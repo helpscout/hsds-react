@@ -5,7 +5,7 @@ import { classNames } from '../../utilities/classNames'
 import Choice from './FromGroup.Choice'
 import Grid from './FromGroup.Grid'
 
-import { FormGroupUI } from './styles/FormGroup.css'
+import { FormGroupUI } from './FormGroup.css'
 
 type Props = {
   children?: any

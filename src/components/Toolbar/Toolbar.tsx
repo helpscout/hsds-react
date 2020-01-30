@@ -4,7 +4,7 @@ import Item from './Toolbar.Item'
 import Shadow from './Toolbar.Shadow'
 import { ToolbarPlacement, ToolbarSize, ToolbarTheme } from './Toolbar.types'
 import { classNames } from '../../utilities/classNames'
-import { WrapperUI, ToolbarUI } from './styles/Toolbar.css'
+import { WrapperUI, ToolbarUI } from './Toolbar.css'
 
 export interface Props {
   className?: string

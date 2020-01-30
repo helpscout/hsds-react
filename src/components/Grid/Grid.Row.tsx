@@ -1,7 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { RowUI } from './styles/Grid.Row.css'
+import { RowUI } from './Grid.Row.css'
 import { GridRowProps } from './Grid.types'
 
 class Row extends React.PureComponent<GridRowProps> {

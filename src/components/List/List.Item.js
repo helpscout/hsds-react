@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { ItemUI } from './styles/List.css'
+import { ItemUI } from './List.css'
 import { ListContext } from './List'
 
 export const Item = props => {

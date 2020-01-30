@@ -7,7 +7,7 @@ import get from '../../utilities/get'
 import { classNames } from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
-import { ChoiceGroupUI } from './styles/ChoiceGroup.css'
+import { ChoiceGroupUI } from './ChoiceGroup.css'
 import Radio from '../Radio'
 import RadioCard from '../RadioCard'
 

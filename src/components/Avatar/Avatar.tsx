@@ -25,7 +25,7 @@ import {
   StatusUI,
   config,
   getCircleProps,
-} from './styles/Avatar.css'
+} from './Avatar.css'
 
 import { getImageSrc } from './Avatar.utils'
 import { AvatarListContext } from '../AvatarList/AvatarList'

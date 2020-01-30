@@ -17,7 +17,7 @@ import {
   IconUI,
   IconWrapperUI,
   TextUI,
-} from './styles/Tag.css'
+} from './Tag.css'
 
 export const tagClassName = 'c-Tag'
 

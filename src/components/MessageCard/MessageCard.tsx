@@ -11,7 +11,7 @@ import {
   SubtitleUI,
   BodyUI,
   ActionUI,
-} from './styles/MessageCard.css'
+} from './MessageCard.css'
 
 import Truncate from '../Truncate'
 

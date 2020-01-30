@@ -7,7 +7,7 @@ import Bubble from './Message.Bubble'
 import Timestamp from '../Timestamp'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { ChatBlockUI } from './styles/ChatBlock.css'
+import { ChatBlockUI } from './Message.ChatBlock.css'
 
 export type MetaPosition = 'top' | 'bottom'
 

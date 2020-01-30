@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { TruncatedUI } from './styles/EditableField.Truncated.css'
+import { TruncatedUI } from './EditableField.css'
 import Truncate from '../Truncate'
 
 import { TRUNCATED_CLASSNAMES } from './EditableField.utils'
@@ -12,9 +12,7 @@ const Truncated = ({ string, splitter }: TruncateProps) => {
 
     return (
       <TruncatedUI
-        className={`${TRUNCATED_CLASSNAMES.component} ${
-          TRUNCATED_CLASSNAMES.withSplitter
-        }`}
+        className={`${TRUNCATED_CLASSNAMES.component} ${TRUNCATED_CLASSNAMES.withSplitter}`}
       >
         <span className={`${TRUNCATED_CLASSNAMES.firstChunk}`}>{first}</span>
         <span className={`${TRUNCATED_CLASSNAMES.secondChunk}`}>

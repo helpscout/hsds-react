@@ -3,7 +3,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import BlankSlate from './ChatList.BlankSlate'
 import Item from './ChatList.Item'
-import { ChatListUI } from './styles/ChatList.css'
+import { ChatListUI } from './ChatList.css'
 
 type Props = {
   className?: string

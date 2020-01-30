@@ -4,12 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Illo from '../Illo'
 import { classNames } from '../../utilities/classNames'
 
-import {
-  BlankSlateUI,
-  HeadingUI,
-  TextUI,
-  IlloUI,
-} from './styles/BlankSlate.css'
+import { BlankSlateUI, HeadingUI, TextUI, IlloUI } from './BlankSlate.css'
 
 interface Props {
   className?: string

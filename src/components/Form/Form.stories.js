@@ -1,15 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { action as addonAction } from '@storybook/addon-actions'
 import { withKnobs, text, boolean } from '@storybook/addon-knobs'
 import styled from 'styled-components'
 import { Form, FormGroup, FormLabel, Input } from '../index'
-import Readme from './README.md'
-
-const action = name => (...args) => {
-  addonAction(name)(...args)
-  console.log(name, { args })
-}
 
 export const ContainerUI = styled('div')`
   form {
@@ -19,7 +12,7 @@ export const ContainerUI = styled('div')`
 
 const stories = storiesOf('Form', module)
 
-stories.addDecorator(withKnobs).addParameters({ readme: { sidebar: Readme } })
+stories.addDecorator(withKnobs)
 
 stories.add('with save, cancel and delete buttons', () => {
   class SampleForm extends React.Component {

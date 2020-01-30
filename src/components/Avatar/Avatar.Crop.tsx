@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
-import { CropUI } from './styles/Avatar.css'
+import { CropUI } from './Avatar.css'
 
 export const AvatarCrop = props => {
   const { className, children, isImageLoaded, withShadow, hasImage } = props

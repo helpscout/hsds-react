@@ -3,7 +3,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Item from './Nav.Item'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { NavUI, ListUI } from './styles/Nav.css'
+import { NavUI, ListUI } from './Nav.css'
 
 export interface Props {
   className?: string

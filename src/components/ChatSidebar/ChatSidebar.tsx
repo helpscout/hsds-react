@@ -6,11 +6,7 @@ import { noop } from '../../utilities/other'
 import pluralize from '../../utilities/pluralize'
 import { smoothScrollTo } from '../../utilities/smoothScroll'
 
-import {
-  ChatSidebarUI,
-  StatusBarWrapperUI,
-  ContentUI,
-} from './styles/ChatSidebar.css'
+import { ChatSidebarUI, StatusBarWrapperUI, ContentUI } from './ChatSidebar.css'
 
 type Props = {
   className?: string

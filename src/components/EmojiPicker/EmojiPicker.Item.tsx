@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Emoji from './EmojiPicker.Emoji'
 import { classNames } from '../../utilities/classNames'
-import { ItemWrapperUI, ItemUI } from './styles/EmojiPicker.css'
+import { ItemWrapperUI, ItemUI } from './EmojiPicker.css'
 import { EmojiPickerItemProps } from './EmojiPicker.types'
 import { defaultEmoji } from './emojiSet'
 

@@ -22,7 +22,7 @@ import {
   AnimatedCardContainerUI,
   CardUI,
   CloseUI,
-} from './styles/Modal.css'
+} from './Modal.css'
 import { ModalProps } from './Modal.types'
 
 const modalBaseZIndex = 1040

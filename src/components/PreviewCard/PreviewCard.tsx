@@ -4,7 +4,7 @@ import Context from './PreviewCard.Context'
 import Heading from '../Heading'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
-import { PreviewCardUI } from './styles/PreviewCard.css'
+import { PreviewCardUI } from './PreviewCard.css'
 
 type Props = {
   children?: any

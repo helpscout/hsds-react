@@ -1,7 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { OverlayUI } from './styles/Overlay.css'
+import { OverlayUI } from './Overlay.css'
 
 type Props = {
   children?: any

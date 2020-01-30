@@ -3,7 +3,7 @@ import VisuallyHidden from '../VisuallyHidden'
 import { classNames } from '../../utilities/classNames'
 import { isString } from '../../utilities/is'
 import { legacySizes } from './Spinner.utils'
-import { SpinnerUI, SpinnerSVGUI, SpinnerCircleUI } from './styles/Spinner.css'
+import { SpinnerUI, SpinnerSVGUI, SpinnerCircleUI } from './Spinner.css'
 import { SpinnerProps } from './Spinner.types'
 
 export class Spinner extends React.PureComponent<SpinnerProps> {

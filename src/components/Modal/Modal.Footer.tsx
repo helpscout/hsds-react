@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
-import { FooterUI } from './styles/Modal.Footer.css'
+import { FooterUI } from './Modal.css'
 import { ModalFooterProps } from './Modal.types'
 
 class Footer extends React.PureComponent<ModalFooterProps> {

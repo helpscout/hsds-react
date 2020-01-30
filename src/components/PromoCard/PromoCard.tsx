@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { PromoCardUI, BorderUI } from './styles/PromoCard.css'
+import { PromoCardUI, BorderUI } from './PromoCard.css'
 
 // Refactor this when FluffyCard is converted to TypeScript
 export type FluffyCardTextAlign = 'left' | 'center' | 'right'

@@ -2,7 +2,7 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 
-import { CodeUI } from './styles/Code.css'
+import { CodeUI } from './Code.css'
 
 export interface Props {
   className?: string

@@ -3,12 +3,7 @@ import Container from './OptionTile.Container'
 import Centralize from '../Centralize'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
-import {
-  OptionTileUI,
-  HeaderUI,
-  ContentUI,
-  TitleUI,
-} from './styles/OptionTile.css'
+import { OptionTileUI, HeaderUI, ContentUI, TitleUI } from './OptionTile.css'
 import OptionIcon from '../OptionIcon'
 import { OptionTileProps } from './OptionTile.types'
 

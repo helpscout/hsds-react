@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { classNames } from '../../utilities/classNames'
-import { SectionUI } from './styles/Page.Section.css'
+import { SectionUI } from './Page.css'
 import { PageContext } from './Page'
 
 export const Section = ({ children, className }) => {

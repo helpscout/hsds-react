@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import SideNavigation, { SideNavigationContext } from '../SideNavigation'
-import { FadeInOutUI } from '../styles/SideNavigation.css'
+import { FadeInOutUI } from '../SideNavigation.css'
 
 describe('ClassName', () => {
   test('Has default className if collapsable', () => {

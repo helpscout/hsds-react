@@ -2,7 +2,7 @@ import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { PopperUI } from './styles/Tooltip.css'
+import { PopperUI } from './Tooltip.css'
 
 export interface Props {
   children: any

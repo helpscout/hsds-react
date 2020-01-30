@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import Icon from '../Icon'
-import { SortableCellUI, HeaderCellUI } from './styles/Table.css'
+import { SortableCellUI, HeaderCellUI } from './Table.css'
 import { TABLE_CLASSNAME } from './Table'
 
 import { HeaderCellProps } from './Table.types'

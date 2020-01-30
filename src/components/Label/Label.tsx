@@ -3,7 +3,7 @@ import { UIState } from '../../constants/types'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { isString } from '../../utilities/is'
-import { LabelUI } from './styles/Label.css'
+import { LabelUI } from './Label.css'
 
 type Props = {
   className?: string

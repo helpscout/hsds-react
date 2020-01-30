@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { AvatarShape, AvatarSize } from '../Avatar/Avatar.types'
 import { classNames } from '../../utilities/classNames'
-import { AvatarUI } from './styles/Skeleton.Avatar.css'
+import { AvatarUI } from './Skeleton.Avatar.css'
 
 export interface Props {
   className?: string

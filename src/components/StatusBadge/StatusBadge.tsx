@@ -4,7 +4,7 @@ import Badge from '../Badge'
 import StatusDot from '../StatusDot'
 import { classNames } from '../../utilities/classNames'
 
-import { StatusBadgeUI, StatusDotUI } from './styles/StatusBadge.css'
+import { StatusBadgeUI, StatusDotUI } from './StatusBadge.css'
 
 const defaultProps = {
   count: 0,

@@ -7,7 +7,7 @@ import Flexy from '../Flexy'
 import Spinner from '../Spinner'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { ChatBlockUI } from './styles/Chat.css'
+import { ChatBlockUI } from './Message.Chat.css'
 
 type Props = MessageBubble & {
   bubbleClassName?: string

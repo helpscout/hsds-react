@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { ItemUI } from './styles/Flexy.Item.css'
+import { FlexyItemUI } from './Flexy.css'
 
 export const Item = ({ children, className, inline, ...rest }) => (
-  <ItemUI
+  <FlexyItemUI
     {...getValidProps(rest)}
     className={classNames(
       'c-Flexy__item',
@@ -14,7 +14,7 @@ export const Item = ({ children, className, inline, ...rest }) => (
     )}
   >
     {children}
-  </ItemUI>
+  </FlexyItemUI>
 )
 
 Item.propTypes = {

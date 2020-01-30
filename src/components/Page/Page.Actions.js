@@ -6,7 +6,7 @@ import {
   ActionsBlockUI,
   ActionsItemUI,
   StickyActionsWrapperUI,
-} from './styles/Page.Actions.css'
+} from './Page.css'
 import StickyActions from './Page.StickyActions'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'

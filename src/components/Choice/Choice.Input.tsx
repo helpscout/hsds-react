@@ -11,7 +11,7 @@ import {
   InputIconUI,
   InputPlaceholderUI,
   InputRadioUI,
-} from './styles/Input.css'
+} from './Choice.css'
 
 type Props = {
   autoFocus: boolean

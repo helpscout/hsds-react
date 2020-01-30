@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
-import { StaticUI } from './styles/Input.Static.css'
+import { StaticUI } from './Input.Static.css'
 import { InputStaticProps } from './Input.types'
 
 const Static = (props: InputStaticProps) => {

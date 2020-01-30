@@ -272,7 +272,7 @@ class Pop extends React.Component<Props, State> {
           })
         : null
     )
-    console.log(componentClassName)
+
     return (
       <Manager>
         <div>

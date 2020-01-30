@@ -3,7 +3,7 @@ import EventListener from '../EventListener'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { repeat } from '../../utilities/strings'
-import { ResizerUI, GhostUI } from './styles/Input.Resizer.css'
+import { ResizerUI, GhostUI } from './Input.Resizer.css'
 import { RefNode, InputResizerProps } from './Input.types'
 
 // Thanks Stephen <3

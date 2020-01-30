@@ -27,7 +27,7 @@ import {
   TagListWrapperUI,
   AvatarListWrapperUI,
   DividerWrapperUI,
-} from './styles/Item.css'
+} from './ChatList.css'
 
 type Props = {
   avatar?: any

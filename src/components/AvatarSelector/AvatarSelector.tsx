@@ -5,7 +5,7 @@ import {
   AvatarUI,
   IconAssignUI,
   IconCaretUI,
-} from './styles/AvatarSelector.css.js'
+} from './AvatarSelector.css.js'
 
 export interface Props {
   image: string

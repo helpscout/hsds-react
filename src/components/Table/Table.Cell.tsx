@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import Truncate from '../Truncate'
-import { CellUI } from './styles/Table.css'
+import { CellUI } from './Table.css'
 import { TABLE_CLASSNAME } from './Table'
 
 import { CellProps } from './Table.types'

@@ -13,7 +13,7 @@ import {
   TitleUI,
   IndicatorUI,
   ErrorWrapperUI,
-} from './styles/Nav.css'
+} from './Nav.css'
 
 export interface Props {
   children?: any

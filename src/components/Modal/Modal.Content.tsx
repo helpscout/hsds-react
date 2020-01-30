@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { ContentUI } from './styles/Modal.Content.css'
+import { ContentUI } from './Modal.css'
 import { ModalContentProps } from './Modal.types'
 import Body from './Modal.Body'
 

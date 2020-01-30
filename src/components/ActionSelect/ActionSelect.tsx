@@ -7,7 +7,7 @@ import { findFirstFocusableNode } from '../../utilities/focus'
 import { smoothScrollTo, linear } from '../../utilities/smoothScroll'
 import { noop } from '../../utilities/other'
 import { ActionSelectProps, ActionSelectState } from './ActionSelect.types'
-import { ActionSelectUI } from './styles/ActionSelect.css'
+import { ActionSelectUI } from './ActionSelect.css'
 import { getColor } from '../../styles/utilities/color'
 
 export class ActionSelect extends React.PureComponent<

@@ -7,11 +7,7 @@ import Animate from '../Animate'
 import { classNames } from '../../utilities/classNames'
 import { getComponentKey } from '../../utilities/component'
 import { isOdd, getMiddleIndex } from '../../utilities/number'
-import {
-  AvatarStackUI,
-  AvatarStackLayeringUI,
-  ItemUI,
-} from './styles/AvatarStack.css'
+import { AvatarStackUI, AvatarStackLayeringUI, ItemUI } from './AvatarStack.css'
 
 export interface Props {
   animationDuration: number

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { cy } from '@helpscout/cyan'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import { EditableField } from '../EditableField'
 import {
   ACTIONS_CLASSNAMES,

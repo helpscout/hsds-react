@@ -3,9 +3,8 @@ import EventListener from '../EventListener'
 import Tooltip from '../Tooltip'
 import { classNames } from '../../utilities/classNames'
 import { truncateMiddle } from '../../utilities/strings'
-import { TruncateUI } from './styles/Truncate.css'
+import { TruncateUI, TruncateWithSplitterUI } from './Truncate.css'
 import { TruncateProps, TruncateState } from './Truncate.types'
-import { TruncateWithSplitterUI } from './styles/Truncate.WithSplitter.css'
 import { TRUNCATED_CLASSNAMES } from './Truncate.utils'
 
 export class Truncate extends React.PureComponent<
@@ -138,9 +137,7 @@ export class Truncate extends React.PureComponent<
 
       truncatedText = (
         <TruncateWithSplitterUI
-          className={`${TRUNCATED_CLASSNAMES.component} ${
-            TRUNCATED_CLASSNAMES.withSplitter
-          }`}
+          className={`${TRUNCATED_CLASSNAMES.component} ${TRUNCATED_CLASSNAMES.withSplitter}`}
         >
           <span className={`${TRUNCATED_CLASSNAMES.firstChunk}`}>{first}</span>
           <span className={`${TRUNCATED_CLASSNAMES.secondChunk}`}>

@@ -3,7 +3,7 @@ import { BlockSelectorTag } from '../../constants/types'
 import Block from './Card.Block'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { CardUI } from './styles/Card.css'
+import { CardUI } from './Card.css'
 
 export type Props = {
   autoWordWrap?: boolean

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
-import { ControlUI } from './styles/Skeleton.Control.css'
+import { ControlUI } from './Skeleton.Control.css'
 
 class Control extends React.PureComponent<any> {
   static displayName = 'Skeleton.Control'

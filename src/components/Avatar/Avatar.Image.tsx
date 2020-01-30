@@ -11,7 +11,7 @@ import VisuallyHidden from '../VisuallyHidden'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
-import { ImageWrapperUI, ImageUI, TitleUI } from './styles/Avatar.css'
+import { ImageWrapperUI, ImageUI, TitleUI } from './Avatar.css'
 import { getAnimationProps } from './Avatar.utils'
 import { ImageProps, ImageState } from './Avatar.types'
 

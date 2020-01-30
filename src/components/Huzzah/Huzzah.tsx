@@ -3,7 +3,7 @@ import HUZZAHS from './huzzahs'
 import { getHuzzah, DEFAULT_HUZZAH } from './Huzzah.utils'
 import { classNames } from '../../utilities/classNames'
 import { sample } from '../../utilities/collection'
-import { HuzzahUI } from './styles/Huzzah.css'
+import { HuzzahUI } from './Huzzah.css'
 
 type HuzzahSize = 'lg' | 'md' | 'sm'
 

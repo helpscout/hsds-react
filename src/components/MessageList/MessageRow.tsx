@@ -7,12 +7,7 @@ import Text from '../Text'
 import Tooltip from '../Tooltip'
 import Truncate from '../Truncate'
 import { classNames } from '../../utilities/classNames'
-import {
-  ContentUI,
-  HandleUI,
-  IconUI,
-  SortableItemUI,
-} from './styles/MessageRow.css'
+import { ContentUI, HandleUI, IconUI, SortableItemUI } from './MessageList.css'
 import { SortableElement, SortableHandle } from 'react-sortable-hoc'
 
 const DraggableHandle = SortableHandle(({ isVisible }) => (

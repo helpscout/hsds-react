@@ -2,7 +2,7 @@ import React, { createContext } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import Item from './List.Item'
-import { ListUI } from './styles/List.css'
+import { ListUI } from './List.css'
 
 export const ListContext = createContext()
 

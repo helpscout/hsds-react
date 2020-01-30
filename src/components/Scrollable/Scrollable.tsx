@@ -11,7 +11,7 @@ import {
   getFadeRightStyles,
 } from '../../utilities/scrollFade'
 import { noop } from '../../utilities/other'
-import { ScrollableUI, ContentUI, FaderUI } from './styles/Scrollable.css'
+import { ScrollableUI, ContentUI, FaderUI } from './Scrollable.css'
 
 export interface Props {
   backgroundColor: string

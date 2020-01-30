@@ -4,7 +4,7 @@ import RouteWrapper from '../RouteWrapper'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { wordHasSpaces } from '../../utilities/strings'
-import { LinkUI } from './styles/Link.css'
+import { LinkUI } from './Link.css'
 
 export interface Props {
   autoWordWrap: boolean

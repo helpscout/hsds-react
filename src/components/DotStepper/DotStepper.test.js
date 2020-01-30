@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { DotStepperUI, BulletUI, ProgressBulletUI } from './DotStepper.css.js'
+import { DotStepperUI, BulletUI, ProgressBulletUI } from './DotStepper.css'
 import DotStepper from './'
 import Tooltip from '../Tooltip'
 

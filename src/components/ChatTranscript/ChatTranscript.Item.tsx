@@ -16,7 +16,7 @@ import {
   ItemContentUI,
   ItemPrivateNoteUI,
   ItemAttachmentListUI,
-} from './styles/ChatTranscript.css'
+} from './ChatTranscript.css'
 
 export const ITEM_TYPES = {
   lineItem: 'line_item',

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
-import { VisuallyHiddenUI } from './styles/VisuallyHidden.css'
+import { VisuallyHiddenUI } from './VisuallyHidden.css'
 
 type Props = {
   children?: any

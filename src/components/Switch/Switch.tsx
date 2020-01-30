@@ -14,7 +14,7 @@ import {
   StateUI,
   BackdropUI,
   ToggleUI,
-} from './styles/Switch.css.js'
+} from './Switch.css'
 
 export interface Props {
   className?: string

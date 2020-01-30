@@ -1,16 +1,14 @@
 // from https://github.com/ItsJonQ/styled-providers
 // Thank you Q!
 import React, { useMemo } from 'react'
-import stylisPluginExtraScope from 'stylis-plugin-extra-scope'
 import { StyleSheetManager } from 'styled-components'
 
 // from https://github.com/Andarist/stylis-plugin-extra-scope
-function extraScopePlugin(extra) {
+function createExtraScopePlugin(extra) {
   const scope = `${extra.trim()} `
 
   return (context, content, selectors, parents, line, column, length, type) => {
     if (context !== 2 || type === 107) return
-
     for (let i = 0; i < selectors.length; i++) {
       const scoped = selectors[i].indexOf(scope) === 0
       if (!scoped) selectors[i] = `${scope}${selectors[i]}`
@@ -28,9 +26,12 @@ export default function ScopeProvider({
   ...restProps
 }) {
   const stylisPlugins = useMemo(() => {
-    return [extraScopePlugin(scope)]
+    const extraScopePlugin = createExtraScopePlugin(scope)
+    Object.defineProperty(extraScopePlugin, 'name', {
+      value: 'extraScopePlugin',
+    })
+    return [extraScopePlugin]
   }, [scope])
-
   return (
     <StyleSheetManager stylisPlugins={stylisPlugins} {...restProps}>
       {children}

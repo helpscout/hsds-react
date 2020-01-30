@@ -10,7 +10,7 @@ import {
   AvatarGridUI,
   AvatarGridWrapperUI,
   AvatarGridContainerUI,
-} from './styles/AvatarGrid.css'
+} from './AvatarGrid.css'
 
 type Props = {
   animationEasing: string

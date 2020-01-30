@@ -1,7 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { HrUI } from './styles/Hr.css'
+import { HrUI } from './Hr.css'
 
 export type HrSize = 'md' | 'sm' | 'xs' | 'none'
 

@@ -1,9 +1,6 @@
 import * as React from 'react'
 
-import {
-  ComponentUI,
-  ComposedMaskUI,
-} from './styles/EditableFieldComposite.css'
+import { EditableFieldCompositeUI, ComposedMaskUI } from './EditableField.css'
 
 import {
   STATES_CLASSNAMES,
@@ -311,7 +308,7 @@ export class EditableFieldComposite extends React.PureComponent<
     const { fields, hasActiveFields } = this.state
 
     return (
-      <ComponentUI
+      <EditableFieldCompositeUI
         className={classNames(
           className && className,
           EditableFieldComposite.className,
@@ -331,7 +328,7 @@ export class EditableFieldComposite extends React.PureComponent<
         >
           {this.renderMaskContent()}
         </ComposedMaskUI>
-      </ComponentUI>
+      </EditableFieldCompositeUI>
     )
   }
 }

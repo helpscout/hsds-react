@@ -10,8 +10,8 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Button from '../Button'
 import Scrollable from '../Scrollable'
 
-import { TableWrapperUI, TableUI, LoadingUI } from './styles/Table.css'
-import { defaultSkin, chooseSkin } from './styles/skins'
+import { TableWrapperUI, TableUI, LoadingUI } from './Table.css'
+import { defaultSkin, chooseSkin } from './Table.skins'
 
 import Body from './Table.Body'
 import Head from './Table.Head'

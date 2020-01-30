@@ -9,7 +9,7 @@ import {
 } from '../../utilities/nodePosition'
 import { noop } from '../../utilities/other'
 
-import { DropContentUI, DropUI } from './styles/Drop.css'
+import { DropContentUI, DropUI } from './Drop.css'
 
 export interface DropPositionerProps {
   className?: string

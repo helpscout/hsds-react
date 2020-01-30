@@ -2,7 +2,7 @@ import * as React from 'react'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { ConditionOperatorProps } from './Condition.types'
-import { OperatorUI } from './styles/Condition.css'
+import { OperatorUI } from './Condition.css'
 
 export const Operator = (props: ConditionOperatorProps) => {
   const { className, isBorderless, type, ...rest } = props

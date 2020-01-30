@@ -9,7 +9,6 @@ import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import {
   convertLinksToHTML,
-  escapeHTML,
   isWord,
   newlineToHTML,
 } from '../../utilities/strings'
@@ -21,7 +20,7 @@ import {
   MessageBubbleIconWrapperUI,
   MessageBubbleTitleUI,
   MessageBubbleTypingUI,
-} from './styles/Bubble.css'
+} from './Message.Bubble.css'
 
 type Props = MessageBubble
 type Context = MessageThemeContext

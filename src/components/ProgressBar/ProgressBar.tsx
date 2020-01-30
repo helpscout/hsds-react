@@ -2,7 +2,7 @@ import * as React from 'react'
 import { UISize } from '../../constants/types'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { ProgressBarUI, BarUI } from './styles/ProgressBar.css'
+import { ProgressBarUI, BarUI } from './ProgressBar.css'
 
 type Value = number | string
 

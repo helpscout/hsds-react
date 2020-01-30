@@ -1,12 +1,11 @@
 import * as React from 'react'
 import Collapsible from '../Collapsible'
-import Centralize from '../Centralize'
 import Button from './StatusBar.Button'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { StatusBarProps, StatusBarState } from './StatusBar.types'
 
-import { StatusBarUI } from './styles/StatusBar.css'
+import { StatusBarUI } from './StatusBar.css'
 
 class StatusBar extends React.PureComponent<StatusBarProps, StatusBarState> {
   constructor(props) {

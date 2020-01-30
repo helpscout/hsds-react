@@ -3,7 +3,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { CloseButtonSize } from './CloseButton.types'
 import { noop } from '../../utilities/other'
-import { CloseButtonUI, IconUI } from './styles/CloseButton.css'
+import { CloseButtonUI, IconUI } from './CloseButton.css'
 
 export interface Props {
   className?: string

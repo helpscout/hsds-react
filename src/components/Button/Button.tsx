@@ -4,12 +4,7 @@ import { classNames } from '../../utilities/classNames'
 import { includes } from '../../utilities/arrays'
 import { noop } from '../../utilities/other'
 import RouteWrapper from '../RouteWrapper'
-import {
-  ButtonUI,
-  ButtonContentUI,
-  FocusUI,
-  SpinnerUI,
-} from './styles/Button.css'
+import { ButtonUI, ButtonContentUI, FocusUI, SpinnerUI } from './Button.css'
 import Icon from '../Icon'
 import { ButtonKind, ButtonShape, ButtonSize } from './Button.types'
 import { UIState } from '../../constants/types'

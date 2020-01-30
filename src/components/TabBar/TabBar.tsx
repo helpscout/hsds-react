@@ -4,7 +4,7 @@ import Nav from '../Nav'
 import Toolbar from '../Toolbar'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { TabBarUI, SecContentUI, ToolbarUI } from './styles/TabBar.css'
+import { TabBarUI, SecContentUI, ToolbarUI } from './TabBar.css'
 
 export interface Props {
   className?: string

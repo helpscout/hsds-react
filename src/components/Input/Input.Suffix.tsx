@@ -1,7 +1,7 @@
 import * as React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { SuffixUI } from './styles/Input.css'
+import { SuffixUI } from './Input.css'
 import { InputSuffixProps } from './Input.types'
 
 class Suffix extends React.PureComponent<InputSuffixProps> {

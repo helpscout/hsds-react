@@ -2,7 +2,7 @@ import * as React from 'react'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
 
-import { StatusBarButtonUI } from './styles/StatusBar.css'
+import { StatusBarButtonUI } from './StatusBar.css'
 
 const Button = props => {
   const { children, className, icon, ...rest } = props

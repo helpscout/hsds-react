@@ -1,12 +1,11 @@
 import * as React from 'react'
 
 import {
-  HsAppUI,
   ContentUI,
   InnerContentUI,
   AppLayoutUI,
   AppContainerUI,
-} from './styles/HsApp.css'
+} from './HsApp.css'
 import Nav from './HsApp.Nav'
 import Sidenav from './HsApp.Sidenav'
 

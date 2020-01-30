@@ -5,7 +5,7 @@ import { classNames } from '../../utilities/classNames'
 import Icon from '../Icon'
 import FadeInOut from './SideNavigation.FadeInOut'
 
-import { FooterUI } from './styles/SideNavigation.css'
+import { FooterUI } from './SideNavigation.css'
 import { SideNavigationContext } from './SideNavigation'
 
 export const Footer = ({ children, className, ...rest }) => {

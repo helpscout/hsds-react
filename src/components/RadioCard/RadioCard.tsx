@@ -14,7 +14,7 @@ import {
   FocusUI,
   ContentUI,
   HeadingUI,
-} from './styles/RadioCard.css'
+} from './RadioCard.css'
 
 import { RadioCardProps, RadioCardState, InputEvent } from './RadioCard.types'
 

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
-import { LoadingDotsUI, LoadingDotUI } from './styles/LoadingDots.css'
+import { LoadingDotsUI, LoadingDotUI } from './LoadingDots.css'
 
 type Props = {
   align?: 'left' | 'center' | 'right' | ''

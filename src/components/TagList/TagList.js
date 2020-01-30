@@ -6,7 +6,7 @@ import Inline from '../Inline'
 import Overflow from '../Overflow'
 import { classNames } from '../../utilities/classNames'
 import { noop, promiseNoop } from '../../utilities/other'
-import { TagListUI, ClearAllUI } from './styles/TagList.css'
+import { TagListUI, ClearAllUI } from './TagList.css'
 
 export const tagListClassName = 'c-TagList'
 

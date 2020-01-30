@@ -2,7 +2,7 @@ import * as React from 'react'
 import { TextSize, TextShade, UIState } from './Text.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { TextUI } from './styles/Text.css'
+import { TextUI } from './Text.css'
 
 export interface Props {
   allCaps?: boolean

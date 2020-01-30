@@ -17,7 +17,7 @@ import {
   CloseWrapperUI,
   ContentUI,
   IconWrapperUI,
-} from './styles/Alert.css'
+} from './Alert.css'
 
 export interface Props {
   actionRight?: any

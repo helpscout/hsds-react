@@ -5,7 +5,7 @@ import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
-import { DragHandleUI } from './styles/Sortable.css'
+import { DragHandleUI } from './Sortable.css'
 
 const defaultProps = {
   onDragStart: noop,

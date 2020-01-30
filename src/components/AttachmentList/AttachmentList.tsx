@@ -5,7 +5,7 @@ import Inline from '../Inline'
 import Overflow from '../Overflow'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { AttachmentListUI } from './styles/AttachmentList.css'
+import { AttachmentListUI } from './AttachmentList.css'
 
 type Props = {
   children: Array<any> | string

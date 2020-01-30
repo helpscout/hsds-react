@@ -10,7 +10,7 @@ import {
   getFadeRightStyles,
 } from '../../utilities/scrollFade'
 import { noop, requestAnimationFrame } from '../../utilities/other'
-import { OverflowUI } from './styles/Overflow.css'
+import { OverflowUI } from './Overflow.css'
 
 type Props = {
   backgroundColor?: string

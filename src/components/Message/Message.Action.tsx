@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { ActionChatBlockUI } from './styles/Action.css'
+import { ActionChatBlockUI } from './Message.css'
 import ChatBlock from './Message.ChatBlock'
 
 type Props = MessageChat & {
