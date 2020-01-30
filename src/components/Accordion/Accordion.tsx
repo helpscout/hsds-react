@@ -136,13 +136,14 @@ export class Accordion extends React.PureComponent<
 
   getSubComponentProps() {
     const { duration, isPage, isSeamless, isSortable, size } = this.props
-    const { sections } = this.state
+    const { isSorting, sections } = this.state
 
     return {
       duration,
       isPage,
       isSeamless,
       isSortable,
+      isSorting,
       onOpen: this.onOpen,
       onClose: this.onClose,
       sections,

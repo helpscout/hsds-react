@@ -99,9 +99,13 @@ class Title extends React.Component<TitleProps, TitleState> {
     return this.props.href || this.props.to
   }
 
+  getIsSorting() {
+    return this.props.isSorting
+  }
+
   handleClick = (event: Event | KeyboardEvent) => {
     this.props.onClick(event)
-    if (this.getIsLink()) return
+    if (this.getIsLink() || this.getIsSorting()) return
 
     event && event.preventDefault()
     const { isOpen, setOpen, uuid } = this.props

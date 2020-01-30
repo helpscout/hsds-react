@@ -27,6 +27,7 @@ export type BodyProps = {
   isOpen: boolean
   isPage: boolean
   isSeamless: boolean
+  isSorting: boolean
   onOpen: (uuid: string) => void
   onClose: (uuid: string) => void
   size?: Sizes
@@ -43,6 +44,7 @@ export type SectionProps = {
   isOpen: boolean
   isSeamless: boolean
   isSortable: boolean
+  isSorting: boolean
   onOpen?: (uuid: string) => void
   onClose?: (uuid: string) => void
   sections: object
@@ -59,6 +61,7 @@ export type TitleProps = {
   isPage: boolean
   isSeamless: boolean
   isSortable: boolean
+  isSorting: boolean
   onClick: (event: Event) => void
   onOpen?: (uuid: string) => void
   onClose?: (uuid: string) => void
