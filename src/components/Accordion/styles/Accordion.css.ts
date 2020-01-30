@@ -87,18 +87,19 @@ export const SectionUI = styled('div')`
   border-bottom: 1px solid ${getColor('grey.400')};
   position: relative;
 
-  .is-page &.is-seamless,
-  .is-page .c-SortableItem &.is-seamless:last-child,
-  .is-sortable &:not(.is-seamless) {
-    border-bottom-width: 1px;
-  }
-
-  &.is-seamless,
   &:last-child,
   .is-page &.is-seamless:last-child,
   .is-page .c-SortableItem:last-child &.is-seamless:last-child,
-  .is-sortable .c-SortableItem:last-child &:not(.is-seamless) {
+  .is-sortable .c-SortableItem:last-child &,
+  .is-sortable .c-SortableItem:last-child &.is-seamless {
     border-bottom-width: 0;
+  }
+
+  .is-page &.is-seamless,
+  .is-page .c-SortableItem &.is-seamless:last-child,
+  .is-sortable &,
+  .is-sortable &.is-seamless {
+    border-bottom-width: 1px;
   }
 `
 
