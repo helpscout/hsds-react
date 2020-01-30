@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { boolean, text } from '@storybook/addon-knobs'
+import { boolean, text, number } from '@storybook/addon-knobs'
 import { Accordion, Button, Input, Page, Text } from '../src/index'
 import { faker } from '@helpscout/helix'
 import { withAktiv, withHsApp } from './utils'
@@ -46,7 +46,9 @@ const onSortEnd = (...args) => console.log('Sorted', ...args)
 
 stories.add('default', () => (
   <Accordion
+    distance={number('distance', 5)}
     isSortable={boolean('isSortable', false)}
+    pressDelay={number('pressDelay', 300)}
     onOpen={onOpen}
     onClose={onClose}
     onSortEnd={onSortEnd}
@@ -57,7 +59,9 @@ stories.add('default', () => (
 
 stories.add('extra small', () => (
   <Accordion
+    distance={number('distance', 5)}
     isSortable={boolean('isSortable', false)}
+    pressDelay={number('pressDelay', 300)}
     onOpen={onOpen}
     onClose={onClose}
     onSortEnd={onSortEnd}
@@ -69,7 +73,9 @@ stories.add('extra small', () => (
 
 stories.add('small', () => (
   <Accordion
+    distance={number('distance', 5)}
     isSortable={boolean('isSortable', false)}
+    pressDelay={number('pressDelay', 300)}
     onOpen={onOpen}
     onClose={onClose}
     onSortEnd={onSortEnd}
@@ -81,7 +87,9 @@ stories.add('small', () => (
 
 stories.add('large', () => (
   <Accordion
+    distance={number('distance', 5)}
     isSortable={boolean('isSortable', false)}
+    pressDelay={number('pressDelay', 300)}
     onOpen={onOpen}
     onClose={onClose}
     onSortEnd={onSortEnd}
@@ -94,7 +102,9 @@ stories.add('large', () => (
 stories.add('allow multiple', () => (
   <Accordion
     allowMultiple
+    distance={number('distance', 5)}
     isSortable={boolean('isSortable', false)}
+    pressDelay={number('pressDelay', 300)}
     onSortEnd={onSortEnd}
   >
     {createSections(data)}
@@ -104,7 +114,9 @@ stories.add('allow multiple', () => (
 stories.add('is seamless', () => (
   <Accordion
     isSeamless
+    distance={number('distance', 5)}
     isSortable={boolean('isSortable', false)}
+    pressDelay={number('pressDelay', 300)}
     onSortEnd={onSortEnd}
   >
     {createSections(data)}
@@ -116,7 +128,9 @@ stories.add('is in page', () => (
     <Page.Card>
       <Page.Header subtitle="In page mode" />
       <Accordion
+        distance={number('distance', 5)}
         isSortable={boolean('isSortable', false)}
+        pressDelay={number('pressDelay', 300)}
         onSortEnd={onSortEnd}
       >
         {createSections(data)}
@@ -161,7 +175,9 @@ stories.add('uses custom ids', () => {
             />
           </form>
           <Accordion
+            distance={number('distance', 5)}
             isSortable={boolean('isSortable', false)}
+            pressDelay={number('pressDelay', 300)}
             onOpen={this.updateSectionId}
             onSortEnd={onSortEnd}
             openSectionIds={[value]}
@@ -209,7 +225,9 @@ stories.add('uses multiple custom ids', () => {
           </form>
           <Accordion
             allowMultiple
+            distance={number('distance', 5)}
             isSortable={boolean('isSortable', false)}
+            pressDelay={number('pressDelay', 300)}
             onOpen={(uuid, openSectionIds) =>
               this.updateSectionIds(openSectionIds)
             }
@@ -235,7 +253,9 @@ stories.add('Row (Link)', () => {
       <Page.Card>
         <Accordion
           isSeamless
+          distance={number('distance', 5)}
           isSortable={boolean('isSortable', false)}
+          pressDelay={number('pressDelay', 300)}
           onSortEnd={onSortEnd}
         >
           <Accordion.Link to="/">
@@ -260,7 +280,9 @@ storiesHsApp.addDecorator(withHsApp)
 
 storiesHsApp.add('default', () => (
   <Accordion
+    distance={number('distance', 5)}
     isSortable={boolean('isSortable', false)}
+    pressDelay={number('pressDelay', 300)}
     onOpen={onOpen}
     onClose={onClose}
     onSortEnd={onSortEnd}

@@ -4,6 +4,7 @@ export type AccordionProps = {
   allowMultiple?: boolean
   children: any
   className?: string
+  distance: number
   duration?: number
   isPage: boolean
   isSeamless: boolean
@@ -12,6 +13,7 @@ export type AccordionProps = {
   onClose: (uuid: string, openIds?: Array<any>) => void
   onSortEnd: (...args: any[]) => void
   openSectionIds?: Array<any>
+  pressDelay: number
   size?: Sizes
 }
 

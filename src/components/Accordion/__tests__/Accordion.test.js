@@ -229,4 +229,24 @@ describe('sorting', () => {
     instance.handleOnSortEnd(prevIndex, nextIndex)
     expect(spy).toHaveBeenCalledWith(prevIndex, nextIndex)
   })
+
+  test('distance takes precendent over pressDelay', () => {
+    const wrapper = mount(
+      <Accordion distance={15} isSortable pressDelay={300} />
+    )
+    const instance = wrapper.instance()
+    const props = instance.getSortableProps()
+    expect(props.distance).toEqual(15)
+    expect(props.pressDelay).toBeUndefined()
+  })
+
+  test('pressDelay can be set if distance is less than or equal to zero', () => {
+    const wrapper = mount(
+      <Accordion distance={0} isSortable pressDelay={300} />
+    )
+    const instance = wrapper.instance()
+    const props = instance.getSortableProps()
+    expect(props.distance).toBeUndefined()
+    expect(props.pressDelay).toEqual(300)
+  })
 })

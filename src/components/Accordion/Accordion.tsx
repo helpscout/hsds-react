@@ -69,6 +69,7 @@ export class Accordion extends React.PureComponent<
   static Title = Title
 
   static defaultProps = {
+    distance: 5,
     isPage: false,
     isSeamless: false,
     isSortable: false,
@@ -76,6 +77,7 @@ export class Accordion extends React.PureComponent<
     onClose: noop,
     onSortEnd: noop,
     openSectionIds: [],
+    pressDelay: 0,
     size: 'md',
   }
 
@@ -161,16 +163,22 @@ export class Accordion extends React.PureComponent<
     }
   }
 
+  getSortableProps = () => {
+    const { distance, pressDelay } = this.props
+    return distance > 0 ? { distance } : { pressDelay }
+  }
+
   render() {
     const { children, isSortable, ...rest } = this.props
     const componentClassName = getComponentClassName(this.props, this.state)
+    const sortableProps = this.getSortableProps()
     const content = isSortable ? (
       <Sortable
-        distance={15}
         helperClass="is-sorting-item"
         lockAxis="y"
         onSortStart={this.handleOnSortStart}
         onSortEnd={this.handleOnSortEnd}
+        {...sortableProps}
       >
         {children}
       </Sortable>
