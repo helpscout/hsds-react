@@ -37,6 +37,17 @@ export const AccordionUI = styled('div')`
   .is-sorting {
     position: relative;
   }
+
+  .c-Accordion__Section,
+  .c-SortableItem {
+    border-bottom: 1px solid ${getColor('grey.400')};
+  }
+
+  .c-Accordion__Section:last-child,
+  .c-SortableItem .c-Accordion__Section,
+  .c-SortableItem:last-child {
+    border-bottom-width: 0;
+  }
 `
 
 export const BodyUI = styled('div')`
@@ -84,22 +95,10 @@ export const BodyUI = styled('div')`
 export const SectionUI = styled('div')`
   ${baseStyles};
   background: white;
-  border-bottom: 1px solid ${getColor('grey.400')};
   position: relative;
 
-  &:last-child,
-  .is-page &.is-seamless:last-child,
-  .is-page .c-SortableItem:last-child &.is-seamless:last-child,
-  .is-sortable .c-SortableItem:last-child &,
-  .is-sortable .c-SortableItem:last-child &.is-seamless {
+  &:last-child:not(.is-sortable) {
     border-bottom-width: 0;
-  }
-
-  .is-page &.is-seamless,
-  .is-page .c-SortableItem &.is-seamless:last-child,
-  .is-sortable &,
-  .is-sortable &.is-seamless {
-    border-bottom-width: 1px;
   }
 `
 
