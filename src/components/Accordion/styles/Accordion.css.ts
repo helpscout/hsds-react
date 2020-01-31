@@ -1,4 +1,4 @@
-import styled from '../../styled'
+import styled, { Global } from '../../styled'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { breakpoint } from '../../../styles/mixins/breakpoints.css'
 import { getColor } from '../../../styles/utilities/color'
@@ -12,13 +12,11 @@ export const AccordionUI = styled('div')`
   border-radius: 4px;
   overflow: hidden;
 
-  &.is-seamless {
-    border: none;
-    border-radius: none;
-  }
-
-  &.is-sorting {
-    user-select: none;
+  .c-Accordion__Section {
+    border-bottom: 1px solid ${getColor('grey.400')};
+    &:last-child {
+      border-bottom-width: 0;
+    }
   }
 
   &.is-page {
@@ -28,25 +26,66 @@ export const AccordionUI = styled('div')`
     ${breakpoint(
       PageConfig.breakpoint.widescreen,
       `
-      margin-left: -100px;
-      margin-right: -100px;
-    `
-    )};
+        margin-left: -100px;
+        margin-right: -100px;
+      `
+    )}
   }
 
-  .is-sorting {
-    position: relative;
+  &.is-seamless {
+    border: none;
+    border-radius: none;
   }
 
-  .c-Accordion__Section,
-  .c-SortableItem {
-    border-bottom: 1px solid ${getColor('grey.400')};
-  }
+  &.is-sortable {
+    .c-Accordion__Section {
+      border-bottom: none;
+    }
 
-  .c-Accordion__Section:last-child,
-  .c-SortableItem .c-Accordion__Section,
-  .c-SortableItem:last-child {
-    border-bottom-width: 0;
+    .c-Accordion__Section__Title {
+      user-select: none;
+
+      &.is-seamless .drag-handle {
+        left: -15px;
+      }
+
+      &.is-page .drag-handle {
+        left: 15px;
+      }
+
+      &:hover .drag-handle {
+        display: inline-block;
+      }
+    }
+
+    .c-SortableItem {
+      border-bottom: 1px solid ${getColor('grey.400')};
+      &:last-child {
+        border-bottom-width: 0;
+      }
+    }
+
+    &.is-sorting {
+      pointer-events: none;
+      user-select: none;
+
+      .c-Accordion__Section {
+        user-select: none;
+      }
+    }
+
+    .c-Accordion__Section__Title.is-sortable {
+      background-color: white;
+
+      .drag-handle {
+        display: none;
+        pointer-events: all;
+      }
+
+      &:hover .drag-handle {
+        display: inline-block;
+      }
+    }
   }
 `
 
@@ -96,10 +135,6 @@ export const SectionUI = styled('div')`
   ${baseStyles};
   background: white;
   position: relative;
-
-  &:last-child:not(.is-sortable) {
-    border-bottom-width: 0;
-  }
 `
 
 export const makeTitleUI = (selector: 'div') => {
@@ -122,26 +157,6 @@ export const makeTitleUI = (selector: 'div') => {
 
     &:focus {
       outline: none;
-    }
-
-    .c-Accordion.is-sorting & {
-      pointer-events: none;
-    }
-
-    .is-sortable & {
-      user-select: none;
-    }
-
-    .is-sorting-item & {
-      background-color: ${getColor('grey.200')};
-      cursor: move;
-      overflow: hidden;
-      pointer-events: all;
-      user-select: none;
-
-      .drag-handle {
-        display: inline-block;
-      }
     }
 
     &.is-link {
@@ -184,28 +199,30 @@ export const makeTitleUI = (selector: 'div') => {
       )};
     }
 
-    .drag-handle {
-      color: ${getColor('grey.800')};
-      cursor: move;
-      display: none;
-      pointer-events: none;
-      position: absolute;
-      left: 1px;
-      top: 50%;
-      transform: translateY(-50%);
+    &.is-sortable {
+      background-color: ${getColor('grey.200')};
+      cursor: pointer;
+      overflow: hidden;
+      user-select: none;
 
-      .is-seamless & {
+      .drag-handle {
+        color: ${getColor('grey.800')};
+        cursor: move;
+        display: inline-block;
+        pointer-events: none;
+        position: absolute;
+        left: 1px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      &.is-seamless .drag-handle {
         left: -15px;
       }
 
-      &.is-page {
+      &.is-page .drag-handle {
         left: 15px;
       }
-    }
-
-    &:hover .drag-handle {
-      display: inline-block;
-      pointer-events: all;
     }
   `
 }

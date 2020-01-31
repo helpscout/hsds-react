@@ -20,6 +20,7 @@ export const classNameStrings = {
   isOpenClassName: 'is-open',
   isPageClassName: 'is-page',
   isSeamlessClassName: 'is-seamless',
+  isSortableClassName: 'is-sortable',
   isSizeXsClassName: 'is-xs',
   isSizeSmClassName: 'is-sm',
   isSizeMdClassName: 'is-md',
@@ -32,6 +33,7 @@ const getComponentClassName = ({
   isOpen,
   isPage,
   isSeamless,
+  isSortable,
   size,
   to,
 }: TitleProps): string => {
@@ -45,6 +47,7 @@ const getComponentClassName = ({
     isSizeSmClassName,
     isSizeMdClassName,
     isSizeLgClassName,
+    isSortableClassName,
   } = classNameStrings
 
   const isLink = href || to
@@ -55,6 +58,7 @@ const getComponentClassName = ({
     !isLink && isOpen && isOpenClassName,
     isPage && isPageClassName,
     isSeamless && isSeamlessClassName,
+    isSortable && isSortableClassName,
     size && size === 'xs' && isSizeXsClassName,
     size && size === 'sm' && isSizeSmClassName,
     size && size === 'md' && isSizeMdClassName,
