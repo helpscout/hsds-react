@@ -4,16 +4,21 @@ export type AccordionProps = {
   allowMultiple?: boolean
   children: any
   className?: string
+  distance: number
   duration?: number
   isPage: boolean
   isSeamless: boolean
+  isSortable?: boolean
   onOpen: (uuid: string, openIds?: Array<any>) => void
   onClose: (uuid: string, openIds?: Array<any>) => void
+  onSortEnd: (...args: any[]) => void
   openSectionIds?: Array<any>
+  pressDelay: number
   size?: Sizes
 }
 
 export type AccordionState = {
+  isSorting: boolean
   sections: Object
 }
 
@@ -24,6 +29,7 @@ export type BodyProps = {
   isOpen: boolean
   isPage: boolean
   isSeamless: boolean
+  isSorting: boolean
   onOpen: (uuid: string) => void
   onClose: (uuid: string) => void
   size?: Sizes
@@ -39,6 +45,8 @@ export type SectionProps = {
   isPage: boolean
   isOpen: boolean
   isSeamless: boolean
+  isSortable: boolean
+  isSorting: boolean
   onOpen?: (uuid: string) => void
   onClose?: (uuid: string) => void
   sections: object
@@ -54,6 +62,8 @@ export type TitleProps = {
   isOpen: boolean
   isPage: boolean
   isSeamless: boolean
+  isSortable: boolean
+  isSorting: boolean
   onClick: (event: Event) => void
   onOpen?: (uuid: string) => void
   onClose?: (uuid: string) => void
@@ -61,6 +71,10 @@ export type TitleProps = {
   size?: Sizes
   to?: string
   uuid: string
+}
+
+export type TitleState = {
+  isSorting: boolean
 }
 
 export type WithUuidProps = {}

@@ -8,13 +8,15 @@ import { setFontSize } from '../../../styles/utilities/font'
 
 export const AccordionUI = styled('div')`
   ${baseStyles};
-  border: 1px solid ${getColor('border')};
+  border: 1px solid ${getColor('grey.400')};
   border-radius: 4px;
   overflow: hidden;
 
-  &.is-seamless {
-    border: none;
-    border-radius: none;
+  .c-Accordion__Section {
+    border-bottom: 1px solid ${getColor('grey.400')};
+    &:last-child {
+      border-bottom-width: 0;
+    }
   }
 
   &.is-page {
@@ -24,10 +26,66 @@ export const AccordionUI = styled('div')`
     ${breakpoint(
       PageConfig.breakpoint.widescreen,
       `
-      margin-left: -100px;
-      margin-right: -100px;
-    `
-    )};
+        margin-left: -100px;
+        margin-right: -100px;
+      `
+    )}
+  }
+
+  &.is-seamless {
+    border: none;
+    border-radius: none;
+  }
+
+  &.is-sortable {
+    .c-Accordion__Section {
+      border-bottom: none;
+    }
+
+    .c-Accordion__Section__Title {
+      user-select: none;
+
+      &.is-seamless .drag-handle {
+        left: -15px;
+      }
+
+      &.is-page .drag-handle {
+        left: 15px;
+      }
+
+      &:hover .drag-handle {
+        display: inline-block;
+      }
+    }
+
+    .c-SortableItem {
+      border-bottom: 1px solid ${getColor('grey.400')};
+      &:last-child {
+        border-bottom-width: 0;
+      }
+    }
+
+    &.is-sorting {
+      pointer-events: none;
+      user-select: none;
+
+      .c-Accordion__Section {
+        user-select: none;
+      }
+    }
+
+    .c-Accordion__Section__Title.is-sortable {
+      background-color: white;
+
+      .drag-handle {
+        display: none;
+        pointer-events: all;
+      }
+
+      &:hover .drag-handle {
+        display: inline-block;
+      }
+    }
   }
 `
 
@@ -75,12 +133,8 @@ export const BodyUI = styled('div')`
 
 export const SectionUI = styled('div')`
   ${baseStyles};
-  border-bottom: 1px solid ${getColor('border')};
-
-  &.is-seamless,
-  &:last-child {
-    border-bottom: none;
-  }
+  background: white;
+  position: relative;
 `
 
 export const makeTitleUI = (selector: 'div') => {
@@ -91,6 +145,7 @@ export const makeTitleUI = (selector: 'div') => {
     cursor: pointer;
     display: block;
     padding: 18px 20px;
+    position: relative;
     text-decoration: none;
 
     &:hover,
@@ -102,16 +157,6 @@ export const makeTitleUI = (selector: 'div') => {
 
     &:focus {
       outline: none;
-    }
-
-    &.is-open {
-      &.is-link {
-        border-bottom: none;
-      }
-
-      &.is-seamless {
-        border-bottom-color: transparent;
-      }
     }
 
     &.is-link {
@@ -152,6 +197,32 @@ export const makeTitleUI = (selector: 'div') => {
       padding-right: 100px;
     `
       )};
+    }
+
+    &.is-sortable {
+      background-color: ${getColor('grey.200')};
+      cursor: pointer;
+      overflow: hidden;
+      user-select: none;
+
+      .drag-handle {
+        color: ${getColor('grey.800')};
+        cursor: move;
+        display: inline-block;
+        pointer-events: none;
+        position: absolute;
+        left: 1px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      &.is-seamless .drag-handle {
+        left: -15px;
+      }
+
+      &.is-page .drag-handle {
+        left: 15px;
+      }
     }
   `
 }

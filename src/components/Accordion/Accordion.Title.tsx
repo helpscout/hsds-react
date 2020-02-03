@@ -9,8 +9,9 @@ import { classNames } from '../../utilities/classNames'
 import { memoize } from '../../utilities/memoize'
 import { noop } from '../../utilities/other'
 import { makeTitleUI } from './styles/Accordion.css'
-import { TitleProps } from './Accordion.types'
+import { TitleProps, TitleState } from './Accordion.types'
 import { COMPONENT_KEY, mapConnectedPropsAsProps } from './Accordion.utils'
+import SortableDragHandle from '../Sortable/Sortable.DragHandle'
 
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion__Section__Title',
@@ -19,6 +20,7 @@ export const classNameStrings = {
   isOpenClassName: 'is-open',
   isPageClassName: 'is-page',
   isSeamlessClassName: 'is-seamless',
+  isSortableClassName: 'is-sortable',
   isSizeXsClassName: 'is-xs',
   isSizeSmClassName: 'is-sm',
   isSizeMdClassName: 'is-md',
@@ -31,6 +33,7 @@ const getComponentClassName = ({
   isOpen,
   isPage,
   isSeamless,
+  isSortable,
   size,
   to,
 }: TitleProps): string => {
@@ -44,6 +47,7 @@ const getComponentClassName = ({
     isSizeSmClassName,
     isSizeMdClassName,
     isSizeLgClassName,
+    isSortableClassName,
   } = classNameStrings
 
   const isLink = href || to
@@ -54,6 +58,7 @@ const getComponentClassName = ({
     !isLink && isOpen && isOpenClassName,
     isPage && isPageClassName,
     isSeamless && isSeamlessClassName,
+    isSortable && isSortableClassName,
     size && size === 'xs' && isSizeXsClassName,
     size && size === 'sm' && isSizeSmClassName,
     size && size === 'md' && isSizeMdClassName,
@@ -62,15 +67,26 @@ const getComponentClassName = ({
   )
 }
 
-class Title extends React.Component<TitleProps> {
+const getDragHandleClassName = ({ isPage }: TitleProps): string => {
+  const { isPageClassName } = classNameStrings
+
+  return classNames('drag-handle', isPage && isPageClassName)
+}
+
+class Title extends React.Component<TitleProps, TitleState> {
   static defaultProps = {
     isOpen: false,
     isPage: false,
     isSeamless: false,
+    isSortable: false,
     setOpen: noop,
     onClick: noop,
     onOpen: noop,
     onClose: noop,
+  }
+
+  state = {
+    isSorting: false,
   }
 
   static displayName = 'AccordionSectionTitle'
@@ -87,9 +103,13 @@ class Title extends React.Component<TitleProps> {
     return this.props.href || this.props.to
   }
 
+  getIsSorting() {
+    return this.props.isSorting
+  }
+
   handleClick = (event: Event | KeyboardEvent) => {
     this.props.onClick(event)
-    if (this.getIsLink()) return
+    if (this.getIsLink() || this.getIsSorting()) return
 
     event && event.preventDefault()
     const { isOpen, setOpen, uuid } = this.props
@@ -132,7 +152,7 @@ class Title extends React.Component<TitleProps> {
   }
 
   render() {
-    const { children, isOpen, uuid, ...rest } = this.props
+    const { children, isOpen, isSortable, uuid, ...rest } = this.props
 
     const id = `accordion__section__title--${uuid}`
     const ariaControls = `accordion__section__body--${uuid}`
@@ -140,6 +160,10 @@ class Title extends React.Component<TitleProps> {
 
     const TitleUI = this.getTitleUI()
     const restProps = this.getIsLink() ? rest : getValidProps(rest)
+
+    const dragHandle = isSortable ? (
+      <SortableDragHandle className={getDragHandleClassName(this.props)} />
+    ) : null
 
     return (
       <TitleUI
@@ -153,6 +177,7 @@ class Title extends React.Component<TitleProps> {
         role="tab"
         tabIndex="0"
       >
+        {dragHandle}
         <Flexy>
           <Flexy.Block>{children}</Flexy.Block>
           <Flexy.Item>{this.renderIcon()}</Flexy.Item>
