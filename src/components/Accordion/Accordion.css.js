@@ -10,6 +10,7 @@ export const AccordionUI = styled('div')`
   border: 1px solid ${getColor('border')};
   border-radius: 4px;
   overflow: hidden;
+  color: ${getColor('charcoal.500')};
 
   &.is-seamless {
     border: none;
@@ -86,13 +87,11 @@ export const TitleUI = styled('div')`
   display: block;
   padding: 18px 20px;
   text-decoration: none;
+  font-weight: 500;
 
   &:hover,
-  &:focus,
-  &.is-open {
+  &:focus {
     background-color: ${getColor('grey.200')};
-    color: currentColor;
-    text-decoration: none;
   }
 
   &:focus {
@@ -100,7 +99,10 @@ export const TitleUI = styled('div')`
   }
 
   &.is-open {
-    border-bottom: 1px solid ${getColor('border')};
+    &:hover,
+    &:focus {
+      background-color: transparent;
+    }
 
     &.is-link {
       border-bottom: none;

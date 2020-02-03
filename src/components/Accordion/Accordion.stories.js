@@ -2,7 +2,6 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { text } from '@storybook/addon-knobs'
 import { faker } from '@helpscout/helix'
-import { withAktiv, withHsApp } from '../../utilities/storybook'
 import { Accordion, Button, Input, Page, Text } from '../index'
 
 const stories = storiesOf('Accordion', module)
@@ -30,7 +29,7 @@ const createSections = data =>
   data.map((datum, index) => (
     <Accordion.Section key={index} id={datum.id}>
       <Accordion.Title>
-        <Text truncate weight={700}>
+        <Text truncate weight={500}>
           {datum.title}
         </Text>
       </Accordion.Title>
@@ -43,24 +42,6 @@ const onClose = id => console.log('Close', id)
 
 stories.add('default', () => (
   <Accordion onOpen={onOpen} onClose={onClose}>
-    {createSections(data)}
-  </Accordion>
-))
-
-stories.add('extra small', () => (
-  <Accordion onOpen={onOpen} onClose={onClose} size="xs">
-    {createSections(data)}
-  </Accordion>
-))
-
-stories.add('small', () => (
-  <Accordion onOpen={onOpen} onClose={onClose} size="sm">
-    {createSections(data)}
-  </Accordion>
-))
-
-stories.add('large', () => (
-  <Accordion onOpen={onOpen} onClose={onClose} size="lg">
     {createSections(data)}
   </Accordion>
 ))
@@ -199,13 +180,3 @@ stories.add('Row (Link)', () => {
     </Page>
   )
 })
-
-const storiesHsApp = storiesOf('Accordion/HS App', module)
-storiesHsApp.addDecorator(withAktiv)
-storiesHsApp.addDecorator(withHsApp)
-
-storiesHsApp.add('default', () => (
-  <Accordion onOpen={onOpen} onClose={onClose}>
-    {createSections(data)}
-  </Accordion>
-))
