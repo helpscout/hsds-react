@@ -3,6 +3,8 @@ import { DropdownProps } from '../Dropdown/V2/Dropdown.types'
 export interface ActionSelectBaseProps {
   animationDuration: number
   animationEasing: string
+  onAnimationEnd: () => void
+  onAnimationUpdate: () => void
   children?: any
   className?: string
   mainRef?: (node: HTMLElement) => void
@@ -29,6 +31,7 @@ export interface ActionSelectState {
 }
 
 export interface ActionSelectContentResizerProps extends ActionSelectBaseProps {
+  onAnimationEnd: () => void
   borderWidth: number
   isOpen: boolean
   resizeCount: number

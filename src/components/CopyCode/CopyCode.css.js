@@ -4,7 +4,7 @@ import { getColor } from '../../styles/utilities/color'
 
 export const config = {
   borderColor: getColor('border'),
-  borderColorFocus: getColor('blue.400'),
+  borderColorFocus: getColor('blue.500'),
   boxShadow: '0 0 0 0 transparent',
   boxShadowFocus: `0 0 0 1px ${getColor('blue.400')}`,
   fontSize: 12,
@@ -65,11 +65,11 @@ export const SyntaxHighlight = styled('div')`
 
   div::-moz-selection,
   span::-moz-selection {
-    background: #daf1ff;
+    background: ${getColor('blue.200')};
   }
   div::selection,
   span::selection {
-    background: #daf1ff;
+    background: ${getColor('blue.200')};
   }
 
   .token.parameter {

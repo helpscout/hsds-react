@@ -3,11 +3,11 @@ import { getColor } from '../../styles/utilities/color'
 import Input from '../Input'
 
 export const CopyInputUI = styled(Input)`
-  ::-moz-selection {
+  input::-moz-selection {
     background: ${getColor('blue.200')};
   }
 
-  ::selection {
+  input::selection {
     background: ${getColor('blue.200')};
   }
 `
