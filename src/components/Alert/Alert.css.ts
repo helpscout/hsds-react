@@ -42,7 +42,7 @@ export const AlertUI = styled('div')`
 `
 
 export const ContentUI = styled('div')`
-  align-items: flex-start;
+  align-items: center;
   display: flex;
 
   > * {
@@ -63,9 +63,7 @@ export const BadgeWrapperUI = styled('div')`
 `
 
 export const BlockUI = styled('div')`
-  line-height: 28px;
   max-width: 100%;
-  min-height: 28px;
   min-width: 0;
 
   .c-Heading,
@@ -97,7 +95,10 @@ export const BlockUI = styled('div')`
 `
 
 export const IconWrapperUI = styled('div')`
-  padding: 3px 0;
+  align-self: center;
+  padding: 0;
+  flex: 0 0 auto;
+
   + * {
     margin-left: 8px;
   }
@@ -107,6 +108,11 @@ export const CloseWrapperUI = styled('div')`
   margin-left: auto;
   margin-right: -4px;
   padding-left: 8px;
+  flex: 0 0 auto;
+`
+
+export const ActionRightUI = styled.div`
+  flex: 0 0 auto;
 `
 
 function makeStateStyles(): string {

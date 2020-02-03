@@ -27,14 +27,6 @@ stories.add('content', () => (
   </Alert>
 ))
 
-stories.add('actionRight', () => (
-  <div>
-    <Alert actionRight={<Button size="sm">Action!</Button>} icon>
-      Action Right Buddy with Icon!
-    </Alert>
-  </div>
-))
-
 stories.add('dismissible', () => (
   <div>
     <Alert dismissible>Buddy! This is dismissible.</Alert>
