@@ -231,6 +231,19 @@ stories.add('header/footer with items', () => (
   </Modal>
 ))
 
+stories.add('with tooltip', () => (
+  <Modal trigger={<Link>Clicky</Link>} isSeamless isOpen>
+    <Modal.Content>
+      <Modal.Header>
+        <Heading size="h4">Heading</Heading>
+      </Modal.Header>
+      <Modal.Body>
+        <Input state={'error'} errorMessage={'Shoot! Something is wrong.'} />
+      </Modal.Body>
+    </Modal.Content>
+  </Modal>
+))
+
 stories.add('custom close trigger', () => {
   class Contents extends React.Component {
     render() {
