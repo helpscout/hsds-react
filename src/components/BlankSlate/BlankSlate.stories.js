@@ -2,7 +2,7 @@ import React from 'react'
 import { withKnobs, boolean, number, text } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
 import WrenchCat from '@helpscout/hsds-illos/wrench-cat'
-import { withAktiv, withHsApp } from '../../utilities/storybook'
+import { withAktiv } from '../../utilities/storybook'
 import { BlankSlate } from '../index'
 
 const stories = storiesOf('BlankSlate', module)
@@ -80,55 +80,4 @@ stories.add('Light background', () => {
     illoSize: 90,
   }
   return <BlankSlate {...props} />
-})
-
-const storiesHsApp = storiesOf('BlankSlate/HS App', module)
-storiesHsApp.addDecorator(
-  withKnobs({
-    escapeHTML: false,
-  })
-)
-storiesHsApp.addDecorator(withHsApp)
-
-storiesHsApp.add('default', () => {
-  const props = {
-    title: title(),
-    illoName: illoName(),
-    message: htmlMessage,
-    illoSize: number('illoSize', 90),
-  }
-  return <BlankSlate {...getKnobsProps()} {...props} />
-})
-
-storiesHsApp.add('Light background', () => {
-  const props = {
-    title: title(),
-    illoName: illoName(),
-    lightBackground: boolean('lightBackground', true),
-    alignTop: boolean('alignTop', false),
-    message: htmlMessage,
-    illoSize: 90,
-  }
-  return (
-    <div style={{ height: '800px' }}>
-      <BlankSlate {...props} />
-    </div>
-  )
-})
-
-storiesHsApp.add('Align top', () => {
-  const props = {
-    title: title(),
-    illoName: illoName(),
-    lightBackground: boolean('lightBackground', true),
-    alignTop: boolean('alignTop', true),
-    message: htmlMessage,
-    illoSize: 90,
-  }
-
-  return (
-    <div style={{ height: '800px' }}>
-      <BlankSlate {...props} />
-    </div>
-  )
 })

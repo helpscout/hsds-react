@@ -3,7 +3,6 @@ import { storiesOf } from '@storybook/react'
 import { withKnobs, text } from '@storybook/addon-knobs'
 import { withAktiv } from '../../utilities/storybook'
 import { ItemSpec } from '../Dropdown/DropdownV2.stories'
-import HsApp from '../HsApp'
 import { SideNavigation, Flexy, Heading, Button } from '../index'
 
 const renderSidebarFolders = () => {
@@ -265,28 +264,4 @@ stories.add('is collapsed', () => {
   const badge = text('badgeLabel', 'HS')
   const headerLabel = text('headerLabel', 'Help Scout')
   return <SidebarCollapsed badge={badge} headerLabel={headerLabel} />
-})
-
-const storiesHsApp = storiesOf('SideNavigation/HS App Demo', module)
-storiesHsApp.addDecorator(withKnobs)
-
-storiesHsApp.add('HS App - Mailbox', () => {
-  const items = ItemSpec.generate(3)
-  const sidenav = (
-    <SideNavigation>
-      <SideNavigation.Header>
-        <SideNavigation.DropdownHeader items={items} selectedItem={items[0]}>
-          Dropdown
-        </SideNavigation.DropdownHeader>
-      </SideNavigation.Header>
-      <SidebarHsAppItems />
-      {renderSidebarFolders()}
-      {renderSidebarFooter()}
-    </SideNavigation>
-  )
-  return (
-    <HsApp sidenavComponent={sidenav}>
-      <Heading>CONTENT</Heading>
-    </HsApp>
-  )
 })
