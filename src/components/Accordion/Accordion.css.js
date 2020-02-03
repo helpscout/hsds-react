@@ -115,6 +115,8 @@ export const TitleUI = styled('div')`
 
   &.is-link {
     outline: none;
+    text-decoration: none;
+    color: currentColor;
 
     &:hover {
       .${titleClassNames.iconCaretClassName} {
