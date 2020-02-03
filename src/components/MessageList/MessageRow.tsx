@@ -12,7 +12,11 @@ import { SortableElement, SortableHandle } from 'react-sortable-hoc'
 
 const DraggableHandle = SortableHandle(({ isVisible }) => (
   <HandleUI>
-    {isVisible ? <IconUI alt="" name="drag-handle" shade="faint" /> : null}
+    {isVisible ? (
+      <IconUI alt="" name="drag-handle" shade="faint" size="24" />
+    ) : (
+      <IconUI alt="" name="drag-handle" shade="faint" size="24" />
+    )}
   </HandleUI>
 ))
 

@@ -2,6 +2,7 @@ import * as React from 'react'
 import { AccordionUI } from './MessageList.css'
 import MessageRow from './MessageRow'
 import { SortableContainer } from 'react-sortable-hoc'
+import { GlobalContext } from '../HSDS/Provider'
 
 export interface Props {
   items: Array<any>
@@ -19,27 +20,19 @@ const SortableList = SortableContainer(({ children }) => {
   return <div>{children}</div>
 })
 
-/* istanbul ignore next */
-export class MessageList extends React.Component<Props, State> {
-  static defaultProps = {
-    items: [],
-    onSortEnd: () => {},
-    onSortStart: () => {},
-  }
+export const MessageList = props => {
+  if (props.items.length === 0) return null
+  const [isDragging, setDragging] = React.useState(false)
+  const [indexOfDraggedItem, setIndexOfDraggingItem] = React.useState(-1)
 
-  state = {
-    indexOfDraggedItem: -1,
-    isDragging: false,
-  }
+  const contextValue: any = React.useContext(GlobalContext)
+  const scope = contextValue ? contextValue.getCurrentScope() : null
 
-  onSortEnd = ({ oldIndex, newIndex, collection, isKeySorting }) => {
-    const isDragging = false
-    this.setState({
-      indexOfDraggedItem: -1,
-      isDragging,
-    })
+  const onSortEnd = ({ oldIndex, newIndex, collection, isKeySorting }) => {
+    setDragging(false)
+    setIndexOfDraggingItem(-1)
 
-    this.props.onSortEnd({
+    props.onSortEnd({
       collection,
       isDragging,
       isKeySorting,
@@ -48,14 +41,11 @@ export class MessageList extends React.Component<Props, State> {
     })
   }
 
-  onSortStart = ({ node, index, collection, isKeySorting }) => {
-    const isDragging = true
-    this.setState({
-      indexOfDraggedItem: index,
-      isDragging,
-    })
+  const onSortStart = ({ node, index, collection, isKeySorting }) => {
+    setDragging(true)
+    setIndexOfDraggingItem(index)
 
-    this.props.onSortStart({
+    props.onSortStart({
       collection,
       index,
       node,
@@ -64,37 +54,46 @@ export class MessageList extends React.Component<Props, State> {
     })
   }
 
-  render() {
-    const { items } = this.props
+  const getContainer = () => {
+    if (scope) {
+      return document.querySelector(`.${scope}`)
+    }
 
-    if (!items.length) return null
-
-    return (
-      <SortableList
-        lockAxis="y"
-        helperClass="is-dragging"
-        items={items}
-        onSortStart={this.onSortStart}
-        onSortEnd={this.onSortEnd}
-        lockOffset={10}
-        lockToContainerEdges={true}
-        useDragHandle={true}
-      >
-        <AccordionUI>
-          {items.map((item, index) => (
-            <MessageRow
-              {...item}
-              index={index}
-              isDragging={this.state.indexOfDraggedItem === index}
-              isDraggingOnList={this.state.isDragging}
-              key={`item-${item.id}`}
-              sortIndex={index}
-            />
-          ))}
-        </AccordionUI>
-      </SortableList>
-    )
+    return document.body
   }
+
+  return (
+    <SortableList
+      lockAxis="y"
+      helperClass="is-dragging"
+      items={props.items}
+      onSortStart={onSortStart}
+      onSortEnd={onSortEnd}
+      lockOffset={10}
+      lockToContainerEdges={true}
+      useDragHandle={true}
+      helperContainer={getContainer}
+    >
+      <AccordionUI>
+        {props.items.map((item, index) => (
+          <MessageRow
+            {...item}
+            index={index}
+            isDragging={indexOfDraggedItem === index}
+            isDraggingOnList={isDragging}
+            key={`item-${item.id}`}
+            sortIndex={index}
+          />
+        ))}
+      </AccordionUI>
+    </SortableList>
+  )
+}
+
+MessageList.defaultProps = {
+  items: [],
+  onSortEnd: () => {},
+  onSortStart: () => {},
 }
 
 export default MessageList

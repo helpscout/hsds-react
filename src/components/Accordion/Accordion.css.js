@@ -92,6 +92,10 @@ export const TitleUI = styled('div')`
   &:hover,
   &:focus {
     background-color: ${getColor('grey.200')};
+
+    .${titleClassNames.iconCaretClassName} {
+      color: ${getColor('text.slightlyMuted')};
+    }
   }
 
   &:focus {
@@ -117,12 +121,6 @@ export const TitleUI = styled('div')`
     outline: none;
     text-decoration: none;
     color: currentColor;
-
-    &:hover {
-      .${titleClassNames.iconCaretClassName} {
-        color: ${getColor('text.slightlyMuted')};
-      }
-    }
   }
 
   &.is-md {
