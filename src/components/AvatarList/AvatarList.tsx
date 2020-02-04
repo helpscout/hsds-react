@@ -14,6 +14,7 @@ import {
 import { AvatarListWrapperUI } from './styles/AvatarList.css.js'
 import { COMPONENT_KEY } from './AvatarList.utils'
 import { COMPONENT_KEY as AVATAR_KEY } from '../Avatar/Avatar.utils'
+import { COMPONENT_KEY as TOOLTIP_KEY } from '../Tooltip/Tooltip.utils'
 
 export interface Props {
   animationEasing: string
@@ -40,8 +41,12 @@ export class AvatarList extends React.PureComponent<Props> {
   }
 
   getAvatars = () => {
-    return React.Children.toArray(this.props.children).filter(child =>
-      isComponentNamed(child, AVATAR_KEY)
+    return React.Children.toArray(this.props.children).filter(
+      child =>
+        isComponentNamed(child, AVATAR_KEY) ||
+        // This supports when Agent Avatars in HS App are wrapped
+        // with a Tooltip when they agent is typing.
+        isComponentNamed(child, TOOLTIP_KEY)
     )
   }
 
