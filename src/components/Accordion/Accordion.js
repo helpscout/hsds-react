@@ -9,12 +9,15 @@ import { noop } from '../../utilities/other'
 import { AccordionUI } from './Accordion.css'
 import { stringifyArray } from './Accordion.utils'
 import { PageContext } from '../Page/Page'
+import Sortable from '../Sortable'
 
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion',
   isAllowMultipleClassName: 'is-allow-multiple',
   isPageClassName: 'is-page',
   isSeamlessClassName: 'is-seamless',
+  isSortableClassName: 'is-sortable',
+  isSortingClassName: 'is-sorting',
 }
 
 const getComponentClassName = ({
@@ -22,18 +25,24 @@ const getComponentClassName = ({
   className,
   isPage,
   isSeamless,
+  isSorting,
+  isSortable,
 }) => {
   const {
     baseComponentClassName,
     isAllowMultipleClassName,
     isPageClassName,
     isSeamlessClassName,
+    isSortableClassName,
+    isSortingClassName,
   } = classNameStrings
   return classNames(
     baseComponentClassName,
     allowMultiple && isAllowMultipleClassName,
     isPage && isPageClassName,
     isSeamless && isSeamlessClassName,
+    isSortable && isSortableClassName,
+    isSorting && isSortingClassName,
     className
   )
 }
@@ -56,6 +65,10 @@ const getOpenSectionIds = sections => {
   }, [])
 }
 
+const getSortableProps = ({ distance, pressDelay }) => {
+  return distance > 0 ? { distance } : { pressDelay }
+}
+
 export const AccordionContext = createContext(null)
 
 const Accordion = props => {
@@ -66,10 +79,13 @@ const Accordion = props => {
     isPage: isPageProps,
     isSeamless: isSeamlessProps,
     size,
+    isSortable,
+    onSortEnd,
     ...rest
   } = props
 
   const [sections, setOpenSections] = useState({})
+  const [isSorting, setIsSorting] = useState(false)
 
   const { accordion = {} } = useContext(PageContext)
 
@@ -106,32 +122,62 @@ const Accordion = props => {
     duration,
     isPage,
     isSeamless,
-    onOpen,
+    isSortable,
+    isSorting,
     onClose,
+    onOpen,
     sections,
     setOpen,
     size,
   }
 
+  let content = children
+  if (isSortable) {
+    content = (
+      <Sortable
+        helperClass="is-sorting-item"
+        lockAxis="y"
+        onSortStart={() => setIsSorting(true)}
+        onSortEnd={(...args) => {
+          setIsSorting(false)
+          onSortEnd(...args)
+        }}
+        {...getSortableProps(rest)}
+      >
+        {children}
+      </Sortable>
+    )
+  }
+
   return (
     <AccordionUI
       {...getValidProps(rest)}
-      className={getComponentClassName({ ...props, isSeamless, isPage })}
+      className={getComponentClassName({
+        ...props,
+        isSeamless,
+        isPage,
+        isSortable,
+        isSorting,
+      })}
       role="tablist"
     >
       <AccordionContext.Provider value={contextValue}>
-        {children}
+        {content}
       </AccordionContext.Provider>
     </AccordionUI>
   )
 }
 
 Accordion.defaultProps = {
+  distance: 5,
   isPage: false,
   isSeamless: false,
-  onOpen: noop,
+  isSortable: false,
   onClose: noop,
+  onOpen: noop,
+  onSortEnd: noop,
   openSectionIds: [],
+  pressDelay: 0,
   size: 'md',
 }
 

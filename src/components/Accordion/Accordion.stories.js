@@ -1,8 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { text } from '@storybook/addon-knobs'
-import { faker } from '@helpscout/helix'
+import { text, boolean, number } from '@storybook/addon-knobs'
 import { Accordion, Button, Input, Page, Text } from '../index'
+import { faker } from '@helpscout/helix'
 
 const stories = storiesOf('Accordion', module)
 const body = faker.lorem.paragraph()()
@@ -39,26 +39,99 @@ const createSections = data =>
 
 const onOpen = id => console.log('Open', id)
 const onClose = id => console.log('Close', id)
+const onSortEnd = (...args) => console.log('Sorted', ...args)
 
 stories.add('default', () => (
-  <Accordion onOpen={onOpen} onClose={onClose}>
+  <Accordion
+    distance={number('distance', 5)}
+    isSortable={boolean('isSortable', false)}
+    pressDelay={number('pressDelay', 300)}
+    onOpen={onOpen}
+    onClose={onClose}
+    onSortEnd={onSortEnd}
+  >
+    {createSections(data)}
+  </Accordion>
+))
+
+stories.add('extra small', () => (
+  <Accordion
+    distance={number('distance', 5)}
+    isSortable={boolean('isSortable', false)}
+    pressDelay={number('pressDelay', 300)}
+    onOpen={onOpen}
+    onClose={onClose}
+    onSortEnd={onSortEnd}
+    size="xs"
+  >
+    {createSections(data)}
+  </Accordion>
+))
+
+stories.add('small', () => (
+  <Accordion
+    distance={number('distance', 5)}
+    isSortable={boolean('isSortable', false)}
+    pressDelay={number('pressDelay', 300)}
+    onOpen={onOpen}
+    onClose={onClose}
+    onSortEnd={onSortEnd}
+    size="sm"
+  >
+    {createSections(data)}
+  </Accordion>
+))
+
+stories.add('large', () => (
+  <Accordion
+    distance={number('distance', 5)}
+    isSortable={boolean('isSortable', false)}
+    pressDelay={number('pressDelay', 300)}
+    onOpen={onOpen}
+    onClose={onClose}
+    onSortEnd={onSortEnd}
+    size="lg"
+  >
     {createSections(data)}
   </Accordion>
 ))
 
 stories.add('allow multiple', () => (
-  <Accordion allowMultiple>{createSections(data)}</Accordion>
+  <Accordion
+    allowMultiple
+    distance={number('distance', 5)}
+    isSortable={boolean('isSortable', false)}
+    pressDelay={number('pressDelay', 300)}
+    onSortEnd={onSortEnd}
+  >
+    {createSections(data)}
+  </Accordion>
 ))
 
 stories.add('is seamless', () => (
-  <Accordion isSeamless>{createSections(data)}</Accordion>
+  <Accordion
+    isSeamless
+    distance={number('distance', 5)}
+    isSortable={boolean('isSortable', false)}
+    pressDelay={number('pressDelay', 300)}
+    onSortEnd={onSortEnd}
+  >
+    {createSections(data)}
+  </Accordion>
 ))
 
-stories.add('is seamless in page', () => (
+stories.add('is in page', () => (
   <Page>
     <Page.Card>
-      <Page.Header subtitle="In seamless mode" />
-      <Accordion>{createSections(data)}</Accordion>
+      <Page.Header subtitle="In page mode" />
+      <Accordion
+        distance={number('distance', 5)}
+        isSortable={boolean('isSortable', false)}
+        pressDelay={number('pressDelay', 300)}
+        onSortEnd={onSortEnd}
+      >
+        {createSections(data)}
+      </Accordion>
     </Page.Card>
   </Page>
 ))
@@ -98,7 +171,14 @@ stories.add('uses custom ids', () => {
               style={{ width: '100px' }}
             />
           </form>
-          <Accordion onOpen={this.updateSectionId} openSectionIds={[value]}>
+          <Accordion
+            distance={number('distance', 5)}
+            isSortable={boolean('isSortable', false)}
+            pressDelay={number('pressDelay', 300)}
+            onOpen={this.updateSectionId}
+            onSortEnd={onSortEnd}
+            openSectionIds={[value]}
+          >
             {createSections(dataWithIds)}
           </Accordion>
         </div>
@@ -142,9 +222,13 @@ stories.add('uses multiple custom ids', () => {
           </form>
           <Accordion
             allowMultiple
+            distance={number('distance', 5)}
+            isSortable={boolean('isSortable', false)}
+            pressDelay={number('pressDelay', 300)}
             onOpen={(uuid, openSectionIds) =>
               this.updateSectionIds(openSectionIds)
             }
+            onSortEnd={onSortEnd}
             openSectionIds={values}
           >
             {createSections(dataWithIds)}
@@ -164,7 +248,13 @@ stories.add('Row (Link)', () => {
   return (
     <Page>
       <Page.Card>
-        <Accordion isSeamless>
+        <Accordion
+          isSeamless
+          distance={number('distance', 5)}
+          isSortable={boolean('isSortable', false)}
+          pressDelay={number('pressDelay', 300)}
+          onSortEnd={onSortEnd}
+        >
           <Accordion.Link to="/">
             <Text truncate weight={500}>
               {linkOneContent}

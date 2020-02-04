@@ -9,6 +9,7 @@ import { TitleUI } from './Accordion.css'
 import { SectionContext } from './Accordion.Section'
 import { AccordionContext } from './Accordion'
 import { noop } from '../../utilities/other'
+import SortableDragHandle from '../Sortable/Sortable.DragHandle'
 
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion__Section__Title',
@@ -17,6 +18,7 @@ export const classNameStrings = {
   isOpenClassName: 'is-open',
   isPageClassName: 'is-page',
   isSeamlessClassName: 'is-seamless',
+  isSortableClassName: 'is-sortable',
   isSizeXsClassName: 'is-xs',
   isSizeSmClassName: 'is-sm',
   isSizeMdClassName: 'is-md',
@@ -28,6 +30,7 @@ const getComponentClassName = ({
   isOpen,
   isPage,
   isSeamless,
+  isSortable,
   size,
   isLink,
 }) => {
@@ -37,6 +40,7 @@ const getComponentClassName = ({
     isOpenClassName,
     isPageClassName,
     isSeamlessClassName,
+    isSortableClassName,
     isSizeXsClassName,
     isSizeSmClassName,
     isSizeMdClassName,
@@ -49,6 +53,7 @@ const getComponentClassName = ({
     !isLink && isOpen && isOpenClassName,
     isPage && isPageClassName,
     isSeamless && isSeamlessClassName,
+    isSortable && isSortableClassName,
     size && size === 'xs' && isSizeXsClassName,
     size && size === 'sm' && isSizeSmClassName,
     size && size === 'md' && isSizeMdClassName,
@@ -65,13 +70,19 @@ const getIconName = (isOpen, isLink) => {
   return name
 }
 
+const getDragHandleClassName = isPage => {
+  const { isPageClassName } = classNameStrings
+
+  return classNames('drag-handle', isPage && isPageClassName)
+}
+
 const Title = props => {
   const { children, className, onClick, ...rest } = props
   const { uuid, isOpen } = useContext(SectionContext) || {}
-  const { isPage, isSeamless, setOpen = noop, size } =
+  const { isPage, isSeamless, setOpen = noop, size, isSorting, isSortable } =
     useContext(AccordionContext) || {}
 
-  const isLink = props.href || props.to
+  const isLink = props.href || props.to || isSorting
   const isIconOpen = isLink ? false : isOpen
 
   const componentClassName = getComponentClassName({
@@ -81,6 +92,8 @@ const Title = props => {
     isSeamless,
     size,
     isLink,
+    isSortable,
+    isSorting,
   })
 
   const restProps = isLink ? rest : getValidProps(rest)
@@ -107,6 +120,10 @@ const Title = props => {
     size: 14,
   }
 
+  const dragHandle = isSortable ? (
+    <SortableDragHandle className={getDragHandleClassName(isPage)} />
+  ) : null
+
   const id = `accordion__section__title--${uuid}`
   const ariaControls = `accordion__section__body--${uuid}`
 
@@ -123,6 +140,7 @@ const Title = props => {
       tabIndex="0"
       as={isLink ? Link : 'div'}
     >
+      {dragHandle}
       <Flexy>
         <Flexy.Block>{children}</Flexy.Block>
         <Flexy.Item>

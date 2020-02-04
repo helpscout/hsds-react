@@ -247,3 +247,32 @@ describe('Events', () => {
     expect(spy).toHaveBeenCalled()
   })
 })
+
+describe('dragHandle', () => {
+  test('Does not render drag handle if not sortable', () => {
+    const wrapper = mount(<Title />)
+    expect(wrapper.find('.c-SortableDragHandle')).toHaveLength(0)
+  })
+
+  test('Does render drag handle if sortable', () => {
+    const wrapper = mount(
+      <SectionContext.Provider value={{ isSortable: true }}>
+        <Title />
+      </SectionContext.Provider>
+    )
+    const handle = wrapper.find('.c-SortableDragHandle')
+    expect(handle).toHaveLength(1)
+    expect(handle.hasClass('drag-handle')).toBe(true)
+  })
+
+  test('Conditionally applies a className to indicate that the drag handle is in a page', () => {
+    const wrapper = mount(
+      <SectionContext.Provider value={{ isPage: true, isSortable: true }}>
+        <Title />
+      </SectionContext.Provider>
+    )
+    expect(
+      wrapper.find('.c-SortableDragHandle').hasClass(classNames.isPageClassName)
+    ).toBe(true)
+  })
+})
