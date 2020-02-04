@@ -17,8 +17,8 @@ const Color = props => {
   const background = lighten
     ? lightenFn(hex, lighten)
     : darken
-      ? darkenFn(hex, darken)
-      : hex
+    ? darkenFn(hex, darken)
+    : hex
 
   const styles = {
     background,
@@ -35,8 +35,7 @@ const Color = props => {
   return (
     <div style={styles}>
       {background}
-      <br />
-      ({amount})
+      <br />({amount})
     </div>
   )
 }
@@ -49,8 +48,8 @@ const Shade = props => {
   const background = lighten
     ? lightenFn(hex, lighten)
     : darken
-      ? darkenFn(hex, darken)
-      : hex
+    ? darkenFn(hex, darken)
+    : hex
 
   const styles = {
     background,
@@ -68,8 +67,7 @@ const Shade = props => {
   return (
     <div style={styles}>
       {background}
-      <br />
-      ({getColorShade(background)})
+      <br />({getColorShade(background)})
     </div>
   )
 }
