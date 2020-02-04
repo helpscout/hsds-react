@@ -7,9 +7,17 @@ import { classNameStrings as titleClassNames } from './Accordion.Title'
 import { setFontSize } from '../../styles/utilities/font'
 
 export const AccordionUI = styled('div')`
-  border: 1px solid ${getColor('border')};
+  border: 1px solid ${getColor('grey.400')};
   border-radius: 4px;
   overflow: hidden;
+  color: ${getColor('charcoal.500')};
+
+  .c-Accordion__Section {
+    border-bottom: 1px solid ${getColor('grey.400')};
+    &:last-child {
+      border-bottom-width: 0;
+    }
+  }
 
   &.is-seamless {
     border: none;
@@ -27,6 +35,50 @@ export const AccordionUI = styled('div')`
       margin-right: -100px;
     `
     )};
+  }
+
+  &.is-sortable {
+    .c-Accordion__Section {
+      border-bottom: none;
+    }
+    .c-Accordion__Section__Title {
+      user-select: none;
+      &.is-seamless .drag-handle {
+        left: -15px;
+      }
+      &.is-page .drag-handle {
+        left: 15px;
+      }
+      &:hover .drag-handle {
+        display: inline-block;
+      }
+    }
+
+    .c-SortableItem {
+      border-bottom: 1px solid ${getColor('grey.400')};
+      &:last-child {
+        border-bottom-width: 0;
+      }
+    }
+
+    &.is-sorting {
+      pointer-events: none;
+      user-select: none;
+      .c-Accordion__Section {
+        user-select: none;
+      }
+    }
+
+    .c-Accordion__Section__Title.is-sortable {
+      background-color: white;
+      .drag-handle {
+        display: none;
+        pointer-events: all;
+      }
+      &:hover .drag-handle {
+        display: inline-block;
+      }
+    }
   }
 `
 
@@ -71,12 +123,8 @@ export const BodyUI = styled('div')`
 `
 
 export const SectionUI = styled('div')`
-  border-bottom: 1px solid ${getColor('border')};
-
-  &.is-seamless,
-  &:last-child {
-    border-bottom: none;
-  }
+  background: white;
+  position: relative;
 `
 
 export const TitleUI = styled('div')`
@@ -86,13 +134,16 @@ export const TitleUI = styled('div')`
   display: block;
   padding: 18px 20px;
   text-decoration: none;
+  font-weight: 500;
 
   &:hover,
   &:focus,
   &.is-open {
     background-color: ${getColor('grey.200')};
-    color: currentColor;
-    text-decoration: none;
+
+    .${titleClassNames.iconCaretClassName} {
+      color: ${getColor('text.slightlyMuted')};
+    }
   }
 
   &:focus {
@@ -100,7 +151,13 @@ export const TitleUI = styled('div')`
   }
 
   &.is-open {
-    border-bottom: 1px solid ${getColor('border')};
+    background-color: transparent;
+
+    &:hover,
+    &:active,
+    &:focus {
+      background-color: transparent;
+    }
 
     &.is-link {
       border-bottom: none;
@@ -113,6 +170,8 @@ export const TitleUI = styled('div')`
 
   &.is-link {
     outline: none;
+    text-decoration: none;
+    color: currentColor;
 
     &:hover {
       .${titleClassNames.iconCaretClassName} {
@@ -149,5 +208,30 @@ export const TitleUI = styled('div')`
     padding-right: 100px;
   `
     )};
+  }
+
+  &.is-sortable {
+    background-color: ${getColor('grey.200')};
+    cursor: pointer;
+    overflow: hidden;
+    user-select: none;
+
+    &.is-seamless .drag-handle {
+      left: -15px;
+    }
+    &.is-page .drag-handle {
+      left: 15px;
+    }
+
+    .drag-handle {
+      color: ${getColor('grey.800')};
+      cursor: move;
+      display: inline-block;
+      pointer-events: none;
+      position: absolute;
+      left: 1px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
 `

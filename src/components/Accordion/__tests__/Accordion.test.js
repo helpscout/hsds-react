@@ -231,3 +231,83 @@ describe('State', () => {
     ).toBeFalsy()
   })
 })
+
+describe('sorting', () => {
+  test('Adds a classname to indicate the accordion is sortable', () => {
+    const wrapper = mount(<Accordion />)
+    expect(
+      wrapper
+        .find('.c-Accordion')
+        .first()
+        .hasClass('is-sortable')
+    ).toBe(false)
+    wrapper.setProps({ isSortable: true })
+    expect(
+      wrapper
+        .find('.c-Accordion')
+        .first()
+        .hasClass('is-sortable')
+    ).toBe(true)
+  })
+
+  test('Adds a classname to indicate the accordion is being sorted', () => {
+    const wrapper = mount(<Accordion isSortable />)
+    const instance = wrapper.instance()
+    expect(
+      wrapper
+        .find('.c-Accordion')
+        .first()
+        .hasClass('is-sorting')
+    ).toBe(false)
+    instance.handleOnSortStart()
+    wrapper.update()
+    expect(
+      wrapper
+        .find('.c-Accordion')
+        .first()
+        .hasClass('is-sorting')
+    ).toBe(true)
+  })
+
+  test('Updates the state during sorting', () => {
+    const wrapper = mount(<Accordion isSortable />)
+    const instance = wrapper.instance()
+
+    expect(wrapper.state().isSorting).toBe(false)
+    instance.handleOnSortStart()
+    expect(wrapper.state().isSorting).toBe(true)
+    instance.handleOnSortEnd()
+    expect(wrapper.state().isSorting).toBe(false)
+  })
+
+  test('Invokes onSortEnd callback after sorting', () => {
+    const prevIndex = 1
+    const nextIndex = 5
+    const spy = jest.fn()
+    const wrapper = mount(<Accordion isSortable onSortEnd={spy} />)
+    const instance = wrapper.instance()
+    expect(spy).not.toHaveBeenCalled()
+    instance.handleOnSortEnd(prevIndex, nextIndex)
+    expect(spy).toHaveBeenCalledWith(prevIndex, nextIndex)
+  })
+
+  test('distance takes precendent over pressDelay', () => {
+    const wrapper = mount(
+      <Accordion distance={15} isSortable pressDelay={300} />
+    )
+    const instance = wrapper.instance()
+    const props = instance.getSortableProps()
+    expect(props.distance).toEqual(15)
+    expect(props.pressDelay).toBeUndefined()
+  })
+
+  test('pressDelay can be set if distance is less than or equal to zero', () => {
+    const wrapper = mount(
+      <Accordion distance={0} isSortable pressDelay={300} />
+    )
+    const instance = wrapper.instance()
+    const props = instance.getSortableProps()
+    expect(props.distance).toBeUndefined()
+    expect(props.pressDelay).toEqual(300)
+  })
+})
