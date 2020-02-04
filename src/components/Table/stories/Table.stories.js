@@ -1,18 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 import { storiesOf } from '@storybook/react'
-import { action } from '@storybook/addon-actions'
 import {
   createFakeCustomers,
   defaultColumns,
-  columsnWithCustomNameCell,
-  columsnWithCustomHeaderNameCell,
   compoundColumns,
 } from '../Table.testUtils'
 import Heading from '../../Heading'
 import PreviewCard from '../../PreviewCard'
 import { Table } from '../../../index'
-import TablePlayground from './TablePlayground'
 import TableWithPagination from './TableWithPagination'
 import TableWithSorting from './TableWithSorting'
 import { defaultSkin, alternativeSkin } from '../Table.skins'
@@ -65,68 +61,9 @@ stories.add('alternative skin (built in)', () => (
       skin="alternative"
       columns={defaultColumns}
       data={createFakeCustomers({ amount: 10 })}
-      skin="alternative"
     />
   </div>
 ))
-
-const purpleSkin = {
-  fontColorHeader: 'rebeccapurple',
-  fontColorBody: 'rebeccapurple',
-  fontColorAlternate: 'plum',
-  bgHeader: 'gold',
-  bgColor: 'plum',
-  bgAlternate: 'rebeccapurple',
-  borderTableBody: '1px solid blueviolet',
-  borderTableHeader: '1px solid blueviolet',
-  borderRows: '1px solid blueviolet',
-  borderColumns: '1px solid blueviolet',
-}
-
-stories.add('with custom skin', () => (
-  <div>
-    <PreviewCard style={{ marginBottom: '20px' }}>
-      <Heading size="h4">Custom skin</Heading>
-      <pre>
-        <code>skin = </code>
-        <code>{JSON.stringify(purpleSkin, null, 2)}</code>
-      </pre>
-    </PreviewCard>
-    <Table
-      columns={defaultColumns}
-      data={createFakeCustomers({ amount: 10 })}
-      skin={purpleSkin}
-    />
-  </div>
-))
-
-stories.add('with custom header cell render', () => (
-  <Table
-    columns={columsnWithCustomHeaderNameCell}
-    data={createFakeCustomers({ amount: 5 })}
-  />
-))
-
-stories.add('with custom cell rendering', () => (
-  <Table
-    columns={columsnWithCustomNameCell}
-    data={createFakeCustomers({ amount: 10, longNames: true })}
-    tableWidth={{ max: '800px', min: '500px' }}
-  />
-))
-
-stories.add('with className provided to row for styling', () => {
-  const customers = createFakeCustomers({ amount: 10 }).map(info => {
-    const className = info.days < 50 ? 'active' : 'stale'
-    return { ...info, ...{ className } }
-  })
-
-  return (
-    <ContainerUI>
-      <Table columns={defaultColumns} data={customers} />
-    </ContainerUI>
-  )
-})
 
 stories.add('with horizontal scroll', () => (
   <Table
@@ -168,13 +105,13 @@ stories.add('with compound columns', () => (
 
 stories.add('with sorting', () => <TableWithSorting />)
 
-stories.add('with row click', () => (
-  <Table
-    columns={defaultColumns}
-    data={createFakeCustomers({ amount: 10 })}
-    onRowClick={action('click')}
-  />
-))
+// stories.add('with row click', () => (
+//   <Table
+//     columns={defaultColumns}
+//     data={createFakeCustomers({ amount: 10 })}
+//     onRowClick={action('click')}
+//   />
+// ))
 
 stories.add('expandable', () => (
   <div>
@@ -201,5 +138,3 @@ stories.add('expandable', () => (
     />
   </div>
 ))
-
-stories.add('playground', () => <TablePlayground />)

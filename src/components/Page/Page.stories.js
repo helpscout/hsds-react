@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import { storiesOf } from '@storybook/react'
-import { PageDecorator } from '../../../utilities/storybook'
-import { Page } from '../../index'
+import { PageDecorator } from '../../utilities/storybook'
+import { Button, Input, Page } from '../index'
 
-const stories = storiesOf('Page/Header', module).addDecorator(PageDecorator)
+const stories = storiesOf('Page', module).addDecorator(PageDecorator)
 
 const renderPropCode = `
 <Page.Header
@@ -56,7 +56,7 @@ const P = styled('div')`
   }
 `
 
-stories.add('default', () => (
+stories.add('Header', () => (
   <Page>
     <Page.Card>
       <Page.Section>
@@ -172,7 +172,7 @@ stories.add('default', () => (
   </Page>
 ))
 
-stories.add('Subsequent Cards', () => (
+stories.add('Header Subsequent Cards', () => (
   <Page>
     <Page.Card>
       <Page.Section>
@@ -215,7 +215,7 @@ stories.add('Subsequent Cards', () => (
   </Page>
 ))
 
-stories.add('Responsiveness', () => (
+stories.add('Header Responsiveness', () => (
   <Page isResponsive>
     <Page.Card>
       <Page.Section>
@@ -260,5 +260,94 @@ stories.add('Responsiveness', () => (
         <Page.Content>Something cool</Page.Content>
       </Page.Section>
     </Page.Card>
+  </Page>
+))
+
+stories.add('Section', () => (
+  <Page>
+    <Page.Card>
+      <Page.Section>
+        <h1>Section 1</h1>
+        <p>A Page.Section is where content should live.</p>
+        <p>Sections are wrappers too, not pretty, but smart</p>
+        <p>They handle responsiveness if enabled on the Page</p>
+      </Page.Section>
+      <Page.Section>
+        <h2>Section 2</h2>
+        <p>When to use?</p>
+        <p>
+          If the content inside a Card has multiple Headings, it's a sure signal
+          that it has multiple sections
+        </p>
+      </Page.Section>
+    </Page.Card>
+  </Page>
+))
+
+stories.add('Card', () => (
+  <Page>
+    <Page.Card>
+      <p>Cards are just presentational wrappers, nothing special.</p>
+    </Page.Card>
+    <Page.Card>
+      <p>There can be more than 1 per Page.</p>
+    </Page.Card>
+    <Page.Card>
+      <p>Sorry Cards, I didn't mean that. You are so pretty.</p>
+    </Page.Card>
+  </Page>
+))
+
+stories.add('Actions', () => (
+  <Page>
+    <Page.Card>
+      <Input />
+    </Page.Card>
+    <Page.Actions
+      primary={<Button kind="primary">Thing</Button>}
+      secondary={<Button kind="secondary">Thing</Button>}
+      serious={<Button kind="link">Thing</Button>}
+    />
+  </Page>
+))
+
+stories.add('Actions directions', () => (
+  <Page>
+    <Page.Actions
+      direction="left"
+      primary={
+        <Button kind="primary" size="lg">
+          Left
+        </Button>
+      }
+      secondary={
+        <Button kind="secondary" size="lg">
+          Thing
+        </Button>
+      }
+      serious={
+        <Button state="danger" size="lg">
+          Thing
+        </Button>
+      }
+    />
+    <Page.Actions
+      direction="right"
+      primary={
+        <Button kind="primary" size="lg">
+          Left
+        </Button>
+      }
+      secondary={
+        <Button kind="secondary" size="lg">
+          Thing
+        </Button>
+      }
+      serious={
+        <Button state="danger" size="lg">
+          Thing
+        </Button>
+      }
+    />
   </Page>
 ))

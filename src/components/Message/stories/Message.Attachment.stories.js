@@ -2,11 +2,11 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Avatar, Message } from '../../index'
 
-const stories = storiesOf('Message/Attachment', module)
+const stories = storiesOf('Message', module)
 const imageUrl =
   'https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto'
 
-stories.add('default', () => (
+stories.add('Attachment', () => (
   <Message.Provider theme="embed">
     <Message from avatar={<Avatar name="Arctic Puffin" />}>
       <Message.Attachment filename="file.png" url={imageUrl} />
@@ -14,7 +14,7 @@ stories.add('default', () => (
   </Message.Provider>
 ))
 
-stories.add('states', () => (
+stories.add('Attachment States', () => (
   <Message.Provider theme="embed">
     <Message from avatar={<Avatar name="Arctic Puffin" />}>
       <Message.Chat>Error</Message.Chat>

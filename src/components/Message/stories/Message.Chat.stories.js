@@ -3,9 +3,9 @@ import { storiesOf } from '@storybook/react'
 import { faker } from '@helpscout/helix'
 import { Avatar, Message } from '../../index'
 
-const stories = storiesOf('Message/Chat', module)
+const stories = storiesOf('Message', module)
 
-stories.add('default', () => {
+stories.add('Chat', () => {
   const htmlBody = `
     :sob:
     <br />
@@ -24,7 +24,7 @@ stories.add('default', () => {
   )
 })
 
-stories.add('from/to', () => {
+stories.add('Chat from/to', () => {
   return (
     <div>
       <Message from avatar={<Avatar name="From" />}>
@@ -43,7 +43,7 @@ stories.add('from/to', () => {
   )
 })
 
-stories.add('states', () => {
+stories.add('Chat states', () => {
   return (
     <Message to avatar={<Avatar name="Buddy" />}>
       <Message.Chat read timestamp="9:41am">

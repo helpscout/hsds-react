@@ -2,14 +2,14 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Avatar, Message } from '../../index'
 
-const stories = storiesOf('Message/Media', module)
+const stories = storiesOf('Message', module)
 const dimensions = { width: 800, height: 500 }
 const imageUrlSlow = `https://loremflickr.com/${dimensions.width}/${dimensions.height}`
 const imageUrl =
   'https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto'
 const onMediaLoad = event => console.log(event.target)
 
-stories.add('default', () => (
+stories.add('Media', () => (
   <Message.Provider theme="embed">
     <Message from avatar={<Avatar name="Arctic Puffin" />}>
       <Message.Chat>Hey Buddy!</Message.Chat>
@@ -28,7 +28,7 @@ stories.add('default', () => (
 
 const onErrorTryAgainClick = () => console.log('Try again!')
 
-stories.add('image:large', () => {
+stories.add('Media image:large', () => {
   const imageProps = {
     ...dimensions,
     imageUrl: imageUrlSlow,
@@ -73,7 +73,7 @@ stories.add('image:large', () => {
   )
 })
 
-stories.add('image:left-right', () => {
+stories.add('Media image:left-right', () => {
   const imageProps = {
     ...dimensions,
     imageUrl: imageUrlSlow,
@@ -111,7 +111,7 @@ stories.add('image:left-right', () => {
   )
 })
 
-stories.add('consecutive', () => {
+stories.add('Media consecutive', () => {
   const imageProps = {
     ...dimensions,
     imageUrl: imageUrlSlow,
@@ -129,7 +129,7 @@ stories.add('consecutive', () => {
   )
 })
 
-stories.add('states', () => (
+stories.add('Media states', () => (
   <Message.Provider theme="embed">
     <Message from avatar={<Avatar name="Arctic Puffin" />}>
       <Message.Chat>Error</Message.Chat>

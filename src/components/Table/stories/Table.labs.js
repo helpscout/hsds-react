@@ -4,7 +4,13 @@ import ColumnCustomizer from './ColumnsCustomizer'
 import TableCustomizer from './TableCustomizer'
 import Truncate from '../../Truncate'
 import { Wrapper, Header } from './commonComponents'
-import { createFakeCustomers, sortData } from '../Table.testUtils'
+import {
+  createFakeCustomers,
+  defaultColumns,
+  columsnWithCustomNameCell,
+  columsnWithCustomHeaderNameCell,
+  sortData,
+} from '../Table.testUtils'
 import { getColor } from '../../../styles/utilities/color'
 import { defaultSkin, alternativeSkin } from '../Table.skins'
 import { Table } from '../../index'
@@ -230,3 +236,63 @@ export default class TablePlayground extends Component {
     })
   }
 }
+
+// additional stories
+
+const purpleSkin = {
+  fontColorHeader: 'rebeccapurple',
+  fontColorBody: 'rebeccapurple',
+  fontColorAlternate: 'plum',
+  bgHeader: 'gold',
+  bgColor: 'plum',
+  bgAlternate: 'rebeccapurple',
+  borderTableBody: '1px solid blueviolet',
+  borderTableHeader: '1px solid blueviolet',
+  borderRows: '1px solid blueviolet',
+  borderColumns: '1px solid blueviolet',
+}
+
+stories.add('with custom skin', () => (
+  <div>
+    <PreviewCard style={{ marginBottom: '20px' }}>
+      <Heading size="h4">Custom skin</Heading>
+      <pre>
+        <code>skin = </code>
+        <code>{JSON.stringify(purpleSkin, null, 2)}</code>
+      </pre>
+    </PreviewCard>
+    <Table
+      columns={defaultColumns}
+      data={createFakeCustomers({ amount: 10 })}
+      skin={purpleSkin}
+    />
+  </div>
+))
+
+stories.add('with custom header cell render', () => (
+  <Table
+    columns={columsnWithCustomHeaderNameCell}
+    data={createFakeCustomers({ amount: 5 })}
+  />
+))
+
+stories.add('with custom cell rendering', () => (
+  <Table
+    columns={columsnWithCustomNameCell}
+    data={createFakeCustomers({ amount: 10, longNames: true })}
+    tableWidth={{ max: '800px', min: '500px' }}
+  />
+))
+
+stories.add('with className provided to row for styling', () => {
+  const customers = createFakeCustomers({ amount: 10 }).map(info => {
+    const className = info.days < 50 ? 'active' : 'stale'
+    return { ...info, ...{ className } }
+  })
+
+  return (
+    <ContainerUI>
+      <Table columns={defaultColumns} data={customers} />
+    </ContainerUI>
+  )
+})

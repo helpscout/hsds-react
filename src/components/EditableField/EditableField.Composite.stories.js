@@ -5,7 +5,7 @@ import { ContainerUI } from './EditableField.stories'
 import EditableField from '.'
 import { EditableFieldComposite } from '.'
 
-const stories = storiesOf('EditableField/Composite', module)
+const stories = storiesOf('EditableFieldComposite', module)
   .addParameters({
     options: { showPanel: false, enableShortcuts: false, isFullscreen: false },
   })

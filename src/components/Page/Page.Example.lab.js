@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action as addonAction } from '@storybook/addon-actions'
 import { boolean, number } from '@storybook/addon-knobs'
-import { PageDecorator } from '../../../utilities/storybook'
+import { PageDecorator } from '../../utilities/storybook'
 import {
   Button,
   ControlGroup,
@@ -11,16 +11,16 @@ import {
   Input,
   Page,
   Switch,
-} from '../../index'
+} from '../index'
 
-const stories = storiesOf('Page/Example', module).addDecorator(PageDecorator)
+const stories = storiesOf('Page', module).addDecorator(PageDecorator)
 
 const action = name => (...args) => {
   addonAction(name)(...args)
   console.log(name, { args })
 }
 
-stories.add('Responsive', () => {
+stories.add('Example Responsive', () => {
   const isResponsive = boolean('isResponsive', true)
   const isSticky = boolean('isSticky', true)
   const zIndex = number('zIndex', 100)

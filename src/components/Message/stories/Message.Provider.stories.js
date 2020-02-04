@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Message } from '../../index'
 
-const stories = storiesOf('Message/Provider', module)
+const stories = storiesOf('Message', module)
 
 stories.add('Theme', () => {
   class Example extends React.PureComponent {
