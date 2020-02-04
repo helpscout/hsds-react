@@ -1,4 +1,5 @@
-import * as React from 'react'
+import React from 'react'
+import { PropTypes } from 'prop-types'
 import { connect } from '@helpscout/wedux'
 import Animate from '../../Animate'
 import Card from './Dropdown.Card'
@@ -30,15 +31,46 @@ import { isBrowserEnv } from '../../../utilities/env'
 import { createUniqueIDFactory } from '../../../utilities/id'
 import { memoizeWithProps } from '../../../utilities/memoize'
 import { getComputedClientRect } from './Dropdown.MenuContainer.utils'
-import { DropdownMenuContainerProps } from './Dropdown.types'
 
 const uniqueID = createUniqueIDFactory('DropdownMenuContainer')
 const clearerID = createUniqueIDFactory('hsds-dropdown-v2-theallclearer')
 
-export class MenuContainer extends React.PureComponent<
-  DropdownMenuContainerProps
-> {
+export class MenuContainer extends React.PureComponent {
   static displayName = 'DropdownContainer'
+
+  static propTypes = {
+    allowMultipleSelection: PropTypes.bool,
+    animationDuration: PropTypes.number,
+    animationSequence: PropTypes.string,
+    className: PropTypes.string,
+    clearSelection: PropTypes.func,
+    closeDropdown: PropTypes.func,
+    contentWindow: PropTypes.object,
+    dropRight: PropTypes.bool,
+    dropUp: PropTypes.bool,
+    forceDropDown: PropTypes.bool,
+    focusItem: PropTypes.func,
+    getState: PropTypes.func,
+    id: PropTypes.string,
+    innerRef: PropTypes.func,
+    isLoading: PropTypes.bool,
+    isOpen: PropTypes.bool,
+    items: PropTypes.arrayOf(PropTypes.object),
+    menuOffsetTop: PropTypes.number,
+    onMenuMounted: PropTypes.func,
+    onMenuReposition: PropTypes.func,
+    onMenuUnmounted: PropTypes.func,
+    positionFixed: PropTypes.bool,
+    renderEmpty: PropTypes.func,
+    renderLoading: PropTypes.func,
+    selectItem: PropTypes.func,
+    selectionClearer: PropTypes.string,
+    shouldDropDirectionUpdate: PropTypes.func,
+    shouldRefocusOnClose: PropTypes.func,
+    triggerId: PropTypes.string,
+    triggerNode: PropTypes.any,
+    zIndex: PropTypes.number,
+  }
 
   static defaultProps = {
     animationDuration: 80,
@@ -66,14 +98,14 @@ export class MenuContainer extends React.PureComponent<
     zIndex: 1080,
   }
 
-  id: string = uniqueID()
-  didOpen: boolean = false
-  node: HTMLElement
-  parentNode: HTMLElement
-  placementNode: HTMLElement
-  wrapperNode: HTMLElement
-  memoSetPositionStylesOnNode: any
-  positionRAF: any = null
+  id = uniqueID()
+  didOpen = false
+  node
+  parentNode
+  placementNode
+  wrapperNode
+  memoSetPositionStylesOnNode
+  positionRAF = null
 
   componentDidMount() {
     this.memoSetPositionStylesOnNode = memoizeWithProps(
@@ -89,7 +121,7 @@ export class MenuContainer extends React.PureComponent<
   /* istanbul ignore next */
   // Skipping coverage for this method as it does almost exclusively DOM
   // calculations, which isn't a JSDOM's forte.
-  shouldDropUp(): boolean {
+  shouldDropUp() {
     const { contentWindow, dropUp } = this.props
     // Always return true, if dropUp
     if (dropUp) return true
@@ -108,7 +140,7 @@ export class MenuContainer extends React.PureComponent<
     return false
   }
 
-  shouldDropDirectionUpdate(positionProps): boolean {
+  shouldDropDirectionUpdate(positionProps) {
     if (!this.didOpen) return true
 
     return this.props.shouldDropDirectionUpdate({
@@ -140,7 +172,7 @@ export class MenuContainer extends React.PureComponent<
     return hasGroups(this.props.items)
   }
 
-  getItemProps = (item: any, index?: number) => {
+  getItemProps = (item, index) => {
     const state = this.props.getState()
     const props = getItemProps(state, item, index)
 
@@ -160,7 +192,7 @@ export class MenuContainer extends React.PureComponent<
       const groupId = `${id}-group-${index}`
       const groupHeaderId = `${id}-group-${index}-header`
 
-      if (!items.length) return
+      if (!items.length) return null
 
       const groupedItemsMarkup = (
         <Group key={groupId} id={groupId} aria-labelledby={groupHeaderId}>
@@ -186,13 +218,7 @@ export class MenuContainer extends React.PureComponent<
     })
   }
 
-  renderItems = ({
-    items,
-    withIndex,
-  }: {
-    items: Array<any>
-    withIndex?: boolean
-  }) => {
+  renderItems = ({ items, withIndex }) => {
     const {
       allowMultipleSelection,
       clearSelection,
@@ -210,7 +236,7 @@ export class MenuContainer extends React.PureComponent<
       return [clearerItem].concat(items).map((item, index) => {
         /* istanbul ignore next */
         const indexProp = withIndex ? index : undefined
-        const itemProps: any = this.getItemProps(item, indexProp)
+        const itemProps = this.getItemProps(item, indexProp)
 
         if (item.id === clearerItem.id) {
           return (
@@ -277,11 +303,11 @@ export class MenuContainer extends React.PureComponent<
     return this.renderMenu()
   }
 
-  getTargetNode = (): HTMLElement => {
+  getTargetNode = () => {
     return this.props.triggerNode || this.wrapperNode
   }
 
-  getStylePosition = (): any => {
+  getStylePosition = () => {
     const { contentWindow } = this.props
     const targetNode = this.getTargetNode()
 
@@ -489,9 +515,9 @@ export class MenuContainer extends React.PureComponent<
   }
 }
 
-const ConnectedMenuContainer: any = connect(
+const ConnectedMenuContainer = connect(
   // mapStateToProps
-  (state: any) => {
+  state => {
     const {
       allowMultipleSelection,
       contentWindow,

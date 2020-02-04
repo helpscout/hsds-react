@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import Icon from '../../Icon'
 import { classNames } from '../../../utilities/classNames'
 import { noop } from '../../../utilities/other'
@@ -12,12 +12,11 @@ const defaultProps = {
   getState: noop,
 }
 
-const ItemSelectedCheck = (props: any = defaultProps) => {
+const ItemSelectedCheck = (props = defaultProps) => {
   let isClearerActive = false
   const state = props.getState()
 
   if (props.isSelectionClearer && state) {
-    // @ts-ignore
     isClearerActive = isSelectedItemEmpty(state.selectedItem)
   }
 

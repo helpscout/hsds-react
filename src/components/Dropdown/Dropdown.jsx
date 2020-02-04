@@ -1,7 +1,6 @@
-import * as React from 'react'
+import React from 'react'
 import { connect } from '@helpscout/wedux'
 import { initialState } from './Dropdown.store'
-import { DropdownProps } from './Dropdown.types'
 import { closeDropdown, setMenuNode, setTriggerNode } from './Dropdown.actions'
 import EventListener from '../../EventListener'
 import MenuContainer from './Dropdown.MenuContainer'
@@ -12,11 +11,8 @@ import { classNames } from '../../../utilities/classNames'
 import { noop } from '../../../utilities/other'
 import { renderRenderPropComponent } from '../../../utilities/component'
 
-export interface State {
-  items: Array<any>
-}
-
-export class Dropdown extends React.PureComponent<DropdownProps, State> {
+// TODO: migrate/create PropTypes for Dropdown
+export class Dropdown extends React.PureComponent {
   static defaultProps = {
     ...initialState,
     allowMultipleSelection: false,
@@ -30,11 +26,11 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     triggerRef: noop,
   }
 
-  node: HTMLElement
-  triggerNode: HTMLElement
-  menuNode: HTMLElement
+  node
+  triggerNode
+  menuNode
 
-  handleOnDocumentBodyClick = (event: Event) => {
+  handleOnDocumentBodyClick = event => {
     if (!event) return
     if (!this.menuNode) return
 
@@ -84,12 +80,12 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     return <Trigger {...this.getTriggerProps()}>{triggerComponent}</Trigger>
   }
 
-  setNodeRef = (node: HTMLElement) => {
+  setNodeRef = node => {
     this.node = node
     this.props.innerRef(node)
   }
 
-  setMenuNodeRef = (node: HTMLElement) => {
+  setMenuNodeRef = node => {
     this.menuNode = node
     this.props.menuRef(node)
 
@@ -100,7 +96,7 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
     this.props.setMenuNode(node)
   }
 
-  setTriggerNodeRef = (node: HTMLElement) => {
+  setTriggerNodeRef = node => {
     if (!node) return
     this.triggerNode = node
     this.props.triggerRef(node)
@@ -163,9 +159,9 @@ export class Dropdown extends React.PureComponent<DropdownProps, State> {
   }
 }
 
-const ConnectedDropdown: any = connect(
+const ConnectedDropdown = connect(
   // mapStateToProps
-  (state: any) => {
+  state => {
     const { contentWindow, envNode, id, isOpen, getState } = state
     return {
       contentWindow,
@@ -181,9 +177,6 @@ const ConnectedDropdown: any = connect(
     setMenuNode,
     setTriggerNode,
   }
-)(
-  // @ts-ignore
-  Dropdown
-)
+)(Dropdown)
 
 export default ConnectedDropdown

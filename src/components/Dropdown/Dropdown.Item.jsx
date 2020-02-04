@@ -1,4 +1,5 @@
-import * as React from 'react'
+import React from 'react'
+import { PropTypes } from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { connect } from '@helpscout/wedux'
 import Icon from '../../Icon'
@@ -20,36 +21,36 @@ import { getComponentKey } from '../../../utilities/component'
 import { noop } from '../../../utilities/other'
 import ItemSelectedCheck from './Dropdown.ItemSelectedCheck'
 
-export interface Props {
-  actionId?: string
-  className?: string
-  contentWindow: any
-  disabled: boolean
-  dropRight: boolean
-  dropUp: boolean
-  getState: (...args: any[]) => void
-  href?: string
-  id?: string
-  index: string
-  innerRef: (node: HTMLElement) => void
-  isHover: boolean
-  isSelectionClearer: boolean
-  items: Array<any>
-  onMouseEnter: (...args: any[]) => void
-  onMouseMove: (...args: any[]) => void
-  onBlur: (...args: any[]) => void
-  onClick: (...args: any[]) => void
-  onFocus: (...args: any[]) => void
-  preventSelect?: boolean
-  renderItem?: (props: any) => void
-  subMenuId?: string
-  label: string
-  type: string
-  value: string
-}
-
-export class Item extends React.PureComponent<Props> {
+export class Item extends React.PureComponent {
   static displayName = 'DropdownItem'
+
+  static propTypes = {
+    actionId: PropTypes.string,
+    className: PropTypes.string,
+    contentWindow: PropTypes.any,
+    disabled: PropTypes.bool,
+    dropRight: PropTypes.bool,
+    dropUp: PropTypes.bool,
+    getState: PropTypes.func,
+    href: PropTypes.string,
+    id: PropTypes.string,
+    index: PropTypes.string,
+    innerRef: PropTypes.func,
+    isHover: PropTypes.bool,
+    isSelectionClearer: PropTypes.bool,
+    items: PropTypes.arrayOf(PropTypes.any),
+    onMouseEnter: PropTypes.func,
+    onMouseMove: PropTypes.func,
+    onBlur: PropTypes.func,
+    onClick: PropTypes.func,
+    onFocus: PropTypes.func,
+    preventSelect: PropTypes.bool,
+    renderItem: PropTypes.func,
+    subMenuId: PropTypes.string,
+    label: PropTypes.string,
+    type: PropTypes.string,
+    value: PropTypes.string,
+  }
 
   static defaultProps = {
     contentWindow: window,
@@ -73,10 +74,10 @@ export class Item extends React.PureComponent<Props> {
     value: '',
   }
 
-  node: HTMLElement
-  actionNode: HTMLElement
-  wrapperNode: HTMLElement
-  menuNode: HTMLElement | null
+  node
+  actionNode
+  wrapperNode
+  menuNode
 
   componentDidMount() {
     /* istanbul ignore else */
@@ -85,9 +86,9 @@ export class Item extends React.PureComponent<Props> {
     }
   }
 
-  handleOnClick = (event: Event) => {
+  handleOnClick = event => {
     const { label, onClick, preventSelect, value } = this.props
-    const state: any = this.props.getState()
+    const state = this.props.getState()
 
     if (preventSelect) {
       onClick({ label, value }, event)
@@ -102,7 +103,7 @@ export class Item extends React.PureComponent<Props> {
     }
   }
 
-  hasSubMenu(): boolean {
+  hasSubMenu() {
     const { items } = this.props
 
     return !!(items && items.length)
@@ -130,7 +131,7 @@ export class Item extends React.PureComponent<Props> {
     })
   }
 
-  getItemProps = (item: any, index?: number) => {
+  getItemProps = (item, index) => {
     const state = this.props.getState()
     return getItemProps(state, item)
   }
@@ -199,7 +200,7 @@ export class Item extends React.PureComponent<Props> {
       value,
       getState,
     } = this.props
-    const internalState: any = getState()
+    const internalState = getState()
     const allowMultipleSelection =
       internalState != null && internalState.allowMultipleSelection
 
@@ -284,9 +285,9 @@ export class Item extends React.PureComponent<Props> {
   }
 }
 
-const ConnectedItem: any = connect(
+const ConnectedItem = connect(
   // mapStateToProps
-  (state: any) => {
+  state => {
     const { contentWindow, getState, renderItem, selectedItem } = state
 
     return {
@@ -296,9 +297,6 @@ const ConnectedItem: any = connect(
       selectedItem,
     }
   }
-)(
-  // @ts-ignore
-  Item
-)
+)(Item)
 
 export default ConnectedItem

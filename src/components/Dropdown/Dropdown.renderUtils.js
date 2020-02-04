@@ -1,22 +1,20 @@
 import { SELECTORS, isPathActive } from './Dropdown.utils'
 
-type DOMNode = HTMLElement | Element | null
-
 // TODO:
 // Ensure the correct envNode is passed into these functions.
 // At the moment, it assumes window.document, which does not work for iFrames.
 
-export const getIndexFromItemDOMNode = (itemNode?: DOMNode): string => {
+export const getIndexFromItemDOMNode = itemNode => {
   const index = itemNode && itemNode.getAttribute(SELECTORS.indexAttribute)
   return index || ''
 }
 
-export const getIdFromItemDOMNode = (itemNode?: DOMNode): string => {
+export const getIdFromItemDOMNode = itemNode => {
   const id = itemNode && itemNode.getAttribute('id')
   return id || ''
 }
 
-export const getValueFromItemDOMNode = (itemNode?: DOMNode): string => {
+export const getValueFromItemDOMNode = itemNode => {
   const value = itemNode && itemNode.getAttribute(SELECTORS.valueAttribute)
   return value || ''
 }
@@ -29,7 +27,7 @@ export const findItemDOMNode = (index, envNode = document) => {
   return envNode.querySelector(`[${SELECTORS.indexAttribute}="${index}"]`)
 }
 
-export const findItemDOMNodeById = (item?, envNode = document) => {
+export const findItemDOMNodeById = (item, envNode = document) => {
   return item && item.id && envNode.getElementById(item.id)
 }
 
@@ -43,7 +41,7 @@ export const findSingleItemDOMNode = (envNode = document) => {
 
 export const findOpenItemDOMNodes = (
   envNode = document,
-  openClassName: string = 'is-open'
+  openClassName = 'is-open'
 ) => {
   return envNode.querySelectorAll(
     `[${SELECTORS.indexAttribute}].${openClassName}`
@@ -52,7 +50,7 @@ export const findOpenItemDOMNodes = (
 
 export const findFocusedItemDOMNode = (
   envNode = document,
-  focusClassName: string = 'is-focused'
+  focusClassName = 'is-focused'
 ) => {
   return envNode.querySelector(
     `[${SELECTORS.indexAttribute}].${focusClassName}`
@@ -61,57 +59,48 @@ export const findFocusedItemDOMNode = (
 
 export const findFocusedItemDOMNodes = (
   envNode = document,
-  focusClassName: string = 'is-focused'
+  focusClassName = 'is-focused'
 ) => {
   return envNode.querySelectorAll(
     `[${SELECTORS.indexAttribute}].${focusClassName}`
   )
 }
 
-export const findMenuDOMNodesFromItemNode = (
-  itemNode: DOMNode,
-  envNode = document
-) => {
+export const findMenuDOMNodesFromItemNode = (itemNode, envNode = document) => {
   return itemNode && itemNode.querySelectorAll(`[${SELECTORS.menuAttribute}]`)
 }
 
-export const findClosestItemDOMNode = (node?: DOMNode) => {
+export const findClosestItemDOMNode = node => {
   return node && node.closest && node.closest(`[${SELECTORS.indexAttribute}]`)
 }
 
-export const isDOMNodeValidItem = (node?: DOMNode) => {
+export const isDOMNodeValidItem = node => {
   return !!getIndexFromItemDOMNode(node)
 }
 
 // Enhancement: Use these functions to calculate sub-menu position on render
 
-export const getSubMenuDOMNodeFromItemDOMNode = (itemNode?: DOMNode) => {
+export const getSubMenuDOMNodeFromItemDOMNode = itemNode => {
   if (!itemNode) return false
   return itemNode.querySelector(`[${SELECTORS.menuAttribute}]`)
 }
 
-export const itemHasSubMenu = (itemNode?: DOMNode): boolean => {
+export const itemHasSubMenu = itemNode => {
   if (!itemNode) return false
   return !!getSubMenuDOMNodeFromItemDOMNode(itemNode)
 }
 
-export const isOpenFromIndex = (path?: string, index?: string): boolean => {
+export const isOpenFromIndex = (path, index) => {
   if (!path || !index) return false
   return isPathActive(path, index) && path !== index
 }
 
-export const didOpenSubMenu = (
-  previousIndex?: string,
-  index?: string
-): boolean => {
+export const didOpenSubMenu = (previousIndex, index) => {
   if (!previousIndex || !index) return false
   return previousIndex.length < index.length
 }
 
-export const didCloseSubMenu = (
-  previousIndex?: string,
-  index?: string
-): boolean => {
+export const didCloseSubMenu = (previousIndex, index) => {
   if (!previousIndex || !index) return false
   return previousIndex.length > index.length
 }
@@ -119,15 +108,7 @@ export const didCloseSubMenu = (
 // TODO: Recalculate on EVERY show
 // Going to be ignoring chunks of this from test coverage, since DOM related
 // calculations are difficult to mock/test within JSDOM.
-export const setMenuPositionStyles = (props: {
-  contentWindow: any
-  dropRight?: boolean
-  dropUp?: boolean
-  menuNode: HTMLElement | null
-  itemNode: HTMLElement
-  wrapperNode: HTMLElement | null
-  triggerNode: HTMLElement
-}) => {
+export const setMenuPositionStyles = props => {
   const defaultProps = {
     dropRight: true,
     dropUp: false,
@@ -199,7 +180,7 @@ export const setMenuPositionStyles = (props: {
   wrapperNode.style.transform = `translateY(-${translateY}px)`
 }
 
-export const resetSubMenuScrollPositionFromItemNode = (itemNode: DOMNode) => {
+export const resetSubMenuScrollPositionFromItemNode = itemNode => {
   if (!itemNode) return
   const previousMenuNodes = findMenuDOMNodesFromItemNode(itemNode)
   if (!previousMenuNodes) return
@@ -211,7 +192,7 @@ export const resetSubMenuScrollPositionFromItemNode = (itemNode: DOMNode) => {
   })
 }
 
-export const setAriaActiveOnMenuFromItemNode = (itemNode: DOMNode) => {
+export const setAriaActiveOnMenuFromItemNode = itemNode => {
   if (!itemNode) return
   const menuNode = itemNode.closest(`[${SELECTORS.menuAttribute}]`)
 

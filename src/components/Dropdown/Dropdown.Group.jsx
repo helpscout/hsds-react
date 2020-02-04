@@ -1,17 +1,17 @@
-import * as React from 'react'
+import React from 'react'
+import { PropTypes } from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { GroupUI } from './Dropdown.css'
 import { classNames } from '../../../utilities/classNames'
 import { noop } from '../../../utilities/other'
 
-export interface Props {
-  className?: string
-  children?: any
-  innerRef: (node: HTMLElement) => void
-}
-
-export class Group extends React.PureComponent<Props> {
+export class Group extends React.PureComponent {
   static displayName = 'DropdownGroup'
+
+  static propTypes = {
+    className: PropTypes.string,
+    innerRef: PropTypes.func,
+  }
 
   static defaultProps = {
     innerRef: noop,

@@ -7,7 +7,7 @@ export const initialItemState = {
   previousIndex: null,
 }
 
-const reducer = (state = initialState, action: any = {}) => {
+const reducer = (state = initialState, action = {}) => {
   let nextState
   const { payload } = action
 

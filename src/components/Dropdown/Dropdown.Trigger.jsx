@@ -1,31 +1,33 @@
-import * as React from 'react'
+import React from 'react'
+import { PropTypes } from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { connect } from '@helpscout/wedux'
+
 import { toggleOpen, openDropdown, closeDropdown } from './Dropdown.actions'
 import { TriggerUI } from './Dropdown.css.js'
+
 import Keys from '../../../constants/Keys'
 import { classNames } from '../../../utilities/classNames'
 import { noop } from '../../../utilities/other'
 
-export interface Props {
-  children?: any
-  className?: string
-  closeDropdown: () => void
-  disabled: boolean
-  triggerRef: (node: HTMLElement) => void
-  id?: string
-  isOpen: boolean
-  onBlur: (event: Event) => void
-  onFocus: (event: Event) => void
-  onKeyDown: (event: KeyboardEvent) => void
-  onClick: (event: Event) => void
-  openDropdown: () => void
-  style: any
-  toggleOpen: () => void
-}
-
-export class Trigger extends React.PureComponent<Props> {
+export class Trigger extends React.PureComponent {
   static displayName = 'DropdownTrigger'
+
+  static propTypes = {
+    className: PropTypes.string,
+    closeDropdown: PropTypes.func,
+    disabled: PropTypes.bool,
+    triggerRef: PropTypes.func,
+    id: PropTypes.string,
+    isOpen: PropTypes.bool,
+    onBlur: PropTypes.func,
+    onFocus: PropTypes.func,
+    onKeyDown: PropTypes.func,
+    onClick: PropTypes.func,
+    openDropdown: PropTypes.func,
+    style: PropTypes.object,
+    toggleOpen: PropTypes.func,
+  }
 
   static defaultProps = {
     disabled: false,
@@ -41,12 +43,12 @@ export class Trigger extends React.PureComponent<Props> {
     toggleOpen: noop,
   }
 
-  handleOnClick = (event: Event) => {
+  handleOnClick = event => {
     this.props.onClick(event)
     this.props.toggleOpen()
   }
 
-  handleOnKeyDown = (event: KeyboardEvent) => {
+  handleOnKeyDown = event => {
     switch (event.keyCode) {
       case Keys.DOWN_ARROW:
         this.openDropdown(event)
@@ -123,13 +125,13 @@ export class Trigger extends React.PureComponent<Props> {
   }
 }
 
-export const mapStateToProps = (state: any) => {
+export const mapStateToProps = state => {
   const { isOpen, triggerId, triggerProps, triggerStyle } = state
 
   return { ...triggerProps, isOpen, id: triggerId, style: triggerStyle }
 }
 
-const ConnectedTrigger: any = connect(
+const ConnectedTrigger = connect(
   mapStateToProps,
   // mapDispatchToProps
   {
@@ -137,9 +139,6 @@ const ConnectedTrigger: any = connect(
     openDropdown,
     closeDropdown,
   }
-)(
-  // @ts-ignore
-  Trigger
-)
+)(Trigger)
 
 export default ConnectedTrigger

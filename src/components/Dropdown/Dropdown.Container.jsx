@@ -1,8 +1,7 @@
-import * as React from 'react'
+import React from 'react'
 import { Provider } from '@helpscout/wedux'
 import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFromComponent'
 import getShallowDiffs from '@helpscout/react-utils/dist/getShallowDiffs'
-import { DropdownProps } from './Dropdown.types'
 import createStore, { initialState } from './Dropdown.store'
 import Dropdown from './Dropdown'
 import actionTypes from './Dropdown.actionTypes'
@@ -31,19 +30,9 @@ import { createUniqueIDFactory } from '../../../utilities/id'
 import { noop } from '../../../utilities/other'
 import { isDefined } from '../../../utilities/is'
 
-export interface Props extends DropdownProps {
-  // Secret prop to pass in a custom store
-  __store?: any
-  subscribe: (state: any) => void
-}
-
-export interface State {
-  id: string
-}
-
 const uniqueID = createUniqueIDFactory('hsds-dropdown-v2-')
 
-export class DropdownContainer extends React.PureComponent<Props, State> {
+export class DropdownContainer extends React.PureComponent {
   static displayName = 'DropdownContainer'
 
   static defaultProps = {
@@ -69,7 +58,7 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
   static Menu = Menu
   static Trigger = Trigger
 
-  store: any
+  store
 
   constructor(props, context) {
     super(props, context)
@@ -199,7 +188,7 @@ export class DropdownContainer extends React.PureComponent<Props, State> {
     this.rehydrateStoreWithProps(nextState)
   }
 
-  rehydrateStoreWithProps(props: Object) {
+  rehydrateStoreWithProps(props) {
     // @ts-ignore
     this.store.setState(filterNonStoreProps(props))
   }

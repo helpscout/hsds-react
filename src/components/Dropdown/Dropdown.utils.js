@@ -1,4 +1,3 @@
-import { ItemIndex } from './Dropdown.types'
 import { initialState } from './Dropdown.store'
 import { getComponentKey } from '../../../utilities/component'
 import { classNames } from '../../../utilities/classNames'
@@ -20,7 +19,7 @@ export const SELECTORS = {
 /**
  * Path Helpers
  */
-export const pathResolve = (...args): string => {
+export const pathResolve = (...args) => {
   // @ts-ignore
   const [path, ...rest] = args
   let nextPath = rest.filter(isDefined).join(DELIMETER)
@@ -34,7 +33,7 @@ export const pathResolve = (...args): string => {
   return `${path}`
 }
 
-export const isPathActive = (path?: string, index?: string): boolean => {
+export const isPathActive = (path, index) => {
   if (!isDefined(path)) return false
   if (!isDefined(index)) return false
 
@@ -48,7 +47,7 @@ export const isPathActive = (path?: string, index?: string): boolean => {
   return matchPath === index
 }
 
-export const getParentPath = (path: string): string => {
+export const getParentPath = path => {
   if (!isDefined(path)) return ''
 
   const paths = path.split(DELIMETER)
@@ -58,16 +57,13 @@ export const getParentPath = (path: string): string => {
   return paths.slice(0, paths.length - 1).join(DELIMETER)
 }
 
-export const getNextChildPath = (path: string): string => {
+export const getNextChildPath = path => {
   if (!isDefined(path)) return ''
 
   return `${path}${DELIMETER}0`
 }
 
-export const incrementPathIndex = (
-  path: string,
-  amount: number = 1
-): string => {
+export const incrementPathIndex = (path, amount = 1) => {
   const paths = path.split(DELIMETER)
   const nextIndexBase = paths.pop()
 
@@ -78,10 +74,7 @@ export const incrementPathIndex = (
   return [...paths, nextIndex].join(DELIMETER)
 }
 
-export const decrementPathIndex = (
-  path: string,
-  amount: number = 1
-): string => {
+export const decrementPathIndex = (path, amount = 1) => {
   const paths = path.split(DELIMETER)
   const nextIndexBase = paths.pop()
 
@@ -136,7 +129,7 @@ export const itemIsActive = (selectedItem, item) => {
 
 export const processSelectionOfItem = (currentSelection, item) => {
   let removed = false
-  let selection: any[] = []
+  let selection = []
 
   for (const presentItem of currentSelection) {
     if (itemIsActive(presentItem, item)) {
@@ -149,10 +142,7 @@ export const processSelectionOfItem = (currentSelection, item) => {
   return removed ? selection : selection.concat(item)
 }
 
-export const getItemFromCollection = (
-  items: Array<any>,
-  value: string | Object
-): any => {
+export const getItemFromCollection = (items, value) => {
   for (const item of items) {
     if (itemIsActive(value, item)) {
       return item
@@ -167,30 +157,30 @@ export const getItemFromCollection = (
   return undefined
 }
 
-export const getCustomItemProps = (props: any): any => {
+export const getCustomItemProps = props => {
   const { renderItem, ...rest } = props
 
   return rest
 }
 
-export const itemHasSubMenu = (itemProps: any): boolean => {
+export const itemHasSubMenu = itemProps => {
   const { items } = itemProps
 
   return !!(items && items.length)
 }
 
-export const hasGroups = (items: Array<any>): boolean => {
+export const hasGroups = items => {
   return !!items.find(i => i.type === 'group')
 }
 
-export const flattenGroupedItems = (items: Array<any>): Array<any> => {
+export const flattenGroupedItems = items => {
   return items.reduce((collection, group) => {
     const { items, ...groupHeader } = group
     return [...collection, groupHeader, ...items]
   }, [])
 }
 
-export const isItemsEmpty = (items: Array<any>): boolean => {
+export const isItemsEmpty = items => {
   let collection = items
 
   if (hasGroups(items)) {
@@ -202,19 +192,19 @@ export const isItemsEmpty = (items: Array<any>): boolean => {
   return collection.length === 0
 }
 
-export const filterGroupHeaderFromItems = (item: any): boolean => {
+export const filterGroupHeaderFromItems = item => {
   return !(item && item.type && item.type === 'group')
 }
 
-export const filterDisabledFromItems = (item: any): boolean => {
+export const filterDisabledFromItems = item => {
   return !(item && item.disabled === true)
 }
 
-export const filterDividerFromItems = (item: any): boolean => {
+export const filterDividerFromItems = item => {
   return !(item && item.type && item.type === 'divider')
 }
 
-export const filterNonFocusableItemFromItems = (item: any): boolean => {
+export const filterNonFocusableItemFromItems = item => {
   return filterDisabledFromItems(item) && filterDividerFromItems(item)
 }
 
@@ -222,10 +212,7 @@ export const getUniqueKeyFromItem = item => {
   return item && (item.id || item.value || item.label)
 }
 
-export const getIndexMapFromItems = (
-  items: Array<any>,
-  path?: string
-): Array<any> => {
+export const getIndexMapFromItems = (items, path) => {
   let collection = items
 
   if (hasGroups(items)) {
@@ -242,7 +229,8 @@ export const getIndexMapFromItems = (
 
     /* istanbul ignore else */
     if (!indexMap[itemIndex]) {
-      indexMap
+      // TODO: validate if this place is suppose to do something
+      //indexMap
     }
 
     const key = getUniqueKeyFromItem(item)
@@ -251,31 +239,27 @@ export const getIndexMapFromItems = (
   }, {})
 }
 
-export const isDropRight = (state: any): boolean => state.direction === 'right'
+export const isDropRight = state => state.direction === 'right'
 
-export const itemIsHover = (state: any, itemIndex: ItemIndex): boolean => {
+export const itemIsHover = (state, itemIndex) => {
   const { index } = state
   if (!index) return false
 
   return isPathActive(index, itemIndex)
 }
 
-export const itemIsOpen = (state: any, itemIndex: ItemIndex): boolean => {
+export const itemIsOpen = (state, itemIndex) => {
   const { index } = state
   if (!index) return false
 
   return itemIsHover(state, itemIndex) && itemIndex.length < index.length
 }
 
-export const itemIsSelected = (state: any, itemIndex: ItemIndex) => {
+export const itemIsSelected = (state, itemIndex) => {
   return state.index === itemIndex
 }
 
-export const getItemProps = (
-  state: any,
-  item: any,
-  index?: string | number
-): Object => {
+export const getItemProps = (state, item, index) => {
   if (!state) return item
 
   const { dropUp, id, enableTabNavigation, indexMap, selectedItem } = state
@@ -298,7 +282,7 @@ export const getItemProps = (
 
   const isActive = itemIsActive(selectedItem, item)
   const hasSubMenu = itemHasSubMenu(item)
-  const isSelected = itemIsSelected(state, itemIndex as string)
+  const isSelected = itemIsSelected(state, itemIndex)
 
   const itemId = pathResolve(id, itemIndex)
 
@@ -319,12 +303,12 @@ export const getItemProps = (
     ),
     'aria-selected': isSelected,
     'aria-haspopup': hasSubMenu,
-    [SELECTORS.indexAttribute]: itemIndex,
+    [SELECTORS.indexAttribute]: index,
     [SELECTORS.valueAttribute]: value,
     actionId: pathResolve(itemId, 'action'),
     key,
     role: 'option',
-    index: itemIndex,
+    index,
     dropRight,
     dropUp,
     id: itemId,

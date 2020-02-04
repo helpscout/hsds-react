@@ -1,4 +1,5 @@
-import * as React from 'react'
+import React from 'react'
+import { PropTypes } from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import EventListener from '../../EventListener'
 import { connect } from '@helpscout/wedux'
@@ -6,14 +7,22 @@ import { CardUI } from './Dropdown.css'
 import { classNames } from '../../../utilities/classNames'
 import { noop } from '../../../utilities/other'
 import { isDefined, isNumber } from '../../../utilities/is'
-import { DropdownCardProps, WidthValue } from './Dropdown.types'
 
-export interface State {
-  width?: WidthValue
-}
-
-export class Card extends React.PureComponent<DropdownCardProps> {
+export class Card extends React.PureComponent {
   static displayName = 'DropdownCard'
+
+  static propTypes = {
+    borderColor: PropTypes.string,
+    className: PropTypes.string,
+    innerRef: PropTypes.func,
+    minWidth: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+    minHeight: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+    maxHeight: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+    maxWidth: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+    width: PropTypes.any,
+    triggerNode: PropTypes.node,
+    style: PropTypes.any,
+  }
 
   static defaultProps = {
     cardRef: noop,
@@ -37,7 +46,7 @@ export class Card extends React.PureComponent<DropdownCardProps> {
   }
 
   /* istanbul ignore next */
-  getWidthValue(): WidthValue {
+  getWidthValue() {
     const { triggerNode, width } = this.props
     if (!isDefined(width)) return null
     if (isNumber(width)) return width
@@ -45,10 +54,10 @@ export class Card extends React.PureComponent<DropdownCardProps> {
     // @ts-ignore
     if (!width.includes('%') || !triggerNode) return width
 
-    return triggerNode.clientWidth * (parseInt(width as string, 10) / 100)
+    return triggerNode.clientWidth * (parseInt(width, 10) / 100)
   }
 
-  getStyles(): Object {
+  getStyles() {
     const {
       borderColor,
       minWidth,
@@ -88,9 +97,9 @@ export class Card extends React.PureComponent<DropdownCardProps> {
   }
 }
 
-const ConnectedCard: any = connect(
+const ConnectedCard = connect(
   // mapStateToProps
-  (state: any) => {
+  state => {
     const {
       cardBorderColor,
       maxHeight,
@@ -111,9 +120,6 @@ const ConnectedCard: any = connect(
       width,
     }
   }
-)(
-  // @ts-ignore
-  Card
-)
+)(Card)
 
 export default ConnectedCard

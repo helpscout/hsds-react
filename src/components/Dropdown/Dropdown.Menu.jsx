@@ -1,4 +1,5 @@
-import * as React from 'react'
+import React from 'react'
+import { PropTypes } from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { connect } from '@helpscout/wedux'
 import { MenuWrapperUI, MenuUI } from './Dropdown.css.js'
@@ -6,22 +7,22 @@ import ScrollLock from '../../ScrollLock'
 import { classNames } from '../../../utilities/classNames'
 import { noop } from '../../../utilities/other'
 
-export interface Props {
-  className?: string
-  children?: any
-  id?: string
-  menuRef: (node: HTMLElement) => void
-  innerRef: (node: HTMLElement) => void
-  isSubMenu: boolean
-  renderMenu?: (props: any) => void
-  style: Object
-  withScrollLock: boolean
-  wrapperStyles: Object
-  zIndex: number
-}
-
-export class Menu extends React.PureComponent<Props> {
+export class Menu extends React.PureComponent {
   static displayName = 'DropdownMenu'
+
+  static propTypes = {
+    className: PropTypes.string,
+    children: PropTypes.any,
+    id: PropTypes.string,
+    menuRef: PropTypes.func,
+    innerRef: PropTypes.func,
+    isSubMenu: PropTypes.bool,
+    renderMenu: PropTypes.func,
+    style: PropTypes.object,
+    withScrollLock: PropTypes.bool,
+    wrapperStyles: PropTypes.object,
+    zIndex: PropTypes.number,
+  }
 
   static defaultProps = {
     menuRef: noop,
@@ -34,13 +35,13 @@ export class Menu extends React.PureComponent<Props> {
     zIndex: 1015,
   }
 
-  getStyles(): Object {
+  getStyles() {
     const { style, zIndex } = this.props
 
     return { ...style, zIndex }
   }
 
-  getWrapperStyles(): Object {
+  getWrapperStyles() {
     const { wrapperStyles } = this.props
 
     return { ...wrapperStyles }
@@ -100,9 +101,9 @@ export class Menu extends React.PureComponent<Props> {
   }
 }
 
-const ConnectedMenu: any = connect(
+const ConnectedMenu = connect(
   // mapStateToProps
-  (state: any) => {
+  state => {
     const { renderMenu, withScrollLock } = state
 
     return {
@@ -110,9 +111,6 @@ const ConnectedMenu: any = connect(
       withScrollLock,
     }
   }
-)(
-  // @ts-ignore
-  Menu
-)
+)(Menu)
 
 export default ConnectedMenu

@@ -1,16 +1,16 @@
-import * as React from 'react'
+import React from 'react'
+import { PropTypes } from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../../utilities/classNames'
 import { DividerUI } from './Dropdown.css'
 import { noop } from '../../../utilities/other'
 
-export interface Props {
-  className?: string
-  innerRef: (node: HTMLElement) => void
-}
-
-export class Divider extends React.PureComponent<Props> {
+export class Divider extends React.PureComponent {
   static displayName = 'DropdownDivider'
+
+  static propTypes = {
+    innerRef: PropTypes.func,
+  }
 
   static defaultProps = {
     innerRef: noop,

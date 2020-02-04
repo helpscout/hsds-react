@@ -114,7 +114,7 @@ export const setMenuNode = (state, menuNode) => {
 }
 
 /* istanbul ignore next */
-export const incrementIndex = (state, modifier: number = 1) => {
+export const incrementIndex = (state, modifier = 1) => {
   const { envNode, index, indexMap, items, selectionClearer } = state
 
   if (!items.length) return
@@ -128,7 +128,7 @@ export const incrementIndex = (state, modifier: number = 1) => {
 
   // This extra check is to support item filtering.
   // The next DOM node may not exist, depending on filtering results.
-  const target = findItemDOMNode(nextIndex, envNode) as Element
+  const target = findItemDOMNode(nextIndex, envNode)
   if (!target) return
 
   // @ts-ignore
@@ -136,7 +136,7 @@ export const incrementIndex = (state, modifier: number = 1) => {
 }
 
 /* istanbul ignore next */
-export const decrementIndex = (state, modifier: number = 1) => {
+export const decrementIndex = (state, modifier = 1) => {
   const { envNode, index, indexMap, items } = state
   if (!items.length || !isDefined(index)) return
 
@@ -146,7 +146,7 @@ export const decrementIndex = (state, modifier: number = 1) => {
 
   // This extra check is to support item filtering.
   // The next DOM node may not exist, depending on filtering results.
-  const target = findItemDOMNode(nextIndex, envNode) as Element
+  const target = findItemDOMNode(nextIndex, envNode)
   if (!target) return
 
   // @ts-ignore
@@ -154,8 +154,8 @@ export const decrementIndex = (state, modifier: number = 1) => {
 }
 
 /* istanbul ignore next */
-export const focusItem = (state, event: Event) => {
-  const node = findClosestItemDOMNode(event.target as Element)
+export const focusItem = (state, event) => {
+  const node = findClosestItemDOMNode(event.target)
 
   if (!node) return
 
@@ -186,7 +186,7 @@ export const focusItem = (state, event: Event) => {
 }
 
 /* istanbul ignore next */
-export const selectItemFromIndex = (state: any, event: any) => {
+export const selectItemFromIndex = (state, event) => {
   const target = findItemDOMNode(state.index, state.envNode)
   if (!target) return
 
@@ -215,7 +215,7 @@ export const closeAndRefocusTriggerNode = state => {
 }
 
 /* istanbul ignore next */
-export const selectItem = (state, event: any, eventTarget?: any) => {
+export const selectItem = (state, event, eventTarget) => {
   const {
     allowMultipleSelection,
     items,

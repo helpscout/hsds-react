@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { connect } from '@helpscout/wedux'
 import Keys from '../../../constants/Keys'
 import KeypressListener from '../../KeypressListener'
@@ -31,7 +31,7 @@ import { isDefined } from '../../../utilities/is'
 import { scrollIntoView } from '../../../utilities/scrolling'
 import { noop } from '../../../utilities/other'
 
-class Renderer extends React.PureComponent<any> {
+class Renderer extends React.PureComponent {
   static displayName = 'DropdownRenderer'
 
   static defaultProps = {
@@ -49,7 +49,7 @@ class Renderer extends React.PureComponent<any> {
 
   modifier = 1
 
-  handleTab = (event: KeyboardEvent) => {
+  handleTab = event => {
     const { closeDropdown, enableTabNavigation, items, index } = this.props
 
     if (!enableTabNavigation) {
@@ -158,7 +158,7 @@ class Renderer extends React.PureComponent<any> {
     this.setNextIndex(nextIndex)
   }
 
-  setNextIndex = (nextIndex: string) => {
+  setNextIndex = nextIndex => {
     const { envNode } = this.props
     /* istanbul ignore if */
     if (!isDefined(nextIndex)) return
@@ -355,9 +355,9 @@ class Renderer extends React.PureComponent<any> {
   }
 }
 
-const ConnectedRenderer: any = connect(
+const ConnectedRenderer = connect(
   // mapStateToProps
-  (state: any) => {
+  state => {
     const {
       activeClassName,
       allowMultipleSelection,
@@ -405,9 +405,6 @@ const ConnectedRenderer: any = connect(
     decrementIndex,
     selectItemFromIndex,
   }
-)(
-  // @ts-ignore
-  Renderer
-)
+)(Renderer)
 
 export default ConnectedRenderer

@@ -1,13 +1,4 @@
-type ClientRect = {
-  height: number
-  left: number
-  top: number
-}
-
-export const getComputedClientRect = (
-  node: HTMLElement,
-  contentWindow: any
-): ClientRect => {
+export const getComputedClientRect = (node, contentWindow) => {
   const defaultRect = {
     height: 0,
     left: 0,
