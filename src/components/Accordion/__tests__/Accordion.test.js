@@ -269,17 +269,6 @@ describe('sorting', () => {
     ).toBe(true)
   })
 
-  test('Updates the state during sorting', () => {
-    const wrapper = mount(<Accordion isSortable />)
-    const instance = wrapper.instance()
-
-    expect(wrapper.state().isSorting).toBe(false)
-    instance.handleOnSortStart()
-    expect(wrapper.state().isSorting).toBe(true)
-    instance.handleOnSortEnd()
-    expect(wrapper.state().isSorting).toBe(false)
-  })
-
   test('Invokes onSortEnd callback after sorting', () => {
     const prevIndex = 1
     const nextIndex = 5
@@ -289,6 +278,17 @@ describe('sorting', () => {
     expect(spy).not.toHaveBeenCalled()
     instance.handleOnSortEnd(prevIndex, nextIndex)
     expect(spy).toHaveBeenCalledWith(prevIndex, nextIndex)
+  })
+
+  test('Updates the state during sorting', () => {
+    const wrapper = mount(<Accordion isSortable />)
+    const instance = wrapper.instance()
+
+    expect(wrapper.state().isSorting).toBe(false)
+    instance.handleOnSortStart()
+    expect(wrapper.state().isSorting).toBe(true)
+    instance.handleOnSortEnd()
+    expect(wrapper.state().isSorting).toBe(false)
   })
 
   test('distance takes precendent over pressDelay', () => {
