@@ -1,26 +1,43 @@
 import * as React from 'react'
-import Heading from '../Heading/index'
-import { classNames } from '../../utilities/classNames'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { HeaderUI } from './Dropdown.css'
+import Heading from '../../Heading'
+import { classNames } from '../../../utilities/classNames'
+import { noop } from '../../../utilities/other'
 
-import { DropdownHeaderUI } from './Dropdown.css'
-
-type Props = {
-  children?: any
+export interface Props {
   className?: string
+  children?: any
+  innerRef: (node: HTMLElement) => void
+  label?: string
 }
 
-const Header = (props: Props) => {
-  const { children, className, ...rest } = props
+export class Header extends React.PureComponent<Props> {
+  static displayName = 'DropdownHeader'
 
-  const componentClassName = classNames('c-DropdownHeader', className)
+  static defaultProps = {
+    innerRef: noop,
+  }
 
-  return (
-    <DropdownHeaderUI className={componentClassName} {...rest}>
-      <Heading size="small" light>
-        {children}
-      </Heading>
-    </DropdownHeaderUI>
-  )
+  render() {
+    const { className, children, innerRef, label, ...rest } = this.props
+    const componentClassName = classNames('c-DropdownV2Header', className)
+
+    const textLabel = children || label
+
+    return (
+      <HeaderUI
+        {...getValidProps(rest)}
+        className={componentClassName}
+        ref={innerRef}
+        tabIndex={null}
+      >
+        <Heading size="small" light>
+          {textLabel}
+        </Heading>
+      </HeaderUI>
+    )
+  }
 }
 
 export default Header

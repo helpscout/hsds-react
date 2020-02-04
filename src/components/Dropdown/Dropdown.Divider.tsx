@@ -1,25 +1,35 @@
 import * as React from 'react'
-import { classNames } from '../../utilities/classNames'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { classNames } from '../../../utilities/classNames'
+import { DividerUI } from './Dropdown.css'
+import { noop } from '../../../utilities/other'
 
-import { DropdownDividerUI } from './Dropdown.css'
-
-type Props = {
-  children?: any
+export interface Props {
   className?: string
+  innerRef: (node: HTMLElement) => void
 }
 
-const Divider = (props: Props) => {
-  const { className, children, ...rest } = props
+export class Divider extends React.PureComponent<Props> {
+  static displayName = 'DropdownDivider'
 
-  const componentClassName = classNames('c-DropdownDivider', className)
+  static defaultProps = {
+    innerRef: noop,
+  }
 
-  return (
-    <DropdownDividerUI
-      className={componentClassName}
-      role="separator"
-      {...rest}
-    />
-  )
+  render() {
+    const { className, children, innerRef, ...rest } = this.props
+    const componentClassName = classNames('c-DropdownV2Divider', className)
+
+    return (
+      <DividerUI
+        {...getValidProps(rest)}
+        className={componentClassName}
+        ref={innerRef}
+        tabIndex={null}
+        role="presentation"
+      />
+    )
+  }
 }
 
 export default Divider

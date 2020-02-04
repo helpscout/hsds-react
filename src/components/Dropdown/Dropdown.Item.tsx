@@ -1,282 +1,304 @@
 import * as React from 'react'
-import Flexy from '../Flexy'
-import Icon from '../Icon'
-import Keys from '../../constants/Keys'
-import { default as Menu, MenuComponent } from './Dropdown.Menu'
-import { classNames } from '../../utilities/classNames'
-import { noop } from '../../utilities/other'
-import { DropdownItemProps, DropdownItemState } from './Dropdown.types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { connect } from '@helpscout/wedux'
+import Icon from '../../Icon'
+import Card from './Dropdown.Card'
+import Divider from './Dropdown.Divider'
+import Header from './Dropdown.Header'
+import Menu from './Dropdown.Menu'
+import {
+  ActionUI,
+  ActionContentUI,
+  ItemUI,
+  SubMenuIncidatorUI,
+  WrapperUI,
+} from './Dropdown.css.js'
+import { SELECTORS, getCustomItemProps, getItemProps } from './Dropdown.utils'
+import { setMenuPositionStyles } from './Dropdown.renderUtils'
+import { classNames } from '../../../utilities/classNames'
+import { getComponentKey } from '../../../utilities/component'
+import { noop } from '../../../utilities/other'
+import ItemSelectedCheck from './Dropdown.ItemSelectedCheck'
 
-import { DropdownItemUI } from './Dropdown.css'
+export interface Props {
+  actionId?: string
+  className?: string
+  contentWindow: any
+  disabled: boolean
+  dropRight: boolean
+  dropUp: boolean
+  getState: (...args: any[]) => void
+  href?: string
+  id?: string
+  index: string
+  innerRef: (node: HTMLElement) => void
+  isHover: boolean
+  isSelectionClearer: boolean
+  items: Array<any>
+  onMouseEnter: (...args: any[]) => void
+  onMouseMove: (...args: any[]) => void
+  onBlur: (...args: any[]) => void
+  onClick: (...args: any[]) => void
+  onFocus: (...args: any[]) => void
+  preventSelect?: boolean
+  renderItem?: (props: any) => void
+  subMenuId?: string
+  label: string
+  type: string
+  value: string
+}
 
-class Item extends React.PureComponent<DropdownItemProps, DropdownItemState> {
+export class Item extends React.PureComponent<Props> {
+  static displayName = 'DropdownItem'
+
   static defaultProps = {
+    contentWindow: window,
+    getState: noop,
     disabled: false,
-    enableTabNavigation: false,
+    index: '0',
+    innerRef: noop,
+    isHover: false,
+    isSelectionClearer: false,
+    items: undefined,
+    dropRight: true,
+    dropUp: false,
+    onMouseEnter: noop,
+    onMouseMove: noop,
     onBlur: noop,
     onClick: noop,
     onFocus: noop,
-    onMouseEnter: noop,
-    onMouseLeave: noop,
-    onMenuClose: noop,
-    onParentMenuClose: noop,
-    onSelect: noop,
+    preventSelect: false,
+    label: '',
+    type: 'item',
+    value: '',
   }
 
-  static childContextTypes = {
-    parentMenu: noop,
-    parentMenuClose: noop,
-  }
+  node: HTMLElement
+  actionNode: HTMLElement
+  wrapperNode: HTMLElement
+  menuNode: HTMLElement | null
 
-  node: HTMLElement | null = null
-  menu: any = null
-  _isMounted: boolean = false
-
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      isOpen: props.isOpen,
-      isHover: props.isHover,
-      isFocused: props.isFocused,
+  componentDidMount() {
+    /* istanbul ignore else */
+    if (this.node) {
+      this.renderMenu()
     }
-
-    // this.handleOnBlur = this.handleOnBlur.bind(this)
-    // this.handleOnClick = this.handleOnClick.bind(this)
-    // this.handleOnEnter = this.handleOnEnter.bind(this)
-    // this.handleOnFocus = this.handleOnFocus.bind(this)
-    // this.handleOnMouseEnter = this.handleOnMouseEnter.bind(this)
-    // this.handleOnMouseLeave = this.handleOnMouseLeave.bind(this)
-    // this.handleOnMenuClose = this.handleOnMenuClose.bind(this)
   }
 
-  componentWillMount = () => {
-    this.menu = this.getMenuFromChildren()
+  handleOnClick = (event: Event) => {
+    const { label, onClick, preventSelect, value } = this.props
+    const state: any = this.props.getState()
+
+    if (preventSelect) {
+      onClick({ label, value }, event)
+    } else if (
+      state &&
+      state.allowMultipleSelection &&
+      state.selectionClearer
+    ) {
+      onClick(state, event)
+    } else {
+      onClick(event, { hasSubMenu: this.hasSubMenu() })
+    }
   }
 
-  componentDidMount = () => {
-    this._isMounted = true
+  hasSubMenu(): boolean {
+    const { items } = this.props
+
+    return !!(items && items.length)
   }
 
-  getChildContext = () => {
-    const { onParentMenuClose } = this.props
+  renderMenu() {
+    if (!this.hasSubMenu()) return
+
+    const { contentWindow, dropRight, dropUp } = this.props
+
+    // Async call to coordinate with Portal adjustments
+    requestAnimationFrame(() => {
+      /* istanbul ignore next */
+      if (this.menuNode && this.wrapperNode && this.node && this.actionNode) {
+        setMenuPositionStyles({
+          contentWindow,
+          dropRight,
+          dropUp,
+          menuNode: this.menuNode,
+          wrapperNode: this.wrapperNode,
+          itemNode: this.node,
+          triggerNode: this.actionNode,
+        })
+      }
+    })
+  }
+
+  getItemProps = (item: any, index?: number) => {
+    const state = this.props.getState()
+    return getItemProps(state, item)
+  }
+
+  getWrapperProps = () => {
+    const { index, value } = this.props
 
     return {
-      parentMenu: this.menu,
-      parentMenuClose: onParentMenuClose,
+      className: 'c-DropdownV2MenuWrapper',
+      ref: this.setWrapperNodeRef,
+      [SELECTORS.indexAttribute]: index,
+      [SELECTORS.valueAttribute]: value,
     }
   }
 
-  componentWillReceiveProps = nextProps => {
-    const { isFocused, isHover, isOpen } = this.state
-    if (
-      nextProps.isFocused !== isFocused ||
-      nextProps.isOpen !== isOpen ||
-      nextProps.isHover !== isHover
-    ) {
-      this.setState({
-        isFocused: nextProps.isFocused,
-        isOpen: nextProps.isHover,
-        isHover: nextProps.isHover,
-      })
+  renderSubMenu() {
+    const { actionId, getState, renderItem, items, subMenuId } = this.props
+
+    return (
+      this.hasSubMenu() && (
+        <WrapperUI {...this.getWrapperProps()}>
+          <Card>
+            <Menu
+              aria-labelledby={actionId}
+              menuRef={this.setMenuNodeRef}
+              isSubMenu
+              id={subMenuId}
+            >
+              {items.map((item, index) => (
+                <Item
+                  getState={getState}
+                  renderItem={renderItem}
+                  key={
+                    item.id ||
+                    item.value ||
+                    /* istanbul ignore next */
+                    getComponentKey(item, index)
+                  }
+                  {...this.getItemProps(item)}
+                />
+              ))}
+            </Menu>
+          </Card>
+        </WrapperUI>
+      )
+    )
+  }
+
+  renderSubMenuIndicator() {
+    const { dropRight } = this.props
+    const icon = dropRight ? 'caret-right' : 'caret-left'
+
+    return (
+      <SubMenuIncidatorUI className="c-DropdownV2ItemSubMenuIndicator">
+        <Icon name={icon} size="12" shade="extraMuted" />
+      </SubMenuIncidatorUI>
+    )
+  }
+
+  renderContent() {
+    const {
+      actionId,
+      renderItem,
+      children,
+      label,
+      value,
+      getState,
+    } = this.props
+    const internalState: any = getState()
+    const allowMultipleSelection =
+      internalState != null && internalState.allowMultipleSelection
+
+    if (allowMultipleSelection && renderItem == null) {
+      return ItemSelectedCheck(getCustomItemProps(this.props))
     }
-  }
 
-  componentWillUnmount = () => {
-    this._isMounted = false
-  }
-
-  handleOnBlur = event => {
-    const { onBlur } = this.props
-    onBlur(event, this)
-    this.setState({
-      isFocused: false,
-    })
-  }
-
-  handleOnEnter = event => {
-    event.stopPropagation()
-    /* istanbul ignore else */
-    if (event.keyCode === Keys.ENTER) {
-      if (this.menu) {
-        this.handleOnMouseEnter(event)
-      } else {
-        this.handleOnClick(event)
-      }
+    if (renderItem) {
+      return renderItem(getCustomItemProps(this.props))
     }
-  }
 
-  handleOnClick = event => {
-    const { disabled, onClick, onSelect, value } = this.props
+    const hasSubMenu = this.hasSubMenu()
+    const content = children || label || value
 
-    if (event) event.stopPropagation()
-    if (disabled) return
+    if (!hasSubMenu) return content
 
-    /* istanbul ignore else */
-    if (!this.menu) {
-      onClick(event, this)
-      onSelect(value)
-    } else {
-      this.setState({
-        isOpen: !this.state.isOpen,
-      })
+    const componentClassName = classNames(
+      hasSubMenu && 'has-subMenu',
+      'c-DropdownV2ItemAction'
+    )
+
+    const actionProps = {
+      id: actionId,
+      ref: this.setActionNodeRef,
+      className: componentClassName,
     }
+
+    return (
+      <ActionUI {...actionProps}>
+        <ActionContentUI className="c-DropdownV2ItemActionContent">
+          {content}
+        </ActionContentUI>
+        {this.renderSubMenuIndicator()}
+      </ActionUI>
+    )
   }
 
-  handleOnFocus = event => {
-    const { onFocus } = this.props
-    onFocus(event, this)
-    this.setState({
-      isFocused: true,
-    })
+  setNodeRef = node => {
+    this.node = node
+    this.props.innerRef(node)
   }
-
-  handleOnMouseEnter = event => {
-    const { onMouseEnter } = this.props
-    onMouseEnter(event, this)
-    this.setState({
-      isHover: true,
-    })
-  }
-
-  handleOnMouseLeave = event => {
-    const { onMouseLeave } = this.props
-    onMouseLeave(event, this)
-    this.setState({
-      isHover: false,
-    })
-  }
+  setActionNodeRef = node => (this.actionNode = node)
+  setWrapperNodeRef = node => (this.wrapperNode = node)
 
   /* istanbul ignore next */
-  // Works in the browser, but JSDOM isn't picking this up
-  handleOnMenuClose = () => {
-    const { onMenuClose } = this.props
-    onMenuClose()
-  }
-
-  getMenu = (child: any) => {
-    if (!React.isValidElement(child)) return null
-    return child.type && (child.type === Menu || child.type === MenuComponent)
-  }
-
-  getMenuFromChildren = () => {
-    const { children } = this.props
-
-    if (Array.isArray(children)) {
-      return children.find(child => Boolean(this.getMenu(child)))
-    } else {
-      return this.getMenu(children) ? children : null
-    }
-  }
-
-  removeMenuFromChildren = () => {
-    const { children } = this.props
-
-    if (this.menu && Array.isArray(children)) {
-      return children.filter(child => !this.getMenu(child))
-    } else {
-      return children
-    }
+  setMenuNodeRef = node => {
+    this.menuNode = node
   }
 
   render() {
-    const {
-      children,
-      className,
-      disabled,
-      enableTabNavigation,
-      itemRef,
-      isFocused: propIsFocused,
-      isHover: propIsHover,
-      isOpen: propIsOpen,
-      itemIndex,
-      onBlur,
-      onClick,
-      onFocus,
-      onMouseEnter,
-      onMouseLeave,
-      onMenuClose,
-      onParentMenuClose,
-      ...rest
-    } = this.props
-    const { isOpen, isHover, isFocused } = this.state
-
-    const handleOnBlur = this.handleOnBlur
-    const handleOnClick = this.handleOnClick
-    const handleOnFocus = this.handleOnFocus
-    const handleOnEnter = this.handleOnEnter
-    const handleOnMouseEnter = this.handleOnMouseEnter
-    const handleOnMouseLeave = this.handleOnMouseLeave
-    const handleOnMenuClose = this.handleOnMenuClose
+    const { className, disabled, href, isSelectionClearer, type } = this.props
+    const hasSubMenu = this.hasSubMenu()
 
     const componentClassName = classNames(
-      'c-DropdownItem',
+      'c-DropdownV2Item',
       disabled && 'is-disabled',
-      isHover && 'is-hover',
-      isFocused && 'is-focused',
+      !hasSubMenu && 'is-option',
+      isSelectionClearer && 'c-SelectionClearerItem',
       className
     )
 
-    const itemMarkup = this.removeMenuFromChildren()
+    if (type === 'group' || type === 'header') return <Header {...this.props} />
+    if (type === 'divider') return <Divider />
 
-    const menuMarkup =
-      !disabled && this.menu && isOpen ? (
-        <div className="c-DropdownItem__menu">
-          {React.cloneElement(this.menu, {
-            enableTabNavigation,
-            isOpen,
-            selectedIndex:
-              this.menu.props.selectedIndex !== undefined
-                ? this.menu.props.selectedIndex
-                : 0,
-            onClose: handleOnMenuClose,
-            trigger: this.node,
-            direction: this.menu.props.direction
-              ? this.menu.props.direction
-              : 'right',
-          })}
-        </div>
-      ) : null
-
-    const menuIndicatorMarkup = this.menu ? (
-      <Flexy.Item className="c-DropdownItem__submenu-icon">
-        <Icon name="caret-right" muted size="12" />
-      </Flexy.Item>
-    ) : null
+    const selector = href ? 'a' : 'div'
 
     return (
-      <DropdownItemUI
+      <ItemUI
+        {...getValidProps(this.props)}
         className={componentClassName}
-        role="presentation"
-        {...rest}
+        aria-disabled={disabled}
+        onClick={this.handleOnClick}
+        ref={this.setNodeRef}
+        role={hasSubMenu ? 'group' : 'option'}
+        as={selector}
+        data-cy="DropdownItem"
       >
-        <div
-          className="c-DropdownItem__link"
-          onBlur={handleOnBlur}
-          onClick={handleOnClick}
-          onFocus={handleOnFocus}
-          onMouseEnter={handleOnMouseEnter}
-          onMouseLeave={handleOnMouseLeave}
-          onKeyDown={handleOnEnter}
-          tabIndex={-1}
-          ref={node => {
-            this.node = node
-          }}
-          aria-haspopup={!!this.menu}
-          aria-expanded={!!(this.menu && isOpen)}
-          aria-disabled={disabled}
-        >
-          <Flexy>
-            <Flexy.Block className="c-DropdownItem__content">
-              {itemMarkup}
-            </Flexy.Block>
-            {menuIndicatorMarkup}
-          </Flexy>
-        </div>
-        {menuMarkup}
-      </DropdownItemUI>
+        {this.renderContent()}
+        {this.renderSubMenu()}
+      </ItemUI>
     )
   }
 }
 
-export default Item
+const ConnectedItem: any = connect(
+  // mapStateToProps
+  (state: any) => {
+    const { contentWindow, getState, renderItem, selectedItem } = state
+
+    return {
+      contentWindow,
+      getState,
+      renderItem,
+      selectedItem,
+    }
+  }
+)(
+  // @ts-ignore
+  Item
+)
+
+export default ConnectedItem
