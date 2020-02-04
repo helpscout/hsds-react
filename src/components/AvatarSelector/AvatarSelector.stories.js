@@ -3,8 +3,18 @@ import { storiesOf } from '@storybook/react'
 import AvatarSpec from '../../utilities/specs/avatarGrid.specs'
 import Dropdown from '../Dropdown/DropdownV2'
 import { AvatarSelector } from '../index'
+import styled from '../styled'
+import { getColor } from '../../styles/utilities/color'
+
+const DarkerUI = styled.div`
+  background-color: ${getColor('grey.500')};
+  padding: 50px;
+`
+
+const withDarkerBackground = storyFn => <DarkerUI>{storyFn()}</DarkerUI>
 
 const stories = storiesOf('AvatarSelector', module)
+stories.addDecorator(withDarkerBackground)
 const fixtures = AvatarSpec.generate(20)
 
 const avatarsItems = fixtures.map(({ name, id, image }) => {

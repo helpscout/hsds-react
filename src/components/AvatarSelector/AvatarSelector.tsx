@@ -1,10 +1,13 @@
 import * as React from 'react'
+import { classNames } from '../../utilities/classNames'
+import Icon from '../Icon'
+import Avatar from '../Avatar'
+
 import {
-  AvatarSelectorUI,
   AvatarSelectorWrapperUI,
-  AvatarUI,
   IconAssignUI,
   IconCaretUI,
+  AvatarWrapperUI,
 } from './AvatarSelector.css.js'
 
 export interface Props {
@@ -12,6 +15,7 @@ export interface Props {
   initials: string
   isOpen: boolean
   name: string
+  size: string
 }
 
 export default class AvatarSelector extends React.PureComponent<Props> {
@@ -20,39 +24,43 @@ export default class AvatarSelector extends React.PureComponent<Props> {
     initials: '',
     isOpen: false,
     name: '',
+    size: 'lg',
   }
 
   renderAvatar() {
     const { image, initials, name } = this.props
     return (
-      <AvatarUI
-        borderColor="#fff"
-        size="sm"
-        image={image}
-        name={name}
-        initials={initials || name}
-      />
+      <AvatarWrapperUI>
+        <Avatar
+          size="smmd"
+          image={image}
+          name={name}
+          initials={initials || name}
+        />
+      </AvatarWrapperUI>
     )
   }
 
   renderBlankAvatar() {
-    return <IconAssignUI name="assigned" shade="faint" />
+    return (
+      <IconAssignUI>
+        <Icon name="assigned" size="24" />
+      </IconAssignUI>
+    )
   }
 
   render() {
-    const { image, initials, isOpen, name } = this.props
+    const { image, initials, isOpen, name, size } = this.props
+    const classnames = classNames('c-AvatarSelector', isOpen ? 'is-open' : '')
+
     return (
-      <AvatarSelectorWrapperUI className="c-AvatarSelector" tabIndex="0">
+      <AvatarSelectorWrapperUI className={classnames} tabIndex="0" size={size}>
         {image || initials || name
           ? this.renderAvatar()
           : this.renderBlankAvatar()}
-        <AvatarSelectorUI>
-          <IconCaretUI
-            shade="subtle"
-            size="14"
-            name={isOpen ? 'caret-up' : 'caret-down'}
-          />
-        </AvatarSelectorUI>
+        <IconCaretUI>
+          <Icon size="14" name={isOpen ? 'caret-up' : 'caret-down'} />
+        </IconCaretUI>
       </AvatarSelectorWrapperUI>
     )
   }
