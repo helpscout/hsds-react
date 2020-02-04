@@ -1,6 +1,6 @@
 import actionTypes from './Dropdown.actionTypes'
 import { initialState } from './Dropdown.store'
-import { isFunction } from '../../../utilities/is'
+import { isFunction } from '../../utilities/is'
 
 export const initialItemState = {
   index: null,

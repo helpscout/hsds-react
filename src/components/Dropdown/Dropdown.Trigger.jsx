@@ -6,9 +6,9 @@ import { connect } from '@helpscout/wedux'
 import { toggleOpen, openDropdown, closeDropdown } from './Dropdown.actions'
 import { TriggerUI } from './Dropdown.css.js'
 
-import Keys from '../../../constants/Keys'
-import { classNames } from '../../../utilities/classNames'
-import { noop } from '../../../utilities/other'
+import Keys from '../../constants/Keys'
+import { classNames } from '../../utilities/classNames'
+import { noop } from '../../utilities/other'
 
 export class Trigger extends React.PureComponent {
   static displayName = 'DropdownTrigger'

@@ -26,9 +26,9 @@ import {
   updateSelectedItem,
 } from './Dropdown.actions'
 import Trigger from './Dropdown.Trigger'
-import { createUniqueIDFactory } from '../../../utilities/id'
-import { noop } from '../../../utilities/other'
-import { isDefined } from '../../../utilities/is'
+import { createUniqueIDFactory } from '../../utilities/id'
+import { noop } from '../../utilities/other'
+import { isDefined } from '../../utilities/is'
 
 const uniqueID = createUniqueIDFactory('hsds-dropdown-')
 

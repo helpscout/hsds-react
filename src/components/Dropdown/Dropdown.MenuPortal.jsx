@@ -1,4 +1,4 @@
-import PortalWrapper from '../../PortalWrapper'
+import PortalWrapper from '../PortalWrapper'
 
 export const MenuPortal = ({ children }) => children
 

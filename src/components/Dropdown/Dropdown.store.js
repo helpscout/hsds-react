@@ -2,7 +2,7 @@
 // Couldn't figure out how to make this play nicely with Jest.
 import unistoreCreateStore from '@helpscout/wedux'
 import reducer from './Dropdown.reducer'
-import { noop } from '../../../utilities/other'
+import { noop } from '../../utilities/other'
 
 export const initialState = {
   activeClassName: 'is-active',

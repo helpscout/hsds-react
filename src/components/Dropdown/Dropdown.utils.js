@@ -1,7 +1,7 @@
 import { initialState } from './Dropdown.store'
-import { getComponentKey } from '../../../utilities/component'
-import { classNames } from '../../../utilities/classNames'
-import { isObject, isDefined, isArray, isString } from '../../../utilities/is'
+import { getComponentKey } from '../../utilities/component'
+import { classNames } from '../../utilities/classNames'
+import { isObject, isDefined, isArray, isString } from '../../utilities/is'
 
 export const DELIMETER = '.'
 
@@ -295,7 +295,7 @@ export const getItemProps = (state, item, index) => {
   return {
     ...rest,
     className: classNames(
-      'c-DropdownItem',
+      'c-DropdownV2Item',
       /* istanbul ignore next */
       hasSubMenu && 'has-subMenu',
       isActive && 'is-active',
@@ -303,12 +303,12 @@ export const getItemProps = (state, item, index) => {
     ),
     'aria-selected': isSelected,
     'aria-haspopup': hasSubMenu,
-    [SELECTORS.indexAttribute]: index,
+    [SELECTORS.indexAttribute]: itemIndex,
     [SELECTORS.valueAttribute]: value,
     actionId: pathResolve(itemId, 'action'),
     key,
     role: 'option',
-    index,
+    index: itemIndex,
     dropRight,
     dropUp,
     id: itemId,

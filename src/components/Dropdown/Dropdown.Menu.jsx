@@ -3,9 +3,9 @@ import { PropTypes } from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { connect } from '@helpscout/wedux'
 import { MenuWrapperUI, MenuUI } from './Dropdown.css.js'
-import ScrollLock from '../../ScrollLock'
-import { classNames } from '../../../utilities/classNames'
-import { noop } from '../../../utilities/other'
+import ScrollLock from '../ScrollLock'
+import { classNames } from '../../utilities/classNames'
+import { noop } from '../../utilities/other'
 
 export class Menu extends React.PureComponent {
   static displayName = 'DropdownMenu'

@@ -1,4 +1,4 @@
-import { createActionTypes } from '../../../utilities/actions'
+import { createActionTypes } from '../../utilities/actions'
 
 const actionTypes = [
   'CHANGE_DIRECTION',

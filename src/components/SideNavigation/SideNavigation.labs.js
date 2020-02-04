@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { withKnobs, text } from '@storybook/addon-knobs'
 import { withAktiv } from '../../utilities/storybook'
-import { ItemSpec } from '../Dropdown.stories'
+import { ItemSpec } from '../Dropdown/Dropdown.stories'
 import { SideNavigation, Flexy, Heading, Button } from '../index'
 
 const renderSidebarFolders = () => {

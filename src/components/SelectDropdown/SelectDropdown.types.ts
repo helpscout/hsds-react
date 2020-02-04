@@ -1,5 +1,5 @@
 import { UIState } from '../../constants/types'
-import { DropdownProps } from '../dropdown/Dropdown.types'
+import { DropdownProps } from '../Dropdown/Dropdown.types'
 
 export interface SelectDropdownProps extends DropdownProps {
   onChange: (...args: any) => void

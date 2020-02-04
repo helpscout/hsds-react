@@ -1,4 +1,4 @@
-import { isDefined } from '../../../utilities/is'
+import { isDefined } from '../../utilities/is'
 import actionTypes from './Dropdown.actionTypes'
 import {
   getItemFromCollection,
@@ -21,7 +21,7 @@ import {
 
 import { dispatch } from './Dropdown.store'
 
-import { focusWithoutScrolling } from '../../../utilities/focus'
+import { focusWithoutScrolling } from '../../utilities/focus'
 
 export const changeDirection = state => {
   return dispatch(state, {

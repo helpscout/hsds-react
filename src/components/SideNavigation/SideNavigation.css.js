@@ -6,7 +6,7 @@ import Button from '../Button'
 import Text from '../Text'
 import Heading from '../Heading'
 
-import { DropdownUI, TriggerUI } from '../dropdown/Dropdown.css'
+import { DropdownUI, TriggerUI } from '../Dropdown/Dropdown.css'
 import { darken, lighten } from '../../utilities/color'
 
 const config = {

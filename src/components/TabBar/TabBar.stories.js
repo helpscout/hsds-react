@@ -5,7 +5,7 @@ import { createSpec, faker } from '@helpscout/helix'
 import { withAktiv } from '../../utilities/storybook'
 import { withKnobs, boolean, text } from '@storybook/addon-knobs'
 import { TabBar } from '../index'
-import Dropdown from '../dropdown'
+import Dropdown from '../Dropdown'
 import Button from '../Button'
 
 const ItemSpec = createSpec({

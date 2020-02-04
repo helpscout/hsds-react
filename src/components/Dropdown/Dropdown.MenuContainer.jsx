@@ -1,7 +1,7 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 import { connect } from '@helpscout/wedux'
-import Animate from '../../Animate'
+import Animate from '../Animate'
 import Card from './Dropdown.Card'
 import Menu from './Dropdown.Menu'
 import MenuPortal from './Dropdown.MenuPortal'
@@ -24,12 +24,12 @@ import {
   clearSelection,
 } from './Dropdown.actions'
 import { MenuContainerUI } from './Dropdown.css.js'
-import { classNames } from '../../../utilities/classNames'
-import { renderRenderPropComponent } from '../../../utilities/component'
-import { noop } from '../../../utilities/other'
-import { isBrowserEnv } from '../../../utilities/env'
-import { createUniqueIDFactory } from '../../../utilities/id'
-import { memoizeWithProps } from '../../../utilities/memoize'
+import { classNames } from '../../utilities/classNames'
+import { renderRenderPropComponent } from '../../utilities/component'
+import { noop } from '../../utilities/other'
+import { isBrowserEnv } from '../../utilities/env'
+import { createUniqueIDFactory } from '../../utilities/id'
+import { memoizeWithProps } from '../../utilities/memoize'
 import { getComputedClientRect } from './Dropdown.MenuContainer.utils'
 
 const uniqueID = createUniqueIDFactory('DropdownMenuContainer')

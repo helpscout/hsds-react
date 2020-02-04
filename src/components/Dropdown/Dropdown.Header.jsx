@@ -2,9 +2,9 @@ import React from 'react'
 import { PropTypes } from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { HeaderUI } from './Dropdown.css'
-import Heading from '../../Heading'
-import { classNames } from '../../../utilities/classNames'
-import { noop } from '../../../utilities/other'
+import Heading from '../Heading'
+import { classNames } from '../../utilities/classNames'
+import { noop } from '../../utilities/other'
 
 export class Header extends React.PureComponent {
   static displayName = 'DropdownHeader'

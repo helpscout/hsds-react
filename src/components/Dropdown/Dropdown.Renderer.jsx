@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from '@helpscout/wedux'
-import Keys from '../../../constants/Keys'
-import KeypressListener from '../../KeypressListener'
+import Keys from '../../constants/Keys'
+import KeypressListener from '../KeypressListener'
 import {
   focusItem,
   incrementIndex,
@@ -27,9 +27,9 @@ import {
   resetSubMenuScrollPositionFromItemNode,
   setAriaActiveOnMenuFromItemNode,
 } from './Dropdown.renderUtils'
-import { isDefined } from '../../../utilities/is'
-import { scrollIntoView } from '../../../utilities/scrolling'
-import { noop } from '../../../utilities/other'
+import { isDefined } from '../../utilities/is'
+import { scrollIntoView } from '../../utilities/scrolling'
+import { noop } from '../../utilities/other'
 
 class Renderer extends React.PureComponent {
   static displayName = 'DropdownRenderer'

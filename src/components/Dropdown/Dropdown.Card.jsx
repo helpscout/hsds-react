@@ -1,12 +1,12 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import EventListener from '../../EventListener'
+import EventListener from '../EventListener'
 import { connect } from '@helpscout/wedux'
 import { CardUI } from './Dropdown.css'
-import { classNames } from '../../../utilities/classNames'
-import { noop } from '../../../utilities/other'
-import { isDefined, isNumber } from '../../../utilities/is'
+import { classNames } from '../../utilities/classNames'
+import { noop } from '../../utilities/other'
+import { isDefined, isNumber } from '../../utilities/is'
 
 export class Card extends React.PureComponent {
   static displayName = 'DropdownCard'
@@ -15,10 +15,10 @@ export class Card extends React.PureComponent {
     borderColor: PropTypes.string,
     className: PropTypes.string,
     innerRef: PropTypes.func,
-    minWidth: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
-    minHeight: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
-    maxHeight: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
-    maxWidth: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+    minWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    minHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    maxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    maxWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     width: PropTypes.any,
     triggerNode: PropTypes.node,
     style: PropTypes.any,
