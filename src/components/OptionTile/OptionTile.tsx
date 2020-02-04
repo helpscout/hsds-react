@@ -4,7 +4,7 @@ import Centralize from '../Centralize'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { OptionTileUI, HeaderUI, ContentUI, TitleUI } from './OptionTile.css'
-import OptionIcon from '../OptionIcon'
+import OptionIcon from './OptionIcon'
 import { OptionTileProps } from './OptionTile.types'
 
 class OptionTile extends React.PureComponent<OptionTileProps> {
