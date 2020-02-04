@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { HashRouter as Router, Route } from 'react-router-dom'
 import { NavLink } from '../index'
 
-const stories = storiesOf('NavLink', module)
+const stories = storiesOf('Deleted/NavLink', module)
 
 const props = {
   activeStyle: { fontWeight: 'bold' },

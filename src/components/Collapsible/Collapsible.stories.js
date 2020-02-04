@@ -34,7 +34,7 @@ const action = () => {
   console.log('action')
 }
 
-storiesOf('Collapsible', module).add('default', () => (
+storiesOf('Utilities/Collapsible', module).add('default', () => (
   <div>
     <SampleComponent onOpen={action} onClose={action}>
       <div style={{ background: '#eee', height: 200 }}>Hello!</div>

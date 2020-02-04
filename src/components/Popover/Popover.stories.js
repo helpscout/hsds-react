@@ -11,7 +11,7 @@ import { withArtboard } from '@helpscout/artboard'
 import { action } from '@storybook/addon-actions'
 import { PropProvider, Text, Popover } from '..'
 
-const stories = storiesOf('Popover', module)
+const stories = storiesOf('Utilities/Popover', module)
 stories.addDecorator(withArtboard({ width: 300, height: 100 }))
 stories.addDecorator(withKnobs)
 

@@ -6,7 +6,7 @@ import FormGroup from '../FormGroup'
 import Checkbox from '../Checkbox'
 import Input from '../Input'
 
-const stories = storiesOf('ActionSelect', module)
+const stories = storiesOf('PhaseOut/ActionSelect', module)
 
 export class Example extends React.Component {
   state = {

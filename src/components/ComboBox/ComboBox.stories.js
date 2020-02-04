@@ -7,7 +7,7 @@ import Artboard from '@helpscout/artboard'
 import ComboBox from '.'
 import InfiniteScroller from '../InfiniteScroller'
 
-const stories = storiesOf('ComboBox', module)
+const stories = storiesOf('PhaseOut/ComboBox', module)
 stories.addDecorator(withKnobs)
 stories.addDecorator(storyFn => (
   <Artboard

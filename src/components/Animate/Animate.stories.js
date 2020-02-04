@@ -45,7 +45,7 @@ class AnimateOutExample extends Component {
   }
 }
 
-storiesOf('utilities/Animate', module)
+storiesOf('Utilities/Animate', module)
   .add('default', () => (
     <div>
       <p>No delay</p>

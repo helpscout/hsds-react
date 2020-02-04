@@ -6,7 +6,7 @@ import { Centralize, Huzzah, Text } from '../index'
 const stories = storiesOf('Huzzah', module)
 const huzzahs = Object.keys(huzzahSet)
 
-stories.add('Huzzah', () => {
+stories.add('Deleted/Huzzah', () => {
   const huzzahsMarkup = huzzahs.map(i => (
     <div style={{ display: 'inline-block', margin: 12, textAlign: 'center' }}>
       <Centralize>

@@ -154,7 +154,7 @@ class SidebarHsAppItems extends React.PureComponent {
   }
 }
 
-const stories = storiesOf('SideNavigation', module)
+const stories = storiesOf('Deleted/SideNavigation', module)
 stories.addDecorator(withAktiv)
 stories.addDecorator(withKnobs)
 stories.addDecorator(storyFn => <SidebarWrapper>{storyFn()}</SidebarWrapper>)

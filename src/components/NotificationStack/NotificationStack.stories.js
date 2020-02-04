@@ -10,7 +10,7 @@ const NotificationSpec = createSpec({
 })
 
 const fromName = faker.name.firstName()()
-const stories = storiesOf('NotificationStack', module)
+const stories = storiesOf('Utilities/NotificationStack', module)
 
 class TestComponent extends Component {
   constructor() {

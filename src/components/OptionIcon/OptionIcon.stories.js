@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { ThemeProvider } from '../styled'
 import { OptionIcon } from '../index'
 
-const stories = storiesOf('OptionIcon', module)
+const stories = storiesOf('PhaseOut/OptionIcon', module)
 
 stories.add('Default', () => <OptionIcon />)
 

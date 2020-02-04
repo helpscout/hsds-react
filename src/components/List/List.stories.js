@@ -4,7 +4,7 @@ import { withKnobs, select } from '@storybook/addon-knobs'
 import { withArtboard } from '@helpscout/artboard'
 import { List, Text } from '../index'
 
-const stories = storiesOf('List', module)
+const stories = storiesOf('Utilities/List', module)
 stories.addDecorator(
   withArtboard({ withCenterGuides: false, showInterface: false })
 )

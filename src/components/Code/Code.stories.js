@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Code, Text } from '../index'
 
-const stories = storiesOf('Code', module)
+const stories = storiesOf('Deleted/Code', module)
 
 stories.add('default', () => (
   <Text>

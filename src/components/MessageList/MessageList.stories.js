@@ -5,7 +5,7 @@ import mockItems from './MessageList.mockItems'
 import Page from '../Page'
 import MessageList from '.'
 
-const stories = storiesOf('MessageList', module)
+const stories = storiesOf('PhaseOut/MessageList', module)
 
 stories.add('MessageList', () => {
   class Messages extends React.Component {

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { storiesOf } from '@storybook/react'
 import { Flexy } from '../index'
 
-const stories = storiesOf('Flexy', module)
+const stories = storiesOf('Utilities/Flexy', module)
 
 const BlockUI = styled('div')`
   background: yellow;

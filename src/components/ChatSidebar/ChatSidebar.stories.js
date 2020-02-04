@@ -21,7 +21,7 @@ ChatSpec.afterGenerate(({ isTyping, ...rest }) => {
 
 const avatars = AvatarSpec.generate(8)
 
-const stories = storiesOf('ChatSidebar', module)
+const stories = storiesOf('PhaseOut/ChatSidebar', module)
 
 class SampleComponent extends Component {
   constructor() {

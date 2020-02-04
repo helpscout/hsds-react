@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Animate, AnimateGroup, Card } from '../index'
 
-const stories = storiesOf('utilities/AnimateGroup', module)
+const stories = storiesOf('Utilities/AnimateGroup', module)
 
 stories.add('default', () => (
   <div>

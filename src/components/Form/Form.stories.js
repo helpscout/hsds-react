@@ -10,7 +10,7 @@ export const ContainerUI = styled('div')`
   }
 `
 
-const stories = storiesOf('Form', module)
+const stories = storiesOf('Deleted/Form', module)
 
 stories.addDecorator(withKnobs)
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Card, Overlay, PropProvider } from '../index'
 
-const stories = storiesOf('Overlay', module)
+const stories = storiesOf('Utilities/Overlay', module)
 
 stories.add('default', () => (
   <Overlay style={{ width: '500px', height: '400px' }}>

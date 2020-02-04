@@ -15,7 +15,7 @@ const ItemsMarkup = fixture.map(o => {
   )
 })
 
-const stories = storiesOf('DetailList', module)
+const stories = storiesOf('Deleted/DetailList', module)
 
 stories.add('default', () => (
   <DetailList>

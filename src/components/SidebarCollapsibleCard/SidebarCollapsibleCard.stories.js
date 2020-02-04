@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Sortable, SidebarCollapsibleCard } from '../index'
 
-storiesOf('SidebarCollapsibleCard', module)
+storiesOf('Deleted/SidebarCollapsibleCard', module)
   .add('default', () => (
     <div>
       <SidebarCollapsibleCard title="Profile">

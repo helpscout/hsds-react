@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { VisuallyHidden } from '../index'
 
-storiesOf('VisuallyHidden', module)
+storiesOf('Utilities/VisuallyHidden', module)
   .add('default', () => (
     <VisuallyHidden>Peek-a-boo! You can't see me</VisuallyHidden>
   ))

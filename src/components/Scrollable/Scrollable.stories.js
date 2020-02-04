@@ -11,7 +11,7 @@ const ContentSpec = createSpec({
   id: faker.random.uuid(),
 })
 
-const stories = storiesOf('Scrollable', module)
+const stories = storiesOf('Utilities/Scrollable', module)
 stories.addDecorator(withKnobs)
 
 stories.add('Default', () => (

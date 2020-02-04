@@ -2,7 +2,7 @@ import * as React from 'react'
 import { storiesOf } from '@storybook/react'
 import { shadows } from '../src/styles/configs/shadows'
 
-const stories = storiesOf('Shadow', module)
+const stories = storiesOf('Utilities/Shadow', module)
 
 stories.add('Default', () => {
   return (

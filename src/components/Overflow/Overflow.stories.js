@@ -10,7 +10,7 @@ const ChatSpec = createSpec({
 
 const fixture = ChatSpec.generate()
 
-const stories = storiesOf('Overflow', module)
+const stories = storiesOf('Utilities/Overflow', module)
 
 stories.add('default', () => (
   <div style={{ width: '20%' }}>

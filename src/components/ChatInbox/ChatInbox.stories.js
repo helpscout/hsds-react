@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import AvatarSpec from '../../utilities/specs/avatar.specs'
 import { AvatarList, ChatInbox, ChatList } from '../index'
 
-const stories = storiesOf('ChatInbox', module)
+const stories = storiesOf('PhaseOut/ChatInbox', module)
 
 stories.add('default', () => (
   <div style={{ width: 300 }}>

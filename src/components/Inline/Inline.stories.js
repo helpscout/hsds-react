@@ -4,7 +4,7 @@ import { withKnobs, select } from '@storybook/addon-knobs'
 import { withArtboard } from '@helpscout/artboard'
 import Inline from '.'
 
-const stories = storiesOf('Inline', module)
+const stories = storiesOf('Utilities/Inline', module)
 
 stories.addDecorator(
   withArtboard({

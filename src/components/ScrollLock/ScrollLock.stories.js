@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Flexy, Image, Scrollable } from '../index'
 
-const stories = storiesOf('ScrollLock', module)
+const stories = storiesOf('Utilities/ScrollLock', module)
 
 stories.add('default', () => (
   <div>

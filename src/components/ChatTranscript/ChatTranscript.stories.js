@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import fixture from '../../utilities/specs/chatTranscript.specs'
 import { ChatTranscript } from '../index'
 
-const stories = storiesOf('ChatTranscript', module)
+const stories = storiesOf('PhaseOut/ChatTranscript', module)
 const fixtureTranscript = fixture.events
 const author = {
   name: 'Name',

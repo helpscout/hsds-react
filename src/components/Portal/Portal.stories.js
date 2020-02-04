@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { PortalWrapper } from '../index'
 
-const stories = storiesOf('Portal', module)
+const stories = storiesOf('Utilities/Portal', module)
 
 stories.add('Default', () => {
   class PortalExample extends React.PureComponent {

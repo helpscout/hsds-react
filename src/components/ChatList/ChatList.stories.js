@@ -167,7 +167,7 @@ const getItemMarkup = () => {
   })
 }
 
-const stories = storiesOf('ChatList', module)
+const stories = storiesOf('PhaseOut/ChatList', module)
 
 stories.add('default', () => {
   const itemMarkup = getItemMarkup()

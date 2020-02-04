@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { Centralize, Illo, Text } from '../index'
 import illosData from './illos'
 
-const stories = storiesOf('Illo', module)
+const stories = storiesOf('PhaseOut/Illo', module)
 
 stories.add('Illo', () => {
   const icons = Object.keys(illosData).map(i => (

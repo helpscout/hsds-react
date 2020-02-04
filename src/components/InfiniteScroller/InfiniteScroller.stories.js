@@ -10,7 +10,7 @@ import {
   Text,
 } from '../index'
 
-const stories = storiesOf('InfiniteScroller', module)
+const stories = storiesOf('Utilities/InfiniteScroller', module)
 
 // Setup stuff
 const makeStoryItems = (count, start = 0) => {

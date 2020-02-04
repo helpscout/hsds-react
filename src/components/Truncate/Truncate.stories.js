@@ -5,7 +5,7 @@ import { Truncate } from '../index'
 
 const fixture = createSpec(faker.lorem.paragraph())
 
-const stories = storiesOf('Truncate', module)
+const stories = storiesOf('Utilities/Truncate', module)
 const limit = 10
 
 stories.add('default', () => (

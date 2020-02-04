@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Select } from '../index'
 
-const stories = storiesOf('Select', module)
+const stories = storiesOf('PhaseOut/Select', module)
 
 stories.add('default', () => <Select options={['one', 'two', 'three']} />)
 
