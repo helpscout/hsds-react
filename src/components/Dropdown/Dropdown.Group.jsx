@@ -19,7 +19,7 @@ export class Group extends React.PureComponent {
 
   render() {
     const { className, children, innerRef, ...rest } = this.props
-    const componentClassName = classNames('c-DropdownV2Group', className)
+    const componentClassName = classNames('c-DropdownGroup', className)
 
     return (
       <GroupUI

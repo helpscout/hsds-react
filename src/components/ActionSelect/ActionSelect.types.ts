@@ -1,4 +1,4 @@
-import { DropdownProps } from '../Dropdown/V2/Dropdown.types'
+import { DropdownProps } from '../dropdown/Dropdown.types'
 
 export interface ActionSelectBaseProps {
   animationDuration: number

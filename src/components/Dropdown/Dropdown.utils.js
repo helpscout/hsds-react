@@ -295,7 +295,7 @@ export const getItemProps = (state, item, index) => {
   return {
     ...rest,
     className: classNames(
-      'c-DropdownV2Item',
+      'c-DropdownItem',
       /* istanbul ignore next */
       hasSubMenu && 'has-subMenu',
       isActive && 'is-active',

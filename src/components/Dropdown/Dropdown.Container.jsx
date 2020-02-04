@@ -30,7 +30,7 @@ import { createUniqueIDFactory } from '../../../utilities/id'
 import { noop } from '../../../utilities/other'
 import { isDefined } from '../../../utilities/is'
 
-const uniqueID = createUniqueIDFactory('hsds-dropdown-v2-')
+const uniqueID = createUniqueIDFactory('hsds-dropdown-')
 
 export class DropdownContainer extends React.PureComponent {
   static displayName = 'DropdownContainer'

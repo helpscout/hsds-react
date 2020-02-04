@@ -2,7 +2,7 @@ import Backdrop from '../Input/Input.BackdropV2'
 import styled from 'styled-components'
 
 export const SelectDropdownUI = styled('div')`
-  .c-DropdownV2Trigger {
+  .c-DropdownTrigger {
     display: block;
   }
 `

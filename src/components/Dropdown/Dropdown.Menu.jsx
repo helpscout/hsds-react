@@ -59,7 +59,7 @@ export class Menu extends React.PureComponent {
     } = this.props
 
     const componentClassName = classNames(
-      'c-DropdownV2Menu',
+      'c-DropdownMenu',
       isSubMenu && 'is-subMenu',
       className
     )
@@ -81,7 +81,7 @@ export class Menu extends React.PureComponent {
 
     return (
       <MenuWrapperUI
-        className="c-DropdownV2MenuWrapper"
+        className="c-DropdownMenuWrapper"
         ref={innerRef}
         style={this.getWrapperStyles()}
       >

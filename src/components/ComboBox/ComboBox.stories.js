@@ -11,7 +11,7 @@ const stories = storiesOf('PhaseOut/ComboBox', module)
 stories.addDecorator(withKnobs)
 stories.addDecorator(storyFn => (
   <Artboard
-    name="dropdown-v2"
+    name="dropdown"
     withCenterGuides={false}
     artboardWidth={480}
     artboardHeight={300}
@@ -119,7 +119,7 @@ stories.add('Infinite Scroll', () => {
             onLoading={this.loadMore}
             offset={200}
             getScrollParent={({ node }) =>
-              node.closest('.c-DropdownV2MenuWrapper')
+              node.closest('.c-DropdownMenuWrapper')
             }
           />
         )

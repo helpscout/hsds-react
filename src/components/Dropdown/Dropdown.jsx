@@ -137,7 +137,7 @@ export class Dropdown extends React.PureComponent {
 
   render() {
     const { className, envNode, id } = this.props
-    const componentClassName = classNames(className, 'c-DropdownV2')
+    const componentClassName = classNames(className, 'c-Dropdown')
 
     return (
       <DropdownUI

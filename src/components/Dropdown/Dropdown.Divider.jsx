@@ -18,7 +18,7 @@ export class Divider extends React.PureComponent {
 
   render() {
     const { className, children, innerRef, ...rest } = this.props
-    const componentClassName = classNames('c-DropdownV2Divider', className)
+    const componentClassName = classNames('c-DropdownDivider', className)
 
     return (
       <DividerUI

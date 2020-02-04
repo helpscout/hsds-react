@@ -33,7 +33,7 @@ import { memoizeWithProps } from '../../../utilities/memoize'
 import { getComputedClientRect } from './Dropdown.MenuContainer.utils'
 
 const uniqueID = createUniqueIDFactory('DropdownMenuContainer')
-const clearerID = createUniqueIDFactory('hsds-dropdown-v2-theallclearer')
+const clearerID = createUniqueIDFactory('hsds-dropdown-theallclearer')
 
 export class MenuContainer extends React.PureComponent {
   static displayName = 'DropdownContainer'
@@ -469,13 +469,13 @@ export class MenuContainer extends React.PureComponent {
     const shouldDropUp = this.shouldDropUp()
 
     const componentClassName = classNames(
-      'c-DropdownV2MenuContainer',
+      'c-DropdownMenuContainer',
       !dropRight && 'is-dropLeft',
       className
     )
 
     return (
-      <div className="DropdownV2MenuContainerRoot" ref={this.setWrapperNode}>
+      <div className="DropdownMenuContainerRoot" ref={this.setWrapperNode}>
         <MenuPortal
           id={this.id}
           isOpen={isOpen}
@@ -483,7 +483,7 @@ export class MenuContainer extends React.PureComponent {
           onClose={this.onPortalClose}
         >
           <div
-            className="DropdownV2MenuContainerPlacementRoot"
+            className="DropdownMenuContainerPlacementRoot"
             style={{ position: 'relative' }}
             ref={this.setPlacementNode}
           >

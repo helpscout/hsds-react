@@ -32,7 +32,7 @@ export class Block extends React.PureComponent {
     } = this.props
 
     const componentClassName = classNames(
-      'c-DropdownV2Block',
+      'c-DropdownBlock',
       isSeamless && 'is-seamless',
       isStretchy && 'is-stretchy',
       className

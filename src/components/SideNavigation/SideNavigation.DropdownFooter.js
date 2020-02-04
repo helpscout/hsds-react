@@ -6,7 +6,7 @@ import { noop } from '../../utilities/other'
 
 import Icon from '../Icon'
 import SideNavigation, { SideNavigationContext } from './SideNavigation'
-import Dropdown from '../Dropdown/DropdownV2'
+import Dropdown from '../Dropdown'
 
 import {} from './SideNavigation.css'
 

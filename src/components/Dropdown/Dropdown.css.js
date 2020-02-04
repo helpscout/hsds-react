@@ -21,7 +21,7 @@ export const MenuContainerUI = styled('div')`
     right: 0%;
   }
 
-  .c-DropdownV2Block + .c-DropdownV2Block {
+  .c-DropdownBlock + .c-DropdownBlock {
     border-top: 1px solid ${getColor('grey.600')};
   }
 `
@@ -144,7 +144,7 @@ export const ItemUI = styled.div`
     }
   }
 
-  &.c-SelectionClearerItem + .c-DropdownV2Item {
+  &.c-SelectionClearerItem + .c-DropdownItem {
     padding-top: 12px;
   }
 

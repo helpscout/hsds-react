@@ -140,7 +140,7 @@ export class Item extends React.PureComponent {
     const { index, value } = this.props
 
     return {
-      className: 'c-DropdownV2MenuWrapper',
+      className: 'c-DropdownMenuWrapper',
       ref: this.setWrapperNodeRef,
       [SELECTORS.indexAttribute]: index,
       [SELECTORS.valueAttribute]: value,
@@ -185,7 +185,7 @@ export class Item extends React.PureComponent {
     const icon = dropRight ? 'caret-right' : 'caret-left'
 
     return (
-      <SubMenuIncidatorUI className="c-DropdownV2ItemSubMenuIndicator">
+      <SubMenuIncidatorUI className="c-DropdownItemSubMenuIndicator">
         <Icon name={icon} size="12" shade="extraMuted" />
       </SubMenuIncidatorUI>
     )
@@ -219,7 +219,7 @@ export class Item extends React.PureComponent {
 
     const componentClassName = classNames(
       hasSubMenu && 'has-subMenu',
-      'c-DropdownV2ItemAction'
+      'c-DropdownItemAction'
     )
 
     const actionProps = {
@@ -230,7 +230,7 @@ export class Item extends React.PureComponent {
 
     return (
       <ActionUI {...actionProps}>
-        <ActionContentUI className="c-DropdownV2ItemActionContent">
+        <ActionContentUI className="c-DropdownItemActionContent">
           {content}
         </ActionContentUI>
         {this.renderSubMenuIndicator()}
@@ -255,7 +255,7 @@ export class Item extends React.PureComponent {
     const hasSubMenu = this.hasSubMenu()
 
     const componentClassName = classNames(
-      'c-DropdownV2Item',
+      'c-DropdownItem',
       disabled && 'is-disabled',
       !hasSubMenu && 'is-option',
       isSelectionClearer && 'c-SelectionClearerItem',

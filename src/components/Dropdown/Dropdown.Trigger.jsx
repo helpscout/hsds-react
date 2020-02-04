@@ -103,7 +103,7 @@ export class Trigger extends React.PureComponent {
       className,
       isOpen && 'is-open',
       disabled && 'is-disabled',
-      'c-DropdownV2Trigger'
+      'c-DropdownTrigger'
     )
 
     return (

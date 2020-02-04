@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import AvatarSpec from '../../utilities/specs/avatarGrid.specs'
-import Dropdown from '../Dropdown/DropdownV2'
+import Dropdown from '../Dropdown'
 import { AvatarSelector } from '../index'
 import styled from '../styled'
 import { getColor } from '../../styles/utilities/color'

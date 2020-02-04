@@ -21,7 +21,7 @@ export class Header extends React.PureComponent {
 
   render() {
     const { className, children, innerRef, label, ...rest } = this.props
-    const componentClassName = classNames('c-DropdownV2Header', className)
+    const componentClassName = classNames('c-DropdownHeader', className)
 
     const textLabel = children || label
 

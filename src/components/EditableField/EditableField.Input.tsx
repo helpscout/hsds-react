@@ -11,7 +11,7 @@ import {
   ValidationIconUI,
 } from './EditableField.css'
 
-import Dropdown from '../Dropdown/DropdownV2'
+import Dropdown from '../Dropdown'
 import Icon from '../Icon'
 import Tooltip from '../Tooltip'
 import Truncate from '../Truncate'

@@ -16,7 +16,7 @@ export const MenuUI = styled('div')`
   padding-left: 5px;
   padding-right: 5px;
 
-  .c-DropdownV2Item.is-option {
+  .c-DropdownItem.is-option {
     background: none !important;
     padding: 0;
     outline: none !important;
@@ -32,7 +32,7 @@ export const ItemWrapperUI = styled('div')<any>`
   margin: 3px;
   transform: scale(1);
 
-  .c-DropdownV2Item.is-focused &,
+  .c-DropdownItem.is-focused &,
   &:hover {
     transform: scale(1.075);
   }
@@ -80,9 +80,9 @@ export const ItemUI = styled('div')<any>`
 export const TriggerUI = styled(Icon)`
   color: ${getColor('grey.600')};
 
-  .c-DropdownV2Trigger:active &,
-  .c-DropdownV2Trigger:focus &,
-  .c-DropdownV2Trigger:hover & {
+  .c-DropdownTrigger:active &,
+  .c-DropdownTrigger:focus &,
+  .c-DropdownTrigger:hover & {
     color: ${getColor('yellow.500')};
   }
 `

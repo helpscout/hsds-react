@@ -29,7 +29,7 @@ export class Card extends React.PureComponent {
     style: {},
   }
 
-  static className = 'c-DropdownV2Card'
+  static className = 'c-DropdownCard'
 
   state = {
     width: this.props.width,

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import Dropdown from '../Dropdown/DropdownV2'
+import Dropdown from '../Dropdown'
 import { EmojiPickerProps } from './EmojiPicker.types'
 import { MenuUI, TriggerUI } from './EmojiPicker.css'
 import Item from './EmojiPicker.Item'

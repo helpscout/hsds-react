@@ -1,7 +1,7 @@
 import * as React from 'react'
 import ComboBox from '../ComboBox'
-import { DropdownProps } from '../Dropdown/V2/Dropdown.types'
-import { initialState } from '../Dropdown/V2/Dropdown.store'
+import { DropdownProps } from '../dropdown/Dropdown.types'
+import { initialState } from '../dropdown/Dropdown.store'
 
 export interface Props extends DropdownProps {
   limit: number

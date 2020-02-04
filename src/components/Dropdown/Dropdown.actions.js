@@ -271,7 +271,7 @@ export const selectItem = (state, event, eventTarget) => {
       item,
       selection: selectedItem,
       deselected,
-      dropdownType: 'hsds-dropdown-v2',
+      dropdownType: 'hsds-dropdown',
     })
   }
 
@@ -298,7 +298,7 @@ export const clearSelection = (state, event) => {
     const callbackProps = {
       event,
       item: '',
-      dropdownType: 'hsds-dropdown-v2',
+      dropdownType: 'hsds-dropdown',
     }
 
     state.onSelect('', callbackProps)

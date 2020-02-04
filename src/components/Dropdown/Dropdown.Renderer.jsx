@@ -344,7 +344,7 @@ class Renderer extends React.PureComponent {
     this.optimizedRender()
 
     return (
-      <div className="c-DropdownV2RendererNode">
+      <div className="c-DropdownRendererNode">
         <KeypressListener
           handler={this.handleOnKeyDown}
           type="keydown"
