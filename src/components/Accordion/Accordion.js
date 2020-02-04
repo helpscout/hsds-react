@@ -10,6 +10,7 @@ import { AccordionUI } from './Accordion.css'
 import { stringifyArray } from './Accordion.utils'
 import { PageContext } from '../Page/Page'
 import Sortable from '../Sortable'
+import { GlobalContext } from '../HSDS/Provider'
 
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion',
@@ -88,6 +89,8 @@ const Accordion = props => {
   const [isSorting, setIsSorting] = useState(false)
 
   const { accordion = {} } = useContext(PageContext)
+  const { getCurrentScope } = React.useContext(GlobalContext) || {}
+  const scope = getCurrentScope ? getCurrentScope() : null
 
   const isPage = accordion.isPage || isPageProps
   const isSeamless = accordion.isSeamless || isSeamlessProps
@@ -118,6 +121,14 @@ const Accordion = props => {
     })
   }
 
+  const getContainer = () => {
+    if (scope) {
+      return document.querySelector(`.${scope}`)
+    }
+
+    return document.body
+  }
+
   const contextValue = {
     duration,
     isPage,
@@ -137,6 +148,7 @@ const Accordion = props => {
       <Sortable
         helperClass="is-sorting-item"
         lockAxis="y"
+        helperContainer={getContainer}
         onSortStart={() => setIsSorting(true)}
         onSortEnd={(...args) => {
           setIsSorting(false)
