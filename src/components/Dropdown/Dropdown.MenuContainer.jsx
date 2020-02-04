@@ -575,9 +575,6 @@ const ConnectedMenuContainer = connect(
     onMenuUnmounted,
     selectItem,
   }
-)(
-  // @ts-ignore
-  MenuContainer
-)
+)(MenuContainer)
 
 export default ConnectedMenuContainer

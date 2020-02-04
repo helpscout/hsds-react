@@ -20,7 +20,6 @@ export const SELECTORS = {
  * Path Helpers
  */
 export const pathResolve = (...args) => {
-  // @ts-ignore
   const [path, ...rest] = args
   let nextPath = rest.filter(isDefined).join(DELIMETER)
 
@@ -37,10 +36,9 @@ export const isPathActive = (path, index) => {
   if (!isDefined(path)) return false
   if (!isDefined(index)) return false
 
-  // @ts-ignore
   const matchPath = path
     .split(DELIMETER)
-    // @ts-ignore
+
     .slice(0, index.split(DELIMETER).length)
     .join(DELIMETER)
 
@@ -276,7 +274,6 @@ export const getItemProps = (state, item, index) => {
 
   /* istanbul ignore if */
   if (isDefined(index)) {
-    // @ts-ignore
     itemIndex = !isString(index) ? index.toString() : index
   }
 
@@ -295,7 +292,7 @@ export const getItemProps = (state, item, index) => {
   return {
     ...rest,
     className: classNames(
-      'c-DropdownV2Item',
+      'c-DropdownItem',
       /* istanbul ignore next */
       hasSubMenu && 'has-subMenu',
       isActive && 'is-active',

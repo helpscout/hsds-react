@@ -189,7 +189,6 @@ export class DropdownContainer extends React.PureComponent {
   }
 
   rehydrateStoreWithProps(props) {
-    // @ts-ignore
     this.store.setState(filterNonStoreProps(props))
   }
 

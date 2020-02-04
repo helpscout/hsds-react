@@ -51,7 +51,6 @@ export class Card extends React.PureComponent {
     if (!isDefined(width)) return null
     if (isNumber(width)) return width
 
-    // @ts-ignore
     if (!width.includes('%') || !triggerNode) return width
 
     return triggerNode.clientWidth * (parseInt(width, 10) / 100)

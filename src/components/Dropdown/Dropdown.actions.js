@@ -131,7 +131,6 @@ export const incrementIndex = (state, modifier = 1) => {
   const target = findItemDOMNode(nextIndex, envNode)
   if (!target) return
 
-  // @ts-ignore
   return focusItem(state, { target })
 }
 
@@ -149,7 +148,6 @@ export const decrementIndex = (state, modifier = 1) => {
   const target = findItemDOMNode(nextIndex, envNode)
   if (!target) return
 
-  // @ts-ignore
   return focusItem(state, { target })
 }
 
@@ -167,12 +165,10 @@ export const focusItem = (state, event) => {
     event.stopPropagation()
   }
 
-  // @ts-ignore
   const isMouseEvent = isDefined(event.pageX)
   const lastInteractionType = isMouseEvent ? 'mouse' : 'keyboard'
 
   if (state.enableTabNavigation && !isMouseEvent) {
-    // @ts-ignore
     node.focus()
   }
 

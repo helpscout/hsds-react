@@ -42,7 +42,6 @@ export class Dropdown extends React.PureComponent {
     // using the `contentWindow` prop. https://stackoverflow.com/a/26251098
     if (targetNode instanceof this.props.contentWindow.Element) {
       if (
-        // @ts-ignore
         this.menuNode.contains(targetNode) ||
         targetNode === this.triggerNode
       ) {
@@ -91,7 +90,7 @@ export class Dropdown extends React.PureComponent {
 
     /* istanbul ignore next */
     // Internally, for store
-    // @ts-ignore
+
     if (this.props.getState().menuNode) return
     this.props.setMenuNode(node)
   }
@@ -103,7 +102,7 @@ export class Dropdown extends React.PureComponent {
 
     /* istanbul ignore next */
     // Internally, for store
-    // @ts-ignore
+
     if (this.props.getState().triggerNode === node) return
     this.props.setTriggerNode(node)
   }
@@ -178,5 +177,5 @@ const ConnectedDropdown = connect(
     setTriggerNode,
   }
 )(Dropdown)
-
-export default ConnectedDropdown
+const AnotherComponent = () => <span></span>
+export default AnotherComponent
