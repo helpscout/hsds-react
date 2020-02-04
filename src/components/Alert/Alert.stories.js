@@ -55,3 +55,11 @@ stories.add('status', () => (
     <Alert status="warning">Warning Buddy!</Alert>
   </div>
 ))
+
+stories.add('actionRight', () => (
+  <div>
+    <Alert actionRight={<Button size="sm">Action!</Button>} icon>
+      Action Right Buddy with Icon!
+    </Alert>
+  </div>
+))
