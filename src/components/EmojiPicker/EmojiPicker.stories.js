@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions'
 import { withArtboard } from '@helpscout/artboard'
 import EmojiPicker from '.'
 
-const stories = storiesOf('EmojiPicker', module)
+const stories = storiesOf('Components/EmojiPicker', module)
 
 stories.addDecorator(
   withArtboard({

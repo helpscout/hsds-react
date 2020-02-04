@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { createSpec, faker } from '@helpscout/helix'
 import { Avatar, ChatScroller, Message, Scrollable } from '../index'
 
-const stories = storiesOf('ChatScroller', module)
+const stories = storiesOf('Components/ChatScroller', module)
 
 const MessageSpec = createSpec({
   id: faker.random.uuid(),

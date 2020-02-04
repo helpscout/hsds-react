@@ -4,7 +4,7 @@ import { SampleComponent as AvatarListSampleComponent } from '../AvatarList/Avat
 import { SampleComponent as TagListSampleComponent } from '../TagList/TagList.stories'
 import { Toolbar } from '../index'
 
-const stories = storiesOf('Toolbar', module)
+const stories = storiesOf('Components/Toolbar', module)
 
 stories.add('default', () => (
   <Toolbar>

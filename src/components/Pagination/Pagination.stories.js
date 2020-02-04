@@ -18,7 +18,7 @@ const PaginationWrapperUI = styled('div')`
   padding: 20px;
 `
 
-const stories = storiesOf('Pagination', module)
+const stories = storiesOf('Components/Pagination', module)
 stories.addDecorator(withKnobs)
 stories.addDecorator(storyFn => (
   <PaginationWrapperUI>

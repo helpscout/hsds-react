@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Attachment, AttachmentList } from '../index'
 
-const stories = storiesOf('AttachmentList', module)
+const stories = storiesOf('Components/AttachmentList', module)
 const onClick = (event, attachment) => {
   console.log(event, attachment)
 }

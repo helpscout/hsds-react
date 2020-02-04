@@ -12,7 +12,7 @@ import {
   Text,
 } from '../index'
 
-const stories = storiesOf('Button', module)
+const stories = storiesOf('Components/Button', module)
 
 const ContainerUI = styled('div')`
   background: #f1f3f5;

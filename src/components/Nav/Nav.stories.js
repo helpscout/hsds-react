@@ -6,7 +6,7 @@ import { withArtboard } from '@helpscout/artboard'
 import Toolbar from '../Toolbar'
 import Nav from '.'
 
-const stories = storiesOf('Nav', module)
+const stories = storiesOf('Components/Nav', module)
 
 stories.addDecorator(
   withArtboard({

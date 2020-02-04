@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { getColor } from '../../styles/utilities/color'
 import { Badge } from '../index'
 
-const stories = storiesOf('Badge', module)
+const stories = storiesOf('Components/Badge', module)
 
 stories.add('default', () => <Badge>Badger</Badge>)
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Spinner } from '../index'
 
-const stories = storiesOf('Spinner', module)
+const stories = storiesOf('Components/Spinner', module)
 
 stories.add('default', () => (
   <div>

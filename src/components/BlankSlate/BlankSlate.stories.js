@@ -5,7 +5,7 @@ import WrenchCat from '@helpscout/hsds-illos/wrench-cat'
 import { withAktiv } from '../../utilities/storybook'
 import { BlankSlate } from '../index'
 
-const stories = storiesOf('BlankSlate', module)
+const stories = storiesOf('Components/BlankSlate', module)
 stories.addDecorator(
   withKnobs({
     escapeHTML: false,

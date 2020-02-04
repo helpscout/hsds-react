@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { withKnobs, boolean, number, text } from '@storybook/addon-knobs'
 import { Avatar, Message } from '../../index'
 
-const stories = storiesOf('Message', module)
+const stories = storiesOf('Components/Message', module)
 stories.addDecorator(withKnobs)
 
 const dimensions = { width: 800, height: 500 }

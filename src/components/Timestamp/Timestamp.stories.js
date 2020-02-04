@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Timestamp } from '../index'
 
-const stories = storiesOf('Timestamp', module)
+const stories = storiesOf('Components/Timestamp', module)
 
 const customFormatter = timestamp => {
   const now = new Date().toISOString()

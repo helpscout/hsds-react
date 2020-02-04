@@ -4,7 +4,7 @@ import { withKnobs, boolean, select, text } from '@storybook/addon-knobs'
 import { withArtboard } from '@helpscout/artboard'
 import { Tag } from '../index'
 
-const stories = storiesOf('Tag', module)
+const stories = storiesOf('Components/Tag', module)
 stories.addDecorator(withArtboard({ id: 'Tag' }))
 stories.addDecorator(withKnobs)
 

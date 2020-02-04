@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { WithAktiv } from '../../utilities/storybook'
 import Text from '.'
 
-storiesOf('Text', module)
+storiesOf('Components/Text', module)
   .add('default', () => <Text>I am text. Behold my text.</Text>)
   .add('sizes', () => (
     <div>

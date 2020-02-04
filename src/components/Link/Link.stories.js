@@ -4,7 +4,7 @@ import { withArtboard } from '@helpscout/artboard'
 import { boolean, text } from '@storybook/addon-knobs'
 import { Link } from '../index'
 
-const stories = storiesOf('Link', module)
+const stories = storiesOf('Components/Link', module)
 
 stories.addDecorator(
   withArtboard({ width: 300, height: 100, withCenterGuides: false })

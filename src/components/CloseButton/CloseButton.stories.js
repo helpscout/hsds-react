@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions'
 import { withArtboard } from '@helpscout/artboard'
 import { CloseButton } from '../index'
 
-const stories = storiesOf('Deleted/CloseButton', module)
+const stories = storiesOf('To Delete/CloseButton', module)
 stories.addDecorator(withKnobs)
 stories.addDecorator(withArtboard({ withCenterGuides: false }))
 

@@ -28,7 +28,7 @@ const onOpen = () => {
   console.log('onOpen')
 }
 
-const stories = storiesOf('Deleted/Dropdown', module)
+const stories = storiesOf('To Delete/Dropdown', module)
 
 stories.add('Default', () => (
   <div style={{ padding: '50px' }}>

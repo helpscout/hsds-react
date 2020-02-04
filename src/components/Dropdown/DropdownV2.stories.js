@@ -6,7 +6,7 @@ import { createSpec, faker } from '@helpscout/helix'
 import Dropdown from './DropdownV2'
 import Button from '../Button'
 
-const stories = storiesOf('DropdownV2', module)
+const stories = storiesOf('Components/DropdownV2', module)
 
 stories.addParameters({
   a11y: { element: '.c-DropdownV2' },

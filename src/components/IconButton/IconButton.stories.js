@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { boolean, number, text, select } from '@storybook/addon-knobs'
 import IconButton from '.'
 
-const stories = storiesOf('IconButton', module)
+const stories = storiesOf('Components/IconButton', module)
 
 stories.add('Default', () => {
   const props = {

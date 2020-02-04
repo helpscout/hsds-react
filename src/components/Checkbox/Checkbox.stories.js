@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Checkbox, ChoiceGroup, Heading, Text } from '../index'
 
-storiesOf('Checkbox', module)
+storiesOf('Components/Checkbox', module)
   .add('default', () => <Checkbox label="Label" helpText="Help description" />)
   .add('custom content', () => (
     <Checkbox label="Label" align="top">

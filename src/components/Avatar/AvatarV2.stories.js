@@ -11,7 +11,7 @@ import { withArtboard } from '@helpscout/artboard'
 import AvatarSpec from '../../utilities/specs/avatar.specs'
 import { Avatar } from '../index'
 
-const stories = storiesOf('Avatar', module)
+const stories = storiesOf('Components/Avatar', module)
 stories.addDecorator(
   withArtboard({ width: 300, height: 160, withCenterGuides: false })
 )

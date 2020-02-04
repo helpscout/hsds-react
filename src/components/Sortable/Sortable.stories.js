@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Card, Sortable, SidebarCollapsibleCard } from '../index'
 
-storiesOf('Sortable', module)
+storiesOf('Components/Sortable', module)
   .add('default', () => (
     <Sortable>
       <Card>Jacobim Mugatu</Card>

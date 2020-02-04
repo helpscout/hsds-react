@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Grid, PropProvider, Radio, ChoiceGroup } from '../index'
 
-storiesOf('Radio', module)
+storiesOf('Components/Radio', module)
   .add('default', () => <Radio label="Label" helpText="Help description" />)
   .add('group', () => (
     <ChoiceGroup>

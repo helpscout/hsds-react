@@ -12,7 +12,7 @@ const NotificationSpec = createSpec({
   from: faker.name.firstName(),
 })
 
-const stories = storiesOf('Notification', module)
+const stories = storiesOf('Components/Notification', module)
 stories.addDecorator(withKnobs)
 stories.addDecorator(storyFn => {
   return (

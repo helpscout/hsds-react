@@ -11,7 +11,7 @@ import { withArtboard } from '@helpscout/artboard'
 import { action } from '@storybook/addon-actions'
 import Tooltip, { TooltipContext } from '.'
 
-const stories = storiesOf('Tooltip', module)
+const stories = storiesOf('Components/Tooltip', module)
 stories.addDecorator(withArtboard())
 stories.addDecorator(withKnobs)
 

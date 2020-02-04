@@ -2,7 +2,7 @@ import * as React from 'react'
 import { storiesOf } from '@storybook/react'
 import HelpText from '.'
 
-storiesOf('HelpText', module)
+storiesOf('Components/HelpText', module)
   .add('default', () => <HelpText>I am help text. Behold my text.</HelpText>)
   .add('states', () => (
     <div>

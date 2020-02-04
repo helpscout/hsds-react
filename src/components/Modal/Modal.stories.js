@@ -19,7 +19,7 @@ import {
 } from '../index'
 import Frame from '../Frame'
 
-const stories = storiesOf('Modal', module)
+const stories = storiesOf('Components/Modal', module)
 
 const ContentSpec = createSpec({
   content: faker.lorem.paragraph(),

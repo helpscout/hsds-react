@@ -11,7 +11,7 @@ const items = [
   'lasttest@cde.com',
 ]
 
-const stories = storiesOf('FilteredList', module)
+const stories = storiesOf('Components/FilteredList', module)
 stories.addDecorator(withKnobs)
 
 stories.add('default', () => <FilteredList items={items} />)

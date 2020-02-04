@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import TagSpec from '../../utilities/specs/tags.specs'
 import { TagList, Tag } from '../index'
 
-const stories = storiesOf('TagList', module)
+const stories = storiesOf('Components/TagList', module)
 
 export class SampleComponent extends Component {
   constructor() {

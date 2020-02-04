@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Flexy, Hr, Switch, Text } from '../index'
 
-const stories = storiesOf('Switch', module)
+const stories = storiesOf('Components/Switch', module)
 
 stories.add('default', () => (
   <form style={{ width: 300 }}>

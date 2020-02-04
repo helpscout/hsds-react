@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { LoadingDots, Text } from '../index'
 
-storiesOf('LoadingDots', module)
+storiesOf('Components/LoadingDots', module)
   .add('default', () => <LoadingDots />)
   .add('align', () => (
     <div>

@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { faker } from '@helpscout/helix'
 import { Avatar, Message } from '../../index'
 
-const stories = storiesOf('Message', module)
+const stories = storiesOf('Components/Message', module)
 
 stories.add('Chat', () => {
   const htmlBody = `

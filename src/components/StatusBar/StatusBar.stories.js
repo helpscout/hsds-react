@@ -2,7 +2,7 @@ import React, { PureComponent as Component } from 'react'
 import { storiesOf } from '@storybook/react'
 import { StatusBar } from '../index'
 
-const stories = storiesOf('StatusBar', module)
+const stories = storiesOf('Components/StatusBar', module)
 
 stories.add('default', () => (
   <StatusBar isOpen>Status: Click me to close.</StatusBar>

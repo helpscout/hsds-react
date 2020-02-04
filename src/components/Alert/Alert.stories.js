@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Alert, Button, Heading, Link, Text } from '../index'
 
-const stories = storiesOf('Alert', module)
+const stories = storiesOf('Components/Alert', module)
 
 stories.add('default', () => <Alert>Buddy!</Alert>)
 

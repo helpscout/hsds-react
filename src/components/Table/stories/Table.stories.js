@@ -13,7 +13,7 @@ import TableWithPagination from './TableWithPagination'
 import TableWithSorting from './TableWithSorting'
 import { defaultSkin, alternativeSkin } from '../Table.skins'
 
-const stories = storiesOf('Table', module)
+const stories = storiesOf('Components/Table', module)
 
 export const ContainerUI = styled('div')`
   table {

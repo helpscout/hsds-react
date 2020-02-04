@@ -16,7 +16,7 @@ const ItemsMarkup = fixture.map(o => {
   )
 })
 
-const stories = storiesOf('Timeline', module)
+const stories = storiesOf('Components/Timeline', module)
 
 stories.add('default', () => (
   <Timeline>

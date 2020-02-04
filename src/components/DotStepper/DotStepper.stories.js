@@ -4,7 +4,7 @@ import DotStepper from './'
 import { withKnobs, number } from '@storybook/addon-knobs'
 import { withArtboard } from '@helpscout/artboard'
 
-const stories = storiesOf('DotStepper', module)
+const stories = storiesOf('Components/DotStepper', module)
 
 stories.addDecorator(
   withArtboard({

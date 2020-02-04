@@ -7,7 +7,7 @@ import Button from '../Button'
 import SplitButton from '.'
 import Modal from '../Modal'
 
-const stories = storiesOf('SplitButton', module)
+const stories = storiesOf('Components/SplitButton', module)
 
 stories.addDecorator(
   withArtboard({

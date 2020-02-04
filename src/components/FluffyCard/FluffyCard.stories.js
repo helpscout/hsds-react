@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { FluffyCard } from '../index'
 
-const stories = storiesOf('FluffyCard', module)
+const stories = storiesOf('Components/FluffyCard', module)
 
 stories.add('default', () => (
   <FluffyCard href="#">

@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { ChoiceGroup, RadioCard, Icon } from '../index'
 
-const stories = storiesOf('RadioCard', module)
+const stories = storiesOf('Components/RadioCard', module)
 
 const onChange = value => {
   console.log(value)

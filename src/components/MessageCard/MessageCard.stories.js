@@ -14,7 +14,7 @@ import { withArtboard } from '@helpscout/artboard'
 import { makeBrandColors } from '../../styles/utilities/color'
 import MessageCard from '.'
 
-const stories = storiesOf('MessageCard', module)
+const stories = storiesOf('Components/MessageCard', module)
 
 stories.addDecorator(
   withArtboard({

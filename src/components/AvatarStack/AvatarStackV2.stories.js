@@ -15,7 +15,7 @@ const guides = [
   },
 ]
 
-const stories = storiesOf('AvatarStack', module)
+const stories = storiesOf('Components/AvatarStack', module)
 stories.addDecorator(
   withArtboard({
     guides,

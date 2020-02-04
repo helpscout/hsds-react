@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Page, FormLabel, FormGroup, Input, Switch } from '../index'
 
-storiesOf('FormLabel', module)
+storiesOf('Components/FormLabel', module)
   .add('default', () => (
     <Page>
       <Page.Card>

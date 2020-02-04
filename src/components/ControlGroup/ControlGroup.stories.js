@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Button, ControlGroup, Icon, Input, Select } from '../index'
 
-const stories = storiesOf('ControlGroup', module)
+const stories = storiesOf('Components/ControlGroup', module)
 
 stories.add('default', () => (
   <ControlGroup>

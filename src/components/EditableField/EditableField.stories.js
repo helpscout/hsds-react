@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions'
 import { withAktiv } from '../../utilities/storybook'
 import EditableField from '.'
 
-const stories = storiesOf('EditableField', module)
+const stories = storiesOf('Components/EditableField', module)
 
 stories.addDecorator(withAktiv)
 

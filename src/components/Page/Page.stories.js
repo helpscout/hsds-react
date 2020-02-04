@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react'
 import { PageDecorator } from '../../utilities/storybook'
 import { Button, Input, Page } from '../index'
 
-const stories = storiesOf('Page', module).addDecorator(PageDecorator)
+const stories = storiesOf('Components/Page', module).addDecorator(PageDecorator)
 
 const renderPropCode = `
 <Page.Header

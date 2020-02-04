@@ -7,7 +7,7 @@ import AvatarSpec from '../../utilities/specs/avatar.specs'
 import { getColor } from '../../styles/utilities/color'
 import { Avatar, Flexy, Button } from '../index'
 
-const stories = storiesOf('Avatar', module)
+const stories = storiesOf('Components/Avatar', module)
 
 stories.addDecorator(
   withKnobs({

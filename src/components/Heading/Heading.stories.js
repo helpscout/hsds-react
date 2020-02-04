@@ -4,7 +4,7 @@ import { boolean, select, text } from '@storybook/addon-knobs'
 import { withArtboard } from '@helpscout/artboard'
 import Heading from '.'
 
-const stories = storiesOf('Heading', module)
+const stories = storiesOf('Components/Heading', module)
 stories.addDecorator(
   withArtboard({ width: 400, height: 200, withCenterGuides: false })
 )

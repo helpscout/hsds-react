@@ -14,7 +14,7 @@ import {
 } from '../index'
 import AvatarSpec from '../../utilities/specs/avatarGrid.specs'
 
-const stories = storiesOf('ArticleCard', module)
+const stories = storiesOf('Components/ArticleCard', module)
 stories.addDecorator(withKnobs)
 stories.addDecorator(storyFn => {
   return (

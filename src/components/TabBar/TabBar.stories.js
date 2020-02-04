@@ -18,7 +18,7 @@ const routerDecorator = storyFn => {
   return <Router>{storyFn()}</Router>
 }
 
-const stories = storiesOf('TabBar', module)
+const stories = storiesOf('Components/TabBar', module)
 stories.addDecorator(withKnobs)
 stories.addDecorator(withAktiv)
 stories.addDecorator(routerDecorator)

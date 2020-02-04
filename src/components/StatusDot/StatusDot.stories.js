@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { StatusDot } from '../index'
 
-const stories = storiesOf('StatusDot', module)
+const stories = storiesOf('Components/StatusDot', module)
 
 stories.add('default', () => <StatusDot />)
 

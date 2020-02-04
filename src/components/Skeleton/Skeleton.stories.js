@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { FormGroup, Flexy, Skeleton } from '../index'
 
-const stories = storiesOf('Skeleton', module)
+const stories = storiesOf('Components/Skeleton', module)
 
 stories.add('default', () => (
   <div style={{ width: 300 }}>

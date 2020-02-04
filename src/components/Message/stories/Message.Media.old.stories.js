@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Avatar, Message } from '../../index'
 
-const stories = storiesOf('Message', module)
+const stories = storiesOf('Components/Message', module)
 const dimensions = { width: 800, height: 500 }
 const imageUrlSlow = `https://loremflickr.com/${dimensions.width}/${dimensions.height}`
 const imageUrl =

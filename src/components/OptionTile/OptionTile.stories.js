@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { ThemeProvider } from '../styled'
 import { OptionTile } from '../index'
 
-const stories = storiesOf('OptionTile', module)
+const stories = storiesOf('Components/OptionTile', module)
 
 stories.add('Default', () => <OptionTile />)
 

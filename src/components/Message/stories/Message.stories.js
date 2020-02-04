@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { ScopeProvider } from '../../styled'
 import { Avatar, Link, Message, PreviewCard } from '../../index'
 
-const stories = storiesOf('Message', module)
+const stories = storiesOf('Components/Message', module)
 stories.add('default', () => (
   <div>
     <Message from avatar={<Avatar name="Arctic Puffin" />}>

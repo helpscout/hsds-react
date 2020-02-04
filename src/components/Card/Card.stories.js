@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Card, Heading } from '../index'
 
-storiesOf('Card', module)
+storiesOf('Components/Card', module)
   .add('default', () => <Card>Hello</Card>)
   .add('link', () => (
     <Card href="https://www.helpscout.net/">

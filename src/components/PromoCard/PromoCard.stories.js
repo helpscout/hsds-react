@@ -5,7 +5,7 @@ import { withArtboard } from '@helpscout/artboard'
 import { faker } from '@helpscout/helix'
 import { PromoCard } from '../index'
 
-const stories = storiesOf('PromoCard', module)
+const stories = storiesOf('Components/PromoCard', module)
 stories.addDecorator(withKnobs)
 stories.addDecorator(
   withArtboard({

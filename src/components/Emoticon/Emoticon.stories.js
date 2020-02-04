@@ -5,7 +5,7 @@ import { Emoticon } from './Emoticon'
 const font =
   '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
 
-const stories = storiesOf('Emoticon', module)
+const stories = storiesOf('Components/Emoticon', module)
 
 class Play extends React.Component {
   state = {

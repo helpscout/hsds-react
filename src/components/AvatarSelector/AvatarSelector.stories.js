@@ -13,7 +13,7 @@ const DarkerUI = styled.div`
 
 const withDarkerBackground = storyFn => <DarkerUI>{storyFn()}</DarkerUI>
 
-const stories = storiesOf('AvatarSelector', module)
+const stories = storiesOf('Components/AvatarSelector', module)
 stories.addDecorator(withDarkerBackground)
 const fixtures = AvatarSpec.generate(20)
 

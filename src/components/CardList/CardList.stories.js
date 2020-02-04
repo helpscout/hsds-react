@@ -4,7 +4,7 @@ import { createSpec, faker } from '@helpscout/helix'
 import { withKnobs, boolean, text, number } from '@storybook/addon-knobs'
 import { ArticleCard, CardList } from '../index'
 
-const stories = storiesOf('CardList', module)
+const stories = storiesOf('Components/CardList', module)
 stories.addDecorator(withKnobs)
 
 const CardSpec = createSpec({

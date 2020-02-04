@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { CopyInput } from '../index'
 
-const stories = storiesOf('CopyInput', module)
+const stories = storiesOf('Components/CopyInput', module)
 
 stories.add('Default', () => (
   <CopyInput value="testing" onCopy={action('Copy')} />

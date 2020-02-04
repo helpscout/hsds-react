@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions'
 import { withArtboard } from '@helpscout/artboard'
 import Stepper from '.'
 
-const stories = storiesOf('Stepper', module)
+const stories = storiesOf('Components/Stepper', module)
 
 stories.addDecorator(
   withArtboard({

@@ -4,7 +4,7 @@ import { ContainerUI, NoteUI } from '../EditableField/EditableField.stories'
 import { withAktiv } from '../../utilities/storybook'
 import EditableTextarea from '.'
 
-const stories = storiesOf('EditableTextarea', module)
+const stories = storiesOf('Components/EditableTextarea', module)
   .addParameters({
     options: { showPanel: false, enableShortcuts: false, isFullscreen: false },
     a11y: { element: 'c-EditableField' },

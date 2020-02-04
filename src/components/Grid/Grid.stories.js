@@ -2,7 +2,7 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { Card, FormGroup, Grid, Input } from '../index'
 
-storiesOf('Grid', module)
+storiesOf('Components/Grid', module)
   .add('default', () => (
     <Grid>
       <Grid.Col size="8, 6@lg">

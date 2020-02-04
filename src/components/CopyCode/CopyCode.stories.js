@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { CopyCode } from '../index'
 
-const stories = storiesOf('CopyCode', module)
+const stories = storiesOf('Components/CopyCode', module)
 
 stories.add('JavaScript', () => {
   return (

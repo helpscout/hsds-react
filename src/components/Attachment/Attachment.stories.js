@@ -4,7 +4,7 @@ import { withKnobs, select, text } from '@storybook/addon-knobs'
 import { withArtboard } from '@helpscout/artboard'
 import { Attachment } from './Attachment'
 
-const stories = storiesOf('Attachment', module)
+const stories = storiesOf('Components/Attachment', module)
 stories.addDecorator(withKnobs)
 stories.addDecorator(
   withArtboard({ width: 400, height: 200, withCenterGuides: false })

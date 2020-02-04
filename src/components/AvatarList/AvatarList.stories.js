@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 import AvatarSpec from '../../utilities/specs/avatarGrid.specs'
 import { Avatar, AvatarList } from '../index'
 
-const stories = storiesOf('AvatarList', module)
+const stories = storiesOf('Components/AvatarList', module)
 const fixtures = AvatarSpec.generate(20)
 
 const avatarsMarkup = fixtures.map(avatar => {

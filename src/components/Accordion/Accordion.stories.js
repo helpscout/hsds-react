@@ -4,7 +4,7 @@ import { text, boolean, number } from '@storybook/addon-knobs'
 import { Accordion, Button, Input, Page, Text } from '../index'
 import { faker } from '@helpscout/helix'
 
-const stories = storiesOf('Accordion', module)
+const stories = storiesOf('Components/Accordion', module)
 const body = faker.lorem.paragraph()()
 const form = (
   <form>

@@ -12,7 +12,7 @@ import { storiesOf } from '@storybook/react'
 import { withArtboard } from '@helpscout/artboard'
 import { SelectDropdown } from '..'
 
-const stories = storiesOf('SelectDropdown', module)
+const stories = storiesOf('Components/SelectDropdown', module)
 stories.addDecorator(
   withArtboard({ id: 'SelectDropdown', withResponsiveWidth: true })
 )

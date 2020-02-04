@@ -6,7 +6,7 @@ import { select } from '@storybook/addon-knobs'
 import iconList from './icons'
 import { Flexy, Icon, Text } from '../index'
 
-const stories = storiesOf('Icon', module)
+const stories = storiesOf('Components/Icon', module)
 
 const IconGrid = styled('div')`
   display: flex;

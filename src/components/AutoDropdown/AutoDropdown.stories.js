@@ -5,7 +5,7 @@ import { action } from '@storybook/addon-actions'
 import { createSpec, faker } from '@helpscout/helix'
 import { storiesOf } from '@storybook/react'
 
-const stories = storiesOf('AutoDropdown', module)
+const stories = storiesOf('Components/AutoDropdown', module)
 stories.addDecorator(withKnobs)
 
 const ItemSpec = createSpec({

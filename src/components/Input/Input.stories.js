@@ -6,7 +6,7 @@ import { boolean, select, text } from '@storybook/addon-knobs'
 import { getColor } from '../../styles/utilities/color'
 import { Button, Flexy, Icon, Input } from '../index'
 
-const stories = storiesOf('Input', module)
+const stories = storiesOf('Components/Input', module)
 
 stories.add('Default', () => {
   const props = {

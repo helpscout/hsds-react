@@ -13,7 +13,7 @@ import Page from '../Page'
 
 import { boolean } from '@storybook/addon-knobs'
 
-const stories = storiesOf('Condition', module)
+const stories = storiesOf('Components/Condition', module)
 
 const options = [
   {
