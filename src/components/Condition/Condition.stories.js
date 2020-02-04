@@ -12,11 +12,8 @@ import Select from '../Select'
 import Page from '../Page'
 
 import { boolean } from '@storybook/addon-knobs'
-import { jsxDecorator } from 'storybook-addon-jsx'
 
 const stories = storiesOf('Condition', module)
-
-stories.addDecorator(jsxDecorator)
 
 const options = [
   {

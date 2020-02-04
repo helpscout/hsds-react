@@ -7,11 +7,8 @@ import Input from '../Input'
 import Select from '../Select'
 
 import { boolean, number, text } from '@storybook/addon-knobs'
-import { jsxDecorator } from 'storybook-addon-jsx'
 
 const stories = storiesOf('ConditionField', module)
-
-stories.addDecorator(jsxDecorator)
 
 const options = [
   {

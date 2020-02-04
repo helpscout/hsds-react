@@ -4,11 +4,8 @@ import Condition from '../Condition'
 import ConditionList from '.'
 
 import { boolean } from '@storybook/addon-knobs'
-import { jsxDecorator } from 'storybook-addon-jsx'
 
 const stories = storiesOf('ConditionList', module)
-
-stories.addDecorator(jsxDecorator)
 
 stories.add('Default', () => {
   const props = {
