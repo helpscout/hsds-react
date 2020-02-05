@@ -1,8 +1,10 @@
-import { create } from '@storybook/theming/create';
+import { create } from '@storybook/theming/create'
 
 export default create({
   base: 'light',
-  brandTitle: 'Help Scout',
-  brandUrl: 'https://helpscout.com',
-  brandImage: 'https://www.helpscout.com/images/nav/logo-color.svg',
-});
+  brandTitle: 'HSDS',
+  brandUrl: 'https://style.helpscout.com/',
+  brandImage:
+    'https://p-zkf42x.t2.n0.cdn.getcloudapp.com/items/o0uQ5QWg/hsds-logo.svg',
+  colorSecondary: '#1292EE',
+})
