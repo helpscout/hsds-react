@@ -1,13 +1,14 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { createSpec, faker } from '@helpscout/helix'
 import { action } from '@storybook/addon-actions'
-import { withKnobs, boolean, number } from '@storybook/addon-knobs'
+import { boolean, number } from '@storybook/addon-knobs'
 import SearchableDropdown from '.'
 import InfiniteScroller from '../InfiniteScroller'
 
-const stories = storiesOf('SearchableDropdown', module)
-stories.addDecorator(withKnobs)
+export default {
+  component: SearchableDropdown,
+  title: 'Components/SearchableDropdown',
+}
 
 const ItemSpec = createSpec({
   id: faker.random.uuid(),
@@ -33,13 +34,13 @@ const items = [
   },
 ]
 
-stories.add('Default', () => {
+export const Default = () => {
   return (
     <SearchableDropdown itemFilterKey="label" items={items} isOpen={true} />
   )
-})
+}
 
-stories.add('DropUp', () => {
+export const DropUp = () => {
   return (
     <SearchableDropdown
       itemFilterKey="label"
@@ -48,9 +49,13 @@ stories.add('DropUp', () => {
       dropUp={true}
     />
   )
-})
+}
 
-stories.add('StateReducer', () => {
+DropUp.story = {
+  name: 'DropUp',
+}
+
+export const StateReducer = () => {
   const stateReducer = (state, action) => {
     console.group('State update')
     console.log('state', state)
@@ -68,9 +73,13 @@ stories.add('StateReducer', () => {
       stateReducer={stateReducer}
     />
   )
-})
+}
 
-stories.add('Stateful/With Multiple Selection', () => {
+StateReducer.story = {
+  name: 'StateReducer',
+}
+
+export const StatefulWithMultipleSelection = () => {
   const props = {
     items,
     dropUp: boolean('dropUp', false),
@@ -81,9 +90,13 @@ stories.add('Stateful/With Multiple Selection', () => {
   }
 
   return <SearchableDropdown {...props} />
-})
+}
 
-stories.add('Infinite Scroll', () => {
+StatefulWithMultipleSelection.story = {
+  name: 'Stateful/With Multiple Selection',
+}
+
+export const InfiniteScroll = () => {
   class Test extends React.Component {
     state = {
       items: ItemSpec.generate(30),
@@ -131,9 +144,9 @@ stories.add('Infinite Scroll', () => {
   }
 
   return <Test />
-})
+}
 
-stories.add('with Auto input', () => {
+export const WithAutoInput = () => {
   const props = {
     items,
     dropUp: boolean('dropUp', false),
@@ -143,4 +156,8 @@ stories.add('with Auto input', () => {
   }
 
   return <SearchableDropdown {...props} />
-})
+}
+
+WithAutoInput.story = {
+  name: 'with Auto input',
+}

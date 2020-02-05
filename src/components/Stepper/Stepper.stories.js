@@ -1,5 +1,5 @@
 import React from 'react'
-import { withKnobs, boolean, number } from '@storybook/addon-knobs'
+import { boolean, number } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import Stepper from '.'
 

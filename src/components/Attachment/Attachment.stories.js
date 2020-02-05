@@ -1,5 +1,5 @@
 import React from 'react'
-import { withKnobs, select, text } from '@storybook/addon-knobs'
+import { select, text } from '@storybook/addon-knobs'
 import { Attachment } from './Attachment'
 
 export default {

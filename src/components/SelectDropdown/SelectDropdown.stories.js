@@ -1,18 +1,13 @@
 import * as React from 'react'
-import {
-  withKnobs,
-  boolean,
-  number,
-  select,
-  text,
-} from '@storybook/addon-knobs'
+import { boolean, number, select, text } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import { createSpec, faker } from '@helpscout/helix'
-import { storiesOf } from '@storybook/react'
 import SelectDropdown from './index'
 
-const stories = storiesOf('Components/SelectDropdown', module)
-stories.addDecorator(withKnobs)
+export default {
+  component: SelectDropdown,
+  title: 'Components/SelectDropdown',
+}
 
 const ItemSpec = createSpec({
   id: faker.random.uuid(),
@@ -20,7 +15,7 @@ const ItemSpec = createSpec({
 })
 const items = ItemSpec.generate(20)
 
-stories.add('Default', () => {
+export const Default = () => {
   const props = {
     items,
     state: select(
@@ -39,9 +34,9 @@ stories.add('Default', () => {
     onSelect: action('onSelect'),
   }
   return <SelectDropdown {...props} />
-})
+}
 
-stories.add('Really long items', () => {
+export const ReallyLongItems = () => {
   const props = {
     items: [
       {
@@ -59,9 +54,13 @@ stories.add('Really long items', () => {
   }
 
   return <SelectDropdown {...props} />
-})
+}
 
-stories.add('Statefully controlled', () => {
+ReallyLongItems.story = {
+  name: 'Really long items',
+}
+
+export const StatefullyControlled = () => {
   class Example extends React.Component {
     state = {
       items: [
@@ -81,9 +80,13 @@ stories.add('Statefully controlled', () => {
   }
 
   return <Example />
-})
+}
 
-stories.add('with auto input', () => {
+StatefullyControlled.story = {
+  name: 'Statefully controlled',
+}
+
+export const WithAutoInput = () => {
   const props = {
     items,
     state: select(
@@ -103,4 +106,8 @@ stories.add('with auto input', () => {
     autoInput: true,
   }
   return <SelectDropdown {...props} />
-})
+}
+
+WithAutoInput.story = {
+  name: 'with auto input',
+}

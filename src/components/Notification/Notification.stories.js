@@ -1,6 +1,6 @@
 import React from 'react'
 import { createSpec, faker } from '@helpscout/helix'
-import { withKnobs, text, select } from '@storybook/addon-knobs'
+import { text, select } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import { Notification } from '../index'
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { withKnobs, number, text, select } from '@storybook/addon-knobs'
+import { number, text, select } from '@storybook/addon-knobs'
 import AvatarSpec from '../../utilities/specs/avatar.specs'
 import { Avatar, AvatarStack } from '../index'
 

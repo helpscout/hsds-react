@@ -1,5 +1,5 @@
 import React from 'react'
-import { withKnobs, text, select } from '@storybook/addon-knobs'
+import { text, select } from '@storybook/addon-knobs'
 import { faker } from '@helpscout/helix'
 import { PromoCard } from '../index'
 

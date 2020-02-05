@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { withKnobs, number } from '@storybook/addon-knobs'
+import { number } from '@storybook/addon-knobs'
 import { FilteredList } from '..'
 
 export default {

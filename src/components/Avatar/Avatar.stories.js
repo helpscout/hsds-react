@@ -1,6 +1,6 @@
 import React from 'react'
 import { ThemeProvider } from 'styled-components'
-import { withKnobs, boolean, select } from '@storybook/addon-knobs'
+import { boolean, select } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import AvatarSpec from '../../utilities/specs/avatar.specs'
 import { getColor } from '../../styles/utilities/color'

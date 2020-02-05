@@ -1,5 +1,5 @@
 import React from 'react'
-import { withKnobs, boolean, number, text } from '@storybook/addon-knobs'
+import { boolean, number, text } from '@storybook/addon-knobs'
 import { Avatar, Message } from '../../index'
 
 export default {

@@ -1,12 +1,6 @@
 import React from 'react'
 import { ThemeProvider } from '../styled'
-import {
-  withKnobs,
-  boolean,
-  number,
-  text,
-  select,
-} from '@storybook/addon-knobs'
+import { boolean, number, text, select } from '@storybook/addon-knobs'
 import { getColor } from '../../styles/utilities/color'
 import { action } from '@storybook/addon-actions'
 import { makeBrandColors } from '../../styles/utilities/color'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { withKnobs, boolean, select } from '@storybook/addon-knobs'
+import { boolean, select } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import { CloseButton } from '../index'
 

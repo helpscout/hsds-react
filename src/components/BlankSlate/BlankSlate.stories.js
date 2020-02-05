@@ -1,5 +1,5 @@
 import React from 'react'
-import { withKnobs, boolean, number, text } from '@storybook/addon-knobs'
+import { boolean, number, text } from '@storybook/addon-knobs'
 import WrenchCat from '@helpscout/hsds-illos/wrench-cat'
 import { withAktiv } from '../../utilities/storybook'
 import { BlankSlate } from '../index'

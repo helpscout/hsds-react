@@ -1,7 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
-import { withKnobs, boolean, number, text } from '@storybook/addon-knobs'
+import { boolean, number, text } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import { Pagination } from '..'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { withKnobs, boolean } from '@storybook/addon-knobs'
+import { boolean } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import { createSpec, faker } from '@helpscout/helix'
 import { Card, Image, Scrollable } from '../index'

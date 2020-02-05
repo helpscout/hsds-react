@@ -1,6 +1,6 @@
 import React from 'react'
 import DotStepper from './'
-import { withKnobs, number } from '@storybook/addon-knobs'
+import { number } from '@storybook/addon-knobs'
 
 export default {
   component: DotStepper,

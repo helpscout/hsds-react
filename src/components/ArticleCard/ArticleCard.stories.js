@@ -1,6 +1,6 @@
 import React from 'react'
 import { createSpec, faker } from '@helpscout/helix'
-import { withKnobs, boolean, text } from '@storybook/addon-knobs'
+import { boolean, text } from '@storybook/addon-knobs'
 import {
   ArticleCard,
   Flexy,

@@ -1,11 +1,5 @@
 import * as React from 'react'
-import {
-  withKnobs,
-  boolean,
-  number,
-  select,
-  text,
-} from '@storybook/addon-knobs'
+import { boolean, number, select, text } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import Tooltip, { TooltipContext } from '.'
 
