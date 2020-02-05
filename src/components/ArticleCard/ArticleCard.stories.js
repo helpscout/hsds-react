@@ -23,48 +23,6 @@ const avatarsMarkup = fixtures.map(avatar => {
   return <Avatar image={image} key={name} name={name} status={null} />
 })
 
-const baseGuide = {
-  position: 'absolute',
-  width: '100%',
-  zIndex: 1000,
-}
-
-export const guides = [
-  {
-    ...baseGuide,
-    height: 20,
-  },
-  {
-    ...baseGuide,
-    height: 22,
-    top: 'none',
-    bottom: 0,
-  },
-  {
-    ...baseGuide,
-    height: '100%',
-    width: 20,
-  },
-  {
-    ...baseGuide,
-    height: '100%',
-    left: 'none',
-    right: 0,
-    width: 20,
-  },
-  {
-    ...baseGuide,
-    height: 5,
-    top: 'none',
-    color: 'blue',
-    bottom: -4,
-  },
-]
-
-export function makeGuides(guides) {
-  return guides.map((guide, key) => <Guide key={key} {...guide} />)
-}
-
 const ArticleSpec = createSpec({
   title: faker.lorem.sentence(),
   content: faker.lorem.paragraph(),
@@ -90,9 +48,6 @@ export const Default = () => {
 
   return (
     <div style={{ position: 'relative' }}>
-      <GuideContainer position="absolute" width="100%" height="100%">
-        {makeGuides(guides)}
-      </GuideContainer>
       <ArticleCard {...props} />
       {consecutive && <ArticleCard {...props} />}
     </div>
