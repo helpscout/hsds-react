@@ -4,7 +4,7 @@ import { FilteredList } from '..'
 
 export default {
   component: FilteredList,
-  title: 'Components/FilteredList',
+  title: 'Components/Text/FilteredList',
 }
 
 const items = [

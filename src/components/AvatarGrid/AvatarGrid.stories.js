@@ -4,7 +4,7 @@ import { Avatar, AvatarGrid } from '../index'
 
 export default {
   component: AvatarGrid,
-  title: 'Components/AvatarGrid',
+  title: 'Phaseout/AvatarGrid',
 }
 const fixtures = AvatarSpec.generate(20)
 

@@ -3,7 +3,7 @@ import { Card, Overlay, PropProvider } from '../index'
 
 export default {
   component: Overlay,
-  title: 'Components/Overlay',
+  title: 'Utilities/Overlay',
 }
 
 export const Default = () => (

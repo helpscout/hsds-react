@@ -3,19 +3,9 @@ import { number, text, select } from '@storybook/addon-knobs'
 import AvatarSpec from '../../utilities/specs/avatar.specs'
 import { Avatar, AvatarStack } from '../index'
 
-const guides = [
-  {
-    width: '100%',
-    height: '60px',
-    top: '50%',
-    marginTop: '-30px',
-    opacity: 0.1,
-  },
-]
-
 export default {
   component: AvatarStack,
-  title: 'Components/AvatarStack',
+  title: 'Phaseout/AvatarStack',
 }
 
 export const V2Default = () => {
@@ -25,8 +15,6 @@ export const V2Default = () => {
   const animationEasing = text('animationEasing', 'ease')
   const animationSequence = text('animationSequence', 'fade')
   const max = number('max', 5)
-
-  const animation = number('animationDuration', 300)
   const size = select(
     'size',
     {

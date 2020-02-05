@@ -4,7 +4,7 @@ import { Avatar, ChatScroller, Message, Scrollable } from '../index'
 
 export default {
   component: ChatScroller,
-  title: 'Components/ChatScroller',
+  title: 'Components/Groups/ChatScroller',
 }
 
 const MessageSpec = createSpec({

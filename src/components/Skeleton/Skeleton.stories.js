@@ -3,7 +3,7 @@ import { FormGroup, Flexy, Skeleton } from '../index'
 
 export default {
   component: Skeleton,
-  title: 'Components/Skeleton',
+  title: 'Components/Structural/Skeleton',
 }
 
 export const Default = () => (

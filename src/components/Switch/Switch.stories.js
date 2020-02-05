@@ -3,7 +3,7 @@ import { Flexy, Hr, Switch, Text } from '../index'
 
 export default {
   component: Switch,
-  title: 'Components/Switch',
+  title: 'Components/Forms/Switch',
 }
 
 export const Default = () => (

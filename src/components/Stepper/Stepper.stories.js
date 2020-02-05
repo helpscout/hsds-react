@@ -5,7 +5,7 @@ import Stepper from '.'
 
 export default {
   component: Stepper,
-  title: 'Components/Stepper',
+  title: 'Components/Wayfinding/Stepper',
 }
 
 export const Default = () => {

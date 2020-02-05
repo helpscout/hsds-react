@@ -5,7 +5,7 @@ import { PromoCard } from '../index'
 
 export default {
   component: PromoCard,
-  title: 'Components/PromoCard',
+  title: 'Components/Structural/PromoCard',
 }
 
 const initialContent = faker.lorem.paragraph()()

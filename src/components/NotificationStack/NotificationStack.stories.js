@@ -5,7 +5,7 @@ import { Notification, NotificationStack } from '../index'
 
 export default {
   component: NotificationStack,
-  title: 'Components/NotificationStack',
+  title: 'Utilities/NotificationStack',
 }
 
 const NotificationSpec = createSpec({

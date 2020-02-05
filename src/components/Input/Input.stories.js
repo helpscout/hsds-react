@@ -7,7 +7,7 @@ import { Button, Flexy, Icon, Input } from '../index'
 
 export default {
   component: Input,
-  title: 'Components/Input',
+  title: 'Components/Forms/Input',
 }
 
 export const Default = () => {

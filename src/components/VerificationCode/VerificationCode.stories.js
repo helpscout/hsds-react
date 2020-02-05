@@ -3,7 +3,7 @@ import VerificationCode from './'
 
 export default {
   component: VerificationCode,
-  title: 'Components/VerificationCode',
+  title: 'Components/Forms/VerificationCode',
 }
 
 export const Default = () => {

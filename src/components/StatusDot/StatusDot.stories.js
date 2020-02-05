@@ -3,7 +3,7 @@ import { StatusDot } from '../index'
 
 export default {
   component: StatusDot,
-  title: 'Components/StatusDot',
+  title: 'Components/Badges/StatusDot',
 }
 
 export const Default = () => <StatusDot />

@@ -14,7 +14,7 @@ import AvatarSpec from '../../utilities/specs/avatarGrid.specs'
 
 export default {
   component: ArticleCard,
-  title: 'Components/ArticleCard',
+  title: 'Components/Structural/ArticleCard',
 }
 
 const fixtures = AvatarSpec.generate(5)

@@ -5,7 +5,7 @@ import { Toolbar } from '../index'
 
 export default {
   component: Toolbar,
-  title: 'Components/Toolbar',
+  title: 'Components/Conversation/Toolbar',
 }
 
 export const Default = () => (

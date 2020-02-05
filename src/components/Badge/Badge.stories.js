@@ -4,7 +4,7 @@ import { Badge } from '../index'
 
 export default {
   component: Badge,
-  title: 'Components/Badge',
+  title: 'Components/Badges/Badge',
 }
 
 export const Default = () => <Badge>Badger</Badge>

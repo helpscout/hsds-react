@@ -4,7 +4,7 @@ import IconButton from '.'
 
 export default {
   component: IconButton,
-  title: 'Components/IconButton',
+  title: 'Components/Buttons/IconButton',
 }
 
 export const Default = () => {

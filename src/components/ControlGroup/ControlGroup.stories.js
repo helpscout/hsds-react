@@ -3,7 +3,7 @@ import { Button, ControlGroup, Icon, Input, Select } from '../index'
 
 export default {
   component: ControlGroup,
-  title: 'Components/ControlGroup',
+  title: 'Components/Forms/ControlGroup',
 }
 
 export const Default = () => (

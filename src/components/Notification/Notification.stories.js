@@ -6,7 +6,7 @@ import { Notification } from '../index'
 
 export default {
   component: Notification,
-  title: 'Components/Notification',
+  title: 'Components/Conversation/Notification',
 }
 
 const NotificationSpec = createSpec({

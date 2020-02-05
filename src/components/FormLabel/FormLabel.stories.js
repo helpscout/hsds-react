@@ -3,7 +3,7 @@ import { Page, FormLabel, FormGroup, Input, Switch } from '../index'
 
 export default {
   component: FormLabel,
-  title: 'Components/FormLabel',
+  title: 'Components/Text/FormLabel',
 }
 
 export const Default = () => (

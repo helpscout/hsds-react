@@ -3,7 +3,7 @@ import { ChoiceGroup, RadioCard, Icon } from '../index'
 
 export default {
   component: RadioCard,
-  title: 'Components/RadioCard',
+  title: 'Components/Forms/RadioCard',
 }
 
 const onChange = value => {

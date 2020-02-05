@@ -5,7 +5,7 @@ import { Avatar, ChatList } from '../index'
 
 export default {
   component: ChatList,
-  title: 'Components/ChatList',
+  title: 'Components/Wayfinding/ChatList',
 }
 
 const avatars = AvatarSpec.generate(8)

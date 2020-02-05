@@ -3,7 +3,7 @@ import { FluffyCard } from '../index'
 
 export default {
   component: FluffyCard,
-  title: 'Components/FluffyCard',
+  title: 'Components/Structural/FluffyCard',
 }
 
 export const Default = () => (

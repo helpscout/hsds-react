@@ -7,7 +7,7 @@ import { Flexy, Icon, Text } from '../index'
 
 export default {
   component: Icon,
-  title: 'Components/Icon',
+  title: 'Components/Elements/Icon',
 }
 
 const IconGrid = styled('div')`

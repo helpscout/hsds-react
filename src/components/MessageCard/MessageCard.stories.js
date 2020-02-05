@@ -8,7 +8,7 @@ import MessageCard from '.'
 
 export default {
   component: MessageCard,
-  title: 'Components/MessageCard',
+  title: 'Components/Conversation/MessageCard',
 }
 
 class Story extends React.Component {

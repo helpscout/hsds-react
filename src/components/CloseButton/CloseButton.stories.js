@@ -5,7 +5,7 @@ import { CloseButton } from '../index'
 
 export default {
   component: CloseButton,
-  title: 'To Delete/CloseButton',
+  title: 'Components/Buttons/CloseButton',
 }
 
 export const Default = () => {

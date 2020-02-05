@@ -3,7 +3,7 @@ import { Checkbox, ChoiceGroup, Heading, Text } from '../index'
 
 export default {
   component: Checkbox,
-  title: 'Components/Checkbox',
+  title: 'Components/Forms/Checkbox',
 }
 
 export const Default = () => (

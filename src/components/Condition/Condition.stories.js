@@ -14,7 +14,7 @@ import { boolean } from '@storybook/addon-knobs'
 
 export default {
   component: Condition,
-  title: 'Components/Condition',
+  title: 'Components/Forms/Condition',
 }
 
 const options = [

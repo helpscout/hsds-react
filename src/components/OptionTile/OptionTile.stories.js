@@ -4,7 +4,7 @@ import { OptionTile } from '../index'
 
 export default {
   component: OptionTile,
-  title: 'Components/OptionTile',
+  title: 'Components/Wayfinding/OptionTile',
 }
 
 export const Default = () => <OptionTile />

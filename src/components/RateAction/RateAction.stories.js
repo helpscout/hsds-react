@@ -3,7 +3,7 @@ import RateAction from '.'
 
 export default {
   component: RateAction,
-  title: 'Components/RateAction',
+  title: 'Components/Badges/RateAction',
 }
 
 const font =

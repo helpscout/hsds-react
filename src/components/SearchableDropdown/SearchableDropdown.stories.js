@@ -7,7 +7,7 @@ import InfiniteScroller from '../InfiniteScroller'
 
 export default {
   component: SearchableDropdown,
-  title: 'Components/SearchableDropdown',
+  title: 'Components/Dropdowns/SearchableDropdown',
 }
 
 const ItemSpec = createSpec({

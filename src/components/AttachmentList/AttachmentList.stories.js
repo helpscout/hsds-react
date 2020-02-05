@@ -3,7 +3,7 @@ import { Attachment, AttachmentList } from '../index'
 
 export default {
   component: AttachmentList,
-  title: 'Components/AttachmentList',
+  title: 'Components/Groups/AttachmentList',
 }
 
 const onClick = (event, attachment) => {

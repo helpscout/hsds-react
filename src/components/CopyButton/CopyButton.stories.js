@@ -4,7 +4,7 @@ import { CopyButton } from '../index'
 
 export default {
   component: CopyButton,
-  title: 'Components/CopyButton',
+  title: 'Components/Buttons/CopyButton',
 }
 
 export const Default = () => (

@@ -3,7 +3,7 @@ import { PreviewCard } from '../index'
 
 export default {
   component: PreviewCard,
-  title: 'Components/PreviewCard',
+  title: 'Components/Structural/PreviewCard',
 }
 
 export const Default = () => (

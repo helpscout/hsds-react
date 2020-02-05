@@ -4,7 +4,7 @@ import { TagList, Tag } from '../index'
 
 export default {
   component: TagList,
-  title: 'Components/TagList',
+  title: 'Components/Groups/TagList',
 }
 
 export class SampleComponent extends Component {

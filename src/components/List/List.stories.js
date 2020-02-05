@@ -4,7 +4,7 @@ import { List, Text } from '../index'
 
 export default {
   component: List,
-  title: 'Components/List',
+  title: 'Utilities/List',
 }
 
 const listItems = [

@@ -7,7 +7,7 @@ import { getColor } from '../../styles/utilities/color'
 
 export default {
   component: AvatarSelector,
-  title: 'Components/AvatarSelector',
+  title: 'Components/Badges/AvatarSelector',
 }
 
 const DarkerUI = styled.div`

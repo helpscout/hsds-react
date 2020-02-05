@@ -8,7 +8,7 @@ import { Avatar, Flexy, Button } from '../index'
 
 export default {
   component: Avatar,
-  title: 'Components/Avatar',
+  title: 'Components/Badges/Avatar',
 }
 
 const fixture = AvatarSpec.generate()

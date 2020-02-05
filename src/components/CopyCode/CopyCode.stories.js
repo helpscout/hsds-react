@@ -4,7 +4,7 @@ import { CopyCode } from '../index'
 
 export default {
   component: CopyCode,
-  title: 'Components/CopyCode',
+  title: 'Components/Forms/CopyCode',
 }
 
 export const JavaScript = () => {

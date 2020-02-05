@@ -12,7 +12,7 @@ import EditableTextarea from '.'
 
 export default {
   component: EditableTextarea,
-  title: 'Components/EditableTextarea',
+  title: 'Components/Forms/EditableTextarea',
 }
 
 export const Default = () => (

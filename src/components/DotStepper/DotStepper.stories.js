@@ -4,7 +4,7 @@ import { number } from '@storybook/addon-knobs'
 
 export default {
   component: DotStepper,
-  title: 'Components/DotStepper',
+  title: 'Components/Wayfinding/DotStepper',
 }
 
 export const Default = () => {

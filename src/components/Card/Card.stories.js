@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, Heading } from '../index'
 
 export default {
-  title: 'Components/Card',
+  title: 'Components/Structural/Card',
   component: Card,
 }
 

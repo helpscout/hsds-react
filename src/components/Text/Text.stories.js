@@ -4,7 +4,7 @@ import Text from '.'
 
 export default {
   component: Text,
-  title: 'Components/Text',
+  title: 'Components/Text/Text',
 }
 
 export const Default = () => <Text>I am text. Behold my text.</Text>

@@ -7,7 +7,7 @@ import Modal from '../Modal'
 
 export default {
   component: SplitButton,
-  title: 'Components/SplitButton',
+  title: 'Components/Buttons/SplitButton',
 }
 
 const ItemSpec = createSpec({

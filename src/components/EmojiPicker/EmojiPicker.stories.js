@@ -5,7 +5,7 @@ import EmojiPicker from '.'
 
 export default {
   component: EmojiPicker,
-  title: 'Components/EmojiPicker',
+  title: 'Components/Conversation/EmojiPicker',
 }
 export const Default = () => {
   const props = {

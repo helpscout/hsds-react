@@ -5,7 +5,7 @@ import { Avatar } from '../index'
 
 export default {
   component: Avatar,
-  title: 'Components/Avatar',
+  title: 'Components/Badges/Avatar',
 }
 
 export const V2Default = () => {

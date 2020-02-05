@@ -13,7 +13,7 @@ import {
 
 export default {
   component: Button,
-  title: 'Components/Button',
+  title: 'Components/Buttons/Button',
 }
 
 const ContainerUI = styled('div')`

@@ -3,7 +3,7 @@ import { Alert, Button, Heading, Link, Text } from '../index'
 
 export default {
   component: Alert,
-  title: 'Components/Alert',
+  title: 'Components/Text/Alert',
 }
 
 export const Default = () => <Alert>Buddy!</Alert>

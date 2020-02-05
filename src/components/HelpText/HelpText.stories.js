@@ -3,7 +3,7 @@ import HelpText from '.'
 
 export default {
   component: HelpText,
-  title: 'Components/HelpText',
+  title: 'Components/Text/HelpText',
 }
 
 export const Default = () => (

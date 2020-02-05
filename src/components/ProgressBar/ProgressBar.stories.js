@@ -3,7 +3,7 @@ import { ProgressBar } from '../index'
 
 export default {
   component: ProgressBar,
-  title: 'Components/ProgressBar',
+  title: 'Components/Elements/ProgressBar',
 }
 
 export const Default = () => <ProgressBar value={50} />

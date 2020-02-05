@@ -3,7 +3,7 @@ import { Card, Sortable, SidebarCollapsibleCard } from '../index'
 
 export default {
   component: Sortable,
-  title: 'Components/Sortable',
+  title: 'Components/Structural/Sortable',
 }
 
 export const Default = () => (

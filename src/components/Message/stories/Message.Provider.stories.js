@@ -3,7 +3,7 @@ import { Message } from '../../index'
 
 export default {
   component: Message,
-  title: 'Components/Message',
+  title: 'Components/Conversation/Message',
 }
 
 export const Theme = () => {

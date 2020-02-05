@@ -5,7 +5,7 @@ import { faker } from '@helpscout/helix'
 
 export default {
   component: Accordion,
-  title: 'Components/Accordion',
+  title: 'Components/Structural/Accordion',
 }
 
 const body = faker.lorem.paragraph()()

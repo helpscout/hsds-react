@@ -9,7 +9,7 @@ import Button from '../Button'
 
 export default {
   component: TabBar,
-  title: 'Components/TabBar',
+  title: 'Components/Wayfinding/TabBar',
 }
 
 const ItemSpec = createSpec({

@@ -1,12 +1,12 @@
 import React from 'react'
-import { boolean, number, text } from '@storybook/addon-knobs'
+import { boolean, text } from '@storybook/addon-knobs'
 import WrenchCat from '@helpscout/hsds-illos/wrench-cat'
 import { withAktiv } from '../../utilities/storybook'
 import { BlankSlate } from '../index'
 
 export default {
   component: BlankSlate,
-  title: 'Components/BlankSlate',
+  title: 'Components/Text/BlankSlate',
 }
 
 const message = () =>

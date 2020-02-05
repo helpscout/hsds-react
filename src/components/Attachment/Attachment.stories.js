@@ -4,7 +4,7 @@ import { Attachment } from './Attachment'
 
 export default {
   component: Attachment,
-  title: 'Components/Attachment',
+  title: 'Components/Badges/Attachment',
 }
 
 export const Default = () => {

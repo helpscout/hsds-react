@@ -4,7 +4,7 @@ import { CopyInput } from '../index'
 
 export default {
   component: CopyInput,
-  title: 'Components/CopyInput',
+  title: 'Components/Forms/CopyInput',
 }
 
 export const Default = () => (

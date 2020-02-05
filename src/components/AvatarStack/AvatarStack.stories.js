@@ -4,7 +4,7 @@ import { Avatar, AvatarStack } from '../index'
 
 export default {
   component: AvatarStack,
-  title: 'Components/AvatarStack',
+  title: 'Phaseout/AvatarStack',
 }
 
 const fixtures = AvatarSpec.generate(5)

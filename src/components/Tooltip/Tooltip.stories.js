@@ -5,7 +5,7 @@ import Tooltip, { TooltipContext } from '.'
 
 export default {
   component: Tooltip,
-  title: 'Components/Tooltip',
+  title: 'Components/Overlay/Tooltip',
 }
 
 export const Default = () => {

@@ -6,7 +6,7 @@ import Nav from '.'
 
 export default {
   component: Nav,
-  title: 'Components/Nav',
+  title: 'Components/Wayfinding/Nav',
 }
 
 const RouteComponent = () => <div />

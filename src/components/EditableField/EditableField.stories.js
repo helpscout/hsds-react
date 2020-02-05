@@ -6,7 +6,7 @@ import EditableField from '.'
 
 export default {
   component: EditableField,
-  title: 'Components/EditableField',
+  title: 'Components/Forms/EditableField',
 }
 
 export const ContainerUI = styled('div')`

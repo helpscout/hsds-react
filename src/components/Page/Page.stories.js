@@ -5,7 +5,7 @@ import { Button, Input, Page } from '../index'
 
 export default {
   component: Page,
-  title: 'Components/Page',
+  title: 'Components/Structural/Page',
 }
 
 const renderPropCode = `

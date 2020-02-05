@@ -20,7 +20,7 @@ import Frame from '../Frame'
 
 export default {
   component: Modal,
-  title: 'Components/Modal',
+  title: 'Components/Overlay/Modal',
 }
 
 const ContentSpec = createSpec({

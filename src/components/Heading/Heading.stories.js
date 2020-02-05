@@ -4,7 +4,7 @@ import Heading from '.'
 
 export default {
   component: Heading,
-  title: 'Components/Heading',
+  title: 'Components/Text/Heading',
 }
 
 export const Default = () => {

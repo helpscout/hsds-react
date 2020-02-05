@@ -4,7 +4,7 @@ import { Tag } from '../index'
 
 export default {
   component: Tag,
-  title: 'Components/Tag',
+  title: 'Components/Badges/Tag',
 }
 
 export const Default = () => {

@@ -14,7 +14,7 @@ import { defaultSkin, alternativeSkin } from '../Table.skins'
 
 export default {
   component: Table,
-  title: 'Components/Table',
+  title: 'Components/Structural/Table',
 }
 
 export const ContainerUI = styled('div')`

@@ -4,7 +4,7 @@ import { Avatar, Message } from '../../index'
 
 export default {
   component: Message,
-  title: 'Components/Message',
+  title: 'Components/Conversation/Message',
 }
 const dimensions = { width: 800, height: 500 }
 const imageUrlSlow = `https://loremflickr.com/${dimensions.width}/${dimensions.height}`

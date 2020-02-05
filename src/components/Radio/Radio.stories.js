@@ -3,7 +3,7 @@ import { Grid, PropProvider, Radio, ChoiceGroup } from '../index'
 
 export default {
   component: Radio,
-  title: 'Components/Radio',
+  title: 'Components/Forms/Radio',
 }
 
 export const Default = () => <Radio label="Label" helpText="Help description" />

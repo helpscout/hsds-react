@@ -3,7 +3,7 @@ import { Emoticon } from './Emoticon'
 
 export default {
   component: Emoticon,
-  title: 'Components/Emoticon',
+  title: 'Components/Badges/Emoticon',
 }
 
 const font =

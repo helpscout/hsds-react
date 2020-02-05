@@ -3,7 +3,7 @@ import { Image } from '../index'
 
 export default {
   component: Image,
-  title: 'Components/Image',
+  title: 'Components/Structural/Image',
 }
 
 export const Default = () => (

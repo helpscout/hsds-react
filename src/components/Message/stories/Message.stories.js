@@ -4,7 +4,7 @@ import { Avatar, Link, Message, PreviewCard } from '../../index'
 
 export default {
   component: Message,
-  title: 'Components/Message',
+  title: 'Components/Conversation/Message',
 }
 
 export const Default = () => (

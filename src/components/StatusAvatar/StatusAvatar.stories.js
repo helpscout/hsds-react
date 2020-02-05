@@ -4,7 +4,7 @@ import { StatusAvatar } from '../index'
 
 export default {
   component: StatusAvatar,
-  title: 'Components/StatusAvatar',
+  title: 'Components/Badges/StatusAvatar',
 }
 
 const fixture = AvatarSpec.generate()

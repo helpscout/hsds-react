@@ -3,7 +3,7 @@ import { Timestamp } from '../index'
 
 export default {
   component: Timestamp,
-  title: 'Components/Timestamp',
+  title: 'Components/Text/Timestamp',
 }
 
 const customFormatter = timestamp => {

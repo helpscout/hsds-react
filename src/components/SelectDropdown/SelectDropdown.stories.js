@@ -6,7 +6,7 @@ import SelectDropdown from './index'
 
 export default {
   component: SelectDropdown,
-  title: 'Components/SelectDropdown',
+  title: 'Components/Dropdowns/SelectDropdown',
 }
 
 const ItemSpec = createSpec({

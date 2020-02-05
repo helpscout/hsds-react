@@ -3,7 +3,7 @@ import { StatusBar } from '../index'
 
 export default {
   component: StatusBar,
-  title: 'Components/StatusBar',
+  title: 'Components/Text/StatusBar',
 }
 
 export const Default = () => (

@@ -7,7 +7,7 @@ import Button from '../Button'
 
 export default {
   component: Dropdown,
-  title: 'Components/Dropdown',
+  title: 'Components/Dropdowns/Dropdown',
 }
 
 export const ItemSpec = createSpec({

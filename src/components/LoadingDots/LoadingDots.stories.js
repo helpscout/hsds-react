@@ -3,7 +3,7 @@ import { LoadingDots, Text } from '../index'
 
 export default {
   component: LoadingDots,
-  title: 'Components/LoadingDots',
+  title: 'Components/Elements/LoadingDots',
 }
 
 export const Default = () => <LoadingDots />

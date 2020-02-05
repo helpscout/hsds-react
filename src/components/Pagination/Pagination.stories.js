@@ -7,7 +7,7 @@ import { Pagination } from '..'
 
 export default {
   component: Pagination,
-  title: 'Components/Pagination',
+  title: 'Components/Wayfinding/Pagination',
 }
 
 export const config = {

@@ -5,7 +5,7 @@ import { ArticleCard, CardList } from '../index'
 
 export default {
   component: CardList,
-  title: 'Components/CardList',
+  title: 'Components/Structural/CardList',
 }
 
 const CardSpec = createSpec({

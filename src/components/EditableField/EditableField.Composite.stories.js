@@ -11,7 +11,7 @@ import { EditableFieldComposite } from '.'
 // .addDecorator(withAktiv);
 export default {
   component: EditableFieldComposite,
-  title: 'Components/EditableFieldComposite',
+  title: 'Components/Forms/EditableFieldComposite',
 }
 
 export const Default = () => (
