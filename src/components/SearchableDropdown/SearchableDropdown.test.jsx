@@ -1,38 +1,32 @@
-import * as React from 'react'
+import React from 'react'
 import { mount } from 'enzyme'
-import { ComboBox } from './ComboBox'
+import { SearchableDropdown } from './SearchableDropdown'
 import { hasClass } from '../../tests/helpers/enzyme'
 
-jest.mock('../Dropdown/V2/Dropdown.Card', () => {
+jest.mock('../Dropdown/Dropdown.Card', () => {
   const Card = ({ children }) => <div>{children}</div>
-  return {
-    default: Card,
-  }
+  return Card
 })
 
 jest.mock('../Animate', () => {
   const Animate = ({ children }) => <div>{children}</div>
-  return {
-    default: Animate,
-  }
+  return Animate
 })
 
-jest.mock('../Dropdown/V2/Dropdown.MenuPortal', () => {
+jest.mock('../Dropdown/Dropdown.MenuPortal', () => {
   const Portal = ({ children }) => <div>{children}</div>
-  return {
-    default: Portal,
-  }
+  return Portal
 })
 
 describe('className', () => {
   test('Has a default className', () => {
-    const wrapper = mount(<ComboBox />)
+    const wrapper = mount(<SearchableDropdown />)
 
-    expect(hasClass(wrapper, 'c-ComboBox')).toBe(true)
+    expect(hasClass(wrapper, 'c-SearchableDropdown')).toBe(true)
   })
 
   test('Accepts custom className', () => {
-    const wrapper = mount(<ComboBox className="ron" />)
+    const wrapper = mount(<SearchableDropdown className="ron" />)
 
     expect(hasClass(wrapper, 'ron')).toBe(true)
   })
@@ -40,8 +34,8 @@ describe('className', () => {
 
 describe('safeSetState', () => {
   test('Removes _isMounted flag on unmount', () => {
-    const wrapper = mount(<ComboBox />)
-    const inst = wrapper.instance() as any
+    const wrapper = mount(<SearchableDropdown />)
+    const inst = wrapper.instance()
 
     wrapper.unmount()
 
@@ -49,8 +43,8 @@ describe('safeSetState', () => {
   })
 
   test('Cannot safeSetState on unmount', () => {
-    const wrapper = mount(<ComboBox />)
-    const inst = wrapper.instance() as any
+    const wrapper = mount(<SearchableDropdown />)
+    const inst = wrapper.instance()
 
     wrapper.setState({ safe: true })
 
@@ -64,7 +58,7 @@ describe('safeSetState', () => {
 
 describe('Input', () => {
   test('Passes inputValue to Dropdown', () => {
-    const wrapper = mount(<ComboBox />)
+    const wrapper = mount(<SearchableDropdown />)
     wrapper.setState({ inputValue: 'ron' })
 
     const el = wrapper.find('Dropdown')
@@ -73,7 +67,7 @@ describe('Input', () => {
   })
 
   test('Renders an input', () => {
-    const wrapper = mount(<ComboBox isOpen />)
+    const wrapper = mount(<SearchableDropdown isOpen />)
 
     const inputEl = wrapper.find('Input')
 
@@ -82,7 +76,7 @@ describe('Input', () => {
 
   test('Fires onInputChange callback', () => {
     const spy = jest.fn()
-    const wrapper = mount(<ComboBox isOpen onInputChange={spy} />)
+    const wrapper = mount(<SearchableDropdown isOpen onInputChange={spy} />)
 
     const el = wrapper.find('input[type="text"]')
     // @ts-ignore
@@ -94,7 +88,9 @@ describe('Input', () => {
 
   test('Does not fire onInputChange callback, if input value does not change', () => {
     const spy = jest.fn()
-    const wrapper = mount(<ComboBox isOpen onInputChange={spy} inputValue="" />)
+    const wrapper = mount(
+      <SearchableDropdown isOpen onInputChange={spy} inputValue="" />
+    )
 
     const el = wrapper.find('input[type="text"]')
     // @ts-ignore
@@ -106,7 +102,7 @@ describe('Input', () => {
 
   test('Stops propagation on Enter press', () => {
     const spy = jest.fn()
-    const wrapper = mount(<ComboBox isOpen />)
+    const wrapper = mount(<SearchableDropdown isOpen />)
 
     const el = wrapper.find('Input')
 
@@ -118,7 +114,9 @@ describe('Input', () => {
 
   test('Fires onKeyDown callback', () => {
     const spy = jest.fn()
-    const wrapper = mount(<ComboBox isOpen inputProps={{ onKeyDown: spy }} />)
+    const wrapper = mount(
+      <SearchableDropdown isOpen inputProps={{ onKeyDown: spy }} />
+    )
 
     const el = wrapper.find('Input')
 
@@ -128,9 +126,9 @@ describe('Input', () => {
     expect(spy).toHaveBeenCalled()
   })
 
-  test('Closes ComboBox on input tab press, by default', () => {
+  test('Closes SearchableDropdown on input tab press, by default', () => {
     const spy = jest.fn()
-    const wrapper = mount(<ComboBox isOpen />)
+    const wrapper = mount(<SearchableDropdown isOpen />)
 
     const el = wrapper.find('Input')
 
@@ -142,9 +140,9 @@ describe('Input', () => {
     expect(wrapper.state().isOpen).toBe(false)
   })
 
-  test('Tab press on input does NOT close ComboBox, if specified', () => {
+  test('Tab press on input does NOT close SearchableDropdown, if specified', () => {
     const spy = jest.fn()
-    const wrapper = mount(<ComboBox isOpen closeOnInputTab={false} />)
+    const wrapper = mount(<SearchableDropdown isOpen closeOnInputTab={false} />)
 
     const el = wrapper.find('Input')
 
@@ -170,7 +168,7 @@ describe('Filtering', () => {
         value: 'brick',
       },
     ]
-    const wrapper = mount(<ComboBox isOpen items={items} />)
+    const wrapper = mount(<SearchableDropdown isOpen items={items} />)
 
     expect(wrapper.find('DropdownItem').length).toBe(3)
 
@@ -195,7 +193,7 @@ describe('Filtering', () => {
       },
     ]
     const wrapper = mount(
-      <ComboBox isOpen items={items} itemFilterKey="label" />
+      <SearchableDropdown isOpen items={items} itemFilterKey="label" />
     )
 
     expect(wrapper.find('DropdownItem').length).toBe(3)
@@ -221,7 +219,7 @@ describe('Filtering', () => {
       },
     ]
     const wrapper = mount(
-      <ComboBox isOpen items={items} itemFilterKey="nope" />
+      <SearchableDropdown isOpen items={items} itemFilterKey="nope" />
     )
 
     expect(wrapper.find('DropdownItem').length).toBe(3)
@@ -252,7 +250,7 @@ describe('Filtering', () => {
         ],
       },
     ]
-    const wrapper = mount(<ComboBox isOpen items={items} />)
+    const wrapper = mount(<SearchableDropdown isOpen items={items} />)
 
     // +1 to account for group header
     expect(wrapper.find('DropdownItem').length).toBe(4)
@@ -284,7 +282,7 @@ describe('Filtering', () => {
         ],
       },
     ]
-    const wrapper = mount(<ComboBox isOpen items={items} />)
+    const wrapper = mount(<SearchableDropdown isOpen items={items} />)
 
     // +1 to account for group header
     expect(wrapper.find('DropdownItem').length).toBe(4)
@@ -297,7 +295,7 @@ describe('Filtering', () => {
 
     expect(wrapper.find('DropdownItem').length).toBe(0)
 
-    const emptyEl = wrapper.find('div.c-ComboBoxEmpty')
+    const emptyEl = wrapper.find('div.c-SearchableDropdownEmpty')
 
     expect(emptyEl.length).toBeTruthy()
     expect(emptyEl.text()).toContain('No results')
@@ -324,7 +322,7 @@ describe('Filtering', () => {
     ]
     const renderEmpty = () => <div className="empty-block" />
     const wrapper = mount(
-      <ComboBox isOpen items={items} renderEmpty={renderEmpty} />
+      <SearchableDropdown isOpen items={items} renderEmpty={renderEmpty} />
     )
 
     const el = wrapper.find('input[type="text"]')
@@ -366,7 +364,7 @@ describe('Custom Filtering', () => {
     }
 
     const wrapper = mount(
-      <ComboBox isOpen items={items} customFilter={customFilter} />
+      <SearchableDropdown isOpen items={items} customFilter={customFilter} />
     )
 
     expect(wrapper.find('DropdownItem').length).toBe(3)
@@ -384,7 +382,9 @@ describe('Custom Filtering', () => {
 describe('Render slots', () => {
   test('Can render into renderMenuStart', () => {
     const Component = () => <div className="render-component-test" />
-    const wrapper = mount(<ComboBox isOpen renderMenuStart={Component} />)
+    const wrapper = mount(
+      <SearchableDropdown isOpen renderMenuStart={Component} />
+    )
     const el = wrapper.find('div.render-component-test')
 
     expect(el.length).toBeTruthy()
@@ -392,7 +392,9 @@ describe('Render slots', () => {
 
   test('Can render into renderMenuEnd', () => {
     const Component = () => <div className="render-component-test" />
-    const wrapper = mount(<ComboBox isOpen renderMenuEnd={Component} />)
+    const wrapper = mount(
+      <SearchableDropdown isOpen renderMenuEnd={Component} />
+    )
     const el = wrapper.find('div.render-component-test')
 
     expect(el.length).toBeTruthy()
@@ -400,7 +402,9 @@ describe('Render slots', () => {
 
   test('Can render into renderFooter', () => {
     const Component = () => <div className="render-component-test" />
-    const wrapper = mount(<ComboBox isOpen renderFooter={Component} />)
+    const wrapper = mount(
+      <SearchableDropdown isOpen renderFooter={Component} />
+    )
     const el = wrapper.find('div.render-component-test')
 
     expect(el.length).toBeTruthy()
@@ -409,7 +413,7 @@ describe('Render slots', () => {
 
 describe('onSelect', () => {
   test('Resets inputValue on select', () => {
-    const wrapper = mount(<ComboBox />)
+    const wrapper = mount(<SearchableDropdown />)
     wrapper.setState({ inputValue: 'brick' })
 
     const el = wrapper.find('Dropdown').first()
@@ -422,7 +426,7 @@ describe('onSelect', () => {
 
   test('Fires onSelect callback', () => {
     const spy = jest.fn()
-    const wrapper = mount(<ComboBox onSelect={spy} />)
+    const wrapper = mount(<SearchableDropdown onSelect={spy} />)
     wrapper.setState({ inputValue: 'brick' })
 
     const el = wrapper.find('Dropdown').first()
@@ -436,7 +440,7 @@ describe('onSelect', () => {
 
 describe('onMenuMount/Unmount', () => {
   test('Clears search query on menu mount', () => {
-    const wrapper = mount(<ComboBox />)
+    const wrapper = mount(<SearchableDropdown />)
     wrapper.setState({ inputValue: 'ron' })
 
     const el = wrapper.find('Dropdown').first()
@@ -448,7 +452,7 @@ describe('onMenuMount/Unmount', () => {
   })
 
   test('Clears search query on menu unmount', () => {
-    const wrapper = mount(<ComboBox />)
+    const wrapper = mount(<SearchableDropdown />)
     wrapper.setState({ inputValue: 'ron' })
 
     const el = wrapper.find('Dropdown').first()
@@ -461,7 +465,7 @@ describe('onMenuMount/Unmount', () => {
 
   test('Attempts to scroll to top on reset', () => {
     const spy = jest.fn()
-    const wrapper = mount(<ComboBox />)
+    const wrapper = mount(<SearchableDropdown />)
     // @ts-ignore
     wrapper.instance().menuWrapperNode = { scrollTop: 50 }
 
@@ -476,7 +480,7 @@ describe('onMenuMount/Unmount', () => {
 describe('onOpen/onClose', () => {
   test('Fires onOpen callback', () => {
     const spy = jest.fn()
-    const wrapper = mount(<ComboBox onOpen={spy} />)
+    const wrapper = mount(<SearchableDropdown onOpen={spy} />)
     const el = wrapper.find('Dropdown')
 
     // @ts-ignore
@@ -487,7 +491,7 @@ describe('onOpen/onClose', () => {
 
   test('Fires onClose callback', () => {
     const spy = jest.fn()
-    const wrapper = mount(<ComboBox onClose={spy} />)
+    const wrapper = mount(<SearchableDropdown onClose={spy} />)
     const el = wrapper.find('Dropdown')
 
     // @ts-ignore
@@ -499,7 +503,7 @@ describe('onOpen/onClose', () => {
 
 describe('shouldDropDirectionUpdate', () => {
   test('Resolves to true, by default', () => {
-    const wrapper = mount(<ComboBox />)
+    const wrapper = mount(<SearchableDropdown />)
     const el = wrapper.find('Dropdown')
 
     // @ts-ignore
@@ -507,7 +511,7 @@ describe('shouldDropDirectionUpdate', () => {
   })
 
   test('Resolves to false, if there is text within the input', () => {
-    const wrapper = mount(<ComboBox />)
+    const wrapper = mount(<SearchableDropdown />)
     wrapper.setState({ inputValue: 'hello' })
     const el = wrapper.find('Dropdown')
 
@@ -522,11 +526,41 @@ describe('shouldDropDirectionUpdate', () => {
       return true
     }
     const wrapper = mount(
-      <ComboBox shouldDropDirectionUpdate={customShouldDropDirectionUpdate} />
+      <SearchableDropdown
+        shouldDropDirectionUpdate={customShouldDropDirectionUpdate}
+      />
     )
     const el = wrapper.find('Dropdown')
 
     // @ts-ignore
     expect(el.prop('shouldDropDirectionUpdate')()).toBe(true)
+  })
+})
+
+describe('limit', () => {
+  test('Renders a searchable input, if item count exceeds limit', () => {
+    const items = [0, 1, 2, 3]
+    const wrapper = mount(
+      <SearchableDropdown isOpen items={items} limit={2} autoInput={true} />
+    )
+    expect(wrapper.find('input[type="text"]').exists()).toBeTruthy()
+  })
+
+  test('Does not show a searchable input, if item count is below limit', () => {
+    const items = [0, 1, 2, 3]
+    const wrapper = mount(
+      <SearchableDropdown isOpen items={items} limit={20} autoInput={true} />
+    )
+
+    expect(wrapper.find('input[type="text"]').exists()).toBeFalsy()
+  })
+
+  test('Calculates the limit if there is group inside the item', () => {
+    const items = [{ type: 'group', items: [0, 1, 2, 3, 4] }]
+    const wrapper = mount(
+      <SearchableDropdown isOpen items={items} limit={2} autoInput={true} />
+    )
+
+    expect(wrapper.instance().isInputActive()).toBeTruthy()
   })
 })

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import AutoDropdown from '../AutoDropdown'
+import SearchableDropdown from '../SearchableDropdown'
 import Icon from '../Icon'
 import Text from '../Text'
 import SelectArrows from '../Select/Select.Arrows'
@@ -31,6 +31,8 @@ export class SelectDropdown extends React.PureComponent<
     clearOnSelect: false,
     errorIcon: 'alert',
     items: [],
+    limit: 15,
+    autoInput: true,
     isFocused: false,
     isFocusSelectedItemOnOpen: true,
     onBlur: noop,
@@ -179,7 +181,7 @@ export class SelectDropdown extends React.PureComponent<
         className="c-SelectDropdownWrapper"
         data-cy="SelectDropdown"
       >
-        <AutoDropdown
+        <SearchableDropdown
           {...this.props}
           className={this.getClassName()}
           renderTrigger={this.renderTrigger()}

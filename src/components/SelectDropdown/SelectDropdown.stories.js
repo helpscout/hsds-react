@@ -8,20 +8,19 @@ import {
 } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import { createSpec, faker } from '@helpscout/helix'
-import { SelectDropdown } from '..'
+import { storiesOf } from '@storybook/react'
+import SelectDropdown from './index'
 
-export default {
-  component: SelectDropdown,
-  title: 'Components/SelectDropdown',
-}
+const stories = storiesOf('Components/SelectDropdown', module)
+stories.addDecorator(withKnobs)
 
 const ItemSpec = createSpec({
   id: faker.random.uuid(),
   value: faker.name.firstName(),
 })
-const items = ItemSpec.generate(15)
+const items = ItemSpec.generate(20)
 
-export const Default = () => {
+stories.add('Default', () => {
   const props = {
     items,
     state: select(
@@ -40,9 +39,9 @@ export const Default = () => {
     onSelect: action('onSelect'),
   }
   return <SelectDropdown {...props} />
-}
+})
 
-export const ReallyLongItems = () => {
+stories.add('Really long items', () => {
   const props = {
     items: [
       {
@@ -60,13 +59,9 @@ export const ReallyLongItems = () => {
   }
 
   return <SelectDropdown {...props} />
-}
+})
 
-ReallyLongItems.story = {
-  name: 'Really long items',
-}
-
-export const StatefullyControlled = () => {
+stories.add('Statefully controlled', () => {
   class Example extends React.Component {
     state = {
       items: [
@@ -86,8 +81,26 @@ export const StatefullyControlled = () => {
   }
 
   return <Example />
-}
+})
 
-StatefullyControlled.story = {
-  name: 'Statefully controlled',
-}
+stories.add('with auto input', () => {
+  const props = {
+    items,
+    state: select(
+      'state',
+      {
+        default: 'default',
+        error: 'error',
+      },
+      'default'
+    ),
+    dropUp: boolean('dropUp', false),
+    maxHeight: text('maxHeight', '200px'),
+    maxWidth: text('maxWidth', '100%'),
+    limit: number('limit', 15),
+    width: text('width', '100%'),
+    onSelect: action('onSelect'),
+    autoInput: true,
+  }
+  return <SelectDropdown {...props} />
+})

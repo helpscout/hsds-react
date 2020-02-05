@@ -5,7 +5,7 @@ import { classNames } from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 
 import Icon from '../Icon'
-import AutoDropdown from '../AutoDropdown/AutoDropdown'
+import SearchableDropdown from '../SearchableDropdown/SearchableDropdown'
 
 import { DropdownHeaderUI } from './SideNavigation.css'
 import SideNavigation, { SideNavigationContext } from './SideNavigation'
@@ -41,7 +41,7 @@ export class DropdownHeader extends React.PureComponent {
 
     return (
       <DropdownHeaderUI>
-        <AutoDropdown
+        <SearchableDropdown
           {...getValidProps(rest)}
           className={componentClassName}
           items={items}

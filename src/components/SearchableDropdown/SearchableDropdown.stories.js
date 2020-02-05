@@ -1,18 +1,16 @@
 import React from 'react'
+import { storiesOf } from '@storybook/react'
 import { createSpec, faker } from '@helpscout/helix'
 import { action } from '@storybook/addon-actions'
-import { withKnobs, boolean } from '@storybook/addon-knobs'
-import ComboBox from '.'
+import { withKnobs, boolean, number } from '@storybook/addon-knobs'
+import SearchableDropdown from '.'
 import InfiniteScroller from '../InfiniteScroller'
 
-export default {
-  component: ComboBox,
-  title: 'PhaseOut/ComboBox',
-}
+const stories = storiesOf('SearchableDropdown', module)
+stories.addDecorator(withKnobs)
 
 const ItemSpec = createSpec({
   id: faker.random.uuid(),
-  label: faker.name.firstName(),
   value: faker.name.firstName(),
 })
 
@@ -35,21 +33,24 @@ const items = [
   },
 ]
 
-export const Default = () => {
-  return <ComboBox itemFilterKey="label" items={items} isOpen={true} />
-}
-
-export const DropUp = () => {
+stories.add('Default', () => {
   return (
-    <ComboBox itemFilterKey="label" items={items} isOpen={true} dropUp={true} />
+    <SearchableDropdown itemFilterKey="label" items={items} isOpen={true} />
   )
-}
+})
 
-DropUp.story = {
-  name: 'DropUp',
-}
+stories.add('DropUp', () => {
+  return (
+    <SearchableDropdown
+      itemFilterKey="label"
+      items={items}
+      isOpen={true}
+      dropUp={true}
+    />
+  )
+})
 
-export const StateReducer = () => {
+stories.add('StateReducer', () => {
   const stateReducer = (state, action) => {
     console.group('State update')
     console.log('state', state)
@@ -60,20 +61,16 @@ export const StateReducer = () => {
   }
 
   return (
-    <ComboBox
+    <SearchableDropdown
       itemFilterKey="label"
       items={items}
       isOpen={true}
       stateReducer={stateReducer}
     />
   )
-}
+})
 
-StateReducer.story = {
-  name: 'StateReducer',
-}
-
-export const StatefulWithMultipleSelection = () => {
+stories.add('Stateful/With Multiple Selection', () => {
   const props = {
     items,
     dropUp: boolean('dropUp', false),
@@ -83,14 +80,10 @@ export const StatefulWithMultipleSelection = () => {
     allowMultipleSelection: boolean('allowMultipleSelection', true),
   }
 
-  return <ComboBox {...props} />
-}
+  return <SearchableDropdown {...props} />
+})
 
-StatefulWithMultipleSelection.story = {
-  name: 'Stateful/With Multiple Selection',
-}
-
-export const InfiniteScroll = () => {
+stories.add('Infinite Scroll', () => {
   class Test extends React.Component {
     state = {
       items: ItemSpec.generate(30),
@@ -104,7 +97,7 @@ export const InfiniteScroll = () => {
     }
 
     loadMore = () => {
-      console.log('ComboBox: Infinite Scroll: Load More!')
+      console.log('SearchableDropdown: Infinite Scroll: Load More!')
       this.setState({
         items: [...this.state.items, ...ItemSpec.generate(30)],
       })
@@ -126,7 +119,7 @@ export const InfiniteScroll = () => {
 
     render() {
       return (
-        <ComboBox
+        <SearchableDropdown
           itemFilterKey="label"
           items={this.state.items}
           isOpen={true}
@@ -138,4 +131,16 @@ export const InfiniteScroll = () => {
   }
 
   return <Test />
-}
+})
+
+stories.add('with Auto input', () => {
+  const props = {
+    items,
+    dropUp: boolean('dropUp', false),
+    limit: number('limit', 15),
+    onSelect: action('onSelect'),
+    autoInput: true,
+  }
+
+  return <SearchableDropdown {...props} />
+})

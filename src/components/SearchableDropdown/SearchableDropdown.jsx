@@ -1,18 +1,22 @@
-import * as React from 'react'
+import React from 'react'
 import Dropdown from '../Dropdown'
-import { isItemsEmpty } from '../Dropdown/Dropdown.utils'
+import { isItemsEmpty, hasGroups } from '../Dropdown/Dropdown.utils'
 import { initialState } from '../Dropdown/Dropdown.store'
 import Keys from '../../constants/Keys'
 import Text from '../Text'
 import { noop } from '../../utilities/other'
 import { classNames } from '../../utilities/classNames'
 import { renderRenderPropComponent } from '../../utilities/component'
-import { HeaderUI, InputUI, MenuUI, EmptyItemUI } from './ComboBox.css'
-import { ComboBoxProps, ComboBoxState } from './ComboBox.types'
+import {
+  HeaderUI,
+  InputUI,
+  MenuUI,
+  EmptyItemUI,
+} from './SearchableDropdown.css'
 
 const defaultInputProps = {
   autoFocus: true,
-  className: 'c-ComboBoxInput',
+  className: 'c-SearchableDropdownInput',
   onOpen: noop,
   onClose: noop,
   onChange: noop,
@@ -21,18 +25,21 @@ const defaultInputProps = {
   size: 'xssm',
 }
 
-export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
+// TODO: Create propTypes
+export class SearchableDropdown extends React.Component {
   static defaultProps = {
     ...initialState,
+    autoInput: false,
     closeOnInputTab: true,
-    onInputChange: noop,
+    innerRef: noop,
     inputProps: {},
     itemFilterKey: 'value',
-    innerRef: noop,
+    limit: 15,
     maxHeight: 330,
-    minWidth: 222,
     maxWidth: 222,
+    minWidth: 222,
     noResultsLabel: 'No results',
+    onInputChange: noop,
     showInput: true,
   }
 
@@ -41,8 +48,8 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
     inputValue: '',
   }
 
-  _isMounted: boolean
-  menuWrapperNode: HTMLElement
+  _isMounted
+  menuWrapperNode
 
   componentDidMount() {
     this._isMounted = true
@@ -58,7 +65,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
     return this.props.shouldDropDirectionUpdate(positionProps)
   }
 
-  safeSetState = (nextState, callback?) => {
+  safeSetState = (nextState, callback) => {
     if (this._isMounted) {
       this.setState(nextState, callback)
     }
@@ -209,21 +216,41 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
     this.resetInputValue()
   }
 
+  isInputActive() {
+    const { showInput, autoInput, items, limit } = this.props
+
+    if (autoInput) {
+      let total = items.length
+      if (hasGroups(items)) {
+        total = items.reduce((p, c) => {
+          if (c.type === 'group') {
+            return p + c.items.length
+          }
+          return p + 1
+        }, 0)
+      }
+      return total > limit
+    }
+
+    return showInput
+  }
+
   getDropdownProps = () => {
     const {
       className,
       enableTabNavigation,
       noResultsLabel,
       onInputChange,
-      showInput,
       ...rest
     } = this.props
     const { inputValue, isOpen } = this.state
 
-    const componentClassName = classNames('c-ComboBox', className)
+    const isInputActive = this.isInputActive()
+
+    const componentClassName = classNames('c-SearchableDropdown', className)
     /* istanbul ignore next */
     const shouldEnableTabNavigation =
-      enableTabNavigation || (enableTabNavigation && !showInput)
+      enableTabNavigation || (enableTabNavigation && !isInputActive)
 
     return {
       ...rest,
@@ -242,9 +269,10 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
   }
 
   getMenuClassName() {
-    const { showInput } = this.props
-
-    return classNames('c-ComboBoxMenu', showInput && 'is-withInput')
+    return classNames(
+      'c-SearchableDropdownMenu',
+      this.isInputActive() && 'is-withInput'
+    )
   }
 
   handleOnOpen = () => {
@@ -274,7 +302,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
       : noResultsLabel
 
     return (
-      <EmptyItemUI className="c-ComboBoxEmpty">
+      <EmptyItemUI className="c-SearchableDropdownEmpty">
         <Text shade="muted">{message}</Text>
       </EmptyItemUI>
     )
@@ -297,7 +325,7 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
     if (!renderFooter) return
 
     return (
-      <Dropdown.Block className="c-ComboBoxFooter">
+      <Dropdown.Block className="c-SearchableDropdownFooter">
         {renderRenderPropComponent(renderFooter)}
       </Dropdown.Block>
     )
@@ -306,15 +334,16 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
   setMenuWrapperNode = node => (this.menuWrapperNode = node)
 
   render() {
-    const { inputProps, showInput } = this.props
+    const { inputProps } = this.props
+
+    const isInputActive = this.isInputActive()
 
     return (
-      // @ts-ignore
       <Dropdown {...this.getDropdownProps()}>
         {dropdownProps => (
           <Dropdown.Card>
-            {showInput && (
-              <HeaderUI className="c-ComboBoxHeader">
+            {isInputActive && (
+              <HeaderUI className="c-SearchableDropdownHeader">
                 <InputUI
                   {...{ ...defaultInputProps, ...inputProps }}
                   onChange={this.onInputChange}
@@ -340,4 +369,4 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
   }
 }
 
-export default ComboBox
+export default SearchableDropdown

@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router'
 import { Route } from 'react-router-dom'
 import { createSpec, faker } from '@helpscout/helix'
 import {
-  AutoDropdown,
+  SearchableDropdown,
   Button,
   FormLabel,
   Heading,
@@ -351,11 +351,11 @@ export const Nested = () => (
               {ContentSpec.generate(2).map(({ id, content }) => (
                 <p key={id}>{content}</p>
               ))}
-              <AutoDropdown />
+              <SearchableDropdown autoInput={true} />
             </Modal.Body>
           </Modal>
 
-          <AutoDropdown />
+          <SearchableDropdown autoInput={true} />
         </Modal.Body>
       </Modal>
     </Modal.Body>
