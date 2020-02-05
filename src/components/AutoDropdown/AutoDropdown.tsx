@@ -1,5 +1,5 @@
 import * as React from 'react'
-import ComboBox from '../ComboBox'
+import SearchableDropdown from '../SearchableDropdown'
 import { DropdownProps } from '../Dropdown/Dropdown.types'
 import { initialState } from '../Dropdown/Dropdown.store'
 
@@ -16,7 +16,13 @@ export class AutoDropdown extends React.PureComponent<Props> {
   render() {
     const { items, limit, ...rest } = this.props
 
-    return <ComboBox {...rest} showInput={items.length > limit} items={items} />
+    return (
+      <SearchableDropdown
+        {...rest}
+        showInput={items.length > limit}
+        items={items}
+      />
+    )
   }
 }
 

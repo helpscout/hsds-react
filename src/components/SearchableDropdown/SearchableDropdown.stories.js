@@ -2,31 +2,15 @@ import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { createSpec, faker } from '@helpscout/helix'
 import { action } from '@storybook/addon-actions'
-import { withKnobs, boolean } from '@storybook/addon-knobs'
-import Artboard from '@helpscout/artboard'
-import ComboBox from '.'
+import { withKnobs, boolean, number } from '@storybook/addon-knobs'
+import SearchableDropdown from '.'
 import InfiniteScroller from '../InfiniteScroller'
 
-const stories = storiesOf('PhaseOut/ComboBox', module)
+const stories = storiesOf('SearchableDropdown', module)
 stories.addDecorator(withKnobs)
-stories.addDecorator(storyFn => (
-  <Artboard
-    name="dropdown"
-    withCenterGuides={false}
-    artboardWidth={480}
-    artboardHeight={300}
-  >
-    <div
-      style={{ boxSizing: 'border-box', width: 480, height: 300, padding: 30 }}
-    >
-      {storyFn()}
-    </div>
-  </Artboard>
-))
 
 const ItemSpec = createSpec({
   id: faker.random.uuid(),
-  label: faker.name.firstName(),
   value: faker.name.firstName(),
 })
 
@@ -50,12 +34,19 @@ const items = [
 ]
 
 stories.add('Default', () => {
-  return <ComboBox itemFilterKey="label" items={items} isOpen={true} />
+  return (
+    <SearchableDropdown itemFilterKey="label" items={items} isOpen={true} />
+  )
 })
 
 stories.add('DropUp', () => {
   return (
-    <ComboBox itemFilterKey="label" items={items} isOpen={true} dropUp={true} />
+    <SearchableDropdown
+      itemFilterKey="label"
+      items={items}
+      isOpen={true}
+      dropUp={true}
+    />
   )
 })
 
@@ -70,7 +61,7 @@ stories.add('StateReducer', () => {
   }
 
   return (
-    <ComboBox
+    <SearchableDropdown
       itemFilterKey="label"
       items={items}
       isOpen={true}
@@ -89,7 +80,7 @@ stories.add('Stateful/With Multiple Selection', () => {
     allowMultipleSelection: boolean('allowMultipleSelection', true),
   }
 
-  return <ComboBox {...props} />
+  return <SearchableDropdown {...props} />
 })
 
 stories.add('Infinite Scroll', () => {
@@ -106,7 +97,7 @@ stories.add('Infinite Scroll', () => {
     }
 
     loadMore = () => {
-      console.log('ComboBox: Infinite Scroll: Load More!')
+      console.log('SearchableDropdown: Infinite Scroll: Load More!')
       this.setState({
         items: [...this.state.items, ...ItemSpec.generate(30)],
       })
@@ -128,7 +119,7 @@ stories.add('Infinite Scroll', () => {
 
     render() {
       return (
-        <ComboBox
+        <SearchableDropdown
           itemFilterKey="label"
           items={this.state.items}
           isOpen={true}
@@ -140,4 +131,16 @@ stories.add('Infinite Scroll', () => {
   }
 
   return <Test />
+})
+
+stories.add('with Auto input', () => {
+  const props = {
+    items,
+    dropUp: boolean('dropUp', false),
+    limit: number('limit', 15),
+    onSelect: action('onSelect'),
+    autoInput: true,
+  }
+
+  return <SearchableDropdown {...props} />
 })

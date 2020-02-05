@@ -1,13 +1,18 @@
 import React from 'react'
 import Dropdown from '../Dropdown'
-import { isItemsEmpty } from '../Dropdown/Dropdown.utils'
+import { isItemsEmpty, hasGroups } from '../Dropdown/Dropdown.utils'
 import { initialState } from '../Dropdown/Dropdown.store'
 import Keys from '../../constants/Keys'
 import Text from '../Text'
 import { noop } from '../../utilities/other'
 import { classNames } from '../../utilities/classNames'
 import { renderRenderPropComponent } from '../../utilities/component'
-import { HeaderUI, InputUI, MenuUI, EmptyItemUI } from './ComboBox.css'
+import {
+  HeaderUI,
+  InputUI,
+  MenuUI,
+  EmptyItemUI,
+} from './SearchableDropdown.css'
 
 const defaultInputProps = {
   autoFocus: true,
@@ -215,7 +220,16 @@ export class SearchableDropdown extends React.Component {
     const { showInput, autoInput, items, limit } = this.props
 
     if (autoInput) {
-      return items.length > limit
+      let total = items.length
+      if (hasGroups(items)) {
+        total = items.reduce((p, c) => {
+          if (c.type === 'group') {
+            return p + c.items.length
+          }
+          return p + 1
+        }, 0)
+      }
+      return total > limit
     }
 
     return showInput
