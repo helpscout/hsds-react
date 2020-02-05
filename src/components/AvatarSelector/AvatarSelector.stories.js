@@ -5,21 +5,19 @@ import { AvatarSelector } from '../index'
 import styled from '../styled'
 import { getColor } from '../../styles/utilities/color'
 
+const withDarkerBackground = storyFn => <DarkerUI>{storyFn()}</DarkerUI>
+
 export default {
   component: AvatarSelector,
   title: 'Components/Badges/AvatarSelector',
+  decorators: [withDarkerBackground],
 }
 
 const DarkerUI = styled.div`
   background-color: ${getColor('grey.500')};
   padding: 50px;
 `
-
-const withDarkerBackground = storyFn => <DarkerUI>{storyFn()}</DarkerUI>
-
-// stories.addDecorator(withDarkerBackground)
 const fixtures = AvatarSpec.generate(20)
-
 const avatarsItems = fixtures.map(({ name, id, image }) => {
   return {
     label: name,

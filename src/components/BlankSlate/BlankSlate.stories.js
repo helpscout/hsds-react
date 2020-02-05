@@ -7,6 +7,7 @@ import { BlankSlate } from '../index'
 export default {
   component: BlankSlate,
   title: 'Components/Text/BlankSlate',
+  decorators: [withAktiv],
 }
 
 const message = () =>

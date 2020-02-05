@@ -5,16 +5,6 @@ import { boolean, number, text } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import { Pagination } from '..'
 
-export default {
-  component: Pagination,
-  title: 'Components/Wayfinding/Pagination',
-}
-
-export const config = {
-  TOTAL_ITEMS: 255,
-  RANGE_PER_PAGE: 50,
-}
-
 const PaginationWrapperUI = styled('div')`
   min-width: 400px;
   max-width: 800px;
@@ -22,12 +12,22 @@ const PaginationWrapperUI = styled('div')`
   padding: 20px;
 `
 
-// stories.addDecorator(storyFn => (
-//   <PaginationWrapperUI>
-//     <div style={{ backgroundColor: '#fff' }}>{storyFn()}</div>
-//   </PaginationWrapperUI>
-// ))
+export default {
+  component: Pagination,
+  title: 'Components/Wayfinding/Pagination',
+  decorators: [
+    storyFn => (
+      <PaginationWrapperUI>
+        <div style={{ backgroundColor: '#fff' }}>{storyFn()}</div>
+      </PaginationWrapperUI>
+    ),
+  ],
+}
 
+const config = {
+  TOTAL_ITEMS: 255,
+  RANGE_PER_PAGE: 50,
+}
 const subject = () => text('subject', 'Customer')
 const activePage = (cPage = 1) => number('activePage', cPage)
 

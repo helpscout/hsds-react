@@ -21,6 +21,9 @@ import Frame from '../Frame'
 export default {
   component: Modal,
   title: 'Components/Overlay/Modal',
+  decorators: [
+    story => <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>,
+  ],
 }
 
 const ContentSpec = createSpec({
@@ -132,8 +135,6 @@ class StatefulComponent extends React.Component {
     )
   }
 }
-
-// stories.addDecorator(story => <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>);
 
 export const Default = () => (
   <Modal

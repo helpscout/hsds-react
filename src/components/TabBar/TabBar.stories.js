@@ -7,9 +7,14 @@ import { TabBar } from '../index'
 import Dropdown from '../Dropdown'
 import Button from '../Button'
 
+const routerDecorator = storyFn => {
+  return <Router>{storyFn()}</Router>
+}
+
 export default {
   component: TabBar,
   title: 'Components/Wayfinding/TabBar',
+  decorators: [withAktiv, routerDecorator],
 }
 
 const ItemSpec = createSpec({
@@ -17,13 +22,6 @@ const ItemSpec = createSpec({
   label: faker.name.firstName(),
   value: faker.name.firstName(),
 })
-
-const routerDecorator = storyFn => {
-  return <Router>{storyFn()}</Router>
-}
-
-// stories.addDecorator(withAktiv)
-// stories.addDecorator(routerDecorator)
 
 const renderTabBarItem = () => {
   const itemHome = text('itemHomeText', 'Home')

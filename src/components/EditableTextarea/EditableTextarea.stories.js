@@ -3,16 +3,10 @@ import { ContainerUI, NoteUI } from '../EditableField/EditableField.stories'
 import { withAktiv } from '../../utilities/storybook'
 import EditableTextarea from '.'
 
-// const stories = storiesOf('Components/EditableTextarea', module)
-// .addParameters({
-//   options: { showPanel: false, enableShortcuts: false, isFullscreen: false },
-//   a11y: { element: 'c-EditableField' },
-// })
-// .addDecorator(withAktiv);
-
 export default {
   component: EditableTextarea,
   title: 'Components/Forms/EditableTextarea',
+  decorators: [withAktiv],
 }
 
 export const Default = () => (

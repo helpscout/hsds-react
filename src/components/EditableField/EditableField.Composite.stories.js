@@ -4,14 +4,10 @@ import { ContainerUI } from './EditableField.stories'
 import EditableField from '.'
 import { EditableFieldComposite } from '.'
 
-// const stories = storiesOf('Components/EditableFieldComposite', module)
-// .addParameters({
-//   options: { showPanel: false, enableShortcuts: false, isFullscreen: false },
-// })
-// .addDecorator(withAktiv);
 export default {
   component: EditableFieldComposite,
   title: 'Components/Forms/EditableFieldComposite',
+  decorators: [withAktiv],
 }
 
 export const Default = () => (
