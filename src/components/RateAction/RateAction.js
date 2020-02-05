@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Emoticon from '../Emoticon'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { RateActionUI } from './RateAction.css'
+import { EmoticonUI, RateActionUI } from './RateAction.css'
 import { getName } from '../Emoticon/Emoticon.utils'
 
 export class RateAction extends React.PureComponent {
@@ -15,6 +15,7 @@ export class RateAction extends React.PureComponent {
     name: 'reaction-happy',
     onClick: noop,
     size: 'lg',
+    withBorder: false,
   }
 
   static propTypes = {
@@ -77,6 +78,7 @@ export class RateAction extends React.PureComponent {
       size,
       onBlur,
       onFocus,
+      withBorder,
       ...rest
     } = this.props
 
@@ -89,6 +91,9 @@ export class RateAction extends React.PureComponent {
         onBlur={this.handleOnBlur}
         onClick={this.handleOnClick}
         onFocus={this.handleOnFocus}
+        name={name}
+        size={size}
+        withBorder={withBorder}
       >
         <Emoticon
           {...rest}
