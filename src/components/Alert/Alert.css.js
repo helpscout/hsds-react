@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-
 import { STATUSES } from '../../styles/configs/constants'
 import { getColor } from '../../styles/utilities/color'
 import forEach from '../../styles/utilities/forEach'
@@ -121,7 +120,7 @@ export const ActionRightUI = styled.div`
   padding: 22px 12px 22px 0;
 `
 
-function makeStateStyles(): string {
+function makeStateStyles() {
   return forEach(
     STATUSES,
     state => `

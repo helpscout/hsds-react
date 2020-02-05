@@ -1,15 +1,13 @@
-import * as React from 'react'
-import { UIStatus } from '../../constants/types'
+import React from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-
+import classNames from '../../utilities/classNames'
+import { noop } from '../../utilities/other'
 import Badge from '../Badge'
 import Animate from '../Animate'
 import Collapsible from '../Collapsible'
 import CloseButton from '../CloseButton'
 import Icon from '../Icon'
-import classNames from '../../utilities/classNames'
-import { noop } from '../../utilities/other'
-
 import {
   AlertUI,
   BadgeWrapperUI,
@@ -19,22 +17,6 @@ import {
   IconWrapperUI,
   ActionRightUI,
 } from './Alert.css'
-
-export interface Props {
-  actionRight?: any
-  badge?: string
-  className?: string
-  closeLabel?: string
-  dismissible: boolean
-  icon: boolean
-  noMargin: boolean
-  onDismiss: () => void
-  status: UIStatus
-}
-
-export interface State {
-  dismissed: boolean
-}
 
 export const classNameSpace = 'c-Alert'
 export const cx = {
@@ -47,7 +29,7 @@ export const cx = {
   icon: `${classNameSpace}__icon`,
 }
 
-export class Alert extends React.PureComponent<Props, State> {
+export class Alert extends React.PureComponent {
   static defaultProps = {
     dismissible: false,
     icon: false,
@@ -110,7 +92,6 @@ export class Alert extends React.PureComponent<Props, State> {
     const {
       actionRight,
       badge,
-      closeLabel,
       dismissible,
       children,
       className,
@@ -154,6 +135,25 @@ export class Alert extends React.PureComponent<Props, State> {
       componentMarkup
     )
   }
+}
+
+Alert.propTypes = {
+  /** Renders an action-based element on the right side of the content. Typically Buttons. */
+  actionRight: PropTypes.any,
+  /** Renders a [Badge](../Badge) component. */
+  badge: PropTypes.string,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Allows this component to be dismissed by clicking a CloseButton. */
+  dismissible: PropTypes.bool,
+  /** Renders an alert [Icon](../Icon). */
+  icon: PropTypes.bool,
+  /** Removes margin from the bottom of the component. */
+  noMargin: PropTypes.bool,
+  /** Callback function when this component is dismissed. */
+  onDismiss: PropTypes.func,
+  /** Changes the color of the component to the corresponding status. */
+  status: PropTypes.oneOf(['error', 'info', 'success', 'warning']),
 }
 
 export default Alert
