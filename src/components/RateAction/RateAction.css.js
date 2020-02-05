@@ -16,12 +16,29 @@ export const config = {
   transition: 'all 200ms ease-in-out',
 }
 
+function getBorderHoverColor(name) {
+  if (name === 'happy' || name === 'reaction-happy') {
+    return getColor('yellow.200')
+  } else if (name === 'sad' || name === 'reaction-sad') {
+    return getColor('indigo.200')
+  } else if (name === 'meh' || name === 'reaction-okay') {
+    return getColor('grey.300')
+  }
+}
+
 export const RateActionUI = styled('button')`
   &.c-RateAction {
+    .c-Emoticon {
+      border: 2px solid white;
+      border-radius: 50%;
+      width: calc(100%);
+      height: calc(100%);
+    }
+
     ${baseStyles};
     -webkit-appearance: none;
     border-radius: 50%;
-    border: 2px solid white;
+    border: none;
     box-shadow: 0 3px 6px 0 ${config.boxShadowColor};
     height: ${config.size.default};
     margin: 0;
@@ -32,12 +49,36 @@ export const RateActionUI = styled('button')`
     user-select: none;
     width: ${config.size.default};
     will-change: box-shadow, transform, fill;
-    z-index: 0;
     -webkit-user-drag: none;
 
     path {
       transition: fill 200ms linear;
     }
+
+    ${({ name, size, withBorder }) => {
+      const _size = parseInt(config.size[size], 10) * 2 + 4
+      return (
+        withBorder &&
+        `
+          &:before {
+            content: '';
+            background: #efefef;
+            border-radius: 50% !important;
+            display: block;
+            height: ${_size}px;
+            left: 50%;
+            top: 50%;
+            margin-left: -${_size / 2}px;
+            margin-top: -${_size / 2}px;
+            position: absolute;
+            width: ${_size}px;
+            z-index: -1;
+          }
+          &:hover:before {
+            background-color: ${getBorderHoverColor(name)}
+          }`
+      )
+    }}
 
     /* Removes the ugly dotted line in firefox when focused */
     &::-moz-focus-inner {
