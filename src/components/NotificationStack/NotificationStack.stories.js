@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import { createSpec, faker } from '@helpscout/helix'
-import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { Notification, NotificationStack } from '../index'
+
+export default {
+  component: NotificationStack,
+  title: 'Components/NotificationStack',
+}
 
 const NotificationSpec = createSpec({
   id: faker.random.uuid(),
@@ -10,7 +14,6 @@ const NotificationSpec = createSpec({
 })
 
 const fromName = faker.name.firstName()()
-const stories = storiesOf('Utilities/NotificationStack', module)
 
 class TestComponent extends Component {
   constructor() {
@@ -72,6 +75,10 @@ class TestComponent extends Component {
   }
 }
 
-stories.add('default', () => {
+export const Default = () => {
   return <TestComponent />
-})
+}
+
+Default.story = {
+  name: 'default',
+}

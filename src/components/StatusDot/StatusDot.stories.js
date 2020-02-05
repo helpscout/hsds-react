@@ -1,28 +1,42 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { StatusDot } from '../index'
 
-const stories = storiesOf('Components/StatusDot', module)
+export default {
+  component: StatusDot,
+  title: 'Components/StatusDot',
+}
 
-stories.add('default', () => <StatusDot />)
+export const Default = () => <StatusDot />
 
-stories.add('borderColor', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const BorderColor = () => (
   <div>
     <div>
       <StatusDot status="online" inline borderColor="red" />: Online
     </div>
   </div>
-))
+)
 
-stories.add('outerBorderColor', () => (
+BorderColor.story = {
+  name: 'borderColor',
+}
+
+export const OuterBorderColor = () => (
   <div>
     <div>
       <StatusDot status="online" inline outerBorderColor="red" />: Online
     </div>
   </div>
-))
+)
 
-stories.add('icon', () => (
+OuterBorderColor.story = {
+  name: 'outerBorderColor',
+}
+
+export const Icon = () => (
   <div style={{ background: '#eee' }}>
     <div>
       <StatusDot status="online" inline icon="tick" />: Online
@@ -31,9 +45,13 @@ stories.add('icon', () => (
       <StatusDot status="offline" inline icon="cross" />: Offline
     </div>
   </div>
-))
+)
 
-stories.add('states', () => (
+Icon.story = {
+  name: 'icon',
+}
+
+export const States = () => (
   <div>
     <div>
       <StatusDot status="online" inline />: Online
@@ -51,9 +69,13 @@ stories.add('states', () => (
       <StatusDot status="inactive" inline />: Inactive
     </div>
   </div>
-))
+)
 
-stories.add('sizes', () => (
+States.story = {
+  name: 'states',
+}
+
+export const Sizes = () => (
   <div>
     <div>
       <StatusDot inline size="md" />: MD
@@ -62,4 +84,8 @@ stories.add('sizes', () => (
       <StatusDot inline size="sm" />: SM
     </div>
   </div>
-))
+)
+
+Sizes.story = {
+  name: 'sizes',
+}

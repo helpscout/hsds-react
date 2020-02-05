@@ -6,14 +6,13 @@ import {
   select,
   text,
 } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
-import { withArtboard } from '@helpscout/artboard'
 import { action } from '@storybook/addon-actions'
 import { PropProvider, Text, Popover } from '..'
 
-const stories = storiesOf('Utilities/Popover', module)
-stories.addDecorator(withArtboard({ width: 300, height: 100 }))
-stories.addDecorator(withKnobs)
+export default {
+  component: Popover,
+  title: 'Utilities/Popover',
+}
 
 const actionLoggerProps = {
   onBeforeOpen: tooltipInstance => {
@@ -26,7 +25,7 @@ const actionLoggerProps = {
   },
 }
 
-stories.add('Default', () => {
+export const Default = () => {
   const triggerOn = select(
     'triggerOn',
     {
@@ -79,9 +78,9 @@ stories.add('Default', () => {
       </div>
     </PropProvider>
   )
-})
+}
 
-stories.add('Render props', () => {
+export const RenderProps = () => {
   const props = {
     ...actionLoggerProps,
     renderHeader: ({ Header, Title }) => (
@@ -103,4 +102,8 @@ stories.add('Render props', () => {
       <div>Popover Trigger</div>
     </Popover>
   )
-})
+}
+
+RenderProps.story = {
+  name: 'Render props',
+}

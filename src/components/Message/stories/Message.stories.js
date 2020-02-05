@@ -1,10 +1,13 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { ScopeProvider } from '../../styled'
 import { Avatar, Link, Message, PreviewCard } from '../../index'
 
-const stories = storiesOf('Components/Message', module)
-stories.add('default', () => (
+export default {
+  component: Message,
+  title: 'Components/Message',
+}
+
+export const Default = () => (
   <div>
     <Message from avatar={<Avatar name="Arctic Puffin" />}>
       <Message.Question read timestamp="9:41am">
@@ -112,26 +115,38 @@ stories.add('default', () => (
       <Message.Chat typing />
     </Message>
   </div>
-))
+)
 
-stories.add('question', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const _Question = () => (
   <Message from avatar={<Avatar name="Arctic Puffin" />}>
     <Message.Question read timestamp="9:41am">
       How's it goin'?
     </Message.Question>
   </Message>
-))
+)
 
-stories.add('action', () => (
+_Question.story = {
+  name: 'question',
+}
+
+export const _Action = () => (
   <Message to>
     <Message.Action read timestamp="9:41am">
       Buddy became upset.{' '}
       <a href="https://www.helpscout.net/">Find out what happened</a>
     </Message.Action>
   </Message>
-))
+)
 
-stories.add('content', () => (
+_Action.story = {
+  name: 'action',
+}
+
+export const _Content = () => (
   <ScopeProvider scope="#Messages">
     <div id="Messages">
       <Message to avatar={<Avatar name="Buddy" />}>
@@ -200,18 +215,30 @@ stories.add('content', () => (
       </Message>
     </div>
   </ScopeProvider>
-))
+)
 
-stories.add('note', () => (
+_Content.story = {
+  name: 'content',
+}
+
+export const Note = () => (
   <Message to avatar={<Avatar name="Buddy" />}>
     <Message.Chat isNote read timestamp="9:41am">
       Note: SAAAAAAANTAAAAAAAA!
     </Message.Chat>
   </Message>
-))
+)
 
-stories.add('typing', () => (
+Note.story = {
+  name: 'note',
+}
+
+export const Typing = () => (
   <Message from avatar={<Avatar name="Arctic Puffin" />}>
     <Message.Chat typing />
   </Message>
-))
+)
+
+Typing.story = {
+  name: 'typing',
+}

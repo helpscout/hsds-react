@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { storiesOf } from '@storybook/react'
 import {
   withKnobs,
   boolean,
@@ -7,15 +6,15 @@ import {
   select,
   text,
 } from '@storybook/addon-knobs'
-import { withArtboard } from '@helpscout/artboard'
 import { action } from '@storybook/addon-actions'
 import Tooltip, { TooltipContext } from '.'
 
-const stories = storiesOf('Components/Tooltip', module)
-stories.addDecorator(withArtboard())
-stories.addDecorator(withKnobs)
+export default {
+  component: Tooltip,
+  title: 'Components/Tooltip',
+}
 
-stories.add('Default', () => {
+export const Default = () => {
   const triggerOn = select(
     'triggerOn',
     {
@@ -71,9 +70,9 @@ stories.add('Default', () => {
       </div>
     </TooltipContext.Provider>
   )
-})
+}
 
-stories.add('With Context provider', () => {
+export const WithContextProvider = () => {
   const triggerOn = select(
     'triggerOn',
     {
@@ -109,4 +108,8 @@ stories.add('With Context provider', () => {
       </div>
     </TooltipContext.Provider>
   )
-})
+}
+
+WithContextProvider.story = {
+  name: 'With Context provider',
+}

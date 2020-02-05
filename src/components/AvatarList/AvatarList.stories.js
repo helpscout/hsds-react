@@ -1,9 +1,11 @@
 import React, { PureComponent as Component } from 'react'
-import { storiesOf } from '@storybook/react'
 import AvatarSpec from '../../utilities/specs/avatarGrid.specs'
 import { Avatar, AvatarList } from '../index'
 
-const stories = storiesOf('Components/AvatarList', module)
+export default {
+  component: AvatarList,
+  title: 'Components/AvatarList',
+}
 const fixtures = AvatarSpec.generate(20)
 
 const avatarsMarkup = fixtures.map(avatar => {
@@ -37,15 +39,23 @@ export const SampleComponent = props => {
   return <AvatarList max={2}>{avatarsMarkup}</AvatarList>
 }
 
-stories.add('default', () => <AvatarList max={4}>{avatarsMarkup}</AvatarList>)
+export const Default = () => <AvatarList max={4}>{avatarsMarkup}</AvatarList>
 
-stories.add('animation: easing', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const AnimationEasing = () => (
   <AvatarList animationEasing="bounce" animationSequence="fade scale" max={4}>
     {avatarsMarkup}
   </AvatarList>
-))
+)
 
-stories.add('animation: staggering', () => (
+AnimationEasing.story = {
+  name: 'animation: easing',
+}
+
+export const AnimationStaggering = () => (
   <AvatarList
     animationEasing="bounce"
     animationSequence="fade scale"
@@ -54,11 +64,19 @@ stories.add('animation: staggering', () => (
   >
     {avatarsMarkup}
   </AvatarList>
-))
+)
 
-stories.add('test: render', () => <TestComponent />)
+AnimationStaggering.story = {
+  name: 'animation: staggering',
+}
 
-stories.add('Add/Remove', () => {
+export const TestRender = () => <TestComponent />
+
+TestRender.story = {
+  name: 'test: render',
+}
+
+export const AddRemove = () => {
   class Example extends Component {
     state = { avatars: [] }
 
@@ -92,4 +110,8 @@ stories.add('Add/Remove', () => {
   }
 
   return <Example />
-})
+}
+
+AddRemove.story = {
+  name: 'Add/Remove',
+}

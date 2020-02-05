@@ -1,14 +1,16 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { ChoiceGroup, RadioCard, Icon } from '../index'
 
-const stories = storiesOf('Components/RadioCard', module)
+export default {
+  component: RadioCard,
+  title: 'Components/RadioCard',
+}
 
 const onChange = value => {
   console.log(value)
 }
 
-stories.add('default', () => (
+export const Default = () => (
   <ChoiceGroup align="horizontal" onChange={onChange} value="chat">
     <RadioCard icon="fab-chat" value="chat" />
     <RadioCard icon="fab-antenna" value="antenna" />
@@ -16,9 +18,13 @@ stories.add('default', () => (
     <RadioCard icon="fab-search" value="search" />
     <RadioCard icon="fab-question" value="question" />
   </ChoiceGroup>
-))
+)
 
-stories.add('responsive', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const Responsive = () => (
   <div style={{ width: 300 }}>
     <ChoiceGroup
       align="horizontal"
@@ -33,9 +39,13 @@ stories.add('responsive', () => (
       <RadioCard icon="fab-question" value="question" />
     </ChoiceGroup>
   </div>
-))
+)
 
-stories.add('responsive + maxWidth', () => (
+Responsive.story = {
+  name: 'responsive',
+}
+
+export const ResponsiveMaxWidth = () => (
   <div style={{ width: 600 }}>
     <ChoiceGroup
       align="horizontal"
@@ -51,9 +61,13 @@ stories.add('responsive + maxWidth', () => (
       <RadioCard icon="fab-question" value="question" />
     </ChoiceGroup>
   </div>
-))
+)
 
-stories.add('focused', () => (
+ResponsiveMaxWidth.story = {
+  name: 'responsive + maxWidth',
+}
+
+export const Focused = () => (
   <ChoiceGroup align="horizontal" onChange={onChange} value="chat">
     <RadioCard icon="fab-chat" value="chat" isFocused />
     <RadioCard icon="fab-antenna" value="antenna" />
@@ -61,9 +75,13 @@ stories.add('focused', () => (
     <RadioCard icon="fab-search" value="search" />
     <RadioCard icon="fab-question" value="question" />
   </ChoiceGroup>
-))
+)
 
-stories.add('custom icons', () => (
+Focused.story = {
+  name: 'focused',
+}
+
+export const CustomIcons = () => (
   <ChoiceGroup align="horizontal" onChange={onChange} value="chat">
     <RadioCard icon={<Icon size="24" name="search" />} value="chat" />
     <RadioCard icon={<Icon size="24" name="search" />} value="antenna" />
@@ -71,9 +89,13 @@ stories.add('custom icons', () => (
     <RadioCard icon={<Icon size="24" name="search" />} value="search" />
     <RadioCard icon={<Icon size="24" name="search" />} value="question" />
   </ChoiceGroup>
-))
+)
 
-stories.add('size, heading & content', () => (
+CustomIcons.story = {
+  name: 'custom icons',
+}
+
+export const SizeHeadingContent = () => (
   <ChoiceGroup
     align="horizontal"
     onChange={onChange}
@@ -103,4 +125,8 @@ stories.add('size, heading & content', () => (
       maxWidth="214px"
     />
   </ChoiceGroup>
-))
+)
+
+SizeHeadingContent.story = {
+  name: 'size, heading & content',
+}

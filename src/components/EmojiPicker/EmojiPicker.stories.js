@@ -1,22 +1,13 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { select } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
-import { withArtboard } from '@helpscout/artboard'
 import EmojiPicker from '.'
 
-const stories = storiesOf('Components/EmojiPicker', module)
-
-stories.addDecorator(
-  withArtboard({
-    width: 500,
-    height: 300,
-    withCenterGuides: false,
-    showInterface: false,
-  })
-)
-
-stories.add('Default', () => {
+export default {
+  component: EmojiPicker,
+  title: 'Components/EmojiPicker',
+}
+export const Default = () => {
   const props = {
     shouldRefocusOnClose() {
       return false
@@ -30,4 +21,4 @@ stories.add('Default', () => {
   }
 
   return <EmojiPicker {...props} />
-})
+}

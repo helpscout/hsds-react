@@ -1,13 +1,15 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { ThemeProvider } from '../styled'
 import { OptionTile } from '../index'
 
-const stories = storiesOf('Components/OptionTile', module)
+export default {
+  component: OptionTile,
+  title: 'Components/OptionTile',
+}
 
-stories.add('Default', () => <OptionTile />)
+export const Default = () => <OptionTile />
 
-stories.add('Container', () => (
+export const _Container = () => (
   <div style={{ background: '#eee', padding: 20, width: 350 }}>
     <OptionTile.Container>
       <OptionTile
@@ -24,9 +26,9 @@ stories.add('Container', () => (
       />
     </OptionTile.Container>
   </div>
-))
+)
 
-stories.add('Themed', () => {
+export const Themed = () => {
   const theme = {
     brandColor: {
       brandColor: 'red',
@@ -54,4 +56,4 @@ stories.add('Themed', () => {
       </div>
     </ThemeProvider>
   )
-})
+}

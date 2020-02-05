@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { storiesOf } from '@storybook/react'
 import { boolean, select, text } from '@storybook/addon-knobs'
 import {
   Button,
@@ -12,7 +11,10 @@ import {
   Text,
 } from '../index'
 
-const stories = storiesOf('Components/Button', module)
+export default {
+  component: Button,
+  title: 'Components/Button',
+}
 
 const ContainerUI = styled('div')`
   background: #f1f3f5;
@@ -68,7 +70,7 @@ const makeButtonVariations = (props = {}) => {
   )
 }
 
-stories.add('default', () => (
+export const Default = () => (
   <div>
     <ContainerUI>
       <Heading style={{ marginBottom: '20px' }}>Kinds</Heading>
@@ -101,9 +103,13 @@ stories.add('default', () => (
       </Flexy>
     </ContainerUI>
   </div>
-))
+)
 
-stories.add('Playground', () => {
+Default.story = {
+  name: 'default',
+}
+
+export const Playground = () => {
   const props = {
     children: text('children', 'Button'),
     disabled: boolean('disabled', false),
@@ -138,9 +144,9 @@ stories.add('Playground', () => {
     spinButtonOnLoading: boolean('spinButtonOnLoading', false),
   }
   return <Button {...props} />
-})
+}
 
-stories.add('everything', () => (
+export const Everything = () => (
   <ContainerUI>
     {makeButtonVariations({ kind: 'primary' })}
     {makeButtonVariations({ kind: 'primaryAlt' })}
@@ -153,9 +159,13 @@ stories.add('everything', () => (
     {makeButtonVariations({ kind: 'primary', state: 'success' })}
     {makeButtonVariations({ kind: 'primary', state: 'warning' })}
   </ContainerUI>
-))
+)
 
-stories.add('button-group', () => (
+Everything.story = {
+  name: 'everything',
+}
+
+export const ButtonGroup = () => (
   <ContainerUI>
     <ControlGroup>
       <ControlGroup.Item>
@@ -169,9 +179,13 @@ stories.add('button-group', () => (
       </ControlGroup.Item>
     </ControlGroup>
   </ContainerUI>
-))
+)
 
-stories.add('icon', () => (
+ButtonGroup.story = {
+  name: 'button-group',
+}
+
+export const _Icon = () => (
   <ContainerUI>
     <Flexy>
       <Button kind="secondary" onClick={e => console.log(e)}>
@@ -184,9 +198,13 @@ stories.add('icon', () => (
       </Button>
     </Flexy>
   </ContainerUI>
-))
+)
 
-stories.add('end chat', () => (
+_Icon.story = {
+  name: 'icon',
+}
+
+export const EndChat = () => (
   <ContainerUI>
     <Flexy>
       <Button kind="primary" shape="rounded" size="sm" state="gray">
@@ -207,9 +225,13 @@ stories.add('end chat', () => (
       </Button>
     </Flexy>
   </ContainerUI>
-))
+)
 
-stories.add('selector', () => {
+EndChat.story = {
+  name: 'end chat',
+}
+
+export const Selector = () => {
   const props = {
     href: select(
       'selector',
@@ -226,4 +248,8 @@ stories.add('selector', () => {
       {props.href ? 'Link' : 'Button'}
     </Button>
   )
-})
+}
+
+Selector.story = {
+  name: 'selector',
+}

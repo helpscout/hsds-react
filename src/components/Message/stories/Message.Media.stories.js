@@ -1,11 +1,11 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { withKnobs, boolean, number, text } from '@storybook/addon-knobs'
 import { Avatar, Message } from '../../index'
 
-const stories = storiesOf('Components/Message', module)
-stories.addDecorator(withKnobs)
-
+export default {
+  component: Message,
+  title: 'Components/Message',
+}
 const dimensions = { width: 800, height: 500 }
 const imageUrlSlow = `https://loremflickr.com/${dimensions.width}/${dimensions.height}`
 const defaultProps = {
@@ -23,7 +23,7 @@ const defaultProps = {
   isUploading: false,
 }
 
-stories.add('Media', () => {
+export const _Media = () => {
   const {
     error,
     modalAnimationDuration,
@@ -64,4 +64,4 @@ stories.add('Media', () => {
       </Message>
     </div>
   )
-})
+}

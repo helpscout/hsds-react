@@ -1,7 +1,6 @@
 import React from 'react'
 import { MemoryRouter } from 'react-router'
 import { Route } from 'react-router-dom'
-import { storiesOf } from '@storybook/react'
 import { createSpec, faker } from '@helpscout/helix'
 import {
   AutoDropdown,
@@ -19,7 +18,10 @@ import {
 } from '../index'
 import Frame from '../Frame'
 
-const stories = storiesOf('Components/Modal', module)
+export default {
+  component: Modal,
+  title: 'Components/Modal',
+}
 
 const ContentSpec = createSpec({
   content: faker.lorem.paragraph(),
@@ -131,11 +133,9 @@ class StatefulComponent extends React.Component {
   }
 }
 
-stories.addDecorator(story => (
-  <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>
-))
+// stories.addDecorator(story => <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>);
 
-stories.add('default', () => (
+export const Default = () => (
   <Modal
     trigger={<Link onClick={e => e.preventDefault()}>Open dis modal</Link>}
   >
@@ -146,9 +146,13 @@ stories.add('default', () => (
       ))}
     </Modal.Body>
   </Modal>
-))
+)
 
-stories.add('no close on escape', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const NoCloseOnEscape = () => (
   <Modal
     closeOnEscape={false}
     trigger={<Link onClick={e => e.preventDefault()}>Open dis modal</Link>}
@@ -160,9 +164,13 @@ stories.add('no close on escape', () => (
       ))}
     </Modal.Body>
   </Modal>
-))
+)
 
-stories.add('open', () => (
+NoCloseOnEscape.story = {
+  name: 'no close on escape',
+}
+
+export const Open = () => (
   <Modal isOpen trigger={<Link onClick={e => e.preventDefault()}>Clicky</Link>}>
     <Modal.Content>
       <Modal.Body>
@@ -173,9 +181,13 @@ stories.add('open', () => (
       </Modal.Body>
     </Modal.Content>
   </Modal>
-))
+)
 
-stories.add('header/footer', () => (
+Open.story = {
+  name: 'open',
+}
+
+export const HeaderFooter = () => (
   <Modal isOpen trigger={<Link onClick={e => e.preventDefault()}>Clicky</Link>}>
     <Modal.Header>Header</Modal.Header>
     <Modal.Body>
@@ -186,9 +198,13 @@ stories.add('header/footer', () => (
     </Modal.Body>
     <Modal.Footer>Footer</Modal.Footer>
   </Modal>
-))
+)
 
-stories.add('header/footer styles', () => (
+HeaderFooter.story = {
+  name: 'header/footer',
+}
+
+export const HeaderFooterStyles = () => (
   <Modal isOpen trigger={<Link onClick={e => e.preventDefault()}>Clicky</Link>}>
     <Modal.Header seamless>Header</Modal.Header>
     <Modal.Body>
@@ -199,9 +215,13 @@ stories.add('header/footer styles', () => (
     </Modal.Body>
     <Modal.Footer shadow>Footer</Modal.Footer>
   </Modal>
-))
+)
 
-stories.add('header/footer with items', () => (
+HeaderFooterStyles.story = {
+  name: 'header/footer styles',
+}
+
+export const HeaderFooterWithItems = () => (
   <Modal
     isOpen
     trigger={<Link onClick={e => e.preventDefault()}>Clicky</Link>}
@@ -237,9 +257,13 @@ stories.add('header/footer with items', () => (
       </Modal.Footer>
     </Modal.Content>
   </Modal>
-))
+)
 
-stories.add('with tooltip', () => (
+HeaderFooterWithItems.story = {
+  name: 'header/footer with items',
+}
+
+export const WithTooltip = () => (
   <Modal trigger={<Link>Clicky</Link>} isSeamless isOpen>
     <Modal.Content>
       <Modal.Header>
@@ -250,9 +274,13 @@ stories.add('with tooltip', () => (
       </Modal.Body>
     </Modal.Content>
   </Modal>
-))
+)
 
-stories.add('custom close trigger', () => {
+WithTooltip.story = {
+  name: 'with tooltip',
+}
+
+export const CustomCloseTrigger = () => {
   class Contents extends React.Component {
     render() {
       return (
@@ -272,9 +300,13 @@ stories.add('custom close trigger', () => {
       <Contents />
     </Modal>
   )
-})
+}
 
-stories.add('seamless', () => (
+CustomCloseTrigger.story = {
+  name: 'custom close trigger',
+}
+
+export const Seamless = () => (
   <Modal
     trigger={<Link onClick={e => e.preventDefault()}>Clicky</Link>}
     seamless
@@ -286,9 +318,13 @@ stories.add('seamless', () => (
       ))}
     </Modal.Content>
   </Modal>
-))
+)
 
-stories.add('nested', () => (
+Seamless.story = {
+  name: 'seamless',
+}
+
+export const Nested = () => (
   <Modal trigger={<Link onClick={e => e.preventDefault()}>Clicky</Link>}>
     <Modal.Body>
       <Heading>Title</Heading>
@@ -324,9 +360,13 @@ stories.add('nested', () => (
       </Modal>
     </Modal.Body>
   </Modal>
-))
+)
 
-stories.add('custom mounting selector', () => {
+Nested.story = {
+  name: 'nested',
+}
+
+export const CustomMountingSelector = () => {
   return (
     <div>
       <p>Render modal here:</p>
@@ -345,9 +385,13 @@ stories.add('custom mounting selector', () => {
       </Modal>
     </div>
   )
-})
+}
 
-stories.add('lifecycle events', () => {
+CustomMountingSelector.story = {
+  name: 'custom mounting selector',
+}
+
+export const LifecycleEvents = () => {
   const onBeforeOpen = modalOpen => {
     console.log('Before open!')
     setTimeout(() => {
@@ -379,9 +423,13 @@ stories.add('lifecycle events', () => {
       </Modal>
     </div>
   )
-})
+}
 
-stories.add('routes', () => {
+LifecycleEvents.story = {
+  name: 'lifecycle events',
+}
+
+export const Routes = () => {
   return (
     <div>
       <h1>Routes</h1>
@@ -451,17 +499,25 @@ stories.add('routes', () => {
       />
     </div>
   )
-})
+}
 
-stories.add('stateful example', () => (
+Routes.story = {
+  name: 'routes',
+}
+
+export const StatefulExample = () => (
   <div>
     <button>Does Nothing</button>
     <hr />
     <StatefulComponent />
   </div>
-))
+)
 
-stories.add('tabbing', () => (
+StatefulExample.story = {
+  name: 'stateful example',
+}
+
+export const Tabbing = () => (
   <Modal isOpen trigger={<Link onClick={e => e.preventDefault()}>Clicky</Link>}>
     <Modal.Content>
       <Modal.Body>
@@ -479,7 +535,11 @@ stories.add('tabbing', () => (
       </Modal.Body>
     </Modal.Content>
   </Modal>
-))
+)
+
+Tabbing.story = {
+  name: 'tabbing',
+}
 
 class HSAppExample extends React.Component {
   state = {
@@ -553,9 +613,13 @@ class HSAppExample extends React.Component {
   }
 }
 
-stories.add('HSApp', () => <HSAppExample />)
+export const HsApp = () => <HSAppExample />
 
-stories.add('styled', () => {
+HsApp.story = {
+  name: 'HSApp',
+}
+
+export const Styled = () => {
   const StyledModal = styled(Modal)`
     .c-ModalOverlay {
       background: purple;
@@ -573,4 +637,8 @@ stories.add('styled', () => {
       </Modal.Content>
     </StyledModal>
   )
-})
+}
+
+Styled.story = {
+  name: 'styled',
+}

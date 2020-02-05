@@ -1,16 +1,13 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { withKnobs, select, text } from '@storybook/addon-knobs'
-import { withArtboard } from '@helpscout/artboard'
 import { Attachment } from './Attachment'
 
-const stories = storiesOf('Components/Attachment', module)
-stories.addDecorator(withKnobs)
-stories.addDecorator(
-  withArtboard({ width: 400, height: 200, withCenterGuides: false })
-)
+export default {
+  component: Attachment,
+  title: 'Components/Attachment',
+}
 
-stories.add('Default', () => {
+export const Default = () => {
   const theme = select(
     'theme',
     {
@@ -44,4 +41,4 @@ stories.add('Default', () => {
       <Attachment {...props} size={!isPreview && props.size} />
     </Attachment.Provider>
   )
-})
+}

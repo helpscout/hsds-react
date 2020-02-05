@@ -1,17 +1,13 @@
 import React from 'react'
 import { withKnobs, boolean, number, text } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
 import WrenchCat from '@helpscout/hsds-illos/wrench-cat'
 import { withAktiv } from '../../utilities/storybook'
 import { BlankSlate } from '../index'
 
-const stories = storiesOf('Components/BlankSlate', module)
-stories.addDecorator(
-  withKnobs({
-    escapeHTML: false,
-  })
-)
-stories.addDecorator(withAktiv)
+export default {
+  component: BlankSlate,
+  title: 'Components/BlankSlate',
+}
 
 const message = () =>
   text(
@@ -35,19 +31,24 @@ const getKnobsProps = otherKnobs => {
   }
 }
 
-stories.add('Default', () => {
+export const Default = () => {
   const props = { message: message(), title: title('') }
   return <BlankSlate {...getKnobsProps()} {...props} />
-})
-stories.add('HTML in message', () => {
+}
+
+export const HtmlInMessage = () => {
   const props = {
     title: title(''),
     message: htmlMessage,
   }
   return <BlankSlate {...getKnobsProps()} {...props} />
-})
+}
 
-stories.add('Illo', () => {
+HtmlInMessage.story = {
+  name: 'HTML in message',
+}
+
+export const Illo = () => {
   const props = {
     title: title(''),
     illoName: illoName(),
@@ -55,23 +56,23 @@ stories.add('Illo', () => {
     illoSize: 90,
   }
   return <BlankSlate {...getKnobsProps()} {...props} />
-})
+}
 
-stories.add('Custom Illo', () => {
+export const CustomIllo = () => {
   const props = {
     title: title(''),
     illo: <WrenchCat size={90} />,
     message: htmlMessage,
   }
   return <BlankSlate {...getKnobsProps()} {...props} />
-})
+}
 
-stories.add('Heading', () => {
+export const Heading = () => {
   const props = { title: title(), message: htmlMessage }
   return <BlankSlate {...getKnobsProps()} {...props} />
-})
+}
 
-stories.add('Light background', () => {
+export const LightBackground = () => {
   const props = {
     title: title(),
     illoName: illoName(),
@@ -80,4 +81,8 @@ stories.add('Light background', () => {
     illoSize: 90,
   }
   return <BlankSlate {...props} />
-})
+}
+
+LightBackground.story = {
+  name: 'Light background',
+}

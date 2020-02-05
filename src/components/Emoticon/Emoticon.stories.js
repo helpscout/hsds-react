@@ -1,11 +1,13 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { Emoticon } from './Emoticon'
+
+export default {
+  component: Emoticon,
+  title: 'Components/Emoticon',
+}
 
 const font =
   '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
-
-const stories = storiesOf('Components/Emoticon', module)
 
 class Play extends React.Component {
   state = {
@@ -66,12 +68,12 @@ class Play extends React.Component {
     )
   }
 }
-stories.add('Default', () => <Play />)
+export const Default = () => <Play />
 
 const SIZES = ['lg', 'md', 'sm']
 const REACTIONS_EMOTICONS = ['reaction-happy', 'reaction-okay', 'reaction-sad']
 
-stories.add('Reactions', () => (
+export const Reactions = () => (
   <div style={{ fontFamily: font }}>
     <div style={{ margin: '0 0 35px' }}>
       <h4>Default</h4>
@@ -109,4 +111,4 @@ stories.add('Reactions', () => (
       ))}
     </div>
   </div>
-))
+)

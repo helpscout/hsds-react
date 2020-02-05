@@ -1,19 +1,15 @@
 import React from 'react'
 import { ThemeProvider } from 'styled-components'
-import { storiesOf } from '@storybook/react'
 import { withKnobs, boolean, select } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import AvatarSpec from '../../utilities/specs/avatar.specs'
 import { getColor } from '../../styles/utilities/color'
 import { Avatar, Flexy, Button } from '../index'
 
-const stories = storiesOf('Components/Avatar', module)
-
-stories.addDecorator(
-  withKnobs({
-    escapeHTML: false,
-  })
-)
+export default {
+  component: Avatar,
+  title: 'Components/Avatar',
+}
 
 const fixture = AvatarSpec.generate()
 
@@ -51,31 +47,47 @@ class AvatarReload extends React.Component {
   }
 }
 
-stories.add('default', () => {
+export const Default = () => {
   return <AvatarReload />
-})
+}
 
-stories.add('failed', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const Failed = () => (
   <Avatar name={fixture.name} image="https://notfound" />
-))
+)
 
-stories.add('fallback', () => (
+Failed.story = {
+  name: 'failed',
+}
+
+export const Fallback = () => (
   <Avatar
     name={fixture.name}
     image="https://notfound"
     fallbackImage={fixture.image}
   />
-))
+)
 
-stories.add('fallback failed', () => (
+Fallback.story = {
+  name: 'fallback',
+}
+
+export const FallbackFailed = () => (
   <Avatar
     name={fixture.name}
     image="https://notfound"
     fallbackImage="https://notfound2"
   />
-))
+)
 
-stories.add('themed', () => (
+FallbackFailed.story = {
+  name: 'fallback failed',
+}
+
+export const Themed = () => (
   <div>
     <ThemeProvider theme={{ brandColor: { brandColor: 'red' } }}>
       <Avatar name={fixture.name} image="https://notfound" />
@@ -87,9 +99,13 @@ stories.add('themed', () => (
       <Avatar name={fixture.name} image="https://notfound" />
     </ThemeProvider>
   </div>
-))
+)
 
-stories.add('status', () => (
+Themed.story = {
+  name: 'themed',
+}
+
+export const Status = () => (
   <div style={{ background: 'dodgerblue', padding: 20 }}>
     <Flexy just="left">
       <Avatar
@@ -176,19 +192,31 @@ stories.add('status', () => (
       />
     </Flexy>
   </div>
-))
+)
 
-stories.add('initials', () => <Avatar name={fixture.name} />)
+Status.story = {
+  name: 'status',
+}
 
-stories.add('sizes', () => (
+export const Initials = () => <Avatar name={fixture.name} />
+
+Initials.story = {
+  name: 'initials',
+}
+
+export const Sizes = () => (
   <div>
     <Avatar name={fixture.name} size="lg" />
     <Avatar name={fixture.name} size="md" />
     <Avatar name={fixture.name} size="sm" />
   </div>
-))
+)
 
-stories.add('border', () => (
+Sizes.story = {
+  name: 'sizes',
+}
+
+export const Border = () => (
   <div style={{ background: 'orangered', padding: 20 }}>
     <Avatar
       borderColor="orangered"
@@ -199,7 +227,11 @@ stories.add('border', () => (
       status="online"
     />
   </div>
-))
+)
+
+Border.story = {
+  name: 'border',
+}
 
 const iconSize = [
   '8',
@@ -218,7 +250,7 @@ const iconSize = [
 ]
 const avatarSize = ['lg', 'md', 'smmd', 'sm', 'xs', 'xxs']
 
-stories.add('with action', () => (
+export const WithAction = () => (
   <Flexy just="left">
     <Avatar
       name={fixture.name}
@@ -234,7 +266,11 @@ stories.add('with action', () => (
       fallbackImage="https://d33v4339jhl8k0.cloudfront.net/customer-avatar/01.png"
     />
   </Flexy>
-))
+)
+
+WithAction.story = {
+  name: 'with action',
+}
 
 class AnimationSequence extends React.Component {
   state = {
@@ -276,8 +312,12 @@ class AnimationSequence extends React.Component {
   }
 }
 
-stories.add('with animation sequence', () => (
+export const WithAnimationSequence = () => (
   <Flexy just="left">
     <AnimationSequence />
   </Flexy>
-))
+)
+
+WithAnimationSequence.story = {
+  name: 'with animation sequence',
+}

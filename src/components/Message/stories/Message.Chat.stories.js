@@ -1,11 +1,13 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { faker } from '@helpscout/helix'
 import { Avatar, Message } from '../../index'
 
-const stories = storiesOf('Components/Message', module)
+export default {
+  component: Message,
+  title: 'Components/Message',
+}
 
-stories.add('Chat', () => {
+export const _Chat = () => {
   const htmlBody = `
     :sob:
     <br />
@@ -22,9 +24,9 @@ stories.add('Chat', () => {
       </Message.Chat>
     </Message>
   )
-})
+}
 
-stories.add('Chat from/to', () => {
+export const ChatFromTo = () => {
   return (
     <div>
       <Message from avatar={<Avatar name="From" />}>
@@ -41,9 +43,13 @@ stories.add('Chat from/to', () => {
       </Message>
     </div>
   )
-})
+}
 
-stories.add('Chat states', () => {
+ChatFromTo.story = {
+  name: 'Chat from/to',
+}
+
+export const ChatStates = () => {
   return (
     <Message to avatar={<Avatar name="Buddy" />}>
       <Message.Chat read timestamp="9:41am">
@@ -87,4 +93,8 @@ stories.add('Chat states', () => {
       </Message.Chat>
     </Message>
   )
-})
+}
+
+ChatStates.story = {
+  name: 'Chat states',
+}

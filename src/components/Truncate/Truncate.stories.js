@@ -1,14 +1,16 @@
 import React from 'react'
 import { createSpec, faker } from '@helpscout/helix'
-import { storiesOf } from '@storybook/react'
 import { Truncate } from '../index'
 
-const fixture = createSpec(faker.lorem.paragraph())
+export default {
+  component: Truncate,
+  title: 'Utilities/Truncate',
+}
 
-const stories = storiesOf('Utilities/Truncate', module)
+const fixture = createSpec(faker.lorem.paragraph())
 const limit = 10
 
-stories.add('default', () => (
+export const Default = () => (
   <div>
     <p>
       Auto:
@@ -50,9 +52,13 @@ stories.add('default', () => (
     </p>
     <br />
   </div>
-))
+)
 
-stories.add('tooltip', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const Tooltip = () => (
   <div>
     <p>
       Auto:
@@ -89,4 +95,8 @@ stories.add('tooltip', () => (
     </p>
     <br />
   </div>
-))
+)
+
+Tooltip.story = {
+  name: 'tooltip',
+}

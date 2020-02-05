@@ -1,5 +1,4 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import {
   withKnobs,
   boolean,
@@ -7,17 +6,15 @@ import {
   text,
   select,
 } from '@storybook/addon-knobs'
-import { withArtboard } from '@helpscout/artboard'
 import AvatarSpec from '../../utilities/specs/avatar.specs'
 import { Avatar } from '../index'
 
-const stories = storiesOf('Components/Avatar', module)
-stories.addDecorator(
-  withArtboard({ width: 300, height: 160, withCenterGuides: false })
-)
-stories.addDecorator(withKnobs)
+export default {
+  component: Avatar,
+  title: 'Components/Avatar',
+}
 
-stories.add('V2/Default', () => {
+export const V2Default = () => {
   const animationDuration = number('animationDuration', 160)
   const animationEasing = text('animationEasing', 'ease')
 
@@ -70,4 +67,8 @@ stories.add('V2/Default', () => {
   }
 
   return <Avatar {...props} />
-})
+}
+
+V2Default.story = {
+  name: 'V2/Default',
+}

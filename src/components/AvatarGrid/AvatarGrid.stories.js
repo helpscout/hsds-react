@@ -1,9 +1,11 @@
 import React, { PureComponent as Component } from 'react'
-import { storiesOf } from '@storybook/react'
 import AvatarSpec from '../../utilities/specs/avatarGrid.specs'
 import { Avatar, AvatarGrid } from '../index'
 
-const stories = storiesOf('PhaseOut/AvatarGrid', module)
+export default {
+  component: AvatarGrid,
+  title: 'Components/AvatarGrid',
+}
 const fixtures = AvatarSpec.generate(20)
 
 const avatarsMarkup = fixtures.map(avatar => {
@@ -67,32 +69,56 @@ class TestComponent extends Component {
   }
 }
 
-stories.add('default', () => (
+export const Default = () => (
   <div style={{ background: '#eee', padding: 10 }}>
     <AvatarGrid borderColor="#eee" showStatusBorderColor max={14}>
       {avatarsMarkup}
     </AvatarGrid>
   </div>
-))
+)
 
-stories.add('animations', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const Animations = () => (
   <AvatarGrid animationSequence="scaleLg" animationStagger={100} max={9}>
     {aFewAvatarsMarkup}
   </AvatarGrid>
-))
+)
 
-stories.add('few', () => <AvatarGrid max={14}>{aFewAvatarsMarkup}</AvatarGrid>)
+Animations.story = {
+  name: 'animations',
+}
 
-stories.add('size', () => (
+export const Few = () => <AvatarGrid max={14}>{aFewAvatarsMarkup}</AvatarGrid>
+
+Few.story = {
+  name: 'few',
+}
+
+export const Size = () => (
   <AvatarGrid max={9} size="sm">
     {avatarsMarkup}
   </AvatarGrid>
-))
+)
 
-stories.add('shape', () => (
+Size.story = {
+  name: 'size',
+}
+
+export const Shape = () => (
   <AvatarGrid max={9} shape="circle">
     {avatarsMarkup}
   </AvatarGrid>
-))
+)
 
-stories.add('test: render', () => <TestComponent />)
+Shape.story = {
+  name: 'shape',
+}
+
+export const TestRender = () => <TestComponent />
+
+TestRender.story = {
+  name: 'test: render',
+}

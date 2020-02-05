@@ -1,22 +1,13 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { MemoryRouter as Router, Route } from 'react-router-dom'
 import { boolean, text } from '@storybook/addon-knobs'
-import { withArtboard } from '@helpscout/artboard'
 import Toolbar from '../Toolbar'
 import Nav from '.'
 
-const stories = storiesOf('Components/Nav', module)
-
-stories.addDecorator(
-  withArtboard({
-    width: 600,
-    height: 200,
-    withCenterGuides: false,
-    withResponsiveWidth: true,
-    showInterface: false,
-  })
-)
+export default {
+  component: Nav,
+  title: 'Components/Nav',
+}
 
 const RouteComponent = () => <div />
 
@@ -44,7 +35,7 @@ const BaseNav = () => {
   )
 }
 
-stories.add('Default', () => (
+export const Default = () => (
   <Router>
     <div>
       <BaseNav />
@@ -54,9 +45,9 @@ stories.add('Default', () => (
       <Route exact path="/three" component={RouteComponent} />
     </div>
   </Router>
-))
+)
 
-stories.add('Toolbar', () => {
+export const _Toolbar = () => {
   // Solution to work around React-Router's rendering
   // https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/guides/blocked-updates.md
   const NavBar = () => (
@@ -78,4 +69,4 @@ stories.add('Toolbar', () => {
       </div>
     </Router>
   )
-})
+}

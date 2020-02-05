@@ -1,6 +1,10 @@
 import React, { PureComponent as Component } from 'react'
-import { storiesOf } from '@storybook/react'
 import { Animate, Card, Heading, Text } from '../index'
+
+export default {
+  component: Animate,
+  title: 'Utilities/Animate',
+}
 
 class AnimateOutExample extends Component {
   constructor() {
@@ -45,44 +49,57 @@ class AnimateOutExample extends Component {
   }
 }
 
-storiesOf('Utilities/Animate', module)
-  .add('default', () => (
-    <div>
-      <p>No delay</p>
-      <Animate sequence="fade down">
-        <Card>
-          <Heading>Anchorman</Heading>
-          <Text>Stay classy San Diego!</Text>
-        </Card>
-      </Animate>
-    </div>
-  ))
-  .add('custom delay/duration', () => (
-    <div>
-      <p>Tiny tiny delay</p>
-      <Animate sequence="fade scale" delay={300} easing="bounce">
-        <Card>
-          <Heading>Anchorman</Heading>
-          <Text>Stay classy San Diego!</Text>
-        </Card>
-      </Animate>
-      <br />
-      <p>delay 1 second… (duration: 400ms)</p>
-      <Animate sequence="fade down" delay={1000} duration={400}>
-        <Card>
-          <Heading>Anchorman</Heading>
-          <Text>Stay classy San Diego!</Text>
-        </Card>
-      </Animate>
-      <br />
-      <p>Suupperr slow (duration: 3000ms)</p>
-      <Animate sequence="fade down" duration={3000}>
-        <Card>
-          <Heading>Anchorman</Heading>
-          <Text>Stay classy San Diego!</Text>
-        </Card>
-      </Animate>
-      <br />
-    </div>
-  ))
-  .add('animateOut', () => <AnimateOutExample />)
+export const Default = () => (
+  <div>
+    <p>No delay</p>
+    <Animate sequence="fade down">
+      <Card>
+        <Heading>Anchorman</Heading>
+        <Text>Stay classy San Diego!</Text>
+      </Card>
+    </Animate>
+  </div>
+)
+
+Default.story = {
+  name: 'default',
+}
+
+export const CustomDelayDuration = () => (
+  <div>
+    <p>Tiny tiny delay</p>
+    <Animate sequence="fade scale" delay={300} easing="bounce">
+      <Card>
+        <Heading>Anchorman</Heading>
+        <Text>Stay classy San Diego!</Text>
+      </Card>
+    </Animate>
+    <br />
+    <p>delay 1 second… (duration: 400ms)</p>
+    <Animate sequence="fade down" delay={1000} duration={400}>
+      <Card>
+        <Heading>Anchorman</Heading>
+        <Text>Stay classy San Diego!</Text>
+      </Card>
+    </Animate>
+    <br />
+    <p>Suupperr slow (duration: 3000ms)</p>
+    <Animate sequence="fade down" duration={3000}>
+      <Card>
+        <Heading>Anchorman</Heading>
+        <Text>Stay classy San Diego!</Text>
+      </Card>
+    </Animate>
+    <br />
+  </div>
+)
+
+CustomDelayDuration.story = {
+  name: 'custom delay/duration',
+}
+
+export const AnimateOut = () => <AnimateOutExample />
+
+AnimateOut.story = {
+  name: 'animateOut',
+}

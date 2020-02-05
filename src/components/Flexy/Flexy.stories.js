@@ -1,16 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
-import { storiesOf } from '@storybook/react'
 import { Flexy } from '../index'
 
-const stories = storiesOf('Utilities/Flexy', module)
+export default {
+  component: Flexy,
+  title: 'Utilities/Flexy',
+}
 
 const BlockUI = styled('div')`
   background: yellow;
   padding: 20px;
 `
 
-stories.add('default', () => (
+export const Default = () => (
   <Flexy>
     <Flexy.Block>
       <BlockUI>Block</BlockUI>
@@ -22,9 +24,13 @@ stories.add('default', () => (
       <BlockUI>Item</BlockUI>
     </Flexy.Item>
   </Flexy>
-))
+)
 
-stories.add('align', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const Align = () => (
   <div>
     <Flexy style={{ height: 100, border: '1px solid blue' }} align="top">
       <Flexy.Item>
@@ -42,9 +48,13 @@ stories.add('align', () => (
       </Flexy.Item>
     </Flexy>
   </div>
-))
+)
 
-stories.add('gap', () => (
+Align.story = {
+  name: 'align',
+}
+
+export const Gap = () => (
   <div>
     <Flexy style={{ border: '1px solid blue' }} gap="none">
       <Flexy.Block>
@@ -131,9 +141,13 @@ stories.add('gap', () => (
       </Flexy.Block>
     </Flexy>
   </div>
-))
+)
 
-stories.add('just', () => (
+Gap.story = {
+  name: 'gap',
+}
+
+export const Just = () => (
   <div>
     <Flexy style={{ height: 100, border: '1px solid blue' }} just="left">
       <Flexy.Item>
@@ -151,4 +165,8 @@ stories.add('just', () => (
       </Flexy.Item>
     </Flexy>
   </div>
-))
+)
+
+Just.story = {
+  name: 'just',
+}

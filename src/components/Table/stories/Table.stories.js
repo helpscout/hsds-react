@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { storiesOf } from '@storybook/react'
 import {
   createFakeCustomers,
   defaultColumns,
@@ -13,7 +12,10 @@ import TableWithPagination from './TableWithPagination'
 import TableWithSorting from './TableWithSorting'
 import { defaultSkin, alternativeSkin } from '../Table.skins'
 
-const stories = storiesOf('Components/Table', module)
+export default {
+  component: Table,
+  title: 'Components/Table',
+}
 
 export const ContainerUI = styled('div')`
   table {
@@ -26,7 +28,7 @@ export const ContainerUI = styled('div')`
   }
 `
 
-stories.add('default', () => (
+export const Default = () => (
   <div>
     <PreviewCard style={{ marginBottom: '20px' }}>
       <Heading size="h4">Default skin</Heading>
@@ -42,11 +44,15 @@ stories.add('default', () => (
       data={createFakeCustomers({ amount: 10 })}
     />
   </div>
-))
+)
+
+Default.story = {
+  name: 'default',
+}
 
 const TableUI = styled(Table)``
 
-stories.add('alternative skin (built in)', () => (
+export const AlternativeSkinBuiltIn = () => (
   <div>
     <PreviewCard style={{ marginBottom: '20px' }}>
       <Heading size="h4">Alternative skin</Heading>
@@ -63,19 +69,31 @@ stories.add('alternative skin (built in)', () => (
       data={createFakeCustomers({ amount: 10 })}
     />
   </div>
-))
+)
 
-stories.add('with horizontal scroll', () => (
+AlternativeSkinBuiltIn.story = {
+  name: 'alternative skin (built in)',
+}
+
+export const WithHorizontalScroll = () => (
   <Table
     columns={defaultColumns}
     data={createFakeCustomers({ amount: 10 })}
     containerWidth="500px"
   />
-))
+)
 
-stories.add('with pagination', () => <TableWithPagination />)
+WithHorizontalScroll.story = {
+  name: 'with horizontal scroll',
+}
 
-stories.add('with compound columns', () => (
+export const WithPagination = () => <TableWithPagination />
+
+WithPagination.story = {
+  name: 'with pagination',
+}
+
+export const WithCompoundColumns = () => (
   <div>
     <PreviewCard style={{ marginBottom: '20px' }}>
       <Heading size="h4">Columns:</Heading>
@@ -101,19 +119,19 @@ stories.add('with compound columns', () => (
       data={createFakeCustomers({ amount: 10 })}
     />
   </div>
-))
+)
 
-stories.add('with sorting', () => <TableWithSorting />)
+WithCompoundColumns.story = {
+  name: 'with compound columns',
+}
 
-// stories.add('with row click', () => (
-//   <Table
-//     columns={defaultColumns}
-//     data={createFakeCustomers({ amount: 10 })}
-//     onRowClick={action('click')}
-//   />
-// ))
+export const WithSorting = () => <TableWithSorting />
 
-stories.add('expandable', () => (
+WithSorting.story = {
+  name: 'with sorting',
+}
+
+export const Expandable = () => (
   <div>
     <Heading size="h4" style={{ marginBottom: '20px' }}>
       Default expander text
@@ -137,4 +155,8 @@ stories.add('expandable', () => (
       }}
     />
   </div>
-))
+)
+
+Expandable.story = {
+  name: 'expandable',
+}

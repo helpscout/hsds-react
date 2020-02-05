@@ -1,10 +1,12 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { Flexy, Hr, Switch, Text } from '../index'
 
-const stories = storiesOf('Components/Switch', module)
+export default {
+  component: Switch,
+  title: 'Components/Switch',
+}
 
-stories.add('default', () => (
+export const Default = () => (
   <form style={{ width: 300 }}>
     <Hr size="sm" />
     <Flexy>
@@ -33,9 +35,13 @@ stories.add('default', () => (
       </Flexy.Item>
     </Flexy>
   </form>
-))
+)
 
-stories.add('state', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const State = () => (
   <form style={{ width: 300 }}>
     <Hr size="sm" />
     <Flexy>
@@ -64,9 +70,13 @@ stories.add('state', () => (
       </Flexy.Item>
     </Flexy>
   </form>
-))
+)
 
-stories.add('disabled', () => (
+State.story = {
+  name: 'state',
+}
+
+export const Disabled = () => (
   <form style={{ width: 300 }}>
     <Hr size="sm" />
     <Flexy>
@@ -105,9 +115,13 @@ stories.add('disabled', () => (
       </Flexy.Item>
     </Flexy>
   </form>
-))
+)
 
-stories.add('loading', () => (
+Disabled.story = {
+  name: 'disabled',
+}
+
+export const Loading = () => (
   <form style={{ width: 300 }}>
     <Hr size="sm" />
     <Flexy>
@@ -123,9 +137,13 @@ stories.add('loading', () => (
       </Flexy.Item>
     </Flexy>
   </form>
-))
+)
 
-stories.add('sizes', () => (
+Loading.story = {
+  name: 'loading',
+}
+
+export const Sizes = () => (
   <form style={{ width: 300 }}>
     <Hr size="sm" />
     <Flexy>
@@ -168,7 +186,11 @@ stories.add('sizes', () => (
     </Flexy>
     <Hr size="sm" />
   </form>
-))
+)
+
+Sizes.story = {
+  name: 'sizes',
+}
 
 class LoadingSwitch extends React.Component {
   state = {
@@ -232,6 +254,10 @@ class App extends React.Component {
   }
 }
 
-stories.add('stateful', () => {
+export const Stateful = () => {
   return <App />
-})
+}
+
+Stateful.story = {
+  name: 'stateful',
+}

@@ -1,16 +1,18 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { createSpec, faker } from '@helpscout/helix'
 import { Avatar, ChatScroller, Message, Scrollable } from '../index'
 
-const stories = storiesOf('Components/ChatScroller', module)
+export default {
+  component: ChatScroller,
+  title: 'Components/ChatScroller',
+}
 
 const MessageSpec = createSpec({
   id: faker.random.uuid(),
   message: faker.lorem.sentence(),
 })
 
-stories.add('Default', () => {
+export const Default = () => {
   class Chat extends React.Component {
     state = {
       messages: MessageSpec.generate(5),
@@ -65,9 +67,9 @@ stories.add('Default', () => {
       <Chat />
     </div>
   )
-})
+}
 
-stories.add('Custom selector', () => {
+export const CustomSelector = () => {
   class Chat extends React.Component {
     state = {
       messages: MessageSpec.generate(5),
@@ -125,4 +127,8 @@ stories.add('Custom selector', () => {
       </Scrollable>
     </div>
   )
-})
+}
+
+CustomSelector.story = {
+  name: 'Custom selector',
+}

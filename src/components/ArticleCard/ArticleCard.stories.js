@@ -1,7 +1,5 @@
 import React from 'react'
 import { createSpec, faker } from '@helpscout/helix'
-import { storiesOf } from '@storybook/react'
-import Artboard, { GuideContainer, Guide } from '@helpscout/artboard'
 import { withKnobs, boolean, text } from '@storybook/addon-knobs'
 import {
   ArticleCard,
@@ -14,22 +12,10 @@ import {
 } from '../index'
 import AvatarSpec from '../../utilities/specs/avatarGrid.specs'
 
-const stories = storiesOf('Components/ArticleCard', module)
-stories.addDecorator(withKnobs)
-stories.addDecorator(storyFn => {
-  return (
-    <Artboard
-      name="hsds-article-card"
-      artboardHeight={200}
-      withCenterGuides={false}
-      showGuides={false}
-    >
-      <div style={{ background: '#f2f2f2', padding: 20, minWidth: 320 }}>
-        {storyFn()}
-      </div>
-    </Artboard>
-  )
-})
+export default {
+  component: ArticleCard,
+  title: 'Components/ArticleCard',
+}
 
 const fixtures = AvatarSpec.generate(5)
 const avatarsMarkup = fixtures.map(avatar => {
@@ -86,7 +72,7 @@ const ArticleSpec = createSpec({
 
 const article = ArticleSpec.generate()
 
-stories.add('Default', () => {
+export const Default = () => {
   const { content, title } = article
 
   const metaHeaderConfig = boolean('metaHeader', false)
@@ -111,9 +97,9 @@ stories.add('Default', () => {
       {consecutive && <ArticleCard {...props} />}
     </div>
   )
-})
+}
 
-stories.add('Content', () => {
+export const Content = () => {
   const content = (
     <Flexy>
       <Flexy.Block>
@@ -128,7 +114,7 @@ stories.add('Content', () => {
   )
 
   return <ArticleCard content={content} />
-})
+}
 
 function metaHeader() {
   return (

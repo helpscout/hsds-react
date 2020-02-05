@@ -1,19 +1,29 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { Card, Overlay, PropProvider } from '../index'
 
-const stories = storiesOf('Utilities/Overlay', module)
+export default {
+  component: Overlay,
+  title: 'Components/Overlay',
+}
 
-stories.add('default', () => (
+export const Default = () => (
   <Overlay style={{ width: '500px', height: '400px' }}>
     <Card>Not now, Arctic Puffin!</Card>
   </Overlay>
-))
+)
 
-stories.add('HS-App', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const HsApp = () => (
   <PropProvider app="hs-app">
     <Overlay style={{ width: '500px', height: '400px' }}>
       <Card>Not now, Arctic Puffin!</Card>
     </Overlay>
   </PropProvider>
-))
+)
+
+HsApp.story = {
+  name: 'HS-App',
+}

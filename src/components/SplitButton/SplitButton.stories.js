@@ -1,21 +1,14 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { createSpec, faker } from '@helpscout/helix'
-import { withArtboard } from '@helpscout/artboard'
 import Flexy from '../Flexy'
 import Button from '../Button'
 import SplitButton from '.'
 import Modal from '../Modal'
 
-const stories = storiesOf('Components/SplitButton', module)
-
-stories.addDecorator(
-  withArtboard({
-    width: 500,
-    height: 300,
-    withCenterGuides: false,
-  })
-)
+export default {
+  component: SplitButton,
+  title: 'Components/SplitButton',
+}
 
 const ItemSpec = createSpec({
   label: faker.lorem.words(),
@@ -62,7 +55,7 @@ const buildGrid = ({ disabled = false } = {}) => {
   )
 }
 
-stories.add('Default', () => {
+export const Default = () => {
   return (
     <SplitButton
       dropdownProps={dropdownProps}
@@ -73,9 +66,9 @@ stories.add('Default', () => {
       Submit
     </SplitButton>
   )
-})
+}
 
-stories.add('Sizes and Colours', () => {
+export const SizesAndColours = () => {
   return (
     <div>
       <SplitButton dropdownProps={dropdownProps} kind="tertiary" size="sm">
@@ -89,13 +82,16 @@ stories.add('Sizes and Colours', () => {
       </SplitButton>
     </div>
   )
-})
+}
 
-stories.add('Colors', () => buildGrid())
+SizesAndColours.story = {
+  name: 'Sizes and Colours',
+}
 
-stories.add('Disabled', () => buildGrid({ disabled: true }))
+export const Colors = () => buildGrid()
+export const Disabled = () => buildGrid({ disabled: true })
 
-stories.add('Within Modal', () => {
+export const WithinModal = () => {
   const WordSpec = createSpec({
     key: faker.random.uuid(),
     children: faker.lorem.sentence(),
@@ -135,4 +131,4 @@ stories.add('Within Modal', () => {
   }
 
   return <Example />
-})
+}

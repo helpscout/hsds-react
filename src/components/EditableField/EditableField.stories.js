@@ -1,13 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { withAktiv } from '../../utilities/storybook'
 import EditableField from '.'
 
-const stories = storiesOf('Components/EditableField', module)
-
-stories.addDecorator(withAktiv)
+export default {
+  component: EditableField,
+  title: 'Components/EditableField',
+}
 
 export const ContainerUI = styled('div')`
   width: 300px;
@@ -72,7 +72,7 @@ const ATLAS = {
   someOtherProp: 'the best, Jerry, the best',
 }
 
-stories.add('default', () => (
+export const Default = () => (
   <ContainerUI
     onSubmit={e => {
       e.preventDefault()
@@ -92,9 +92,13 @@ stories.add('default', () => (
       value="Atlas"
     />
   </ContainerUI>
-))
+)
 
-stories.add('Text large', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const TextLarge = () => (
   <ContainerUI
     onSubmit={e => {
       e.preventDefault()
@@ -109,9 +113,13 @@ stories.add('Text large', () => (
       value="Barcelona FC"
     />
   </ContainerUI>
-))
+)
 
-stories.add('Floating Labels', () => (
+TextLarge.story = {
+  name: 'Text large',
+}
+
+export const FloatingLabels = () => (
   <ContainerUI
     onSubmit={e => {
       e.preventDefault()
@@ -133,9 +141,9 @@ stories.add('Floating Labels', () => (
       floatingLabels
     />
   </ContainerUI>
-))
+)
 
-stories.add('Text Multiple', () => (
+export const TextMultiple = () => (
   <ContainerUI
     onSubmit={e => {
       e.preventDefault()
@@ -156,9 +164,9 @@ stories.add('Text Multiple', () => (
       value={['George Harrison', 'Neil Young']}
     />
   </ContainerUI>
-))
+)
 
-stories.add('Text Multiple Large', () => (
+export const TextMultipleLarge = () => (
   <ContainerUI
     onSubmit={e => {
       e.preventDefault()
@@ -173,9 +181,9 @@ stories.add('Text Multiple Large', () => (
       value={['George Harrison', 'Neil Young']}
     />
   </ContainerUI>
-))
+)
 
-stories.add('Email Multiple', () => (
+export const EmailMultiple = () => (
   <ContainerUI
     onSubmit={e => {
       e.preventDefault()
@@ -197,9 +205,9 @@ stories.add('Email Multiple', () => (
       ]}
     />
   </ContainerUI>
-))
+)
 
-stories.add('Url', () => (
+export const Url = () => (
   <ContainerUI
     onSubmit={e => {
       e.preventDefault()
@@ -232,9 +240,9 @@ stories.add('Url', () => (
       }}
     />
   </ContainerUI>
-))
+)
 
-stories.add('Number', () => (
+export const Number = () => (
   <ContainerUI
     onSubmit={e => {
       e.preventDefault()
@@ -255,9 +263,9 @@ stories.add('Number', () => (
       value="166"
     />
   </ContainerUI>
-))
+)
 
-stories.add('With options', () => (
+export const WithOptions = () => (
   <ContainerUI
     onSubmit={e => {
       e.preventDefault()
@@ -281,9 +289,13 @@ stories.add('With options', () => (
       value={{ option: 'Work', value: '123456789' }}
     />
   </ContainerUI>
-))
+)
 
-stories.add('With options large', () => (
+WithOptions.story = {
+  name: 'With options',
+}
+
+export const WithOptionsLarge = () => (
   <ContainerUI
     onSubmit={e => {
       e.preventDefault()
@@ -300,9 +312,13 @@ stories.add('With options large', () => (
       value={{ option: 'Work', value: '123456789' }}
     />
   </ContainerUI>
-))
+)
 
-stories.add('With options multiple', () => (
+WithOptionsLarge.story = {
+  name: 'With options large',
+}
+
+export const WithOptionsMultiple = () => (
   <ContainerUI
     onSubmit={e => {
       e.preventDefault()
@@ -321,9 +337,13 @@ stories.add('With options multiple', () => (
       ]}
     />
   </ContainerUI>
-))
+)
 
-stories.add('Disabled', () => (
+WithOptionsMultiple.story = {
+  name: 'With options multiple',
+}
+
+export const Disabled = () => (
   <ContainerUI
     onSubmit={e => {
       e.preventDefault()
@@ -370,7 +390,7 @@ stories.add('Disabled', () => (
       disabled
     />
   </ContainerUI>
-))
+)
 
 class ValidationApp extends React.Component {
   state = { timeout: 100 }
@@ -496,4 +516,4 @@ class ValidationApp extends React.Component {
   }
 }
 
-stories.add('Validation', () => <ValidationApp />)
+export const Validation = () => <ValidationApp />

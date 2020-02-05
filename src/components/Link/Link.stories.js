@@ -1,16 +1,13 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { withArtboard } from '@helpscout/artboard'
 import { boolean, text } from '@storybook/addon-knobs'
 import { Link } from '../index'
 
-const stories = storiesOf('Components/Link', module)
+export default {
+  component: Link,
+  title: 'Components/Link',
+}
 
-stories.addDecorator(
-  withArtboard({ width: 300, height: 100, withCenterGuides: false })
-)
-
-stories.add('Default', () => {
+export const Default = () => {
   const props = {
     children: text('Content', 'Linky'),
     href: text('href', 'https://github.com/helpscout/hsds-react'),
@@ -18,4 +15,4 @@ stories.add('Default', () => {
   }
 
   return <Link {...props} />
-})
+}

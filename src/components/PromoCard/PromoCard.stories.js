@@ -1,24 +1,16 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { withKnobs, text, select } from '@storybook/addon-knobs'
-import { withArtboard } from '@helpscout/artboard'
 import { faker } from '@helpscout/helix'
 import { PromoCard } from '../index'
 
-const stories = storiesOf('Components/PromoCard', module)
-stories.addDecorator(withKnobs)
-stories.addDecorator(
-  withArtboard({
-    id: 'hsds-PromoCard-story',
-    width: 400,
-    height: 200,
-    withCenterGuides: false,
-  })
-)
+export default {
+  component: PromoCard,
+  title: 'Components/PromoCard',
+}
 
 const initialContent = faker.lorem.paragraph()()
 
-stories.add('Default', () => {
+export const Default = () => {
   const props = {
     promoColor: select(
       'promoColor',
@@ -40,4 +32,4 @@ stories.add('Default', () => {
       <PromoCard {...props} />
     </div>
   )
-})
+}

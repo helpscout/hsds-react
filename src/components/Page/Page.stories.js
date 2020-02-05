@@ -1,10 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import { storiesOf } from '@storybook/react'
 import { PageDecorator } from '../../utilities/storybook'
 import { Button, Input, Page } from '../index'
 
-const stories = storiesOf('Components/Page', module).addDecorator(PageDecorator)
+export default {
+  component: Page,
+  title: 'Components/Page',
+}
 
 const renderPropCode = `
 <Page.Header
@@ -56,7 +58,7 @@ const P = styled('div')`
   }
 `
 
-stories.add('Header', () => (
+export const _Header = () => (
   <Page>
     <Page.Card>
       <Page.Section>
@@ -170,9 +172,9 @@ stories.add('Header', () => (
       </Page.Section>
     </Page.Card>
   </Page>
-))
+)
 
-stories.add('Header Subsequent Cards', () => (
+export const HeaderSubsequentCards = () => (
   <Page>
     <Page.Card>
       <Page.Section>
@@ -213,9 +215,9 @@ stories.add('Header Subsequent Cards', () => (
       </Page.Section>
     </Page.Card>
   </Page>
-))
+)
 
-stories.add('Header Responsiveness', () => (
+export const HeaderResponsiveness = () => (
   <Page isResponsive>
     <Page.Card>
       <Page.Section>
@@ -261,9 +263,9 @@ stories.add('Header Responsiveness', () => (
       </Page.Section>
     </Page.Card>
   </Page>
-))
+)
 
-stories.add('Section', () => (
+export const _Section = () => (
   <Page>
     <Page.Card>
       <Page.Section>
@@ -282,9 +284,9 @@ stories.add('Section', () => (
       </Page.Section>
     </Page.Card>
   </Page>
-))
+)
 
-stories.add('Card', () => (
+export const _Card = () => (
   <Page>
     <Page.Card>
       <p>Cards are just presentational wrappers, nothing special.</p>
@@ -296,9 +298,9 @@ stories.add('Card', () => (
       <p>Sorry Cards, I didn't mean that. You are so pretty.</p>
     </Page.Card>
   </Page>
-))
+)
 
-stories.add('Actions', () => (
+export const _Actions = () => (
   <Page>
     <Page.Card>
       <Input />
@@ -309,9 +311,9 @@ stories.add('Actions', () => (
       serious={<Button kind="link">Thing</Button>}
     />
   </Page>
-))
+)
 
-stories.add('Actions directions', () => (
+export const ActionsDirections = () => (
   <Page>
     <Page.Actions
       direction="left"
@@ -350,4 +352,8 @@ stories.add('Actions directions', () => (
       }
     />
   </Page>
-))
+)
+
+ActionsDirections.story = {
+  name: 'Actions directions',
+}

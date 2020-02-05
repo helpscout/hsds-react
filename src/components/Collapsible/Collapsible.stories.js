@@ -1,6 +1,10 @@
 import React, { PureComponent as Component } from 'react'
-import { storiesOf } from '@storybook/react'
 import { Button, Collapsible } from '../index'
+
+export default {
+  component: Collapsible,
+  title: 'Utilities/Collapsible',
+}
 
 class SampleComponent extends Component {
   constructor() {
@@ -34,7 +38,7 @@ const action = () => {
   console.log('action')
 }
 
-storiesOf('Utilities/Collapsible', module).add('default', () => (
+export const Default = () => (
   <div>
     <SampleComponent onOpen={action} onClose={action}>
       <div style={{ background: '#eee', height: 200 }}>Hello!</div>
@@ -44,4 +48,8 @@ storiesOf('Utilities/Collapsible', module).add('default', () => (
       <div style={{ background: '#eee', height: 200 }}>Hello!</div>
     </SampleComponent>
   </div>
-))
+)
+
+Default.story = {
+  name: 'default',
+}

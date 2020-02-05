@@ -1,17 +1,20 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { withAktiv } from '../../utilities/storybook'
 import { ContainerUI } from './EditableField.stories'
 import EditableField from '.'
 import { EditableFieldComposite } from '.'
 
-const stories = storiesOf('Components/EditableFieldComposite', module)
-  .addParameters({
-    options: { showPanel: false, enableShortcuts: false, isFullscreen: false },
-  })
-  .addDecorator(withAktiv)
+// const stories = storiesOf('Components/EditableFieldComposite', module)
+// .addParameters({
+//   options: { showPanel: false, enableShortcuts: false, isFullscreen: false },
+// })
+// .addDecorator(withAktiv);
+export default {
+  component: EditableFieldComposite,
+  title: 'Components/EditableFieldComposite',
+}
 
-stories.add('default', () => (
+export const Default = () => (
   <ContainerUI
     onSubmit={e => {
       e.preventDefault()
@@ -36,9 +39,13 @@ stories.add('default', () => (
       />
     </EditableFieldComposite>
   </ContainerUI>
-))
+)
 
-stories.add('empty', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const Empty = () => (
   <ContainerUI
     onSubmit={e => {
       e.preventDefault()
@@ -54,9 +61,13 @@ stories.add('empty', () => (
       <EditableField label="Name" name="name" type="text" placeholder="name" />
     </EditableFieldComposite>
   </ContainerUI>
-))
+)
 
-stories.add('with custom separator', () => (
+Empty.story = {
+  name: 'empty',
+}
+
+export const WithCustomSeparator = () => (
   <ContainerUI
     onSubmit={e => {
       e.preventDefault()
@@ -82,9 +93,13 @@ stories.add('with custom separator', () => (
       />
     </EditableFieldComposite>
   </ContainerUI>
-))
+)
 
-stories.add('large', () => (
+WithCustomSeparator.story = {
+  name: 'with custom separator',
+}
+
+export const Large = () => (
   <ContainerUI
     onSubmit={e => {
       e.preventDefault()
@@ -110,7 +125,11 @@ stories.add('large', () => (
       />
     </EditableFieldComposite>
   </ContainerUI>
-))
+)
+
+Large.story = {
+  name: 'large',
+}
 
 function validateFieldValue(payload) {
   console.log('validating')

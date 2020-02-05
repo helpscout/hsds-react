@@ -1,21 +1,13 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { withKnobs, select } from '@storybook/addon-knobs'
-import { withArtboard } from '@helpscout/artboard'
 import Inline from '.'
 
-const stories = storiesOf('Utilities/Inline', module)
+export default {
+  component: Inline,
+  title: 'Utilities/Inline',
+}
 
-stories.addDecorator(
-  withArtboard({
-    withCenterGuides: false,
-    showInterface: false,
-    height: 100,
-  })
-)
-stories.addDecorator(withKnobs)
-
-stories.add('Default', () => {
+export const Default = () => {
   const props = {
     size: select(
       'size',
@@ -36,4 +28,4 @@ stories.add('Default', () => {
       <Inline.Item>Mugatu</Inline.Item>
     </Inline>
   )
-})
+}

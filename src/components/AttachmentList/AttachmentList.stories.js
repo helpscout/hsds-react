@@ -1,8 +1,11 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { Attachment, AttachmentList } from '../index'
 
-const stories = storiesOf('Components/AttachmentList', module)
+export default {
+  component: AttachmentList,
+  title: 'Components/AttachmentList',
+}
+
 const onClick = (event, attachment) => {
   console.log(event, attachment)
 }
@@ -10,7 +13,7 @@ const handleDownloadAllClick = event => {
   console.log('Download all')
 }
 
-stories.add('default', () => {
+export const Default = () => {
   return (
     <AttachmentList onDownloadAllClick={handleDownloadAllClick}>
       <Attachment name="parrot.png" size="5KB" onClick={onClick} />
@@ -22,7 +25,11 @@ stories.add('default', () => {
       />
     </AttachmentList>
   )
-})
+}
+
+Default.story = {
+  name: 'default',
+}
 
 class ThemePreviewDemo extends React.Component {
   state = {
@@ -69,6 +76,10 @@ class ThemePreviewDemo extends React.Component {
   }
 }
 
-stories.add('theme: preview', () => {
+export const ThemePreview = () => {
   return <ThemePreviewDemo />
-})
+}
+
+ThemePreview.story = {
+  name: 'theme: preview',
+}

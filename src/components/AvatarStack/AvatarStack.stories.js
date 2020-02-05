@@ -1,9 +1,12 @@
 import React, { PureComponent as Component } from 'react'
-import { storiesOf } from '@storybook/react'
 import AvatarSpec from '../../utilities/specs/avatarGrid.specs'
 import { Avatar, AvatarStack } from '../index'
 
-const stories = storiesOf('PhaseOut/AvatarStack', module)
+export default {
+  component: AvatarStack,
+  title: 'Components/AvatarStack',
+}
+
 const fixtures = AvatarSpec.generate(5)
 
 const avatarsMarkup = fixtures.map(avatar => {
@@ -33,12 +36,24 @@ class TestComponent extends Component {
   }
 }
 
-stories.add('default', () => <AvatarStack max={5}>{avatarsMarkup}</AvatarStack>)
+export const Default = () => <AvatarStack max={5}>{avatarsMarkup}</AvatarStack>
 
-stories.add('animation: easing', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const AnimationEasing = () => (
   <AvatarStack animationEasing="bounce" animationSequence="fade scale" max={4}>
     {avatarsMarkup}
   </AvatarStack>
-))
+)
 
-stories.add('test: render', () => <TestComponent />)
+AnimationEasing.story = {
+  name: 'animation: easing',
+}
+
+export const TestRender = () => <TestComponent />
+
+TestRender.story = {
+  name: 'test: render',
+}

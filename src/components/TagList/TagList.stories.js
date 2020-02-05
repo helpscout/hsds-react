@@ -1,9 +1,11 @@
 import React, { PureComponent as Component } from 'react'
-import { storiesOf } from '@storybook/react'
 import TagSpec from '../../utilities/specs/tags.specs'
 import { TagList, Tag } from '../index'
 
-const stories = storiesOf('Components/TagList', module)
+export default {
+  component: TagList,
+  title: 'Components/TagList',
+}
 
 export class SampleComponent extends Component {
   constructor() {
@@ -62,5 +64,9 @@ export class SampleComponent extends Component {
   }
 }
 
-stories.add('Default', () => <SampleComponent />)
-stories.add('Clear all', () => <SampleComponent clearAll showAll size="md" />)
+export const Default = () => <SampleComponent />
+export const ClearAll = () => <SampleComponent clearAll showAll size="md" />
+
+ClearAll.story = {
+  name: 'Clear all',
+}

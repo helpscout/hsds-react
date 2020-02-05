@@ -1,12 +1,18 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { Select } from '../index'
 
-const stories = storiesOf('PhaseOut/Select', module)
+export default {
+  component: Select,
+  title: 'Phaseout/Select',
+}
 
-stories.add('default', () => <Select options={['one', 'two', 'three']} />)
+export const Default = () => <Select options={['one', 'two', 'three']} />
 
-stories.add('groups', () => {
+Default.story = {
+  name: 'default',
+}
+
+export const Groups = () => {
   const options = [
     {
       label: 'Group 1',
@@ -18,27 +24,47 @@ stories.add('groups', () => {
     },
   ]
   return <Select options={options} value="five" />
-})
+}
 
-stories.add('placeholder', () => (
+Groups.story = {
+  name: 'groups',
+}
+
+export const Placeholder = () => (
   <Select
     placeholder="Select one"
     options={['one', 'two', 'three']}
     onChange={v => console.log(v)}
   />
-))
+)
 
-stories.add('prefix', () => <Select prefix="Filter by: " options={['One']} />)
+Placeholder.story = {
+  name: 'placeholder',
+}
 
-stories.add('helpText', () => (
+export const Prefix = () => <Select prefix="Filter by: " options={['One']} />
+
+Prefix.story = {
+  name: 'prefix',
+}
+
+export const HelpText = () => (
   <Select helpText="This text appears below the Select" />
-))
+)
 
-stories.add('hintText', () => (
+HelpText.story = {
+  name: 'helpText',
+}
+
+export const HintText = () => (
   <Select hintText="This text appears above the Select" />
-))
+)
 
-stories.add('states', () => (
+HintText.story = {
+  name: 'hintText',
+}
+
+export const States = () => (
   <div>
     <Select state="error" />
     <br />
@@ -46,21 +72,33 @@ stories.add('states', () => (
     <br />
     <Select state="warning" />
   </div>
-))
+)
 
-stories.add('state: error', () => (
+States.story = {
+  name: 'states',
+}
+
+export const StateError = () => (
   <div>
     <Select state="error" errorMessage="This is error." />
     <br />
     <Select state="error" size="sm" errorMessage="This is error." />
     <br />
   </div>
-))
+)
 
-stories.add('sizes', () => (
+StateError.story = {
+  name: 'state: error',
+}
+
+export const Sizes = () => (
   <div>
     <Select autoFocus placeholder="Regular" />
     <br />
     <Select size="sm" autoFocus placeholder="Small" />
   </div>
-))
+)
+
+Sizes.story = {
+  name: 'sizes',
+}

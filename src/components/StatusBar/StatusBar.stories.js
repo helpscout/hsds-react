@@ -1,14 +1,20 @@
 import React, { PureComponent as Component } from 'react'
-import { storiesOf } from '@storybook/react'
 import { StatusBar } from '../index'
 
-const stories = storiesOf('Components/StatusBar', module)
+export default {
+  component: StatusBar,
+  title: 'Components/StatusBar',
+}
 
-stories.add('default', () => (
+export const Default = () => (
   <StatusBar isOpen>Status: Click me to close.</StatusBar>
-))
+)
 
-stories.add('styles', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const Styles = () => (
   <div>
     Light
     <div>
@@ -43,15 +49,23 @@ stories.add('styles', () => (
     </div>
     <br />
   </div>
-))
+)
 
-stories.add('closeOnClick: Disabled', () => (
+Styles.story = {
+  name: 'styles',
+}
+
+export const CloseOnClickDisabled = () => (
   <StatusBar isOpen closeOnClick={false}>
     Status: Can't close me on click. Nice try.
   </StatusBar>
-))
+)
 
-stories.add('custom click to close', () => {
+CloseOnClickDisabled.story = {
+  name: 'closeOnClick: Disabled',
+}
+
+export const CustomClickToClose = () => {
   class TestComponent extends Component {
     constructor() {
       super()
@@ -82,4 +96,8 @@ stories.add('custom click to close', () => {
   }
 
   return <TestComponent />
-})
+}
+
+CustomClickToClose.story = {
+  name: 'custom click to close',
+}

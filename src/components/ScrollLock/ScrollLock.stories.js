@@ -1,10 +1,12 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { Flexy, Image, Scrollable } from '../index'
 
-const stories = storiesOf('Utilities/ScrollLock', module)
+export default {
+  component: Scrollable,
+  title: 'Utilities/Scrollable',
+}
 
-stories.add('default', () => (
+export const Default = () => (
   <div>
     <p>
       ScrollLock prevents you from scrolling past the start or end of a
@@ -108,4 +110,8 @@ stories.add('default', () => (
       <b>Buddy:</b> You smell like beef and cheese, you don't smell like Santa.
     </p>
   </div>
-))
+)
+
+Default.story = {
+  name: 'default',
+}

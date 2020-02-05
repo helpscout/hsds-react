@@ -1,10 +1,12 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { Animate, AnimateGroup, Card } from '../index'
 
-const stories = storiesOf('Utilities/AnimateGroup', module)
+export default {
+  component: AnimateGroup,
+  title: 'Utilities/AnimateGroup',
+}
 
-stories.add('default', () => (
+export const Default = () => (
   <div>
     <p>Stagger fade in</p>
     <AnimateGroup stagger>
@@ -22,9 +24,13 @@ stories.add('default', () => (
       </Animate>
     </AnimateGroup>
   </div>
-))
+)
 
-stories.add('expand', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const Expand = () => (
   <div>
     <p>Stagger fade in</p>
     <div style={{ margin: 'auto', width: '80%' }}>
@@ -63,9 +69,13 @@ stories.add('expand', () => (
       </Card>
     </div>
   </div>
-))
+)
 
-stories.add('sequence', () => (
+Expand.story = {
+  name: 'expand',
+}
+
+export const Sequence = () => (
   <div>
     <p>Sequence defined by Group</p>
     <AnimateGroup stagger sequence="fade left">
@@ -86,4 +96,8 @@ stories.add('sequence', () => (
       </Animate>
     </AnimateGroup>
   </div>
-))
+)
+
+Sequence.story = {
+  name: 'sequence',
+}

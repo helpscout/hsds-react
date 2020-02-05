@@ -1,7 +1,11 @@
 import React from 'react'
 import { createSpec, faker } from '@helpscout/helix'
-import { storiesOf } from '@storybook/react'
 import { List, Overflow, Tag } from '../index'
+
+export default {
+  component: Overflow,
+  title: 'Utilities/Overflow',
+}
 
 const ChatSpec = createSpec({
   id: faker.random.uuid(),
@@ -10,17 +14,19 @@ const ChatSpec = createSpec({
 
 const fixture = ChatSpec.generate()
 
-const stories = storiesOf('Utilities/Overflow', module)
-
-stories.add('default', () => (
+export const Default = () => (
   <div style={{ width: '20%' }}>
     <Overflow>
       <div style={{ width: 500 }}>{fixture.message}</div>
     </Overflow>
   </div>
-))
+)
 
-stories.add('tags', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const Tags = () => (
   <div style={{ width: '20%' }}>
     <Overflow>
       <List type="inline">
@@ -39,4 +45,8 @@ stories.add('tags', () => (
       </List>
     </Overflow>
   </div>
-))
+)
+
+Tags.story = {
+  name: 'tags',
+}

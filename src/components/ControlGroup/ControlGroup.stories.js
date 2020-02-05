@@ -1,10 +1,12 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { Button, ControlGroup, Icon, Input, Select } from '../index'
 
-const stories = storiesOf('Components/ControlGroup', module)
+export default {
+  component: ControlGroup,
+  title: 'Components/ControlGroup',
+}
 
-stories.add('default', () => (
+export const Default = () => (
   <ControlGroup>
     <ControlGroup.Item>
       <Input.AddOn>Prefix</Input.AddOn>
@@ -16,9 +18,13 @@ stories.add('default', () => (
       <Input.AddOn>Suffix</Input.AddOn>
     </ControlGroup.Item>
   </ControlGroup>
-))
+)
 
-stories.add('button', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const _Button = () => (
   <ControlGroup>
     <ControlGroup.Item>
       <Button>Button</Button>
@@ -30,9 +36,13 @@ stories.add('button', () => (
       <Button>Button</Button>
     </ControlGroup.Item>
   </ControlGroup>
-))
+)
 
-stories.add('input + button', () => (
+_Button.story = {
+  name: 'button',
+}
+
+export const InputButton = () => (
   <ControlGroup>
     <ControlGroup.Item>
       <Input.AddOn>Prefix</Input.AddOn>
@@ -46,9 +56,13 @@ stories.add('input + button', () => (
       </Button>
     </ControlGroup.Item>
   </ControlGroup>
-))
+)
 
-stories.add('input + select', () => (
+InputButton.story = {
+  name: 'input + button',
+}
+
+export const InputSelect = () => (
   <ControlGroup>
     <ControlGroup.Item>
       <Input.AddOn>Prefix</Input.AddOn>
@@ -62,4 +76,8 @@ stories.add('input + select', () => (
       </Select>
     </ControlGroup.Block>
   </ControlGroup>
-))
+)
+
+InputSelect.story = {
+  name: 'input + select',
+}

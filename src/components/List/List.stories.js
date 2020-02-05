@@ -1,14 +1,11 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { withKnobs, select } from '@storybook/addon-knobs'
-import { withArtboard } from '@helpscout/artboard'
 import { List, Text } from '../index'
 
-const stories = storiesOf('Utilities/List', module)
-stories.addDecorator(
-  withArtboard({ withCenterGuides: false, showInterface: false })
-)
-stories.addDecorator(withKnobs)
+export default {
+  component: List,
+  title: 'Components/List',
+}
 
 const listItems = [
   {
@@ -46,7 +43,7 @@ const listItemsMarkup = listItems.map(item => {
   )
 })
 
-stories.add('Default', () => {
+export const Default = () => {
   const props = {
     border: select(
       'border',
@@ -80,4 +77,4 @@ stories.add('Default', () => {
   }
 
   return <List {...props}>{listItemsMarkup}</List>
-})
+}

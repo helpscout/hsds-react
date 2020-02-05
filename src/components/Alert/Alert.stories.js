@@ -1,12 +1,18 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { Alert, Button, Heading, Link, Text } from '../index'
 
-const stories = storiesOf('Components/Alert', module)
+export default {
+  component: Alert,
+  title: 'Components/Alert',
+}
 
-stories.add('default', () => <Alert>Buddy!</Alert>)
+export const Default = () => <Alert>Buddy!</Alert>
 
-stories.add('content', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const Content = () => (
   <Alert>
     <Heading size="h1">H1 Heading</Heading>
     <Heading size="h2">H2 Heading</Heading>
@@ -25,41 +31,65 @@ stories.add('content', () => (
       <li>List item</li>
     </ul>
   </Alert>
-))
+)
 
-stories.add('dismissible', () => (
+Content.story = {
+  name: 'content',
+}
+
+export const Dismissible = () => (
   <div>
     <Alert dismissible>Buddy! This is dismissible.</Alert>
 
     <p>Content</p>
   </div>
-))
+)
 
-stories.add('badge', () => (
+Dismissible.story = {
+  name: 'dismissible',
+}
+
+export const Badge = () => (
   <div>
     <Alert badge="Wow">Badge Buddy!</Alert>
   </div>
-))
+)
 
-stories.add('icon', () => (
+Badge.story = {
+  name: 'badge',
+}
+
+export const Icon = () => (
   <div>
     <Alert icon>Icon Buddy!</Alert>
   </div>
-))
+)
 
-stories.add('status', () => (
+Icon.story = {
+  name: 'icon',
+}
+
+export const Status = () => (
   <div>
     <Alert status="info">Info Buddy!</Alert>
     <Alert status="error">Error Buddy!</Alert>
     <Alert status="success">Success Buddy!</Alert>
     <Alert status="warning">Warning Buddy!</Alert>
   </div>
-))
+)
 
-stories.add('actionRight', () => (
+Status.story = {
+  name: 'status',
+}
+
+export const ActionRight = () => (
   <div>
     <Alert actionRight={<Button size="sm">Action!</Button>} icon>
       Action Right Buddy with Icon!
     </Alert>
   </div>
-))
+)
+
+ActionRight.story = {
+  name: 'actionRight',
+}

@@ -1,6 +1,4 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { withArtboard } from '@helpscout/artboard'
 import { withKnobs, number, text, select } from '@storybook/addon-knobs'
 import AvatarSpec from '../../utilities/specs/avatar.specs'
 import { Avatar, AvatarStack } from '../index'
@@ -15,19 +13,12 @@ const guides = [
   },
 ]
 
-const stories = storiesOf('Components/AvatarStack', module)
-stories.addDecorator(
-  withArtboard({
-    guides,
-    width: 400,
-    height: 100,
-    showGuides: false,
-    showInterface: false,
-  })
-)
-stories.addDecorator(withKnobs)
+export default {
+  component: AvatarStack,
+  title: 'Components/AvatarStack',
+}
 
-stories.add('V2/Default', () => {
+export const V2Default = () => {
   const avatars = number('avatars', 5)
 
   const animationDuration = number('animationDuration', 300)
@@ -77,4 +68,8 @@ stories.add('V2/Default', () => {
   }
 
   return <AvatarStack {...props}>{avatarsMarkup}</AvatarStack>
-})
+}
+
+V2Default.story = {
+  name: 'V2/Default',
+}

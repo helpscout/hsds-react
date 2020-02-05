@@ -1,10 +1,12 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { FormGroup, Flexy, Skeleton } from '../index'
 
-const stories = storiesOf('Components/Skeleton', module)
+export default {
+  component: Skeleton,
+  title: 'Components/Skeleton',
+}
 
-stories.add('default', () => (
+export const Default = () => (
   <div style={{ width: 300 }}>
     <Flexy>
       <Flexy.Item>
@@ -17,9 +19,13 @@ stories.add('default', () => (
     </Flexy>
     <Skeleton.Paragraph />
   </div>
-))
+)
 
-stories.add('without animations', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const WithoutAnimations = () => (
   <div style={{ width: 300 }}>
     <Flexy>
       <Flexy.Item>
@@ -32,23 +38,35 @@ stories.add('without animations', () => (
     </Flexy>
     <Skeleton.Paragraph withAnimations={false} />
   </div>
-))
+)
 
-stories.add('avatar', () => (
+WithoutAnimations.story = {
+  name: 'without animations',
+}
+
+export const _Avatar = () => (
   <div>
     <Skeleton.Avatar size="lg" />
     <Skeleton.Avatar size="md" />
     <Skeleton.Avatar size="sm" />
   </div>
-))
+)
 
-stories.add('heading', () => (
+_Avatar.story = {
+  name: 'avatar',
+}
+
+export const _Heading = () => (
   <div>
     <Skeleton.Heading width="70%" />
   </div>
-))
+)
 
-stories.add('form', () => (
+_Heading.story = {
+  name: 'heading',
+}
+
+export const Form = () => (
   <div style={{ width: 300 }}>
     <FormGroup>
       <Skeleton.Control size="sm" style={{ marginBottom: 5 }} />
@@ -58,36 +76,60 @@ stories.add('form', () => (
       <Skeleton.Control />
     </FormGroup>
   </div>
-))
+)
 
-stories.add('image', () => (
+Form.story = {
+  name: 'form',
+}
+
+export const _Image = () => (
   <div style={{ width: 300 }}>
     <Skeleton.Image />
   </div>
-))
+)
 
-stories.add('paragraph', () => (
+_Image.story = {
+  name: 'image',
+}
+
+export const _Paragraph = () => (
   <div>
     <Skeleton.Paragraph />
   </div>
-))
+)
 
-stories.add('Paragraph with heading', () => (
+_Paragraph.story = {
+  name: 'paragraph',
+}
+
+export const ParagraphWithHeading = () => (
   <div>
     <Skeleton.Heading />
     <Skeleton.Paragraph />
   </div>
-))
+)
 
-stories.add('paragraph with small heading', () => (
+ParagraphWithHeading.story = {
+  name: 'Paragraph with heading',
+}
+
+export const ParagraphWithSmallHeading = () => (
   <div>
     <Skeleton.Heading size="sm" />
     <Skeleton.Paragraph />
   </div>
-))
+)
 
-stories.add('text', () => (
+ParagraphWithSmallHeading.story = {
+  name: 'paragraph with small heading',
+}
+
+export const _Text = () => (
   <div>
     <Skeleton.Text width="70%" />
   </div>
-))
+)
+
+_Text.story = {
+  name: 'text',
+}

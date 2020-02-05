@@ -1,5 +1,4 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { ThemeProvider } from '../styled'
 import {
   withKnobs,
@@ -10,25 +9,13 @@ import {
 } from '@storybook/addon-knobs'
 import { getColor } from '../../styles/utilities/color'
 import { action } from '@storybook/addon-actions'
-import { withArtboard } from '@helpscout/artboard'
 import { makeBrandColors } from '../../styles/utilities/color'
 import MessageCard from '.'
 
-const stories = storiesOf('Components/MessageCard', module)
-
-stories.addDecorator(
-  withArtboard({
-    id: 'hsds-MessageCard',
-    width: 600,
-    height: 400,
-    withCenterGuides: false,
-  })
-)
-stories.addDecorator(
-  withKnobs({
-    escapeHTML: false,
-  })
-)
+export default {
+  component: MessageCard,
+  title: 'Components/MessageCard',
+}
 
 class Story extends React.Component {
   render() {
@@ -83,4 +70,4 @@ class Story extends React.Component {
   }
 }
 
-stories.add('Default', () => <Story />)
+export const Default = () => <Story />

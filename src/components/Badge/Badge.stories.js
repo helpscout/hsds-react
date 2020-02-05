@@ -1,42 +1,64 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { getColor } from '../../styles/utilities/color'
 import { Badge } from '../index'
 
-const stories = storiesOf('Components/Badge', module)
+export default {
+  component: Badge,
+  title: 'Components/Badge',
+}
 
-stories.add('default', () => <Badge>Badger</Badge>)
+export const Default = () => <Badge>Badger</Badge>
 
-stories.add('status', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const Status = () => (
   <div>
     <Badge status="error">Badger</Badge>
     <Badge status="info">Badger</Badge>
     <Badge status="success">Badger</Badge>
     <Badge status="warning">Badger</Badge>
   </div>
-))
+)
 
-stories.add('styles', () => (
+Status.story = {
+  name: 'status',
+}
+
+export const Styles = () => (
   <div>
     <Badge>Regular</Badge>
     <Badge white>White</Badge>
   </div>
-))
+)
 
-stories.add('size', () => (
+Styles.story = {
+  name: 'styles',
+}
+
+export const Size = () => (
   <div>
     <Badge size="md">Regular</Badge>
     <Badge size="sm">Small</Badge>
   </div>
-))
+)
 
-stories.add('square', () => (
+Size.story = {
+  name: 'size',
+}
+
+export const Square = () => (
   <div>
     <Badge isSquare>Regular</Badge>
   </div>
-))
+)
 
-stories.add('inverted', () => (
+Square.story = {
+  name: 'square',
+}
+
+export const Inverted = () => (
   <div>
     <Badge status="error" inverted={true}>
       Badger
@@ -51,9 +73,13 @@ stories.add('inverted', () => (
       Badger
     </Badge>
   </div>
-))
+)
 
-stories.add('custom color', () => (
+Inverted.story = {
+  name: 'inverted',
+}
+
+export const CustomColor = () => (
   <div>
     <Badge color={getColor('yellow.500')} inverted={true}>
       Badger
@@ -76,9 +102,13 @@ stories.add('custom color', () => (
     <Badge color={getColor('green.500')}>Badger</Badge>
     <Badge color={getColor('blue.500')}>Badger</Badge>
   </div>
-))
+)
 
-stories.add('custom textColor', () => (
+CustomColor.story = {
+  name: 'custom color',
+}
+
+export const CustomTextColor = () => (
   <div>
     <Badge
       color={getColor('yellow.500')}
@@ -95,4 +125,8 @@ stories.add('custom textColor', () => (
       Badger
     </Badge>
   </div>
-))
+)
+
+CustomTextColor.story = {
+  name: 'custom textColor',
+}

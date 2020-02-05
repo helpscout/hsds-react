@@ -3,17 +3,18 @@ import { AutoDropdown } from '..'
 import { withKnobs, boolean, number } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import { createSpec, faker } from '@helpscout/helix'
-import { storiesOf } from '@storybook/react'
 
-const stories = storiesOf('Components/AutoDropdown', module)
-stories.addDecorator(withKnobs)
+export default {
+  component: AutoDropdown,
+  title: 'Components/AutoDropdown',
+}
 
 const ItemSpec = createSpec({
   value: faker.name.firstName(),
 })
 const items = ItemSpec.generate(15)
 
-stories.add('Default', () => {
+export const Default = () => {
   const props = {
     items,
     dropUp: boolean('dropUp', false),
@@ -22,9 +23,9 @@ stories.add('Default', () => {
   }
 
   return <AutoDropdown {...props} />
-})
+}
 
-stories.add('Stateful', () => {
+export const Stateful = () => {
   class Example extends React.Component {
     static defaultProps = {
       onSelect: action('onSelect'),
@@ -75,9 +76,9 @@ stories.add('Stateful', () => {
   }
 
   return <Example />
-})
+}
 
-stories.add('Stateful/With Multiple Selection', () => {
+export const StatefulWithMultipleSelection = () => {
   const props = {
     items,
     dropUp: boolean('dropUp', false),
@@ -104,9 +105,13 @@ stories.add('Stateful/With Multiple Selection', () => {
   }
 
   return <AutoDropdown {...props} />
-})
+}
 
-stories.add('Multiple instances', () => {
+StatefulWithMultipleSelection.story = {
+  name: 'Stateful/With Multiple Selection',
+}
+
+export const MultipleInstances = () => {
   const renderTrigger = index => <span>{`Click ${index}`}</span>
 
   return (
@@ -118,4 +123,8 @@ stories.add('Multiple instances', () => {
       ))}
     </ul>
   )
-})
+}
+
+MultipleInstances.story = {
+  name: 'Multiple instances',
+}

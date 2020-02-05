@@ -1,16 +1,22 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { Spinner } from '../index'
 
-const stories = storiesOf('Components/Spinner', module)
+export default {
+  component: Spinner,
+  title: 'Components/Spinner',
+}
 
-stories.add('default', () => (
+export const Default = () => (
   <div>
     <Spinner />
   </div>
-))
+)
 
-stories.add('sizes', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const Sizes = () => (
   <div>
     <div>
       xl
@@ -33,4 +39,8 @@ stories.add('sizes', () => (
       <Spinner size="xs" />
     </div>
   </div>
-))
+)
+
+Sizes.story = {
+  name: 'sizes',
+}

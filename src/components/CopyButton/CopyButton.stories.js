@@ -1,10 +1,12 @@
 import React from 'react'
 import { action } from '@storybook/addon-actions'
-import { storiesOf } from '@storybook/react'
 import { CopyButton } from '../index'
 
-const stories = storiesOf('Components/CopyButton', module)
+export default {
+  component: CopyButton,
+  title: 'Components/CopyButton',
+}
 
-stories.add('Default', () => (
+export const Default = () => (
   <CopyButton onClick={action('Click')} onReset={action('Reset')} />
-))
+)

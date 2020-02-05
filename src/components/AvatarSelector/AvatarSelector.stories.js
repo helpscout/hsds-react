@@ -1,10 +1,14 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import AvatarSpec from '../../utilities/specs/avatarGrid.specs'
 import Dropdown from '../Dropdown'
 import { AvatarSelector } from '../index'
 import styled from '../styled'
 import { getColor } from '../../styles/utilities/color'
+
+export default {
+  component: AvatarSelector,
+  title: 'Components/AvatarSelector',
+}
 
 const DarkerUI = styled.div`
   background-color: ${getColor('grey.500')};
@@ -13,8 +17,7 @@ const DarkerUI = styled.div`
 
 const withDarkerBackground = storyFn => <DarkerUI>{storyFn()}</DarkerUI>
 
-const stories = storiesOf('Components/AvatarSelector', module)
-stories.addDecorator(withDarkerBackground)
+// stories.addDecorator(withDarkerBackground)
 const fixtures = AvatarSpec.generate(20)
 
 const avatarsItems = fixtures.map(({ name, id, image }) => {
@@ -70,9 +73,28 @@ class AvatarSelectorWithDropdown extends React.Component {
   }
 }
 
-stories.add('default', () => <AvatarSelector />)
-stories.add('with dropdown', () => <AvatarSelectorWithDropdown />)
-stories.add('with image', () => (
+export const Default = () => <AvatarSelector />
+
+Default.story = {
+  name: 'default',
+}
+
+export const WithDropdown = () => <AvatarSelectorWithDropdown />
+
+WithDropdown.story = {
+  name: 'with dropdown',
+}
+
+export const WithImage = () => (
   <AvatarSelector image={fixtures[0].image} name="Buzz Arooooooo" />
-))
-stories.add('with intials', () => <AvatarSelector name="Buzz Arooooooo" />)
+)
+
+WithImage.story = {
+  name: 'with image',
+}
+
+export const WithIntials = () => <AvatarSelector name="Buzz Arooooooo" />
+
+WithIntials.story = {
+  name: 'with intials',
+}

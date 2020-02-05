@@ -1,10 +1,13 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { text, boolean, number } from '@storybook/addon-knobs'
 import { Accordion, Button, Input, Page, Text } from '../index'
 import { faker } from '@helpscout/helix'
 
-const stories = storiesOf('Components/Accordion', module)
+export default {
+  component: Accordion,
+  title: 'Components/Accordion',
+}
+
 const body = faker.lorem.paragraph()()
 const form = (
   <form>
@@ -41,7 +44,7 @@ const onOpen = id => console.log('Open', id)
 const onClose = id => console.log('Close', id)
 const onSortEnd = (...args) => console.log('Sorted', ...args)
 
-stories.add('default', () => (
+export const Default = () => (
   <Accordion
     distance={number('distance', 5)}
     isSortable={boolean('isSortable', false)}
@@ -52,9 +55,13 @@ stories.add('default', () => (
   >
     {createSections(data)}
   </Accordion>
-))
+)
 
-stories.add('extra small', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const ExtraSmall = () => (
   <Accordion
     distance={number('distance', 5)}
     isSortable={boolean('isSortable', false)}
@@ -66,9 +73,13 @@ stories.add('extra small', () => (
   >
     {createSections(data)}
   </Accordion>
-))
+)
 
-stories.add('small', () => (
+ExtraSmall.story = {
+  name: 'extra small',
+}
+
+export const Small = () => (
   <Accordion
     distance={number('distance', 5)}
     isSortable={boolean('isSortable', false)}
@@ -80,9 +91,13 @@ stories.add('small', () => (
   >
     {createSections(data)}
   </Accordion>
-))
+)
 
-stories.add('large', () => (
+Small.story = {
+  name: 'small',
+}
+
+export const Large = () => (
   <Accordion
     distance={number('distance', 5)}
     isSortable={boolean('isSortable', false)}
@@ -94,9 +109,13 @@ stories.add('large', () => (
   >
     {createSections(data)}
   </Accordion>
-))
+)
 
-stories.add('allow multiple', () => (
+Large.story = {
+  name: 'large',
+}
+
+export const AllowMultiple = () => (
   <Accordion
     allowMultiple
     distance={number('distance', 5)}
@@ -106,9 +125,13 @@ stories.add('allow multiple', () => (
   >
     {createSections(data)}
   </Accordion>
-))
+)
 
-stories.add('is seamless', () => (
+AllowMultiple.story = {
+  name: 'allow multiple',
+}
+
+export const IsSeamless = () => (
   <Accordion
     isSeamless
     distance={number('distance', 5)}
@@ -118,9 +141,13 @@ stories.add('is seamless', () => (
   >
     {createSections(data)}
   </Accordion>
-))
+)
 
-stories.add('is in page', () => (
+IsSeamless.story = {
+  name: 'is seamless',
+}
+
+export const IsInPage = () => (
   <Page>
     <Page.Card>
       <Page.Header subtitle="In page mode" />
@@ -134,9 +161,13 @@ stories.add('is in page', () => (
       </Accordion>
     </Page.Card>
   </Page>
-))
+)
 
-stories.add('uses custom ids', () => {
+IsInPage.story = {
+  name: 'is in page',
+}
+
+export const UsesCustomIds = () => {
   class AccordionWithCustomIds extends React.Component {
     state = {
       value: 3,
@@ -187,9 +218,13 @@ stories.add('uses custom ids', () => {
   }
 
   return <AccordionWithCustomIds />
-})
+}
 
-stories.add('uses multiple custom ids', () => {
+UsesCustomIds.story = {
+  name: 'uses custom ids',
+}
+
+export const UsesMultipleCustomIds = () => {
   class AccordionWithCustomIds extends React.Component {
     state = {
       values: [1, 2],
@@ -239,9 +274,13 @@ stories.add('uses multiple custom ids', () => {
   }
 
   return <AccordionWithCustomIds />
-})
+}
 
-stories.add('Row (Link)', () => {
+UsesMultipleCustomIds.story = {
+  name: 'uses multiple custom ids',
+}
+
+export const RowLink = () => {
   const linkOneContent = text('linkOneContent', 'Link Row One')
   const linkTwoContent = text('linkTwoContent', 'Link Row Two')
 
@@ -269,4 +308,8 @@ stories.add('Row (Link)', () => {
       </Page.Card>
     </Page>
   )
-})
+}
+
+RowLink.story = {
+  name: 'Row (Link)',
+}

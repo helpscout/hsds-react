@@ -1,14 +1,16 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import VerificationCode from './'
 
-const stories = storiesOf('Components/VerificationCode', module)
+export default {
+  component: VerificationCode,
+  title: 'Components/VerificationCode',
+}
 
-stories.add('Default', () => {
+export const Default = () => {
   return <VerificationCode />
-})
+}
 
-stories.add('Invalid', () => {
+export const Invalid = () => {
   return (
     <VerificationCode
       isValid={false}
@@ -17,9 +19,9 @@ stories.add('Invalid', () => {
       }}
     />
   )
-})
+}
 
-stories.add('In context', () => {
+export const InContext = () => {
   return (
     <div>
       <input type="text" />
@@ -30,7 +32,11 @@ stories.add('In context', () => {
       <button>Submit</button>
     </div>
   )
-})
+}
+
+InContext.story = {
+  name: 'In context',
+}
 
 class ExternalValue extends React.PureComponent {
   state = {
@@ -57,6 +63,10 @@ class ExternalValue extends React.PureComponent {
   }
 }
 
-stories.add('External value', () => {
+export const _ExternalValue = () => {
   return <ExternalValue />
-})
+}
+
+_ExternalValue.story = {
+  name: 'External value',
+}

@@ -1,23 +1,14 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { withKnobs, boolean, number } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
-import { withArtboard } from '@helpscout/artboard'
 import Stepper from '.'
 
-const stories = storiesOf('Components/Stepper', module)
+export default {
+  component: Stepper,
+  title: 'Components/Stepper',
+}
 
-stories.addDecorator(
-  withArtboard({
-    width: 500,
-    height: 300,
-    withCenterGuides: false,
-    showInterface: false,
-  })
-)
-stories.addDecorator(withKnobs)
-
-stories.add('Default', () => {
+export const Default = () => {
   const props = {
     currentIndex: number('currentIndex', 0),
     isClickable: boolean('isClickable', false),
@@ -38,4 +29,4 @@ stories.add('Default', () => {
   }
 
   return <Stepper {...props} />
-})
+}

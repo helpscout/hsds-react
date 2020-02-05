@@ -1,28 +1,14 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { createSpec, faker } from '@helpscout/helix'
 import { action } from '@storybook/addon-actions'
 import { withKnobs, boolean } from '@storybook/addon-knobs'
-import Artboard from '@helpscout/artboard'
 import ComboBox from '.'
 import InfiniteScroller from '../InfiniteScroller'
 
-const stories = storiesOf('PhaseOut/ComboBox', module)
-stories.addDecorator(withKnobs)
-stories.addDecorator(storyFn => (
-  <Artboard
-    name="dropdown"
-    withCenterGuides={false}
-    artboardWidth={480}
-    artboardHeight={300}
-  >
-    <div
-      style={{ boxSizing: 'border-box', width: 480, height: 300, padding: 30 }}
-    >
-      {storyFn()}
-    </div>
-  </Artboard>
-))
+export default {
+  component: ComboBox,
+  title: 'PhaseOut/ComboBox',
+}
 
 const ItemSpec = createSpec({
   id: faker.random.uuid(),
@@ -49,17 +35,21 @@ const items = [
   },
 ]
 
-stories.add('Default', () => {
+export const Default = () => {
   return <ComboBox itemFilterKey="label" items={items} isOpen={true} />
-})
+}
 
-stories.add('DropUp', () => {
+export const DropUp = () => {
   return (
     <ComboBox itemFilterKey="label" items={items} isOpen={true} dropUp={true} />
   )
-})
+}
 
-stories.add('StateReducer', () => {
+DropUp.story = {
+  name: 'DropUp',
+}
+
+export const StateReducer = () => {
   const stateReducer = (state, action) => {
     console.group('State update')
     console.log('state', state)
@@ -77,9 +67,13 @@ stories.add('StateReducer', () => {
       stateReducer={stateReducer}
     />
   )
-})
+}
 
-stories.add('Stateful/With Multiple Selection', () => {
+StateReducer.story = {
+  name: 'StateReducer',
+}
+
+export const StatefulWithMultipleSelection = () => {
   const props = {
     items,
     dropUp: boolean('dropUp', false),
@@ -90,9 +84,13 @@ stories.add('Stateful/With Multiple Selection', () => {
   }
 
   return <ComboBox {...props} />
-})
+}
 
-stories.add('Infinite Scroll', () => {
+StatefulWithMultipleSelection.story = {
+  name: 'Stateful/With Multiple Selection',
+}
+
+export const InfiniteScroll = () => {
   class Test extends React.Component {
     state = {
       items: ItemSpec.generate(30),
@@ -140,4 +138,4 @@ stories.add('Infinite Scroll', () => {
   }
 
   return <Test />
-})
+}

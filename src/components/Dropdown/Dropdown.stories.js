@@ -1,16 +1,14 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { boolean } from '@storybook/addon-knobs'
 import { createSpec, faker } from '@helpscout/helix'
 import Dropdown from './index'
 import Button from '../Button'
 
-const stories = storiesOf('Components/Dropdown', module)
-
-stories.addParameters({
-  a11y: { element: '.c-Dropdown' },
-})
+export default {
+  component: Dropdown,
+  title: 'Components/Dropdown',
+}
 
 export const ItemSpec = createSpec({
   id: faker.random.uuid(),
@@ -19,50 +17,74 @@ export const ItemSpec = createSpec({
   onClick: () => (value, props) => console.log('Clicked!', value),
 })
 
-stories.add('Dropdown/Default', () => {
+export const DropdownDefault = () => {
   const props = {
     items: ItemSpec.generate(100),
     disabled: boolean('disabled', false),
   }
 
   return <Dropdown {...props} />
-})
+}
 
-stories.add('Dropdown/Empty', () => {
+DropdownDefault.story = {
+  name: 'Dropdown/Default',
+}
+
+export const DropdownEmpty = () => {
   const Empty = () => <div>Nothing here!</div>
 
   return <Dropdown items={[]} renderEmpty={() => <Empty />} />
-})
+}
 
-stories.add('Dropdown/Loading', () => {
+DropdownEmpty.story = {
+  name: 'Dropdown/Empty',
+}
+
+export const DropdownLoading = () => {
   const items = ItemSpec.generate(8)
   const Loading = () => <div>Loading...</div>
 
   return <Dropdown items={items} isLoading renderLoading={() => <Loading />} />
-})
+}
 
-stories.add('Menu/Custom size', () => {
+DropdownLoading.story = {
+  name: 'Dropdown/Loading',
+}
+
+export const MenuCustomSize = () => {
   const items = ItemSpec.generate(8)
 
   return <Dropdown items={items} minWidth={400} maxWidth={600} />
-})
+}
 
-stories.add('Menu/DownLeft', () => {
+MenuCustomSize.story = {
+  name: 'Menu/Custom size',
+}
+
+export const MenuDownLeft = () => {
   const items = ItemSpec.generate(20)
 
   return <Dropdown items={items} direction="left" />
-})
+}
 
-stories.add('Menu/Callbacks', () => {
+MenuDownLeft.story = {
+  name: 'Menu/DownLeft',
+}
+
+export const MenuCallbacks = () => {
   const items = ItemSpec.generate(8)
   const onOpen = () => console.log('Open')
   const onClose = () => console.log('Close')
   const onSelect = (item, props) => console.log('Select', props.item)
 
   return <Dropdown {...{ items, onOpen, onClose, onSelect }} />
-})
+}
 
-stories.add('Menu/StateReducer', () => {
+MenuCallbacks.story = {
+  name: 'Menu/Callbacks',
+}
+
+export const MenuStateReducer = () => {
   const items = ItemSpec.generate(8)
   const stateReducer = (state, action) => {
     console.group('State update')
@@ -74,16 +96,24 @@ stories.add('Menu/StateReducer', () => {
   }
 
   return <Dropdown {...{ items, stateReducer }} />
-})
+}
 
-stories.add('Menu/Subscribe', () => {
+MenuStateReducer.story = {
+  name: 'Menu/StateReducer',
+}
+
+export const MenuSubscribe = () => {
   const items = ItemSpec.generate(8)
   const subscribe = state => console.log('State update', state)
 
   return <Dropdown {...{ items, subscribe }} />
-})
+}
 
-stories.add('Menu/zIndex', () => {
+MenuSubscribe.story = {
+  name: 'Menu/Subscribe',
+}
+
+export const MenuZIndex = () => {
   const items = ItemSpec.generate(8)
 
   return (
@@ -101,9 +131,13 @@ stories.add('Menu/zIndex', () => {
       <Dropdown items={items} zIndex={999999} direction="up" />
     </div>
   )
-})
+}
 
-stories.add('Menu/Nested', () => {
+MenuZIndex.story = {
+  name: 'Menu/zIndex',
+}
+
+export const MenuNested = () => {
   const items = [
     {
       ...ItemSpec.generate(),
@@ -122,9 +156,13 @@ stories.add('Menu/Nested', () => {
   ]
 
   return <Dropdown items={items} isOpened />
-})
+}
 
-stories.add('Menu/Nested/UpLeft', () => {
+MenuNested.story = {
+  name: 'Menu/Nested',
+}
+
+export const MenuNestedUpLeft = () => {
   const items = [
     {
       ...ItemSpec.generate(),
@@ -143,9 +181,13 @@ stories.add('Menu/Nested/UpLeft', () => {
   ]
 
   return <Dropdown items={items} dropUp direction="left" />
-})
+}
 
-stories.add('Item/Link', () => {
+MenuNestedUpLeft.story = {
+  name: 'Menu/Nested/UpLeft',
+}
+
+export const ItemLink = () => {
   const props = {
     disabled: boolean('disabled', false),
     items: ItemSpec.generate(100).map(item => ({
@@ -155,9 +197,13 @@ stories.add('Item/Link', () => {
   }
 
   return <Dropdown {...props} />
-})
+}
 
-stories.add('Item/Disabled Link', () => {
+ItemLink.story = {
+  name: 'Item/Link',
+}
+
+export const ItemDisabledLink = () => {
   const props = {
     disabled: boolean('disabled', false),
     items: ItemSpec.generate(100)
@@ -169,18 +215,26 @@ stories.add('Item/Disabled Link', () => {
   }
 
   return <Dropdown {...props} />
-})
+}
 
-stories.add('Item/Active', () => {
+ItemDisabledLink.story = {
+  name: 'Item/Disabled Link',
+}
+
+export const ItemActive = () => {
   const items = ItemSpec.generate(8)
   const selectedItem = items[0]
 
   return (
     <Dropdown items={items} selectedItem={selectedItem} clearOnSelect={false} />
   )
-})
+}
 
-stories.add('Item/Disabled', () => {
+ItemActive.story = {
+  name: 'Item/Active',
+}
+
+export const ItemDisabled = () => {
   const items = ItemSpec.generate(8).map((item, index) => {
     if (index !== 5) return item
     return {
@@ -190,9 +244,13 @@ stories.add('Item/Disabled', () => {
   })
 
   return <Dropdown items={items} />
-})
+}
 
-stories.add('Item/Divider', () => {
+ItemDisabled.story = {
+  name: 'Item/Disabled',
+}
+
+export const ItemDivider = () => {
   const items = ItemSpec.generate(8).map((item, index) => {
     if (index !== 5) return item
     return {
@@ -201,9 +259,13 @@ stories.add('Item/Divider', () => {
   })
 
   return <Dropdown items={items} />
-})
+}
 
-stories.add('Item/Groups', () => {
+ItemDivider.story = {
+  name: 'Item/Divider',
+}
+
+export const ItemGroups = () => {
   const items = [
     {
       items: [
@@ -226,9 +288,13 @@ stories.add('Item/Groups', () => {
   ]
 
   return <Dropdown items={items} />
-})
+}
 
-stories.add('Item/Custom', () => {
+ItemGroups.story = {
+  name: 'Item/Groups',
+}
+
+export const ItemCustom = () => {
   const items = ItemSpec.generate(8)
   const onSelect = value => console.log(value)
   const CustomItem = props => {
@@ -255,9 +321,13 @@ stories.add('Item/Custom', () => {
       onSelect={onSelect}
     />
   )
-})
+}
 
-stories.add('Trigger/Custom', () => {
+ItemCustom.story = {
+  name: 'Item/Custom',
+}
+
+export const TriggerCustom = () => {
   const items = ItemSpec.generate(8)
 
   return (
@@ -266,9 +336,13 @@ stories.add('Trigger/Custom', () => {
       renderTrigger={<Button kind="secondary">Dropdown</Button>}
     />
   )
-})
+}
 
-stories.add('Stateful', () => {
+TriggerCustom.story = {
+  name: 'Trigger/Custom',
+}
+
+export const Stateful = () => {
   class Example extends React.Component {
     state = {
       isOpen: true,
@@ -308,9 +382,9 @@ stories.add('Stateful', () => {
   }
 
   return <Example />
-})
+}
 
-stories.add('Stateful/Multiple Selection', () => {
+export const StatefulMultipleSelection = () => {
   class Example extends React.Component {
     state = {
       isOpen: true,
@@ -356,10 +430,14 @@ stories.add('Stateful/Multiple Selection', () => {
   }
 
   return <Example />
-})
+}
 
-stories.add('Disabled', () => {
+StatefulMultipleSelection.story = {
+  name: 'Stateful/Multiple Selection',
+}
+
+export const Disabled = () => {
   const items = ItemSpec.generate(100)
 
   return <Dropdown disabled items={items} />
-})
+}

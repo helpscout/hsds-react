@@ -1,10 +1,12 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { Message } from '../../index'
 
-const stories = storiesOf('Components/Message', module)
+export default {
+  component: Message,
+  title: 'Components/Message',
+}
 
-stories.add('Theme', () => {
+export const Theme = () => {
   class Example extends React.PureComponent {
     state = {
       isEmbed: true,
@@ -37,4 +39,4 @@ stories.add('Theme', () => {
   }
 
   return <Example />
-})
+}

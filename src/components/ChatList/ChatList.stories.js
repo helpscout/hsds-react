@@ -1,8 +1,12 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import AvatarSpec from '../../utilities/specs/avatar.specs'
 import ChatSpec from '../../utilities/specs/chat.specs'
 import { Avatar, ChatList } from '../index'
+
+export default {
+  component: ChatList,
+  title: 'Components/ChatList',
+}
 
 const avatars = AvatarSpec.generate(8)
 
@@ -38,14 +42,16 @@ const getItemMarkup = () => {
   })
 }
 
-const stories = storiesOf('Components/ChatList', module)
-
-stories.add('item', () => {
+export const _Item = () => {
   const itemMarkup = getItemMarkup()
   return <div style={{ width: 300 }}>{itemMarkup[0]}</div>
-})
+}
 
-stories.add('list', () => {
+_Item.story = {
+  name: 'item',
+}
+
+export const List = () => {
   const itemMarkup = getItemMarkup()
   return (
     <div style={{ width: 300 }}>
@@ -55,19 +61,31 @@ stories.add('list', () => {
       </ChatList>
     </div>
   )
-})
+}
 
-stories.add('list: empty', () => (
+List.story = {
+  name: 'list',
+}
+
+export const ListEmpty = () => (
   <div style={{ width: 300 }}>
     <ChatList />
   </div>
-))
+)
 
-stories.add('list: loading', () => (
+ListEmpty.story = {
+  name: 'list: empty',
+}
+
+export const ListLoading = () => (
   <div style={{ width: 300 }}>
     <ChatList>
       <ChatList.Item />
       <ChatList.Item />
     </ChatList>
   </div>
-))
+)
+
+ListLoading.story = {
+  name: 'list: loading',
+}

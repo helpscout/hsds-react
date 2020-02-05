@@ -1,10 +1,12 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { PortalWrapper } from '../index'
 
-const stories = storiesOf('Utilities/Portal', module)
+export default {
+  component: PortalWrapper,
+  title: 'Utilities/PortalWrapper',
+}
 
-stories.add('Default', () => {
+export const Default = () => {
   class PortalExample extends React.PureComponent {
     render() {
       return <div>Hallo</div>
@@ -33,4 +35,4 @@ stories.add('Default', () => {
   }
 
   return <Example />
-})
+}

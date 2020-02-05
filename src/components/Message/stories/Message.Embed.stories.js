@@ -1,8 +1,11 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { Avatar, Message } from '../../index'
 
-const stories = storiesOf('Components/Message', module)
+export default {
+  component: Message,
+  title: 'Components/Message',
+}
+
 const html = `
   <div style="left: 0;
               width: 100%;
@@ -54,23 +57,27 @@ const html4 = `
 <div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 83.9419%;"><iframe src="//speakerdeck.com/player/19b85c8a3b63450d85f6df64db9d0359" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" allowfullscreen scrolling="no"></iframe></div>
 `
 
-stories.add('Embed', () => (
+export const _Embed = () => (
   <Message.Provider theme="embed">
     <Message from avatar={<Avatar name="Artic Puffin" />}>
       <Message.Embed html={html} />
     </Message>
   </Message.Provider>
-))
+)
 
-stories.add('Embed note', () => (
+export const EmbedNote = () => (
   <Message.Provider theme="embed">
     <Message from avatar={<Avatar name="Artic Puffin" />}>
       <Message.Embed isNote html={html} />
     </Message>
   </Message.Provider>
-))
+)
 
-stories.add('Embed left-right', () => {
+EmbedNote.story = {
+  name: 'Embed note',
+}
+
+export const EmbedLeftRight = () => {
   return (
     <div>
       <Message to avatar={<Avatar name="Artic Puffin" />}>
@@ -88,9 +95,13 @@ stories.add('Embed left-right', () => {
       </Message>
     </div>
   )
-})
+}
 
-stories.add('Embed consecutive', () => {
+EmbedLeftRight.story = {
+  name: 'Embed left-right',
+}
+
+export const EmbedConsecutive = () => {
   return (
     <div>
       <Message to avatar={<Avatar name="Artic Puffin" />}>
@@ -102,4 +113,8 @@ stories.add('Embed consecutive', () => {
       </Message>
     </div>
   )
-})
+}
+
+EmbedConsecutive.story = {
+  name: 'Embed consecutive',
+}

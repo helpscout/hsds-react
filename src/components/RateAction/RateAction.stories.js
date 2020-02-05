@@ -1,15 +1,18 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import RateAction from '.'
 
-const stories = storiesOf('Components/RateAction', module)
+export default {
+  component: RateAction,
+  title: 'Components/RateAction',
+}
+
 const font =
   '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
 
 const SIZES = ['lg', 'md', 'sm']
 const REACTIONS_EMOTICONS = ['reaction-happy', 'reaction-okay', 'reaction-sad']
 
-stories.add('Default', () => {
+export const Default = () => {
   return (
     <div style={{ fontFamily: font }}>
       <h4>Default</h4>
@@ -23,7 +26,7 @@ stories.add('Default', () => {
       ))}
     </div>
   )
-})
+}
 
 class Play extends React.Component {
   state = {
@@ -89,9 +92,9 @@ class Play extends React.Component {
     )
   }
 }
-stories.add('Active', () => <Play />)
+export const Active = () => <Play />
 
-stories.add('Disabled', () => {
+export const Disabled = () => {
   return (
     <div style={{ fontFamily: font }}>
       {REACTIONS_EMOTICONS.map(iconName => (
@@ -104,4 +107,4 @@ stories.add('Disabled', () => {
       ))}
     </div>
   )
-})
+}
