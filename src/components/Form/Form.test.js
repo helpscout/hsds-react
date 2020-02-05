@@ -32,7 +32,7 @@ describe('Children', () => {
   })
 })
 
-describe('Actions', () => {
+describe.only('Actions', () => {
   test('submits the Form on click of the save button', () => {
     const wrapper = mount(<Form />)
     const el = wrapper.find('.c-Form').hostNodes()
@@ -106,6 +106,21 @@ describe('Actions', () => {
         '-1'
       )
     )
+  })
+
+  test('renders buttons with custom props when applied', () => {
+    const wrapper = mount(
+      <Form
+        actionTabbable={false}
+        cancelButtonProps={{ isLoading: true }}
+        destroyButtonProps={{ isLoading: true }}
+        onCancel={() => {}}
+        onDestroy={() => {}}
+        saveButtonProps={{ isLoading: true }}
+      />
+    )
+
+    expect(wrapper.find('.is-loading').hostNodes()).toHaveLength(3)
   })
 })
 

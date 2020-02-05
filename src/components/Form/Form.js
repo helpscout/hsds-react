@@ -1,4 +1,6 @@
 import * as React from 'react'
+import PropTypes from 'prop-types'
+
 import Actions from './Actions/Form.Actions'
 import Button from '../Button'
 import { classNames } from '../../utilities/classNames'
@@ -16,17 +18,36 @@ export class Form extends React.PureComponent {
     saveText: 'Save',
   }
 
+  static propTypes = {
+    actionDirection: PropTypes.string,
+    actionTabbable: PropTypes.bool,
+    cancelButtonProps: PropTypes.object,
+    cancelText: PropTypes.string,
+    children: PropTypes.any,
+    className: PropTypes.string,
+    destroyButtonProps: PropTypes.object,
+    destroyText: PropTypes.string,
+    onCancel: PropTypes.func,
+    onDestroy: PropTypes.func,
+    onSave: PropTypes.func,
+    saveButtonProps: PropTypes.object,
+    saveText: PropTypes.string,
+  }
+
   render() {
     const {
       actionDirection,
       actionTabbable,
+      cancelButtonProps,
       cancelText,
       children,
       className,
+      destroyButtonProps,
       destroyText,
       onCancel,
       onDestroy,
       onSave,
+      saveButtonProps,
       saveText,
     } = this.props
 
@@ -41,6 +62,7 @@ export class Form extends React.PureComponent {
         version={2}
         submit={true}
         {...commonButtonProps}
+        {...saveButtonProps}
       >
         {saveText}
       </Button>
@@ -53,6 +75,7 @@ export class Form extends React.PureComponent {
         version={2}
         onClick={onCancel}
         {...commonButtonProps}
+        {...cancelButtonProps}
       >
         {cancelText}
       </Button>
@@ -66,6 +89,7 @@ export class Form extends React.PureComponent {
         version={2}
         onClick={onDestroy}
         {...commonButtonProps}
+        {...destroyButtonProps}
       >
         {destroyText}
       </Button>
