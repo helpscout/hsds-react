@@ -92,10 +92,10 @@ export const RateActionUI = styled('button')`
       border: 2px solid ${config.outlineColor};
       display: none;
       height: calc(${config.size.default} + 4px);
-      left: -4px;
+      left: -2px;
       pointer-events: none;
       position: absolute;
-      top: -4px;
+      top: -2px;
       width: calc(${config.size.default} + 4px);
       will-change: transform;
 
