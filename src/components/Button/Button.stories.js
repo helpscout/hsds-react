@@ -49,9 +49,6 @@ const makeButtonVariations = (props = {}) => {
           <Button {...props} size="xl">
             Button
           </Button>
-          <Button {...props} size="lgxl">
-            Button
-          </Button>
           <Button {...props} size="lg">
             Button
           </Button>
