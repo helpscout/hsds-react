@@ -9,20 +9,16 @@ import {
 import { action } from '@storybook/addon-actions'
 import { createSpec, faker } from '@helpscout/helix'
 import { storiesOf } from '@storybook/react'
-import { withArtboard } from '@helpscout/artboard'
-import { SelectDropdown } from '..'
+import SelectDropdown from './index'
 
 const stories = storiesOf('Components/SelectDropdown', module)
-stories.addDecorator(
-  withArtboard({ id: 'SelectDropdown', withResponsiveWidth: true })
-)
 stories.addDecorator(withKnobs)
 
 const ItemSpec = createSpec({
   id: faker.random.uuid(),
   value: faker.name.firstName(),
 })
-const items = ItemSpec.generate(15)
+const items = ItemSpec.generate(20)
 
 stories.add('Default', () => {
   const props = {
@@ -85,4 +81,26 @@ stories.add('Statefully controlled', () => {
   }
 
   return <Example />
+})
+
+stories.add('with auto input', () => {
+  const props = {
+    items,
+    state: select(
+      'state',
+      {
+        default: 'default',
+        error: 'error',
+      },
+      'default'
+    ),
+    dropUp: boolean('dropUp', false),
+    maxHeight: text('maxHeight', '200px'),
+    maxWidth: text('maxWidth', '100%'),
+    limit: number('limit', 15),
+    width: text('width', '100%'),
+    onSelect: action('onSelect'),
+    autoInput: true,
+  }
+  return <SelectDropdown {...props} />
 })

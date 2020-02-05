@@ -2,7 +2,7 @@ import * as React from 'react'
 import { mount } from 'enzyme'
 import SideNavigation from '../SideNavigation'
 import { DropdownHeader } from '../SideNavigation.DropdownHeader'
-import AutoDropdown from '../../AutoDropdown/AutoDropdown'
+import SearchableDropdown from '../../SearchableDropdown/SearchableDropdown'
 import { Trigger } from '../../Dropdown/V2/Dropdown.Trigger'
 
 describe('ClassName', () => {
@@ -11,7 +11,7 @@ describe('ClassName', () => {
 
     expect(
       wrapper
-        .find(AutoDropdown)
+        .find(SearchableDropdown)
         .getDOMNode()
         .classList.contains('c-SideNavigation__DropdownHeader')
     ).toBeTruthy()
@@ -25,7 +25,7 @@ describe('ClassName', () => {
 
     expect(
       wrapper
-        .find(AutoDropdown)
+        .find(SearchableDropdown)
         .getDOMNode()
         .classList.contains(customClass)
     ).toBeTruthy()

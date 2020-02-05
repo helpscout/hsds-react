@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom'
 import { storiesOf } from '@storybook/react'
 import { createSpec, faker } from '@helpscout/helix'
 import {
-  AutoDropdown,
+  SearchableDropdown,
   Button,
   FormLabel,
   Heading,
@@ -315,11 +315,11 @@ stories.add('nested', () => (
               {ContentSpec.generate(2).map(({ id, content }) => (
                 <p key={id}>{content}</p>
               ))}
-              <AutoDropdown />
+              <SearchableDropdown autoInput={true} />
             </Modal.Body>
           </Modal>
 
-          <AutoDropdown />
+          <SearchableDropdown autoInput={true} />
         </Modal.Body>
       </Modal>
     </Modal.Body>
