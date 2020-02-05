@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { mount } from 'enzyme'
 import { Item } from '../Dropdown.Item'
 import ItemSelectedCheck from '../Dropdown.ItemSelectedCheck'
@@ -6,31 +6,26 @@ import {
   findDOMNode,
   hasClass,
   getAttribute,
-} from '../../../../tests/helpers/enzyme'
+} from '../../../tests/helpers/enzyme'
 import { setMenuPositionStyles } from '../Dropdown.renderUtils'
-import { MenuUI } from '../Dropdown.css.js'
 
 jest.mock('../Dropdown.utils')
 jest.mock('../Dropdown.renderUtils')
 jest.mock('../Dropdown.Card', () => {
   const Card = props => <div {...props} />
-  return {
-    default: props => {
-      return <Card {...props} />
-    },
+  return props => {
+    return <Card {...props} />
   }
 })
 jest.mock('../Dropdown.Menu', () => {
+  const { MenuUI } = require('../Dropdown.css.js')
   const Menu = props => <MenuUI {...props} />
-  return {
-    default: props => {
-      return <Menu {...props} />
-    },
+  return props => {
+    return <Menu {...props} />
   }
 })
 
 beforeEach(() => {
-  // @ts-ignore
   setMenuPositionStyles.mockClear()
 })
 
@@ -38,7 +33,7 @@ describe('className', () => {
   test('Has a default className', () => {
     const wrapper = mount(<Item />)
 
-    expect(hasClass(wrapper, 'c-DropdownV2Item')).toBe(true)
+    expect(hasClass(wrapper, 'c-DropdownItem')).toBe(true)
   })
 
   test('Is div by default', () => {
@@ -95,9 +90,8 @@ describe('ref', () => {
   test('Internally sets the actionNode', () => {
     const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
     const wrapper = mount(<Item items={items} />)
-    const el = findDOMNode(wrapper, '.c-DropdownV2ItemAction')
+    const el = findDOMNode(wrapper, '.c-DropdownItemAction')
 
-    // @ts-ignore
     expect(wrapper.instance().actionNode).toBe(el)
   })
 
@@ -105,7 +99,6 @@ describe('ref', () => {
     const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
     const wrapper = mount(<Item items={items} />)
 
-    // @ts-ignore
     expect(wrapper.instance().wrapperNode).toBeTruthy()
   })
 })
@@ -123,7 +116,6 @@ describe('renderMenu', () => {
   //   const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
   //   const wrapper = mount(<Item items={items} />)
   //   expect(setMenuPositionStyles).toHaveBeenCalledTimes(1)
-  //   // @ts-ignore
   //   wrapper.instance().menuNode = null
   //   wrapper.setProps({
   //     isHover: true,
@@ -136,7 +128,7 @@ describe('Action', () => {
   const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
   test('Renders an Action', () => {
     const wrapper = mount(<Item items={items} />)
-    const el = wrapper.find('.c-DropdownV2ItemAction')
+    const el = wrapper.find('.c-DropdownItemAction')
 
     expect(el.length).toBeTruthy()
   })
@@ -144,7 +136,7 @@ describe('Action', () => {
   test('Gets subMenu class, if applicable', () => {
     const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
     const wrapper = mount(<Item items={items} />)
-    const el = wrapper.find('.c-DropdownV2ItemAction')
+    const el = wrapper.find('.c-DropdownItemAction')
 
     expect(hasClass(el, 'has-subMenu')).toBe(true)
   })
@@ -280,7 +272,7 @@ describe('Indicator', () => {
   test('Renders the sub menu indicator, if has items', () => {
     const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
     const wrapper = mount(<Item items={items} />)
-    const el = wrapper.find('.c-DropdownV2ItemSubMenuIndicator')
+    const el = wrapper.find('.c-DropdownItemSubMenuIndicator')
 
     expect(el.length).toBeTruthy()
   })
@@ -288,7 +280,7 @@ describe('Indicator', () => {
   test('Does not render the sub menu indicator, if has no items', () => {
     const items = undefined
     const wrapper = mount(<Item items={items} />)
-    const el = wrapper.find('.c-DropdownV2ItemSubMenuIndicator')
+    const el = wrapper.find('.c-DropdownItemSubMenuIndicator')
 
     expect(el.length).not.toBeTruthy()
   })
@@ -308,7 +300,6 @@ describe('Indicator', () => {
 describe('renderItem', () => {
   test('Can render custom markup for item', () => {
     const CustomItem = (props = {}) => {
-      // @ts-ignore
       return <div className="ron">{props.label}</div>
     }
 
@@ -320,7 +311,6 @@ describe('renderItem', () => {
 
   test('Can render custom markup for item when multiselect enabled', () => {
     const CustomItem = (props = {}) => {
-      // @ts-ignore
       return <div className="ron">{props.label}</div>
     }
 
@@ -359,7 +349,7 @@ describe('renderItem', () => {
 describe('disabled', () => {
   test('Adds disabled styles, if specified', () => {
     const wrapper = mount(<Item disabled />)
-    const el = wrapper.find('.c-DropdownV2Item')
+    const el = wrapper.find('.c-DropdownItem')
 
     expect(hasClass(wrapper, 'is-disabled')).toBe(true)
     expect(getAttribute(el, 'aria-disabled')).toBe('true')

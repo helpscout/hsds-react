@@ -97,7 +97,7 @@ export class DropdownContainer extends React.PureComponent {
     this.store.setState({ getState: this.store.getState })
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.store.subscribe(this.props.subscribe)
   }
 
@@ -105,7 +105,7 @@ export class DropdownContainer extends React.PureComponent {
     this.store.unsubscribe(this.props.subscribe)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const state = this.store.getState()
     // Batch updates to a single update
     let nextState = {}

@@ -1,13 +1,11 @@
-import * as React from 'react'
+import React from 'react'
 import { mount } from 'enzyme'
-import Dropdown from '../../DropdownV2'
+import Dropdown from '../../Dropdown'
 import createStore, { initialState } from '../Dropdown.store'
 
 jest.mock('../Dropdown.MenuPortal', () => {
   const Portal = props => <div>{props.children}</div>
-  return {
-    default: props => <Portal {...props} />,
-  }
+  return props => <Portal {...props} />
 })
 
 const createMockStore = props => createStore({ ...initialState, ...props })
@@ -16,7 +14,7 @@ describe('Store/Render', () => {
   // Initial test to render with the default store
   test('Renders a Dropdown', () => {
     const wrapper = mount(<Dropdown isOpen={true} />)
-    const store: any = wrapper.instance()['store']
+    const store = wrapper.instance()['store']
 
     expect(wrapper).toBeTruthy()
 

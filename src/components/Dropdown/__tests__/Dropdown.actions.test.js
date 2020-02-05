@@ -1,4 +1,3 @@
-// @ts-ignore
 import {
   changeDirection,
   onMenuMounted,
@@ -318,7 +317,7 @@ describe('selectItem', () => {
     selectItem(state, event)
 
     expect(spy).toHaveBeenCalledWith(mockItem.value, {
-      dropdownType: 'hsds-dropdown-v2',
+      dropdownType: 'hsds-dropdown',
       event,
       deselected: undefined,
       item: mockItem,

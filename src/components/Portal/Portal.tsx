@@ -38,7 +38,7 @@ export class Portal extends React.Component<PortalProps> {
   }
 
   /* istanbul ignore next */
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.node && this.props.className !== nextProps.className) {
       // TODO: fix typescript complains
       // @ts-ignore

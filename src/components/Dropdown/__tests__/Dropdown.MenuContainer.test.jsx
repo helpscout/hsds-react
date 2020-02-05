@@ -1,50 +1,38 @@
-import * as React from 'react'
+import React from 'react'
 import { mount } from 'enzyme'
 import { MenuContainer } from '../Dropdown.MenuContainer'
 import { initialState } from '../Dropdown.store'
-import { find, hasClass } from '../../../../tests/helpers/enzyme'
-import { MenuUI } from '../Dropdown.css.js'
+import { find, hasClass } from '../../../tests/helpers/enzyme'
 
 const { defaultProps } = MenuContainer
 
 jest.mock('../Dropdown.MenuPortal', () => {
   const Portal = ({ children }) => <div>{children}</div>
-  return {
-    default: Portal,
-  }
+  return Portal
 })
-jest.mock('../../../Animate', () => {
+jest.mock('../../Animate', () => {
   const Animate = ({ children }) => <div>{children}</div>
-  return {
-    default: Animate,
-  }
+  return Animate
 })
 jest.mock('../Dropdown.Renderer', () => {
   const Renderer = () => <div />
-  return {
-    default: Renderer,
-  }
+  return Renderer
 })
 jest.mock('../Dropdown.Menu', () => {
+  const { MenuUI } = require('../Dropdown.css.js')
   const Menu = props => <MenuUI {...props} />
-  return {
-    default: Menu,
-  }
+  return Menu
 })
 jest.mock('../Dropdown.Card', () => {
   const Card = ({ children }) => <div>{children}</div>
-  return {
-    default: Card,
-  }
+  return Card
 })
 jest.mock('../Dropdown.Item', () => {
   const Item = ({ children }) => <div>{children}</div>
-  return {
-    default: Item,
-  }
+  return Item
 })
 
-const baseSelector = 'div.c-DropdownV2MenuContainer'
+const baseSelector = 'div.c-DropdownMenuContainer'
 
 describe('className', () => {
   test('Has a default className', () => {
@@ -123,11 +111,11 @@ describe('Portal', () => {
   })
 
   test('Refocuses triggerNode on close', () => {
-    const spy = jest.fn() as unknown
+    const spy = jest.fn()
     const mockTriggerNode = {
       focus: spy,
       getBoundingClientRect: () => ({ height: 0, top: 0, left: 0 }),
-    } as HTMLElement
+    }
 
     const wrapper = mount(
       <MenuContainer isOpen={true} triggerNode={mockTriggerNode} />
@@ -249,7 +237,7 @@ describe('Groups', () => {
 
     const group = wrapper.find('DropdownGroup')
     const menu = wrapper.find('Menu')
-    const els = menu.find('Item.c-DropdownV2Item')
+    const els = menu.find('Item.c-DropdownItem')
     const el = els.first()
 
     expect(group.length).toBeTruthy()
@@ -606,7 +594,7 @@ describe('setPositionStylesOnNode', () => {
     )
 
     // Setup
-    const inst = wrapper.instance() as any
+    const inst = wrapper.instance()
     inst.node = document.createElement('div')
     inst.placementNode = document.createElement('div')
     inst.didOpen = true
@@ -630,7 +618,7 @@ describe('setPositionStylesOnNode', () => {
     )
 
     // Setup
-    const inst = wrapper.instance() as any
+    const inst = wrapper.instance()
     inst.node = document.createElement('div')
     inst.placementNode = document.createElement('div')
     inst.didOpen = true
@@ -652,7 +640,7 @@ describe('setPositionStylesOnNode', () => {
     const wrapper = mount(<MenuContainer triggerNode={mockTriggerNode} />)
 
     // Setup
-    const inst = wrapper.instance() as any
+    const inst = wrapper.instance()
     inst.node = document.createElement('div')
     inst.placementNode = document.createElement('div')
     inst.didOpen = true
@@ -678,7 +666,7 @@ describe('setPositionStylesOnNode', () => {
     const wrapper = mount(<MenuContainer triggerNode={mockTriggerNode} />)
 
     // Setup
-    const inst = wrapper.instance() as any
+    const inst = wrapper.instance()
     inst.node = document.createElement('div')
     inst.placementNode = document.createElement('div')
     inst.didOpen = true
@@ -708,7 +696,7 @@ describe('setPositionStylesOnNode', () => {
     const wrapper = mount(<MenuContainer />)
 
     // Setup
-    const inst = wrapper.instance() as any
+    const inst = wrapper.instance()
     inst.node = document.createElement('div')
     inst.placementNode = document.createElement('div')
     inst.didOpen = true

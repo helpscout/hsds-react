@@ -665,7 +665,7 @@ describe('getItemProps', () => {
       selectedItem: item,
     }
 
-    const enhancedItem: any = getItemProps(state, item)
+    const enhancedItem = getItemProps(state, item)
 
     expect(enhancedItem).not.toBe(item)
     expect(enhancedItem.className).toContain(item.className)

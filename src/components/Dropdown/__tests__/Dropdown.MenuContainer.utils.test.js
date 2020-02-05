@@ -17,7 +17,7 @@ describe('getComputedClientRect', () => {
         top: 332,
         left: 21,
       }),
-    } as HTMLElement
+    }
 
     const results = getComputedClientRect(node, window)
 

@@ -1,24 +1,19 @@
-import * as React from 'react'
+import React from 'react'
 import { mount } from 'enzyme'
 import { Dropdown } from '../Dropdown'
-import Keys from '../../../../constants/Keys'
 
 const documentEvents = {
-  click: (event: any) => undefined,
-  keydown: (event: any) => undefined,
+  click: event => undefined,
+  keydown: event => undefined,
 }
 
 jest.mock('../Dropdown.Trigger', () => {
   const Trigger = props => <div />
-  return {
-    default: () => <Trigger />,
-  }
+  return () => <Trigger />
 })
 jest.mock('../Dropdown.MenuContainer', () => {
   const MenuContainer = props => <div />
-  return {
-    default: () => <MenuContainer />,
-  }
+  return () => <MenuContainer />
 })
 
 describe('Click events', () => {
@@ -29,7 +24,6 @@ describe('Click events', () => {
   })
 
   afterEach(() => {
-    // @ts-ignore
     document.addEventListener.mockRestore()
   })
 
@@ -52,7 +46,6 @@ describe('Click events', () => {
 
     wrapper.instance()['menuNode'] = undefined
 
-    // @ts-ignore
     documentEvents.click()
 
     expect(spy).not.toHaveBeenCalled()

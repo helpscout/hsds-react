@@ -60,7 +60,6 @@ export class Dropdown extends React.PureComponent {
 
   getTriggerProps() {
     const { disabled, onBlur, onFocus } = this.props
-
     return {
       disabled,
       onBlur,
@@ -177,5 +176,5 @@ const ConnectedDropdown = connect(
     setTriggerNode,
   }
 )(Dropdown)
-const AnotherComponent = () => <span></span>
-export default AnotherComponent
+
+export default ConnectedDropdown

@@ -20,7 +20,7 @@ export class Card extends React.PureComponent {
     maxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     maxWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     width: PropTypes.any,
-    triggerNode: PropTypes.node,
+    triggerNode: PropTypes.any,
     style: PropTypes.any,
   }
 

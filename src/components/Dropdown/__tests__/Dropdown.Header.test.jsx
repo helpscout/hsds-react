@@ -1,13 +1,13 @@
-import * as React from 'react'
+import React from 'react'
 import { mount } from 'enzyme'
 import { Header } from '../Dropdown.Header'
-import { hasClass } from '../../../../tests/helpers/enzyme'
+import { hasClass } from '../../../tests/helpers/enzyme'
 
 describe('className', () => {
   test('Has a default className', () => {
     const wrapper = mount(<Header />)
 
-    expect(hasClass(wrapper, 'c-DropdownV2Header')).toBe(true)
+    expect(hasClass(wrapper, 'c-DropdownHeader')).toBe(true)
   })
 
   test('Accepts custom className', () => {

@@ -1,14 +1,6 @@
-import * as React from 'react'
+import React from 'react'
 import { mount } from 'enzyme'
 import DropdownContainer from '../Dropdown.Container'
-import '../Dropdown'
-
-jest.mock('../Dropdown', () => {
-  const Dropdown = () => <div />
-  return {
-    default: Dropdown,
-  }
-})
 
 describe('Prop changes', () => {
   test('Update store on item change', () => {

@@ -30,7 +30,7 @@ class EventListener extends React.Component<Props> {
   }
 
   /* istanbul ignore next */
-  componentWillUpdate() {
+  UNSAFE_componentWillUpdate() {
     this.detachListener()
   }
 

@@ -1,16 +1,16 @@
-import * as React from 'react'
+import React from 'react'
 import { mount } from 'enzyme'
 import { Menu } from '../Dropdown.Menu'
-import { hasClass } from '../../../../tests/helpers/enzyme'
+import { hasClass } from '../../../tests/helpers/enzyme'
 
-const baseSelector = 'div.c-DropdownV2Menu'
+const baseSelector = 'div.c-DropdownMenu'
 
 describe('className', () => {
   test('Has a default className', () => {
     const wrapper = mount(<Menu />)
     const el = wrapper.find(baseSelector)
 
-    expect(hasClass(el, 'c-DropdownV2Menu')).toBe(true)
+    expect(hasClass(el, 'c-DropdownMenu')).toBe(true)
   })
 
   test('Accepts custom className', () => {

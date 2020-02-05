@@ -1,13 +1,13 @@
-import * as React from 'react'
+import React from 'react'
 import { mount } from 'enzyme'
 import { Card } from '../Dropdown.Card'
-import { hasClass } from '../../../../tests/helpers/enzyme'
+import { hasClass } from '../../../tests/helpers/enzyme'
 
 describe('className', () => {
   test('Has a default className', () => {
     const wrapper = mount(<Card />)
 
-    expect(hasClass(wrapper, 'c-DropdownV2Card')).toBe(true)
+    expect(hasClass(wrapper, 'c-DropdownCard')).toBe(true)
   })
 
   test('Accepts custom className', () => {
@@ -48,7 +48,7 @@ describe('Dimensions', () => {
     }
     const wrapper = mount(<Card {...dimensions} />)
     const el = wrapper.find('Card').first()
-    const styles = el.prop('style') as any
+    const styles = el.prop('style')
 
     expect(styles.minHeight).toBe(60)
     expect(styles.minWidth).toBe(300)

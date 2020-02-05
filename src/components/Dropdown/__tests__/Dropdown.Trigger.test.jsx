@@ -1,16 +1,16 @@
-import * as React from 'react'
+import React from 'react'
 import { mount } from 'enzyme'
 import createStore from '../Dropdown.store'
 import { Provider } from '@helpscout/wedux'
-import Keys from '../../../../constants/Keys'
+import Keys from '../../../constants/Keys'
 import ConnectedTrigger, { Trigger, mapStateToProps } from '../Dropdown.Trigger'
-import { hasClass, getAttribute } from '../../../../tests/helpers/enzyme'
+import { hasClass, getAttribute } from '../../../tests/helpers/enzyme'
 
 describe('className', () => {
   test('Has a default className', () => {
     const wrapper = mount(<Trigger />)
 
-    expect(hasClass(wrapper, 'c-DropdownV2Trigger')).toBe(true)
+    expect(hasClass(wrapper, 'c-DropdownTrigger')).toBe(true)
   })
 
   test('Accepts custom className', () => {
@@ -186,7 +186,7 @@ describe('ConnectedTrigger', () => {
         <ConnectedTrigger />
       </Provider>
     )
-    const el = wrapper.find('.c-DropdownV2Trigger')
+    const el = wrapper.find('.c-DropdownTrigger')
 
     expect(wrapper).toBeTruthy()
     expect(el.length).toBeTruthy()
@@ -211,14 +211,14 @@ describe('mapStateToProps', () => {
 describe('Disable', () => {
   test('Renders the disabled in the DOM node', () => {
     const wrapper = mount(<Trigger disabled={true} />)
-    const el = wrapper.find('span.c-DropdownV2Trigger')
+    const el = wrapper.find('span.c-DropdownTrigger')
 
     expect(el.prop('disabled')).toBe(true)
   })
 
   test('Renders disabled styles', () => {
     const wrapper = mount(<Trigger disabled={true} />)
-    const el = wrapper.find('span.c-DropdownV2Trigger')
+    const el = wrapper.find('span.c-DropdownTrigger')
 
     expect(el.hasClass('is-disabled')).toBe(true)
   })
