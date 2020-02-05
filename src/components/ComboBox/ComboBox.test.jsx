@@ -41,7 +41,7 @@ describe('className', () => {
 describe('safeSetState', () => {
   test('Removes _isMounted flag on unmount', () => {
     const wrapper = mount(<ComboBox />)
-    const inst = wrapper.instance() as any
+    const inst = wrapper.instance()
 
     wrapper.unmount()
 
@@ -50,7 +50,7 @@ describe('safeSetState', () => {
 
   test('Cannot safeSetState on unmount', () => {
     const wrapper = mount(<ComboBox />)
-    const inst = wrapper.instance() as any
+    const inst = wrapper.instance()
 
     wrapper.setState({ safe: true })
 
