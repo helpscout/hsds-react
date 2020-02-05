@@ -4,7 +4,8 @@
 // Goal would be to either only use react-image at some point, or to migrate the loading
 // code here into an <Image /> component
 
-import * as React from 'react'
+import React from 'react'
+import { PropTypes } from 'prop-types'
 
 import VisuallyHidden from '../VisuallyHidden'
 
@@ -13,14 +14,24 @@ import { noop } from '../../utilities/other'
 
 import { ImageWrapperUI, ImageUI, TitleUI } from './Avatar.css'
 import { getAnimationProps } from './Avatar.utils'
-import { ImageProps, ImageState } from './Avatar.types'
 
 let cache = {}
 export const clearCache = () => {
   cache = {}
 }
 
-export class AvatarImage extends React.PureComponent<ImageProps, ImageState> {
+export class AvatarImage extends React.PureComponent {
+  static propTypes = {
+    animation: PropTypes.bool,
+    animationDuration: PropTypes.number,
+    animationEasing: PropTypes.string,
+    src: PropTypes.any,
+    light: PropTypes.bool,
+    name: PropTypes.string,
+    onError: PropTypes.func,
+    onLoad: PropTypes.func,
+    title: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  }
   static defaultProps = {
     animation: true,
     animationDuration: 160,
@@ -33,9 +44,9 @@ export class AvatarImage extends React.PureComponent<ImageProps, ImageState> {
     light: false,
   }
 
-  sourceList: string[] = []
+  sourceList = []
 
-  image: any
+  image
 
   state = {
     currentIndex: 0,

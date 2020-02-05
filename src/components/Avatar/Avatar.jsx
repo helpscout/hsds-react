@@ -1,4 +1,5 @@
-import * as React from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import StatusDot from '../StatusDot'
@@ -11,7 +12,6 @@ import { noop } from '../../utilities/other'
 
 import AvatarCrop from './Avatar.Crop'
 import AvatarImage from './Avatar.Image'
-import { AvatarProps, AvatarState } from './Avatar.types'
 
 import {
   ActionUI,
@@ -30,7 +30,37 @@ import {
 import { getImageSrc } from './Avatar.utils'
 import { AvatarListContext } from '../AvatarList/AvatarList'
 
-export class Avatar extends React.PureComponent<AvatarProps, AvatarState> {
+export class Avatar extends React.PureComponent {
+  static propTypes = {
+    actionable: PropTypes.bool,
+    actionIcon: PropTypes.string,
+    actionIconSize: PropTypes.string,
+    active: PropTypes.bool,
+    animation: PropTypes.bool,
+    animationDuration: PropTypes.number,
+    animationEasing: PropTypes.string,
+    borderColor: PropTypes.string,
+    className: PropTypes.string,
+    count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    fallbackImage: PropTypes.string,
+    image: PropTypes.string,
+    initials: PropTypes.string,
+    light: PropTypes.bool,
+    name: PropTypes.string,
+    onActionClick: PropTypes.func,
+    onError: PropTypes.func,
+    onLoad: PropTypes.func,
+    onRemoveAnimationEnd: PropTypes.func,
+    outerBorderColor: PropTypes.string,
+    removingAvatarAnimation: PropTypes.bool,
+    shape: PropTypes.string,
+    showStatusBorderColor: PropTypes.bool,
+    size: PropTypes.string,
+    status: PropTypes.string,
+    statusIcon: PropTypes.string,
+    withShadow: PropTypes.bool,
+  }
+
   static defaultProps = {
     actionable: false,
     actionIcon: 'trash',
@@ -53,7 +83,7 @@ export class Avatar extends React.PureComponent<AvatarProps, AvatarState> {
     onLoad: noop,
   }
 
-  src: string[]
+  src
 
   state = {
     imageLoaded: false,
@@ -95,7 +125,7 @@ export class Avatar extends React.PureComponent<AvatarProps, AvatarState> {
     this.props.onLoad()
   }
 
-  getShapeClassNames = (): string => {
+  getShapeClassNames = () => {
     const { shape, size } = this.props
 
     return classNames(shape && `is-${shape}`, size && `is-${size}`)

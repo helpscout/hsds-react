@@ -91,11 +91,7 @@ export const ActionUI = styled('div')`
   }
 `
 
-export interface CropProps {
-  hasImage: boolean
-}
-
-export const CropUI = styled('div')<CropProps>`
+export const CropUI = styled('div')`
   align-items: center;
   background-color: ${({ hasImage }) =>
     hasImage ? 'transparent' : 'currentColor'};
@@ -118,7 +114,7 @@ export const CropUI = styled('div')<CropProps>`
   }
 `
 
-export const ImageWrapperUI = styled('div')<any>`
+export const ImageWrapperUI = styled('div')`
   backface-visibility: hidden;
   display: block;
   height: 100%;
@@ -150,7 +146,7 @@ export const ImageWrapperUI = styled('div')<any>`
   }
 `
 
-export const ImageUI = styled('div')<any>`
+export const ImageUI = styled('div')`
   background-position: center center;
   background-size: cover;
   ${({ src }) => src && `background-image: url('${src}');`}
@@ -218,7 +214,7 @@ export const StatusUI = styled('div')`
   }
 `
 
-export const CropBorderUI = styled('div')<{ borderColor?: any }>`
+export const CropBorderUI = styled('div')`
   position: absolute;
   top: -${config.borderWidth}px;
   bottom: -${config.borderWidth}px;
@@ -263,13 +259,13 @@ export const OuterBorderUI = styled(CropBorderUI)`
   right: -${config.borderWidth * 2}px;
 `
 
-function getColorStyles(props: Object): string {
+function getColorStyles(props) {
   return `
     color: ${getThemeBrandProp(props, 'brandColor', config.color)};
   `
 }
 
-function getBorderRadiusStyles({ suffix = '' } = {}): string {
+function getBorderRadiusStyles({ suffix = '' } = {}) {
   return `
     &.is-circle${suffix} {
       border-radius: 200%;
@@ -283,7 +279,7 @@ function getBorderRadiusStyles({ suffix = '' } = {}): string {
   `
 }
 
-function getSizeStyles(): string {
+function getSizeStyles() {
   return forEach(config.size, (size, props) => {
     const { fontSize, size: sz } = props
 
@@ -310,7 +306,7 @@ export function getCircleProps(sz) {
   }
 }
 
-function getBorderAnimationSizeStyles(): string {
+function getBorderAnimationSizeStyles() {
   return forEach(config.size, (size, props) => {
     const { size: sz } = props
     const { size: svgSize, ...rest } = getCircleProps(sz)

@@ -1,6 +1,6 @@
 import { getEasingTiming } from '../../utilities/easing'
 
-export const getImageSrc = (props): string[] => {
+export const getImageSrc = props => {
   const { fallbackImage, image } = props
   const src = [image]
   if (fallbackImage) {
@@ -9,7 +9,7 @@ export const getImageSrc = (props): string[] => {
   return src.filter(i => !!i)
 }
 
-export const getAnimationProps = (props): object => {
+export const getAnimationProps = props => {
   const { animationDuration, animationEasing, animation } = props
   if (!animation) {
     return {}
