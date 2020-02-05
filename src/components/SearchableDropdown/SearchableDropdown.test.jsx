@@ -536,3 +536,31 @@ describe('shouldDropDirectionUpdate', () => {
     expect(el.prop('shouldDropDirectionUpdate')()).toBe(true)
   })
 })
+
+describe('limit', () => {
+  test('Renders a searchable input, if item count exceeds limit', () => {
+    const items = [0, 1, 2, 3]
+    const wrapper = mount(
+      <SearchableDropdown isOpen items={items} limit={2} autoInput={true} />
+    )
+    expect(wrapper.find('input[type="text"]').exists()).toBeTruthy()
+  })
+
+  test('Does not show a searchable input, if item count is below limit', () => {
+    const items = [0, 1, 2, 3]
+    const wrapper = mount(
+      <SearchableDropdown isOpen items={items} limit={20} autoInput={true} />
+    )
+
+    expect(wrapper.find('input[type="text"]').exists()).toBeFalsy()
+  })
+
+  test('Calculates the limit if there is group inside the item', () => {
+    const items = [{ type: 'group', items: [0, 1, 2, 3, 4] }]
+    const wrapper = mount(
+      <SearchableDropdown isOpen items={items} limit={2} autoInput={true} />
+    )
+
+    expect(wrapper.instance().isInputActive()).toBeTruthy()
+  })
+})
