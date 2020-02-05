@@ -84,7 +84,14 @@ Status.story = {
 
 export const ActionRight = () => (
   <div>
-    <Alert actionRight={<Button size="sm">Action!</Button>} icon>
+    <Alert
+      actionRight={
+        <Button size="sm" kind="secondary">
+          Action!
+        </Button>
+      }
+      icon
+    >
       Action Right Buddy with Icon!
     </Alert>
   </div>
