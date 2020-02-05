@@ -62,7 +62,7 @@ export const RateActionUI = styled('button')`
         `
           &:before {
             content: '';
-            background: #efefef;
+            background: ${getColor('grey.200')};
             border-radius: 50% !important;
             display: block;
             height: ${_size}px;
