@@ -4,7 +4,7 @@ import { noop } from '../../utilities/other'
 import { isNativeSpanType } from '@helpscout/react-utils/dist/isType'
 import compose from '@helpscout/react-utils/dist/compose'
 import Heading from '../Heading'
-import LoadingDots from '../LoadingDots'
+import TypingDots from '../TypingDots'
 import Icon from '../Icon'
 import Text from '../Text'
 import styled from '../styled'
@@ -36,7 +36,10 @@ const MessageBubbleTitle = styled(Heading)(TitleCSS)
 const MessageBubbleTyping = styled('div')(TypingCSS)
 
 // convertLinksToHTML will escape for output as HTML
-const enhanceBody = compose(newlineToHTML, convertLinksToHTML)
+const enhanceBody = compose(
+  newlineToHTML,
+  convertLinksToHTML
+)
 
 export const Bubble = (props: Props, context: Context) => {
   const {
@@ -128,7 +131,7 @@ export const Bubble = (props: Props, context: Context) => {
 
   const innerContentMarkup = typing ? (
     <MessageBubbleTyping className="c-MessageBubble__typing">
-      <LoadingDots />
+      <TypingDots />
     </MessageBubbleTyping>
   ) : (
     bodyMarkup
