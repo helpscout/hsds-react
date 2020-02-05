@@ -197,27 +197,21 @@ const config = {
   size: {
     xl: {
       fontSize: 14,
-      height: 54,
-      minWidth: '120px',
-      padding: 20,
-    },
-    lgxl: {
-      fontSize: 14,
       height: 50,
-      minWidth: '120px',
-      padding: 20,
+      minWidth: 'initial',
+      padding: 30,
     },
     lg: {
       fontSize: 14,
       height: 40,
-      minWidth: '120px',
-      padding: 20,
+      minWidth: 'initial',
+      padding: 30,
     },
     md: {
-      fontSize: 13,
+      fontSize: 14,
       height: 35,
       minWidth: 'initial',
-      padding: 15,
+      padding: 30,
     },
     sm: {
       fontSize: 13,

@@ -1,4 +1,5 @@
-import * as React from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { classNames } from '../../utilities/classNames'
 import Icon from '../Icon'
 import Avatar from '../Avatar'
@@ -10,15 +11,14 @@ import {
   AvatarWrapperUI,
 } from './AvatarSelector.css.js'
 
-export interface Props {
-  image: string
-  initials: string
-  isOpen: boolean
-  name: string
-  size: string
-}
-
-export default class AvatarSelector extends React.PureComponent<Props> {
+export default class AvatarSelector extends React.PureComponent {
+  static propTypes = {
+    image: PropTypes.string,
+    initials: PropTypes.string,
+    isOpen: PropTypes.bool,
+    name: PropTypes.string,
+    size: PropTypes.string,
+  }
   static defaultProps = {
     image: '',
     initials: '',
@@ -31,12 +31,7 @@ export default class AvatarSelector extends React.PureComponent<Props> {
     const { image, initials, name } = this.props
     return (
       <AvatarWrapperUI>
-        <Avatar
-          size="smmd"
-          image={image}
-          name={name}
-          initials={initials || name}
-        />
+        <Avatar size="smmd" image={image} name={name} initials={initials} />
       </AvatarWrapperUI>
     )
   }

@@ -86,6 +86,14 @@ export const ButtonUI = styled.button`
   ${makeButtonKindStyles('default', config.default)};
   ${makeButtonKindStyles('link', config.link)};
   ${makeButtonKindStyles('suffix', config.suffix)};
+
+  /* some overwrite */
+  &.is-primary {
+    &.is-lg,
+    &.is-xl {
+      min-width: 120px;
+    }
+  }
 `
 
 function makePrimaryStyles(name = 'primary', props = {}) {

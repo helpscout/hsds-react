@@ -7,7 +7,7 @@ export const AvatarWrapperUI = styled.div`
 export const IconAssignUI = styled.div``
 
 export const IconCaretUI = styled.div`
-  margin-left: -2px;
+  margin-left: -1px;
 `
 
 export const AvatarSelectorWrapperUI = styled('div')`
@@ -37,11 +37,11 @@ export const AvatarSelectorWrapperUI = styled('div')`
   }
 
   ${IconAssignUI} {
-    padding: 9px 0 9px 7px;
+    padding: 9px 0 9px 10px;
   }
 
   ${IconCaretUI} {
-    padding-right: 7px;
+    padding-right: 8px;
   }
 
   ${AvatarWrapperUI} + ${IconCaretUI}{

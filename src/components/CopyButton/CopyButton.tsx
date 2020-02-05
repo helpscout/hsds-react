@@ -9,8 +9,6 @@ import {
   ContentWrapperUI,
 } from './CopyButton.css'
 
-import { ButtonSize } from '../Button/Button.types'
-
 export interface Props {
   canRenderFocus: boolean
   children?: any
@@ -19,7 +17,7 @@ export interface Props {
   onClick: (event: Event) => void
   onReset: () => void
   resetTimeout: number
-  size: ButtonSize
+  size: any
   title?: string
 }
 

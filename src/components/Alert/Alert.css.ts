@@ -14,7 +14,9 @@ export const AlertUI = styled('div')`
   background-color: ${config.backgroundColor};
   color: ${config.color};
   box-shadow: ${config.boxShadow};
-  padding: 8px 16px;
+  padding: 0 16px;
+  min-height: 44px;
+  display: flex;
   margin-bottom: 16px;
   text-align: left;
 
@@ -44,6 +46,7 @@ export const AlertUI = styled('div')`
 export const ContentUI = styled('div')`
   align-items: center;
   display: flex;
+  flex: 1 1 100%;
 
   > * {
     max-width: 100%;
@@ -65,6 +68,7 @@ export const BadgeWrapperUI = styled('div')`
 export const BlockUI = styled('div')`
   max-width: 100%;
   min-width: 0;
+  padding: 13px 0;
 
   .c-Heading,
   .c-Text,
@@ -113,6 +117,8 @@ export const CloseWrapperUI = styled('div')`
 
 export const ActionRightUI = styled.div`
   flex: 0 0 auto;
+  margin-left: auto;
+  padding: 22px 12px 22px 0;
 `
 
 function makeStateStyles(): string {

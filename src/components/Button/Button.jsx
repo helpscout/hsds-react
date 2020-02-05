@@ -1,4 +1,5 @@
-import * as React from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { includes } from '../../utilities/arrays'
@@ -6,39 +7,36 @@ import { noop } from '../../utilities/other'
 import RouteWrapper from '../RouteWrapper'
 import { ButtonUI, ButtonContentUI, FocusUI, SpinnerUI } from './Button.css'
 import Icon from '../Icon'
-import { ButtonKind, ButtonShape, ButtonSize } from './Button.types'
-import { UIState } from '../../constants/types'
 
-export interface Props {
-  allowContentEventPropogation: boolean
-  buttonRef: (ref: any) => void
-  canRenderFocus: boolean
-  children?: any
-  className?: string
-  disabled: boolean
-  disableOnLoading: boolean
-  kind: ButtonKind
-  href?: string
-  innerRef: (ref: any) => void
-  isActive: boolean
-  isBlock: boolean
-  isFirst: boolean
-  isFocused: boolean
-  isHovered: boolean
-  isNotOnly: boolean
-  isLast: boolean
-  isLoading: boolean
-  isSuffix: boolean
-  shape: ButtonShape
-  size: ButtonSize
-  spinButtonOnLoading: boolean
-  state?: UIState
-  submit: boolean
-  theme?: string
-  to?: string
-}
+class Button extends React.PureComponent {
+  static propTypes = {
+    allowContentEventPropogation: PropTypes.bool,
+    buttonRef: PropTypes.func,
+    canRenderFocus: PropTypes.bool,
+    className: PropTypes.string,
+    disabled: PropTypes.bool,
+    disableOnLoading: PropTypes.bool,
+    kind: PropTypes.string,
+    href: PropTypes.string,
+    innerRef: PropTypes.any,
+    isActive: PropTypes.bool,
+    isBlock: PropTypes.bool,
+    isFirst: PropTypes.bool,
+    isFocused: PropTypes.bool,
+    isHovered: PropTypes.bool,
+    isNotOnly: PropTypes.bool,
+    isLast: PropTypes.bool,
+    isLoading: PropTypes.bool,
+    isSuffix: PropTypes.bool,
+    shape: PropTypes.string,
+    size: PropTypes.string,
+    spinButtonOnLoading: PropTypes.bool,
+    state: PropTypes.string,
+    submit: PropTypes.bool,
+    theme: PropTypes.string,
+    to: PropTypes.string,
+  }
 
-class Button extends React.PureComponent<Props> {
   static defaultProps = {
     allowContentEventPropogation: true,
     buttonRef: noop,
@@ -66,12 +64,10 @@ class Button extends React.PureComponent<Props> {
     // const { href, 'data-bypass': dataBypass } = this.props
     // return href || dataBypass
 
-    // TODO: fix typescript complains
-    // @ts-ignore
     return this.props.href
   }
 
-  shouldShowFocus = (): boolean => {
+  shouldShowFocus = () => {
     const paddedButtonKinds = [
       'primary',
       'primaryAlt',
@@ -172,7 +168,7 @@ class Button extends React.PureComponent<Props> {
       isSuffix && 'is-suffix',
       kind && `is-${kind}`,
       shape && `is-shape-${shape}`,
-      size && `is-${size}`,
+      size && `is-${size === 'lgxl' ? 'xl' : size}`, // remapping lgxl to xl
       spinButtonOnLoading && 'is-spinButtonOnLoading',
       state && `is-${state}`,
       theme && `is-${theme}`,

@@ -91,8 +91,8 @@ WithImage.story = {
   name: 'with image',
 }
 
-export const WithIntials = () => <AvatarSelector name="Buzz Arooooooo" />
+export const WithInitials = () => <AvatarSelector name="Buzz Arooooooo" />
 
-WithIntials.story = {
-  name: 'with intials',
+WithInitials.story = {
+  name: 'with initials',
 }
