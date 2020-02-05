@@ -32,7 +32,7 @@ describe('Children', () => {
   })
 })
 
-describe.only('Actions', () => {
+describe('Actions', () => {
   test('submits the Form on click of the save button', () => {
     const wrapper = mount(<Form />)
     const el = wrapper.find('.c-Form').hostNodes()
