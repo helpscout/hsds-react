@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Overlay, PropProvider } from '../index'
+import { Card, Overlay } from '../index'
 
 export default {
   component: Overlay,
@@ -17,11 +17,9 @@ Default.story = {
 }
 
 export const HsApp = () => (
-  <PropProvider app="hs-app">
-    <Overlay style={{ width: '500px', height: '400px' }}>
-      <Card>Not now, Arctic Puffin!</Card>
-    </Overlay>
-  </PropProvider>
+  <Overlay style={{ width: '500px', height: '400px' }} isHsApp={true}>
+    <Card>Not now, Arctic Puffin!</Card>
+  </Overlay>
 )
 
 HsApp.story = {

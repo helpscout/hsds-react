@@ -1,5 +1,6 @@
 import React from 'react'
-import { Grid, PropProvider, Radio, ChoiceGroup } from '../index'
+import { Grid, Radio, ChoiceGroup } from '../index'
+import { RadioContext } from './Radio'
 
 export default {
   component: Radio,
@@ -37,13 +38,13 @@ Disabled.story = {
 }
 
 export const Custom = () => (
-  <PropProvider value={{ Radio: { kind: 'custom' } }}>
+  <RadioContext.Provider value={{ kind: 'custom' }}>
     <ChoiceGroup>
       <Radio label="Derek (Disable)" value="derek" disabled />
       <Radio label="Hansel" value="hansel" />
       <Radio label="Mugatu" value="mugatu" />
     </ChoiceGroup>
-  </PropProvider>
+  </RadioContext.Provider>
 )
 
 Custom.story = {
@@ -51,7 +52,7 @@ Custom.story = {
 }
 
 export const Stacked = () => (
-  <PropProvider value={{ Radio: { kind: 'custom', stacked: true } }}>
+  <RadioContext.Provider value={{ kind: 'custom', stacked: true }}>
     <ChoiceGroup style={{ maxWidth: 600 }} multiSelect={false}>
       <Grid.Row>
         <Grid.Col size="3">
@@ -70,7 +71,7 @@ export const Stacked = () => (
         </Grid.Col>
       </Grid.Row>
     </ChoiceGroup>
-  </PropProvider>
+  </RadioContext.Provider>
 )
 
 Stacked.story = {

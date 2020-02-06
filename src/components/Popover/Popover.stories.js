@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { boolean, number, select, text } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
-import { PropProvider, Text, Popover } from '..'
+import { Text, Popover } from '..'
 
 export default {
   component: Popover,
@@ -64,13 +64,11 @@ export const Default = () => {
   }
 
   return (
-    <PropProvider value={{ Popover: { zIndex: 10 } }}>
-      <div style={{ padding: '20%', textAlign: 'center' }}>
-        <Popover {...props}>
-          <div tabIndex="0">Popover Trigger</div>
-        </Popover>
-      </div>
-    </PropProvider>
+    <div style={{ padding: '20%', textAlign: 'center' }}>
+      <Popover {...props}>
+        <div tabIndex="0">Popover Trigger</div>
+      </Popover>
+    </div>
   )
 }
 

@@ -8,26 +8,26 @@ type Props = {
   kind: RadioKind
 }
 
-class Radio extends React.PureComponent<Props> {
-  static defaultProps = {
-    kind: 'default',
-  }
+export const RadioContext = React.createContext({})
 
-  render() {
-    const { className, kind, ...rest } = this.props
+export const Radio = ({ kind: kindProp, className, ...rest }) => {
+  const componentClassName = classNames('c-Radio', className)
+  const { kind = kindProp, stacked }: any = React.useContext(RadioContext)
 
-    const componentClassName = classNames('c-Radio', className)
+  return (
+    <Choice
+      {...rest}
+      className={componentClassName}
+      componentID="Radio"
+      kind={kind}
+      type="radio"
+      stacked={stacked}
+    />
+  )
+}
 
-    return (
-      <Choice
-        {...rest}
-        className={componentClassName}
-        componentID="Radio"
-        kind={kind}
-        type="radio"
-      />
-    )
-  }
+Radio.defaultProps = {
+  kind: 'default',
 }
 
 export default Radio
