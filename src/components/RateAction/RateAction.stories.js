@@ -28,7 +28,7 @@ stories.add('Default', () => {
 stories.add('withBorder', () => {
   return (
     <div style={{ fontFamily: font }}>
-      <h4>Default</h4>
+      <h4>With Border</h4>
       {REACTIONS_EMOTICONS.map(iconName => (
         <div style={{ margin: '0 0 15px', clear: 'both' }}>
           <span style={{ float: 'left', marginRight: 20 }}>{iconName}: </span>
