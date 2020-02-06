@@ -3,7 +3,7 @@ import { MessageBubble, MessageThemeContext } from './Message.types'
 import { noop } from '../../utilities/other'
 import { isNativeSpanType } from '@helpscout/react-utils/dist/isType'
 import compose from '@helpscout/react-utils/dist/compose'
-import LoadingDots from '../LoadingDots'
+import TypingDots from '../TypingDots'
 import Icon from '../Icon'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
@@ -118,7 +118,7 @@ export const Bubble = (props: Props, context: Context) => {
 
   const innerContentMarkup = typing ? (
     <MessageBubbleTypingUI className="c-MessageBubble__typing">
-      <LoadingDots />
+      <TypingDots />
     </MessageBubbleTypingUI>
   ) : (
     bodyMarkup

@@ -37,4 +37,4 @@ A Chat component provides the UI for the primary content within a [Message](./Me
 | timestamp       | `string`      | Timestamp for the Message.                                        |
 | title           | `string`      | Renders a [Heading](../../Heading) title in the component.        |
 | to              | `node`/`bool` | Provides author information and applies "To" styles.              |
-| typing          | `bool`        | Renders [LoadingDots](../../LoadingDots) within the component.    |
+| typing          | `bool`        | Renders [TypingDots](../../TypingDots) within the component.      |
