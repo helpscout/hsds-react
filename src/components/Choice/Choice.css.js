@@ -7,7 +7,7 @@ export const choiceConfig = {
     labelDefault: getColor('text.muted'),
     labelSelected: getColor('text.default'),
   },
-  helpTextOffset: '24px',
+  helpTextOffset: '26px',
   labelTextMargin: '10px',
 }
 
@@ -43,6 +43,8 @@ export const ChoiceHelpTextUI = styled('div')`
 `
 
 export const ChoiceLabelTextUI = styled('span')`
+  padding-left: 2px;
+
   &.is-stacked {
     display: block;
     font-weight: bold;
@@ -52,7 +54,6 @@ export const ChoiceLabelTextUI = styled('span')`
 
 export const inputConfig = {
   iconColor: 'white',
-  radioBoxShadow: '0 2px 4px rgba(0, 0, 0, 0.10)',
   radioSize: 4,
   radioOffset: 3,
   size: 16,
@@ -75,6 +76,17 @@ export const InputUI = styled('div')`
   &.is-top {
     top: 2px;
   }
+  .c-InputBackdropV2__focus {
+    top: -3px;
+    bottom: -3px;
+    right: -3px;
+    left: -3px;
+  }
+  &.is-checkbox {
+    .c-InputBackdropV2__focus {
+      border-radius: 4px;
+    }
+  }
 `
 
 export const InputInputUI = styled('input')`
@@ -90,7 +102,7 @@ export const InputIconUI = styled('div')`
 
 export const InputPlaceholderUI = styled('div')`
   background-color: ${inputConfig.iconColor};
-  box-shadow: ${inputConfig.radioBoxShadow};
+  box-shadow: none;
   border-radius: 50%;
   height: ${inputConfig.radioSize}px;
   width: ${inputConfig.radioSize}px;

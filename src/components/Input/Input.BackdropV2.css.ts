@@ -7,12 +7,11 @@ export const config = {
   backgroundColor: 'white',
   backgroundColorDisabled: getColor('grey.200'),
   backgroundColorReadOnly: getColor('grey.300'),
-  backgroundColorFill: getColor('osx.control.backgroundColor'),
+  backgroundColorFill: getColor('blue.500'),
   borderColor: getColor('border.ui.dark'),
-  borderColorFill: getColor('osx.control.borderColor'),
+  borderColorFill: getColor('blue.500'),
   borderRadius: 3,
   boxShadow: `0 0 0 0 ${rgba(getColor('border'), 0)}`,
-  boxShadowCheckbox: '0 0.5px 1px rgba(0, 0, 0, 0.2) inset',
   focusOutlineWidth: 2,
   focusErrorOutlineWidth: 1,
   focusErrorOutlineColor: getColor('red.500'),
@@ -54,11 +53,7 @@ export const BackdropUI = styled('div')`
     }
   }
 
-  &.is-checkbox {
-    box-shadow: ${config.boxShadowCheckbox};
-  }
   &.is-radio {
-    box-shadow: ${config.boxShadowCheckbox};
     border-radius: 50%;
   }
 
