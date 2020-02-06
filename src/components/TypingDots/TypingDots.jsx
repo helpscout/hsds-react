@@ -1,12 +1,9 @@
-import * as React from 'react'
-import propConnect from '../PropProvider/propConnect'
+import React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { TypingDotsProps } from './TypingDots.types'
 import { TypingDotsUI, DotUI } from './styles/TypingDots.css'
-import { COMPONENT_KEY } from './TypingDots.utils'
 
-export class TypingDots extends React.PureComponent<TypingDotsProps> {
+export class TypingDots extends React.PureComponent {
   static className = 'c-TypingDots'
 
   getClassName() {
@@ -27,6 +24,4 @@ export class TypingDots extends React.PureComponent<TypingDotsProps> {
   }
 }
 
-const PropConnectedComponent = propConnect(COMPONENT_KEY)(TypingDots)
-
-export default PropConnectedComponent
+export default TypingDots
