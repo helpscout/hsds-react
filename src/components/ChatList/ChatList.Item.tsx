@@ -4,7 +4,7 @@ import Badge from '../Badge'
 import Flexy from '../Flexy'
 import Heading from '../Heading'
 import Hr from '../Hr'
-import LoadingDots from '../LoadingDots'
+import TypingDots from '../TypingDots'
 import List from '../List'
 import Overflow from '../Overflow'
 import Skeleton from '../Skeleton'
@@ -136,7 +136,7 @@ class Item extends React.Component<Props> {
     const messageMarkup = !isLoading ? (
       isTyping ? (
         <TypingUI className="c-ChatListItem__typing">
-          <LoadingDots />
+          <TypingDots />
         </TypingUI>
       ) : (
         <Text faint size="13">

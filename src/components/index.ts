@@ -114,6 +114,7 @@ export { default as Timeline } from './Timeline'
 export { default as Timestamp } from './Timestamp'
 export { default as Toolbar } from './Toolbar'
 export { default as Tooltip } from './Tooltip'
+export { default as TypingDots } from './TypingDots'
 export { default as Truncate } from './Truncate'
 export { default as VisuallyHidden } from './VisuallyHidden'
 

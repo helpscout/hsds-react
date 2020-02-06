@@ -145,6 +145,8 @@ export const BackdropUI = styled('div')`
       color: ${config.color.disabled};
     }
   }
+
+  ${makeSizeStyles(config)};
 `
 
 export const ToggleUI = styled('div')`

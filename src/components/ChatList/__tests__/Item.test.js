@@ -6,7 +6,7 @@ import {
   Avatar,
   Badge,
   Link,
-  LoadingDots,
+  TypingDots,
   Overflow,
   Skeleton,
   Tag,
@@ -248,16 +248,16 @@ describe('Tags', () => {
 })
 
 describe('Typing', () => {
-  test('Does not show LoadingDots by default', () => {
+  test('Does not show TypingDots by default', () => {
     const wrapper = mount(<Item />)
-    const o = wrapper.find(LoadingDots)
+    const o = wrapper.find(TypingDots)
 
     expect(o.length).toBe(0)
   })
 
-  test('Renders LoadingDots if isTyping', () => {
+  test('Renders TypingDots if isTyping', () => {
     const wrapper = mount(<Item name="Ron" isTyping />)
-    const o = wrapper.find(LoadingDots)
+    const o = wrapper.find(TypingDots)
 
     expect(o.length).toBe(1)
   })

@@ -28,6 +28,36 @@ export const Default = () => {
   )
 }
 
+export const WithBorder = () => {
+  return (
+    <div style={{ fontFamily: font }}>
+      <h4>Default</h4>
+      {REACTIONS_EMOTICONS.map(iconName => (
+        <div style={{ margin: '0 0 15px', clear: 'both' }}>
+          <span style={{ float: 'left', marginRight: 20 }}>{iconName}: </span>
+          {SIZES.map(size => (
+            <div
+              style={{
+                height: 64,
+                float: 'left',
+                verticalAlign: 'middle',
+                display: 'table-cell',
+                marginLeft: 32,
+              }}
+            >
+              <RateAction size={size} name={iconName} withBorder={true} />
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+WithBorder.story = {
+  name: 'with border',
+}
+
 class Play extends React.Component {
   state = {
     activeReaction: null,
