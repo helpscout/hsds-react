@@ -883,7 +883,9 @@ export class EditableField extends React.Component<
     // When there is only one item in the fieldValue array
     if (fieldValue.length === 1) {
       const emptyValue = {
-        ...fieldValue[0],
+        // The id is the input id and we will need to keep this to recycle 
+        // the field, but we need to drop all other data associated with it.
+        id: fieldValue[0].id,
         value: EMPTY_VALUE,
         validated: false,
       }
