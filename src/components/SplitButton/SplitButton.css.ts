@@ -9,7 +9,7 @@ export const OptionsTriggerButtonUI = styled(Button)`
   &.is-primary {
     box-shadow: -1px 0 0 ${getColor('blue.600')};
 
-    &.is-successß {
+    &.is-success {
       box-shadow: -1px 0 0 ${getColor('green.600')};
     }
     &.is-danger {
