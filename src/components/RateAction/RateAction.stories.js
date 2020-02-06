@@ -28,7 +28,7 @@ export const Default = () => {
   )
 }
 
-stories.add('withBorder', () => {
+export const WithBorder = () => {
   return (
     <div style={{ fontFamily: font }}>
       <h4>Default</h4>
@@ -52,7 +52,11 @@ stories.add('withBorder', () => {
       ))}
     </div>
   )
-})
+}
+
+WithBorder.story = {
+  name: 'with border',
+}
 
 class Play extends React.Component {
   state = {
