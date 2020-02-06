@@ -6,7 +6,7 @@ import { noop } from '../../utilities/other'
 import {
   CopyButtonUI,
   ConfirmationIconWrapperUI,
-  ContentWrapperUI,
+  TextUI,
 } from './CopyButton.css'
 
 export interface Props {
@@ -31,7 +31,7 @@ class CopyButton extends React.PureComponent<Props, State> {
     onClick: noop,
     onReset: noop,
     kind: 'tertiary',
-    resetTimeout: 1500,
+    resetTimeout: 2000,
   }
 
   state = {
@@ -92,22 +92,21 @@ class CopyButton extends React.PureComponent<Props, State> {
       className
     )
 
-    const wrapperClassName = classNames(
-      'c-CopyButton__contentWrapper',
-      shouldRenderConfirmation && 'is-copyConfirmed'
-    )
-
     return (
       <CopyButtonUI
         {...rest}
-        className={componentClassName}
         kind={kind}
         onClick={this.handleOnClick}
+        className={componentClassName}
       >
-        <ConfirmationIconWrapperUI className={wrapperClassName}>
-          <Icon className="c-CopyButton__iconConfirmation" name="tick-small" />
+        <ConfirmationIconWrapperUI>
+          <Icon
+            className="c-CopyButton__iconConfirmation"
+            name="tick"
+            size="20"
+          />
         </ConfirmationIconWrapperUI>
-        <ContentWrapperUI className={wrapperClassName}>Copy</ContentWrapperUI>
+        <TextUI>Copy</TextUI>
       </CopyButtonUI>
     )
   }

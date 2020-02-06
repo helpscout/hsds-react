@@ -7,57 +7,44 @@ export const config = {
     background: getColor('blue.500'),
     color: 'white',
   },
-  iconTransitionDuration: '200ms',
-  transition: 'background 200ms linear',
 }
+
+export const TextUI = styled.span`
+  display: inline-flex;
+  transition: opacity linear 150ms;
+`
+
+export const ConfirmationIconWrapperUI = styled('div')`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity linear 150ms;
+  color: white;
+  background: ${config.copyConfirmed.background} !important;
+`
 
 export const CopyButtonUI = styled(Button)`
   position: relative;
-  transition: ${config.transition};
-
-  &.is-copyConfirmed {
-    background: ${config.copyConfirmed.background} !important;
-    border-color: ${config.copyConfirmed.background} !important;
-    color: ${config.copyConfirmed.color} !important;
-  }
+  overflow: hidden;
 
   &.c-CopyButton {
     min-width: 60px;
-    :hover {
-      background-color: ${getColor('blue.100')};
+  }
+
+  &.is-copyConfirmed {
+    border-color: ${config.copyConfirmed.background} !important;
+    ${TextUI} {
+      opacity: 0;
     }
-  }
-`
-
-export const WrapperUI = styled('span')`
-  display: block;
-`
-
-export const ContentWrapperUI = styled(WrapperUI)`
-  opacity: 1;
-  transform: scale(1);
-
-  &.is-copyConfirmed {
-    opacity: 0;
-    transform: scale(0);
-  }
-`
-
-export const ConfirmationIconWrapperUI = styled(WrapperUI)`
-  align-items: center;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 1;
-  opacity: 0;
-  transform: scale(2);
-
-  &.is-copyConfirmed {
-    opacity: 1;
-    transform: scale(1);
+    ${ConfirmationIconWrapperUI} {
+      opacity: 1;
+    }
   }
 `
