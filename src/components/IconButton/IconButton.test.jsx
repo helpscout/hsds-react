@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { cy } from '@helpscout/cyan'
 import IconButton from './IconButton'
 import '../../adapters/app'
@@ -160,7 +160,7 @@ describe('Styles', () => {
 
   test('Renders a circle shape, by default', () => {
     const wrapper = cy.render(<IconButton />)
-    const borderRadius = wrapper.style('border-radius') as string
+    const borderRadius = wrapper.style('border-radius')
     const value = borderRadius && parseInt(borderRadius, 10)
 
     expect(value).toBeGreaterThan(100)
@@ -168,7 +168,7 @@ describe('Styles', () => {
 
   test('Shape can be set to not render a circle', () => {
     const wrapper = cy.render(<IconButton shape="default" />)
-    const borderRadius = wrapper.style('border-radius') as string
+    const borderRadius = wrapper.style('border-radius')
     const value = borderRadius && parseInt(borderRadius, 10)
 
     expect(value).toBeLessThan(100)

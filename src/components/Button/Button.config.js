@@ -187,8 +187,8 @@ const config = {
     backgroundColor: getColor('grey.500'),
   },
   focusOutlineWidth: 2,
-  focusOutlineOffset: 2,
-  focusOutlineColor: getColor('blue.400'),
+  focusOutlineOffset: 3,
+  focusOutlineColor: getColor('blue.500'),
   shape: {
     default: '3px',
     circle: '9999px',

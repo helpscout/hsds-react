@@ -1,22 +1,23 @@
-import * as React from 'react'
-
-import Button, { Props as ButtonPropsInterface } from '../Button/Button'
+import React from 'react'
+import PropTypes from 'prop-types'
+import Button from '../Button'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { IconButtonUI } from './IconButton.css'
 
-export interface Props extends ButtonPropsInterface {
-  icon: string
-  iconSize: number
-  isBorderless: boolean
-  isWithHiddenTitle: boolean
-  innerRef: (node: HTMLElement) => void
-  withCaret: boolean
-}
-
-export class IconButton extends React.PureComponent<Props> {
+export class IconButton extends React.PureComponent {
   static className = 'c-IconButton'
+
+  static propTypes = {
+    icon: PropTypes.string,
+    iconSize: PropTypes.number,
+    isBorderless: PropTypes.bool,
+    isWithHiddenTitle: PropTypes.bool,
+    innerRef: PropTypes.func,
+    withCaret: PropTypes.bool,
+  }
+
   static defaultProps = {
     ...Button.defaultProps,
     icon: 'search',
@@ -42,7 +43,7 @@ export class IconButton extends React.PureComponent<Props> {
     )
   }
 
-  getIconSize(): number {
+  getIconSize() {
     const { iconSize, size } = this.props
 
     if (size === 'xs') {
