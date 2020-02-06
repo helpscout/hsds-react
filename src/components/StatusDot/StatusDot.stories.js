@@ -36,21 +36,6 @@ OuterBorderColor.story = {
   name: 'outerBorderColor',
 }
 
-export const Icon = () => (
-  <div style={{ background: '#eee' }}>
-    <div>
-      <StatusDot status="online" inline icon="tick" />: Online
-    </div>
-    <div>
-      <StatusDot status="offline" inline icon="cross" />: Offline
-    </div>
-  </div>
-)
-
-Icon.story = {
-  name: 'icon',
-}
-
 export const States = () => (
   <div>
     <div>

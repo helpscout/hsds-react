@@ -1,6 +1,5 @@
 import React from 'react'
 import { SampleComponent as AvatarListSampleComponent } from '../AvatarList/AvatarList.stories'
-import { SampleComponent as TagListSampleComponent } from '../TagList/TagList.stories'
 import { Toolbar } from '../index'
 
 export default {
@@ -17,22 +16,6 @@ export const Default = () => (
 
 Default.story = {
   name: 'default',
-}
-
-export const Example = () => (
-  <Toolbar>
-    <Toolbar.Item>
-      <TagListSampleComponent />
-    </Toolbar.Item>
-    <Toolbar.Block />
-    <Toolbar.Item inline>
-      <AvatarListSampleComponent />
-    </Toolbar.Item>
-  </Toolbar>
-)
-
-Example.story = {
-  name: 'example',
 }
 
 export const Placement = () => (

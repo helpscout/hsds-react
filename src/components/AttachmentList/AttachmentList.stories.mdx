@@ -5,7 +5,7 @@ import { Attachment } from '../index'
 import AttachmentList from './'
 
 <Meta
-  title="Components/Groups/AttachmentList"
+  title="Components/Badges/Attachment"
   component={AttachmentList}
 />
 
@@ -18,7 +18,7 @@ An AttachmentList component is a wrapper that renders `Attachment` components.
 If 2 or more `<Attachment>` components are provided, this component will automatically render a clickable "Download All" attachment UI.
 
 <Preview>
-  <Story name="default">
+  <Story name="AttachmentList">
     <AttachmentList onDownloadAllClick={action('Download all')}>
       <Attachment name="parrot.png" size="5KB" onClick={action('on-click')} />
       <Attachment name="parrot2.png" size="5KB" onClick={action('on-click')} />

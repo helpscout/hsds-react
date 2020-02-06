@@ -29,14 +29,7 @@ Default.story = {
 
 export const Status = () => (
   <div>
-    <p>
-      New:
-      <StatusBadge count={19} status="new" />
-    </p>
-    <p>
-      Error (Offline):
-      <StatusBadge count={203021} status="offline" />
-    </p>
+    <StatusBadge count={19} status="new" />
   </div>
 )
 

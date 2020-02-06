@@ -4,10 +4,10 @@ import { TagList, Tag } from '../index'
 
 export default {
   component: TagList,
-  title: 'Components/Groups/TagList',
+  title: 'Components/Badges/Tag',
 }
 
-export class SampleComponent extends Component {
+class SampleComponent extends Component {
   constructor() {
     super()
     this.state = {
@@ -64,7 +64,12 @@ export class SampleComponent extends Component {
   }
 }
 
-export const Default = () => <SampleComponent />
+export const _TagList = () => <SampleComponent />
+
+_TagList.story = {
+  name: 'TagList',
+}
+
 export const ClearAll = () => <SampleComponent clearAll showAll size="md" />
 
 ClearAll.story = {

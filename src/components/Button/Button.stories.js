@@ -67,46 +67,7 @@ const makeButtonVariations = (props = {}) => {
   )
 }
 
-export const Default = () => (
-  <div>
-    <ContainerUI>
-      <Heading style={{ marginBottom: '20px' }}>Kinds</Heading>
-      <Flexy just="left">
-        <Button>default</Button>
-        <Button kind="primary">primary</Button>
-        <Button kind="primaryAlt">primaryAlt</Button>
-        <Button kind="secondary">secondary</Button>
-        <Button kind="secondaryAlt">secondaryAlt</Button>
-        <Button kind="link">link</Button>
-        <Button kind="primary" shape="rounded" size="md">
-          ROUNDED
-          <Icon name="caret-up" size="14" />
-        </Button>
-      </Flexy>
-    </ContainerUI>
-    <ContainerUI>
-      <Heading style={{ marginBottom: '20px' }}>States</Heading>
-      <Flexy just="left">
-        <Button kind="primary">default</Button>
-        <Button kind="primary" state="danger">
-          danger
-        </Button>
-        <Button kind="primary" state="success">
-          success
-        </Button>
-        <Button kind="primary" state="warning">
-          warning
-        </Button>
-      </Flexy>
-    </ContainerUI>
-  </div>
-)
-
-Default.story = {
-  name: 'default',
-}
-
-export const Playground = () => {
+export const Default = () => {
   const props = {
     children: text('children', 'Button'),
     disabled: boolean('disabled', false),
@@ -118,7 +79,6 @@ export const Playground = () => {
       'kind',
       {
         primary: 'primary',
-        primaryAlt: 'primaryAlt',
         secondary: 'secondary',
         secondaryAlt: 'secondaryAlt',
         default: 'default',
@@ -143,10 +103,13 @@ export const Playground = () => {
   return <Button {...props} />
 }
 
+Default.story = {
+  name: 'default',
+}
+
 export const Everything = () => (
   <ContainerUI>
     {makeButtonVariations({ kind: 'primary' })}
-    {makeButtonVariations({ kind: 'primaryAlt' })}
     {makeButtonVariations({ kind: 'secondary' })}
     {makeButtonVariations({ kind: 'secondaryAlt' })}
     {makeButtonVariations({ kind: 'default' })}
@@ -180,25 +143,6 @@ export const ButtonGroup = () => (
 
 ButtonGroup.story = {
   name: 'button-group',
-}
-
-export const _Icon = () => (
-  <ContainerUI>
-    <Flexy>
-      <Button kind="secondary" onClick={e => console.log(e)}>
-        <Icon />
-        Words
-      </Button>
-      <Button kind="secondary" onClick={e => console.log(e)}>
-        Words
-        <Icon />
-      </Button>
-    </Flexy>
-  </ContainerUI>
-)
-
-_Icon.story = {
-  name: 'icon',
 }
 
 export const EndChat = () => (

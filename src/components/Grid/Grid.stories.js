@@ -3,7 +3,7 @@ import { Card, FormGroup, Grid, Input } from '../index'
 
 export default {
   component: Grid,
-  title: 'Components/Structural/Grid',
+  title: 'Utilities/Grid',
 }
 
 export const Default = () => (

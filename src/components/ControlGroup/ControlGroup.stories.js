@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, ControlGroup, Icon, Input, Select } from '../index'
+import { ControlGroup, Input, SelectDropdown } from '../index'
 
 export default {
   component: ControlGroup,
@@ -24,44 +24,6 @@ Default.story = {
   name: 'default',
 }
 
-export const _Button = () => (
-  <ControlGroup>
-    <ControlGroup.Item>
-      <Button>Button</Button>
-    </ControlGroup.Item>
-    <ControlGroup.Item>
-      <Button>Button</Button>
-    </ControlGroup.Item>
-    <ControlGroup.Item>
-      <Button>Button</Button>
-    </ControlGroup.Item>
-  </ControlGroup>
-)
-
-_Button.story = {
-  name: 'button',
-}
-
-export const InputButton = () => (
-  <ControlGroup>
-    <ControlGroup.Item>
-      <Input.AddOn>Prefix</Input.AddOn>
-    </ControlGroup.Item>
-    <ControlGroup.Block>
-      <Input value="HELLO" />
-    </ControlGroup.Block>
-    <ControlGroup.Item>
-      <Button kind="secondary" size="lg" isSuffix>
-        <Icon name="copy" />
-      </Button>
-    </ControlGroup.Item>
-  </ControlGroup>
-)
-
-InputButton.story = {
-  name: 'input + button',
-}
-
 export const InputSelect = () => (
   <ControlGroup>
     <ControlGroup.Item>
@@ -71,13 +33,13 @@ export const InputSelect = () => (
       <Input value="HELLO" />
     </ControlGroup.Block>
     <ControlGroup.Block>
-      <Select>
+      <SelectDropdown>
         <option>Hallo</option>
-      </Select>
+      </SelectDropdown>
     </ControlGroup.Block>
   </ControlGroup>
 )
 
 InputSelect.story = {
-  name: 'input + select',
+  name: 'Input with select',
 }

@@ -4,7 +4,7 @@ import { Avatar, ChatScroller, Message, Scrollable } from '../index'
 
 export default {
   component: ChatScroller,
-  title: 'Components/Groups/ChatScroller',
+  title: 'Utilities/ChatScroller',
 }
 
 const MessageSpec = createSpec({
@@ -67,68 +67,4 @@ export const Default = () => {
       <Chat />
     </div>
   )
-}
-
-export const CustomSelector = () => {
-  class Chat extends React.Component {
-    state = {
-      messages: MessageSpec.generate(5),
-      isTyping: false,
-    }
-
-    addMessage = () => {
-      this.setState({
-        messages: [...this.state.messages, MessageSpec.generate()],
-      })
-    }
-
-    toggleTyping = () => {
-      this.setState({
-        isTyping: !this.state.isTyping,
-      })
-    }
-
-    render() {
-      return (
-        <div style={{ position: 'relative' }}>
-          <div style={{ position: 'fixed', top: 0, zIndex: 100 }}>
-            <button onClick={this.addMessage}>Add Message</button>
-            <button onClick={this.toggleTyping}>Toggle Typing</button>
-          </div>
-          <div style={{ width: 320, height: 300 }}>
-            <ChatScroller
-              messages={this.state.messages}
-              isTyping={this.state.isTyping}
-              scrollableSelector=".custom .c-Scrollable__content"
-            >
-              <div style={{ display: 'flex', height: '100%', width: '100%' }}>
-                <div style={{ padding: '0 15px' }}>
-                  <Message from avatar={<Avatar name="Arctic Puffin" />}>
-                    {this.state.messages.map(props => (
-                      <Message.Chat key={props.id}>
-                        {props.message}
-                      </Message.Chat>
-                    ))}
-                  </Message>
-                  {this.state.isTyping && <Message.Chat typing />}
-                </div>
-              </div>
-            </ChatScroller>
-          </div>
-        </div>
-      )
-    }
-  }
-
-  return (
-    <div style={{ width: 400, height: 400 }}>
-      <Scrollable className="custom">
-        <Chat />
-      </Scrollable>
-    </div>
-  )
-}
-
-CustomSelector.story = {
-  name: 'Custom selector',
 }

@@ -49,64 +49,6 @@ export const Default = () => {
   return <Input {...props} />
 }
 
-export const Autocomplete = () => (
-  <div style={{ width: 300 }}>
-    <form autoComplete="on" action="/">
-      <Input
-        autoFocus
-        label="First name"
-        name="fname"
-        placeholder="Ron"
-        type="text"
-      />
-      <br />
-      <Button submit size="sm">
-        Submit
-      </Button>
-    </form>
-  </div>
-)
-
-Autocomplete.story = {
-  name: 'autocomplete',
-}
-
-export const HelpText = () => (
-  <div>
-    <Input helpText="This text appears below the input" />
-    <br />
-    <Input
-      helpText={
-        <div>
-          This is custom text <Icon name="emoji" inline />
-        </div>
-      }
-    />
-  </div>
-)
-
-HelpText.story = {
-  name: 'helpText',
-}
-
-export const HintText = () => (
-  <div>
-    <Input hintText="This text appears above the input" />
-    <br />
-    <Input
-      hintText={
-        <div>
-          This is custom text <Icon name="emoji" inline />
-        </div>
-      }
-    />
-  </div>
-)
-
-HintText.story = {
-  name: 'hintText',
-}
-
 export const Multiline = () => (
   <div>
     <Input placeholder="This is an input!" style={{ marginBottom: '5px' }} />
@@ -212,93 +154,6 @@ export const Placeholder = () => <Input placeholder="Hello" autoFocus />
 
 Placeholder.story = {
   name: 'placeholder',
-}
-
-export const PrefixSuffix = () => (
-  <div>
-    <Input inlinePrefix="$" inlineSuffix=".00" value="Inline Prefix/Suffix" />
-  </div>
-)
-
-PrefixSuffix.story = {
-  name: 'prefix + suffix',
-}
-
-export const Prefix = () => (
-  <div>
-    <Input
-      prefix={
-        <Button kind="secondary" size="lg" isFirst>
-          Prefix
-        </Button>
-      }
-      value="Input Prefix"
-    />
-  </div>
-)
-
-Prefix.story = {
-  name: 'prefix',
-}
-
-export const Suffix = () => {
-  const StatefulButtonUI = ({ children, state = 'default', ...rest }) => (
-    <Button className={`is-state-${state}`} {...rest}>
-      {children}
-    </Button>
-  )
-
-  const StatefulButton = styled(Button)`
-    &.is-secondary.is-:disabled,
-    &.is-secondary[disabled] {
-      border-color: ${props =>
-        props.state === 'danger' && `${getColor('red.500')} !important`};
-      border-bottom-left-radius: 0;
-      border-top-left-radius: 0;
-      cursor: not-allowed;
-      pointer-events: all;
-    }
-  `
-
-  return (
-    <div>
-      <p>
-        <Input
-          suffix={
-            <Button version={2} kind="secondary" size="lg" isLast>
-              Suffix
-            </Button>
-          }
-          value="Input Suffix"
-        />
-      </p>
-      <p>
-        <Input
-          errorMessage="This is incorrect!"
-          state="error"
-          suffix={
-            <StatefulButton
-              disabled
-              version={2}
-              size="lg"
-              state="danger"
-              kind="secondary"
-              isFirst
-              isLast
-              disabled
-            >
-              Suffix
-            </StatefulButton>
-          }
-          value="Input Suffix"
-        />
-      </p>
-    </div>
-  )
-}
-
-Suffix.story = {
-  name: 'suffix',
 }
 
 export const Seamless = () => <Input seamless autoFocus />
@@ -407,49 +262,6 @@ export const Sizes = () => (
 
 Sizes.story = {
   name: 'sizes',
-}
-
-export const Value = () => (
-  <div>
-    <Input autoFocus placeholder="Regular" value="Derek Zoolander" />
-  </div>
-)
-
-Value.story = {
-  name: 'value',
-}
-
-let applyCallStopTyping
-
-export const OnStartTyping = () => {
-  return (
-    <div>
-      <Input
-        autoFocus
-        onStartTyping={() => console.log('typing started')}
-        onStopTyping={() => console.log('typing stopped')}
-        placeholder="Regular"
-        refApplyCallStopTyping={fn => (applyCallStopTyping = fn)}
-        typingTimeoutDelay={4000}
-        withTypingEvent={true}
-      />
-      <Button onClick={() => applyCallStopTyping()}>Apply Stop Typing</Button>
-    </div>
-  )
-}
-
-OnStartTyping.story = {
-  name: 'onStartTyping',
-}
-
-export const SpecialKeyReturn = () => (
-  <div>
-    <Input hasInsertCarriageReturns={true} multiline={29} resizable />
-  </div>
-)
-
-SpecialKeyReturn.story = {
-  name: 'special key + return',
 }
 
 const PaddedTextArea = styled('div')`

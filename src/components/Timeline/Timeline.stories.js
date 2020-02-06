@@ -4,7 +4,7 @@ import { Link, Timeline, Text } from '../index'
 
 export default {
   component: Timeline,
-  title: 'Components/Groups/Timeline',
+  title: 'Components/Conversation/Timeline',
 }
 
 const fixture = createSpec({
