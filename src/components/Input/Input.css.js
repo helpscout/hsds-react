@@ -5,7 +5,7 @@ import { getColor } from '../../styles/utilities/color'
 import forEach from '../../styles/utilities/forEach'
 
 export const config = {
-  borderWidth: '1px',
+  borderWidth: '2px',
   offset: '1px',
   paddingSide: '16px',
   size: {
