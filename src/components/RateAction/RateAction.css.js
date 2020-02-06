@@ -55,10 +55,10 @@ export const RateActionUI = styled('button')`
       transition: fill 200ms linear;
     }
 
-    ${({ name, size, withBorder }) => {
+    ${({ name, size, withCircle }) => {
       const _size = parseInt(config.size[size], 10) * 2 + 4
       return (
-        withBorder &&
+        withCircle &&
         `
           &:before {
             content: '';
@@ -89,8 +89,8 @@ export const RateActionUI = styled('button')`
       ${baseStyles};
       content: '';
       border-radius: 50%;
-      border: ${({ withBorder }) =>
-        withBorder ? 'none' : `2px solid ${config.outlineColor}`};
+      border: ${({ withCircle }) =>
+        !withCircle ? `2px solid ${config.outlineColor}` : 'none'};
       display: none;
       height: calc(${config.size.default} + 4px);
       left: -2px;
@@ -111,7 +111,7 @@ export const RateActionUI = styled('button')`
     }
 
     &.is-active {
-      ${withBorder => withBorder && `transform: scale(1.3)`};
+      ${withCircle => withCircle && `transform: scale(1.3)`};
       &:focus {
         transform: scale(1.3);
       }
