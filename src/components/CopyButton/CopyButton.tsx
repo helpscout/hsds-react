@@ -102,8 +102,8 @@ class CopyButton extends React.PureComponent<Props, State> {
         <ConfirmationIconWrapperUI>
           <Icon
             className="c-CopyButton__iconConfirmation"
-            name="tick"
-            size="20"
+            name="checkmark"
+            size="24"
           />
         </ConfirmationIconWrapperUI>
         <TextUI>Copy</TextUI>
