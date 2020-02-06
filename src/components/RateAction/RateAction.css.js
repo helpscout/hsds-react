@@ -55,10 +55,10 @@ export const RateActionUI = styled('button')`
       transition: fill 200ms linear;
     }
 
-    ${({ name, size, withBorder }) => {
+    ${({ name, size, withCircle }) => {
       const _size = parseInt(config.size[size], 10) * 2 + 4
       return (
-        withBorder &&
+        withCircle &&
         `
           &:before {
             content: '';
@@ -74,7 +74,7 @@ export const RateActionUI = styled('button')`
             width: ${_size}px;
             z-index: -1;
           }
-          &:hover:before {
+          &:hover:before, &.is-active:before {
             background-color: ${getBorderHoverColor(name)}
           }`
       )
@@ -89,7 +89,8 @@ export const RateActionUI = styled('button')`
       ${baseStyles};
       content: '';
       border-radius: 50%;
-      border: 2px solid ${config.outlineColor};
+      border: ${({ withCircle }) =>
+        !withCircle ? `2px solid ${config.outlineColor}` : 'none'};
       display: none;
       height: calc(${config.size.default} + 4px);
       left: -2px;
@@ -110,8 +111,9 @@ export const RateActionUI = styled('button')`
     }
 
     &.is-active {
+      ${withCircle => withCircle && `transform: scale(1.3)`};
       &:focus {
-        transform: scale(1);
+        transform: scale(1.3);
       }
       &:after {
         animation: HSDSRateActionSelected 200ms
