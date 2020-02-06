@@ -18,6 +18,7 @@ export interface Props extends PopProps {
   onContentClick: (event: React.MouseEvent) => void
   shouldClose: (...args: any) => boolean
   shouldOpen: (...args: any) => boolean
+  wrapperStyles: Object
 }
 
 export interface State {
@@ -47,6 +48,7 @@ class Pop extends React.Component<Props, State> {
     shouldOpen: () => true,
     showArrow: true,
     triggerOn: 'click',
+    wrapperStyles: {},
     zIndex: 1000,
   }
   static Arrow = Arrow
@@ -211,6 +213,14 @@ class Pop extends React.Component<Props, State> {
     }
   }
 
+  getWrapperStyles(): Object {
+    const { wrapperStyles } = this.props
+
+    return { ...wrapperStyles }
+  }
+
+  setNodeRef = node => (this.node = node)
+
   render() {
     const {
       animationDelay,
@@ -275,7 +285,7 @@ class Pop extends React.Component<Props, State> {
 
     return (
       <Manager>
-        <div>
+        <div style={this.getWrapperStyles()}>
           <EventListener
             event="click"
             handler={this.handleOnBodyClick}
