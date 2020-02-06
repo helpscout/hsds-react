@@ -1,0 +1,62 @@
+import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
+import { boolean, text } from '@storybook/addon-knobs'
+import { createSpec, faker } from '@helpscout/helix'
+import { metaHeader, footer } from './ArticleCard.storiesHelpers'
+import ArticleCard from './'
+import { Flexy, Text, Icon } from '../index'
+
+<Meta
+  title="Components/Structural/ArticleCard"
+  component={ArticleCard}
+/>
+
+# ArticleCard
+
+An ArticleCard component is used to encapsulate pieces of UI that share a common concept or action with some placeholders where we could insert any element (metaHeader, footer) or strings (title, content).
+
+<Preview>
+  <Story name="default">
+    <div style={{ position: 'relative' }}>
+      <ArticleCard
+        content= {text('content', faker.lorem.paragraph())}
+        href= {text('href', '#')}
+        title= {text('title', faker.lorem.sentence())}
+        isHovered= {boolean('isHovered', false)}
+        metaHeader= {boolean('metaHeader', true) && metaHeader()}
+        footer= {boolean('footer', true) && footer()}
+      />
+    </div>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: Embed
+
+<br />
+<br />
+
+### Props
+
+<Props of={ArticleCard} />
+
+## Stories
+
+#### With custom content
+
+<Preview>
+  <Story name="with custom content">
+    <ArticleCard content={<Flexy>
+      <Flexy.Block>
+        <Text size={13} weight="500">
+          Open me
+        </Text>
+      </Flexy.Block>
+      <Flexy.Item>
+        <Icon name="minimize" shade="extraMuted" />
+      </Flexy.Item>
+    </Flexy>} />
+  </Story>
+</Preview>

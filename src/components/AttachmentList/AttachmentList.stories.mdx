@@ -1,0 +1,53 @@
+import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
+import { action } from '@storybook/addon-actions'
+import { ThemePreviewDemo } from './AttachmentList.storiesHelpers'
+import { Attachment } from '../index'
+import AttachmentList from './'
+
+<Meta
+  title="Components/Groups/AttachmentList"
+  component={AttachmentList}
+/>
+
+# AttachmentList
+
+An AttachmentList component is a wrapper that renders `Attachment` components.
+
+#### Download All
+
+If 2 or more `<Attachment>` components are provided, this component will automatically render a clickable "Download All" attachment UI.
+
+<Preview>
+  <Story name="default">
+    <AttachmentList onDownloadAllClick={action('Download all')}>
+      <Attachment name="parrot.png" size="5KB" onClick={action('on-click')} />
+      <Attachment name="parrot2.png" size="5KB" onClick={action('on-click')} />
+      <Attachment
+        name="parrot3-with-a-really-long-name.png"
+        size="5KB"
+        onClick={action('on-click')}
+      />
+    </AttachmentList>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: HSDS (ChatList, ChatTranscript), HsApp (Chat app)
+
+<br />
+<br />
+
+### Props
+
+<Props of={AttachmentList} />
+
+### Stories
+
+#### theme: preview
+
+<Story name="theme: preview">
+  <ThemePreviewDemo />
+</Story>

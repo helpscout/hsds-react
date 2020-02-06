@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Animate from './'
+import Animate from '.'
 import { Card, Heading, Text } from '../index'
 
 export class AnimateOutExample extends React.Component {

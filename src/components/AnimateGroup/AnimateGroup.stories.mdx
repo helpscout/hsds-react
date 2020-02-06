@@ -1,13 +1,19 @@
-import React from 'react'
-import { Animate, AnimateGroup, Card } from '../index'
+import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
+import AnimateGroup from './'
+import { Animate, Card } from '../index'
 
-export default {
-  component: AnimateGroup,
-  title: 'Utilities/AnimateGroup',
-}
+<Meta
+  title="Utilities/AnimateGroup"
+  component={AnimateGroup}
+/>
 
-export const Default = () => (
-  <div>
+# AnimateGroup
+
+This component is a light wrapper for `TransitionGroup` from the [react-transition-group](https://github.com/reactjs/react-transition-group) library.
+
+<Preview>
+  <Story name="default">
+      <div>
     <p>Stagger fade in</p>
     <AnimateGroup stagger>
       <Animate sequence="fade">
@@ -24,14 +30,30 @@ export const Default = () => (
       </Animate>
     </AnimateGroup>
   </div>
-)
+  </Story>
+</Preview>
 
-Default.story = {
-  name: 'default',
-}
+#### Reference
 
-export const Expand = () => (
-  <div>
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={AnimateGroup} />
+
+See `react-transition-group`'s [documentation](https://reactcommunity.org/react-transition-group/#TransitionGroup) for additional details.
+
+## Stories
+
+#### Expand
+
+<Preview>
+  <Story name="expand">
+    <div>
     <p>Stagger fade in</p>
     <div style={{ margin: 'auto', width: '80%' }}>
       <Card>
@@ -69,14 +91,14 @@ export const Expand = () => (
       </Card>
     </div>
   </div>
-)
+  </Story>
+</Preview>
 
-Expand.story = {
-  name: 'expand',
-}
+#### Sequence
 
-export const Sequence = () => (
-  <div>
+<Preview>
+  <Story name="sequence">
+    <div>
     <p>Sequence defined by Group</p>
     <AnimateGroup stagger sequence="fade left">
       <Animate>
@@ -96,8 +118,5 @@ export const Sequence = () => (
       </Animate>
     </AnimateGroup>
   </div>
-)
-
-Sequence.story = {
-  name: 'sequence',
-}
+  </Story>
+</Preview>

@@ -1,37 +1,7 @@
 import React from 'react'
 import { Attachment, AttachmentList } from '../index'
 
-export default {
-  component: AttachmentList,
-  title: 'Components/Groups/AttachmentList',
-}
-
-const onClick = (event, attachment) => {
-  console.log(event, attachment)
-}
-const handleDownloadAllClick = event => {
-  console.log('Download all')
-}
-
-export const Default = () => {
-  return (
-    <AttachmentList onDownloadAllClick={handleDownloadAllClick}>
-      <Attachment name="parrot.png" size="5KB" onClick={onClick} />
-      <Attachment name="parrot2.png" size="5KB" onClick={onClick} />
-      <Attachment
-        name="parrot3-with-a-really-long-name.png"
-        size="5KB"
-        onClick={onClick}
-      />
-    </AttachmentList>
-  )
-}
-
-Default.story = {
-  name: 'default',
-}
-
-class ThemePreviewDemo extends React.Component {
+export class ThemePreviewDemo extends React.Component {
   state = {
     attachments: [],
   }
@@ -74,12 +44,4 @@ class ThemePreviewDemo extends React.Component {
       </div>
     )
   }
-}
-
-export const ThemePreview = () => {
-  return <ThemePreviewDemo />
-}
-
-ThemePreview.story = {
-  name: 'theme: preview',
 }
