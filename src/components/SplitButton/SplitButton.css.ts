@@ -20,13 +20,7 @@ export const OptionsTriggerButtonUI = styled(Button)`
     }
   }
 
-  &.is-primaryAlt {
-    box-shadow: -1px 0 0 ${getColor('purple.600')};
-
-    &[disabled] {
-      box-shadow: -1px 0 0 ${getColor('grey.600')};
-    }
-  }
+  pointer-events: all;
 
   .c-Button__content {
     padding-top: 2px;

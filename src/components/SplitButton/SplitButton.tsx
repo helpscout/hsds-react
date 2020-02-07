@@ -63,7 +63,7 @@ export class SplitButton extends React.PureComponent<Props> {
         size={size}
         state={state}
       >
-        <Icon name="caret-down" size="16" />
+        <Icon name="caret-down" size="14" />
       </OptionsTriggerButtonUI>
     )
   }
