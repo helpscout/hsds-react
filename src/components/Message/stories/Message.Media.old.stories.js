@@ -3,7 +3,7 @@ import { Avatar, Message } from '../../index'
 
 export default {
   component: Message,
-  title: 'Components/Conversation/Message',
+  title: 'Components/Conversation/Message (Chat)',
 }
 
 const dimensions = { width: 800, height: 500 }

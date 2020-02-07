@@ -4,7 +4,7 @@ import { Avatar, Message } from '../../index'
 
 export default {
   component: Message,
-  title: 'Components/Conversation/Message',
+  title: 'Components/Conversation/Message (Chat)',
 }
 
 export const _Chat = () => {

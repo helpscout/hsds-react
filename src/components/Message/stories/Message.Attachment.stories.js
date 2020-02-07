@@ -3,7 +3,7 @@ import { Avatar, Message } from '../../index'
 
 export default {
   component: Message,
-  title: 'Components/Conversation/Message',
+  title: 'Components/Conversation/Message (Chat)',
 }
 const imageUrl =
   'https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto'
