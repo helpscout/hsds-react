@@ -1,4 +1,5 @@
 import * as React from 'react'
+import PropTypes from 'prop-types'
 import Attachment from '../Attachment'
 import Icon from '../Icon'
 import Inline from '../Inline'
@@ -7,16 +8,7 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { AttachmentListUI } from './AttachmentList.css'
 
-type Props = {
-  children: Array<any> | string
-  className?: string
-  downloadAllLabel: string
-  onDownloadAllClick: () => void
-  showDownloadAll: boolean
-  withOverflow: boolean
-}
-
-export class AttachmentList extends React.Component<Props> {
+export class AttachmentList extends React.Component {
   static defaultProps = {
     children: [],
     downloadAllLabel: 'Download All',
@@ -29,14 +21,14 @@ export class AttachmentList extends React.Component<Props> {
     theme: () => null,
   }
 
-  handleApplyFade: () => void = () => {}
-  handleScrollToEnd: () => void = () => {}
+  handleApplyFade = () => {}
+  handleScrollToEnd = () => {}
 
   componentDidMount() {
     this.handleApplyFade()
   }
 
-  componentDidUpdate(prevProps: Props) {
+  componentDidUpdate(prevProps) {
     if (this.didAddNewAttachment(prevProps)) {
       this.handleOnAddNewAttachment()
     }
@@ -55,7 +47,7 @@ export class AttachmentList extends React.Component<Props> {
    * @param   {Object} prevProps The previous props.
    * @returns {boolean} Whether new attachments have been added.
    */
-  didAddNewAttachment(prevProps: Props = this.props) {
+  didAddNewAttachment(prevProps = this.props) {
     /* istanbul ignore if */
     if (!this.props.children) return false
 
@@ -154,6 +146,18 @@ export class AttachmentList extends React.Component<Props> {
       </AttachmentListUI>
     )
   }
+}
+
+AttachmentList.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Text label for the "Download All" attachment. */
+  downloadAllLabel: PropTypes.string,
+  /** The callback when the "Download All" attachment is clicked. */
+  onDownloadAllClick: PropTypes.func,
+  /** Show/hides the "Download All" attachment. */
+  showDownloadAll: PropTypes.bool,
+  withOverflow: PropTypes.bool,
 }
 
 export default AttachmentList
