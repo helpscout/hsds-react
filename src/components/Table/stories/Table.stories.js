@@ -15,6 +15,7 @@ import { defaultSkin, alternativeSkin } from '../Table.skins'
 export default {
   component: Table,
   title: 'Components/Structural/Table',
+  excludeStories: ['ContainerUI'],
 }
 
 export const ContainerUI = styled('div')`

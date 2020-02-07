@@ -7,6 +7,7 @@ import { Notification } from '../index'
 export default {
   component: Notification,
   title: 'Components/Conversation/Notification',
+  excludeStories: ['notificationGuides', 'makeGuides'],
 }
 
 const NotificationSpec = createSpec({
@@ -87,17 +88,14 @@ export const Default = () => {
   )
 
   return (
-    <GuideContainer maxWidth={300}>
-      {makeGuides(notificationGuides)}
-      <div>
-        <Notification
-          body={text('body', body)}
-          from={text('from', from)}
-          align={align}
-          type={type}
-          onClick={action('Clicked!')}
-        />
-      </div>
-    </GuideContainer>
+    <div>
+      <Notification
+        body={text('body', body)}
+        from={text('from', from)}
+        align={align}
+        type={type}
+        onClick={action('Clicked!')}
+      />
+    </div>
   )
 }
