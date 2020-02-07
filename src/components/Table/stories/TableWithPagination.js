@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { boolean } from '@storybook/addon-knobs'
+import { boolean, select } from '@storybook/addon-knobs'
 import { createFakeCustomers, getCurrentPageData } from '../Table.testUtils'
 import Pagination from '../../Pagination'
 import Table from '../'
@@ -57,6 +57,14 @@ export default class TableWithPagination extends Component {
           tableWidth={tableWidth}
           containerWidth={containerWidth}
           withTallRows={boolean('withTallRows', false)}
+          skin={select(
+            'Skin',
+            {
+              default: 'default',
+              alternative: 'alternative',
+            },
+            'default'
+          )}
         />
         <Pagination
           subject="Customer"

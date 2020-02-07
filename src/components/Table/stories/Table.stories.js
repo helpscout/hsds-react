@@ -11,27 +11,12 @@ import TableWithSorting from './TableWithSorting'
 export default {
   component: Table,
   title: 'Components/Structural/Table',
-  excludeStories: ['ContainerUI'],
 }
 
 export const Default = () => <TableWithPagination />
 
 Default.story = {
   name: 'default',
-}
-
-export const AlternativeSkinBuiltIn = () => (
-  <div>
-    <Table
-      skin="alternative"
-      columns={defaultColumns}
-      data={createFakeCustomers({ amount: 10 })}
-    />
-  </div>
-)
-
-AlternativeSkinBuiltIn.story = {
-  name: 'alternative skin',
 }
 
 export const WithCompoundColumns = () => (

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { createFakeCustomers, sortData } from '../Table.testUtils'
-import { Wrapper } from './commonComponents'
 import Table from '../'
 
 export default class TablePlayground extends Component {
@@ -63,14 +62,14 @@ export default class TablePlayground extends Component {
     const { data, columns, sortedInfo, isLoading } = this.state
 
     return (
-      <Wrapper>
+      <div style={{ marginBottom: '50px' }}>
         <Table
           columns={columns}
           data={data}
           sortedInfo={sortedInfo}
           isLoading={isLoading}
         />
-      </Wrapper>
+      </div>
     )
   }
 
