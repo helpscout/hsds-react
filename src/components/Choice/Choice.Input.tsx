@@ -90,7 +90,7 @@ class Input extends React.PureComponent<Props, State> {
 
     if (isCustomRadio) {
       iconMarkup = checked ? (
-        <Icon name="tick-small" size="20" />
+        <Icon name="tick-small" size="24" />
       ) : (
         <InputPlaceholderUI className="c-ChoiceInput__placeholder" />
       )
