@@ -90,15 +90,3 @@ export const StateError = () => (
 StateError.story = {
   name: 'state: error',
 }
-
-export const Sizes = () => (
-  <div>
-    <Select autoFocus placeholder="Regular" />
-    <br />
-    <Select size="sm" autoFocus placeholder="Small" />
-  </div>
-)
-
-Sizes.story = {
-  name: 'sizes',
-}

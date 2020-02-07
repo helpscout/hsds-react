@@ -14,12 +14,14 @@ An AvatarStack component displays an array of `Avatar`. This component has a max
 
 <Preview>
   <Story name="variation: AvatarStack">
-    <AvatarStack max={5}>
-    {AvatarSpec.generate(5).map(avatar => {
-      const { name, image, status } = avatar
-      return <Avatar image={image} key={name} name={name} status={status} />
-    })}
-  </AvatarStack>
+    <div style={{ background: '#eee', padding: 10 }}>
+      <AvatarStack max={5} version={2}>
+        {AvatarSpec.generate(5).map(avatar => {
+          const { name, image } = avatar
+          return <Avatar image={image} key={name} name={name} withShadow />
+        })}
+      </AvatarStack>
+  </div>
   </Story>
 </Preview>
 
@@ -27,7 +29,7 @@ An AvatarStack component displays an array of `Avatar`. This component has a max
 
 - **Designer**: Buzz
 - **Engineering**: Juan Pablo
-- **Usage**: Everywhere
+- **Usage**: Embed
 
 <br />
 <br />
