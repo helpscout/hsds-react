@@ -80,7 +80,7 @@ export const Default = () => {
       {
         primary: 'primary',
         secondary: 'secondary',
-        secondaryAlt: 'secondaryAlt',
+        tertiary: 'tertiary',
         default: 'default',
         link: 'link',
       },
@@ -111,7 +111,7 @@ export const Everything = () => (
   <ContainerUI>
     {makeButtonVariations({ kind: 'primary' })}
     {makeButtonVariations({ kind: 'secondary' })}
-    {makeButtonVariations({ kind: 'secondaryAlt' })}
+    {makeButtonVariations({ kind: 'tertiary' })}
     {makeButtonVariations({ kind: 'default' })}
     {makeButtonVariations({ kind: 'link' })}
     {makeButtonVariations({ kind: 'default', state: 'danger' })}

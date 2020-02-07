@@ -68,13 +68,7 @@ class Button extends React.PureComponent {
   }
 
   shouldShowFocus = () => {
-    const paddedButtonKinds = [
-      'primary',
-      'primaryAlt',
-      'secondary',
-      'secondaryAlt',
-      'tertiary',
-    ]
+    const paddedButtonKinds = ['primary', 'secondary', 'tertiary']
 
     return (
       !this.props.disabled &&
