@@ -5,7 +5,7 @@ import { Form, FormGroup, FormLabel, Input } from '../index'
 
 export default {
   component: Form,
-  title: 'Components/Forms/Form',
+  title: 'Utilities/Form',
   excludeStories: ['ContainerUI'],
 }
 
