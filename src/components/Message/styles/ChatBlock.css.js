@@ -45,11 +45,6 @@ const css = `
   }
 
   &.is-theme-embed {
-    &.is-type-action {
-      ${bem.element('block')} {
-        margin: auto;
-      }
-    }
     ${bem.element('block')} {
       max-width: 100%;
     }

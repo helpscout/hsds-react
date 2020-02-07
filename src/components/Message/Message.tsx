@@ -16,6 +16,7 @@ import Question from './Message.Question'
 import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import {
+  getComponentName,
   isComponentTypeChat,
   namespaceComponent,
 } from '../../utilities/component'
@@ -50,7 +51,22 @@ export class Message extends React.PureComponent<Props> {
   shouldShowAvatar = (): boolean => {
     const { from, showAvatar } = this.props
 
+    // This prevents spacing issues when children include
+    // `Message.Action` which requires the full width of the screen.
+    if (this.childrenIncludeActionTypeComponent()) return false
+
     return this.isThemeEmbed() ? (from && showAvatar) || false : !!showAvatar
+  }
+
+  childrenIncludeActionTypeComponent = () => {
+    const { children } = this.props
+    const childArray = React.Children.toArray(children)
+
+    return childArray.some(child => {
+      const componentName = getComponentName(child)
+
+      return componentName === 'Message.Action'
+    })
   }
 
   isThemeEmbed = (): boolean => {
