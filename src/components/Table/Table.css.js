@@ -41,7 +41,7 @@ export const TableUI = styled('table')`
 
   td {
     padding: 5px 14px;
-    height: 62px;
+    height: 50px;
     color: ${props => props.theme.fontColorBody};
   }
 
