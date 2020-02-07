@@ -1,7 +1,7 @@
 import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
 import { select, text, boolean, number } from '@storybook/addon-knobs'
 
-import AvatarSpec from '../../utilities/specs/avatarGrid.specs'
+import AvatarSpec from '../../utilities/specs/avatarList.specs'
 import AvatarList from './'
 import { Avatar} from '../index'
 
@@ -16,7 +16,7 @@ An AvatarList component displays an array of `Avatars`. This component has a max
 
 
 <Preview>
-  <Story name="variation: AvatarList">
+  <Story name="Default">
     <div style={{ background: '#eee', padding: 10 }}>
       <AvatarList max={number('max', 14)} grid={boolean('grid', false)} center={boolean('centered', false)} stack={boolean('stack', false)} size={select('size', ['xs', 'sm', 'md', 'lg'])}>
         {AvatarSpec.generate(20).map(avatar => {

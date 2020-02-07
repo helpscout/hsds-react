@@ -1,6 +1,6 @@
 import React from 'react'
-import { Flexy, Text, StatusBadge, Avatar, AvatarStack } from '../index'
-import AvatarSpec from '../../utilities/specs/avatarGrid.specs'
+import { Flexy, Text, StatusBadge, Avatar, AvatarList } from '../index'
+import AvatarSpec from '../../utilities/specs/avatarList.specs'
 
 export function metaHeader() {
   return (
@@ -19,11 +19,11 @@ export function metaHeader() {
 
 export function footer() {
   return (
-    <AvatarStack max={5} size="sm" version={2}>
+    <AvatarList max={5} size="sm" stack={true}>
       {AvatarSpec.generate(5).map(avatar => {
         const { name, image } = avatar
         return <Avatar image={image} key={name} name={name} status={null} />
       })}
-    </AvatarStack>
+    </AvatarList>
   )
 }
