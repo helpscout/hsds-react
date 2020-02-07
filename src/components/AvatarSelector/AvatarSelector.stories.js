@@ -1,5 +1,5 @@
 import React from 'react'
-import AvatarSpec from '../../utilities/specs/avatarGrid.specs'
+import AvatarSpec from '../../utilities/specs/avatarList.specs'
 import Dropdown from '../Dropdown'
 import { AvatarSelector } from '../index'
 import styled from '../styled'
