@@ -44,7 +44,7 @@ export const Action = (props: Props, context: Context) => {
     return (
       timestamp && (
         <TimestampUI
-          className="c-MessageChatBlock__timestamp"
+          className="c-MessageAction__timestamp"
           read={read}
           timestamp={timestamp}
         />

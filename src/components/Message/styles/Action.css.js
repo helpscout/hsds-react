@@ -11,7 +11,7 @@ export const ActionUI = styled('div')`
   text-align: center;
 
   ${({ isThemeEmbed }) =>
-    !isThemeEmbed && `color: ${getColor('charcoal.700')};`}
+    !isThemeEmbed && `color: ${getColor('charcoal.700')} !important;`}
 
   a {
     ${linkStyles()}

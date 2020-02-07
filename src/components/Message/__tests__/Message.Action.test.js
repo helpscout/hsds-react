@@ -1,57 +1,37 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
-import ChatBlock from '../Message.ChatBlock'
 import Action from '../Message.Action'
 import Message from '../Message'
 import { Text } from '../..'
-
-const cx = 'c-MessageAction'
-const ui = {
-  action: `.${cx}`,
-  text: `.${cx}__text`,
-}
+import { Timestamp } from '../..'
 
 describe('ClassNames', () => {
   test('Has default className', () => {
     const wrapper = mount(<Action />)
-    const o = wrapper.find(ui.action)
+    const o = wrapper.find(Action)
 
     expect(o.length).toBeTruthy()
   })
 
   test('Accepts custom classNames', () => {
     const wrapper = mount(<Action className="mugatu" />)
-    const o = wrapper.find(ui.action)
+    const o = wrapper.find(Action)
 
     expect(o.getDOMNode().classList.contains('mugatu')).toBeTruthy()
   })
 })
 
-describe('ChatBlock', () => {
-  test('Contains a ChatBlock component', () => {
-    const wrapper = mount(<Action />)
-    const o = wrapper.find(ChatBlock)
+describe('Timestamp', () => {
+  test('Renders timestamp', () => {
+    const wrapper = mount(<Action timestamp="time" />)
 
-    expect(o.length).toBeTruthy()
+    expect(wrapper.find(Timestamp).length).toBeTruthy()
   })
 
-  test('ChatBlock does not inherit component classNames', () => {
-    const wrapper = mount(<Action />)
-    const o = wrapper.find(ChatBlock)
+  test('Renders timestamp with from', () => {
+    const wrapper = mount(<Action timestamp="time" />)
 
-    expect(o.getDOMNode().classList.contains(cx)).not.toBeTruthy()
-  })
-
-  test('Passes correct props to ChatBlock', () => {
-    const wrapper = mount(<Action from to read ltr rtl timestamp="time" />)
-    const props = wrapper.find(ChatBlock).instance().props
-
-    expect(props.from).toBeTruthy()
-    expect(props.to).toBeTruthy()
-    expect(props.read).toBeTruthy()
-    expect(props.ltr).toBeTruthy()
-    expect(props.rtl).toBeTruthy()
-    expect(props.timestamp).toBeTruthy()
+    expect(wrapper.find(Timestamp).length).toBeTruthy()
   })
 })
 
@@ -72,19 +52,16 @@ describe('Context', () => {
         <Action />
       </Message.Provider>
     )
-    const o = wrapper.find(ui.action)
-
+    const o = wrapper.find(Action)
     expect(o.getDOMNode().classList.contains('is-theme-embed')).toBe(true)
   })
-
   test('Does not Change text props based on context.theme', () => {
     const wrapper = mount(
       <Message.Provider theme="embed">
         <Action />
       </Message.Provider>
     )
-    let o = wrapper.find(ui.text).first()
-
+    let o = wrapper.find(Text).first()
     expect(o.getDOMNode().classList.contains('is-12')).toBe(true)
     expect(o.getDOMNode().classList.contains('is-shade-faint')).toBe(true)
   })
