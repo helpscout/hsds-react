@@ -30,7 +30,7 @@ class CopyButton extends React.PureComponent<Props, State> {
     canRenderFocus: false,
     onClick: noop,
     onReset: noop,
-    kind: 'tertiary',
+    kind: 'secondary',
     resetTimeout: 2000,
   }
 
