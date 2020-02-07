@@ -31,7 +31,7 @@ export const Default = () => {
 export const WithBorder = () => {
   return (
     <div style={{ fontFamily: font }}>
-      <h4>Default</h4>
+      <h4>With Circle</h4>
       {REACTIONS_EMOTICONS.map(iconName => (
         <div style={{ margin: '0 0 15px', clear: 'both' }}>
           <span style={{ float: 'left', marginRight: 20 }}>{iconName}: </span>
@@ -45,7 +45,7 @@ export const WithBorder = () => {
                 marginLeft: 32,
               }}
             >
-              <RateAction size={size} name={iconName} withBorder={true} />
+              <RateAction size={size} name={iconName} withCircle={true} />
             </div>
           ))}
         </div>
