@@ -50,6 +50,7 @@ export interface TableProps {
   skin?: Skin
   isLoading: boolean
   isScrollLocked: boolean
+  withTallRows: boolean
   sortedInfo?: SortedInfo
   onRowClick?: (event: Event, row: Data) => void
   onExpand: (isTableCollapsed: boolean) => void

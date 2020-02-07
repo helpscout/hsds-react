@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Wrapper } from './commonComponents'
+import { boolean } from '@storybook/addon-knobs'
 import { createFakeCustomers, getCurrentPageData } from '../Table.testUtils'
 import Pagination from '../../Pagination'
 import Table from '../'
@@ -49,13 +49,14 @@ export default class TableWithPagination extends Component {
     } = this.state
 
     return (
-      <Wrapper>
+      <div style={{ marginBottom: '50px' }}>
         <Table
           columns={columns}
           data={paginatedData}
           isLoading={isLoading}
           tableWidth={tableWidth}
           containerWidth={containerWidth}
+          withTallRows={boolean('withTallRows', false)}
         />
         <Pagination
           subject="Customer"
@@ -65,7 +66,7 @@ export default class TableWithPagination extends Component {
           totalItems={data.length}
           onChange={this.handlePageChange}
         />
-      </Wrapper>
+      </div>
     )
   }
 

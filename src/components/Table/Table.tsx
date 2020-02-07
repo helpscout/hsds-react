@@ -48,6 +48,7 @@ export class Table extends React.Component<TableProps, TableState> {
     wrapperRef: noop,
     tableRef: noop,
     onExpand: noop,
+    withTallRows: false,
   }
 
   wrapperNode: HTMLElement
@@ -129,6 +130,7 @@ export class Table extends React.Component<TableProps, TableState> {
       sortedInfo,
       isLoading,
       isScrollLocked,
+      withTallRows,
       onRowClick,
       skin,
       ...rest
@@ -157,6 +159,7 @@ export class Table extends React.Component<TableProps, TableState> {
           >
             <TableUI
               tableWidth={tableWidth}
+              withTallRows={withTallRows}
               className={tableClassNames}
               ref={this.setTableNode}
             >
