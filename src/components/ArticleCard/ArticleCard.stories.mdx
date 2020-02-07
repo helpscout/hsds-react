@@ -1,9 +1,9 @@
 import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
 import { boolean, text } from '@storybook/addon-knobs'
 import { createSpec, faker } from '@helpscout/helix'
-import { metaHeader, footer } from './ArticleCard.storiesHelpers'
+import AvatarSpec from '../../utilities/specs/avatarGrid.specs'
 import ArticleCard from './'
-import { Flexy, Text, Icon } from '../index'
+import { Flexy, Text, Icon, StatusBadge, Avatar, AvatarStack } from '../index'
 
 <Meta
   title="Components/Structural/ArticleCard"
@@ -22,8 +22,25 @@ An ArticleCard component is used to encapsulate pieces of UI that share a common
         href= {text('href', '#')}
         title= {text('title', faker.lorem.sentence())}
         isHovered= {boolean('isHovered', false)}
-        metaHeader= {boolean('metaHeader', true) && metaHeader()}
-        footer= {boolean('footer', true) && footer()}
+        metaHeader= {boolean('metaHeader', true) && (
+          <Flexy align="top">
+            <Flexy.Block>
+              <Text faint size="12">
+                Last updated 1 day ago
+              </Text>
+            </Flexy.Block>
+            <Flexy.Item>
+              <StatusBadge count={20} status={'new'} />
+            </Flexy.Item>
+          </Flexy>
+        )}
+        footer= {boolean('footer', true) && (
+          <AvatarStack max={5} size="sm" version={2}>
+            {AvatarSpec.generate(5).map(avatar => {
+              const { name, image } = avatar
+              return <Avatar image={image} key={name} name={name} status={null} />
+        })}
+    </AvatarStack>)}
       />
     </div>
   </Story>

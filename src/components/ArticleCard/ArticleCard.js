@@ -1,4 +1,5 @@
 import * as React from 'react'
+import PropTypes from 'prop-types'
 import Text from '../Text'
 import Truncate from '../Truncate'
 import { classNames } from '../../utilities/classNames'
@@ -11,20 +12,7 @@ import {
   TitleUI,
 } from './ArticleCard.css'
 
-export interface Props {
-  className?: string
-  content?: React.ReactNode
-  contentLimit?: number
-  contentSize?: number
-  footer?: any
-  isHovered: boolean
-  metaHeader?: any
-  title?: string
-  titleLimit?: number
-  titleSize?: number
-}
-
-export class ArticleCard extends React.PureComponent<Props> {
+export class ArticleCard extends React.PureComponent {
   static defaultProps = {
     contentLimit: 160,
     contentSize: 13,
@@ -132,6 +120,29 @@ export class ArticleCard extends React.PureComponent<Props> {
       </ArticleCardUI>
     )
   }
+}
+
+ArticleCard.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Content of the card. Will be truncated based on the contentLimit prop if content is a string. */
+  content: PropTypes.element,
+  /** The amount of characters to keep before truncation on the content string. */
+  contentLimit: PropTypes.number,
+  /** The `Text` font-size for the content. */
+  contentSize: PropTypes.number,
+  /** Element that will be displayed below the content */
+  footer: PropTypes.any,
+  /** Renders hovered styles. */
+  isHovered: PropTypes.bool,
+  /** Element that will be displayed above the title */
+  metaHeader: PropTypes.any,
+  /** Title of the card. Will be truncated based on the titleLimit prop */
+  title: PropTypes.string,
+  /** The amount of characters to keep before truncation on the title string. */
+  titleLimit: PropTypes.number,
+  /** The `Text` font-size for the title. */
+  titleSize: PropTypes.number,
 }
 
 export default ArticleCard
