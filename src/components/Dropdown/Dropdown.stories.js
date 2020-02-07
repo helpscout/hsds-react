@@ -7,7 +7,7 @@ import Button from '../Button'
 
 export default {
   component: Dropdown,
-  title: 'Component/Dropdowns/Dropdown',
+  title: 'Components/Dropdowns/Dropdown',
   excludeStories: ['ItemSpec'],
 }
 

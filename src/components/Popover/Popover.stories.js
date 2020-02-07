@@ -5,7 +5,7 @@ import { Text, Popover } from '..'
 
 export default {
   component: Popover,
-  title: 'Utilities/Popover',
+  title: 'Components/Overlay/Popover',
 }
 
 const actionLoggerProps = {
