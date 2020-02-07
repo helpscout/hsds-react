@@ -1,9 +1,9 @@
 import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
 import { boolean, text } from '@storybook/addon-knobs'
 import { createSpec, faker } from '@helpscout/helix'
-import AvatarSpec from '../../utilities/specs/avatarGrid.specs'
+import AvatarSpec from '../../utilities/specs/avatarList.specs'
 import ArticleCard from './'
-import { Flexy, Text, Icon, StatusBadge, Avatar, AvatarStack } from '../index'
+import { Flexy, Text, Icon, StatusBadge, Avatar, AvatarList } from '../index'
 
 <Meta
   title="Components/Structural/ArticleCard"
@@ -35,12 +35,12 @@ An ArticleCard component is used to encapsulate pieces of UI that share a common
           </Flexy>
         )}
         footer= {boolean('footer', true) && (
-          <AvatarStack max={5} size="sm" version={2}>
+          <AvatarList max={5} size="sm" version={2}>
             {AvatarSpec.generate(5).map(avatar => {
               const { name, image } = avatar
               return <Avatar image={image} key={name} name={name} status={null} />
         })}
-    </AvatarStack>)}
+    </AvatarList>)}
       />
     </div>
   </Story>
@@ -65,15 +65,17 @@ An ArticleCard component is used to encapsulate pieces of UI that share a common
 
 <Preview>
   <Story name="with custom content">
-    <ArticleCard content={<Flexy>
-      <Flexy.Block>
-        <Text size={13} weight="500">
-          Open me
-        </Text>
-      </Flexy.Block>
-      <Flexy.Item>
-        <Icon name="minimize" shade="extraMuted" />
-      </Flexy.Item>
-    </Flexy>} />
+    <ArticleCard content={(
+      <Flexy>
+        <Flexy.Block>
+          <Text size={13} weight="500">
+            Open me
+          </Text>
+        </Flexy.Block>
+        <Flexy.Item>
+          <Icon name="minimize" shade="extraMuted" />
+        </Flexy.Item>
+      </Flexy>
+    )} />
   </Story>
 </Preview>

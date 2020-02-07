@@ -6,30 +6,13 @@ import Animate from '../Animate'
 import { ItemUI, AvatarListUI, AvatarListWrapperUI } from './AvatarList.css'
 import { classNames } from '../../utilities/classNames'
 import { getComponentKey } from '../../utilities/component'
-import { isOdd, getMiddleIndex } from '../../utilities/number'
 
 export const AvatarListContext = React.createContext({})
 
 const wrapAvatar = (props, avatar, index) => {
-  const {
-    animationDuration,
-    animationEasing,
-    animationSequence,
-    max,
-    stack,
-    count,
-  } = props
+  const { animationDuration, animationEasing, animationSequence, max } = props
 
   let zIndex = max - index
-
-  if (stack && count > 2 && isOdd(`${count}`)) {
-    if (isOdd(index)) {
-      zIndex = zIndex + 1
-    }
-    if (index === getMiddleIndex(`${count}`)) {
-      zIndex = zIndex + 2
-    }
-  }
 
   return (
     <ItemUI key={getComponentKey(avatar, index)} zIndex={zIndex}>
@@ -74,14 +57,11 @@ export const AvatarList = props => {
 
   const propsWithCount = { ...props, count: avatars.length }
 
-  const size = getAvatarSize(propsWithCount)
+  const contextValue = { ...props, size: getAvatarSize(propsWithCount) }
 
-  const contextValue = { size }
-
-  const avatarComponents = avatarList.map((avatar, index) => {
-    //TODO: stacking
-    return wrapAvatar(propsWithCount, avatar, index)
-  })
+  const avatarComponents = avatarList.map((avatar, index) =>
+    wrapAvatar(propsWithCount, avatar, index)
+  )
 
   if (shouldShowExtra) {
     const extraLabel = `+${extraAvatarCount}`
@@ -95,7 +75,6 @@ export const AvatarList = props => {
   }
   const componentClassName = classNames(
     'c-AvatarList',
-    stack && 'is-withLayerStack',
     grid && 'is-grid',
     className
   )
@@ -124,7 +103,6 @@ AvatarList.propTypes = {
   max: PropTypes.number,
   grid: PropTypes.bool,
   size: PropTypes.string,
-  stack: PropTypes.bool,
   center: PropTypes.bool,
 }
 
@@ -136,7 +114,6 @@ AvatarList.defaultProps = {
   center: false,
   showStatusBorderColor: false,
   size: 'sm',
-  stack: false,
 }
 
 export default AvatarList
