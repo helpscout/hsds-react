@@ -37,8 +37,9 @@ describe('Animation', () => {
 
 describe('Limit', () => {
   test('Can limit the amount of avatars', () => {
+    const max = 2
     const wrapper = mount(
-      <AvatarList max={2}>
+      <AvatarList max={max}>
         <Avatar />
         <Avatar />
         <Avatar />
@@ -47,10 +48,9 @@ describe('Limit', () => {
     )
     const avatar = wrapper.find(Avatar)
     const additionalCounter = avatar.last()
-    const limitCount = 2 // to account for the additional counter
 
-    expect(avatar.length).toBe(limitCount)
-    expect(additionalCounter.html()).toContain('+3')
+    expect(avatar.length).toBe(max)
+    expect(additionalCounter.text()).toContain('+3')
   })
 
   test('Cannot set limit to zero (0)', () => {
@@ -67,24 +67,5 @@ describe('Limit', () => {
 
     expect(avatar.length).toBe(4)
     expect(additionalCounter.text()).not.toBe('+2')
-  })
-})
-
-describe('Avatar Props', () => {
-  test('Passes props to Avatar', () => {
-    const wrapper = mount(
-      <AvatarList
-        borderColor="red"
-        outerBorderColor="blue"
-        showStatusBorderColor={true}
-      >
-        <Avatar />
-      </AvatarList>
-    )
-    const avatar = wrapper.find('Avatar').first()
-
-    expect(avatar.prop('borderColor')).toBe('red')
-    expect(avatar.prop('outerBorderColor')).toBe('blue')
-    expect(avatar.prop('showStatusBorderColor')).toBe(true)
   })
 })

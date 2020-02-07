@@ -68,7 +68,7 @@ export const AvatarList = props => {
   const { children, max, className, center, stack, grid, ...rest } = props
   const avatars = React.Children.toArray(children)
   const avatarList =
-    max && avatars.length > max ? avatars.slice(0, max) : avatars
+    max && avatars.length > max ? avatars.slice(0, max - 1) : avatars
   const extraAvatarCount = avatars.length - avatarList.length
   const shouldShowExtra = extraAvatarCount > 0
 
