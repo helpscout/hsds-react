@@ -11,6 +11,7 @@ import TableWithSorting from './TableWithSorting'
 export default {
   component: Table,
   title: 'Components/Structural/Table',
+  excludeStories: ['ContainerUI'],
 }
 
 export const Default = () => <TableWithPagination />

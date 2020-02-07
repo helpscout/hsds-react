@@ -8,6 +8,7 @@ export default {
   component: EditableField,
   title: 'Components/Forms/EditableField',
   decorators: [withAktiv],
+  excludeStories: ['ContainerUI', 'NoteUI'],
 }
 
 export const ContainerUI = styled('div')`
