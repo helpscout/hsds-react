@@ -15,9 +15,9 @@ export const config = {
     0px 5px 10px 1px ${getColor('grey.300')},
     0px 3px 3px 0px rgba(0, 0, 0, 0.05)
   `,
-  borderRadius: '4px',
+  borderRadius: 4,
   focusOutlineWidth: '2px',
-  focusOutlineColor: getColor('blue.400'),
+  focusOutlineColor: getColor('blue.500'),
   iconColor: getColor('grey.600'),
   iconColorChecked: getColor('charcoal.500'),
   iconWrapperSize: 52,
@@ -35,7 +35,7 @@ interface RadioCardUIProp {
 
 export const RadioCardUI = styled('label')<RadioCardUIProp>`
   align-items: center;
-  border-radius: ${config.borderRadius};
+  border-radius: ${config.borderRadius}px;
   box-shadow: ${config.boxShadow};
   cursor: pointer;
   display: flex;
@@ -74,14 +74,14 @@ export const IconWrapperUI = styled('div')`
 
 export const FocusUI = styled('div')`
   animation: BackdropFocusFadeIn 200ms;
-  border-radius: ${config.borderRadius};
-  bottom: 0px;
+  border-radius: ${config.borderRadius + 2}px;
+  bottom: -3px;
   box-shadow: 0 0 0 ${config.focusOutlineWidth} ${config.focusOutlineColor};
-  left: 0px;
+  left: -3px;
   pointer-events: none;
   position: absolute;
-  right: 0px;
-  top: 0px;
+  right: -3px;
+  top: -3px;
   z-index: 1;
 
   @keyframes BackdropFocusFadeIn {
