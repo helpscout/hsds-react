@@ -47,9 +47,8 @@ describe('Limit', () => {
       </AvatarList>
     )
     const avatar = wrapper.find(Avatar)
-    const limitCount = 3 // to account for the additional counter
 
-    expect(avatar.length).toBe(limitCount)
+    expect(avatar.length).toBe(max)
   })
 
   test('Cannot set limit to zero (0)', () => {
