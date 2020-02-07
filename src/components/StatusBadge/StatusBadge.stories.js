@@ -3,10 +3,10 @@ import { StatusBadge } from '../index'
 
 export default {
   component: StatusBadge,
-  title: 'Components/Badges/StatusBadge',
+  title: 'Components/Badges/Badge',
 }
 
-export const Default = () => (
+export const _StatusBadge = () => (
   <div>
     <p>
       Regular:
@@ -23,16 +23,16 @@ export const Default = () => (
   </div>
 )
 
-Default.story = {
-  name: 'default',
+_StatusBadge.story = {
+  name: 'status badge',
 }
 
-export const Status = () => (
+export const StatusNew = () => (
   <div>
     <StatusBadge count={19} status="new" />
   </div>
 )
 
-Status.story = {
-  name: 'status',
+StatusNew.story = {
+  name: 'status badge new',
 }
