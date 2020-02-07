@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Wrapper } from './commonComponents'
 import { createFakeCustomers, getCurrentPageData } from '../Table.testUtils'
 import Pagination from '../../Pagination'
-import { Table } from '../../index'
+import Table from '../'
 
 export default class TableWithPagination extends Component {
   constructor(props) {

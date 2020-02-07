@@ -1,5 +1,4 @@
 import React from 'react'
-import { SampleComponent as AvatarListSampleComponent } from '../AvatarList/AvatarList.stories'
 import { Toolbar } from '../index'
 
 export default {

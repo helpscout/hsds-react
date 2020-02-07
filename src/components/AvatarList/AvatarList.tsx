@@ -28,7 +28,7 @@ export class AvatarList extends React.PureComponent<Props> {
     animationEasing: 'ease',
     animationSequence: 'fade',
     max: 4,
-    shape: 'rounded',
+    shape: 'circle',
     showStatusBorderColor: false,
     size: 'sm',
   }

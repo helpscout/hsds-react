@@ -10,12 +10,8 @@ const fixtures = AvatarSpec.generate(20)
 
 const avatarsMarkup = fixtures.map(avatar => {
   const { name, image } = avatar
-  return <Avatar image={image} key={name} name={name} shape="rounded" />
+  return <Avatar image={image} key={name} name={name} />
 })
-
-export const SampleComponent = props => {
-  return <AvatarList max={2}>{avatarsMarkup}</AvatarList>
-}
 
 export const Default = () => <AvatarList max={4}>{avatarsMarkup}</AvatarList>
 
@@ -42,7 +38,7 @@ export const AddRemove = () => {
     render() {
       const avatarsMarkup = this.state.avatars.map(avatar => {
         const { name, image } = avatar
-        return <Avatar image={image} key={name} name={name} shape="rounded" />
+        return <Avatar image={image} key={name} name={name} />
       })
 
       return (
