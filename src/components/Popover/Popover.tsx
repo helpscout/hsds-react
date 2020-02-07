@@ -104,7 +104,7 @@ export class Popover extends React.PureComponent<Props> {
       <Tooltip
         {...rest}
         arrowClassName="c-PopoverArrow"
-        arrowSize={16}
+        arrowSize={12}
         contentClassName="c-PopoverContent"
         className={this.getClassName()}
         closeOnMouseLeave={false}

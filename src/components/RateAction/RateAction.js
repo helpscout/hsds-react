@@ -16,7 +16,7 @@ export class RateAction extends React.PureComponent {
     name: 'reaction-happy',
     onClick: noop,
     size: 'lg',
-    withBorder: false,
+    withCircle: false,
   }
 
   static propTypes = {
@@ -79,7 +79,7 @@ export class RateAction extends React.PureComponent {
       size,
       onBlur,
       onFocus,
-      withBorder,
+      withCircle,
       ...rest
     } = this.props
 
@@ -94,7 +94,7 @@ export class RateAction extends React.PureComponent {
         onFocus={this.handleOnFocus}
         name={name}
         size={size}
-        withBorder={withBorder}
+        withCircle={withCircle}
       >
         <Emoticon
           {...rest}

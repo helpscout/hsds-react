@@ -17,6 +17,6 @@ This component is a `button` used for ratings, visualized with an [Emoticon](../
 | disabled   | `bool`   | Disables the emoticon from interactions. Default `false`.                               |
 | name       | `string` | Determines the Emoticon image. One of 'reaction-happy', 'reaction-sad', 'reaction-okay' |
 | size       | `string` | Adjusts the size of the component. One of 'lg', 'md', 'sm'                              |
-| withBorder | `bool`   | Shows a big border around the icon                                                      |
+| withCircle | `bool`   | Shows a big border around the icon                                                      |
 
 For additional props, check out [Emoticon](../Emoticon).
