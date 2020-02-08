@@ -65,12 +65,6 @@ const css = `
       max-width: 100%;
     }
   }
-
-  &.is-type-action {
-    ${bem.element('block')} {
-      max-width: 100%;
-    }
-  }
 `
 
 export default css

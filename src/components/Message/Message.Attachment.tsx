@@ -36,7 +36,6 @@ export const Attachment = (props: Props, context: Context) => {
     onClick,
     openDownloadInNewTab,
     size,
-    type,
     uploadingMessage,
     url,
     ...rest

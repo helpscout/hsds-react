@@ -58,7 +58,6 @@ export class Chat extends React.PureComponent<Props> {
       title,
       to,
       typing,
-      type,
       ...rest
     } = this.props
 
@@ -78,7 +77,6 @@ export class Chat extends React.PureComponent<Props> {
       rtl,
       timestamp,
       to,
-      type,
     }
 
     const captionMarkup = caption ? (
@@ -129,7 +127,6 @@ export class Chat extends React.PureComponent<Props> {
           size={size}
           title={title}
           typing={typing}
-          type={type}
         />
       </ChatBlock>
     )
