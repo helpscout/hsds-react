@@ -209,7 +209,6 @@ export class Media extends React.Component<Props> {
       showErrorTryAgainLink,
       thumbnailImageUrl,
       tryAgainLabel,
-      type,
       width,
       ...rest
     } = this.props
