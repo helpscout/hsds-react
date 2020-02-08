@@ -37,8 +37,6 @@ export class ChatBlock extends React.PureComponent<Props> {
     const { children, icon, from, ltr, rtl, timestamp, to } = this.props
 
     return React.Children.map(children, child => {
-      console.log('child', Action)
-
       return child && child.type === Bubble
         ? React.cloneElement(child, {
             icon,
