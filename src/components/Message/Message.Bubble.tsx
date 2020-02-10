@@ -56,7 +56,6 @@ export const Bubble = (props: Props, context: Context) => {
     timestamp,
     title,
     to,
-    type,
     typing,
     ...rest
   } = props

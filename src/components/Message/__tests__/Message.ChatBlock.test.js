@@ -45,24 +45,6 @@ describe('Content', () => {
     expect(o.getDOMNode().innerHTML).toContain('Mugatu')
   })
 
-  test('Enhances Action child component', () => {
-    const wrapper = mount(
-      <ChatBlock to from ltr rtl timestamp="time">
-        <Action />
-      </ChatBlock>
-    )
-    const b = wrapper.find(`.${cx}__block`)
-    const o = b.find(Action)
-    const p = o.props()
-
-    expect(o.length).toBeTruthy()
-    expect(p.to).toBeTruthy()
-    expect(p.from).toBeTruthy()
-    expect(p.ltr).toBeTruthy()
-    expect(p.rtl).toBeTruthy()
-    expect(p.timestamp).toBeTruthy()
-  })
-
   test('Enhances Bubble child component', () => {
     const wrapper = mount(
       <ChatBlock to from ltr rtl timestamp="time">

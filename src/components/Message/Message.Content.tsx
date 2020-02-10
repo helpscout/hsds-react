@@ -22,7 +22,6 @@ const Content = (props: Props) => {
     rtl,
     timestamp,
     to,
-    type,
     ...rest
   } = props
 
@@ -46,7 +45,6 @@ const Content = (props: Props) => {
     ltr,
     read,
     rtl,
-    type,
     timestamp,
     to,
   }

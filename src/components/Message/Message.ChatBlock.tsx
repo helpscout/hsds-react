@@ -2,7 +2,6 @@ import * as React from 'react'
 import { MessageChat } from './Message.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
-import Action from './Message.Action'
 import Bubble from './Message.Bubble'
 import Timestamp from '../Timestamp'
 import styled from '../styled'
@@ -37,7 +36,7 @@ export class ChatBlock extends React.PureComponent<Props> {
     const { children, icon, from, ltr, rtl, timestamp, to } = this.props
 
     return React.Children.map(children, child => {
-      return child && (child.type === Action || child.type === Bubble)
+      return child && child.type === Bubble
         ? React.cloneElement(child, {
             icon,
             from,
@@ -77,7 +76,6 @@ export class ChatBlock extends React.PureComponent<Props> {
       rtl,
       timestamp,
       to,
-      type,
       ...rest
     } = this.props
     const { theme } = this.context
@@ -87,7 +85,6 @@ export class ChatBlock extends React.PureComponent<Props> {
       from && 'is-from',
       to && 'is-to',
       theme && `is-theme-${theme}`,
-      type && `is-type-${type}`,
       className
     )
 
