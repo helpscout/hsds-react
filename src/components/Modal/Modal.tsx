@@ -57,6 +57,8 @@ class Modal extends React.PureComponent<ModalProps> {
     timeout: 80,
     wrapperClassName: 'c-ModalWrapper',
     zIndex: 1,
+    status: '',
+    version: 1,
   }
 
   static childContextTypes = {
@@ -271,7 +273,7 @@ class Modal extends React.PureComponent<ModalProps> {
   }
 
   render() {
-    const { className, isOpen, style, zIndex, ...rest } = this.props
+    const { className, isOpen, style, version, zIndex, ...rest } = this.props
 
     const componentClassName = classNames(
       'c-Modal',
