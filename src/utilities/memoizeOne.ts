@@ -33,20 +33,20 @@ export function memoizeOne(resultFn, isEqual?) {
     ) {
       newArgs[_key] = arguments[_key]
     }
-    // TODO: fix typescript complains
-    // @ts-ignore
+    
+    
     if (calledOnce && lastThis === this && isEqual(newArgs, lastArgs)) {
       return lastResult
     }
-    // TODO: fix typescript complains
-    // @ts-ignore
+    
+    
     lastResult = resultFn.apply(this, newArgs)
     calledOnce = true
-    // TODO: fix typescript complains
-    // @ts-ignore
+    
+    
     lastThis = this
-    // TODO: fix typescript complains
-    // @ts-ignore
+    
+    
     lastArgs = newArgs
     return lastResult
   }

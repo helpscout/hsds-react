@@ -79,7 +79,7 @@ describe('Input', () => {
     const wrapper = mount(<SearchableDropdown isOpen onInputChange={spy} />)
 
     const el = wrapper.find('input[type="text"]')
-    // @ts-ignore
+    
     el.getDOMNode().value = 'ron'
     el.simulate('change')
 
@@ -93,7 +93,7 @@ describe('Input', () => {
     )
 
     const el = wrapper.find('input[type="text"]')
-    // @ts-ignore
+    
     el.getDOMNode().value = ''
     el.simulate('change')
 
@@ -106,7 +106,7 @@ describe('Input', () => {
 
     const el = wrapper.find('Input')
 
-    // @ts-ignore
+    
     el.props().onKeyDown({ keyCode: 13, stopPropagation: spy })
 
     expect(spy).toHaveBeenCalled()
@@ -120,7 +120,7 @@ describe('Input', () => {
 
     const el = wrapper.find('Input')
 
-    // @ts-ignore
+    
     el.props().onKeyDown({ keyCode: 13, stopPropagation: jest.fn() })
 
     expect(spy).toHaveBeenCalled()
@@ -132,11 +132,11 @@ describe('Input', () => {
 
     const el = wrapper.find('Input')
 
-    // @ts-ignore
+    
     el.props().onKeyDown({ keyCode: 9, stopPropagation: spy })
 
     expect(spy).toHaveBeenCalled()
-    // @ts-ignore
+    
     expect(wrapper.state().isOpen).toBe(false)
   })
 
@@ -146,11 +146,11 @@ describe('Input', () => {
 
     const el = wrapper.find('Input')
 
-    // @ts-ignore
+    
     el.props().onKeyDown({ keyCode: 9, stopPropagation: spy })
 
     expect(spy).not.toHaveBeenCalled()
-    // @ts-ignore
+    
     expect(wrapper.state().isOpen).toBe(true)
   })
 })
@@ -173,7 +173,7 @@ describe('Filtering', () => {
     expect(wrapper.find('DropdownItem').length).toBe(3)
 
     const el = wrapper.find('input[type="text"]')
-    // @ts-ignore
+    
     el.getDOMNode().value = 'ron'
     el.simulate('change')
 
@@ -199,7 +199,7 @@ describe('Filtering', () => {
     expect(wrapper.find('DropdownItem').length).toBe(3)
 
     const el = wrapper.find('input[type="text"]')
-    // @ts-ignore
+    
     el.getDOMNode().value = 'ron'
     el.simulate('change')
 
@@ -225,7 +225,7 @@ describe('Filtering', () => {
     expect(wrapper.find('DropdownItem').length).toBe(3)
 
     const el = wrapper.find('input[type="text"]')
-    // @ts-ignore
+    
     el.getDOMNode().value = 'ron'
     el.simulate('change')
 
@@ -256,7 +256,7 @@ describe('Filtering', () => {
     expect(wrapper.find('DropdownItem').length).toBe(4)
 
     const el = wrapper.find('input[type="text"]')
-    // @ts-ignore
+    
     el.getDOMNode().value = 'ron'
     el.simulate('change')
 
@@ -289,7 +289,7 @@ describe('Filtering', () => {
 
     const el = wrapper.find('input[type="text"]')
     const searchQuery = 'loudddddddddnoises'
-    // @ts-ignore
+    
     el.getDOMNode().value = searchQuery
     el.simulate('change')
 
@@ -327,7 +327,7 @@ describe('Filtering', () => {
 
     const el = wrapper.find('input[type="text"]')
     const searchQuery = 'loudddddddddnoises'
-    // @ts-ignore
+    
     el.getDOMNode().value = searchQuery
     el.simulate('change')
 
@@ -370,7 +370,7 @@ describe('Custom Filtering', () => {
     expect(wrapper.find('DropdownItem').length).toBe(3)
 
     const el = wrapper.find('input[type="text"]')
-    // @ts-ignore
+    
     el.getDOMNode().value = 'ron'
     el.simulate('change')
 
@@ -418,7 +418,7 @@ describe('onSelect', () => {
 
     const el = wrapper.find('Dropdown').first()
 
-    // @ts-ignore
+    
     el.props().onSelect('ron', {})
 
     expect(wrapper.state('inputValue')).toBeFalsy()
@@ -431,7 +431,7 @@ describe('onSelect', () => {
 
     const el = wrapper.find('Dropdown').first()
 
-    // @ts-ignore
+    
     el.props().onSelect('ron', {})
 
     expect(spy).toHaveBeenCalledWith('ron', {})
@@ -444,10 +444,10 @@ describe('onMenuMount/Unmount', () => {
     wrapper.setState({ inputValue: 'ron' })
 
     const el = wrapper.find('Dropdown').first()
-    // @ts-ignore
+    
     el.props().onMenuMount()
 
-    // @ts-ignore
+    
     expect(wrapper.state().inputValue).toBeFalsy()
   })
 
@@ -456,23 +456,23 @@ describe('onMenuMount/Unmount', () => {
     wrapper.setState({ inputValue: 'ron' })
 
     const el = wrapper.find('Dropdown').first()
-    // @ts-ignore
+    
     el.props().onMenuUnmount()
 
-    // @ts-ignore
+    
     expect(wrapper.state().inputValue).toBeFalsy()
   })
 
   test('Attempts to scroll to top on reset', () => {
     const spy = jest.fn()
     const wrapper = mount(<SearchableDropdown />)
-    // @ts-ignore
+    
     wrapper.instance().menuWrapperNode = { scrollTop: 50 }
 
-    // @ts-ignore
+    
     wrapper.instance().resetInputValue()
 
-    // @ts-ignore
+    
     expect(wrapper.instance().menuWrapperNode.scrollTop).toBe(0)
   })
 })
@@ -483,7 +483,7 @@ describe('onOpen/onClose', () => {
     const wrapper = mount(<SearchableDropdown onOpen={spy} />)
     const el = wrapper.find('Dropdown')
 
-    // @ts-ignore
+    
     el.props().onOpen()
 
     expect(spy).toHaveBeenCalled()
@@ -494,7 +494,7 @@ describe('onOpen/onClose', () => {
     const wrapper = mount(<SearchableDropdown onClose={spy} />)
     const el = wrapper.find('Dropdown')
 
-    // @ts-ignore
+    
     el.props().onClose()
 
     expect(spy).toHaveBeenCalled()
@@ -506,7 +506,7 @@ describe('shouldDropDirectionUpdate', () => {
     const wrapper = mount(<SearchableDropdown />)
     const el = wrapper.find('Dropdown')
 
-    // @ts-ignore
+    
     expect(el.prop('shouldDropDirectionUpdate')()).toBe(true)
   })
 
@@ -515,7 +515,7 @@ describe('shouldDropDirectionUpdate', () => {
     wrapper.setState({ inputValue: 'hello' })
     const el = wrapper.find('Dropdown')
 
-    // @ts-ignore
+    
     expect(el.prop('shouldDropDirectionUpdate')()).toBe(false)
   })
 
@@ -532,7 +532,7 @@ describe('shouldDropDirectionUpdate', () => {
     )
     const el = wrapper.find('Dropdown')
 
-    // @ts-ignore
+    
     expect(el.prop('shouldDropDirectionUpdate')()).toBe(true)
   })
 })

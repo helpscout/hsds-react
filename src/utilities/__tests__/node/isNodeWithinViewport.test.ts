@@ -13,9 +13,9 @@ test('Returns false if node is not within viewport', () => {
     }),
   }
 
-  // @ts-ignore
+  
   window.scrollY = 0
-  // @ts-ignore
+  
   window.innerHeight = 600
 
   expect(isNodeWithinViewport({ node: mockNode })).toBe(false)
@@ -29,9 +29,9 @@ test('Returns true if node is within viewport', () => {
     }),
   }
 
-  // @ts-ignore
+  
   window.scrollY = 0
-  // @ts-ignore
+  
   window.innerHeight = 1000
 
   expect(isNodeWithinViewport({ node: mockNode })).toBe(true)

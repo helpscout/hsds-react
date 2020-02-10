@@ -4,10 +4,10 @@ export default function debounce(fn, wait, callFirst?) {
   var timeout
   return function() {
     if (!wait) {
-      // @ts-ignore
+      
       return fn.apply(this, arguments)
     }
-    // @ts-ignore
+    
     var context = this
     var args = arguments
     var callNow = callFirst && !timeout
@@ -20,7 +20,7 @@ export default function debounce(fn, wait, callFirst?) {
     }, wait)
 
     if (callNow) {
-      // @ts-ignore
+      
       return fn.apply(this, arguments)
     }
   }

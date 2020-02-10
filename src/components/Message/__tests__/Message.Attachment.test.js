@@ -1,4 +1,5 @@
-import * as React from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { mount } from 'enzyme'
 import Attachment from '../Message.Attachment'
 import Chat from '../Message.Chat'

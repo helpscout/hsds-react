@@ -75,10 +75,10 @@ describe('Portal', () => {
   test('Fires onMenuMounted callback on mount', () => {
     const spy = jest.fn()
     const wrapper = mount(<MenuContainer isOpen={true} onMenuMounted={spy} />)
-    // @ts-ignore
+    
     wrapper.instance().repositionMenuNodeCycle = spy
     const portal = wrapper.find('Portal')
-    // @ts-ignore
+    
     portal.props().onOpen()
 
     expect(spy).toHaveBeenCalled()
@@ -87,10 +87,10 @@ describe('Portal', () => {
   test('Fires onMenuUnmounted callback on mount', () => {
     const spy = jest.fn()
     const wrapper = mount(<MenuContainer isOpen={true} onMenuUnmounted={spy} />)
-    // @ts-ignore
+    
     wrapper.instance().repositionMenuNodeCycle = spy
     const portal = wrapper.find('Portal')
-    // @ts-ignore
+    
     portal.props().onClose()
 
     expect(spy).toHaveBeenCalled()
@@ -99,12 +99,12 @@ describe('Portal', () => {
   test('Adjusts position on Portal mount', () => {
     const spy = jest.fn()
     const wrapper = mount(<MenuContainer isOpen={true} />)
-    // @ts-ignore
+    
     wrapper.instance().setPositionStylesOnNode = spy
-    // @ts-ignore
+    
     wrapper.instance().repositionMenuNodeCycle = spy
     const portal = wrapper.find('Portal')
-    // @ts-ignore
+    
     portal.props().onOpen()
 
     expect(spy).toHaveBeenCalled()
@@ -121,7 +121,7 @@ describe('Portal', () => {
       <MenuContainer isOpen={true} triggerNode={mockTriggerNode} />
     )
     const portal = wrapper.find('Portal')
-    // @ts-ignore
+    
     portal.prop('onClose')()
 
     expect(spy).toHaveBeenCalled()
@@ -349,22 +349,22 @@ describe('Style/Direction', () => {
   test('shouldDropUp returns true if set', () => {
     const wrapper = mount(<MenuContainer dropUp={true} />)
 
-    // @ts-ignore
+    
     expect(wrapper.instance().shouldDropUp()).toBe(true)
   })
 
   test('shouldDropUp returns false if important nodes are missing', () => {
     const wrapper = mount(<MenuContainer />)
-    // @ts-ignore
+    
     wrapper.instance().wrapperNode = undefined
 
-    // @ts-ignore
+    
     expect(wrapper.instance().shouldDropUp()).toBe(false)
   })
 
   test('Renders dropUp styles, if defined', () => {
     const wrapper = mount(<MenuContainer />)
-    // @ts-ignore
+    
     wrapper.instance().shouldDropDirectionUpdate = () => true
 
     wrapper.setProps({ dropUp: true })
@@ -499,7 +499,7 @@ describe('Position', () => {
     const wrapper = mount(<MenuContainer isOpen={true} positionFixed={false} />)
     const inst = wrapper.instance()
 
-    // @ts-ignore
+    
     expect(inst.getPositionProps().position).toBe('absolute')
   })
 
@@ -507,7 +507,7 @@ describe('Position', () => {
     const wrapper = mount(<MenuContainer isOpen={true} positionFixed={true} />)
     const inst = wrapper.instance()
 
-    // @ts-ignore
+    
     expect(inst.getPositionProps().position).toBe('fixed')
   })
 })
@@ -521,7 +521,7 @@ describe('forceHideMenuNode', () => {
       },
     }
     const inst = wrapper.instance()
-    // @ts-ignore
+    
     inst.placementNode = placementNode
 
     wrapper.unmount()
@@ -547,11 +547,11 @@ describe('shouldDropDirectionUpdate', () => {
       <MenuContainer shouldDropDirectionUpdate={shouldDropDirectionUpdate} />
     )
     // Mocking Portal callbacks that open the Menu
-    // @ts-ignore
+    
     wrapper.instance().didOpen = true
 
     // Mock triggering
-    // @ts-ignore
+    
     wrapper.instance().shouldDropDirectionUpdate()
 
     expect(spy).toHaveBeenCalled()
@@ -569,17 +569,17 @@ describe('shouldDropDirectionUpdate', () => {
       <MenuContainer shouldDropDirectionUpdate={shouldDropDirectionUpdate} />
     )
     // Mocking Portal callbacks that open the Menu
-    // @ts-ignore
+    
     wrapper.instance().didOpen = false
-    // @ts-ignore
+    
     wrapper.instance().shouldDropDirectionUpdate()
 
     expect(spy).not.toHaveBeenCalled()
 
     // Mocking RAF loop, on the 2nd run
-    // @ts-ignore
+    
     wrapper.instance().didOpen = true
-    // @ts-ignore
+    
     wrapper.instance().shouldDropDirectionUpdate()
 
     expect(spy).toHaveBeenCalled()

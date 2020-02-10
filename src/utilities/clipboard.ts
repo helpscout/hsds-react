@@ -47,13 +47,13 @@ export const selectText = (element: any) => {
     const selection = window.getSelection()
     const range = document.createRange()
 
-    range.selectNodeContents(element) // TODO: fix typescript complains
-    // @ts-ignore
-    selection.removeAllRanges() // TODO: fix typescript complains
-    // @ts-ignore
+    range.selectNodeContents(element) 
+    
+    selection.removeAllRanges() 
+    
     selection.addRange(range)
-    // TODO: fix typescript complains
-    // @ts-ignore
+    
+    
     selectedText = selection.toString()
   }
 

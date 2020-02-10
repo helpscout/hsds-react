@@ -1,5 +1,5 @@
 export interface <%= name %>Props {
   className?: string
   children?: any
-  innerRef: (node: HTMLElement) => void
+  innerRef: (node) => void
 }

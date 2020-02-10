@@ -1,4 +1,5 @@
-import * as React from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { mount, shallow } from 'enzyme'
 import StatusBar from './StatusBar'
 import { Collapsible, Text, Icon } from '../index'

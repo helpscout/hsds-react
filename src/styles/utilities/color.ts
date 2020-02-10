@@ -41,7 +41,7 @@ export const getColor = (...args: ColorArgs): Color => {
     color = color['default']
   }
 
-  // @ts-ignore
+  
   return color || defaultColor
 }
 

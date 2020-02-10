@@ -1,4 +1,5 @@
-import * as React from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { createSpec, faker } from '@helpscout/helix'
 import { mount } from 'enzyme'
 import Tooltip from '../Tooltip'

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import ContentResizer from './ActionSelect.ContentResizer'
 import { mount } from 'enzyme'
 

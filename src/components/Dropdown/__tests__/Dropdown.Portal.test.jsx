@@ -41,9 +41,9 @@ describe('Store/Render', () => {
 
     const dropdowns = wrapper.find('DropdownContainer')
 
-    // @ts-ignore
+    
     expect(dropdowns.at(0).instance().store).not.toBe(
-      // @ts-ignore
+      
       dropdowns.at(1).instance().store
     )
   })

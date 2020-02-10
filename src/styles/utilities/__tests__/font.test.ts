@@ -36,7 +36,7 @@ describe('setFontSize', () => {
 
 describe('makeFontFamilyFactory', () => {
   test('Defaults to base font', () => {
-    // @ts-ignore
+    
     const fontFamily = makeFontFamilyFactory()()
     expect(fontFamily).toContain(FONT_FAMILY)
   })

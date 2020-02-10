@@ -8,7 +8,7 @@ type ScrollEvent = WheelEvent
 // https://github.com/paypal/downshift/blob/master/src/utils.js#L25
 /* istanbul ignore next */
 export const scrollIntoView = (
-  node: HTMLElement | Element,
+  node | Element,
   rootNode?: HTMLElement | Element
 ) => {
   /* istanbul ignore next */
@@ -37,8 +37,8 @@ export const remapScrollingPlane = (event: ScrollEvent) => {
   const node = event.currentTarget
 
   // Don't customize native shift + scroll interactions
-  // TODO: fix typescript complains
-  // @ts-ignore
+  
+  
   if (event.target.shiftKey) return
   if (!node) return
   if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) {
@@ -46,8 +46,8 @@ export const remapScrollingPlane = (event: ScrollEvent) => {
   }
 
   if (isMouseWheelYEvent(event)) {
-    // TODO: fix typescript complains
-    // @ts-ignore
+    
+    
     node.scrollLeft += event.deltaY
   }
 

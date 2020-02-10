@@ -1,0 +1,192 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+import Backdrop from '../Input/Input.BackdropV2'
+import Icon from '../Icon'
+import { classNames } from '../../utilities/classNames'
+import { noop } from '../../utilities/other'
+import {
+  InputUI,
+  InputInputUI,
+  InputIconUI,
+  InputPlaceholderUI,
+  InputRadioUI,
+} from './Choice.css'
+
+class Input extends React.PureComponent {
+  static propTypes = {
+    autoFocus: PropTypes.bool,
+    align: PropTypes.string,
+    checked: PropTypes.bool,
+    className: PropTypes.string,
+    disabled: PropTypes.bool,
+    helpText: PropTypes.string,
+    id: PropTypes.string,
+    inputRef: PropTypes.func,
+    innerRef: PropTypes.func,
+    kind: PropTypes.string,
+    onBlur: PropTypes.func,
+    onChange: PropTypes.func,
+    onFocus: PropTypes.func,
+    name: PropTypes.string,
+    readOnly: PropTypes.bool,
+    state: PropTypes.string,
+    type: PropTypes.string,
+    value: PropTypes.string,
+  }
+
+  static defaultProps = {
+    autoFocus: false,
+    disabled: false,
+    onBlur: noop,
+    onChange: noop,
+    onFocus: noop,
+    inputRef: noop,
+    innerRef: noop,
+    readOnly: false,
+    type: 'checkbox',
+    value: '',
+  }
+
+  state = {
+    isFocused: false,
+  }
+
+  handleOnBlur = event => {
+    this.setState({
+      isFocused: false,
+    })
+    this.props.onBlur(event)
+  }
+
+  handleOnChange = event => {
+    const { id, onChange, value } = this.props
+
+    onChange(value, event.target.checked, id)
+    // Prevents duplicate firing of onChange event
+    event.stopPropagation()
+  }
+
+  handleOnFocus = event => {
+    this.setState({
+      isFocused: true,
+    })
+    this.props.onFocus(event)
+  }
+
+  getIconMarkup = () => {
+    const { checked, kind, type } = this.props
+    const isRadio = type === 'radio'
+    const isCustomRadio = kind === 'custom' && isRadio
+
+    let iconMarkup
+
+    if (isCustomRadio) {
+      iconMarkup = checked ? (
+        <Icon name="tick-small" size="24" />
+      ) : (
+        <InputPlaceholderUI className="c-ChoiceInput__placeholder" />
+      )
+    } else {
+      const iconTypeMarkup = isRadio ? (
+        <InputRadioUI className="c-ChoiceInput__radio" />
+      ) : (
+        <Icon name="tick-small" size="20" />
+      )
+
+      iconMarkup = checked && iconTypeMarkup
+    }
+
+    return (
+      <InputIconUI className="c-ChoiceInput__icon">{iconMarkup}</InputIconUI>
+    )
+  }
+
+  setRef = node => {
+    this.props.inputRef(node)
+    /* istanbul ignore next */
+    if (this.props.innerRef) {
+      this.props.innerRef(node)
+    }
+  }
+
+  render() {
+    const {
+      align,
+      autoFocus,
+      className,
+      checked,
+      disabled,
+      helpText,
+      id,
+      kind,
+      readOnly,
+      name,
+      state,
+      type,
+      value,
+    } = this.props
+
+    const { isFocused } = this.state
+
+    const componentClassName = classNames(
+      'c-ChoiceInput',
+      align && `is-${align}`,
+      disabled && 'is-disabled',
+      isFocused && 'is-focused',
+      kind && `is-${kind}`,
+      readOnly && 'is-readonly',
+      state && `is-${state}`,
+      type && `is-${type}`,
+      className
+    )
+
+    const inputClassName = classNames(
+      'c-InputField',
+      'c-ChoiceInput__input',
+      type && `is-${type}`
+    )
+
+    const isCustomRadio = kind === 'custom'
+
+    const iconMarkup = this.getIconMarkup()
+
+    return (
+      <InputUI className={componentClassName}>
+        <InputInputUI
+          autoFocus={autoFocus}
+          aria-describedby={helpText || undefined}
+          aria-invalid={state !== 'error'}
+          checked={checked}
+          className={inputClassName}
+          disabled={disabled}
+          id={id}
+          ref={this.setRef}
+          name={name}
+          onBlur={this.handleOnBlur}
+          onChange={this.handleOnChange}
+          onFocus={this.handleOnFocus}
+          readOnly={readOnly}
+          type={type}
+          value={value}
+        />
+        <Backdrop
+          choiceKind={type}
+          disabled={disabled}
+          kind={kind}
+          isFilled={checked}
+          isFirst={false}
+          isFocused={isFocused}
+          isNotOnly={false}
+          isLast={false}
+          isSeamless={false}
+          readOnly={readOnly}
+          state={state}
+          showFocus={!isCustomRadio}
+        />
+        {iconMarkup}
+      </InputUI>
+    )
+  }
+}
+
+export default Input
