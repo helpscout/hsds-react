@@ -3,14 +3,7 @@ import PropTypes from 'prop-types'
 import { classNames } from '../../utilities/classNames'
 import { VisuallyHiddenUI } from './VisuallyHidden.css'
 
-type Props = {
-  children?: any
-  className?: string
-  focusable: boolean
-  role?: string
-}
-
-const VisuallyHidden = (props: Props) => {
+const VisuallyHidden = props => {
   const { children, className, focusable, ...rest } = props
 
   const componentClassName = classNames(
@@ -34,6 +27,12 @@ const VisuallyHidden = (props: Props) => {
 
 VisuallyHidden.defaultProps = {
   focusable: false,
+}
+VisuallyHidden.propTypes = {
+  children: PropTypes.any,
+  className: PropTypes.string,
+  focusable: PropTypes.bool,
+  role: PropTypes.string,
 }
 
 export default VisuallyHidden

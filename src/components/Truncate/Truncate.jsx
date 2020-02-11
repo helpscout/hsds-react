@@ -5,13 +5,9 @@ import Tooltip from '../Tooltip'
 import { classNames } from '../../utilities/classNames'
 import { truncateMiddle } from '../../utilities/strings'
 import { TruncateUI, TruncateWithSplitterUI } from './Truncate.css'
-import { TruncateProps, TruncateState } from './Truncate.types'
 import { TRUNCATED_CLASSNAMES } from './Truncate.utils'
 
-export class Truncate extends React.PureComponent<
-  TruncateProps,
-  TruncateState
-> {
+export class Truncate extends React.PureComponent {
   static displayName = 'Truncate'
   static defaultProps = {
     ellipsis: '…',
@@ -26,7 +22,7 @@ export class Truncate extends React.PureComponent<
   contentNode = null
   _isMounted = false
 
-  constructor(props: TruncateProps) {
+  constructor(props) {
     super(props)
     this.state = {
       isTruncated: !!props.type,
@@ -56,7 +52,7 @@ export class Truncate extends React.PureComponent<
     this._isMounted = false
   }
 
-  componentWillReceiveProps(nextProps: TruncateProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.type !== this.props.type) {
       this.setState({
         isTruncated: this.isTruncated(nextProps),
@@ -73,7 +69,7 @@ export class Truncate extends React.PureComponent<
     this.setState({ isTruncated })
   }
 
-  isTruncated = (props: TruncateProps = this.props): boolean => {
+  isTruncated = (props = this.props) => {
     if (props.type !== 'auto') {
       return this.getText(props) !== this.getTruncatedContent(props)
     } else {
@@ -82,15 +78,13 @@ export class Truncate extends React.PureComponent<
 
       const isContentTruncated = props.splitter
         ? this.isSplitContentTruncated(this.contentNode, this.node)
-        : 
-          
-          this.contentNode.scrollWidth > this.node.offsetWidth
+        : this.contentNode.scrollWidth > this.node.offsetWidth
 
       return isContentTruncated
     }
   }
 
-  isSplitContentTruncated = (contentNode: any, node: any): boolean => {
+  isSplitContentTruncated = (contentNode, node) => {
     return (
       contentNode.offsetWidth <
       node.querySelector(`.${TRUNCATED_CLASSNAMES.firstChunk}`).scrollWidth +
@@ -98,11 +92,11 @@ export class Truncate extends React.PureComponent<
     )
   }
 
-  getText = (props: TruncateProps = this.props) => {
+  getText = (props = this.props) => {
     return this.props.text || this.props.children
   }
 
-  getTruncatedContent = (props: TruncateProps = this.props) => {
+  getTruncatedContent = (props = this.props) => {
     return getTruncatedContent({ ...props, text: this.getText(props) })
   }
 
@@ -154,7 +148,7 @@ export class Truncate extends React.PureComponent<
     const textMarkup = (
       <span
         className="c-Truncate__content"
-        ref={(ref: any) => (this.contentNode = ref)}
+        ref={ref => (this.contentNode = ref)}
       >
         {truncatedText}
       </span>
@@ -175,7 +169,7 @@ export class Truncate extends React.PureComponent<
     return (
       <TruncateUI
         className={componentClassName}
-        ref={(ref: any) => (this.node = ref)}
+        ref={ref => (this.node = ref)}
         {...rest}
       >
         <EventListener event="resize" handler={this.handleOnResize} />
@@ -191,7 +185,7 @@ export class Truncate extends React.PureComponent<
  * @param   {Object} props Component props.
  * @returns {string} The truncated content.
  */
-export function getTruncatedContent(props: any): string {
+export function getTruncatedContent(props) {
   const { ellipsis, limit, type, text } = props
 
   let truncateStart
@@ -217,6 +211,23 @@ export function getTruncatedContent(props: any): string {
       : text
 
   return word
+}
+
+Truncate.propTypes = {
+  children: PropTypes.any,
+  className: PropTypes.string,
+  ellipsis: PropTypes.string,
+  limit: PropTypes.number,
+  end: PropTypes.number,
+  start: PropTypes.number,
+  showTooltipOnTruncate: PropTypes.bool,
+  splitter: PropTypes.string,
+  text: PropTypes.string,
+  title: PropTypes.string,
+  tooltipProps: PropTypes.object,
+  tooltipPlacement: PropTypes.string,
+  tooltipModifiers: PropTypes.object,
+  type: PropTypes.oneOf(['auto', 'start', 'middle', 'end']),
 }
 
 export default Truncate
