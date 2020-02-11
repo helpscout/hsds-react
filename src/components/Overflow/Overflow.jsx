@@ -13,26 +13,7 @@ import {
 import { noop, requestAnimationFrame } from '../../utilities/other'
 import { OverflowUI } from './Overflow.css'
 
-type Props = {
-  backgroundColor?: string
-  className?: string
-  children?: any
-  refApplyFade: (...args: any[]) => void
-  refScrollToEnd: (...args: any[]) => void
-  initialHeightAdjustDelay?: number
-  isScrollable?: boolean
-  onScroll: (event) => void
-  onWheel: (event) => void
-  remapScrollDirections: boolean
-  scrollableRef: (ref?: HTMLElement) => void
-  scrollOnClickFade: boolean
-}
-
-type State = {
-  shouldFadeOnMount: boolean
-}
-
-export class Overflow extends React.PureComponent<Props, State> {
+export class Overflow extends React.PureComponent {
   static defaultProps = {
     initialHeightAdjustDelay: 30,
     isScrollable: true,
@@ -49,12 +30,8 @@ export class Overflow extends React.PureComponent<Props, State> {
     shouldFadeOnMount: false,
   }
 
-  _isMounted: boolean = false
-  faderSize: number = 32
-  faderNodeLeft: HTMLElement | null
-  faderNodeRight: HTMLElement | null
-  containernode | null
-  node: Element | Text | null
+  _isMounted = false
+  faderSize = 32
   scrollAmount = 0.7
   smoothScrollDuration = 200
 
@@ -95,12 +72,11 @@ export class Overflow extends React.PureComponent<Props, State> {
     /* istanbul ignore next */
     // JSDOM does not provide node.clientHeight, which prevents
     // us from testing this calculation
-    
-    
+
     this.node.style.height = height ? `${height - heightOffset}px` : null
   }
 
-  applyFadeStyles = (event: Event | Object) => {
+  applyFadeStyles = event => {
     const { isScrollable } = this.props
     const offset = this.faderSize
 
@@ -110,11 +86,8 @@ export class Overflow extends React.PureComponent<Props, State> {
     const transformRight = getFadeRightStyles(event, offset)
 
     requestAnimationFrame(() => {
-      
-      
       this.faderNodeLeft.style.transform = transformLeft
-      
-      
+
       this.faderNodeRight.style.transform = transformRight
     })
   }
@@ -158,11 +131,8 @@ export class Overflow extends React.PureComponent<Props, State> {
   scrollLeft = () => {
     if (!this.props.scrollOnClickFade) return
 
-    
-    
     const currentScrollAmount = this.containerNode.scrollLeft
-    
-    
+
     const scrollAmount = this.containerNode.clientWidth * this.scrollAmount
     const scrollValue = currentScrollAmount - scrollAmount
 
@@ -175,11 +145,8 @@ export class Overflow extends React.PureComponent<Props, State> {
   scrollRight = () => {
     if (!this.props.scrollOnClickFade) return
 
-    
-    
     const currentScrollAmount = this.containerNode.scrollLeft
-    
-    
+
     const scrollAmount = this.containerNode.clientWidth * this.scrollAmount
     const scrollValue = currentScrollAmount + scrollAmount
 
@@ -203,7 +170,7 @@ export class Overflow extends React.PureComponent<Props, State> {
    * @param {number} amount The amount to scroll by.
    */
   /* istanbul ignore next */
-  scrollContainerView = (amount: number = 0) => {
+  scrollContainerView = (amount = 0) => {
     /* istanbul ignore next */
     if (!this.containerNode) return
 
@@ -274,7 +241,7 @@ export class Overflow extends React.PureComponent<Props, State> {
         {faderLeftMarkup}
         <div
           className="c-Overflow__container"
-          ref={(node: any) => {
+          ref={node => {
             this.containerNode = node
             scrollableRef(node)
           }}
@@ -288,6 +255,21 @@ export class Overflow extends React.PureComponent<Props, State> {
       </OverflowUI>
     )
   }
+}
+
+Overflow.propTypes = {
+  backgroundColor: PropTypes.string,
+  className: PropTypes.string,
+  children: PropTypes.any,
+  refApplyFade: PropTypes.func,
+  refScrollToEnd: PropTypes.func,
+  initialHeightAdjustDelay: PropTypes.number,
+  isScrollable: PropTypes.bool,
+  onScroll: PropTypes.func,
+  onWheel: PropTypes.func,
+  remapScrollDirections: PropTypes.bool,
+  scrollableRef: PropTypes.func,
+  scrollOnClickFade: PropTypes.bool,
 }
 
 export default Overflow

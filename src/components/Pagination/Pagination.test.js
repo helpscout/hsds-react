@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { mount } from 'enzyme'
 import { Pagination } from './Pagination'
 import { NavigationUI, RangeUI, InformationUI } from './Pagination.css'

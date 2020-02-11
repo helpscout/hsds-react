@@ -1,8 +1,6 @@
 import styled from 'styled-components'
-
 import { getColor } from '../../styles/utilities/color'
 import Button from '../Button'
-
 import config from '../Button/Button.config'
 
 export const PaginationUI = styled('div')`

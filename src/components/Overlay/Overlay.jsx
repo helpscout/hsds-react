@@ -4,15 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { OverlayUI } from './Overlay.css'
 
-type Props = {
-  children?: any
-  className?: string
-  isHsApp: boolean
-  fixed: boolean
-  transparent: boolean
-}
-
-class Overlay extends React.PureComponent<Props> {
+class Overlay extends React.PureComponent {
   static defaultProps = {
     fixed: false,
     isHsApp: false,
@@ -48,6 +40,14 @@ class Overlay extends React.PureComponent<Props> {
       </OverlayUI>
     )
   }
+}
+
+Overlay.propTypes = {
+  children: PropTypes.any,
+  className: PropTypes.string,
+  isHsApp: PropTypes.bool,
+  fixed: PropTypes.bool,
+  transparent: PropTypes.bool,
 }
 
 export default Overlay

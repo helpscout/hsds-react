@@ -18,21 +18,7 @@ import {
 import Text from '../Text'
 import Icon from '../Icon'
 
-export interface Props {
-  activePage: number
-  className?: string
-  innerRef: (node) => void
-  isLoading?: boolean
-  onChange: (nextPageNumber: number) => void
-  pluralizedSubject?: string
-  rangePerPage: number
-  separator?: string
-  showNavigation?: boolean
-  subject: string
-  totalItems: number
-}
-
-export class Pagination extends React.PureComponent<Props> {
+export class Pagination extends React.PureComponent {
   static defaultProps = {
     activePage: 1,
     innerRef: noop,
@@ -251,6 +237,20 @@ export class Pagination extends React.PureComponent<Props> {
       </PaginationUI>
     )
   }
+}
+
+Pagination.propTypes = {
+  activePage: PropTypes.number,
+  className: PropTypes.string,
+  innerRef: PropTypes.func,
+  isLoading: PropTypes.bool,
+  onChange: PropTypes.func,
+  pluralizedSubject: PropTypes.string,
+  rangePerPage: PropTypes.number,
+  separator: PropTypes.string,
+  showNavigation: PropTypes.bool,
+  subject: PropTypes.string,
+  totalItems: PropTypes.number,
 }
 
 export default Pagination
