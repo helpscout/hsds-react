@@ -17,7 +17,6 @@ test('Pluralizes a one count, by default', () => {
 })
 
 test('Returns an empty string if value arg is falsy', () => {
-  
   expect(pluralize()).toBe('')
 })
 

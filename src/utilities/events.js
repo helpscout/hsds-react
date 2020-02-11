@@ -49,7 +49,6 @@ export const removeEventListener = (target, eventName, handler, options) => {
  * @returns {boolean}
  */
 
-
 export const isMouseWheelYEvent = (event = {}) => {
   const { deltaX, deltaY } = event
 
@@ -63,7 +62,7 @@ export const isMouseWheelYEvent = (event = {}) => {
   const wheelThreshold = 480
   // Values for calculation
   const computedDeltaX = deltaX * (wheelMultiplier * -1)
-  const computedDeltaY = Math.abs(deltaY) * wheelMultiplier / 120 * 10
+  const computedDeltaY = ((Math.abs(deltaY) * wheelMultiplier) / 120) * 10
 
   if (computedDeltaX !== neutralX) return false
 

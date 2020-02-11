@@ -36,7 +36,6 @@ describe('setFontSize', () => {
 
 describe('makeFontFamilyFactory', () => {
   test('Defaults to base font', () => {
-    
     const fontFamily = makeFontFamilyFactory()()
     expect(fontFamily).toContain(FONT_FAMILY)
   })

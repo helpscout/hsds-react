@@ -1,4 +1,4 @@
-export const sanitizePathName = (pathname) => {
+export const sanitizePathName = pathname => {
   return pathname.replace(/\:(.*)\//g, '')
 }
 
@@ -11,12 +11,7 @@ export const generateKey = () => {
 // Source
 // Modified from:
 // https://github.com/malbernaz/tiny-history/blob/master/index.js
-export const createLocation = (
-  path,
-  state,
-  key,
-  location = {}
-) => {
+export const createLocation = (path, state, key, location = {}) => {
   const a = document.createElement('a')
   a.href = path || location.pathname
   const pathname = sanitizePathName(a.pathname)

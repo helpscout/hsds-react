@@ -1,13 +1,12 @@
 // https://github.com/angus-c/just/blob/master/packages/function-debounce/index.js
 /* istanbul ignore next */
-export default function debounce(fn, wait, callFirst?) {
+export default function debounce(fn, wait, callFirst) {
   var timeout
   return function() {
     if (!wait) {
-      
       return fn.apply(this, arguments)
     }
-    
+
     var context = this
     var args = arguments
     var callNow = callFirst && !timeout
@@ -20,7 +19,6 @@ export default function debounce(fn, wait, callFirst?) {
     }, wait)
 
     if (callNow) {
-      
       return fn.apply(this, arguments)
     }
   }

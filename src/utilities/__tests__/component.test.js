@@ -125,7 +125,6 @@ describe('renderRenderPropComponent', () => {
       disabled: true,
     }
     const result = renderRenderPropComponent(
-      
       <CryLaughingComponent title="custom" />,
       props
     )
@@ -148,7 +147,6 @@ describe('renderRenderPropComponent', () => {
     }
     const result = renderRenderPropComponent(
       ({ disabled }) => (
-        
         <CryLaughingComponent title="custom" disabled={disabled} />
       ),
       props

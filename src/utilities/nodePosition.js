@@ -8,8 +8,8 @@ export const getDirectionX = direction => {
   return direction.match(/left/)
     ? 'left'
     : direction.match(/right/)
-      ? 'right'
-      : ''
+    ? 'right'
+    : ''
 }
 
 export const getDirectionY = direction => {
@@ -19,7 +19,7 @@ export const getDirectionY = direction => {
   return direction.match(/up/) ? 'up' : direction.match(/down/) ? 'down' : ''
 }
 
-export const getDirections = (direction) => {
+export const getDirections = direction => {
   return {
     x: getDirectionX(direction),
     y: getDirectionY(direction),
@@ -44,14 +44,14 @@ export const getOptimalViewportPosition = options => {
   const offsetTop = isNodeEnv()
     ? pos.top
     : pos.top > triggerNode.offsetTop
-      ? pos.top
-      : triggerNode.offsetTop
+    ? pos.top
+    : triggerNode.offsetTop
   /* istanbul ignore next */
   const offsetLeft = isNodeEnv()
     ? pos.left
     : pos.left > triggerNode.offsetLeft
-      ? pos.left
-      : triggerNode.offsetLeft
+    ? pos.left
+    : triggerNode.offsetLeft
   const viewportHeight = getViewportHeight()
   const viewportWidth = getViewportWidth()
   const posSize = offsetTop + pos.height
@@ -77,8 +77,8 @@ export const getOptimalViewportPosition = options => {
     totalOffsetWidthLeft > 0
       ? 'left'
       : directionX === 'left' && totalOffsetWidthLeft < 0
-        ? 'right'
-        : directionX
+      ? 'right'
+      : directionX
 
   directionY =
     directionY === 'down' &&
@@ -86,8 +86,8 @@ export const getOptimalViewportPosition = options => {
     totalOffsetHeightUp > 0
       ? 'up'
       : directionY === 'up' && totalOffsetHeightUp < 0
-        ? 'down'
-        : directionY
+      ? 'down'
+      : directionY
 
   switch (directionY) {
     case 'up':
@@ -164,14 +164,14 @@ export const getViewportPosition = options => {
   const offsetTop = isNodeEnv()
     ? pos.top
     : pos.top > triggerNode.offsetTop
-      ? pos.top
-      : triggerNode.offsetTop
+    ? pos.top
+    : triggerNode.offsetTop
   /* istanbul ignore next */
   const offsetLeft = isNodeEnv()
     ? pos.left
     : pos.left > triggerNode.offsetLeft
-      ? pos.left
-      : triggerNode.offsetLeft
+    ? pos.left
+    : triggerNode.offsetLeft
   const viewportHeight = getViewportHeight()
   const posSize = offsetTop + pos.height
   /* istanbul ignore next */
@@ -194,8 +194,8 @@ export const getViewportPosition = options => {
     totalOffsetHeightUp > 0
       ? 'up'
       : directionY === 'up' && totalOffsetHeightUp < 0
-        ? 'down'
-        : directionY
+      ? 'down'
+      : directionY
 
   /* istanbul ignore next */
   // Ignoring since this method will be removed once getOptimalViewportPosition

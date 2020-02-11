@@ -45,8 +45,7 @@ export const rgbToHex = (r, g, b) => {
 export const hexToHsl = hex => {
   if (!isHex(hex)) return null
   const rgb = hexToRgb(hex)
-  
-  
+
   return rgbToHsl(rgb.r, rgb.g, rgb.b)
 }
 
@@ -63,8 +62,6 @@ export const optimalTextColor = (
   const { r, g, b } = Object.assign({}, defaultPropValues, propValues)
   const backgroundRgb = hexToRgb(backgroundHex)
   const shade = Math.round(
-    
-    
     (backgroundRgb.r * r + backgroundRgb.g * g + backgroundRgb.b * b) / 1000
   )
 
@@ -158,8 +155,7 @@ export const darken = (hex, value = 20) => {
 export const getColorShade = (hex, propValues = optimalTextColorValues) => {
   if (!isHex(hex)) return null
   const hsl = hexToHsl(hex)
-  
-  
+
   const l = hsl.l
   const isDarkText = optimalTextColor(hex, propValues) === 'black'
 

@@ -1,4 +1,4 @@
-export const calculateAspectRatioFit = (props) => {
+export const calculateAspectRatioFit = props => {
   const { width, height, maxWidth, maxHeight } = props
 
   if (width < maxWidth && height < maxHeight) {

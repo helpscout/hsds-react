@@ -38,7 +38,6 @@ export const getColor = (...args) => {
     color = color['default']
   }
 
-  
   return color || defaultColor
 }
 
@@ -49,11 +48,7 @@ export const getColor = (...args) => {
  * @param   {any} fallback The fallback prop.
  * @returns {any} The fetched property
  */
-export const getThemeBrandProp = (
-  props = {},
-  path = '',
-  fallback = ''
-) => {
+export const getThemeBrandProp = (props = {}, path = '', fallback = '') => {
   return get(props, `theme.brandColor.${path}`, fallback)
 }
 

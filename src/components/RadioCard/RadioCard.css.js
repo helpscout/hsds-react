@@ -30,10 +30,13 @@ export const config = {
 }
 
 interface RadioCardUIProp {
-  maxWidth: any
+  maxWidth: any;
 }
 
-export const RadioCardUI = styled('label')<RadioCardUIProp>`
+export const RadioCardUI =
+  styled('label') <
+  RadioCardUIProp >
+  `
   align-items: center;
   border-radius: ${config.borderRadius}px;
   box-shadow: ${config.boxShadow};

@@ -4,7 +4,7 @@ import { isNodeEnv } from './other'
 
 const Element = window['Element']
 
-export const isNodeElement = (node) => {
+export const isNodeElement = node => {
   return (
     node &&
     (node instanceof Element ||
@@ -13,12 +13,12 @@ export const isNodeElement = (node) => {
   )
 }
 
-export const getNodeScope = (nodeScope) => {
+export const getNodeScope = nodeScope => {
   return nodeScope && isNodeElement(nodeScope)
     ? nodeScope
     : nodeScope === window
-      ? window
-      : document
+    ? window
+    : document
 }
 
 export const applyStylesToNode = (node, styles = {}) => {
@@ -26,7 +26,7 @@ export const applyStylesToNode = (node, styles = {}) => {
   if (!isNodeElement(node)) return node
   if (typeof styles !== 'object') return node
 
-  Object.keys(styles).forEach((prop) => {
+  Object.keys(styles).forEach(prop => {
     const value = styles[prop]
     node.style[prop] =
       typeof value === 'number' && prop !== 'zIndex' ? `${value}px` : value
@@ -35,12 +35,9 @@ export const applyStylesToNode = (node, styles = {}) => {
   return node
 }
 
-export const parseFloatValue = (value) =>
-  parseFloat(value || '0')
+export const parseFloatValue = value => parseFloat(value || '0')
 
-export const getComputedHeightProps = (
-  node
-) => {
+export const getComputedHeightProps = node => {
   if (!isNodeElement(node))
     return {
       height: 0,
@@ -71,9 +68,7 @@ export const getComputedHeightProps = (
   }
 }
 
-export const getComputedWidthProps = (
-  node
-) => {
+export const getComputedWidthProps = node => {
   if (!isNodeElement(node))
     return {
       width: 0,
@@ -104,19 +99,19 @@ export const getComputedWidthProps = (
   }
 }
 
-export const getComputedOffsetTop = (node) => {
+export const getComputedOffsetTop = node => {
   if (!isNodeElement(node)) return 0
   const offset = getComputedHeightProps(document).offset
   return node.getBoundingClientRect().top + offset / 2
 }
 
-export const getComputedOffsetLeft = (node) => {
+export const getComputedOffsetLeft = node => {
   if (!isNodeElement(node)) return 0
   const offset = getComputedWidthProps(document).offset
   return node.getBoundingClientRect().left + offset / 2
 }
 
-export const getViewportHeight = (scope) => {
+export const getViewportHeight = scope => {
   const node = getNodeScope(scope)
   const { height, offset } = getComputedHeightProps(node)
 
@@ -125,7 +120,7 @@ export const getViewportHeight = (scope) => {
   return height > window.innerHeight ? height : window.innerHeight - offset
 }
 
-export const getViewportWidth = (scope) => {
+export const getViewportWidth = scope => {
   const node = getNodeScope(scope)
   const { width, offset } = getComputedWidthProps(node)
 
@@ -146,7 +141,7 @@ export const getViewportWidth = (scope) => {
  * @option    complete  bool      node must be in complete view, if true
  * @return    bool                True/False if node is in view
  */
-export const isNodeVisible = (options) => {
+export const isNodeVisible = options => {
   if (!options || typeof options !== 'object') return false
   const { node, scope, offset, complete } = options
 
@@ -182,7 +177,7 @@ export const isNodeVisible = (options) => {
   )
 }
 
-export const getScrollParent = (node) => {
+export const getScrollParent = node => {
   /* istanbul ignore else */
   if (!isNodeElement(node)) {
     return null
@@ -196,7 +191,7 @@ export const getScrollParent = (node) => {
   }
 }
 
-export const isNodeScrollable = (node) => {
+export const isNodeScrollable = node => {
   /* istanbul ignore next */
   // Cannot be tested in JSDOM. scrollHeight and clientHeight do not exist.
   return node && isNodeElement(node)
@@ -204,11 +199,11 @@ export const isNodeScrollable = (node) => {
     : false
 }
 
-export const getClosestDocument = (node) => {
+export const getClosestDocument = node => {
   return node && isNodeElement(node) ? node.ownerDocument : document
 }
 
-export const hasContentOverflowX = (node) => {
+export const hasContentOverflowX = node => {
   // Cannot be tested in JSDOM (missing measurements for props)
   /* istanbul ignore else */
   if (!isNodeElement(node)) return false
@@ -216,7 +211,7 @@ export const hasContentOverflowX = (node) => {
   return node.clientWidth < node.scrollWidth
 }
 
-export const hasContentOverflowY = (node) => {
+export const hasContentOverflowY = node => {
   // Cannot be tested in JSDOM (missing measurements for props)
   /* istanbul ignore else */
   if (!isNodeElement(node)) return false
@@ -236,19 +231,19 @@ export const getClosestNode = (node, selector) => {
  * @param   {Node} node
  * @returns {Node}
  */
-export const scrollIntoView = (node) => {
+export const scrollIntoView = node => {
   if (!isNodeElement(node)) return
   if (node['scrollIntoViewIfNeeded']) return node.scrollIntoViewIfNeeded()
   /* istanbul ignore else */
   if (node['scrollIntoView']) return node.scrollIntoView()
 }
 
-export const getWindowFromNode = (node) => {
+export const getWindowFromNode = node => {
   if (!isNodeElement(node)) return window
   return get(node, 'ownerDocument.defaultView', window)
 }
 
-export const isNodeWithinViewport = (options) => {
+export const isNodeWithinViewport = options => {
   const defaultOptions = {
     offset: 0,
   }

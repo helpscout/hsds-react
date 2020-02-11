@@ -15,7 +15,7 @@ const simpleIsEqual = function simpleIsEqual(newArgs, lastArgs) {
   )
 }
 
-export function memoizeOne(resultFn, isEqual?) {
+export function memoizeOne(resultFn, isEqual) {
   if (isEqual === void 0) {
     isEqual = simpleIsEqual
   }
@@ -33,20 +33,16 @@ export function memoizeOne(resultFn, isEqual?) {
     ) {
       newArgs[_key] = arguments[_key]
     }
-    
-    
+
     if (calledOnce && lastThis === this && isEqual(newArgs, lastArgs)) {
       return lastResult
     }
-    
-    
+
     lastResult = resultFn.apply(this, newArgs)
     calledOnce = true
-    
-    
+
     lastThis = this
-    
-    
+
     lastArgs = newArgs
     return lastResult
   }

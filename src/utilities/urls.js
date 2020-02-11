@@ -1,4 +1,4 @@
-export const normalizeUrl = (string) => {
+export const normalizeUrl = string => {
   if (!string) {
     return ''
   }

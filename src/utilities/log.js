@@ -31,7 +31,5 @@ export const Exception = (methodName, message) => {
     warn('helix: Exception(): Arguments need to be strings.')
   }
 
-  
-  
   this.message = `Blue: ${methodName}(): ${message}`
 }

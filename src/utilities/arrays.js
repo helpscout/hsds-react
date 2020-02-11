@@ -41,10 +41,7 @@ export const includes = (array = [], item) => {
  * @param   {Function} callback Callback to match.
  * @returns {boolean} The result.
  */
-export const find = (
-  array = [],
-  callback
-) => {
+export const find = (array = [], callback) => {
   if (Array.prototype.find) return array.find(callback)
   return array.filter(callback)[0]
 }

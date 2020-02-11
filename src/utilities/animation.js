@@ -8,7 +8,7 @@ export const getSequenceNames = sequence => {
   }
 
   if (isString(sequence)) {
-    names = (sequence)
+    names = sequence
       .trim()
       .split(' ')
       .filter(n => n !== '')

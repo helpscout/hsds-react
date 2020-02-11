@@ -101,8 +101,8 @@ export const incrementFocusIndex = options => {
         currentIndex === null
           ? 0
           : currentIndex <= 0
-            ? itemCount
-            : currentIndex - 1
+          ? itemCount
+          : currentIndex - 1
     } else {
       newFocusIndex =
         currentIndex === null ? 0 : currentIndex <= 0 ? 0 : currentIndex - 1
@@ -115,15 +115,15 @@ export const incrementFocusIndex = options => {
         currentIndex === null
           ? 0
           : itemCount <= currentIndex
-            ? 0
-            : currentIndex + 1
+          ? 0
+          : currentIndex + 1
     } else {
       newFocusIndex =
         currentIndex === null
           ? 0
           : itemCount <= currentIndex
-            ? currentIndex
-            : currentIndex + 1
+          ? currentIndex
+          : currentIndex + 1
     }
   }
 

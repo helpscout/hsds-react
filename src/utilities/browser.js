@@ -1,7 +1,7 @@
 /* istanbul ignore next */
 // Can't write tests for this in JSDOM.
 // Can't create fixture for JSDOM's built-in Navigator instance.
-export const isBrowser = (browser) => {
+export const isBrowser = browser => {
   if (!navigator) return false
   return navigator.userAgent.toLowerCase().indexOf(browser) > -1
 }

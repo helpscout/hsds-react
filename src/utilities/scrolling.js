@@ -5,10 +5,7 @@ import { isMouseWheelYEvent } from './events'
 // Source
 // https://github.com/paypal/downshift/blob/master/src/utils.js#L25
 /* istanbul ignore next */
-export const scrollIntoView = (
-  node,
-  rootNode
-) => {
+export const scrollIntoView = (node, rootNode) => {
   /* istanbul ignore next */
   if (node === null) return
   /* istanbul ignore next */
@@ -24,7 +21,7 @@ export const scrollIntoView = (
   })
 }
 
-export const remapScrollingPlane = (event) => {
+export const remapScrollingPlane = event => {
   // Scrolling behaviour is strange in Firefox…
   // We'll let Firefox natively handle things.
   /* istanbul ignore next */
@@ -35,8 +32,7 @@ export const remapScrollingPlane = (event) => {
   const node = event.currentTarget
 
   // Don't customize native shift + scroll interactions
-  
-  
+
   if (event.target.shiftKey) return
   if (!node) return
   if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) {
@@ -44,8 +40,6 @@ export const remapScrollingPlane = (event) => {
   }
 
   if (isMouseWheelYEvent(event)) {
-    
-    
     node.scrollLeft += event.deltaY
   }
 

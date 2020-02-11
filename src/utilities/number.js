@@ -1,10 +1,10 @@
 import { isDefined, isNumber } from './is'
 
-export const isEven = (number) => Number(number) % 2 === 0
+export const isEven = number => Number(number) % 2 === 0
 
-export const isOdd = (number) => !isEven(number)
+export const isOdd = number => !isEven(number)
 
-export const getMiddleIndex = (number) => {
+export const getMiddleIndex = number => {
   const middle = Math.floor(Number(number) / 2)
 
   return isOdd(number) ? middle : middle - 1

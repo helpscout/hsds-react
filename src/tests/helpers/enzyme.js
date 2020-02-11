@@ -1,4 +1,4 @@
-export const getDOMNode = (wrapper) => {
+export const getDOMNode = wrapper => {
   if (!wrapper.getDOMNode || !wrapper.first) return wrapper
 
   return wrapper.first().getDOMNode()
