@@ -186,7 +186,7 @@ const DropdownMenuDimensions = {
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
-Dropdown.propTypes = Object.assign(DropdownMenuDimensions, {
+Dropdown.propTypes = Object.assign({}, DropdownMenuDimensions, {
   activeClassName: PropTypes.string,
   allowMultipleSelection: PropTypes.bool,
   cardBorderColor: PropTypes.string,
@@ -227,7 +227,7 @@ Dropdown.propTypes = Object.assign(DropdownMenuDimensions, {
   onSelect: PropTypes.func,
   openClassName: PropTypes.string,
   positionFixed: PropTypes.bool,
-  previousIndex: null,
+  previousIndex: PropTypes.any,
   renderEmpty: PropTypes.any,
   renderItem: PropTypes.any,
   renderLoading: PropTypes.any,

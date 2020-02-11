@@ -15,7 +15,7 @@ class AddButton extends React.PureComponent {
     isBorderless: PropTypes.bool,
     scrollDuration: PropTypes.number,
     scrollOffset: PropTypes.number,
-    type: PropTypes.oneOf('and', 'or'),
+    type: PropTypes.oneOf(['and', 'or']),
   }
 
   static defaultProps = {

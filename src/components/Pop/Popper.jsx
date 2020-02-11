@@ -10,7 +10,7 @@ import ReactPopper from '../Popper/Popper'
 import Animate from '../Animate'
 import Portal from './Pop.Portal'
 import Arrow from './Arrow'
-import { popProps } from './Pop'
+import Pop from './index'
 
 const uniqueID = createUniqueIDFactory('PopPopper')
 
@@ -197,24 +197,24 @@ export const enhancePopperStyles = (props = {}) => {
 
   return style
 }
-
-Popper.propTypes = Object.assign(popProps, {
-  animationDelay: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  animationDuration: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  animationEasing: PropTypes.string,
-  animationSequence: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]),
-  arrowColor: PropTypes.string,
-  arrowSize: PropTypes.number,
-  offset: PropTypes.number,
-  close: PropTypes.func,
-  onClick: PropTypes.func,
-  onContentClick: PropTypes.func,
-  onMouseLeave: PropTypes.func,
-  positionFixed: PropTypes.bool,
-  zIndex: PropTypes.number,
-})
+console.log(Pop)
+// Popper.propTypes = Object.assign(Pop.propTypes, {
+//   animationDelay: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+//   animationDuration: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+//   animationEasing: PropTypes.string,
+//   animationSequence: PropTypes.oneOfType([
+//     PropTypes.string,
+//     PropTypes.arrayOf(PropTypes.string),
+//   ]),
+//   arrowColor: PropTypes.string,
+//   arrowSize: PropTypes.number,
+//   offset: PropTypes.number,
+//   close: PropTypes.func,
+//   onClick: PropTypes.func,
+//   onContentClick: PropTypes.func,
+//   onMouseLeave: PropTypes.func,
+//   positionFixed: PropTypes.bool,
+//   zIndex: PropTypes.number,
+// })
 
 export default Popper

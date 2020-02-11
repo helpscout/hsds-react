@@ -6,7 +6,7 @@ import VisuallyHidden from '../VisuallyHidden'
 import { classNames } from '../../utilities/classNames'
 
 import { IlloUI, IconUI } from './Illo.css'
-import { injectFillColorIntoSvg, svgSet } from './Illo.utils'
+import { svgSet } from './Illo.utils'
 
 const Illo = props => {
   const {
@@ -33,24 +33,9 @@ const Illo = props => {
     className
   )
 
-  const src = { __html: svgSet[name] }
+  const IlloComponent = svgSet[name]
   const iconTitle = title || name
   const componentStyle = { ...style, color }
-  const srcRawHTML = src.__html
-
-  const svgColorProps = {
-    primary: color,
-    secondary: colorSecondary,
-    ui: colorUi,
-    uiDark: colorUiDark,
-    uiLight: colorUiLight,
-    uiTransparent: colorUiTransparent,
-    uiWhite: colorUiWhite,
-  }
-
-  const srcHTML = {
-    __html: injectFillColorIntoSvg(srcRawHTML, svgColorProps),
-  }
 
   return (
     <IlloUI
@@ -60,11 +45,9 @@ const Illo = props => {
       style={componentStyle}
     >
       <Centralize>
-        <IconUI
-          className="c-Illo__icon"
-          dangerouslySetInnerHTML={srcHTML}
-          title={iconTitle}
-        />
+        <IconUI className="c-Illo__icon" title={iconTitle}>
+          {<IlloComponent />}
+        </IconUI>
       </Centralize>
       <VisuallyHidden>{iconTitle}</VisuallyHidden>
     </IlloUI>

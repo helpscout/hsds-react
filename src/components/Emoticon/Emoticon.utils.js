@@ -26,5 +26,6 @@ export function getName(name) {
  * @returns {string} Emoticon SVG string
  */
 export function getIcon(emoticonName, size) {
-  return EMOTICONS[`${emoticonName}-${size}`]
+  const Component = EMOTICONS[`${emoticonName}-${size}`]
+  return <Component />
 }

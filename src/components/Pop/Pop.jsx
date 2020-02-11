@@ -341,7 +341,9 @@ export const popProps = {
   dataCy: PropTypes.string,
 }
 
-Pop.propTypes = Object.assign(popProps, {
+console.log(popProps)
+
+Pop.propTypes = Object.assign({}, popProps, {
   onBeforeOpen: PropTypes.func,
   onBeforeClose: PropTypes.func,
   onContentClick: PropTypes.func,

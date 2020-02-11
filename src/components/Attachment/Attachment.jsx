@@ -23,7 +23,7 @@ export class Attachment extends React.PureComponent {
     onClick: PropTypes.func,
     onRemoveClick: PropTypes.func,
     state: PropTypes.string,
-    size: PropTypes.oneOfTypes([PropTypes.string, PropTypes.number]),
+    size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     target: PropTypes.string,
     truncateLimit: PropTypes.number,
     type: PropTypes.oneOf(['action', 'link']),

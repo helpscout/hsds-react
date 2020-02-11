@@ -153,8 +153,7 @@ const Item = props => {
       {attachments.map((attachment, index) => {
         /* istanbul ignore next */
         // Enzyme can't test keys :s
-        
-        
+
         const key = attachment.id ? attachment.id : `attachment-${index}`
 
         return (
@@ -185,7 +184,7 @@ Item.propTypes = {
   chatId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   className: PropTypes.string,
   createdAt: PropTypes.string,
-  id: PropTypes.oneOfTypes([PropTypes.number, PropTypes.string]),
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   isBodySafe: PropTypes.bool,
   onAttachmentClick: PropTypes.func,
   onDownloadAllAttachmentClick: PropTypes.func,

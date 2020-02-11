@@ -83,7 +83,6 @@ export class Emoticon extends React.PureComponent {
     } = this.props
     const iconName = getName(name)
     const icon = getIcon(iconName, size)
-    const src = { __html: icon }
 
     return (
       <EmoticonUI
@@ -92,11 +91,9 @@ export class Emoticon extends React.PureComponent {
         className={this.getClassNames()}
         innerRef={innerRef}
       >
-        <IconUI
-          className="c-Emoticon__icon"
-          dangerouslySetInnerHTML={src}
-          title={title}
-        />
+        <IconUI className="c-Emoticon__icon" title={title}>
+          {icon}
+        </IconUI>
       </EmoticonUI>
     )
   }

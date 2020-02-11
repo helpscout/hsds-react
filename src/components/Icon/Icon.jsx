@@ -49,17 +49,14 @@ const Icon = props => {
     className
   )
 
-  const src = { __html: renameSVGIds(svgSet[name], name) }
+  const IconComponent = svgSet[name]
+  const CaretComponent = svgSet['caret-down']
   const iconTitle = title || name
 
   const caretMarkup = withCaret ? (
-    <span
-      className="c-Icon__icon is-caret"
-      dangerouslySetInnerHTML={{
-        __html: renameSVGIds(svgSet['caret-down'], 'caret-down'),
-      }}
-      title="Caret"
-    />
+    <span className="c-Icon__icon is-caret" title="Caret">
+      {<CaretComponent />}
+    </span>
   ) : null
 
   return (
@@ -71,11 +68,9 @@ const Icon = props => {
       data-icon-name={name}
       data-cy="Icon"
     >
-      <span
-        className="c-Icon__icon"
-        dangerouslySetInnerHTML={src}
-        title={iconTitle}
-      />
+      <span className="c-Icon__icon" title={iconTitle}>
+        {<IconComponent />}
+      </span>
       {caretMarkup}
       {isWithHiddenTitle ? <VisuallyHidden>{iconTitle}</VisuallyHidden> : null}
     </IconUI>

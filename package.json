@@ -158,6 +158,7 @@
     "babel-jest": "^24.7.1",
     "babel-loader": "^8.0.0",
     "babel-plugin-emotion": "^9.2.11",
+    "babel-plugin-inline-react-svg": "^1.1.1",
     "babel-plugin-inline-svg": "1.0.1",
     "babel-plugin-styled-components": "^1.10.6",
     "chalk": "1.1.3",

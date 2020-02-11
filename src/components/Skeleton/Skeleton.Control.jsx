@@ -28,7 +28,7 @@ SkeletonControl.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
   /** Size of the control/field. */
-  size: PropTypes.oneOf('lg', 'md', 'sm'),
+  size: PropTypes.oneOf(['lg', 'md', 'sm']),
   /** Enables animations for the component. */
   withAnimations: PropTypes.bool,
 }

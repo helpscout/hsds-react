@@ -28,7 +28,7 @@ Operator.propTypes = {
   className: PropTypes.string,
   innerRef: PropTypes.func,
   isBorderless: PropTypes.bool,
-  type: PropTypes.oneOf('and', 'or'),
+  type: PropTypes.oneOf(['and', 'or']),
 }
 
 Operator.className = 'c-ConditionOperator'
