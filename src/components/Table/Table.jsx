@@ -207,7 +207,7 @@ export class Table extends React.Component {
 
 export const columnShape = PropTypes.shape({
   title: PropTypes.string,
-  columnKey: PropTypes.oneOf([
+  columnKey: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string),
   ]),

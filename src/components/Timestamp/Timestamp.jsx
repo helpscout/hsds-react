@@ -63,7 +63,7 @@ Timestamp.propTypes = {
   live: PropTypes.bool,
   muted: PropTypes.bool,
   read: PropTypes.bool,
-  timestamp: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+  timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }
 
 export default Timestamp

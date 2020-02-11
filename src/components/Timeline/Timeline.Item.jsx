@@ -38,7 +38,7 @@ class TimelineItem extends React.PureComponent {
 TimelineItem.propTypes = {
   children: PropTypes.any,
   className: PropTypes.string,
-  timestamp: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  timestamp: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
 export default TimelineItem

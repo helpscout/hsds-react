@@ -43,7 +43,7 @@ SkeletonText.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
   /** Defines the width of the component. */
-  width: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   /** Applies heading styles to the component. */
   heading: PropTypes.bool,
   /** Enables animations for the component. */

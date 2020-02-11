@@ -111,7 +111,7 @@ Text.propTypes = {
   state: PropTypes.oneOf(['default', 'error', 'success', 'warning', '', null]),
   subtle: PropTypes.bool,
   truncate: PropTypes.bool,
-  weight: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  weight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   wordWrap: PropTypes.bool,
 }
 

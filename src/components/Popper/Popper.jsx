@@ -176,7 +176,7 @@ export { placements }
 InnerPopper.propTypes = {
   children: PropTypes.shape({
     ref: PropTypes.any,
-    style: PropTypes.oneOf([
+    style: PropTypes.oneOfType([
       PropTypes.any,
       PropTypes.shape({ position: PropTypes.oneOf(['absolute', 'fixed']) }),
     ]),

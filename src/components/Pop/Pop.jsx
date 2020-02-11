@@ -297,10 +297,10 @@ class Pop extends React.Component {
 }
 
 export const popProps = {
-  animationDelay: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
-  animationDuration: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  animationDelay: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  animationDuration: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   animationEasing: PropTypes.string,
-  animationSequence: PropTypes.oneOf([
+  animationSequence: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string),
   ]),

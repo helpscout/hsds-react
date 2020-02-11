@@ -24,7 +24,7 @@ SkeletonHeading.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
   /** Defines the width of the component. */
-  width: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   /** Enables animations for the component. */
   withAnimations: PropTypes.bool,
 }

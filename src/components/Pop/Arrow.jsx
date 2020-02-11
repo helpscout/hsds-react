@@ -132,7 +132,7 @@ Arrow.propTypes = {
   size: PropTypes.number,
   style: PropTypes.object,
   showArrow: PropTypes.bool,
-  theme: PropTypes.oneOf([PropTypes.object, PropTypes.string]),
+  theme: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   zIndex: PropTypes.number,
 }
 

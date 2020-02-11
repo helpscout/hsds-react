@@ -179,11 +179,11 @@ const ConnectedDropdown = connect(
 )(Dropdown)
 
 const DropdownMenuDimensions = {
-  maxHeight: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
-  maxWidth: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
-  minHeight: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
-  minWidth: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
-  width: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  maxWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  minHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  minWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
 Dropdown.propTypes = Object.assign(DropdownMenuDimensions, {
@@ -232,7 +232,7 @@ Dropdown.propTypes = Object.assign(DropdownMenuDimensions, {
   renderItem: PropTypes.any,
   renderLoading: PropTypes.any,
   renderTrigger: PropTypes.any,
-  selectedItem: PropTypes.oneOf([PropTypes.string, PropTypes.object]),
+  selectedItem: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   selectionClearer: PropTypes.string,
   setMenuNode: PropTypes.func,
   setTriggerNode: PropTypes.func,

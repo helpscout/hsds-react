@@ -133,10 +133,10 @@ Sortable.propTypes = {
   useWindowAsScrollContainer: PropTypes.bool,
   hideSortableGhost: PropTypes.bool,
   lockToContainerEdges: PropTypes.bool,
-  lockOffset: PropTypes.oneOf([
+  lockOffset: PropTypes.oneOfType([
     PropTypes.number,
     PropTypes.string,
-    PropTypes.oneOf([
+    PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.arrayOf(PropTypes.number),
     ]),

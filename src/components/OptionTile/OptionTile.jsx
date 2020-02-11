@@ -79,7 +79,7 @@ OptionTile.propTypes = {
   href: PropTypes.string,
   icon: PropTypes.string,
   iconTitle: PropTypes.string,
-  minHeight: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  minHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   to: PropTypes.string,
   title: PropTypes.string,
   style: PropTypes.object,

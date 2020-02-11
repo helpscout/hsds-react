@@ -39,7 +39,7 @@ class ThemeProvider extends React.PureComponent {
 
 ThemeProvider.propTypes = {
   children: PropTypes.any,
-  theme: PropTypes.oneOf([PropTypes.string, 'default']),
+  theme: PropTypes.oneOfType([PropTypes.string, 'default']),
 }
 
 export default ThemeProvider

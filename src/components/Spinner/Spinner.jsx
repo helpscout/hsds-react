@@ -76,7 +76,7 @@ Spinner.propTypes = {
   shade: PropTypes.string,
   isRounded: PropTypes.bool,
   speed: PropTypes.number,
-  size: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }
 
 export default Spinner

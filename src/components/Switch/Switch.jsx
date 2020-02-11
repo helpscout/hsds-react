@@ -239,10 +239,10 @@ Switch.propTypes = {
   labelOff: PropTypes.string,
   size: PropTypes.oneOf(['lg', 'md', 'sm', '']),
   state: PropTypes.oneOf(['error', '']),
-  value: PropTypes.oneOf([
+  value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
-    PropTypes.boolean,
+    PropTypes.bool,
   ]),
 }
 

@@ -27,7 +27,7 @@ class Content extends React.PureComponent {
 
 Content.propTypes = {
   manager: PropTypes.any,
-  id: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
 export default Content

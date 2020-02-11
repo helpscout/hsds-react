@@ -73,7 +73,7 @@ ProgressBar.propTypes = {
   description: PropTypes.string,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['xs', 'xssm', 'sm', 'md', 'lg', '', null]),
-  value: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
 export default ProgressBar

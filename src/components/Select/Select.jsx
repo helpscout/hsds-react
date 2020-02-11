@@ -416,7 +416,7 @@ const optionShape = {
   value: PropTypes.string,
 }
 
-const selectOptionShape = PropTypes.oneOf([
+const selectOptionShape = PropTypes.oneOfType([
   PropTypes.shape(optionShape),
   PropTypes.string,
 ])
@@ -439,9 +439,12 @@ Select.propTypes = {
   isLast: PropTypes.bool,
   label: PropTypes.any,
   name: PropTypes.string,
-  options: PropTypes.oneOf([
-    PropTypes.oneOf([PropTypes.string, PropTypes.arrayOf(selectOptionShape)]),
-    PropTypes.oneOf([PropTypes.shape(optionShape), PropTypes.string]),
+  options: PropTypes.oneOfType([
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(selectOptionShape),
+    ]),
+    PropTypes.oneOfType([PropTypes.shape(optionShape), PropTypes.string]),
     PropTypes.arrayOf(selectOptionShape),
     PropTypes.string,
   ]),
@@ -458,7 +461,7 @@ Select.propTypes = {
   success: PropTypes.bool,
   tabIndex: PropTypes.number,
   value: PropTypes.string,
-  width: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
 export default Select
