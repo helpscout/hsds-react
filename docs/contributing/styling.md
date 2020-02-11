@@ -4,7 +4,7 @@ In this guide, we'll walk through styling our newly created [custom `Strong` com
 
 ## CSS-in-JS
 
-HSDS uses CSS-in-JS techniques for styling, powered by [Fancy](https://helpscout.gitbook.io/fancy).
+HSDS uses CSS-in-JS techniques for styling, powered by [styled-component](https://styled-components.com/).
 
 Start by creating a dedicated `styles/` directory under `Strong/`:
 
@@ -51,10 +51,6 @@ export default StrongUI
 
 Whoa 😳! Lots of stuff! What is this stuff!
 
-#### `styled`
-
-`styled` is an adapter for [Fancy](https://helpscout.gitbook.io/fancy), and works just like `styled` from [Styled Components](https://www.styled-components.com) or [Emotion](https://emotion.sh/).
-
 #### `StrongUI`
 
 The design pattern we use to distinguish styled-components (SC) vs. regular React components is to add `UI` to the end of the name.
@@ -77,5 +73,4 @@ Let's [write a story](storybook.md) to see this thing in a browser!
 
 ## See also
 
-- [Fancy](https://helpscout.gitbook.io/fancy)
-- [Emotion](https://emotion.sh/)
+- [Styled component](https://styled-components.com/)
