@@ -4,14 +4,13 @@ import { classNames } from '../../utilities/classNames'
 import DragHandle from './Sortable.DragHandle'
 import Item from './Sortable.Item'
 import List from './Sortable.List'
-import { SortableProps } from './Sortable.types'
 import { includes } from '../../utilities/arrays'
 import arrayMove from '../../utilities/arrayMove.lib'
 import { noop } from '../../utilities/other'
 
 export { default as arrayMove } from '../../utilities/arrayMove.lib'
 
-class Sortable extends React.PureComponent<SortableProps> {
+class Sortable extends React.PureComponent {
   constructor(props) {
     super(props)
 
@@ -45,7 +44,7 @@ class Sortable extends React.PureComponent<SortableProps> {
     /* istanbul ignore next */
     if (!children) return
 
-    const items = React.Children.map(children, (child: any, index) => {
+    const items = React.Children.map(children, (child, index) => {
       const sortableElement = includes(
         child.type.displayName,
         'sortableElement'
@@ -78,8 +77,6 @@ class Sortable extends React.PureComponent<SortableProps> {
   onSortEnd({ oldIndex, newIndex, collection }, event) {
     /* istanbul ignore next */
     this.setState({
-      
-      
       items: arrayMove(this.state.items, oldIndex, newIndex),
     })
     /* istanbul ignore next */
@@ -97,8 +94,7 @@ class Sortable extends React.PureComponent<SortableProps> {
       onSortEnd,
       ...rest
     } = this.props
-    
-    
+
     const { items } = this.state
 
     const componentClassName = classNames('c-Sortable', className)
@@ -119,14 +115,38 @@ class Sortable extends React.PureComponent<SortableProps> {
   }
 }
 
-
+Sortable.propTypes = {
+  axis: PropTypes.oneOf(['x', 'y', 'xy']),
+  className: PropTypes.string,
+  distance: PropTypes.number,
+  lockAxis: PropTypes.string,
+  helperClass: PropTypes.string,
+  hideDragHandles: PropTypes.bool,
+  transitionDuration: PropTypes.number,
+  contentWindow: PropTypes.any,
+  onSortStart: PropTypes.func,
+  onSortMove: PropTypes.func,
+  onSortEnd: PropTypes.func,
+  shouldCancelStart: PropTypes.func,
+  pressDelay: PropTypes.number,
+  useDragHandle: PropTypes.bool,
+  useWindowAsScrollContainer: PropTypes.bool,
+  hideSortableGhost: PropTypes.bool,
+  lockToContainerEdges: PropTypes.bool,
+  lockOffset: PropTypes.oneOf([
+    PropTypes.number,
+    PropTypes.string,
+    PropTypes.oneOf([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.arrayOf(PropTypes.number),
+    ]),
+  ]),
+  getContainer: PropTypes.func,
+  getHelperDimensions: PropTypes.func,
+}
 
 Sortable.DragHandle = DragHandle
-
-
 Sortable.Item = Item
-
-
 Sortable.List = List
 
 export default Sortable

@@ -6,19 +6,8 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import Progress from './Stepper.Progress'
 import { StepUI, LineUI, CircleUI, GhostTitleUI } from './Stepper.css'
-import { StepperStep } from './Stepper.types'
 
-export interface Props extends StepperStep {
-  className?: string
-  children?: any
-  innerRef: (node) => void
-  index: number
-  isActive: boolean
-  isClickable: boolean
-  onClick: (event: any, index: number) => void
-}
-
-export class Step extends React.PureComponent<Props> {
+export class Step extends React.PureComponent {
   static displayName = 'Stepper.Step'
 
   static className = 'c-StepperStep'
@@ -69,6 +58,18 @@ export class Step extends React.PureComponent<Props> {
       </StepUI>
     )
   }
+}
+
+Step.propTypes = {
+  title: PropTypes.string,
+  id: PropTypes.string,
+  className: PropTypes.string,
+  children: PropTypes.any,
+  innerRef: PropTypes.func,
+  index: PropTypes.number,
+  isActive: PropTypes.bool,
+  isClickable: PropTypes.bool,
+  onClick: PropTypes.func,
 }
 
 export default Step

@@ -11,7 +11,7 @@ export const config = {
   },
 }
 
-export const SpinnerUI = styled('div')<{ spinnerSize: any }>(props => {
+export const SpinnerUI = styled('div')(props => {
   const { spinnerSize } = props
 
   return `
@@ -22,7 +22,7 @@ export const SpinnerUI = styled('div')<{ spinnerSize: any }>(props => {
   `
 })
 
-export const SpinnerSVGUI = styled('svg')<{ spinnerSize: any }>(props => {
+export const SpinnerSVGUI = styled('svg')(props => {
   const { speed, spinnerSize } = props
 
   return `
@@ -42,13 +42,8 @@ export const SpinnerSVGUI = styled('svg')<{ spinnerSize: any }>(props => {
     }
   `
 })
-interface SpinnerCircleUIProps {
-  color?: any
-  shade?: any
-  isRounded?: any
-  speed?: any
-}
-export const SpinnerCircleUI = styled('circle')<SpinnerCircleUIProps>(props => {
+
+export const SpinnerCircleUI = styled('circle')(props => {
   const { color, shade, isRounded, speed } = props
 
   const lineCap = isRounded ? 'round' : 'square'

@@ -1,17 +1,19 @@
-export type TextShade = [
+import PropTypes from 'prop-types'
+
+TextShade = PropTypes.oneOf([
   'default',
   'subtle',
   'muted',
   'faint',
   'extraMuted',
   '',
-  null
-]
+  null,
+])
 
-export type UIState = ['default', 'error', 'success', 'warning', '', null]
+UIState = PropTypes.oneOf(['default', 'error', 'success', 'warning', '', null])
 
-export type UIStatus = ['error', 'info', 'success', 'warning', '', null]
+UIStatus = PropTypes.oneOf(['error', 'info', 'success', 'warning', '', null])
 
-export type UISize = ['xs', 'xssm', 'sm', 'md', 'lg', '', null]
+UISize = PropTypes.oneOf(['xs', 'xssm', 'sm', 'md', 'lg', '', null])
 
-export type BlockSelectorTag = ['div', 'span', 'a', 'p', '']
+BlockSelectorTag = PropTypes.oneOf(['div', 'span', 'a', 'p', ''])

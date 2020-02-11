@@ -5,7 +5,7 @@ import { SortableElement } from 'react-sortable-hoc'
 import DragHandle from './Sortable.DragHandle'
 import { classNames } from '../../utilities/classNames'
 
-const Item = SortableElement(props => {
+const SortableItem = SortableElement(props => {
   const {
     className,
     children,
@@ -28,8 +28,13 @@ const Item = SortableElement(props => {
   )
 })
 
-Item.defaultProps = {
-  index: 0,
+SortableItem.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** If you're using the `SortableHandle` HOC, set this to `true` */
+  useDragHandle: PropTypes.bool,
+  /** Whether to hide the drag handles or not */
+  hideDragHandles: PropTypes.bool,
 }
 
-export default Item
+export default SortableItem

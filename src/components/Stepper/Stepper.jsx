@@ -7,20 +7,8 @@ import { getComponentKey } from '../../utilities/component'
 import { isDefined } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import { StepperUI, StepWrapperUI } from './Stepper.css'
-import { StepperStep } from './Stepper.types'
 
-export interface Props {
-  className?: string
-  currentIndex?: any
-  innerRef: (node) => void
-  isClickable: boolean
-  onChange: (Step: any) => void
-  onComplete: () => void
-  onStepClick: (Step: any, event: any) => void
-  steps: Array<StepperStep>
-}
-
-export class Stepper extends React.PureComponent<Props> {
+export class Stepper extends React.PureComponent {
   static className = 'c-Stepper'
   static defaultProps = {
     currentIndex: 0,
@@ -64,21 +52,21 @@ export class Stepper extends React.PureComponent<Props> {
     return classNames(Stepper.className, className)
   }
 
-  getProgress(): number {
+  getProgress() {
     const matchIndex = this.getMatchIndex()
     const progress = matchIndex >= 0 ? matchIndex : 0
 
     return progress + 1
   }
 
-  getMatchIndex(): number {
+  getMatchIndex() {
     const { currentIndex } = this.props
     const matchIndex = isDefined(currentIndex) ? currentIndex : -1
 
     return matchIndex
   }
 
-  getCurrentTitle(): string {
+  getCurrentTitle() {
     const step = this.getCurrentStep()
 
     return step ? step.title : ''
@@ -128,6 +116,19 @@ export class Stepper extends React.PureComponent<Props> {
       </StepperUI>
     )
   }
+}
+
+Stepper.propTypes = {
+  className: PropTypes.string,
+  currentIndex: PropTypes.any,
+  innerRef: PropTypes.func,
+  isClickable: PropTypes.bool,
+  onChange: PropTypes.func,
+  onComplete: PropTypes.func,
+  onStepClick: PropTypes.func,
+  steps: PropTypes.arrayOf(
+    PropTypes.shape({ title: PropTypes.string, id: PropTypes.string })
+  ),
 }
 
 export default Stepper

@@ -5,9 +5,8 @@ import { classNames } from '../../utilities/classNames'
 import { isString } from '../../utilities/is'
 import { legacySizes } from './Spinner.utils'
 import { SpinnerUI, SpinnerSVGUI, SpinnerCircleUI } from './Spinner.css'
-import { SpinnerProps } from './Spinner.types'
 
-export class Spinner extends React.PureComponent<SpinnerProps> {
+export class Spinner extends React.PureComponent {
   static className = 'c-Spinner'
   static defaultProps = {
     color: 'currentColor',
@@ -23,7 +22,7 @@ export class Spinner extends React.PureComponent<SpinnerProps> {
     return classNames(Spinner.className, className)
   }
 
-  getSize(): number {
+  getSize() {
     const { size } = this.props
     const defaultSize = 16
 
@@ -69,6 +68,15 @@ export class Spinner extends React.PureComponent<SpinnerProps> {
       </SpinnerUI>
     )
   }
+}
+
+Spinner.propTypes = {
+  className: PropTypes.string,
+  color: PropTypes.string,
+  shade: PropTypes.string,
+  isRounded: PropTypes.bool,
+  speed: PropTypes.number,
+  size: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
 }
 
 export default Spinner

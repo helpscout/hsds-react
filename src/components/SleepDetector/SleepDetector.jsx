@@ -2,21 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { noop } from '../../utilities/other'
 
-export interface SleepDetectorProps {
-  buffer: number
-  interval: number
-  onWake: (fn?) => void
-}
-
-export interface SleepDetectorState {
-  lastRun: number
-  intervalId: number
-}
-
-class SleepDetector extends React.Component<
-  SleepDetectorProps,
-  SleepDetectorState
-> {
+class SleepDetector extends React.Component {
   static defaultProps = {
     buffer: 5000,
     interval: 10000,
@@ -25,8 +11,7 @@ class SleepDetector extends React.Component<
 
   constructor(props) {
     super(props)
-    
-    
+
     this.state = {}
   }
 
@@ -46,8 +31,7 @@ class SleepDetector extends React.Component<
     }, interval)
 
     const lastRun = Date.now()
-    
-    
+
     this.setState({ intervalId, lastRun })
   }
 
@@ -63,6 +47,12 @@ class SleepDetector extends React.Component<
   render() {
     return null
   }
+}
+
+SleepDetector.propTypes = {
+  buffer: PropTypes.number,
+  interval: PropTypes.number,
+  onWake: PropTypes.func,
 }
 
 export default SleepDetector

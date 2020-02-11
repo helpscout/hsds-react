@@ -4,13 +4,7 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { ProgressLineUI } from './Stepper.css'
 
-export interface Props {
-  className?: string
-  innerRef: (node) => void
-  isActive: boolean
-}
-
-export class Progress extends React.PureComponent<Props> {
+export class StepperProgress extends React.PureComponent {
   static className = 'c-StepperStepProgress'
   static defaultProps = {
     isActive: false,
@@ -19,7 +13,11 @@ export class Progress extends React.PureComponent<Props> {
 
   getClassName() {
     const { className, isActive } = this.props
-    return classNames(Progress.className, isActive && 'is-active', className)
+    return classNames(
+      StepperProgress.className,
+      isActive && 'is-active',
+      className
+    )
   }
 
   render() {
@@ -35,4 +33,10 @@ export class Progress extends React.PureComponent<Props> {
   }
 }
 
-export default Progress
+StepperProgress.propTypes = {
+  className: PropTypes.string,
+  innerRef: PropTypes.func,
+  isActive: PropTypes.bool,
+}
+
+export default StepperProgress

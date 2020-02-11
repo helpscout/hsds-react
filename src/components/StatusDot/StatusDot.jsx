@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { StatusDotStatus, StatusDotSize } from './StatusDot.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Centralize from '../Centralize'
 import Icon from '../Icon'
@@ -8,22 +7,7 @@ import { classNames } from '../../utilities/classNames'
 
 import { StatusDotUI } from './StatusDot.css'
 
-type Props = {
-  borderColor?: string
-  className?: string
-  children?: any
-  icon?: string
-  inline: boolean
-  isUnread: boolean
-  outerBorderColor?: string
-  outerBorderWidth: number
-  size: StatusDotSize
-  status: StatusDotStatus
-  style?: any
-  title?: string
-}
-
-class StatusDot extends React.PureComponent<Props> {
+class StatusDot extends React.PureComponent {
   static defaultProps = {
     inline: false,
     isUnread: false,
@@ -113,6 +97,28 @@ class StatusDot extends React.PureComponent<Props> {
       </StatusDotUI>
     )
   }
+}
+
+StatusDot.propTypes = {
+  borderColor: PropTypes.string,
+  className: PropTypes.string,
+  children: PropTypes.any,
+  icon: PropTypes.string,
+  inline: PropTypes.bool,
+  isUnread: PropTypes.bool,
+  outerBorderColor: PropTypes.string,
+  outerBorderWidth: PropTypes.number,
+  size: PropTypes.oneOf(['md', 'sm']),
+  status: PropTypes.oneOf([
+    'online',
+    'offline',
+    'busy',
+    'new',
+    'active',
+    'inactive',
+  ]),
+  style: PropTypes.any,
+  title: PropTypes.string,
 }
 
 export default StatusDot

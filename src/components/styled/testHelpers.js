@@ -11,7 +11,7 @@ export const resetStyles = () => {
  * @param   {HTMLElement} el
  * @returns {object}
  */
-export const getCSS = (el: HTMLElement) => el && window.getComputedStyle(el)
+export const getCSS = el => el && window.getComputedStyle(el)
 
 /**
  * Gets a specific CSS property from an element
@@ -20,6 +20,6 @@ export const getCSS = (el: HTMLElement) => el && window.getComputedStyle(el)
  * @param   {string} prop
  * @returns {string}
  */
-export const getCSSProp = (el: HTMLElement, prop?: string) => {
+export const getCSSProp = (el, prop) => {
   return prop ? getCSS(el)[prop] : ''
 }

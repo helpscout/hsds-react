@@ -1,7 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { SwitchSize, SwitchState, SwitchValue } from './Switch.types'
-import { FormLabelContextProps } from '../FormLabel/FormLabel.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FormLabelContext from '../FormLabel/Context'
 import VisuallyHidden from '../VisuallyHidden'
@@ -17,38 +15,9 @@ import {
   ToggleUI,
 } from './Switch.css'
 
-export interface Props {
-  className?: string
-  checked: boolean
-  disabled: boolean
-  id: string
-  isLoading: boolean
-  inputRef: (ref: any) => void
-  innerRef: (ref: any) => void
-  name: string
-  onBlur: (event) => void
-  onChange: (state: boolean, { event: Event, value: SwitchValue }) => void
-  onClick: (event) => void
-  onFocus: (event) => void
-  onMouseDown: (event) => void
-  onMouseUp: (event) => void
-  labelOn: string
-  labelOff: string
-  size: SwitchSize
-  state: SwitchState
-  value: SwitchValue
-}
-
-export interface State {
-  checked?: boolean
-  id: string
-  isActive: boolean
-  isFocused: boolean
-}
-
 const uniqueID = createUniqueIDFactory('Switch')
 
-class Switch extends React.PureComponent<Props, State> {
+class Switch extends React.PureComponent {
   static defaultProps = {
     inputRef: noop,
     innerRef: noop,
@@ -65,9 +34,7 @@ class Switch extends React.PureComponent<Props, State> {
     value: '',
   }
 
-  shouldAutoUpdateChecked: boolean
-
-  constructor(props: Props) {
+  constructor(props) {
     super(props)
     this.state = {
       checked: props.checked || false,
@@ -78,7 +45,7 @@ class Switch extends React.PureComponent<Props, State> {
     this.shouldAutoUpdateChecked = props.checked === undefined
   }
 
-  componentWillReceiveProps(nextProps: Props) {
+  componentWillReceiveProps(nextProps) {
     /* istanbul ignore else */
     if (nextProps.checked !== this.state.checked) {
       this.setState({
@@ -87,7 +54,7 @@ class Switch extends React.PureComponent<Props, State> {
     }
   }
 
-  handleOnChange = (event) => {
+  handleOnChange = event => {
     const { onChange, value } = this.props
     const nextChecked = !this.state.checked
 
@@ -99,7 +66,7 @@ class Switch extends React.PureComponent<Props, State> {
     onChange(nextChecked, { event, value })
   }
 
-  handleOnClick = (event) => {
+  handleOnClick = event => {
     event.stopPropagation()
     if (this.props.isLoading) {
       event.preventDefault()
@@ -108,40 +75,40 @@ class Switch extends React.PureComponent<Props, State> {
     }
   }
 
-  handleOnBlur = (event) => {
+  handleOnBlur = event => {
     this.setState({ isFocused: false })
     this.props.onBlur(event)
   }
 
-  handleOnFocus = (event) => {
+  handleOnFocus = event => {
     this.setState({ isFocused: true })
     this.props.onFocus(event)
   }
 
-  handleOnMouseDown = (event) => {
+  handleOnMouseDown = event => {
     this.setState({
       isActive: true,
     })
     this.props.onMouseDown(event)
   }
 
-  handleOnMouseUp = (event) => {
+  handleOnMouseUp = event => {
     this.setState({
       isActive: false,
     })
     this.props.onMouseUp(event)
   }
 
-  setRef = (node) => {
+  setRef = node => {
     this.props.inputRef(node)
     this.props.innerRef(node)
   }
 
-  getIdFromContextProps = (props: FormLabelContextProps = { id: '' }) => {
+  getIdFromContextProps = (props = { id: '' }) => {
     return props.id || this.state.id
   }
 
-  getInputMarkup = (props: FormLabelContextProps = { id: '' }) => {
+  getInputMarkup = (props = { id: '' }) => {
     const {
       checked: propActive,
       disabled,
@@ -230,7 +197,7 @@ class Switch extends React.PureComponent<Props, State> {
 
     return (
       <FormLabelContext.Consumer>
-        {(props: FormLabelContextProps) => (
+        {props => (
           <WrapperUI className="c-SwitchWrapper">
             <SwitchUI
               {...getValidProps(rest)}
@@ -251,6 +218,32 @@ class Switch extends React.PureComponent<Props, State> {
       </FormLabelContext.Consumer>
     )
   }
+}
+
+Switch.propTypes = {
+  className: PropTypes.string,
+  checked: PropTypes.bool,
+  disabled: PropTypes.bool,
+  id: PropTypes.string,
+  isLoading: PropTypes.bool,
+  inputRef: PropTypes.func,
+  innerRef: PropTypes.func,
+  name: PropTypes.string,
+  onBlur: PropTypes.func,
+  onChange: PropTypes.func,
+  onClick: PropTypes.func,
+  onFocus: PropTypes.func,
+  onMouseDown: PropTypes.func,
+  onMouseUp: PropTypes.func,
+  labelOn: PropTypes.string,
+  labelOff: PropTypes.string,
+  size: PropTypes.oneOf(['lg', 'md', 'sm', '']),
+  state: PropTypes.oneOf(['error', '']),
+  value: PropTypes.oneOf([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.boolean,
+  ]),
 }
 
 export default Switch

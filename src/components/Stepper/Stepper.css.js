@@ -73,7 +73,7 @@ export const GhostTitleUI = styled(Text)`
   visibility: hidden;
 `
 
-export const CircleUI = styled('div')<{ isActive: any }>`
+export const CircleUI = styled('div')`
   background: ${config.backgroundColor};
   box-shadow: 0 0 0 3px ${config.backgroundColor};
   border: 3px solid currentColor;

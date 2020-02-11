@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { mount, shallow, render } from 'enzyme'
 import { Stepper } from './Stepper'
 import Step from './Stepper.Step'
@@ -112,12 +111,12 @@ describe('StepperUI', () => {
 describe('getProgress', () => {
   test('should equal 2', () => {
     const wrapper = mount(<Stepper steps={mockSteps} currentIndex={1} />)
-    
+
     expect(wrapper.instance().getProgress()).toEqual(2)
   })
   test('when no currentIndex is null, kkshould return 1', () => {
     const wrapper = mount(<Stepper currentIndex={null} />)
-    
+
     expect(wrapper.instance().getProgress()).toEqual(1)
   })
 })
@@ -125,12 +124,12 @@ describe('getProgress', () => {
 describe('getMatchIndex', () => {
   test('should return 1', () => {
     const wrapper = mount(<Stepper currentIndex={1} />)
-    
+
     expect(wrapper.instance().getMatchIndex()).toEqual(1)
   })
   test('when no currentIndex defined should return 0', () => {
     const wrapper = mount(<Stepper currentIndex={null} />)
-    
+
     expect(wrapper.instance().getMatchIndex()).toEqual(-1)
   })
 })
@@ -141,7 +140,7 @@ describe('componentDidUpdate', () => {
     const wrapper = mount(
       <Stepper onChange={onChangeSpy} steps={mockSteps} currentIndex={1} />
     )
-    
+
     wrapper.instance().componentDidUpdate({ currentIndex: 0 })
     expect(onChangeSpy).toHaveBeenCalled()
   })
@@ -150,7 +149,7 @@ describe('componentDidUpdate', () => {
     const wrapper = mount(
       <Stepper onChange={onChangeSpy} steps={mockSteps} currentIndex={1} />
     )
-    
+
     wrapper.instance().componentDidUpdate({ currentIndex: 1 })
     expect(onChangeSpy).not.toHaveBeenCalled()
   })
@@ -162,7 +161,7 @@ describe('handleChangeCallback', () => {
     const wrapper = mount(
       <Stepper onChange={onChangeSpy} steps={[]} currentIndex={1} />
     )
-    
+
     wrapper.instance().handleChangeCallback()
     expect(onChangeSpy).not.toHaveBeenCalled()
   })

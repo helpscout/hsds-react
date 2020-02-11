@@ -9,25 +9,13 @@ import Icon from '../Icon'
 
 import { OptionsTriggerButtonUI } from './SplitButton.css'
 
-export interface Props {
-  buttonRef?: (ref: any) => void
-  children?: any
-  className?: string
-  disabled?: boolean
-  dropdownProps?: any
-  kind?: string
-  onClick?: (event) => void
-  size?: string
-  state?: string
-}
-
 const defaultDropdownProps = {
   className: 'c-SplitButton__dropdown',
   direction: 'right',
   onTriggerClick: noop,
 }
 
-export class SplitButton extends React.PureComponent<Props> {
+export class SplitButton extends React.PureComponent {
   static className = 'c-SplitButton'
 
   static defaultProps = {
@@ -103,6 +91,18 @@ export class SplitButton extends React.PureComponent<Props> {
       </ControlGroup>
     )
   }
+}
+
+SplitButton.propTypes = {
+  buttonRef: PropTypes.func,
+  children: PropTypes.any,
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
+  dropdownProps: PropTypes.any,
+  kind: PropTypes.string,
+  onClick: PropTypes.func,
+  size: PropTypes.string,
+  state: PropTypes.string,
 }
 
 export default SplitButton

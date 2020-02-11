@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { mount, shallow } from 'enzyme'
 import Sortable from './Sortable'
 import List from './Sortable.List'

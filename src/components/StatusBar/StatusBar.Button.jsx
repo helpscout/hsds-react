@@ -5,7 +5,7 @@ import { classNames } from '../../utilities/classNames'
 
 import { StatusBarButtonUI } from './StatusBar.css'
 
-const Button = props => {
+const StatusBarButton = props => {
   const { children, className, icon, ...rest } = props
 
   const componentClassName = classNames('c-StatusBarButton', className)
@@ -22,6 +22,11 @@ const Button = props => {
   )
 }
 
-Button.displayName = 'StatusBarButton'
+StatusBarButton.displayName = 'StatusBarButton'
+StatusBarButton.propTypes = {
+  className: PropTypes.string,
+  icon: PropTypes.string,
+  children: PropTypes.any,
+}
 
-export default Button
+export default StatusBarButton

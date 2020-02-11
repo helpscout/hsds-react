@@ -7,10 +7,6 @@ import { classNames } from '../../utilities/classNames'
 
 import { StatusBadgeUI, StatusDotUI } from './StatusBadge.css'
 
-const defaultProps = {
-  count: 0,
-}
-
 const StatusBadge = props => {
   const {
     borderColor,
@@ -56,7 +52,31 @@ const StatusBadge = props => {
   )
 }
 
-StatusBadge.defaultProps = defaultProps
 StatusBadge.displayName = 'StatusBadge'
+StatusBadge.defaultProps = {
+  count: 0,
+}
+StatusBadge.propTypes = {
+  /** Color for the StatusDot border. */
+  borderColor: PropTypes.string,
+  /** Custom class names to be added to the component.  */
+  className: PropTypes.string,
+  /** Count to display within the Badge. */
+  count: PropTypes.number,
+  /** Color for the StatusDot's outer border. */
+  outerBorderColor: PropTypes.string,
+  /** Status style to render to the StatusDot. */
+  status: PropTypes.oneOf([
+    'online',
+    'offline',
+    'busy',
+    'new',
+    'active',
+    'inactive',
+    '',
+  ]),
+  /** Custom text for the HTML `title` attributes. */
+  title: PropTypes.string,
+}
 
 export default StatusBadge

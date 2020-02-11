@@ -4,11 +4,10 @@ import Collapsible from '../Collapsible'
 import Button from './StatusBar.Button'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { StatusBarProps, StatusBarState } from './StatusBar.types'
 
 import { StatusBarUI } from './StatusBar.css'
 
-class StatusBar extends React.PureComponent<StatusBarProps, StatusBarState> {
+class StatusBar extends React.PureComponent {
   constructor(props) {
     super(props)
 
@@ -83,8 +82,15 @@ class StatusBar extends React.PureComponent<StatusBarProps, StatusBarState> {
   }
 }
 
-
-
 StatusBar.Button = Button
+
+StatusBar.propTypes = {
+  closeOnClick: PropTypes.bool,
+  status: PropTypes.oneOf(['error', 'info', 'success', 'warning', '', null]),
+  theme: PropTypes.oneOf(['light', 'bold']),
+  onClick: PropTypes.func,
+  onOpen: PropTypes.func,
+  onClose: PropTypes.func,
+}
 
 export default StatusBar
