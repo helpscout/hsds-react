@@ -3,10 +3,9 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { <%= name %>Props } from './<%= name %>.types'
 import { <%= name %>UI } from './styles/<%= name %>.css'
 
-export class <%= name %> extends React.PureComponent<<%= name %>Props> {
+export class <%= name %> extends React.Component {
   static className = 'c-<%= name %>'
   static defaultProps = {
     innerRef: noop
@@ -33,6 +32,10 @@ export class <%= name %> extends React.PureComponent<<%= name %>Props> {
       </<%= name %>UI>
     )
   }
+}
+
+<%= name %>.propTypes = {
+  className: PropTypes.string,
 }
 
 export default <%= name %>
