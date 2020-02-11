@@ -9,10 +9,11 @@ module.exports = {
     jest: true,
     node: true,
   },
-  plugins: ['jsx-a11y', 'react', 'import'],
+  plugins: ['babel', 'jsx-a11y', 'react', 'import'],
   extends: [
     'plugin:prettier/recommended', // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
   ],
+  parser: 'babel-eslint',
   parserOptions: {
     ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
     sourceType: 'module', // Allows for the use of imports
