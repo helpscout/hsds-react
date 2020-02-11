@@ -46,7 +46,7 @@ describe('shallowPropMemoizeIsEqual', () => {
 describe('memoizeWithProps', () => {
   test('Does not refire if props are the same', () => {
     const spy = jest.fn()
-    const memoSpy: any = memoizeWithProps(spy)
+    const memoSpy = memoizeWithProps(spy)
     const props = { a: 1 }
 
     // One
@@ -61,7 +61,7 @@ describe('memoizeWithProps', () => {
 
   test('Refires function if props are different', () => {
     const spy = jest.fn()
-    const memoSpy: any = memoizeWithProps(spy)
+    const memoSpy = memoizeWithProps(spy)
     const props = { a: 1 }
 
     // One

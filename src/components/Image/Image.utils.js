@@ -10,7 +10,7 @@ import { allPropsDefined } from '../../utilities/is'
  */
 export function getImageSize(props) {
   const { maxWidth, maxHeight, width, height } = props
-  const imageProps: any = { maxWidth, maxHeight, width, height }
+  const imageProps = { maxWidth, maxHeight, width, height }
 
   if (!allPropsDefined(imageProps)) return {}
 

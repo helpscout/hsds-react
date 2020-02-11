@@ -81,7 +81,7 @@ export const MessageList = props => {
 }
 
 MessageList.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.any)
+  items: PropTypes.arrayOf(PropTypes.any),
   onSortEnd: PropTypes.func,
   onSortStart: PropTypes.func,
 }

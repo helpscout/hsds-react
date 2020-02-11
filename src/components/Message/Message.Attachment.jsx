@@ -1,15 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { MessageBubble, MessageThemeContext } from './Message.types'
 import Link from '../Link'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { TextUI } from './Message.css'
 import MessageChat from './Message.Chat'
-
-type Props = MessageBubble & 
-type Context = MessageThemeContext
 
 export const Attachment = (props, context) => {
   const {
@@ -113,8 +109,6 @@ Attachment.defaultProps = {
   size: 'md',
   uploadingMessage: 'Uploading…',
 }
-
-
 
 Attachment.contextTypes = {
   theme: noop,

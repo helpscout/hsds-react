@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const pkg = require('../package.json')
 
-const targetFilePath = path.resolve(__dirname, '../src/utilities/pkg.ts')
+const targetFilePath = path.resolve(__dirname, '../src/utilities/pkg.js')
 
 const setVersion = () => {
   const content = `

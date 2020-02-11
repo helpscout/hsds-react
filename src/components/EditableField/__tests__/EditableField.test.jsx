@@ -11,8 +11,6 @@ import {
   STATES_CLASSNAMES,
 } from '../EditableField.utils'
 
-import { Validation } from '../EditableField.types'
-
 const flushPromises = () => new Promise(setImmediate)
 
 jest.useFakeTimers()
@@ -1371,7 +1369,7 @@ describe('should component update', () => {
   })
 
   test('validationInfo', () => {
-    const validationInfo: Validation = {
+    const validationInfo = {
       isValid: false,
       name: 'email',
       value: 'hello',

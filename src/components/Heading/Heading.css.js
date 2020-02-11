@@ -84,7 +84,7 @@ export const HeadingUI = styled.div`
   ${makeWeightStyles()}
 `
 
-function makeShadeStyles(): string {
+function makeShadeStyles() {
   const shades = Object.keys(SHADES)
 
   return forEach(

@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { MessageBubble } from './Message.types'
 import Link from '../Link'
 import Spinner from '../Spinner'
 import Modal from '../Modal'
@@ -230,7 +229,7 @@ export class Media extends React.Component {
       error && 'is-error',
       className
     )
-    const bem: any = BEM(componentClassName)
+    const bem = BEM(componentClassName)
 
     const captionMarkup = caption && (
       <div className="c-MessageMedia__caption">

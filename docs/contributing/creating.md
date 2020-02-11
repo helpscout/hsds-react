@@ -239,7 +239,6 @@ hsds-react/
               ├── Table.jsx
               ├── Table.Cell.jsx
               ├── Table.utils.js
-              └── Table.types.js
 ```
 
 ## Next

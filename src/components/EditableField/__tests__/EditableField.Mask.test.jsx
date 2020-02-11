@@ -6,15 +6,13 @@ import { EditableFieldMask as Mask } from '../EditableField.Mask'
 
 import { TRUNCATED_CLASSNAMES, STATES_CLASSNAMES } from '../EditableField.utils'
 
-import { Validation } from '../EditableField.types'
-
 describe('class names', () => {
   test('validation', () => {
     const val = {
       value: 'hello',
       id: 'greeting_0',
     }
-    const validationInfo: Validation = {
+    const validationInfo = {
       isValid: false,
       name: 'greeting_0',
       value: 'hello',

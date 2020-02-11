@@ -15,9 +15,20 @@ class Heading extends React.PureComponent {
     linkStyle: PropTypes.bool,
     noWrap: PropTypes.bool,
     selector: PropTypes.string,
-    size: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'big', 'md', 'small', '']),
+    size: PropTypes.oneOf([
+      'h1',
+      'h2',
+      'h3',
+      'h4',
+      'h5',
+      'h6',
+      'big',
+      'md',
+      'small',
+      '',
+    ]),
     truncate: PropTypes.bool,
-    weight: PropTypes.oneOfType([PropTypes.number,PropTypes.string]),
+    weight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     wordWrap: PropTypes.bool,
   }
 
@@ -71,7 +82,7 @@ class Heading extends React.PureComponent {
 
     return (
       <HeadingUI
-        as={selectorTag as any}
+        as={selectorTag}
         {...getValidProps(rest)}
         className={componentClassName}
       >

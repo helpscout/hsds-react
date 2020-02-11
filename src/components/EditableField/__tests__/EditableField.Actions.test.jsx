@@ -7,9 +7,7 @@ import * as urlUtils from '../../../utilities/urls'
 
 import { STATES_CLASSNAMES } from '../EditableField.utils'
 
-import { Validation } from '../EditableField.types'
-
-const validationInfo: Validation = {
+const validationInfo = {
   isValid: false,
   name: 'email',
   value: 'hello',
@@ -68,7 +66,7 @@ describe('Should component update', () => {
       id: 'greeting_0',
     }
 
-    const wrapper: any = mount(
+    const wrapper = mount(
       <Actions name="email" fieldValue={val} actions={[]} />
     )
     const actualProps = wrapper.props()
@@ -101,7 +99,7 @@ describe('Should component update', () => {
       value: 'hello',
       type: 'error',
     }
-    const wrapper: any = mount(
+    const wrapper = mount(
       <Actions name="email" fieldValue={val} actions={[]} />
     )
     const actualProps = wrapper.props()
@@ -133,7 +131,7 @@ describe('handleActionClick', () => {
 
     const actions = [{ name: 'link' }]
 
-    const wrapper: any = mount(
+    const wrapper = mount(
       <Actions name="website" fieldValue={val} actions={actions} />
     )
 

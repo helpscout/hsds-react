@@ -10,15 +10,13 @@ import {
   OTHERCOMPONENTS_CLASSNAMES,
 } from '../EditableField.utils'
 
-import { Validation } from '../EditableField.types'
-
 describe('Should component update', () => {
   test('fieldValue', () => {
     const val = {
       value: 'hello',
       id: 'greeting_0',
     }
-    const wrapper: any = mount(
+    const wrapper = mount(
       <EditableFieldInput name="greeting" fieldValue={val} />
     )
     const actualProps = wrapper.props()
@@ -45,7 +43,7 @@ describe('Should component update', () => {
       value: 'hello',
       id: 'greeting_0',
     }
-    const wrapper: any = mount(
+    const wrapper = mount(
       <EditableFieldInput name="greeting" fieldValue={val} isActive />
     )
     const actualProps = wrapper.props()
@@ -69,7 +67,7 @@ describe('Should component update', () => {
       value: 'hello',
       id: 'greeting_0',
     }
-    const wrapper: any = mount(
+    const wrapper = mount(
       <EditableFieldInput name="greeting" fieldValue={val} isActive disabled />
     )
     const actualProps = wrapper.props()
@@ -93,13 +91,13 @@ describe('Should component update', () => {
       value: 'hello',
       id: 'greeting_0',
     }
-    const validationInfo: Validation = {
+    const validationInfo = {
       isValid: false,
       name: 'email',
       value: 'hello',
       type: 'error',
     }
-    const wrapper: any = mount(
+    const wrapper = mount(
       <EditableFieldInput name="greeting" fieldValue={val} />
     )
     const actualProps = wrapper.props()
@@ -125,7 +123,7 @@ describe('component did update', () => {
       value: 'hello',
       id: 'greeting_0',
     }
-    const wrapper: any = mount(
+    const wrapper = mount(
       <EditableFieldInput name="greeting" fieldValue={val} />
     )
 
@@ -155,7 +153,7 @@ describe('validation', () => {
       value: 'hello',
       id: 'greeting_0',
     }
-    const validationInfo: Validation = {
+    const validationInfo = {
       isValid: false,
       name: 'greeting_0',
       value: 'hello',
@@ -179,7 +177,7 @@ describe('validation', () => {
       value: 'hello',
       id: 'greeting_0',
     }
-    const validationInfo: Validation = {
+    const validationInfo = {
       isValid: false,
       name: 'greeting_0',
       value: 'hello',
@@ -205,7 +203,7 @@ describe('validation', () => {
       value: 'hello',
       id: 'greeting_0',
     }
-    const validationInfo: Validation = {
+    const validationInfo = {
       isValid: false,
       name: 'greeting_0',
       value: 'hello',
@@ -232,7 +230,7 @@ describe('validation', () => {
       value: 'hello',
       id: 'greeting_0',
     }
-    const validationInfo: Validation = {
+    const validationInfo = {
       isValid: false,
       name: 'greeting_2',
       value: 'hello',
@@ -256,7 +254,7 @@ describe('handle key up', () => {
     const spy = jest.fn()
     const name = 'greeting_1'
     const fieldValue = { value: 'hello', id: name }
-    const wrapper: any = mount(
+    const wrapper = mount(
       <EditableFieldInput
         name={name}
         fieldValue={fieldValue}
@@ -277,7 +275,7 @@ describe('handle key up', () => {
     const spy = jest.fn()
     const name = 'greeting_1'
     const fieldValue = { value: 'hello', id: name }
-    const wrapper: any = mount(
+    const wrapper = mount(
       <EditableFieldInput name={name} fieldValue={fieldValue} onKeyUp={spy} />
     )
     const event = {

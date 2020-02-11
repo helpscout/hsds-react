@@ -1,4 +1,3 @@
-// Should be a .ts file
 // Couldn't figure out how to make this play nicely with Jest.
 import unistoreCreateStore from '@helpscout/wedux'
 import reducer from './Dropdown.reducer'

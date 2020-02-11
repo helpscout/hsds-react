@@ -21,7 +21,7 @@ const LoadingDots = props => {
 }
 LoadingDots.propTypes = {
   align: PropTypes.oneOf(['left', 'center', 'right', '']),
-  className: string,
+  className: PropTypes.string,
 }
 
 export default LoadingDots
