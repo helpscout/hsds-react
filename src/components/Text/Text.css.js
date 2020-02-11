@@ -82,7 +82,7 @@ export const TextUI = styled.span`
   }
 `
 
-function makeShadeStyles(): string {
+function makeShadeStyles() {
   return forEach(
     TEXT_SHADES,
     shade => `
@@ -107,7 +107,7 @@ function makeSizeStyles() {
   )
 }
 
-export function makeWeightStyles(): string {
+export function makeWeightStyles() {
   return forEach(
     TEXT_WEIGHTS,
     weight => `

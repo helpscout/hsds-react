@@ -4,12 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Item from './Timeline.Item'
 import { classNames } from '../../utilities/classNames'
 
-type Props = {
-  children?: any
-  className?: string
-}
-
-class Timeline extends React.PureComponent<Props> {
+class Timeline extends React.PureComponent {
   static Item = Item
 
   render() {
@@ -23,6 +18,11 @@ class Timeline extends React.PureComponent<Props> {
       </div>
     )
   }
+}
+
+Timeline.propTypes = {
+  children: PropTypes.any,
+  className: PropTypes.string,
 }
 
 export default Timeline

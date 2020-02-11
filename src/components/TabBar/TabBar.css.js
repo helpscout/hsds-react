@@ -22,7 +22,7 @@ const getDirection = align => {
   }
 }
 
-export const TabBarUI = styled('nav')<{ align?: any }>`
+export const TabBarUI = styled('nav')`
   ${setFontSize(14)};
 
   display: flex;

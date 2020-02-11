@@ -1,25 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import * as equal from 'fast-deep-equal'
-
 import Row from './Table.Row'
-import { BodyProps, BodyState } from './Table.types'
+import { columnShape, dataShape } from './Table'
 
-export default class Body extends React.Component<BodyProps, BodyState> {
-  state: BodyState = { rows: [] }
+export default class TableBody extends React.Component {
+  state = { rows: [] }
   columnsCache = this.getColumnsCache(this.props.columns)
 
   static getDerivedStateFromProps(nextProps, prevState) {
     /* istanbul ignore else */
     if (!equal(nextProps.rows, prevState.rows) || nextProps.isTableCollapsed) {
-      return { rows: Body.getRows(nextProps) }
+      return { rows: TableBody.getRows(nextProps) }
     }
 
     return null
   }
 
-  static getRows(props: any = {}) {
+  static getRows(props = {}) {
     const { isTableCollapsed, rows, maxRowsToDisplay } = props
 
     if (!rows) {
@@ -79,4 +77,12 @@ export default class Body extends React.Component<BodyProps, BodyState> {
       </tbody>
     )
   }
+}
+
+TableBody.propTypes = {
+  columns: PropTypes.arrayOf(columnShape),
+  isTableCollapsed: PropTypes.bool,
+  maxRowsToDisplay: PropTypes.number,
+  rows: PropTypes.arrayOf(dataShape),
+  onRowClick: PropTypes.func,
 }

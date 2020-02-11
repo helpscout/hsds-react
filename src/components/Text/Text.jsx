@@ -1,37 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { TextSize, TextShade, UIState } from './Text.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { TextUI } from './Text.css'
 
-export interface Props {
-  allCaps?: boolean
-  block?: boolean
-  children: any
-  className?: string
-  center?: boolean
-  disableSelect?: boolean
-  faint?: boolean
-  isPlainLink: boolean
-  lineHeightReset?: boolean
-  lineHeightInherit?: boolean
-  linkStyle: boolean
-  muted?: boolean
-  noUnderline: boolean
-  noWrap?: boolean
-  selector: string
-  shade?: TextShade
-  size?: TextSize
-  state?: UIState
-  subtle?: boolean
-  truncate: boolean
-  weight?: number | string
-  wordWrap?: boolean
-}
-
-class Text extends React.PureComponent<Props> {
-  public static defaultProps: Partial<Props> = {
+class Text extends React.PureComponent {
+  static defaultProps = {
     center: false,
     disableSelect: false,
     isPlainLink: false,
@@ -97,7 +71,7 @@ class Text extends React.PureComponent<Props> {
 
     return (
       <TextUI
-        as={selector as any}
+        as={selector}
         {...getValidProps(rest)}
         className={componentClassName}
       >
@@ -105,6 +79,40 @@ class Text extends React.PureComponent<Props> {
       </TextUI>
     )
   }
+}
+
+Text.propTypes = {
+  allCaps: PropTypes.bool,
+  block: PropTypes.bool,
+  children: PropTypes.any,
+  className: PropTypes.string,
+  center: PropTypes.bool,
+  disableSelect: PropTypes.bool,
+  faint: PropTypes.bool,
+  isPlainLink: PropTypes.bool,
+  lineHeightReset: PropTypes.bool,
+  lineHeightInherit: PropTypes.bool,
+  linkStyle: PropTypes.bool,
+  muted: PropTypes.bool,
+  noUnderline: PropTypes.bool,
+  noWrap: PropTypes.bool,
+  selector: PropTypes.string,
+  shade: PropTypes.oneOf([
+    'default',
+    'subtle',
+    'slightlyMuted',
+    'muted',
+    'faint',
+    'extraMuted',
+    '',
+    null,
+  ]),
+  size: PropTypes.oneOf(['10', '11', '12', '13', '14', '15', '20', '48']),
+  state: PropTypes.oneOf(['default', 'error', 'success', 'warning', '', null]),
+  subtle: PropTypes.bool,
+  truncate: PropTypes.bool,
+  weight: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  wordWrap: PropTypes.bool,
 }
 
 export default Text

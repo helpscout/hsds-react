@@ -3,19 +3,14 @@ import PropTypes from 'prop-types'
 import Flexy from '../Flexy'
 import { classNames } from '../../utilities/classNames'
 
-export interface Props {
-  className?: string
-  children?: any
-}
-
-export class Item extends React.PureComponent<Props> {
+export class ToolbarItem extends React.PureComponent {
   static displayName = 'Toolbar.Item'
   static className = 'c-ToolbarItem'
 
   getClassName() {
     const { className } = this.props
 
-    return classNames(Item.className, className)
+    return classNames(ToolbarItem.className, className)
   }
 
   render() {
@@ -33,4 +28,9 @@ export class Item extends React.PureComponent<Props> {
   }
 }
 
-export default Item
+ToolbarItem.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.any,
+}
+
+export default ToolbarItem

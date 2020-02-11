@@ -1,15 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import * as equal from 'fast-deep-equal'
-
 import HeaderCell from './Table.HeaderCell'
 import { TABLE_CLASSNAME } from './Table'
 import { generateCellKey } from './Table.utils'
+import { columnShape } from './Table'
 
-import { HeadProps } from './Table.types'
-
-export default class Head extends React.Component<HeadProps> {
+export default class Head extends React.Component {
   shouldComponentUpdate(nextProps) {
     const { columns, sortedInfo } = this.props
 
@@ -41,4 +38,13 @@ export default class Head extends React.Component<HeadProps> {
       </thead>
     )
   }
+}
+
+Head.propTypes = {
+  columns: PropTypes.arrayOf(columnShape),
+  isLoading: PropTypes.bool,
+  sortedInfo: PropTypes.shape({
+    columnKey: PropTypes.string,
+    order: PropTypes.string,
+  }),
 }

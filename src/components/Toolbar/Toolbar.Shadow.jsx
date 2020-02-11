@@ -3,11 +3,7 @@ import PropTypes from 'prop-types'
 import { classNames } from '../../utilities/classNames'
 import { ShadowUI } from './Toolbar.css'
 
-const defaultProps = {
-  placement: 'top',
-}
-
-export const Shadow = props => {
+export const ToolbarShadow = props => {
   const { className, children, placement, ...rest } = props
 
   const componentClassName = classNames(
@@ -19,6 +15,11 @@ export const Shadow = props => {
   return <ShadowUI {...rest} className={componentClassName} />
 }
 
-Shadow.defaultProps = defaultProps
+ToolbarShadow.defaultProps = {
+  placement: 'top',
+}
+ToolbarShadow.propTypes = {
+  placement: PropTypes.oneOf(['top', 'bottom']),
+}
 
-export default Shadow
+export default ToolbarShadow

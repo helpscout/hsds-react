@@ -5,20 +5,9 @@ import Flexy from '../Flexy'
 import Icon from '../Icon'
 import Text from '../Text'
 import Time from './Timestamp.Time'
-
 import { TimestampUI } from './Timestamp.css'
 
-type Props = {
-  children?: any
-  className?: string
-  formatter?: () => string
-  live?: boolean
-  muted?: boolean
-  read: boolean
-  timestamp?: string | number
-}
-
-class Timestamp extends React.Component<Props> {
+class Timestamp extends React.Component {
   static defaultProps = {
     live: false,
     read: false,
@@ -65,6 +54,16 @@ class Timestamp extends React.Component<Props> {
       </TimestampUI>
     )
   }
+}
+
+Timestamp.propTypes = {
+  children: PropTypes.any,
+  className: PropTypes.string,
+  formatter: PropTypes.func,
+  live: PropTypes.bool,
+  muted: PropTypes.bool,
+  read: PropTypes.bool,
+  timestamp: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
 }
 
 export default Timestamp

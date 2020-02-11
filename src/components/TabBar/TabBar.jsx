@@ -7,15 +7,7 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { TabBarUI, SecContentUI, ToolbarUI } from './TabBar.css'
 
-export interface Props {
-  className?: string
-  children?: any
-  innerRef: (node) => void
-  secContent?: any
-  align?: 'left' | 'center' | 'right'
-}
-
-export class TabBar extends React.Component<Props> {
+export class TabBar extends React.Component {
   static className = 'c-TabBar'
   static defaultProps = {
     innerRef: noop,
@@ -50,6 +42,14 @@ export class TabBar extends React.Component<Props> {
       </TabBarUI>
     )
   }
+}
+
+TabBar.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.any,
+  innerRef: PropTypes.func,
+  secContent: PropTypes.any,
+  align: PropTypes.oneOf(['left', 'center', 'right']),
 }
 
 export default TabBar

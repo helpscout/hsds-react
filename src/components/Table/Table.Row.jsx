@@ -1,14 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { classNames } from '../../utilities/classNames'
-
-import Cell from './Table.Cell'
-import { TABLE_CLASSNAME } from './Table'
 import { generateCellKey } from './Table.utils'
+import { TABLE_CLASSNAME, columnShape, dataShape } from './Table'
+import Cell from './Table.Cell'
 
-import { RowProps } from './Table.types'
-
-export default class Row extends React.PureComponent<RowProps> {
+export default class TableRow extends React.PureComponent {
   handleRowClick = e => {
     const { row, onRowClick } = this.props
     onRowClick && onRowClick(e, row)
@@ -32,4 +29,10 @@ export default class Row extends React.PureComponent<RowProps> {
       </tr>
     )
   }
+}
+
+TableRow.propTypes = {
+  columns: PropTypes.arrayOf(columnShape),
+  row: dataShape,
+  onRowClick: PropTypes.func,
 }

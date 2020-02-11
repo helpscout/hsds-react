@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { WithAktiv } from '../../utilities/storybook'
 import Text from '.'
 

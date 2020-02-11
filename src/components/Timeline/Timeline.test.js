@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { mount, shallow } from 'enzyme'
 import Timeline from './Timeline'
 import Item from './Timeline.Item'

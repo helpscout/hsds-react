@@ -4,16 +4,9 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import Timestamp from '../Timestamp'
 import { classNames } from '../../utilities/classNames'
-
 import { TimelineItemUI } from './Timeline.css'
 
-type Props = {
-  children?: any
-  className?: string
-  timestamp?: number | string
-}
-
-class Item extends React.PureComponent<Props> {
+class TimelineItem extends React.PureComponent {
   static displayName = 'Timeline.Item'
 
   render() {
@@ -42,4 +35,10 @@ class Item extends React.PureComponent<Props> {
   }
 }
 
-export default Item
+TimelineItem.propTypes = {
+  children: PropTypes.any,
+  className: PropTypes.string,
+  timestamp: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+}
+
+export default TimelineItem

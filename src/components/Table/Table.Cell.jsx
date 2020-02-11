@@ -1,13 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-
 import Truncate from '../Truncate'
 import { CellUI } from './Table.css'
-import { TABLE_CLASSNAME } from './Table'
+import { TABLE_CLASSNAME, columnShape, dataShape } from './Table'
 
-import { CellProps } from './Table.types'
-
-export default class Cell extends React.PureComponent<CellProps> {
+export default class Cell extends React.PureComponent {
   getCompoundColumnCellData = () => {
     const { column, row } = this.props
     const cellData = {}
@@ -33,9 +29,7 @@ export default class Cell extends React.PureComponent<CellProps> {
   }
 
   renderCompoundColumnCellDefaultMarkup = cellData => {
-    return (Object as any)
-      .values(cellData)
-      .map(d => <div key={d.slice(4)}>{d}</div>)
+    return Object.values(cellData).map(d => <div key={d.slice(4)}>{d}</div>)
   }
 
   renderSingleColumnCell = () => {
@@ -45,10 +39,10 @@ export default class Cell extends React.PureComponent<CellProps> {
       <CellUI align={column.align} className={`${TABLE_CLASSNAME}__Cell`}>
         {column.renderCell ? (
           column.renderCell({
-            [column.columnKey as any]: row[column.columnKey as any],
+            [column.columnKey]: row[column.columnKey],
           })
         ) : (
-          <Truncate>{row[column.columnKey as any]}</Truncate>
+          <Truncate>{row[column.columnKey]}</Truncate>
         )}
       </CellUI>
     )
@@ -61,4 +55,9 @@ export default class Cell extends React.PureComponent<CellProps> {
       ? this.renderCompoundColumnsCell()
       : this.renderSingleColumnCell()
   }
+}
+
+Cell.propTypes = {
+  column: columnShape,
+  row: dataShape,
 }

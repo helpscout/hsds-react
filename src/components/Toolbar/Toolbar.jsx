@@ -3,21 +3,10 @@ import PropTypes from 'prop-types'
 import Block from './Toolbar.Block'
 import Item from './Toolbar.Item'
 import Shadow from './Toolbar.Shadow'
-import { ToolbarPlacement, ToolbarSize, ToolbarTheme } from './Toolbar.types'
 import { classNames } from '../../utilities/classNames'
 import { WrapperUI, ToolbarUI } from './Toolbar.css'
 
-export interface Props {
-  className?: string
-  children?: any
-  placement: ToolbarPlacement
-  shadow: boolean
-  seamless: boolean
-  size: ToolbarSize
-  theme: ToolbarTheme
-}
-
-export class Toolbar extends React.PureComponent<Props> {
+export class Toolbar extends React.PureComponent {
   static defaultProps = {
     placement: 'top',
     seamless: false,
@@ -73,6 +62,16 @@ export class Toolbar extends React.PureComponent<Props> {
       </WrapperUI>
     )
   }
+}
+
+Toolbar.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.any,
+  placement: PropTypes.oneOf(['top', 'bottom']),
+  shadow: PropTypes.bool,
+  seamless: PropTypes.bool,
+  size: PropTypes.oneOf(['xl', 'lg', 'md', 'sm', 'xs']),
+  theme: PropTypes.oneOf(['default', 'note']),
 }
 
 export default Toolbar

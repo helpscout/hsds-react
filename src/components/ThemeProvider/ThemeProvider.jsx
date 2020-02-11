@@ -2,19 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { noop } from '../../utilities/other'
 
-export interface Props {
-  children?: any
-  theme: string
-}
-
-export interface State {
-  theme: string
-}
-
-class ThemeProvider extends React.PureComponent<Props, State> {
-  static propTypes: Object
-  static displayName: string
-
+class ThemeProvider extends React.PureComponent {
   static defaultProps = {
     theme: 'default',
   }
@@ -24,6 +12,7 @@ class ThemeProvider extends React.PureComponent<Props, State> {
 
   constructor(props, context) {
     super(props, context)
+
     this.state = {
       theme: props.theme,
     }
@@ -46,6 +35,11 @@ class ThemeProvider extends React.PureComponent<Props, State> {
   render() {
     return this.props.children
   }
+}
+
+ThemeProvider.propTypes = {
+  children: PropTypes.any,
+  theme: PropTypes.oneOf([PropTypes.string, 'default']),
 }
 
 export default ThemeProvider

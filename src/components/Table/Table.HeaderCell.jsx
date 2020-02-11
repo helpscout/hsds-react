@@ -1,13 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import Icon from '../Icon'
 import { SortableCellUI, HeaderCellUI } from './Table.css'
-import { TABLE_CLASSNAME } from './Table'
+import { TABLE_CLASSNAME, columnShape } from './Table'
 
-import { HeaderCellProps } from './Table.types'
-
-export default class HeaderCell extends React.PureComponent<HeaderCellProps> {
+export default class HeaderCell extends React.PureComponent {
   getColumnSortStatus = () => {
     const { column, sortedInfo } = this.props
     const colKey = Array.isArray(column.columnKey)
@@ -18,8 +15,6 @@ export default class HeaderCell extends React.PureComponent<HeaderCellProps> {
       sortedInfo != null && sortedInfo.order && sortedInfo.columnKey === colKey
 
     if (isTableSortedByThisColumn) {
-      
-      // TS complains that sortedInfo could be undefined, but given the conditional above, it can't
       return sortedInfo.order
     }
 
@@ -83,4 +78,13 @@ export default class HeaderCell extends React.PureComponent<HeaderCellProps> {
       </HeaderCellUI>
     )
   }
+}
+
+HeaderCell = {
+  columns: PropTypes.arrayOf(columnShape),
+  isLoading: PropTypes.bool,
+  sortedInfo: PropTypes.shape({
+    columnKey: PropTypes.string,
+    order: PropTypes.string,
+  }),
 }
