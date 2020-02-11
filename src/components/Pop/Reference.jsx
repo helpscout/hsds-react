@@ -1,9 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import ReactPopperReference from '../Popper/Popper.Reference'
 import styled from 'styled-components'
 
-class Reference extends React.Component<any> {
+class Reference extends React.Component {
   static displayName = 'Pop.Reference'
 
   render() {
@@ -17,7 +16,7 @@ class Reference extends React.Component<any> {
   }
 }
 
-const ReferenceUI = styled('span')<{ display?: any }>`
+const ReferenceUI = styled('span')`
   display: ${props => props.display};
 `
 

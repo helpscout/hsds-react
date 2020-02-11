@@ -5,43 +5,6 @@ import PopperJS from '../../utilities/popper.lib'
 import { ManagerContext } from './Popper.Manager'
 import { safeInvoke, unwrapArray } from './Popper.utils'
 
-type ReferenceElement = any
-type StyleOffsets = { top: number; left: number }
-type StylePosition = { position: 'absolute' | 'fixed' }
-
-export type PopperArrowProps = {
-  ref: any
-  style: StyleOffsets
-}
-
-export type PopperChildrenProps = {
-  ref: any
-  style: StyleOffsets & StylePosition
-  placement: any
-  outOfBoundaries?: boolean
-  scheduleUpdate: () => void
-  arrowProps: PopperArrowProps
-}
-
-export type PopperChildren = any
-
-export type PopperProps = {
-  children: PopperChildren
-  eventsEnabled?: boolean
-  ref?: any
-  modifiers?: any
-  placement?: any
-  positionFixed?: boolean
-  referenceElement?: ReferenceElement
-}
-
-type PopperState = {
-  popperNode?: HTMLElement
-  arrowNode?: HTMLElement
-  popperInstance?: any
-  data?: any
-}
-
 const initialStyle = {
   position: 'absolute',
   top: 0,
@@ -52,7 +15,7 @@ const initialStyle = {
 
 const initialArrowStyle = {}
 
-export class InnerPopper extends React.Component<PopperProps, PopperState> {
+export class InnerPopper extends React.Component {
   static defaultProps = {
     placement: 'bottom',
     eventsEnabled: true,
@@ -66,8 +29,7 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
     popperInstance: undefined,
     data: undefined,
   }
-  arrowNodeRef: any = null
-
+  arrowNodeRef = null
   _isMounted = false
 
   constructor(props) {
@@ -82,13 +44,11 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
   componentWillUnmount() {
     this._isMounted = false
     if (this.state.popperInstance) {
-      
-      
       this.state.popperInstance.destroy()
     }
   }
 
-  safeSetState(state, callback?) {
+  safeSetState(state, callback) {
     if (this._isMounted) {
       return this.setState(state, callback)
     }
@@ -102,7 +62,7 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
   updateStateModifier = {
     enabled: true,
     order: 900,
-    fn: (data: Object) => {
+    fn: data => {
       this.safeSetState({ data })
       return data
     },
@@ -127,37 +87,26 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
     !this.state.popperNode || !this.state.data
       ? initialStyle
       : {
-          
-          
           position: this.state.data.offsets.popper.position,
-          
-          
+
           ...this.state.data.styles,
         }
 
   getPopperPlacement = () =>
-    
-    
     !this.state.data ? undefined : this.state.data.placement
 
   getArrowStyle = () =>
     !this.arrowNodeRef.current || !this.state.data
       ? initialArrowStyle
-      : 
-        
-        this.state.data.arrowStyles
+      : this.state.data.arrowStyles
 
   getOutOfBoundariesState = () =>
-    
-    
     this.state.data ? this.state.data.hide : undefined
 
   initPopperInstance = () => {
     const { referenceElement } = this.props
     const { popperInstance } = this.state
     if (referenceElement && this.state.popperNode && !popperInstance) {
-      
-      
       const popperInstance = new PopperJS(
         referenceElement,
         this.state.popperNode,
@@ -169,10 +118,8 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
     return false
   }
 
-  destroyPopperInstance = (callback: () => boolean) => {
+  destroyPopperInstance = callback => {
     if (this.state.popperInstance) {
-      
-      
       this.state.popperInstance.destroy()
     }
     this.safeSetState({ popperInstance: undefined }, callback)
@@ -186,13 +133,11 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
 
   scheduleUpdate = () => {
     if (this.state.popperInstance) {
-      
-      
       this.state.popperInstance.scheduleUpdate()
     }
   }
 
-  componentDidUpdate(prevProps: PopperProps, prevState: PopperState) {
+  componentDidUpdate(prevProps, prevState) {
     // If needed, initialize the Popper.js instance
     // it will return `true` if it initialized a new instance, or `false` otherwise
     // if it returns `false`, we make sure Popper props haven't changed, and update
@@ -228,7 +173,30 @@ export class InnerPopper extends React.Component<PopperProps, PopperState> {
 const placements = PopperJS.placements
 export { placements }
 
-export default function Popper(props: PopperProps) {
+InnerPopper.propTypes = {
+  children: PropTypes.shape({
+    ref: PropTypes.any,
+    style: PropTypes.oneOf([
+      PropTypes.any,
+      PropTypes.shape({ position: PropTypes.oneOf(['absolute', 'fixed']) }),
+    ]),
+    placement: PropTypes.any,
+    outOfBoundaries: PropTypes.bool,
+    scheduleUpdate: PropTypes.func,
+    arrowProps: PropTypes.shape({
+      ref: PropTypes.any,
+      style: PropTypes.shape({ top: PropTypes.number, left: PropTypes.number }),
+    }),
+  }),
+  eventsEnabled: PropTypes.bool,
+  ref: PropTypes.any,
+  modifiers: PropTypes.any,
+  placement: PropTypes.any,
+  positionFixed: PropTypes.bool,
+  referenceElement: PropTypes.any,
+}
+
+export default function Popper(props) {
   return (
     <ManagerContext.Consumer>
       {({ referenceNode }) => (
@@ -237,3 +205,5 @@ export default function Popper(props: PopperProps) {
     </ManagerContext.Consumer>
   )
 }
+
+Popper.propTypes = InnerPopper.propTypes

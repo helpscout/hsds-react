@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { PopProps } from '../Pop/Pop.types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Pop from '../Pop'
 import Popper from './Tooltip.Popper'
@@ -9,25 +8,11 @@ import { noop } from '../../utilities/other'
 import { isFunction } from '../../utilities/is'
 import { renderChildrenSafely } from '../../utilities/component'
 import { getColor } from '../../styles/utilities/color'
-
-export interface Props extends PopProps {
-  arrowClassName: string
-  contentClassName?: string
-  className?: string
-  color: string
-  dataCyPopper: string
-  innerRef: (node) => void
-  minWidth?: number | string
-  maxWidth?: number | string
-  renderContent?: (props: any) => void
-  theme?: string
-  title?: any
-  zIndex?: number
-}
+import { popShape } from '../Pop/Pop'
 
 export const TooltipContext = React.createContext({})
 
-export class Tooltip extends React.PureComponent<Props> {
+export class Tooltip extends React.PureComponent {
   static defaultProps = {
     arrowClassName: 'c-TooltipArrow',
     arrowSize: 12,
@@ -86,16 +71,15 @@ export class Tooltip extends React.PureComponent<Props> {
    * Storybook.
    */
   /* istanbul ignore next */
-  renderContent = (renderProps?: any) => {
+  renderContent = renderProps => {
     const { renderContent, placement, title } = this.props
 
     if (!this.hasRenderContentProp()) return renderChildrenSafely(title)
 
-    
     return renderContent({ ...renderProps, placement, title })
   }
 
-  renderPopper = (renderProps?: any) => {
+  renderPopper = renderProps => {
     const { dataCyPopper, maxWidth, minWidth } = this.props
 
     return (
@@ -152,5 +136,22 @@ const TooltipConsumer = props => {
 
   return <Tooltip {...newProps} />
 }
+
+Tooltip.propTypes = Object.assign(popShape, {
+  arrowClassName: PropTypes.string,
+  contentClassName: PropTypes.string,
+  className: PropTypes.string,
+  color: PropTypes.string,
+  dataCyPopper: PropTypes.string,
+  innerRef: PropTypes.func,
+  minWidth: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  maxWidth: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  renderContent: PropTypes.func,
+  theme: PropTypes.string,
+  title: PropTypes.any,
+  zIndex: PropTypes.number,
+})
+
+TooltipConsumer.propTypes = Tooltip.propTypes
 
 export default TooltipConsumer

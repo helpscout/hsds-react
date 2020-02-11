@@ -2,24 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { noop } from '../../utilities/other'
 import { ArrowUI } from './Arrow.css'
 
-export interface Props {
-  color?: string
-  className?: string
-  children?: any
-  arrowRef: React.RefObject<HTMLInputElement>
-  placement: string
-  offset: number
-  size: number
-  style?: Object
-  showArrow: boolean
-  theme?: Object | string
-  zIndex: number
-}
-
-export class Arrow extends React.PureComponent<Props> {
+export class Arrow extends React.PureComponent {
   static defaultProps = {
     'data-cy': 'PopArrow',
     ref: null,
@@ -107,7 +92,7 @@ export class Arrow extends React.PureComponent<Props> {
  * @param   {string} placement
  * @returns {string}
  */
-export const getPlacement = (placement: string) => {
+export const getPlacement = placement => {
   if (!placement) return ''
 
   return placement.split('-')[0]
@@ -119,7 +104,7 @@ export const getPlacement = (placement: string) => {
  * @param   {string} placement
  * @returns {string}
  */
-export const getPosition = (placement: string) => {
+export const getPosition = placement => {
   if (!placement || placement.indexOf('-') < 0) return ''
 
   return placement.split('-')[1]
@@ -135,6 +120,20 @@ export const sanitizeStyles = style => {
     left: isNaN(left) ? 0 : left,
     top: isNaN(top) ? 0 : top,
   }
+}
+
+Arrow.propTypes = {
+  color: PropTypes.string,
+  className: PropTypes.string,
+  children: PropTypes.any,
+  arrowRef: PropTypes.node,
+  placement: PropTypes.string,
+  offset: PropTypes.number,
+  size: PropTypes.number,
+  style: PropTypes.object,
+  showArrow: PropTypes.bool,
+  theme: PropTypes.oneOf([PropTypes.object, PropTypes.string]),
+  zIndex: PropTypes.number,
 }
 
 export default Arrow

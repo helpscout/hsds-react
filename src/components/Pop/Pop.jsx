@@ -9,27 +9,12 @@ import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { PopProps, PopInteraction } from './Pop.types'
 import { PopUI } from './Pop.css'
 import { INTERACTION_TYPE } from './Pop.utils'
 
-export interface Props extends PopProps {
-  onBeforeOpen: (instance: Pop) => Promise<any>
-  onBeforeClose: (instance: Pop) => Promise<any>
-  onContentClick: (event: React.MouseEvent) => void
-  shouldClose: (...args: any) => boolean
-  shouldOpen: (...args: any) => boolean
-  wrapperStyles: Object
-}
-
-export interface State {
-  id: string
-  isOpen: boolean
-}
-
 const uniqueID = createUniqueIDFactory('Pop')
 
-class Pop extends React.Component<Props, State> {
+class Pop extends React.Component {
   static defaultProps = {
     arrowSize: 5,
     closeOnBodyClick: true,
@@ -57,7 +42,7 @@ class Pop extends React.Component<Props, State> {
   static Popper = Popper
   static Reference = Reference
 
-  node: any = null
+  node = null
   _isMounted = false
 
   state = {
@@ -77,7 +62,7 @@ class Pop extends React.Component<Props, State> {
     }
   }
 
-  componentWillReceiveProps = (nextProps: Props) => {
+  componentWillReceiveProps = nextProps => {
     const { isOpen: wasOpen } = this.props
     const { isOpen: willOpen } = nextProps
 
@@ -104,13 +89,13 @@ class Pop extends React.Component<Props, State> {
     }
   }
 
-  handleMouseMove = (event: React.MouseEvent) => {
+  handleMouseMove = event => {
     if (!this.shouldHandleHover()) return
     if (this.state.isOpen) return
     this.open({ type: INTERACTION_TYPE.MOUSE_MOVE, props: { event } })
   }
 
-  handleMouseLeave = (event: React.MouseEvent) => {
+  handleMouseLeave = event => {
     if (!this.shouldHandleHover()) return
     if (!this.props.closeOnMouseLeave) return
 
@@ -151,12 +136,11 @@ class Pop extends React.Component<Props, State> {
   handleOnBodyClick = event => {
     if (!this.state.isOpen) return
     if (!this.shouldHandleHover() && !this.props.closeOnBodyClick) return
-    const popperNode = document.getElementById(this.state.id) as HTMLElement
+    const popperNode = document.getElementById(this.state.id)
 
     if (
       !event ||
       event.target === this.node.current ||
-      
       this.node.current.contains(event.target) ||
       (popperNode && popperNode.contains(event.target))
     ) {
@@ -166,7 +150,7 @@ class Pop extends React.Component<Props, State> {
     this.close({ type: INTERACTION_TYPE.BODY_CLICK, props: { event } })
   }
 
-  handleOnContentClick = (event: React.MouseEvent) => {
+  handleOnContentClick = event => {
     this.props.onContentClick(event)
 
     if (!this.props.closeOnContentClick) {
@@ -186,7 +170,7 @@ class Pop extends React.Component<Props, State> {
 
   shouldHandleHover = () => this.props.triggerOn === 'hover'
 
-  open = ({ type, props: extraProps }: PopInteraction) => {
+  open = ({ type, props: extraProps }) => {
     if (!this.props.shouldOpen(type, extraProps)) return
 
     this.props.onBeforeOpen(this).then(() => {
@@ -196,7 +180,7 @@ class Pop extends React.Component<Props, State> {
     })
   }
 
-  close = ({ type, props: extraProps }: PopInteraction) => {
+  close = ({ type, props: extraProps }) => {
     if (!this.props.shouldClose(type, extraProps)) return
 
     this.props.onBeforeClose(this).then(() => {
@@ -206,7 +190,7 @@ class Pop extends React.Component<Props, State> {
     })
   }
 
-  toggleOpen = (event) => {
+  toggleOpen = event => {
     if (this.state.isOpen) {
       this.close({ type: INTERACTION_TYPE.TOGGLE, props: { event } })
     } else {
@@ -214,7 +198,7 @@ class Pop extends React.Component<Props, State> {
     }
   }
 
-  getWrapperStyles(): Object {
+  getWrapperStyles() {
     const { wrapperStyles } = this.props
 
     return { ...wrapperStyles }
@@ -311,5 +295,59 @@ class Pop extends React.Component<Props, State> {
     )
   }
 }
+
+export const popShape = PropTypes.shape({
+  animationDelay: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  animationDuration: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  animationEasing: PropTypes.string,
+  animationSequence: PropTypes.oneOf([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+  arrowClassName: PropTypes.string,
+  arrowSize: PropTypes.number,
+  children: PropTypes.any,
+  className: PropTypes.string,
+  closeOnBodyClick: PropTypes.bool,
+  closeOnEscPress: PropTypes.bool,
+  closeOnContentClick: PropTypes.bool,
+  closeOnMouseLeave: PropTypes.bool,
+  display: PropTypes.string,
+  id: PropTypes.string,
+  isOpen: PropTypes.bool,
+  modifiers: PropTypes.any,
+  onClose: PropTypes.func,
+  onOpen: PropTypes.func,
+  placement: PropTypes.oneOf([
+    'auto-start',
+    'auto',
+    'auto-end',
+    'top-start',
+    'top',
+    'top-end',
+    'right-start',
+    'right',
+    'right-end',
+    'bottom-end',
+    'bottom',
+    'bottom-start',
+    'left-end',
+    'left',
+    'left-start',
+  ]),
+  triggerOn: PropTypes.oneOf(['hover', 'click']),
+  showArrow: PropTypes.bool,
+  zIndex: PropTypes.number,
+  dataCy: PropTypes.string,
+})
+
+Pop.propTypes = Object.assign(popShape, {
+  onBeforeOpen: PropTypes.func,
+  onBeforeClose: PropTypes.func,
+  onContentClick: PropTypes.func,
+  shouldClose: PropTypes.func,
+  shouldOpen: PropTypes.func,
+  wrapperStyles: PropTypes.object,
+})
 
 export default Pop

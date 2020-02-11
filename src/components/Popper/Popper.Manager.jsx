@@ -6,20 +6,7 @@ export const ManagerContext = React.createContext({
   referenceNode: undefined,
 })
 
-export type ManagerProps = {
-  children: any
-}
-type ManagerState = {
-  context: {
-    getReferenceRef?: (HTMLElement?) => void
-    referenceNode?: HTMLElement
-  }
-}
-
-export default class Manager extends React.Component<
-  ManagerProps,
-  ManagerState
-> {
+export default class Manager extends React.Component {
   constructor(popper) {
     super(popper)
 
@@ -44,4 +31,8 @@ export default class Manager extends React.Component<
       </ManagerContext.Provider>
     )
   }
+}
+
+Manager.propTypes = {
+  children: PropTypes.any,
 }

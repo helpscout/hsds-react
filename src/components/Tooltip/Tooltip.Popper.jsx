@@ -5,14 +5,7 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { PopperUI } from './Tooltip.css'
 
-export interface Props {
-  children: any
-  className?: string
-  innerRef: (node) => void
-  theme?: string
-}
-
-export class Popper extends React.PureComponent<Props> {
+export class Popper extends React.PureComponent {
   static defaultProps = {
     innerRef: noop,
   }
@@ -38,6 +31,13 @@ export class Popper extends React.PureComponent<Props> {
       </PopperUI>
     )
   }
+}
+
+Popper.propTypes = {
+  children: PropTypes.any,
+  className: PropTypes.string,
+  innerRef: PropTypes.func,
+  theme: PropTypes.string,
 }
 
 export default Popper

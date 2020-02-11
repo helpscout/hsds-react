@@ -1,36 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import ReactPopper from '../Popper/Popper'
-import Animate from '../Animate'
-import Portal from './Pop.Portal'
-import Arrow from './Arrow'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { renderRenderPropComponent } from '../../utilities/component'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { PopProps } from './Pop.types'
 import { PopPopperUI } from './Pop.css'
+import ReactPopper from '../Popper/Popper'
+import Animate from '../Animate'
+import Portal from './Pop.Portal'
+import Arrow from './Arrow'
+import { popShape } from './Pop'
 
 const uniqueID = createUniqueIDFactory('PopPopper')
 
-export interface Props extends PopProps {
-  animationDelay: number | string
-  animationDuration: number | string
-  animationEasing: string
-  animationSequence: string | Array<string>
-  arrowColor?: string
-  arrowSize: number
-  offset: number
-  close: () => void
-  onClick: (event: React.MouseEvent) => void
-  onContentClick: (event: React.MouseEvent) => void
-  onMouseLeave: (event: React.MouseEvent) => void
-  positionFixed: boolean
-  zIndex: number
-}
-
-export class Popper extends React.Component<Props> {
+export class Popper extends React.Component {
   static defaultProps = {
     animationDelay: 0,
     animationDuration: 0,
@@ -64,7 +48,7 @@ export class Popper extends React.Component<Props> {
     return this.props.id || this.id
   }
 
-  handleOnClick = (event: React.MouseEvent) => {
+  handleOnClick = event => {
     /* istanbul ignore next */
     event && event.stopPropagation()
     this.props.onClick(event)
@@ -176,7 +160,7 @@ export class Popper extends React.Component<Props> {
  * @param   {object} props
  * @returns {object}
  */
-export const enhancePopperStyles = (props: any = {}) => {
+export const enhancePopperStyles = (props = {}) => {
   const options = {
     arrowSize: props.arrowSize || 5,
     offset: props.offset || 0,
@@ -213,5 +197,24 @@ export const enhancePopperStyles = (props: any = {}) => {
 
   return style
 }
+
+Popper.propTypes = Object.assign(popShape, {
+  animationDelay: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  animationDuration: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  animationEasing: PropTypes.string,
+  animationSequence: PropTypes.oneOf([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+  arrowColor: PropTypes.string,
+  arrowSize: PropTypes.number,
+  offset: PropTypes.number,
+  close: PropTypes.func,
+  onClick: PropTypes.func,
+  onContentClick: PropTypes.func,
+  onMouseLeave: PropTypes.func,
+  positionFixed: PropTypes.bool,
+  zIndex: PropTypes.number,
+})
 
 export default Popper
