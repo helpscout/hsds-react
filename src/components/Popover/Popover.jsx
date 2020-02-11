@@ -5,25 +5,10 @@ import { noop } from '../../utilities/other'
 import { renderRenderPropComponent } from '../../utilities/component'
 import { HeaderUI, HeadingUI } from './Popover.css'
 import Text from '../Text'
-import Tooltip, { Props as TooltipProps } from '../Tooltip/Tooltip'
+import Tooltip from '../Tooltip/Tooltip'
 import { isPlainContent } from './Popover.utils'
 
-export interface Props extends TooltipProps {
-  className?: string
-  content?: any
-  children?: any
-  innerRef: (node) => void
-  header?: any
-  renderHeader?: any
-  renderContent?: any
-}
-
-export type PopperRenderProps = {
-  close: () => void
-  placement: string
-}
-
-export class Popover extends React.PureComponent<Props> {
+export class Popover extends React.PureComponent {
   static className = 'c-Popover'
   static defaultProps = {
     ...Tooltip.defaultProps,
@@ -36,7 +21,7 @@ export class Popover extends React.PureComponent<Props> {
     return classNames(Popover.className, className)
   }
 
-  getRenderProps(renderProps: PopperRenderProps) {
+  getRenderProps(renderProps) {
     return {
       ...renderProps,
       Header: HeaderUI,
@@ -44,7 +29,7 @@ export class Popover extends React.PureComponent<Props> {
     }
   }
 
-  renderPopoverContent = (renderProps: PopperRenderProps) => {
+  renderPopoverContent = renderProps => {
     const { content, renderContent } = this.props
 
     if (renderContent) {
@@ -63,7 +48,7 @@ export class Popover extends React.PureComponent<Props> {
     }
   }
 
-  renderPopoverHeader = (renderProps: PopperRenderProps) => {
+  renderPopoverHeader = renderProps => {
     const { header, renderHeader } = this.props
     if (!header && !renderHeader) return null
 
@@ -117,5 +102,15 @@ export class Popover extends React.PureComponent<Props> {
     )
   }
 }
+
+Popover.propTypes = Object.assign(Tooltip.propTypes, {
+  className: PropTypes.string,
+  content: PropTypes.any,
+  children: PropTypes.any,
+  innerRef: PropTypes.func,
+  header: PropTypes.any,
+  renderHeader: PropTypes.any,
+  renderContent: PropTypes.any,
+})
 
 export default Popover

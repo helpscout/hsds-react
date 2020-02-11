@@ -29,11 +29,7 @@ export const config = {
   willChange: 'box-shadow',
 }
 
-interface RadioCardUIProp {
-  maxWidth: any
-}
-
-export const RadioCardUI = styled('label')<RadioCardUIProp>`
+export const RadioCardUI = styled('label')`
   align-items: center;
   border-radius: ${config.borderRadius}px;
   box-shadow: ${config.boxShadow};

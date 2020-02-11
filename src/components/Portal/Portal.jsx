@@ -5,9 +5,8 @@ import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFro
 import Container, { ID as portalContainerId } from './Portal.Container'
 import { isNodeElement } from '../../utilities/node'
 import { isObject, isString } from '../../utilities/is'
-import { PortalProps } from './Portal.types'
 
-export class Portal extends React.Component<PortalProps> {
+export class Portal extends React.Component {
   static defaultProps = {
     timeout: 0,
   }
@@ -41,8 +40,6 @@ export class Portal extends React.Component<PortalProps> {
   /* istanbul ignore next */
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.node && this.props.className !== nextProps.className) {
-      
-      
       this.node.className = nextProps.className
     }
 
@@ -74,14 +71,13 @@ export class Portal extends React.Component<PortalProps> {
     mountSelector =
       mountSelector || document.querySelector(`#${portalContainerId}`)
     // 3. Fallback to document.body
-    
-    
+
     // 3- is inside an iframe
     if (!mountSelector && window.parent && !window.STORYBOOK_ENV) {
       mountSelector = window.parent.document.body
     }
     /* istanbul ignore next */
-    
+
     return mountSelector || this.document.body // fallback
   }
 
@@ -93,8 +89,7 @@ export class Portal extends React.Component<PortalProps> {
     this.portal = ReactDOM.unstable_renderSubtreeIntoContainer(
       this,
       <>{children}</>,
-      
-      
+
       this.node
     )
   }
@@ -109,24 +104,17 @@ export class Portal extends React.Component<PortalProps> {
       return
     }
 
-    
-    
     this.node = document.createElement('div')
 
     if (className) {
-      
-      
       this.node.className = className
     }
     if (id) {
-      
-      
       this.node.id = id
     }
 
     // Render to specified target, instead of document
-    
-    
+
     this.state.mountSelector.appendChild(this.node)
     this.renderPortalContent(props)
 
@@ -142,18 +130,12 @@ export class Portal extends React.Component<PortalProps> {
 
     const { onClose } = props
 
-    
-    
     ReactDOM.unmountComponentAtNode(this.node)
     // Unmount from specified target, instead of document
     if (
       this.state.mountSelector &&
-      
-      
       this.node.parentNode === this.state.mountSelector
     ) {
-      
-      
       this.state.mountSelector.removeChild(this.node)
     }
 
@@ -173,15 +155,12 @@ export class Portal extends React.Component<PortalProps> {
       if (!this.isOpening && !this.isOpen) {
         this.isOpening = true
         onBeforeOpen(() => {
-          
-          
           this.mountPortal(props)
         })
       }
     } else {
       this.isOpening = true
-      
-      
+
       this.mountPortal(props)
     }
   }
@@ -206,6 +185,19 @@ export class Portal extends React.Component<PortalProps> {
   render() {
     return null
   }
+}
+
+Portal.propTypes = {
+  className: PropTypes.string,
+  exact: PropTypes.bool,
+  id: PropTypes.string,
+  renderTo: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  onBeforeOpen: PropTypes.func,
+  onOpen: PropTypes.func,
+  onBeforeClose: PropTypes.func,
+  onClose: PropTypes.func,
+  path: PropTypes.string,
+  timeout: PropTypes.number,
 }
 
 export default Portal

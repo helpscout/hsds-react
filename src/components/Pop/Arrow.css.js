@@ -2,12 +2,7 @@ import styled from 'styled-components'
 
 import { config as popoverConfig } from '../Popover/Popover.css'
 
-interface ArrowUIProps {
-  size?: any
-  color?: any
-}
-
-export const ArrowUI = styled.span<ArrowUIProps>`
+export const ArrowUI = styled.span`
   height: ${({ size }) => size}px;
   pointer-events: none;
   position: absolute;

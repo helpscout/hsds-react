@@ -5,14 +5,7 @@ import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
 import { OptionIconUI } from './OptionIcon.css'
 
-type Props = {
-  children?: any
-  className?: string
-  icon: string
-  title?: string
-}
-
-class OptionIcon extends React.PureComponent<Props> {
+class OptionIcon extends React.PureComponent {
   static defaultProps = {
     icon: 'chat',
   }
@@ -32,6 +25,13 @@ class OptionIcon extends React.PureComponent<Props> {
       </OptionIconUI>
     )
   }
+}
+
+OptionIcon.propTypes = {
+  children: PropTypes.any,
+  className: PropTypes.string,
+  icon: PropTypes.string,
+  title: PropTypes.string,
 }
 
 export default OptionIcon

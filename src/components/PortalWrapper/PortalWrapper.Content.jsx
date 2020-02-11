@@ -4,12 +4,7 @@ import { setupManager } from '../../utilities/globalManager'
 
 const managerNamespace = 'BluePortalWrapperGlobalManager'
 
-export interface Props {
-  manager: any
-  id: number | string
-}
-
-class Content extends React.PureComponent<Props> {
+class Content extends React.PureComponent {
   static defaultProps = {
     manager: setupManager(managerNamespace),
     id: 1000,
@@ -28,6 +23,11 @@ class Content extends React.PureComponent<Props> {
   render() {
     return this.props.children || null
   }
+}
+
+Content.propTypes = {
+  manager: PropTypes.any,
+  id: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
 }
 
 export default Content

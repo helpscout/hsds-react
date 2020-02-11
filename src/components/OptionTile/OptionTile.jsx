@@ -6,9 +6,8 @@ import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { OptionTileUI, HeaderUI, ContentUI, TitleUI } from './OptionTile.css'
 import OptionIcon from './OptionIcon'
-import { OptionTileProps } from './OptionTile.types'
 
-class OptionTile extends React.PureComponent<OptionTileProps> {
+class OptionTile extends React.PureComponent {
   static defaultProps = {
     icon: 'chat',
     title: 'Title',
@@ -72,6 +71,20 @@ class OptionTile extends React.PureComponent<OptionTileProps> {
       </OptionTileUI>
     )
   }
+}
+
+OptionTile.propTypes = {
+  children: PropTypes.any,
+  className: PropTypes.string,
+  href: PropTypes.string,
+  icon: PropTypes.string,
+  iconTitle: PropTypes.string,
+  minHeight: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  to: PropTypes.string,
+  title: PropTypes.string,
+  style: PropTypes.object,
+  subtitle: PropTypes.string,
+  textAlign: PropTypes.string,
 }
 
 export default OptionTile
