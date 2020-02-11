@@ -45,7 +45,7 @@ export const OperatorUI = styled('div')`
   }
 `
 
-export const ButtonWrapperUI = styled('div')<{ align?: any }>`
+export const ButtonWrapperUI = styled('div')`
   ${({ align }) => `text-align: ${align};`};
 `
 

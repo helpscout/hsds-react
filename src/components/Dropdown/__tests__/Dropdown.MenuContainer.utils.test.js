@@ -2,7 +2,6 @@ import { getComputedClientRect } from '../Dropdown.MenuContainer.utils'
 
 describe('getComputedClientRect', () => {
   test('Returns zero values if invalid node', () => {
-    
     const results = getComputedClientRect(null, window)
 
     expect(results.height).toBe(0)

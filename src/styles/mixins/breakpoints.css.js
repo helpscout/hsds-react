@@ -24,8 +24,8 @@ export function breakpoint(value = 'md', styles) {
   const minWidth = breakpoints.hasOwnProperty(value)
     ? breakpoints[value]
     : isNumber(value)
-      ? `${value}px`
-      : value
+    ? `${value}px`
+    : value
 
   const compiledStyles = isFunction(styles) ? styles() : styles
 
