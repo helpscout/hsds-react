@@ -1,6 +1,6 @@
 import { isFirefox } from '../../utilities/browser'
 
-export function scrollLockX(event: any, stopPropagation: boolean) {
+export function scrollLockX(event, stopPropagation) {
   // Disabled for Firefox
   /* istanbul ignore if */
   // Can't test this function in JSDOM
@@ -22,7 +22,7 @@ export function scrollLockX(event: any, stopPropagation: boolean) {
   }
 }
 
-export function scrollLockY(event: any, stopPropagation: boolean) {
+export function scrollLockY(event, stopPropagation) {
   // Disabled for Firefox
   /* istanbul ignore if */
   // Can't test this function in JSDOM
@@ -44,11 +44,7 @@ export function scrollLockY(event: any, stopPropagation: boolean) {
   }
 }
 
-export function handleWheelEvent(
-  event: any,
-  direction: 'x' | 'y',
-  stopPropagation: boolean
-) {
+export function handleWheelEvent(event, direction, stopPropagation) {
   if (direction === 'x') {
     return scrollLockX(event, stopPropagation)
   } else {

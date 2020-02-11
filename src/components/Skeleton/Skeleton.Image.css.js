@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import Block from './Skeleton.Block'
+import SkeletonBlock from './Skeleton.Block'
 
-export const ImageUI = styled(Block)`
+export const ImageUI = styled(SkeletonBlock)`
   border-radius: 4px;
   height: 0;
   overflow: hidden;

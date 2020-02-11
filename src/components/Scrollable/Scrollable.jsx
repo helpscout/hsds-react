@@ -1,4 +1,3 @@
-
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
@@ -14,24 +13,7 @@ import {
 import { noop } from '../../utilities/other'
 import { ScrollableUI, ContentUI, FaderUI } from './Scrollable.css'
 
-export interface Props {
-  backgroundColor: string
-  className?: string
-  contentClassName?: string
-  fade?: boolean
-  fadeBottom?: boolean
-  fadeLeft?: boolean
-  fadeRight?: boolean
-  faderSize?: number
-  innerRef: (node) => void
-  onScroll: (event) => void
-  rounded: boolean
-  scrollableRef: (node) => void
-  isScrollLocked: boolean
-  scrollLockDirection?: string
-}
-
-export class Scrollable extends React.PureComponent<Props> {
+export class Scrollable extends React.PureComponent {
   static defaultProps = {
     backgroundColor: 'white',
     fade: false,
@@ -45,10 +27,6 @@ export class Scrollable extends React.PureComponent<Props> {
     isScrollLocked: true,
   }
 
-  faderNodeLeft: HTMLElement
-  faderNodeTop: HTMLElement
-  faderNodeRight: HTMLElement
-  faderNodeBottom: HTMLElement
   containernode
 
   componentDidMount() {
@@ -149,7 +127,7 @@ export class Scrollable extends React.PureComponent<Props> {
   }
 
   renderFaderLeft() {
-    const { backgroundColor, fadeLeft, fadeRight, rounded } = this.props
+    const { backgroundColor, fadeLeft, rounded } = this.props
 
     if (!fadeLeft) return
     const componentClassName = classNames('c-Scrollable__fader', 'is-left')
@@ -169,7 +147,7 @@ export class Scrollable extends React.PureComponent<Props> {
   }
 
   renderFaderRight() {
-    const { backgroundColor, fadeRight, fadeLeft, rounded } = this.props
+    const { backgroundColor, fadeRight, rounded } = this.props
 
     if (!fadeRight) return
 
@@ -296,6 +274,23 @@ export class Scrollable extends React.PureComponent<Props> {
   handleWindowResize = () => {
     this.applyFade()
   }
+}
+
+Scrollable.propTypes = {
+  backgroundColor: PropTypes.string,
+  className: PropTypes.string,
+  contentClassName: PropTypes.string,
+  fade: PropTypes.bool,
+  fadeBottom: PropTypes.bool,
+  fadeLeft: PropTypes.bool,
+  fadeRight: PropTypes.bool,
+  faderSize: PropTypes.number,
+  innerRef: PropTypes.func,
+  onScroll: PropTypes.func,
+  rounded: PropTypes.bool,
+  scrollableRef: PropTypes.func,
+  isScrollLocked: PropTypes.bool,
+  scrollLockDirection: PropTypes.string,
 }
 
 export default Scrollable

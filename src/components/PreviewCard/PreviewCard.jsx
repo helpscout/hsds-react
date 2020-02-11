@@ -7,14 +7,7 @@ import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { PreviewCardUI } from './PreviewCard.css'
 
-type Props = {
-  children?: any
-  className?: string
-  isNote?: boolean
-  title?: string
-}
-
-const PreviewCard = (props: Props) => {
+const PreviewCard = props => {
   const { children, className, isNote, title, ...rest } = props
 
   const createMarkup = contextProps => {
@@ -47,6 +40,13 @@ const PreviewCard = (props: Props) => {
       {contextProps => createMarkup(contextProps)}
     </Context.Consumer>
   )
+}
+
+PreviewCard.propTypes = {
+  children: PropTypes.any,
+  className: PropTypes.string,
+  isNote: PropTypes.bool,
+  title: PropTypes.string,
 }
 
 export default PreviewCard

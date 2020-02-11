@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { BlockUI } from './Skeleton.Block.css'
 
-class Block extends React.PureComponent<any> {
+class SkeletonBlock extends React.PureComponent {
   static displayName = 'Skeleton.Block'
 
   static defaultProps = {
@@ -30,4 +30,11 @@ class Block extends React.PureComponent<any> {
   }
 }
 
-export default Block
+SkeletonBlock.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Enables animations for the component. */
+  withAnimations: PropTypes.bool,
+}
+
+export default SkeletonBlock

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { classNames } from '../../utilities/classNames'
 import { ImageUI } from './Skeleton.Image.css'
 
-class Image extends React.PureComponent<any> {
+class SkeletonImage extends React.PureComponent {
   static displayName = 'Skeleton.Image'
 
   render() {
@@ -15,4 +15,11 @@ class Image extends React.PureComponent<any> {
   }
 }
 
-export default Image
+SkeletonImage.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Enables animations for the component. */
+  withAnimations: PropTypes.bool,
+}
+
+export default SkeletonImage

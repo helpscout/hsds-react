@@ -1,21 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { AvatarShape, AvatarSize } from '../Avatar/Avatar.types'
 import { classNames } from '../../utilities/classNames'
 import { AvatarUI } from './Skeleton.Avatar.css'
 
-export interface Props {
-  className?: string
-  children?: any
-  shape: AvatarShape
-  size: AvatarSize
-}
-
-class Avatar extends React.PureComponent<Props> {
+class SkeletonAvatar extends React.PureComponent {
   static displayName = 'Skeleton.Avatar'
   static defaultProps = {
     size: 'md',
     shape: 'circle',
+    withAnimations: true,
   }
 
   render() {
@@ -32,4 +25,15 @@ class Avatar extends React.PureComponent<Props> {
   }
 }
 
-export default Avatar
+SkeletonAvatar.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Shape of the avatar. */
+  shape: PropTypes.oneOf(['circle', 'rounded', 'square']),
+  /** Size of the avatar. */
+  size: PropTypes.oneOf(['xl', 'lg', 'md', 'sm']),
+  /** Enables animations for the component. */
+  withAnimations: PropTypes.bool,
+}
+
+export default SkeletonAvatar

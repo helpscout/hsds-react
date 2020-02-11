@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import Block from './Skeleton.Block'
+import SkeletonBlock from './Skeleton.Block'
 import forEach from '../../styles/utilities/forEach'
 
 export const config = {
@@ -10,7 +10,7 @@ export const config = {
   },
 }
 
-export const ControlUI = styled(Block)`
+export const ControlUI = styled(SkeletonBlock)`
   border-radius: 4px;
   height: ${config.size.md};
   width: 100%;
@@ -18,7 +18,7 @@ export const ControlUI = styled(Block)`
   ${getSizeStyles};
 `
 
-function getSizeStyles(): string {
+function getSizeStyles() {
   return forEach(config.size, (size, props) => {
     const { size: sz } = props
 

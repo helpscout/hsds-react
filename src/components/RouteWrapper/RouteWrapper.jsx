@@ -8,19 +8,10 @@ import { noop } from '../../utilities/other'
 import get from '../../utilities/get'
 import { createLocation } from '../../utilities/history'
 
-export interface Props {
-  fetch: () => Promise<any>
-  href?: string
-  onClick: (event) => void
-  replace: boolean
-  target?: string
-  to?: string
-}
-
 const RouteWrapper = WrappedComponent => {
   const namespace = getComponentName(WrappedComponent)
 
-  class RouteWrapperComponent extends React.Component<Props> {
+  class RouteWrapperComponent extends React.Component {
     static contextTypes = {
       router: () => {},
     }
@@ -86,7 +77,25 @@ const RouteWrapper = WrappedComponent => {
     }
   }
 
+  RouteWrapperComponent.propTypes = {
+    fetch: PropTypes.func,
+    href: PropTypes.string,
+    onClick: PropTypes.func,
+    replace: PropTypes.bool,
+    target: PropTypes.string,
+    to: PropTypes.string,
+  }
+
   return hoistNonReactStatics(RouteWrapperComponent, WrappedComponent)
+}
+
+RouteWrapper.propTypes = {
+  fetch: PropTypes.func,
+  href: PropTypes.string,
+  onClick: PropTypes.func,
+  replace: PropTypes.bool,
+  target: PropTypes.string,
+  to: PropTypes.string,
 }
 
 export default RouteWrapper

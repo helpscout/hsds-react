@@ -1,19 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { RadioKind } from './Radio.types'
 import Choice from '../Choice'
 import { classNames } from '../../utilities/classNames'
-
-type Props = {
-  className?: string
-  kind: RadioKind
-}
 
 export const RadioContext = React.createContext({})
 
 export const Radio = ({ kind: kindProp, className, ...rest }) => {
   const componentClassName = classNames('c-Radio', className)
-  const { kind = kindProp, stacked }: any = React.useContext(RadioContext)
+  const { kind = kindProp, stacked } = React.useContext(RadioContext)
 
   return (
     <Choice
@@ -29,6 +23,11 @@ export const Radio = ({ kind: kindProp, className, ...rest }) => {
 
 Radio.defaultProps = {
   kind: 'default',
+}
+
+Radio.propTypes = {
+  className: PropTypes.string,
+  kind: PropTypes.oneOf(['default', 'custom']),
 }
 
 export default Radio

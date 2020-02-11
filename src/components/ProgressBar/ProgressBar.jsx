@@ -1,33 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { UISize } from '../../constants/types'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { ProgressBarUI, BarUI } from './ProgressBar.css'
 
-type Value = number | string
-
-type Props = {
-  className?: string
-  description?: string
-  onChange: (value: Value) => void
-  size?: UISize
-  value: Value
-}
-
-class ProgressBar extends React.PureComponent<Props> {
+class ProgressBar extends React.PureComponent {
   static defaultProps = {
     onChange: noop,
     value: 0,
   }
 
-  componentWillReceiveProps(nextProps: Props) {
+  componentWillReceiveProps(nextProps) {
     const { onChange } = this.props
     const value = this.getValueAsPercent(nextProps.value)
     onChange(value)
   }
 
-  getValue(val: Value): number {
+  getValue(val) {
     const value =
       val != null
         ? val
@@ -40,7 +29,7 @@ class ProgressBar extends React.PureComponent<Props> {
     return normalizedBarValue
   }
 
-  getValueAsPercent(val: Value): string {
+  getValueAsPercent(val) {
     return `${this.getValue(val)}%`
   }
 
@@ -77,6 +66,14 @@ class ProgressBar extends React.PureComponent<Props> {
       </ProgressBarUI>
     )
   }
+}
+
+ProgressBar.propTypes = {
+  className: PropTypes.string,
+  description: PropTypes.string,
+  onChange: PropTypes.func,
+  size: PropTypes.oneOf(['xs', 'xssm', 'sm', 'md', 'lg', '', null]),
+  value: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
 }
 
 export default ProgressBar

@@ -15,12 +15,11 @@ import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import { InputWrapperUI } from '../Input/Input.css'
 import { SelectUI, FieldUI, InlinePrefixSuffixUI, ItemUI } from './Select.css'
-import { SelectProps, SelectState } from './Select.types'
 
 const PLACEHOLDER_VALUE = '__placeholder__'
 const uniqueID = createUniqueIDFactory('Select')
 
-export class Select extends React.PureComponent<SelectProps, SelectState> {
+export class Select extends React.PureComponent {
   static defaultProps = {
     autoFocus: false,
     disabled: false,
@@ -39,9 +38,8 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
   static Arrows = Arrows
 
   optionClassName = 'c-Select__option'
-  selectNode: HTMLSelectElement | null
 
-  constructor(props: SelectProps) {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -56,7 +54,7 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
     this.autoFocus()
   }
 
-  componentWillReceiveProps(nextProps: SelectProps) {
+  componentWillReceiveProps(nextProps) {
     const { isFocused, state } = nextProps
     const prevState = this.state.state
 
@@ -98,8 +96,8 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
     }, forceAutoFocusTimeout)
   }
 
-  handleOnChange = (event: any) => {
-    const value = (event.currentTarget as HTMLSelectElement).value
+  handleOnChange = event => {
+    const value = event.currentTarget.value
     this.props.onChange(value)
 
     this.setState({
@@ -107,7 +105,7 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
     })
   }
 
-  handleOnBlur = (event: any) => {
+  handleOnBlur = event => {
     this.setState({
       isFocused: false,
     })
@@ -115,7 +113,7 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
     this.props.onBlur(event)
   }
 
-  handleOnFocus = (event: any) => {
+  handleOnFocus = event => {
     const { onFocus, removeStateStylesOnFocus } = this.props
     const { state } = this.state
 
@@ -167,7 +165,7 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
   }
 
   /* istanbul ignore next */
-  getInlinePrefixSuffixClassName({ type, icon }: any) {
+  getInlinePrefixSuffixClassName({ type, icon }) {
     const { seamless, state } = this.props
 
     return classNames(
@@ -272,12 +270,12 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
     }
   }
 
-  setSelectNode = (node: HTMLSelectElement) => {
+  setSelectNode = node => {
     this.selectNode = node
     this.props.innerRef(node)
   }
 
-  getSelectMarkup = (props: any) => {
+  getSelectMarkup = props => {
     const {
       children,
       className,
@@ -338,7 +336,7 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
         onBlur={this.handleOnBlur}
         onChange={this.handleOnChange}
         onFocus={this.handleOnFocus}
-        ref={this.setSelectNode as any}
+        ref={this.setSelectNode}
         value={selectedValue}
       >
         {placeholderMarkup}
@@ -384,7 +382,7 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
 
     return (
       <FormLabelContext.Consumer>
-        {(props: Object) => (
+        {props => (
           <InputWrapperUI className="c-InputWrapper" style={style}>
             {labelMarkup}
             {hintTextMarkup}
@@ -410,6 +408,57 @@ export class Select extends React.PureComponent<SelectProps, SelectState> {
       </FormLabelContext.Consumer>
     )
   }
+}
+
+const optionShape = {
+  disabled: PropTypes.bool,
+  label: PropTypes.string,
+  value: PropTypes.string,
+}
+
+const selectOptionShape = PropTypes.oneOf([
+  PropTypes.shape(optionShape),
+  PropTypes.string,
+])
+
+Select.propTypes = {
+  autoFocus: PropTypes.bool,
+  children: PropTypes.any,
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
+  errorIcon: PropTypes.string,
+  errorMessage: PropTypes.string,
+  forceAutoFocusTimeout: PropTypes.number,
+  helpText: PropTypes.any,
+  hintText: PropTypes.any,
+  id: PropTypes.string,
+  innerRef: PropTypes.func,
+  isFocused: PropTypes.bool,
+  isFirst: PropTypes.bool,
+  isNotOnly: PropTypes.bool,
+  isLast: PropTypes.bool,
+  label: PropTypes.any,
+  name: PropTypes.string,
+  options: PropTypes.oneOf([
+    PropTypes.oneOf([PropTypes.string, PropTypes.arrayOf(selectOptionShape)]),
+    PropTypes.oneOf([PropTypes.shape(optionShape), PropTypes.string]),
+    PropTypes.arrayOf(selectOptionShape),
+    PropTypes.string,
+  ]),
+  onBlur: PropTypes.func,
+  onChange: PropTypes.func,
+  onFocus: PropTypes.func,
+  placeholder: PropTypes.string,
+  prefix: PropTypes.string,
+  removeStateStylesOnFocus: PropTypes.bool,
+  seamless: PropTypes.bool,
+  style: PropTypes.object,
+  size: PropTypes.oneOf(['xs', 'xssm', 'sm', 'md', 'lg', '', null]),
+  state: PropTypes.oneOf(['error', 'info', 'success', 'warning', '', null]),
+  success: PropTypes.bool,
+  tabIndex: PropTypes.number,
+  value: PropTypes.string,
+  width: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
 }
 
 export default Select

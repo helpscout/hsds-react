@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import Block from './Skeleton.Block'
+import SkeletonBlock from './Skeleton.Block'
 
-export const TextUI = styled(Block)`
+export const TextUI = styled(SkeletonBlock)`
   border-radius: 9999px;
   height: 9px;
   margin-bottom: 11px;

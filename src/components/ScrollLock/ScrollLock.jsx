@@ -4,26 +4,17 @@ import * as ReactDOM from 'react-dom'
 import { noop } from '../../utilities/other'
 import { handleWheelEvent } from './ScrollLock.utils'
 
-export interface Props {
-  children?: any
-  direction: 'x' | 'y'
-  isDisabled: boolean
-  stopPropagation: boolean
-  onWheel: (event: any) => void
-}
-
-export class ScrollLock extends React.PureComponent<Props> {
+export class ScrollLock extends React.PureComponent {
   static defaultProps = {
     isDisabled: false,
     direction: 'y',
     stopPropagation: false,
     onWheel: noop,
   }
-  node: Element | null
 
   componentDidMount() {
     if (this.canRender()) {
-      this.node = ReactDOM.findDOMNode(this) as Element
+      this.node = ReactDOM.findDOMNode(this)
       /* istanbul ignore else */
       if (this.node) {
         this.node.addEventListener('wheel', this.handleWheelEvent)
@@ -41,7 +32,7 @@ export class ScrollLock extends React.PureComponent<Props> {
     return !!this.props.children
   }
 
-  handleWheelEvent = (event: any) => {
+  handleWheelEvent = event => {
     const { direction, isDisabled, onWheel, stopPropagation } = this.props
     onWheel(event)
 
@@ -55,6 +46,14 @@ export class ScrollLock extends React.PureComponent<Props> {
 
     return React.Children.only(this.props.children)
   }
+}
+
+ScrollLock.propTypes = {
+  children: PropTypes.any,
+  direction: PropTypes.oneOf(['x', 'y']),
+  isDisabled: PropTypes.bool,
+  stopPropagation: PropTypes.bool,
+  onWheel: PropTypes.func,
 }
 
 export default ScrollLock

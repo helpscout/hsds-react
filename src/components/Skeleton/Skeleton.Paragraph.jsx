@@ -4,8 +4,12 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Text from './Skeleton.Text'
 import { classNames } from '../../utilities/classNames'
 
-class Paragraph extends React.PureComponent<any> {
+class SkeletonParagraph extends React.PureComponent {
   static displayName = 'Skeleton.Paragraph'
+
+  static defaultProps = {
+    withAnimations: true,
+  }
 
   render() {
     const { className, withAnimations, ...rest } = this.props
@@ -23,4 +27,11 @@ class Paragraph extends React.PureComponent<any> {
   }
 }
 
-export default Paragraph
+SkeletonParagraph.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Enables animations for the component. */
+  withAnimations: PropTypes.bool,
+}
+
+export default SkeletonParagraph

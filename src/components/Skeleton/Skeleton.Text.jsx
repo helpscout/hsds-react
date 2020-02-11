@@ -3,14 +3,14 @@ import PropTypes from 'prop-types'
 import { classNames } from '../../utilities/classNames'
 import { TextUI } from './Skeleton.Text.css'
 
-class Text extends React.PureComponent<any> {
+class SkeletonText extends React.PureComponent {
   static displayName = 'Skeleton.Text'
 
   static defaultProps = {
     heading: false,
-    withAnimations: false,
     style: {},
     width: '70%',
+    withAnimations: true,
   }
 
   render() {
@@ -39,4 +39,15 @@ class Text extends React.PureComponent<any> {
   }
 }
 
-export default Text
+SkeletonText.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Defines the width of the component. */
+  width: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  /** Applies heading styles to the component. */
+  heading: PropTypes.bool,
+  /** Enables animations for the component. */
+  withAnimations: PropTypes.bool,
+}
+
+export default SkeletonText

@@ -31,36 +31,6 @@ import { getImageSrc } from './Avatar.utils'
 import { AvatarListContext } from '../AvatarList/AvatarList'
 
 export class Avatar extends React.PureComponent {
-  static propTypes = {
-    actionable: PropTypes.bool,
-    actionIcon: PropTypes.string,
-    actionIconSize: PropTypes.string,
-    active: PropTypes.bool,
-    animation: PropTypes.bool,
-    animationDuration: PropTypes.number,
-    animationEasing: PropTypes.string,
-    borderColor: PropTypes.string,
-    className: PropTypes.string,
-    count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    fallbackImage: PropTypes.string,
-    image: PropTypes.string,
-    initials: PropTypes.string,
-    light: PropTypes.bool,
-    name: PropTypes.string,
-    onActionClick: PropTypes.func,
-    onError: PropTypes.func,
-    onLoad: PropTypes.func,
-    onRemoveAnimationEnd: PropTypes.func,
-    outerBorderColor: PropTypes.string,
-    removingAvatarAnimation: PropTypes.bool,
-    shape: PropTypes.string,
-    showStatusBorderColor: PropTypes.bool,
-    size: PropTypes.string,
-    status: PropTypes.string,
-    statusIcon: PropTypes.string,
-    withShadow: PropTypes.bool,
-  }
-
   static defaultProps = {
     actionable: false,
     actionIcon: 'trash',
@@ -391,5 +361,38 @@ const AvatarConsumer = props => {
   }
   return <Avatar {...props} />
 }
+
+const avatarPropTypes = {
+  actionable: PropTypes.bool,
+  actionIcon: PropTypes.string,
+  actionIconSize: PropTypes.string,
+  active: PropTypes.bool,
+  animation: PropTypes.bool,
+  animationDuration: PropTypes.number,
+  animationEasing: PropTypes.string,
+  borderColor: PropTypes.string,
+  className: PropTypes.string,
+  count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  fallbackImage: PropTypes.string,
+  image: PropTypes.string,
+  initials: PropTypes.string,
+  light: PropTypes.bool,
+  name: PropTypes.string,
+  onActionClick: PropTypes.func,
+  onError: PropTypes.func,
+  onLoad: PropTypes.func,
+  onRemoveAnimationEnd: PropTypes.func,
+  outerBorderColor: PropTypes.string,
+  removingAvatarAnimation: PropTypes.bool,
+  shape: PropTypes.oneOf(['circle', 'rounded', 'square']),
+  showStatusBorderColor: PropTypes.bool,
+  size: PropTypes.oneOf(['xl', 'lg', 'sm']),
+  status: PropTypes.string,
+  statusIcon: PropTypes.string,
+  withShadow: PropTypes.bool,
+}
+
+Avatar.propTypes = avatarPropTypes
+AvatarConsumer.propTypes = avatarPropTypes
 
 export default AvatarConsumer

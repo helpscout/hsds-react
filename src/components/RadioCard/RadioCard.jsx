@@ -17,11 +17,9 @@ import {
   HeadingUI,
 } from './RadioCard.css'
 
-import { RadioCardProps, RadioCardState, InputEvent } from './RadioCard.types'
-
 const uniqueID = createUniqueIDFactory('RadioCard')
 
-class RadioCard extends React.PureComponent<RadioCardProps, RadioCardState> {
+class RadioCard extends React.PureComponent {
   static defaultProps = {
     checked: false,
     content: null,
@@ -37,10 +35,9 @@ class RadioCard extends React.PureComponent<RadioCardProps, RadioCardState> {
     onFocus: noop,
   }
 
-  defaultIcon: string = 'fab-chat'
-  inputNode: HTMLInputElement
+  defaultIcon = 'fab-chat'
 
-  constructor(props: RadioCardProps) {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -49,14 +46,14 @@ class RadioCard extends React.PureComponent<RadioCardProps, RadioCardState> {
     }
   }
 
-  handleOnBlur = (event: InputEvent) => {
+  handleOnBlur = event => {
     this.setState({
       isFocused: false,
     })
     this.props.onBlur(event)
   }
 
-  handleOnFocus = (event: InputEvent) => {
+  handleOnFocus = event => {
     this.showFocus()
     this.props.onFocus(event)
   }
@@ -154,7 +151,6 @@ class RadioCard extends React.PureComponent<RadioCardProps, RadioCardState> {
     )
 
     return (
-      
       <RadioCardUI
         htmlFor={id}
         className={componentClassName}
@@ -186,7 +182,7 @@ class RadioCard extends React.PureComponent<RadioCardProps, RadioCardState> {
     )
   }
 
-  setInputNodeRef = (node: HTMLInputElement) => {
+  setInputNodeRef = node => {
     this.inputNode = node
     this.props.inputRef(node)
     this.props.innerRef(node)
@@ -199,6 +195,25 @@ class RadioCard extends React.PureComponent<RadioCardProps, RadioCardState> {
       </ChoiceGroupContext.Consumer>
     )
   }
+}
+
+RadioCard.propTypes = {
+  checked: PropTypes.bool,
+  className: PropTypes.string,
+  content: PropTypes.oneOf([PropTypes.string, PropTypes.element]),
+  heading: PropTypes.oneOf([PropTypes.string, PropTypes.element]),
+  icon: PropTypes.oneOf([PropTypes.string, PropTypes.element]),
+  iconSize: PropTypes.number,
+  id: PropTypes.string,
+  innerRef: PropTypes.func,
+  inputRef: PropTypes.func,
+  isFocused: PropTypes.bool,
+  maxWidth: PropTypes.OneOf([PropTypes.string, PropTypes.number]),
+  onBlur: PropTypes.func,
+  onChange: PropTypes.func,
+  onFocus: PropTypes.func,
+  title: PropTypes.string,
+  value: PropTypes.string,
 }
 
 export default RadioCard

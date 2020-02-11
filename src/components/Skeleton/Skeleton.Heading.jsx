@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import Text from './Skeleton.Text'
 import { classNames } from '../../utilities/classNames'
 
-class Heading extends React.PureComponent<any> {
+class SkeletonHeading extends React.PureComponent {
   static displayName = 'Skeleton.Heading'
 
   static defaultProps = {
     style: {},
     width: '70%',
+    withAnimations: true,
   }
 
   render() {
@@ -19,4 +20,13 @@ class Heading extends React.PureComponent<any> {
   }
 }
 
-export default Heading
+SkeletonHeading.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Defines the width of the component. */
+  width: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  /** Enables animations for the component. */
+  withAnimations: PropTypes.bool,
+}
+
+export default SkeletonHeading
