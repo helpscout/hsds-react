@@ -8,7 +8,7 @@ import { noop } from '../../utilities/other'
 import { isFunction } from '../../utilities/is'
 import { renderChildrenSafely } from '../../utilities/component'
 import { getColor } from '../../styles/utilities/color'
-import { popShape } from '../Pop/Pop'
+import { popProps } from '../Pop/Pop'
 
 export const TooltipContext = React.createContext({})
 
@@ -137,7 +137,7 @@ const TooltipConsumer = props => {
   return <Tooltip {...newProps} />
 }
 
-Tooltip.propTypes = Object.assign(popShape, {
+Tooltip.propTypes = Object.assign(popProps, {
   arrowClassName: PropTypes.string,
   contentClassName: PropTypes.string,
   className: PropTypes.string,

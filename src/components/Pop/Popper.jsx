@@ -10,7 +10,7 @@ import ReactPopper from '../Popper/Popper'
 import Animate from '../Animate'
 import Portal from './Pop.Portal'
 import Arrow from './Arrow'
-import { popShape } from './Pop'
+import { popProps } from './Pop'
 
 const uniqueID = createUniqueIDFactory('PopPopper')
 
@@ -198,7 +198,7 @@ export const enhancePopperStyles = (props = {}) => {
   return style
 }
 
-Popper.propTypes = Object.assign(popShape, {
+Popper.propTypes = Object.assign(popProps, {
   animationDelay: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
   animationDuration: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
   animationEasing: PropTypes.string,

@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { mount, render } from 'enzyme'
 import { SelectDropdown } from './SelectDropdown'
 
@@ -52,7 +51,6 @@ describe('Events', () => {
     const wrapper = mount(<SelectDropdown onBlur={spy} />)
     const el = wrapper.find('AutoDropdown')
 
-    
     el.props().onBlur()
 
     expect(spy).toHaveBeenCalled()
@@ -63,7 +61,6 @@ describe('Events', () => {
     const wrapper = mount(<SelectDropdown onFocus={spy} />)
     const el = wrapper.find('AutoDropdown')
 
-    
     el.props().onFocus()
 
     expect(spy).toHaveBeenCalled()
@@ -74,7 +71,6 @@ describe('Events', () => {
     const wrapper = mount(<SelectDropdown onSelect={spy} />)
     const el = wrapper.find('AutoDropdown')
 
-    
     el.props().onSelect('value', { item: {} })
 
     expect(spy).toHaveBeenCalled()
@@ -118,7 +114,6 @@ describe('selectedItem', () => {
     wrapper.setState({ selectedItem: item })
     wrapper.setProps({ selectedItem: undefined })
 
-    
     expect(wrapper.state().selectedItem).toBe(item)
   })
 })
@@ -126,7 +121,7 @@ describe('selectedItem', () => {
 describe('renderTrigger', () => {
   test('Renders a trigger', () => {
     const preWrapper = mount(<SelectDropdown />)
-    
+
     const Trigger = preWrapper.instance().renderTrigger()
     const wrapper = mount(Trigger)
 
@@ -135,7 +130,7 @@ describe('renderTrigger', () => {
 
   test('Renders a label, if defined', () => {
     const preWrapper = mount(<SelectDropdown trigger="Buddy" />)
-    
+
     const Trigger = preWrapper.instance().renderTrigger()
     const wrapper = render(Trigger)
 
@@ -144,7 +139,7 @@ describe('renderTrigger', () => {
 
   test('Renders a placeholder, if defined', () => {
     const preWrapper = mount(<SelectDropdown placeholder="Buddy" />)
-    
+
     const Trigger = preWrapper.instance().renderTrigger()
     const wrapper = render(Trigger)
 
@@ -155,7 +150,7 @@ describe('renderTrigger', () => {
     const preWrapper = mount(
       <SelectDropdown trigger="Buddy" placeholder="Elf" />
     )
-    
+
     const Trigger = preWrapper.instance().renderTrigger()
     const wrapper = render(Trigger)
 
@@ -166,7 +161,7 @@ describe('renderTrigger', () => {
 describe('Error', () => {
   test('Renders Error UI, if state is error', () => {
     const preWrapper = mount(<SelectDropdown state="error" />)
-    
+
     const Trigger = preWrapper.instance().renderTrigger()
     const wrapper = render(Trigger)
     const el = wrapper.find('.c-SelectDropdownError')
@@ -176,7 +171,7 @@ describe('Error', () => {
 
   test('Does not render Error UI by default', () => {
     const preWrapper = mount(<SelectDropdown />)
-    
+
     const Trigger = preWrapper.instance().renderTrigger()
     const wrapper = render(Trigger)
     const el = wrapper.find('.c-SelectDropdownError')
@@ -186,7 +181,7 @@ describe('Error', () => {
 
   test('Adds error style on Trigger, if error', () => {
     const preWrapper = mount(<SelectDropdown state="error" />)
-    
+
     const Trigger = preWrapper.instance().renderTrigger()
     const wrapper = render(Trigger)
 
@@ -197,7 +192,7 @@ describe('Error', () => {
     const preWrapper = mount(
       <SelectDropdown state="error" errorMessage="Uh oh!" />
     )
-    
+
     const Trigger = preWrapper.instance().renderTrigger()
     const wrapper = mount(Trigger)
     const el = wrapper.find('Tooltip').first()
@@ -218,7 +213,6 @@ describe('value', () => {
     ]
     const wrapper = mount(<SelectDropdown items={items} value="ron" />)
 
-    
     expect(wrapper.state().selectedItem.value).toBe('ron')
   })
 
@@ -234,7 +228,6 @@ describe('value', () => {
     const wrapper = mount(<SelectDropdown items={items} />)
     wrapper.setProps({ value: 'ron' })
 
-    
     expect(wrapper.state().selectedItem.value).toBe('ron')
   })
 })

@@ -18,15 +18,9 @@ import {
   ErrorUI,
 } from './SelectDropdown.css'
 import { isObject } from '../../utilities/is'
-import {
-  SelectDropdownProps,
-  SelectDropdownState,
-} from './SelectDropdown.types'
+import Dropdown from '../Dropdown'
 
-export class SelectDropdown extends React.PureComponent<
-  SelectDropdownProps,
-  SelectDropdownState
-> {
+export class SelectDropdown extends React.PureComponent {
   static defaultProps = {
     ...initialState,
     clearOnSelect: false,
@@ -120,7 +114,7 @@ export class SelectDropdown extends React.PureComponent<
     return trigger || placeholder
   }
 
-  getSelectedItem(items: Array<any>, value: any): any {
+  getSelectedItem(items, value) {
     if (isObject(value)) return value
 
     return find(items, item => {
@@ -196,5 +190,17 @@ export class SelectDropdown extends React.PureComponent<
     )
   }
 }
+
+SelectDropdown.propTypes = Object.assign(Dropdown.propTypes, {
+  autoInput: PropTypes.bool,
+  errorIcon: PropTypes.string,
+  errorMessage: PropTypes.string,
+  isFocused: PropTypes.bool,
+  limit: PropTypes.number,
+  onChange: PropTypes.func,
+  placeholder: PropTypes.string,
+  state: PropTypes.oneOf(['default', 'error', 'success', 'warning', '', null]),
+  value: PropTypes.any,
+})
 
 export default SelectDropdown

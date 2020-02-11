@@ -296,7 +296,7 @@ class Pop extends React.Component {
   }
 }
 
-export const popShape = PropTypes.shape({
+export const popProps = {
   animationDelay: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
   animationDuration: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
   animationEasing: PropTypes.string,
@@ -339,9 +339,9 @@ export const popShape = PropTypes.shape({
   showArrow: PropTypes.bool,
   zIndex: PropTypes.number,
   dataCy: PropTypes.string,
-})
+}
 
-Pop.propTypes = Object.assign(popShape, {
+Pop.propTypes = Object.assign(popProps, {
   onBeforeOpen: PropTypes.func,
   onBeforeClose: PropTypes.func,
   onContentClick: PropTypes.func,

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from '@helpscout/wedux'
 import { initialState } from './Dropdown.store'
 import { closeDropdown, setMenuNode, setTriggerNode } from './Dropdown.actions'
@@ -176,5 +177,73 @@ const ConnectedDropdown = connect(
     setTriggerNode,
   }
 )(Dropdown)
+
+const DropdownMenuDimensions = {
+  maxHeight: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  maxWidth: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  minHeight: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  minWidth: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+  width: PropTypes.oneOf([PropTypes.number, PropTypes.string]),
+}
+
+Dropdown.propTypes = Object.assign(DropdownMenuDimensions, {
+  activeClassName: PropTypes.string,
+  allowMultipleSelection: PropTypes.bool,
+  cardBorderColor: PropTypes.string,
+  children: PropTypes.func,
+  className: PropTypes.string,
+  clearOnSelect: PropTypes.bool,
+  closeDropdown: PropTypes.func,
+  closeOnSelect: PropTypes.bool,
+  contentWindow: PropTypes.any,
+  direction: PropTypes.oneOf(['left', 'right']),
+  disabled: PropTypes.bool,
+  dropUp: PropTypes.bool,
+  enableLeftRightArrowNavigation: PropTypes.bool,
+  enableTabNavigation: PropTypes.bool,
+  envNode: PropTypes.any,
+  focusClassName: PropTypes.string,
+  forceDropDown: PropTypes.bool,
+  getState: PropTypes.func,
+  id: PropTypes.string,
+  index: PropTypes.string,
+  innerRef: PropTypes.func,
+  inputValue: PropTypes.string,
+  isLoading: PropTypes.bool,
+  isOpen: PropTypes.bool,
+  isFocusSelectedItemOnOpen: PropTypes.bool,
+  isSelectFirstItemOnOpen: PropTypes.bool,
+  items: PropTypes.arrayOf(PropTypes.any),
+  label: PropTypes.string,
+  menuId: PropTypes.string,
+  menuOffsetTop: PropTypes.number,
+  menuRef: PropTypes.func,
+  onBlur: PropTypes.func,
+  onClose: PropTypes.func,
+  onFocus: PropTypes.func,
+  onMenuMount: PropTypes.func,
+  onMenuUnmount: PropTypes.func,
+  onOpen: PropTypes.func,
+  onSelect: PropTypes.func,
+  openClassName: PropTypes.string,
+  positionFixed: PropTypes.bool,
+  previousIndex: null,
+  renderEmpty: PropTypes.any,
+  renderItem: PropTypes.any,
+  renderLoading: PropTypes.any,
+  renderTrigger: PropTypes.any,
+  selectedItem: PropTypes.oneOf([PropTypes.string, PropTypes.object]),
+  selectionClearer: PropTypes.string,
+  setMenuNode: PropTypes.func,
+  setTriggerNode: PropTypes.func,
+  shouldDropDirectionUpdate: PropTypes.func,
+  stateReducer: PropTypes.func,
+  trigger: PropTypes.any,
+  triggerRef: PropTypes.func,
+  triggerStyle: PropTypes.any,
+  withScrollLock: PropTypes.bool,
+})
+
+ConnectedDropdown.propTypes = Dropdown.propTypes
 
 export default ConnectedDropdown
