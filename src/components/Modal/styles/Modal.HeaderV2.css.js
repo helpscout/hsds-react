@@ -8,7 +8,7 @@ export const HeaderUI = styled(Toolbar)`
   text-align: center;
 
   &.is-theme-default {
-    height: 58px;
+    height: 60px;
     padding: 20px 30px;
   }
 

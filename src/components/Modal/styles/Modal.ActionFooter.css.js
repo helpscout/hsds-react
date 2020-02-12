@@ -10,7 +10,7 @@ export const ActionFooterUI = styled(Toolbar)`
 
   &.is-theme-default {
     background-color: #f7f9fc;
-    height: 79px;
+    height: 80px;
     padding: 20px 30px;
 
     &.is-danger {
