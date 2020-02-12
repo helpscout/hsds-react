@@ -14,7 +14,7 @@ export const getInitialState = props => {
 }
 
 export class ContentResizer extends React.PureComponent {
-  static PropTypes = {
+  static propTypes = {
     animationDuration: PropTypes.number,
     animationEasing: PropTypes.string,
     borderOffset: PropTypes.number,

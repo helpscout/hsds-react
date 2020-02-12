@@ -386,7 +386,7 @@ const avatarPropTypes = {
   removingAvatarAnimation: PropTypes.bool,
   shape: PropTypes.oneOf(['circle', 'rounded', 'square']),
   showStatusBorderColor: PropTypes.bool,
-  size: PropTypes.oneOf(['xl', 'lg', 'sm']),
+  size: PropTypes.oneOf(['xl', 'lg', 'md', 'smmd', 'sm', 'xxs']),
   status: PropTypes.string,
   statusIcon: PropTypes.string,
   withShadow: PropTypes.bool,

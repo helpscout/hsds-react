@@ -46,7 +46,10 @@ export class Input extends React.PureComponent {
     action: PropTypes.any,
     autoFocus: PropTypes.bool,
     autoFocusTimeoutId: PropTypes.any,
-    charValidatorLimit: PropTypes.number,
+    charValidatorLimit: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
     className: PropTypes.string,
     disabled: PropTypes.bool,
     errorIcon: PropTypes.string,

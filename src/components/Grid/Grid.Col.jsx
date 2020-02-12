@@ -7,7 +7,7 @@ import { ColUI } from './Grid.Col.css'
 class Col extends React.PureComponent {
   static propTypes = {
     className: PropTypes.string,
-    size: PropTypes.oneOf(['md', 'sm', 'xs']),
+    size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   }
 
   static displayName = 'GridCol'

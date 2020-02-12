@@ -10,14 +10,14 @@ class Image extends React.PureComponent {
     alt: PropTypes.string,
     block: PropTypes.bool,
     className: PropTypes.string,
-    height: PropTypes.number,
-    maxHeight: PropTypes.number,
-    maxWidth: PropTypes.number,
+    height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    maxWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     src: PropTypes.string,
     shape: PropTypes.oneOf(['rounded', 'square', '']),
     style: PropTypes.any,
     title: PropTypes.string,
-    width: PropTypes.number,
+    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   }
 
   static defaultProps = {
