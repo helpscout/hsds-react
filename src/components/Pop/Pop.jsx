@@ -204,6 +204,7 @@ class Pop extends React.Component {
     return { ...wrapperStyles }
   }
 
+  /* istanbul ignore next */
   setNodeRef = node => (this.node = node)
 
   render() {

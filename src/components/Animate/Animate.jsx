@@ -138,6 +138,7 @@ const AnimateConsumer = props => {
     return <Animate {...newProps} />
   }
 
+  /* istanbul ignore next */
   return <Animate {...props} />
 }
 

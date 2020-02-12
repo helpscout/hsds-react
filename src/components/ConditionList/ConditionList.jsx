@@ -8,7 +8,6 @@ import { ConditionListUI } from './ConditionList.css'
 import { PageContext } from '../Page/Page'
 
 export class ConditionList extends React.Component {
-  
   static propTypes = {
     className: PropTypes.string,
     innerRef: PropTypes.func,
@@ -16,7 +15,7 @@ export class ConditionList extends React.Component {
     isWithOffset: PropTypes.bool,
     onAdd: PropTypes.func,
     scrollDuration: PropTypes.number,
-    scrollOffset: PropTypes.number
+    scrollOffset: PropTypes.number,
   }
 
   static className = 'c-ConditionList'
@@ -90,6 +89,7 @@ const ConditionListConsumer = props => {
     return <ConditionList {...newProps} />
   }
 
+  /* istanbul ignore next */
   return <ConditionList {...props} />
 }
 

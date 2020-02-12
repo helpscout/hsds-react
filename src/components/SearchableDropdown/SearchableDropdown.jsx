@@ -226,6 +226,7 @@ export class SearchableDropdown extends React.Component {
           if (c.type === 'group') {
             return p + c.items.length
           }
+          /* istanbul ignore next */
           return p + 1
         }, 0)
       }

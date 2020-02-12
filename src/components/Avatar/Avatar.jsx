@@ -359,6 +359,7 @@ const AvatarConsumer = props => {
     newProps.className = classNames(props.className, contextValue.className)
     return <Avatar {...newProps} />
   }
+  /* istanbul ignore next */
   return <Avatar {...props} />
 }
 

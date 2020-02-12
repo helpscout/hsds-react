@@ -128,6 +128,7 @@ export class Tooltip extends React.PureComponent {
 const TooltipConsumer = props => {
   const contextValue = React.useContext(TooltipContext)
 
+  /* istanbul ignore next */
   if (!contextValue) {
     return <Tooltip {...props} />
   }
