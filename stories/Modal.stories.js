@@ -23,8 +23,7 @@ import { withAktiv } from './utils'
 
 import SpeechBubble from '@helpscout/hsds-illos/speech-bubble'
 
-const stories = storiesOf('Modal', module)
-stories.addDecorator(withAktiv)
+const stories = storiesOf('Modal', module).addDecorator(withAktiv)
 
 const ContentSpec = createSpec({
   content: faker.lorem.paragraph(),
@@ -103,7 +102,7 @@ class StatefulComponent extends React.Component {
     )
 
     return (
-      <Modal trigger={<button>Open</button>}>
+      <Modal className="with-aktiv" trigger={<button>Open</button>}>
         <Modal.Body>
           <Modal.Content>
             <Modal
@@ -575,11 +574,11 @@ stories.add('styled', () => {
   )
 })
 
-const storiesV2 = storiesOf('Modal/V2', module)
-storiesV2.addDecorator(withAktiv)
+const storiesV2 = storiesOf('Modal/V2', module).addDecorator(withAktiv)
 
 storiesV2.add('default', () => (
   <Modal
+    className={'with-aktiv'}
     version={2}
     isOpen={true}
     trigger={<Link>Clicky</Link>}
@@ -599,26 +598,6 @@ storiesV2.add('default w/ secondary button', () => (
     version={2}
     isOpen={true}
     trigger={<Link>Clicky</Link>}
-    title="Modal Title"
-  >
-    <Modal.Body>
-      {ContentSpec.generate(2).map(({ id, content }) => (
-        <p key={id}>{content}</p>
-      ))}
-    </Modal.Body>
-    <Modal.ActionFooter
-      primaryButtonText="Primary"
-      secondaryButtonText="Secondary"
-    />
-  </Modal>
-))
-
-storiesV2.add('default w/ header icon', () => (
-  <Modal
-    version={2}
-    isOpen={true}
-    trigger={<Link>Clicky</Link>}
-    icon="emoji"
     title="Modal Title"
   >
     <Modal.Body>
@@ -705,6 +684,28 @@ storiesV2.add('branded w/description, secondary button', () => (
   >
     <Modal.Body>
       {ContentSpec.generate(1).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.ActionFooter
+      primaryButtonText="Primary"
+      secondaryButtonText="Secondary"
+    />
+  </Modal>
+))
+
+storiesV2.add('branded w/ really long content', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    description="A really interesting description about lots of really interesting things goes here so that you can feel really informed and on top of things."
+    kind="branded"
+    illo={<SpeechBubble />}
+    trigger={<Link>Clicky</Link>}
+    title="Modal Title"
+  >
+    <Modal.Body>
+      {ContentSpec.generate(10).map(({ id, content }) => (
         <p key={id}>{content}</p>
       ))}
     </Modal.Body>

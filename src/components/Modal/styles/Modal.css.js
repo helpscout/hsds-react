@@ -2,6 +2,7 @@ import styled from '../../styled'
 import { isHSApp } from '../../../styles/utilities/theme'
 import Animate from '../../Animate'
 import Card from '../../Card'
+import { getColor } from '../../../styles/utilities/color'
 
 export const config = {
   closeOffset: '10px',
@@ -28,10 +29,11 @@ export const ModalUI = styled('div')`
   position: fixed;
   right: 0;
   top: 0;
+  font-family: 'Aktiv Grotesk', sans-serif !important;
 
   &.v2.is-danger {
     .c-Icon {
-      color: #e52f28;
+      color: ${getColor('red', 500)};
     }
   }
 
@@ -71,11 +73,13 @@ export const InnerWrapperUI = styled('div')`
   &.v2 {
     position: absolute;
     top: 50px;
-    width: 680px;
+    max-width: 680px;
     min-height: 400px;
+    max-height: 90%;
 
     &.is-alert {
       min-height: 179px;
+      width: 440px;
     }
   }
 `
