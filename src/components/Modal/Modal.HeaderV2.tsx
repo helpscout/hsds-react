@@ -5,6 +5,7 @@ import { COMPONENT_KEY, MODAL_STYLES } from './Modal.utils'
 import {
   AlertHeaderUI,
   AlertHeaderTitleUI,
+  AlertHeaderDescriptionUI,
   BrandedHeaderUI,
   BrandedHeaderImageUI,
   BrandedHeaderTitleUI,
@@ -34,7 +35,7 @@ class HeaderV2 extends React.PureComponent<ModalHeaderV2Props> {
       <AlertHeaderUI {...rest} className={componentClassName} placement={'top'}>
         {<AlertHeaderTitleUI>{title}</AlertHeaderTitleUI>}
         {description ? (
-          <HeaderDescriptionUI>{description}</HeaderDescriptionUI>
+          <AlertHeaderDescriptionUI>{description}</AlertHeaderDescriptionUI>
         ) : null}
         {children}
       </AlertHeaderUI>

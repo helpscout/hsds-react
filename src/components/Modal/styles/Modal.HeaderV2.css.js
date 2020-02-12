@@ -5,8 +5,12 @@ import { getColor, rgba } from '../../../styles/utilities/color'
 export const HeaderUI = styled(Toolbar)`
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  padding: 20px 30px;
   text-align: center;
+
+  &.is-theme-default {
+    height: 58px;
+    padding: 20px 30px;
+  }
 
   &.is-seamless {
     padding: 0px 50px;
@@ -66,6 +70,10 @@ export const AlertHeaderUI = styled('div')`
   width: 100%;
   margin-top: 36px;
   flex-grow: 1;
+`
+
+export const AlertHeaderDescriptionUI = styled(HeaderDescriptionUI)`
+  margin: 7px 50px 22px;
 `
 
 export const AlertHeaderTitleUI = styled(BrandedHeaderTitleUI)`
