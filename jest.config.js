@@ -52,7 +52,7 @@ module.exports = {
   testEnvironment: 'node',
   testURL: 'http://localhost',
   transform: {
-    '^.+\\.jsx?$': 'babel-jest',
+    '^.+\\.[t|j]sx?$': 'babel-jest',
     '^.+\\.css$': '<rootDir>/config/jest/cssTransform.js',
     '^(?!.*\\.(js|jsx|css|json)$)': '<rootDir>/config/jest/fileTransform.js',
   },

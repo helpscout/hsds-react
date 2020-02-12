@@ -66,7 +66,7 @@ class Positioner extends React.PureComponent {
     this.updatePosition()
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.position !== this.position) {
       this.updatePosition(nextProps.position)
     }

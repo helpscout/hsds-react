@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import * as ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom'
 import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFromComponent'
 import Container, { ID as portalContainerId } from './Portal.Container'
 import { isNodeElement } from '../../utilities/node'
@@ -85,11 +85,9 @@ export class Portal extends React.Component {
     const { children } = props
     if (!children || !React.isValidElement(children)) return
 
-    //@ts-ignore
     this.portal = ReactDOM.unstable_renderSubtreeIntoContainer(
       this,
       <>{children}</>,
-
       this.node
     )
   }

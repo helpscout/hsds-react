@@ -92,7 +92,7 @@ export class Emoticon extends React.PureComponent {
         innerRef={innerRef}
       >
         <IconUI className="c-Emoticon__icon" title={title}>
-          {icon}
+          {icon && icon}
         </IconUI>
       </EmoticonUI>
     )

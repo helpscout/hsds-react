@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
-import * as equal from 'fast-deep-equal'
+import equal from 'fast-deep-equal'
 
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Button from '../Button'
@@ -233,19 +233,22 @@ Table.propTypes = {
   maxRowsToDisplay: PropTypes.number,
   containerWidth: PropTypes.string,
   tableWidth: PropTypes.shape({ min: PropTypes.string, max: PropTypes.string }),
-  skin: PropTypes.shape({
-    fontColorHeader: PropTypes.string,
-    fontColorBody: PropTypes.string,
-    fontColorAlternate: PropTypes.string,
-    bgColor: PropTypes.string,
-    bgAlternate: PropTypes.string,
-    bgHeader: PropTypes.string,
-    bgColorHover: PropTypes.string,
-    borderTableBody: PropTypes.string,
-    borderTableHeader: PropTypes.string,
-    borderRows: PropTypes.string,
-    borderColumns: PropTypes.string,
-  }),
+  skin: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.shape({
+      fontColorHeader: PropTypes.string,
+      fontColorBody: PropTypes.string,
+      fontColorAlternate: PropTypes.string,
+      bgColor: PropTypes.string,
+      bgAlternate: PropTypes.string,
+      bgHeader: PropTypes.string,
+      bgColorHover: PropTypes.string,
+      borderTableBody: PropTypes.string,
+      borderTableHeader: PropTypes.string,
+      borderRows: PropTypes.string,
+      borderColumns: PropTypes.string,
+    }),
+  ]),
   isLoading: PropTypes.bool,
   isScrollLocked: PropTypes.bool,
   withTallRows: PropTypes.bool,

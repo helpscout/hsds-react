@@ -70,12 +70,15 @@ describe('message list', () => {
 describe('message list sorting', () => {
   test('should set state and call back onSortStart', () => {
     const wrapper = mount(<MessageList {...messageListDefaultProps} />)
-    wrapper.instance().onSortStart({
-      node: {},
-      isKeySorting: false,
-      collection: {},
-      index: 1,
-    })
+    wrapper
+      .find('MessageList')
+      .instance()
+      .onSortStart({
+        node: {},
+        isKeySorting: false,
+        collection: {},
+        index: 1,
+      })
     wrapper.update()
     wrapper.find(MessageRow).forEach(node => {
       const { index, isDragging } = node.props()
@@ -94,12 +97,15 @@ describe('message list sorting', () => {
   })
   test('should set state and call back onSortEnd', () => {
     const wrapper = mount(<MessageList {...messageListDefaultProps} />)
-    wrapper.instance().onSortEnd({
-      collection: {},
-      isKeySorting: false,
-      oldIndex: 1,
-      newIndex: 3,
-    })
+    wrapper
+      .find('MessageList')
+      .instance()
+      .onSortEnd({
+        collection: {},
+        isKeySorting: false,
+        oldIndex: 1,
+        newIndex: 3,
+      })
     wrapper.update()
     wrapper.find(MessageRow).forEach(node => {
       const { isDragging } = node.props()

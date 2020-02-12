@@ -110,7 +110,7 @@ export class EditableTextarea extends React.PureComponent {
     this.textArea.current.removeEventListener('scroll', this.debouncedScroll)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     // Tested
     /* istanbul ignore next */
     if (nextProps.value === this.state.value) return

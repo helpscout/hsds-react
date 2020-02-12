@@ -7,9 +7,7 @@ jest.mock('../Tooltip.Popper', () => {
   const Popper = ({ className, children }) => (
     <div className={className}>{children}</div>
   )
-  return {
-    default: Popper,
-  }
+  return Popper
 })
 
 describe('classNames', () => {

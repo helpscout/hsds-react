@@ -197,7 +197,7 @@ export const enhancePopperStyles = (props = {}) => {
 
   return style
 }
-console.log(Pop)
+
 // Popper.propTypes = Object.assign(Pop.propTypes, {
 //   animationDelay: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 //   animationDuration: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

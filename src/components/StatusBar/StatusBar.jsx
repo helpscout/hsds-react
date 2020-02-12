@@ -27,7 +27,7 @@ class StatusBar extends React.PureComponent {
     theme: 'light',
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { isOpen } = nextProps
     /* istanbul ignore else */
     if (isOpen !== undefined) {

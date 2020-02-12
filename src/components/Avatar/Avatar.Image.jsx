@@ -188,7 +188,7 @@ export class AvatarImage extends React.PureComponent {
     if (this.image) this.unloadImg()
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     let src = this.srcToArray(nextProps.src)
 
     let srcAdded = src.filter(s => this.sourceList.indexOf(s) === -1)

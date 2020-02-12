@@ -42,7 +42,7 @@ export class RateAction extends React.PureComponent {
     isActive: this.props.isActive,
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.isActive !== this.state.isActive) {
       this.setState({
         isActive: nextProps.isActive,

@@ -10,7 +10,7 @@ class ProgressBar extends React.PureComponent {
     value: 0,
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { onChange } = this.props
     const value = this.getValueAsPercent(nextProps.value)
     onChange(value)

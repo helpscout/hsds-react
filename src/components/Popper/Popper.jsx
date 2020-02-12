@@ -173,28 +173,28 @@ export class InnerPopper extends React.Component {
 const placements = PopperJS.placements
 export { placements }
 
-InnerPopper.propTypes = {
-  children: PropTypes.shape({
-    ref: PropTypes.any,
-    style: PropTypes.oneOfType([
-      PropTypes.any,
-      PropTypes.shape({ position: PropTypes.oneOf(['absolute', 'fixed']) }),
-    ]),
-    placement: PropTypes.any,
-    outOfBoundaries: PropTypes.bool,
-    scheduleUpdate: PropTypes.func,
-    arrowProps: PropTypes.shape({
-      ref: PropTypes.any,
-      style: PropTypes.shape({ top: PropTypes.number, left: PropTypes.number }),
-    }),
-  }),
-  eventsEnabled: PropTypes.bool,
-  ref: PropTypes.any,
-  modifiers: PropTypes.any,
-  placement: PropTypes.any,
-  positionFixed: PropTypes.bool,
-  referenceElement: PropTypes.any,
-}
+// InnerPopper.propTypes = {
+//   children: PropTypes.shape({
+//     ref: PropTypes.any,
+//     style: PropTypes.oneOfType([
+//       PropTypes.any,
+//       PropTypes.shape({ position: PropTypes.oneOf(['absolute', 'fixed']) }),
+//     ]),
+//     placement: PropTypes.any,
+//     outOfBoundaries: PropTypes.bool,
+//     scheduleUpdate: PropTypes.func,
+//     arrowProps: PropTypes.shape({
+//       ref: PropTypes.any,
+//       style: PropTypes.shape({ top: PropTypes.number, left: PropTypes.number }),
+//     }),
+//   }),
+//   eventsEnabled: PropTypes.bool,
+//   ref: PropTypes.any,
+//   modifiers: PropTypes.any,
+//   placement: PropTypes.any,
+//   positionFixed: PropTypes.bool,
+//   referenceElement: PropTypes.any,
+// }
 
 export default function Popper(props) {
   return (
@@ -206,4 +206,4 @@ export default function Popper(props) {
   )
 }
 
-Popper.propTypes = InnerPopper.propTypes
+// Popper.propTypes = InnerPopper.propTypes

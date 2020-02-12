@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import * as ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom'
 import { noop } from '../../utilities/other'
 import { handleWheelEvent } from './ScrollLock.utils'
 

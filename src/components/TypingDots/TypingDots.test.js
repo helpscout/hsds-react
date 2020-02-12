@@ -1,6 +1,6 @@
 import React from 'react'
 import { cy } from '@helpscout/cyan'
-import TypingDots from '..'
+import TypingDots from './TypingDots'
 
 describe('className', () => {
   test('Has default className', () => {

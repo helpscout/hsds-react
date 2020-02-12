@@ -47,7 +47,7 @@ class Collapsible extends React.Component {
     )
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { isOpen: willOpen } = nextProps
     /* istanbul ignore next */
     if (willOpen !== this.props.isOpen) {

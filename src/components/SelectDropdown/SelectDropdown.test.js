@@ -2,12 +2,12 @@ import React from 'react'
 import { mount, render } from 'enzyme'
 import { SelectDropdown } from './SelectDropdown'
 
-jest.mock('../Dropdown/DropdownV2', () => {
+jest.mock('../Dropdown', () => {
   const Dropdown = () => <div />
   Dropdown.Card = () => <div />
   Dropdown.Menu = () => <div />
 
-  return { default: Dropdown }
+  return Dropdown
 })
 
 describe('className', () => {

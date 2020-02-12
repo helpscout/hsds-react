@@ -57,7 +57,7 @@ export class ContentResizer extends React.PureComponent {
     this._isMounted = false
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     /* istanbul ignore else */
     if (nextProps.resizeCount !== this.props.resizeCount) {
       this.animationUpdateInterval &&
@@ -180,7 +180,6 @@ export class ContentResizer extends React.PureComponent {
     const { children, onResize, ...rest } = this.props
 
     return (
-      
       <ContentResizerUI
         {...rest}
         ref={this.setResizerNodeRef}

@@ -56,7 +56,7 @@ export class Notification extends React.PureComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { isActive } = nextProps
     if (isActive === false) {
       this.forceDismiss()

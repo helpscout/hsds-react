@@ -18,7 +18,7 @@ class ThemeProvider extends React.PureComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.theme !== this.state.theme) {
       this.setState({
         theme: nextProps.theme,

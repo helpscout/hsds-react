@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import * as equal from 'fast-deep-equal'
+import equal from 'fast-deep-equal'
 import Row from './Table.Row'
 import { columnShape, dataShape } from './Table'
 

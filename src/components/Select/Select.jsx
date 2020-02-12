@@ -54,7 +54,7 @@ export class Select extends React.PureComponent {
     this.autoFocus()
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { isFocused, state } = nextProps
     const prevState = this.state.state
 

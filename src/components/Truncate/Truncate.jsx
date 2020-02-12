@@ -52,7 +52,7 @@ export class Truncate extends React.PureComponent {
     this._isMounted = false
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.type !== this.props.type) {
       this.setState({
         isTruncated: this.isTruncated(nextProps),

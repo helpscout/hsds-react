@@ -252,7 +252,7 @@ describe('sorting', () => {
 
   test('Adds a classname to indicate the accordion is being sorted', () => {
     const wrapper = mount(<Accordion isSortable />)
-    const instance = wrapper.instance()
+    const instance = wrapper.find('Accordion').instance()
     expect(
       wrapper
         .find('.c-Accordion')
@@ -274,7 +274,7 @@ describe('sorting', () => {
     const nextIndex = 5
     const spy = jest.fn()
     const wrapper = mount(<Accordion isSortable onSortEnd={spy} />)
-    const instance = wrapper.instance()
+    const instance = wrapper.find('Accordion').instance()
     expect(spy).not.toHaveBeenCalled()
     instance.handleOnSortEnd(prevIndex, nextIndex)
     expect(spy).toHaveBeenCalledWith(prevIndex, nextIndex)
@@ -282,7 +282,7 @@ describe('sorting', () => {
 
   test('Updates the state during sorting', () => {
     const wrapper = mount(<Accordion isSortable />)
-    const instance = wrapper.instance()
+    const instance = wrapper.find('Accordion').instance()
 
     expect(wrapper.state().isSorting).toBe(false)
     instance.handleOnSortStart()
@@ -295,7 +295,7 @@ describe('sorting', () => {
     const wrapper = mount(
       <Accordion distance={15} isSortable pressDelay={300} />
     )
-    const instance = wrapper.instance()
+    const instance = wrapper.find('Accordion').instance()
     const props = instance.getSortableProps()
     expect(props.distance).toEqual(15)
     expect(props.pressDelay).toBeUndefined()
@@ -305,7 +305,7 @@ describe('sorting', () => {
     const wrapper = mount(
       <Accordion distance={0} isSortable pressDelay={300} />
     )
-    const instance = wrapper.instance()
+    const instance = wrapper.find('Accordion').instance()
     const props = instance.getSortableProps()
     expect(props.distance).toBeUndefined()
     expect(props.pressDelay).toEqual(300)

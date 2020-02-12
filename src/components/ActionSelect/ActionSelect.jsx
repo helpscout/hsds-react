@@ -30,7 +30,7 @@ export class ActionSelect extends React.PureComponent {
     shouldRefocusOnClose: PropTypes.func,
     shouldScrollIntoView: PropTypes.func,
   }
-  
+
   static className = 'c-ActionSelect'
 
   static defaultProps = {
@@ -72,7 +72,7 @@ export class ActionSelect extends React.PureComponent {
   }
 
   /* istanbul ignore next */
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     /* istanbul ignore next */
     if (nextProps.selectedItem !== this.props.selectedItem) {
       /* istanbul ignore next */

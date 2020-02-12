@@ -184,7 +184,7 @@ export class EditableField extends React.Component {
   }
 
   /* istanbul ignore next */
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (equal(nextProps.value, this.props.value)) return
 
     const { name, defaultOption, value, valueOptions } = nextProps

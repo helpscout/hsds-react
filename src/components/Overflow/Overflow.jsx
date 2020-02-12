@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import * as ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom'
 import EventListener from '../EventListener'
 import { classNames } from '../../utilities/classNames'
 import { remapScrollingPlane } from '../../utilities/scrolling'

@@ -15,7 +15,7 @@ class SleepDetector extends React.Component {
     this.state = {}
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.clearInterval()
     const { interval, buffer } = this.props
 

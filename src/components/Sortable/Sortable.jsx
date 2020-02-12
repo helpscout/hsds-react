@@ -26,11 +26,11 @@ class Sortable extends React.PureComponent {
     onSortEnd: noop,
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.remapChildrenToState()
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     /* istanbul ignore next */
     /* Note: There are tests for this, but for some reason, Istanbul isn't
      * picking it up */

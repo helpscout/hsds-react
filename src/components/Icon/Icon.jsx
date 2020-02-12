@@ -55,7 +55,7 @@ const Icon = props => {
 
   const caretMarkup = withCaret ? (
     <span className="c-Icon__icon is-caret" title="Caret">
-      {<CaretComponent />}
+      {CaretComponent && <CaretComponent />}
     </span>
   ) : null
 
@@ -69,7 +69,7 @@ const Icon = props => {
       data-cy="Icon"
     >
       <span className="c-Icon__icon" title={iconTitle}>
-        {<IconComponent />}
+        {IconComponent && <IconComponent />}
       </span>
       {caretMarkup}
       {isWithHiddenTitle ? <VisuallyHidden>{iconTitle}</VisuallyHidden> : null}

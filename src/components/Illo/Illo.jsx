@@ -46,7 +46,7 @@ const Illo = props => {
     >
       <Centralize>
         <IconUI className="c-Illo__icon" title={iconTitle}>
-          {<IlloComponent />}
+          {IlloComponent && <IlloComponent />}
         </IconUI>
       </Centralize>
       <VisuallyHidden>{iconTitle}</VisuallyHidden>

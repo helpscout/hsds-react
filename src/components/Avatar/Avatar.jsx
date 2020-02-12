@@ -65,7 +65,7 @@ export class Avatar extends React.PureComponent {
     this.src = getImageSrc(props)
   }
 
-  componentWillReceiveProps(newProps) {
+  UNSAFE_componentWillReceiveProps(newProps) {
     const imageHasChanged = newProps.image !== this.props.image
     const fallbackHasChanged =
       newProps.fallbackImage !== this.props.fallbackImage

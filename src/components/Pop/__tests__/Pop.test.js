@@ -5,16 +5,12 @@ import Keys from '../../../constants/Keys'
 
 jest.mock('../Pop.Portal', () => {
   const Portal = ({ children }) => <div>{children}</div>
-  return {
-    default: Portal,
-  }
+  return Portal
 })
 
 jest.mock('../../Animate', () => {
   const Animate = ({ children }) => <div>{children}</div>
-  return {
-    default: Animate,
-  }
+  return Animate
 })
 
 const cx = {

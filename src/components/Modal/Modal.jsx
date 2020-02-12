@@ -117,7 +117,7 @@ class Modal extends React.PureComponent {
   closenode
   scrollablenode
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.documentNode = getClosestDocument(ReactDOM.findDOMNode(this))
   }
 

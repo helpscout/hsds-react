@@ -73,7 +73,7 @@ class Choice extends React.PureComponent {
     id: this.props.id || uniqueID(this.props.componentID),
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState({
       checked: nextProps.checked,
       id: nextProps.id || this.state.id,

@@ -264,7 +264,7 @@ describe('value', () => {
   test('Does not update the state if new value is the same as previous value', () => {
     const lifecycleSpy = jest.spyOn(
       Input.prototype,
-      'componentWillReceiveProps'
+      'UNSAFE_componentWillReceiveProps'
     )
     const stateSpy = jest.spyOn(Input.prototype, 'setState')
 
@@ -280,7 +280,7 @@ describe('value', () => {
   test('Does update the state if new value is different than previous value', () => {
     const lifecycleSpy = jest.spyOn(
       Input.prototype,
-      'componentWillReceiveProps'
+      'UNSAFE_componentWillReceiveProps'
     )
     const stateSpy = jest.spyOn(Input.prototype, 'setState')
 

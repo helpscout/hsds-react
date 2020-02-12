@@ -55,7 +55,7 @@ class InfiniteScroller extends React.PureComponent {
     this._isMounted = false
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     /* istanbul ignore else */
     if (nextProps.isLoading && !this.state.isLoading) {
       this.handleOnLoading()

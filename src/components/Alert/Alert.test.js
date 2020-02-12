@@ -173,7 +173,7 @@ describe('Icon', () => {
 
     expect(d.length).toBeTruthy()
     expect(o.length).toBeTruthy()
-    expect(o.props().name).toBe('alert')
+    expect(o.props().name).toBe('alert-small')
     expect(wrapper.getDOMNode().classList.contains('has-icon')).toBeTruthy()
   })
 })

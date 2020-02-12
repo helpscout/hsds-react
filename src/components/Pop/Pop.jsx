@@ -62,7 +62,7 @@ class Pop extends React.Component {
     }
   }
 
-  componentWillReceiveProps = nextProps => {
+  UNSAFE_componentWillReceiveProps = nextProps => {
     const { isOpen: wasOpen } = this.props
     const { isOpen: willOpen } = nextProps
 
@@ -232,14 +232,14 @@ class Pop extends React.Component {
       className
     )
 
-    const referenceMarkup = React.Children.map(children, child =>
-      child.type === Reference
+    const referenceMarkup = React.Children.map(children, child => {
+      return child.type === Reference
         ? React.cloneElement(child, {
             'aria-describedby': id,
             display,
           })
         : null
-    )
+    })
 
     /* istanbul ignore next */
     /**
@@ -340,8 +340,6 @@ export const popProps = {
   zIndex: PropTypes.number,
   dataCy: PropTypes.string,
 }
-
-console.log(popProps)
 
 Pop.propTypes = Object.assign({}, popProps, {
   onBeforeOpen: PropTypes.func,

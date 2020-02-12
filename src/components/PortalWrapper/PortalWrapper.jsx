@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import * as ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom'
 import getComponentDefaultProp from '@helpscout/react-utils/dist/getComponentDefaultProp'
 import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStatics'
 import getComponentName from '@helpscout/react-utils/dist/getComponentName'

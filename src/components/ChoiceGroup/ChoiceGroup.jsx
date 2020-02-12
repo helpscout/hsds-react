@@ -47,7 +47,7 @@ class ChoiceGroup extends React.PureComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     /* istanbul ignore else */
     if (nextProps.value !== this.props.value) {
       this.setState({
@@ -56,7 +56,7 @@ class ChoiceGroup extends React.PureComponent {
     }
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const child = this.props.children ? this.props.children[0] : false
     let multiSelect
 

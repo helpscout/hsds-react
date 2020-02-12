@@ -93,7 +93,7 @@ describe('Should component update', () => {
       value: 'hello',
       id: 'greeting_0',
     }
-    const validationInfo: Validation = {
+    const validationInfo = {
       isValid: false,
       name: 'email',
       value: 'hello',
