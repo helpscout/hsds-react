@@ -10,8 +10,12 @@ export interface ModalProps extends PortalProps {
   closeIconRepositionDelay: number
   closeIconOffset: number
   closePortal: () => void
-  isOpen: boolean
   containTabKeyPress: boolean
+  description?: string
+  isOpen: boolean
+  kind?: string
+  icon?: string
+  illo?: any
   modalAnimationDelay: number
   modalAnimationDuration: number
   modalAnimationEasing: string
@@ -24,9 +28,12 @@ export interface ModalProps extends PortalProps {
   overlayClassName?: string
   portalIsOpen: boolean
   seamless: boolean
+  state?: string
   style: Object
+  title?: string
   trigger?: any
   timeout: number
+  version?: number
   wrapperClassName?: string
   zIndex: number
 }
@@ -51,6 +58,20 @@ export type ModalContentProps = {
   scrollableRef: (node: HTMLElement) => void
 }
 
+export type ModalActionFooterProps = {
+  children?: any
+  className?: string
+  cancelText?: string
+  kind?: string
+  primaryButtonText?: string
+  secondaryButtonText?: string
+  showDefaultCancel?: boolean
+  state?: string
+  onCancel: () => void
+  onPrimaryClick: () => void
+  onSecondaryClick?: () => void
+}
+
 export type ModalFooterProps = {
   children?: any
   className?: string
@@ -65,6 +86,16 @@ export type ModalHeaderProps = {
   seamless: boolean
   shadow: boolean
   size: ToolbarSize
+}
+
+export type ModalHeaderV2Props = {
+  children?: any
+  className?: string
+  description?: string
+  icon?: string
+  illo?: any
+  kind?: string
+  title?: string
 }
 
 export type ModalOverlayProps = {

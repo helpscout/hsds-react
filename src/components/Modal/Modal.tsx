@@ -1,10 +1,12 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import ActionFooter from './Modal.ActionFooter'
 import Body from './Modal.Body'
 import Content from './Modal.Content'
 import Footer from './Modal.Footer'
 import Header from './Modal.Header'
+import HeaderV2 from './Modal.HeaderV2'
 import Overlay from './Modal.Overlay'
 import CloseButton from '../CloseButton'
 import EventListener from '../EventListener'
@@ -17,7 +19,7 @@ import { isComponentNamed } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { findFocusableNodes } from '../../utilities/focus'
 import { getClosestDocument, isNodeElement } from '../../utilities/node'
-import { COMPONENT_KEY } from './Modal.utils'
+import { COMPONENT_KEY, MODAL_STYLES } from './Modal.utils'
 import {
   ModalUI,
   InnerWrapperUI,
@@ -38,10 +40,14 @@ class Modal extends React.PureComponent<ModalProps> {
     closeIcon: true,
     closePortal: noop,
     closeIconOffset: 10,
+    description: null,
     seamless: false,
     isOpen: false,
     closeIconRepositionDelay: 0,
     containTabKeyPress: true,
+    icon: null,
+    illo: null,
+    kind: MODAL_STYLES.DEFAULT,
     modalAnimationDelay: 0,
     modalAnimationDuration: 200,
     modalAnimationEasing: 'bounce',
@@ -58,6 +64,7 @@ class Modal extends React.PureComponent<ModalProps> {
     wrapperClassName: 'c-ModalWrapper',
     zIndex: 1,
     status: '',
+    state: '',
     version: 1,
   }
 
@@ -65,6 +72,7 @@ class Modal extends React.PureComponent<ModalProps> {
     positionCloseNode: noop,
   }
 
+  static ActionFooter = ActionFooter
   static Body = Body
   static Content = Content
   static Footer = Footer
@@ -191,6 +199,10 @@ class Modal extends React.PureComponent<ModalProps> {
     const {
       cardClassName,
       className,
+      description,
+      icon,
+      illo,
+      kind,
       modalAnimationDelay,
       modalAnimationDuration,
       modalAnimationEasing,
@@ -198,13 +210,33 @@ class Modal extends React.PureComponent<ModalProps> {
       portalIsOpen,
       seamless,
       style,
+      title,
+      version,
       ...rest
     } = this.props
 
-    const componentClassName = classNames('c-Modal__Card', cardClassName)
+    const componentClassName = classNames(
+      'c-Modal__Card',
+      kind === MODAL_STYLES.DEFAULT && 'is-default',
+      kind === MODAL_STYLES.ALERT && 'is-alert',
+      kind === MODAL_STYLES.BRANDED && 'is-branded',
+      cardClassName
+    )
+
+    const v2 = version === 2
 
     const childrenMarkup = this.getChildrenMarkup()
-    const closeMarkup = this.getCloseMarkup()
+    const closeMarkup = v2 ? null : this.getCloseMarkup()
+
+    const headerMarkup = v2 ? (
+      <HeaderV2
+        icon={icon}
+        illo={illo}
+        description={description}
+        title={title}
+        kind={kind}
+      />
+    ) : null
 
     const contentMarkup = !seamless ? (
       <CardUI
@@ -216,10 +248,12 @@ class Modal extends React.PureComponent<ModalProps> {
         tabIndex="-1"
       >
         {closeMarkup}
+        {headerMarkup}
         {childrenMarkup}
       </CardUI>
     ) : (
       <div className="c-Modal__innerContent" role="dialog">
+        {headerMarkup}
         {childrenMarkup}
       </div>
     )
@@ -246,10 +280,14 @@ class Modal extends React.PureComponent<ModalProps> {
       overlayAnimationSequence,
       overlayClassName,
       portalIsOpen,
+      version,
     } = this.props
 
+    const v2 = version === 2
+    const overlayClassNames = classNames(v2 && 'is-dark', overlayClassName)
+
     const props = {
-      className: overlayClassName,
+      className: overlayClassNames,
       isOpen: portalIsOpen,
       onClick: forceClosePortal,
       overlayAnimationDelay,
@@ -273,12 +311,35 @@ class Modal extends React.PureComponent<ModalProps> {
   }
 
   render() {
-    const { className, isOpen, style, version, zIndex, ...rest } = this.props
+    const {
+      className,
+      isOpen,
+      kind,
+      state,
+      style,
+      version,
+      zIndex,
+      ...rest
+    } = this.props
+    const v2 = version === 2
 
     const componentClassName = classNames(
       'c-Modal',
+      v2 && 'v2',
       isOpen && 'is-open',
+      state === 'danger' && 'is-danger',
+      kind === MODAL_STYLES.DEFAULT && 'is-default',
+      kind === MODAL_STYLES.ALERT && 'is-alert',
+      kind === MODAL_STYLES.BRANDED && 'is-branded',
       className
+    )
+
+    const innerWrapperClassName = classNames(
+      'c-Modal__innerWrapper',
+      v2 && 'v2',
+      kind === MODAL_STYLES.DEFAULT && 'is-default',
+      kind === MODAL_STYLES.ALERT && 'is-alert',
+      kind === MODAL_STYLES.BRANDED && 'is-branded'
     )
 
     const styles = { ...style, zIndex }
@@ -304,7 +365,7 @@ class Modal extends React.PureComponent<ModalProps> {
         <EventListener event="resize" handler={this.handleOnResize} />
         <InnerWrapperUI
           {...getValidProps(rest)}
-          className="c-Modal__innerWrapper"
+          className={innerWrapperClassName}
         >
           {this.getInnerContentMarkup()}
         </InnerWrapperUI>

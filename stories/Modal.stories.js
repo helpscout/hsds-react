@@ -19,8 +19,12 @@ import { MemoryRouter } from 'react-router'
 import { Route } from 'react-router-dom'
 import { createSpec, faker } from '@helpscout/helix'
 import Frame from 'react-frame-component'
+import { withAktiv } from './utils'
+
+import SpeechBubble from '@helpscout/hsds-illos/speech-bubble'
 
 const stories = storiesOf('Modal', module)
+stories.addDecorator(withAktiv)
 
 const ContentSpec = createSpec({
   content: faker.lorem.paragraph(),
@@ -138,6 +142,17 @@ stories.addDecorator(story => (
 
 stories.add('default', () => (
   <Modal trigger={<Link>Open dis modal</Link>}>
+    <Modal.Body>
+      <Heading>Title</Heading>
+      {ContentSpec.generate(8).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+  </Modal>
+))
+
+stories.add('v2 styles', () => (
+  <Modal version="2" trigger={<Link>Open dis modal</Link>}>
     <Modal.Body>
       <Heading>Title</Heading>
       {ContentSpec.generate(8).map(({ id, content }) => (
@@ -559,3 +574,198 @@ stories.add('styled', () => {
     </StyledModal>
   )
 })
+
+const storiesV2 = storiesOf('Modal/V2', module)
+storiesV2.addDecorator(withAktiv)
+
+storiesV2.add('default', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    trigger={<Link>Clicky</Link>}
+    title="Modal Title"
+  >
+    <Modal.Body>
+      {ContentSpec.generate(2).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.ActionFooter primaryButtonText="Primary" />
+  </Modal>
+))
+
+storiesV2.add('default w/ secondary button', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    trigger={<Link>Clicky</Link>}
+    title="Modal Title"
+  >
+    <Modal.Body>
+      {ContentSpec.generate(2).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.ActionFooter
+      primaryButtonText="Primary"
+      secondaryButtonText="Secondary"
+    />
+  </Modal>
+))
+
+storiesV2.add('default w/ header icon', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    trigger={<Link>Clicky</Link>}
+    icon="emoji"
+    title="Modal Title"
+  >
+    <Modal.Body>
+      {ContentSpec.generate(2).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.ActionFooter
+      primaryButtonText="Primary"
+      secondaryButtonText="Secondary"
+    />
+  </Modal>
+))
+
+storiesV2.add('default w/ danger state', () => (
+  <Modal
+    version={2}
+    state="danger"
+    isOpen={true}
+    trigger={<Link>Clicky</Link>}
+    icon="alert"
+    title="Modal Title"
+  >
+    <Modal.Body>
+      {ContentSpec.generate(2).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.ActionFooter
+      state="danger"
+      primaryButtonText="Primary"
+      secondaryButtonText="Secondary"
+    />
+  </Modal>
+))
+
+storiesV2.add('default no cancel button', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    trigger={<Link>Clicky</Link>}
+    title="Modal Title"
+  >
+    <Modal.Body>
+      {ContentSpec.generate(2).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.ActionFooter
+      showDefaultCancel={false}
+      primaryButtonText="Primary"
+      secondaryButtonText="Secondary"
+    />
+  </Modal>
+))
+
+storiesV2.add('branded no description, single button', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    kind="branded"
+    illo={<SpeechBubble />}
+    trigger={<Link>Clicky</Link>}
+    title="Modal Title"
+  >
+    <Modal.Body>
+      {ContentSpec.generate(1).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.ActionFooter primaryButtonText="Primary" />
+  </Modal>
+))
+
+storiesV2.add('branded w/description, secondary button', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    description="A really interesting description about lots of really interesting things goes here so that you can feel really informed and on top of things."
+    kind="branded"
+    illo={<SpeechBubble />}
+    trigger={<Link>Clicky</Link>}
+    title="Modal Title"
+  >
+    <Modal.Body>
+      {ContentSpec.generate(1).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.ActionFooter
+      primaryButtonText="Primary"
+      secondaryButtonText="Secondary"
+    />
+  </Modal>
+))
+
+storiesV2.add('alert, no description', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    kind="alert"
+    trigger={<Link>Clicky</Link>}
+    title="Discard this draft?"
+  >
+    <Modal.ActionFooter
+      showDefaultCancel={false}
+      kind={'alert'}
+      primaryButtonText="Discard"
+      secondaryButtonText="Cancel"
+    />
+  </Modal>
+))
+
+storiesV2.add('alert with description', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    description="Let me tell you a little more."
+    kind="alert"
+    trigger={<Link>Clicky</Link>}
+    title="Discard this draft?"
+  >
+    <Modal.ActionFooter
+      showDefaultCancel={false}
+      kind={'alert'}
+      primaryButtonText="Yes, do it"
+      secondaryButtonText="Cancel"
+    />
+  </Modal>
+))
+
+storiesV2.add('alert w/ danger state', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    kind="alert"
+    description="You're about to do a thing that could impact a lot of other things. Continue?"
+    state="danger"
+    trigger={<Link>Clicky</Link>}
+    title="Discard this draft?"
+  >
+    <Modal.ActionFooter
+      showDefaultCancel={false}
+      kind={'alert'}
+      state="danger"
+      primaryButtonText="Yes, do it"
+      secondaryButtonText="Cancel"
+    />
+  </Modal>
+))
