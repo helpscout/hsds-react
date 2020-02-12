@@ -191,16 +191,16 @@ export class SelectDropdown extends React.PureComponent {
   }
 }
 
-// SelectDropdown.propTypes = Object.assign({}, Dropdown.propTypes, {
-//   autoInput: PropTypes.bool,
-//   errorIcon: PropTypes.string,
-//   errorMessage: PropTypes.string,
-//   isFocused: PropTypes.bool,
-//   limit: PropTypes.number,
-//   onChange: PropTypes.func,
-//   placeholder: PropTypes.string,
-//   state: PropTypes.oneOf(['default', 'error', 'success', 'warning', '', null]),
-//   value: PropTypes.any,
-// })
+SelectDropdown.propTypes = Object.assign({}, Dropdown.propTypes, {
+  autoInput: PropTypes.bool,
+  errorIcon: PropTypes.string,
+  errorMessage: PropTypes.string,
+  isFocused: PropTypes.bool,
+  limit: PropTypes.number,
+  onChange: PropTypes.func,
+  placeholder: PropTypes.string,
+  state: PropTypes.oneOf(['default', 'error', 'success', 'warning', '', null]),
+  value: PropTypes.any,
+})
 
 export default SelectDropdown

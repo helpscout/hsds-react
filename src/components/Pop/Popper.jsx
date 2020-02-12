@@ -10,7 +10,7 @@ import ReactPopper from '../Popper/Popper'
 import Animate from '../Animate'
 import Portal from './Pop.Portal'
 import Arrow from './Arrow'
-import Pop from './index'
+import { PopPropTypes } from './Pop'
 
 const uniqueID = createUniqueIDFactory('PopPopper')
 
@@ -198,23 +198,15 @@ export const enhancePopperStyles = (props = {}) => {
   return style
 }
 
-// Popper.propTypes = Object.assign(Pop.propTypes, {
-//   animationDelay: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-//   animationDuration: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-//   animationEasing: PropTypes.string,
-//   animationSequence: PropTypes.oneOfType([
-//     PropTypes.string,
-//     PropTypes.arrayOf(PropTypes.string),
-//   ]),
-//   arrowColor: PropTypes.string,
-//   arrowSize: PropTypes.number,
-//   offset: PropTypes.number,
-//   close: PropTypes.func,
-//   onClick: PropTypes.func,
-//   onContentClick: PropTypes.func,
-//   onMouseLeave: PropTypes.func,
-//   positionFixed: PropTypes.bool,
-//   zIndex: PropTypes.number,
-// })
+// This fixes a test issue  ¯\_(ツ)_/¯
+const importedPopProps = PopPropTypes ? PopPropTypes : {}
+Popper.propTypes = Object.assign(importedPopProps, {
+  arrowColor: PropTypes.string,
+  offset: PropTypes.number,
+  close: PropTypes.func,
+  onClick: PropTypes.func,
+  onMouseLeave: PropTypes.func,
+  positionFixed: PropTypes.bool,
+})
 
 export default Popper

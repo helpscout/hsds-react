@@ -8,7 +8,7 @@ import { noop } from '../../utilities/other'
 import { isFunction } from '../../utilities/is'
 import { renderChildrenSafely } from '../../utilities/component'
 import { getColor } from '../../styles/utilities/color'
-import { popProps } from '../Pop/Pop'
+import { PopPropTypes } from '../Pop/Pop'
 
 export const TooltipContext = React.createContext({})
 
@@ -137,10 +137,10 @@ const TooltipConsumer = props => {
   return <Tooltip {...newProps} />
 }
 
-Tooltip.propTypes = Object.assign(popProps, {
-  arrowClassName: PropTypes.string,
+// This fixes a test issue  ¯\_(ツ)_/¯
+const importedPopProps = PopPropTypes ? PopPropTypes : {}
+Tooltip.propTypes = Object.assign(importedPopProps, {
   contentClassName: PropTypes.string,
-  className: PropTypes.string,
   color: PropTypes.string,
   dataCyPopper: PropTypes.string,
   innerRef: PropTypes.func,
@@ -149,7 +149,6 @@ Tooltip.propTypes = Object.assign(popProps, {
   renderContent: PropTypes.func,
   theme: PropTypes.string,
   title: PropTypes.any,
-  zIndex: PropTypes.number,
 })
 
 TooltipConsumer.propTypes = Tooltip.propTypes
