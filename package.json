@@ -188,7 +188,6 @@
     "jest-cli": "^24.7.1",
     "jest-watch-typeahead": "^0.3.0",
     "mkdirp": "0.5.1",
-    "node-sass": "4.12.0",
     "np": "4.0.2",
     "nyc": "14.1.1",
     "object-assign": "4.1.1",

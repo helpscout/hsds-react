@@ -66,7 +66,7 @@ const getOpenSectionIds = sections => {
   }, [])
 }
 
-const getSortableProps = ({ distance, pressDelay }) => {
+export const getSortableProps = ({ distance, pressDelay }) => {
   return distance > 0 ? { distance } : { pressDelay }
 }
 

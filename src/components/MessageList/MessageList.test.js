@@ -1,11 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { act } from 'react-dom/test-utils'
 import { mount } from 'enzyme'
 import mockItems from './MessageList.mockItems'
 import MessageList from './MessageList'
 import MessageRow from './MessageRow'
 import { AccordionUI } from './MessageList.css'
 import AccordionLink from '../Accordion/Accordion.Link'
+import Sortable from '../Sortable'
 
 const messageListDefaultProps = {
   items: mockItems,
@@ -68,59 +69,42 @@ describe('message list', () => {
 })
 
 describe('message list sorting', () => {
+  test('should use Sortable to sort messages', () => {
+    const wrapper = mount(<MessageList {...messageListDefaultProps} />)
+
+    expect(wrapper.find(Sortable)).toBeTruthy()
+  })
+
   test('should set state and call back onSortStart', () => {
     const wrapper = mount(<MessageList {...messageListDefaultProps} />)
-    wrapper
-      .find('MessageList')
-      .instance()
-      .onSortStart({
+
+    act(() => {
+      wrapper.prop('onSortStart')({
         node: {},
         isKeySorting: false,
         collection: {},
         index: 1,
       })
-    wrapper.update()
-    wrapper.find(MessageRow).forEach(node => {
-      const { index, isDragging } = node.props()
-      expect(isDragging).toEqual(index === 1)
+      wrapper.update()
     })
-    expect(wrapper.state().isDragging).toEqual(true)
-    expect(wrapper.state().indexOfDraggedItem).toEqual(1)
+
     expect(messageListDefaultProps.onSortStart).toHaveBeenCalledTimes(1)
-    expect(messageListDefaultProps.onSortStart).toHaveBeenCalledWith({
-      collection: {},
-      index: 1,
-      node: {},
-      isDragging: true,
-      isKeySorting: false,
-    })
   })
+
   test('should set state and call back onSortEnd', () => {
     const wrapper = mount(<MessageList {...messageListDefaultProps} />)
-    wrapper
-      .find('MessageList')
-      .instance()
-      .onSortEnd({
+
+    act(() => {
+      wrapper.prop('onSortEnd')({
         collection: {},
         isKeySorting: false,
         oldIndex: 1,
         newIndex: 3,
       })
-    wrapper.update()
-    wrapper.find(MessageRow).forEach(node => {
-      const { isDragging } = node.props()
-      expect(isDragging).toEqual(false)
+      wrapper.update()
     })
-    expect(wrapper.state().isDragging).toEqual(false)
-    expect(wrapper.state().indexOfDraggedItem).toEqual(-1)
+
     expect(messageListDefaultProps.onSortEnd).toHaveBeenCalledTimes(1)
-    expect(messageListDefaultProps.onSortEnd).toHaveBeenCalledWith({
-      collection: {},
-      isDragging: false,
-      isKeySorting: false,
-      oldIndex: 1,
-      newIndex: 3,
-    })
   })
 })
 
@@ -196,7 +180,6 @@ describe('message row error', () => {
       <MessageRow {...messageRowDefaultProps} isValid={false} />
     )
     const badge = wrapper.find('Badge').first()
-    const text = wrapper.find('Text').first()
 
     expect(badge.length).toBeTruthy()
     expect(badge.text()).toEqual('Needs Attention')

@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount, render } from 'enzyme'
 import { SelectDropdown } from './SelectDropdown'
+import SearchableDropdown from '../SearchableDropdown'
 
 jest.mock('../Dropdown', () => {
   const Dropdown = () => <div />
@@ -13,17 +14,15 @@ jest.mock('../Dropdown', () => {
 describe('className', () => {
   test('Has a default className', () => {
     const wrapper = mount(<SelectDropdown />)
-    const el = wrapper.find('AutoDropdown')
 
-    expect(el.hasClass('c-SelectDropdown')).toBeTruthy()
+    expect(wrapper.find('.c-SelectDropdown').length).toBeTruthy()
   })
 
   test('Can render a custom className', () => {
     const className = 'buddy'
     const wrapper = mount(<SelectDropdown className={className} />)
-    const el = wrapper.find('AutoDropdown')
 
-    expect(el.hasClass(className)).toBeTruthy()
+    expect(wrapper.hasClass(className)).toBeTruthy()
   })
 })
 
@@ -31,7 +30,7 @@ describe('limit', () => {
   test('Renders a searchable input, if item count exceeds limit', () => {
     const items = [0, 1, 2, 3]
     const wrapper = mount(<SelectDropdown items={items} limit={2} />)
-    const el = wrapper.find('ComboBox')
+    const el = wrapper.find(SearchableDropdown)
 
     expect(el.prop('showInput')).toBe(true)
   })
@@ -39,9 +38,9 @@ describe('limit', () => {
   test('Does not show a searchable input, if item count is below limit', () => {
     const items = [0, 1, 2, 3]
     const wrapper = mount(<SelectDropdown items={items} limit={20} />)
-    const el = wrapper.find('ComboBox')
+    const el = wrapper.find('.c-Input')
 
-    expect(el.prop('showInput')).toBe(false)
+    expect(el.length).toBe(0)
   })
 })
 
@@ -49,7 +48,7 @@ describe('Events', () => {
   test('onBlur callback can be fired', () => {
     const spy = jest.fn()
     const wrapper = mount(<SelectDropdown onBlur={spy} />)
-    const el = wrapper.find('AutoDropdown')
+    const el = wrapper.find(SelectDropdown)
 
     el.props().onBlur()
 
@@ -59,7 +58,7 @@ describe('Events', () => {
   test('onFocus callback can be fired', () => {
     const spy = jest.fn()
     const wrapper = mount(<SelectDropdown onFocus={spy} />)
-    const el = wrapper.find('AutoDropdown')
+    const el = wrapper.find(SelectDropdown)
 
     el.props().onFocus()
 
@@ -69,7 +68,7 @@ describe('Events', () => {
   test('onSelect callback can be fired', () => {
     const spy = jest.fn()
     const wrapper = mount(<SelectDropdown onSelect={spy} />)
-    const el = wrapper.find('AutoDropdown')
+    const el = wrapper.find(SelectDropdown)
 
     el.props().onSelect('value', { item: {} })
 

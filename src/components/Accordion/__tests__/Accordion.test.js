@@ -1,12 +1,16 @@
 import React from 'react'
+import { act } from 'react-dom/test-utils'
 import { mount } from 'enzyme'
-import Accordion, { classNameStrings as classNames } from '../Accordion'
+import Accordion, {
+  classNameStrings as classNames,
+  getSortableProps,
+} from '../Accordion'
 import Section, {
   classNameStrings as sectionClassNames,
 } from '../Accordion.Section'
 import Title, { classNameStrings as titleClassNames } from '../Accordion.Title'
 import Body, { classNameStrings as bodyClassNames } from '../Accordion.Body'
-import Collapsible from '../../Collapsible'
+import Sortable from '../../Sortable'
 
 describe('ClassNames', () => {
   test('Has default className', () => {
@@ -233,40 +237,15 @@ describe('State', () => {
 })
 
 describe('sorting', () => {
-  test('Adds a classname to indicate the accordion is sortable', () => {
+  test('Uses Sortable under the hood is sorting enabled', () => {
     const wrapper = mount(<Accordion />)
-    expect(
-      wrapper
-        .find('.c-Accordion')
-        .first()
-        .hasClass('is-sortable')
-    ).toBe(false)
-    wrapper.setProps({ isSortable: true })
-    expect(
-      wrapper
-        .find('.c-Accordion')
-        .first()
-        .hasClass('is-sortable')
-    ).toBe(true)
-  })
+    expect(wrapper.find(Sortable).length).toBeFalsy()
 
-  test('Adds a classname to indicate the accordion is being sorted', () => {
-    const wrapper = mount(<Accordion isSortable />)
-    const instance = wrapper.find('Accordion').instance()
-    expect(
-      wrapper
-        .find('.c-Accordion')
-        .first()
-        .hasClass('is-sorting')
-    ).toBe(false)
-    instance.handleOnSortStart()
-    wrapper.update()
-    expect(
-      wrapper
-        .find('.c-Accordion')
-        .first()
-        .hasClass('is-sorting')
-    ).toBe(true)
+    act(() => {
+      wrapper.setProps({ isSortable: true })
+    })
+
+    expect(wrapper.find(Sortable).length).toBeTruthy()
   })
 
   test('Invokes onSortEnd callback after sorting', () => {
@@ -274,39 +253,27 @@ describe('sorting', () => {
     const nextIndex = 5
     const spy = jest.fn()
     const wrapper = mount(<Accordion isSortable onSortEnd={spy} />)
-    const instance = wrapper.find('Accordion').instance()
+    const sortable = wrapper.find(Sortable)
+
     expect(spy).not.toHaveBeenCalled()
-    instance.handleOnSortEnd(prevIndex, nextIndex)
+
+    act(() => {
+      sortable.prop('onSortEnd')(prevIndex, nextIndex)
+    })
+
     expect(spy).toHaveBeenCalledWith(prevIndex, nextIndex)
   })
 
-  test('Updates the state during sorting', () => {
-    const wrapper = mount(<Accordion isSortable />)
-    const instance = wrapper.find('Accordion').instance()
-
-    expect(wrapper.state().isSorting).toBe(false)
-    instance.handleOnSortStart()
-    expect(wrapper.state().isSorting).toBe(true)
-    instance.handleOnSortEnd()
-    expect(wrapper.state().isSorting).toBe(false)
-  })
-
   test('distance takes precendent over pressDelay', () => {
-    const wrapper = mount(
-      <Accordion distance={15} isSortable pressDelay={300} />
-    )
-    const instance = wrapper.find('Accordion').instance()
-    const props = instance.getSortableProps()
+    const props = getSortableProps({ distance: 15, pressDelay: 300 })
+
     expect(props.distance).toEqual(15)
     expect(props.pressDelay).toBeUndefined()
   })
 
   test('pressDelay can be set if distance is less than or equal to zero', () => {
-    const wrapper = mount(
-      <Accordion distance={0} isSortable pressDelay={300} />
-    )
-    const instance = wrapper.find('Accordion').instance()
-    const props = instance.getSortableProps()
+    const props = getSortableProps({ distance: 0, pressDelay: 300 })
+
     expect(props.distance).toBeUndefined()
     expect(props.pressDelay).toEqual(300)
   })
