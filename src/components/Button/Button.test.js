@@ -47,10 +47,12 @@ describe('Sizes', () => {
     const lg = mount(<Button size="lg">Large</Button>)
     const md = mount(<Button size="md">Medium</Button>)
     const sm = mount(<Button size="sm">Small</Button>)
+    const xl = mount(<Button size="lgxl">ExtraLarge</Button>)
 
     expect(lg.find('button.c-Button').hasClass('is-lg')).toBe(true)
     expect(md.find('button.c-Button').hasClass('is-md')).toBe(true)
     expect(sm.find('button.c-Button').hasClass('is-sm')).toBe(true)
+    expect(xl.find('button.c-Button').hasClass('is-xl')).toBe(true)
   })
 })
 

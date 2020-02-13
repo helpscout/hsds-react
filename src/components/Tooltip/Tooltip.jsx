@@ -139,6 +139,7 @@ const TooltipConsumer = props => {
 }
 
 // This fixes a test issue  ¯\_(ツ)_/¯
+/* istanbul ignore next */
 const importedPopProps = PopPropTypes ? PopPropTypes : {}
 Tooltip.propTypes = Object.assign(importedPopProps, {
   contentClassName: PropTypes.string,

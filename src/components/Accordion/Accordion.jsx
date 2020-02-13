@@ -43,6 +43,7 @@ const getComponentClassName = ({
     isPage && isPageClassName,
     isSeamless && isSeamlessClassName,
     isSortable && isSortableClassName,
+    /* istanbul ignore next */
     isSorting && isSortingClassName,
     className
   )
@@ -57,6 +58,7 @@ const buildOpenSections = sectionIds =>
     {}
   )
 
+/* istanbul ignore next */
 const getOpenSectionIds = sections => {
   return Object.keys(sections).reduce((accumulator, key) => {
     if (sections[key] && sections[key] === true) {
@@ -90,6 +92,7 @@ const Accordion = props => {
 
   const { accordion = {} } = useContext(PageContext)
   const { getCurrentScope } = React.useContext(GlobalContext) || {}
+  /* istanbul ignore next */
   const scope = getCurrentScope ? getCurrentScope() : null
 
   const isPage = accordion.isPage || isPageProps
@@ -99,10 +102,12 @@ const Accordion = props => {
     setOpenSections(buildOpenSections(openSectionIds))
   }, [stringifyArray(openSectionIds)])
 
+  /* istanbul ignore next */
   const onClose = uuid => {
     props.onClose(uuid, getOpenSectionIds(sections))
   }
 
+  /* istanbul ignore next */
   const onOpen = uuid => {
     props.onOpen(uuid, getOpenSectionIds(sections))
   }
@@ -121,6 +126,7 @@ const Accordion = props => {
     })
   }
 
+  /* istanbul ignore next */
   const getContainer = () => {
     if (scope) {
       return document.querySelector(`.${scope}`)
@@ -149,7 +155,7 @@ const Accordion = props => {
         helperClass="is-sorting-item"
         lockAxis="y"
         helperContainer={getContainer}
-        onSortStart={() => setIsSorting(true)}
+        onSortStart={/* istanbul ignore next */ () => setIsSorting(true)}
         onSortEnd={(...args) => {
           setIsSorting(false)
           onSortEnd(...args)

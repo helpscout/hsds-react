@@ -30,7 +30,7 @@ class ChatInbox extends React.Component {
     this._selfManageCollapse = props.isCollapsed !== undefined
   }
 
-  handleOnClickHeader = (event, onClick = noop) => {
+  handleOnClickHeader = (event, onClick) => {
     const { isCollapsible } = this.props
     /* istanbul ignore else */
     if (isCollapsible) {

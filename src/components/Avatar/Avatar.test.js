@@ -67,10 +67,13 @@ describe('Name', () => {
 
 describe('Image', () => {
   test('Has the correct className', () => {
-    const wrapper = mount(<Avatar name="Buddy the Elf" image="buddy.jpg" />)
+    const wrapper = mount(
+      <Avatar name="Buddy the Elf" image="buddy.jpg" withShadow />
+    )
     const image = wrapper.find(`div${ui.image}`)
 
     expect(image.exists()).toBeTruthy()
+    expect(wrapper.find('.is-withShadow').length).toBeTruthy()
   })
 
   test('Background is currentColor to prevent flash of color before image loads', () => {

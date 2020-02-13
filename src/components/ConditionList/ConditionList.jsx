@@ -80,6 +80,7 @@ export class ConditionList extends React.Component {
   }
 }
 
+/* istanbul ignore next */
 const ConditionListConsumer = props => {
   const contextValue = React.useContext(PageContext)
 
@@ -89,7 +90,6 @@ const ConditionListConsumer = props => {
     return <ConditionList {...newProps} />
   }
 
-  /* istanbul ignore next */
   return <ConditionList {...props} />
 }
 

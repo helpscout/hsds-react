@@ -25,6 +25,7 @@ module.exports = {
     '!src/utilities/react-router/**/*.{js,jsx}',
     '!src/utilities/smoothScroll.{js,jsx}',
     '!src/utilities/closest.js',
+    '!src/utilities/node.js',
     '!src/utilities/component.js',
     '!src/utilities/memoizeOne.js',
     '!src/utilities/index.{js,jsx}',

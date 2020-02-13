@@ -169,7 +169,11 @@ export class MessageRow extends React.PureComponent {
             // suppresses drag images on rest of components
             event.preventDefault()
           }}
-          style={{ pointerEvents: isDraggingOnList ? 'none' : 'all' }}
+          style={{
+            pointerEvents: /* istanbul ignore next */ isDraggingOnList
+              ? 'none'
+              : 'all',
+          }}
         >
           <ContentUI>
             <DraggableHandle isVisible={this.state.isHovering} />

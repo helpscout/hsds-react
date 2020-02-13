@@ -4,6 +4,11 @@ import { isNodeEnv } from './other'
 
 const Element = window['Element']
 
+/**
+ * Note: A lot of stuff here cannot be tested in JSDOM (missing measurements for props)
+ * Tests exist for some cases but file is not included in coverage
+ */
+
 export const isNodeElement = node => {
   return (
     node &&
@@ -54,9 +59,7 @@ export const getComputedHeightProps = node => {
     paddingBottom,
   } = window.getComputedStyle(el)
 
-  // Adjust for node environments (for testing purposes)
   let offset = parseFloatValue(marginTop) + parseFloatValue(marginBottom)
-  /* istanbul ignore next */
   if (!isNodeEnv()) {
     offset =
       offset + parseFloatValue(paddingTop) + parseFloatValue(paddingBottom)
@@ -85,9 +88,7 @@ export const getComputedWidthProps = node => {
     paddingRight,
   } = window.getComputedStyle(el)
 
-  // Adjust for node environments (for testing purposes)
   let offset = parseFloatValue(marginLeft) + parseFloatValue(marginRight)
-  /* istanbul ignore next */
   if (!isNodeEnv()) {
     offset =
       offset + parseFloatValue(paddingLeft) + parseFloatValue(paddingRight)
@@ -115,8 +116,6 @@ export const getViewportHeight = scope => {
   const node = getNodeScope(scope)
   const { height, offset } = getComputedHeightProps(node)
 
-  /* istanbul ignore next */
-  // Tested one case, but cannot test the other in JSDOM
   return height > window.innerHeight ? height : window.innerHeight - offset
 }
 
@@ -124,8 +123,6 @@ export const getViewportWidth = scope => {
   const node = getNodeScope(scope)
   const { width, offset } = getComputedWidthProps(node)
 
-  /* istanbul ignore next */
-  // Tested one case, but cannot test the other in JSDOM
   return width > window.innerWidth ? width : window.innerWidth - offset
 }
 
@@ -156,8 +153,6 @@ export const isNodeVisible = options => {
   const bufferOffset = 4 // To account for potential borders on the nodeScope
 
   const rect = node.getBoundingClientRect()
-  /* istanbul ignore next */
-  // Tested, but JSDOM + Istanbul cannot account for offsetTop.
   const offsetTop = isNodeEnv() ? rect.top : node.offsetTop
 
   const viewportHeight = isWindow
@@ -178,12 +173,9 @@ export const isNodeVisible = options => {
 }
 
 export const getScrollParent = node => {
-  /* istanbul ignore else */
   if (!isNodeElement(node)) {
     return null
   }
-  /* istanbul ignore next */
-  // Cannot be tested in JSDOM. scrollHeight and clientHeight do not exist.
   if (node.scrollHeight > node.clientHeight) {
     return node
   } else {
@@ -192,8 +184,6 @@ export const getScrollParent = node => {
 }
 
 export const isNodeScrollable = node => {
-  /* istanbul ignore next */
-  // Cannot be tested in JSDOM. scrollHeight and clientHeight do not exist.
   return node && isNodeElement(node)
     ? node.scrollHeight > node.clientHeight
     : false
@@ -204,18 +194,12 @@ export const getClosestDocument = node => {
 }
 
 export const hasContentOverflowX = node => {
-  // Cannot be tested in JSDOM (missing measurements for props)
-  /* istanbul ignore else */
   if (!isNodeElement(node)) return false
-  /* istanbul ignore next */
   return node.clientWidth < node.scrollWidth
 }
 
 export const hasContentOverflowY = node => {
-  // Cannot be tested in JSDOM (missing measurements for props)
-  /* istanbul ignore else */
   if (!isNodeElement(node)) return false
-  /* istanbul ignore next */
   return node.clientHeight < node.scrollHeight
 }
 
@@ -234,7 +218,6 @@ export const getClosestNode = (node, selector) => {
 export const scrollIntoView = node => {
   if (!isNodeElement(node)) return
   if (node['scrollIntoViewIfNeeded']) return node.scrollIntoViewIfNeeded()
-  /* istanbul ignore else */
   if (node['scrollIntoView']) return node.scrollIntoView()
 }
 

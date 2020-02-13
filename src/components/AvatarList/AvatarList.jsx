@@ -22,6 +22,7 @@ const wrapAvatar = (props, avatar, index) => {
 
   let zIndex = max - index
 
+  /* istanbul ignore next */
   if (stack && count > 2 && isOdd(`${count}`)) {
     if (isOdd(index)) {
       zIndex = zIndex + 1
@@ -47,7 +48,7 @@ const wrapAvatar = (props, avatar, index) => {
 
 const getCurrentCount = ({ count, max }) => (count < max ? count : max)
 
-const getAvatarSize = ({ size: sizeProp, stack, ...rest }) => {
+export const getAvatarSize = ({ size: sizeProp, stack, ...rest }) => {
   const currentCount = getCurrentCount(rest)
 
   if (!stack) return sizeProp
@@ -79,7 +80,6 @@ export const AvatarList = props => {
   const contextValue = { size }
 
   const avatarComponents = avatarList.map((avatar, index) => {
-    //TODO: stacking
     return wrapAvatar(propsWithCount, avatar, index)
   })
 
@@ -93,6 +93,7 @@ export const AvatarList = props => {
       )
     )
   }
+
   const componentClassName = classNames(
     'c-AvatarList',
     stack && 'is-withLayerStack',
@@ -103,6 +104,7 @@ export const AvatarList = props => {
     'c-AvatarListWrapper',
     center && 'is-center'
   )
+
   return (
     <AvatarListWrapperUI className={componentWrapperClassName}>
       <AvatarListContext.Provider value={contextValue}>

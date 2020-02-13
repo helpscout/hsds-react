@@ -1,11 +1,11 @@
 import React from 'react'
-import { mount, render } from 'enzyme'
-import { AvatarList } from './AvatarList'
+import { mount } from 'enzyme'
+import AvatarList, { getAvatarSize } from './AvatarList'
 import { Animate, Avatar } from '../index'
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = render(<AvatarList />)
+    const wrapper = mount(<AvatarList />)
     const el = wrapper.find('.c-AvatarList')
 
     expect(el.length).toBeTruthy()
@@ -13,10 +13,39 @@ describe('ClassName', () => {
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = render(<AvatarList className={customClass} />)
-    const el = wrapper.find('.c-AvatarList')
+    const wrapper = mount(<AvatarList className={customClass} />)
+    const el = wrapper.find(`.${customClass}`)
 
-    expect(el.hasClass(customClass)).toBe(true)
+    expect(el.length).toBeTruthy()
+  })
+
+  test('Adds stack class when appropriate', () => {
+    const wrapper = mount(<AvatarList stack />)
+    const el = wrapper.find('.is-withLayerStack')
+
+    expect(el.length).toBeTruthy()
+  })
+
+  test('Adds grid class when appropriate', () => {
+    const wrapper = mount(<AvatarList grid />)
+    const el = wrapper.find('.is-grid')
+
+    expect(el.length).toBeTruthy()
+  })
+
+  test('Adds center class when appropriate', () => {
+    const wrapper = mount(<AvatarList center />)
+    const el = wrapper.find('.is-center')
+
+    expect(el.length).toBeTruthy()
+  })
+})
+
+describe('AvatarList', () => {
+  test('get correct avatar size ', () => {
+    expect(getAvatarSize({ stack: true, count: 3, max: 2 })).toBe('lg')
+    expect(getAvatarSize({ stack: true, count: 3, max: 3 })).toBe('md')
+    expect(getAvatarSize({ stack: true, count: 1, max: 2 })).toBe('xl')
   })
 })
 

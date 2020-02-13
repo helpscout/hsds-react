@@ -221,12 +221,12 @@ export class SearchableDropdown extends React.Component {
 
     if (autoInput) {
       let total = items.length
+      /* istanbul ignore next */
       if (hasGroups(items)) {
         total = items.reduce((p, c) => {
           if (c.type === 'group') {
             return p + c.items.length
           }
-          /* istanbul ignore next */
           return p + 1
         }, 0)
       }
