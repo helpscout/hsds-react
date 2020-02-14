@@ -24,6 +24,18 @@ export const BodyUI = styled('div')`
       padding: 0;
     }
   }
+
+  &.is-v2 {
+    padding: 0px;
+
+    ${bem.element('scrollableContent')} {
+      padding: 40px 90px 50px;
+
+      p:first-child {
+        margin-top: 0px;
+      }
+    }
+  }
 `
 
 export default BodyUI

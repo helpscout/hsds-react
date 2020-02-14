@@ -584,7 +584,7 @@ storiesV2.add('default', () => (
     trigger={<Link>Clicky</Link>}
     title="Modal Title"
   >
-    <Modal.Body>
+    <Modal.Body version={2}>
       {ContentSpec.generate(2).map(({ id, content }) => (
         <p key={id}>{content}</p>
       ))}
@@ -600,7 +600,7 @@ storiesV2.add('default w/ secondary button', () => (
     trigger={<Link>Clicky</Link>}
     title="Modal Title"
   >
-    <Modal.Body>
+    <Modal.Body version={2}>
       {ContentSpec.generate(2).map(({ id, content }) => (
         <p key={id}>{content}</p>
       ))}
@@ -619,18 +619,14 @@ storiesV2.add('default w/ danger state', () => (
     isOpen={true}
     trigger={<Link>Clicky</Link>}
     icon="alert"
-    title="Modal Title"
+    title="Change Subdomain?"
   >
-    <Modal.Body>
+    <Modal.Body version={2}>
       {ContentSpec.generate(2).map(({ id, content }) => (
         <p key={id}>{content}</p>
       ))}
     </Modal.Body>
-    <Modal.ActionFooter
-      state="danger"
-      primaryButtonText="Primary"
-      secondaryButtonText="Secondary"
-    />
+    <Modal.ActionFooter state="danger" primaryButtonText="Change Subdomain" />
   </Modal>
 ))
 
@@ -641,13 +637,32 @@ storiesV2.add('default no cancel button', () => (
     trigger={<Link>Clicky</Link>}
     title="Modal Title"
   >
-    <Modal.Body>
+    <Modal.Body version={2}>
       {ContentSpec.generate(2).map(({ id, content }) => (
         <p key={id}>{content}</p>
       ))}
     </Modal.Body>
     <Modal.ActionFooter
       showDefaultCancel={false}
+      primaryButtonText="Primary"
+      secondaryButtonText="Secondary"
+    />
+  </Modal>
+))
+
+storiesV2.add('default w/ very long content', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    trigger={<Link>Clicky</Link>}
+    title="Modal Title"
+  >
+    <Modal.Body version={2}>
+      {ContentSpec.generate(12).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.ActionFooter
       primaryButtonText="Primary"
       secondaryButtonText="Secondary"
     />
@@ -663,7 +678,7 @@ storiesV2.add('branded no description, single button', () => (
     trigger={<Link>Clicky</Link>}
     title="Modal Title"
   >
-    <Modal.Body>
+    <Modal.Body version={2}>
       {ContentSpec.generate(1).map(({ id, content }) => (
         <p key={id}>{content}</p>
       ))}
@@ -672,17 +687,39 @@ storiesV2.add('branded no description, single button', () => (
   </Modal>
 ))
 
+storiesV2.add('branded w/description, danger state', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    description="Before making it official we'd really appreciate your thoughts on what we can do to improve."
+    kind="branded"
+    illo={<SpeechBubble />}
+    trigger={<Link>Clicky</Link>}
+    title="Cancel your account?"
+  >
+    <Modal.Body version={2}>
+      {ContentSpec.generate(1).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.ActionFooter
+      primaryButtonText="Cancel my account"
+      state={'danger'}
+    />
+  </Modal>
+))
+
 storiesV2.add('branded w/description, secondary button', () => (
   <Modal
     version={2}
     isOpen={true}
-    description="A really interesting description about lots of really interesting things goes here so that you can feel really informed and on top of things."
+    description="A really interesting description about lots of really interesting things goes here which should be no more than two lines."
     kind="branded"
     illo={<SpeechBubble />}
     trigger={<Link>Clicky</Link>}
     title="Modal Title"
   >
-    <Modal.Body>
+    <Modal.Body version={2}>
       {ContentSpec.generate(1).map(({ id, content }) => (
         <p key={id}>{content}</p>
       ))}
@@ -698,13 +735,13 @@ storiesV2.add('branded w/ really long content', () => (
   <Modal
     version={2}
     isOpen={true}
-    description="A really interesting description about lots of really interesting things goes here so that you can feel really informed and on top of things."
+    description="A really interesting description about lots of really interesting things goes here which should be no more than two lines."
     kind="branded"
     illo={<SpeechBubble />}
     trigger={<Link>Clicky</Link>}
     title="Modal Title"
   >
-    <Modal.Body>
+    <Modal.Body version={2}>
       {ContentSpec.generate(10).map(({ id, content }) => (
         <p key={id}>{content}</p>
       ))}
@@ -737,10 +774,10 @@ storiesV2.add('alert with description', () => (
   <Modal
     version={2}
     isOpen={true}
-    description="Let me tell you a little more."
+    description="Short title providing a little more detail."
     kind="alert"
     trigger={<Link>Clicky</Link>}
-    title="Discard this draft?"
+    title="Alert Title"
   >
     <Modal.ActionFooter
       showDefaultCancel={false}
@@ -759,7 +796,7 @@ storiesV2.add('alert w/ danger state', () => (
     description="You're about to do a thing that could impact a lot of other things. Continue?"
     state="danger"
     trigger={<Link>Clicky</Link>}
-    title="Discard this draft?"
+    title="Are you sure?"
   >
     <Modal.ActionFooter
       showDefaultCancel={false}
@@ -768,5 +805,25 @@ storiesV2.add('alert w/ danger state', () => (
       primaryButtonText="Yes, do it"
       secondaryButtonText="Cancel"
     />
+  </Modal>
+))
+
+storiesV2.add('sequence', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    kind="sequence"
+    description="We'll send a six digit code to confirm ownership."
+    numSteps={5}
+    step={2}
+    trigger={<Link>Clicky</Link>}
+    title="What email address would you like to connect?"
+  >
+    <Modal.Body version={2}>
+      {ContentSpec.generate(1).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.ActionFooter kind="default" primaryButtonText="Send code" />
   </Modal>
 ))

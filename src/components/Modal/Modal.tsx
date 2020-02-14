@@ -35,6 +35,20 @@ const portalOptions = {
   zIndex: modalBaseZIndex,
 }
 
+const modalV2Animation = {
+  delay: 0,
+  duration: 250,
+  easing: 'boop',
+  sequence: 'fade scale',
+}
+
+const overlayV2Animation = {
+  delay: 0,
+  duration: 250,
+  easing: 'ease-in-out',
+  sequence: 'fade',
+}
+
 class Modal extends React.PureComponent<ModalProps> {
   static defaultProps = {
     closeIcon: true,
@@ -47,12 +61,14 @@ class Modal extends React.PureComponent<ModalProps> {
     containTabKeyPress: true,
     icon: null,
     illo: null,
+    illoSize: 60,
     kind: MODAL_STYLES.DEFAULT,
     modalAnimationDelay: 0,
     modalAnimationDuration: 200,
     modalAnimationEasing: 'bounce',
     modalAnimationSequence: 'fade down',
     modalFocusTimeout: 90,
+    numSteps: 1,
     overlayAnimationDelay: 0,
     overlayAnimationDuration: 200,
     overlayAnimationEasing: 'ease',
@@ -65,6 +81,7 @@ class Modal extends React.PureComponent<ModalProps> {
     zIndex: 1,
     status: '',
     state: '',
+    step: 1,
     version: 1,
   }
 
@@ -77,6 +94,7 @@ class Modal extends React.PureComponent<ModalProps> {
   static Content = Content
   static Footer = Footer
   static Header = Header
+  static HeaderV2 = HeaderV2
   static Overlay = Overlay
 
   documentNode: HTMLElement
@@ -202,28 +220,33 @@ class Modal extends React.PureComponent<ModalProps> {
       description,
       icon,
       illo,
+      illoSize,
       kind,
       modalAnimationDelay,
       modalAnimationDuration,
       modalAnimationEasing,
       modalAnimationSequence,
+      numSteps,
       portalIsOpen,
       seamless,
+      step,
       style,
       title,
       version,
       ...rest
     } = this.props
 
+    const v2 = version === 2
+
     const componentClassName = classNames(
       'c-Modal__Card',
+      v2 && 'is-v2',
       kind === MODAL_STYLES.DEFAULT && 'is-default',
       kind === MODAL_STYLES.ALERT && 'is-alert',
       kind === MODAL_STYLES.BRANDED && 'is-branded',
+      kind === MODAL_STYLES.SEQUENCE && 'is-sequence',
       cardClassName
     )
-
-    const v2 = version === 2
 
     const childrenMarkup = this.getChildrenMarkup()
     const closeMarkup = v2 ? null : this.getCloseMarkup()
@@ -232,9 +255,12 @@ class Modal extends React.PureComponent<ModalProps> {
       <HeaderV2
         icon={icon}
         illo={illo}
+        illoSize={illoSize}
         description={description}
         title={title}
         kind={kind}
+        numSteps={numSteps}
+        step={step}
       />
     ) : null
 
@@ -258,14 +284,19 @@ class Modal extends React.PureComponent<ModalProps> {
       </div>
     )
 
+    const easing = v2 ? modalV2Animation.easing : modalAnimationEasing
+    const delay = v2 ? modalV2Animation.delay : modalAnimationDelay
+    const duration = v2 ? modalV2Animation.duration : modalAnimationDuration
+    const sequence = v2 ? modalV2Animation.sequence : modalAnimationSequence
+
     return (
       <AnimatedCardContainerUI
         className="c-Modal__Card-container"
-        delay={modalAnimationDelay}
-        duration={modalAnimationDuration}
-        easing={modalAnimationEasing}
+        delay={delay}
+        duration={duration}
+        easing={easing}
         in={portalIsOpen}
-        sequence={modalAnimationSequence}
+        sequence={sequence}
       >
         {contentMarkup}
       </AnimatedCardContainerUI>
@@ -277,6 +308,7 @@ class Modal extends React.PureComponent<ModalProps> {
       forceClosePortal,
       overlayAnimationDelay,
       overlayAnimationDuration,
+      overlayAnimationEasing,
       overlayAnimationSequence,
       overlayClassName,
       portalIsOpen,
@@ -286,13 +318,19 @@ class Modal extends React.PureComponent<ModalProps> {
     const v2 = version === 2
     const overlayClassNames = classNames(v2 && 'is-dark', overlayClassName)
 
+    const easing = v2 ? overlayV2Animation.easing : overlayAnimationEasing
+    const delay = v2 ? overlayV2Animation.delay : overlayAnimationDelay
+    const duration = v2 ? overlayV2Animation.duration : overlayAnimationDuration
+    const sequence = v2 ? overlayV2Animation.sequence : overlayAnimationSequence
+
     const props = {
       className: overlayClassNames,
       isOpen: portalIsOpen,
       onClick: forceClosePortal,
-      overlayAnimationDelay,
-      overlayAnimationDuration,
-      overlayAnimationSequence,
+      overlayAnimationDelay: delay,
+      overlayAnimationDuration: duration,
+      overlayAnimationEasing: easing,
+      overlayAnimationSequence: sequence,
     }
 
     return <Overlay {...props} />
@@ -331,6 +369,7 @@ class Modal extends React.PureComponent<ModalProps> {
       kind === MODAL_STYLES.DEFAULT && 'is-default',
       kind === MODAL_STYLES.ALERT && 'is-alert',
       kind === MODAL_STYLES.BRANDED && 'is-branded',
+      kind === MODAL_STYLES.SEQUENCE && 'is-sequence',
       className
     )
 
@@ -339,7 +378,8 @@ class Modal extends React.PureComponent<ModalProps> {
       v2 && 'v2',
       kind === MODAL_STYLES.DEFAULT && 'is-default',
       kind === MODAL_STYLES.ALERT && 'is-alert',
-      kind === MODAL_STYLES.BRANDED && 'is-branded'
+      kind === MODAL_STYLES.BRANDED && 'is-branded',
+      kind === MODAL_STYLES.SEQUENCE && 'is-sequence'
     )
 
     const styles = { ...style, zIndex }

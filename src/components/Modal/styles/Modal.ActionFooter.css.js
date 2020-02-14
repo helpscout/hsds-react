@@ -10,7 +10,7 @@ export const ActionFooterUI = styled(Toolbar)`
 
   &.is-theme-default {
     background-color: #f7f9fc;
-    height: 79px;
+    height: 80px;
     padding: 20px 30px;
 
     &.is-danger {
@@ -22,8 +22,9 @@ export const ActionFooterUI = styled(Toolbar)`
       height: auto;
       background-color: white;
       justify-content: center;
-      margin-bottom: 30px;
+      margin: auto;
       border: none;
+      min-height: 40px;
     }
   }
 `
@@ -33,7 +34,11 @@ export const CancelButtonUI = styled(Button)`
 `
 
 export const SecondaryButtonUI = styled(Button)`
-  margin-left: auto;
+  margin-left: auto !important;
+`
+
+export const SecondaryAlertButtonUI = styled(Button)`
+  margin-left: 0px !important;
 `
 
 export const PrimaryButtonUI = styled(Button)`

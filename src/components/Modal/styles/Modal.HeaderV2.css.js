@@ -2,6 +2,8 @@ import Toolbar from '../../Toolbar'
 import styled from '../../styled'
 import { getColor, rgba } from '../../../styles/utilities/color'
 
+import DotStepper from '../../DotStepper'
+
 export const HeaderUI = styled(Toolbar)`
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
@@ -14,6 +16,10 @@ export const HeaderUI = styled(Toolbar)`
 
   &.is-seamless {
     padding: 0px 50px;
+  }
+
+  &.is-alert {
+    min-height: 40px;
   }
 `
 
@@ -34,24 +40,21 @@ export const HeaderDescriptionUI = styled('div')`
   font-size: 14px;
   line-height: 22px;
   text-align: center;
-  margin-top: 7px;
-  margin: 7px 90px;
+  padding-top: 7px;
   color: ${getColor('charcoal', 600)};
 `
 
 export const BrandedHeaderUI = styled('div')`
   border: none;
-  padding: 20px 30px 0px;
+  padding: 60px 90px 40px;
   text-align: center;
   width: 100%;
-  margin-top: 36px;
   flex-grow: 1;
 `
 
 export const BrandedHeaderTitleUI = styled('div')`
   font-style: normal;
   font-weight: 500;
-  margin: 0px 90px;
   font-size: 18px;
   line-height: 22px;
   text-align: center;
@@ -60,24 +63,28 @@ export const BrandedHeaderTitleUI = styled('div')`
 `
 
 export const BrandedHeaderImageUI = styled('div')`
-  margin-bottom: 20px;
+  padding-bottom: 20px;
 `
 
 export const AlertHeaderUI = styled('div')`
   border: none;
-  padding: 0px 50px;
+  padding: 60px 50px 20px;
   text-align: center;
   width: 100%;
-  margin-top: 36px;
   flex-grow: 1;
 `
 
 export const AlertHeaderDescriptionUI = styled(HeaderDescriptionUI)`
-  margin: 7px 50px 22px;
+  margin: 0px;
+  padding-top: 7px;
 `
 
 export const AlertHeaderTitleUI = styled(BrandedHeaderTitleUI)`
   margin: 0px;
+`
+
+export const DotStepperUI = styled(DotStepper)`
+  padding-bottom: 60px;
 `
 
 export default HeaderUI

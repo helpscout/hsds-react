@@ -1,8 +1,11 @@
 import styled from '../../styled'
 import { isHSApp } from '../../../styles/utilities/theme'
+import { BEM } from '../../../utilities/classNames'
 import Animate from '../../Animate'
 import Card from '../../Card'
 import { getColor } from '../../../styles/utilities/color'
+
+const bem = BEM('.c-ModalBody')
 
 export const config = {
   closeOffset: '10px',
@@ -37,22 +40,18 @@ export const ModalUI = styled('div')`
     }
   }
 
-  &.v2.is-default {
+  &.v2.is-branded,
+  &.v2.is-sequence {
     .c-ModalBody {
-      padding: 40px 90px 50px;
-    }
-  }
-
-  &.v2.is-branded {
-    .c-ModalBody {
-      margin: 0px 90px 50px;
       text-align: center;
+      ${bem.element('scrollableContent')} {
+        padding-top: 0px;
+      }
     }
   }
 
   &.v2.is-alert {
     .c-ModalBody {
-      margin: 0px 90px 50px;
       text-align: center;
     }
   }
@@ -100,8 +99,13 @@ export const CardUI = styled(Card)`
   outline: none;
   overflow: hidden;
 
+  &.is-v2 {
+    transform: scale(0.85);
+  }
+
   &.is-alert {
     min-width: 440px;
+    padding-bottom: 50px;
   }
 `
 

@@ -16,11 +16,13 @@ export interface ModalProps extends PortalProps {
   kind?: string
   icon?: string
   illo?: any
+  illoSize?: number
   modalAnimationDelay: number
   modalAnimationDuration: number
   modalAnimationEasing: string
   modalAnimationSequence: number | string
   modalFocusTimeout: number
+  numSteps?: number
   overlayAnimationDelay: number
   overlayAnimationDuration: number
   overlayAnimationEasing: string
@@ -29,6 +31,7 @@ export interface ModalProps extends PortalProps {
   portalIsOpen: boolean
   seamless: boolean
   state?: string
+  step?: number
   style: Object
   title?: string
   trigger?: any
@@ -46,10 +49,12 @@ export type ModalBodyProps = {
   innerRef: (node: HTMLElement) => void
   isScrollLocked: boolean
   isSeamless: boolean
+  kind?: string
   onScroll: (event: Event) => void
   scrollable: boolean
   scrollableRef: Function
   scrollFade: boolean
+  version?: number
 }
 
 export type ModalContentProps = {
@@ -94,7 +99,10 @@ export type ModalHeaderV2Props = {
   description?: string
   icon?: string
   illo?: any
+  illoSize?: number
   kind?: string
+  numSteps?: number
+  step?: number
   title?: string
 }
 

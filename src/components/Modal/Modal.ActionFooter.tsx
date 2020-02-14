@@ -6,6 +6,7 @@ import {
   ActionFooterUI,
   CancelButtonUI,
   PrimaryButtonUI,
+  SecondaryAlertButtonUI,
   SecondaryButtonUI,
 } from './styles/Modal.ActionFooter.css'
 import { ModalActionFooterProps } from './Modal.types'
@@ -55,6 +56,7 @@ class ActionFooter extends React.PureComponent<ModalActionFooterProps> {
       <PrimaryButtonUI
         state={state}
         kind="primary"
+        size="lg"
         version={2}
         onClick={this.handlePrimaryAction}
       >
@@ -64,19 +66,34 @@ class ActionFooter extends React.PureComponent<ModalActionFooterProps> {
   }
 
   renderSecondaryButton() {
-    const { secondaryButtonText } = this.props
+    const { kind, secondaryButtonText } = this.props
     if (!secondaryButtonText) {
       return null
     }
-    return (
-      <SecondaryButtonUI
-        kind="secondary"
-        version={2}
-        onClick={this.handleSecondaryAction}
-      >
-        {secondaryButtonText}
-      </SecondaryButtonUI>
-    )
+
+    if (kind === MODAL_STYLES.ALERT) {
+      return (
+        <SecondaryAlertButtonUI
+          kind="secondary"
+          size="lg"
+          version={2}
+          onClick={this.handleSecondaryAction}
+        >
+          {secondaryButtonText}
+        </SecondaryAlertButtonUI>
+      )
+    } else {
+      return (
+        <SecondaryButtonUI
+          kind="secondary"
+          size="lg"
+          version={2}
+          onClick={this.handleSecondaryAction}
+        >
+          {secondaryButtonText}
+        </SecondaryButtonUI>
+      )
+    }
   }
 
   renderCancelButton() {
@@ -85,7 +102,12 @@ class ActionFooter extends React.PureComponent<ModalActionFooterProps> {
       return null
     }
     return (
-      <CancelButtonUI kind="default" version={2} onClick={this.handleCancel}>
+      <CancelButtonUI
+        className="is-cancel"
+        kind="default"
+        version={2}
+        onClick={this.handleCancel}
+      >
         {cancelText}
       </CancelButtonUI>
     )
@@ -99,6 +121,7 @@ class ActionFooter extends React.PureComponent<ModalActionFooterProps> {
       kind === MODAL_STYLES.DEFAULT && 'is-default',
       kind === MODAL_STYLES.ALERT && 'is-alert',
       kind === MODAL_STYLES.BRANDED && 'is-branded',
+      kind === MODAL_STYLES.SEQUENCE && 'is-sequence',
       state === 'danger' && 'is-danger',
       className
     )
@@ -107,7 +130,9 @@ class ActionFooter extends React.PureComponent<ModalActionFooterProps> {
       <ActionFooterUI
         {...rest}
         className={componentClassName}
+        gap="md"
         placement="bottom"
+        size="md"
       >
         {this.renderCancelButton()}
         {this.renderSecondaryButton()}

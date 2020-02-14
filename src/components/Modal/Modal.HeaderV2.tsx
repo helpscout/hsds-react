@@ -9,11 +9,13 @@ import {
   BrandedHeaderUI,
   BrandedHeaderImageUI,
   BrandedHeaderTitleUI,
+  DotStepperUI,
   HeaderDescriptionUI,
   HeaderUI,
   HeaderTitleUI,
 } from './styles/Modal.HeaderV2.css'
 import { ModalHeaderV2Props } from './Modal.types'
+
 import Icon from '../Icon'
 import Illo from '../Illo'
 
@@ -22,7 +24,10 @@ class HeaderV2 extends React.PureComponent<ModalHeaderV2Props> {
     description: null,
     icon: null,
     illo: null,
+    illoSize: 60,
     kind: MODAL_STYLES.DEFAULT,
+    numSteps: 1,
+    step: 1,
     title: 'Title',
   }
 
@@ -48,6 +53,7 @@ class HeaderV2 extends React.PureComponent<ModalHeaderV2Props> {
       children,
       description,
       illo,
+      illoSize,
       title,
       ...rest
     } = this.props
@@ -60,7 +66,39 @@ class HeaderV2 extends React.PureComponent<ModalHeaderV2Props> {
         className={componentClassName}
         placement={'top'}
       >
-        {illo ? <BrandedHeaderImageUI>{illo}</BrandedHeaderImageUI> : null}
+        {illo ? (
+          <BrandedHeaderImageUI size={illoSize}>{illo}</BrandedHeaderImageUI>
+        ) : null}
+        {<BrandedHeaderTitleUI>{title}</BrandedHeaderTitleUI>}
+        {description ? (
+          <HeaderDescriptionUI>{description}</HeaderDescriptionUI>
+        ) : null}
+        {children}
+      </BrandedHeaderUI>
+    )
+  }
+
+  renderSequenceStyle() {
+    const {
+      className,
+      children,
+      description,
+      illo,
+      numSteps,
+      step,
+      title,
+      ...rest
+    } = this.props
+
+    const componentClassName = classNames('c-ModalHeaderV2', className)
+
+    return (
+      <BrandedHeaderUI
+        {...rest}
+        className={componentClassName}
+        placement={'top'}
+      >
+        <DotStepperUI numSteps={numSteps} step={step} />
         {<BrandedHeaderTitleUI>{title}</BrandedHeaderTitleUI>}
         {description ? (
           <HeaderDescriptionUI>{description}</HeaderDescriptionUI>
@@ -87,6 +125,8 @@ class HeaderV2 extends React.PureComponent<ModalHeaderV2Props> {
       return this.renderBrandedStyle()
     } else if (kind === MODAL_STYLES.ALERT) {
       return this.renderAlertStyle()
+    } else if (kind === MODAL_STYLES.SEQUENCE) {
+      return this.renderSequenceStyle()
     }
 
     return (

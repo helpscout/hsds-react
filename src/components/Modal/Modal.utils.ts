@@ -13,4 +13,5 @@ export const MODAL_STYLES = {
   ALERT: 'alert',
   DEFAULT: 'default',
   BRANDED: 'branded',
+  SEQUENCE: 'sequence',
 }
