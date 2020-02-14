@@ -99,13 +99,13 @@ export const CardUI = styled(Card)`
   outline: none;
   overflow: hidden;
 
-  &.is-v2 {
-    transform: scale(0.85);
-  }
+  // &.is-v2 {
+  //   transform: scale(0.85);
+  // }
 
   &.is-alert {
     min-width: 440px;
-    padding-bottom: 50px;
+    padding-bottom: 60px;
   }
 `
 

@@ -46,7 +46,7 @@ export const HeaderDescriptionUI = styled('div')`
 
 export const BrandedHeaderUI = styled('div')`
   border: none;
-  padding: 60px 90px 40px;
+  padding: 40px 90px 40px;
   text-align: center;
   width: 100%;
   flex-grow: 1;
@@ -68,7 +68,7 @@ export const BrandedHeaderImageUI = styled('div')`
 
 export const AlertHeaderUI = styled('div')`
   border: none;
-  padding: 60px 50px 20px;
+  padding: 50px 50px 20px;
   text-align: center;
   width: 100%;
   flex-grow: 1;
@@ -84,7 +84,7 @@ export const AlertHeaderTitleUI = styled(BrandedHeaderTitleUI)`
 `
 
 export const DotStepperUI = styled(DotStepper)`
-  padding-bottom: 60px;
+  padding-bottom: 30px;
 `
 
 export default HeaderUI
