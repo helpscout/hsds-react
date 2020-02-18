@@ -102,7 +102,7 @@ class StatefulComponent extends React.Component {
     )
 
     return (
-      <Modal className="with-aktiv" trigger={<button>Open</button>}>
+      <Modal trigger={<button>Open</button>}>
         <Modal.Body>
           <Modal.Content>
             <Modal
@@ -578,7 +578,6 @@ const storiesV2 = storiesOf('Modal/V2', module).addDecorator(withAktiv)
 
 storiesV2.add('default', () => (
   <Modal
-    className={'with-aktiv'}
     version={2}
     isOpen={true}
     trigger={<Link>Clicky</Link>}
@@ -627,26 +626,6 @@ storiesV2.add('default w/ danger state', () => (
       ))}
     </Modal.Body>
     <Modal.ActionFooter state="danger" primaryButtonText="Change Subdomain" />
-  </Modal>
-))
-
-storiesV2.add('default no cancel button', () => (
-  <Modal
-    version={2}
-    isOpen={true}
-    trigger={<Link>Clicky</Link>}
-    title="Modal Title"
-  >
-    <Modal.Body version={2}>
-      {ContentSpec.generate(2).map(({ id, content }) => (
-        <p key={id}>{content}</p>
-      ))}
-    </Modal.Body>
-    <Modal.ActionFooter
-      showDefaultCancel={false}
-      primaryButtonText="Primary"
-      secondaryButtonText="Secondary"
-    />
   </Modal>
 ))
 
