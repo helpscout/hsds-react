@@ -1,7 +1,11 @@
 import React from 'react'
 import { createSpec, faker } from '@helpscout/helix'
-import { storiesOf } from '@storybook/react'
 import { Link, Timeline, Text } from '../index'
+
+export default {
+  component: Timeline,
+  title: 'Components/Conversation/Timeline',
+}
 
 const fixture = createSpec({
   timestamp: '9:41am',
@@ -16,9 +20,7 @@ const ItemsMarkup = fixture.map(o => {
   )
 })
 
-const stories = storiesOf('Timeline', module)
-
-stories.add('default', () => (
+export const Default = () => (
   <Timeline>
     {ItemsMarkup}
     <Timeline.Item timestamp="9:41am">
@@ -27,13 +29,25 @@ stories.add('default', () => (
       </Text>
     </Timeline.Item>
   </Timeline>
-))
+)
 
-stories.add('single-item', () => <Timeline>{ItemsMarkup[0]}</Timeline>)
+Default.story = {
+  name: 'default',
+}
 
-stories.add('two-items', () => (
+export const SingleItem = () => <Timeline>{ItemsMarkup[0]}</Timeline>
+
+SingleItem.story = {
+  name: 'single-item',
+}
+
+export const TwoItems = () => (
   <Timeline>
     {ItemsMarkup[0]}
     {ItemsMarkup[1]}
   </Timeline>
-))
+)
+
+TwoItems.story = {
+  name: 'two-items',
+}

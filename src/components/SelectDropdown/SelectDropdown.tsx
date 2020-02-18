@@ -1,11 +1,11 @@
 import * as React from 'react'
-import AutoDropdown from '../AutoDropdown'
+import SearchableDropdown from '../SearchableDropdown'
 import Icon from '../Icon'
 import Text from '../Text'
 import SelectArrows from '../Select/Select.Arrows'
 import Tooltip from '../Tooltip'
-import { initialState } from '../Dropdown/V2/Dropdown.store'
-import { itemIsActive } from '../Dropdown/V2/Dropdown.utils'
+import { initialState } from '../Dropdown/Dropdown.store'
+import { itemIsActive } from '../Dropdown/Dropdown.utils'
 import { find } from '../../utilities/arrays'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -31,6 +31,8 @@ export class SelectDropdown extends React.PureComponent<
     clearOnSelect: false,
     errorIcon: 'alert',
     items: [],
+    limit: 15,
+    autoInput: true,
     isFocused: false,
     isFocusSelectedItemOnOpen: true,
     onBlur: noop,
@@ -179,7 +181,7 @@ export class SelectDropdown extends React.PureComponent<
         className="c-SelectDropdownWrapper"
         data-cy="SelectDropdown"
       >
-        <AutoDropdown
+        <SearchableDropdown
           {...this.props}
           className={this.getClassName()}
           renderTrigger={this.renderTrigger()}

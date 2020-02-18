@@ -1,15 +1,14 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { withKnobs, boolean, select } from '@storybook/addon-knobs'
+import { boolean, select } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
-import { withArtboard } from '@helpscout/artboard'
 import { CloseButton } from '../index'
 
-const stories = storiesOf('CloseButton', module)
-stories.addDecorator(withKnobs)
-stories.addDecorator(withArtboard({ withCenterGuides: false }))
+export default {
+  component: CloseButton,
+  title: 'Components/Buttons/CloseButton',
+}
 
-stories.add('Default', () => {
+export const Default = () => {
   const options = {
     onClick: action('click'),
     seamless: boolean('seamless', true),
@@ -24,4 +23,4 @@ stories.add('Default', () => {
     ),
   }
   return <CloseButton {...options} />
-})
+}

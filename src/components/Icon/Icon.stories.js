@@ -1,12 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
-import { storiesOf } from '@storybook/react'
 import { select } from '@storybook/addon-knobs'
 import iconList from './icons'
 import { Flexy, Icon, Text } from '../index'
 
-const stories = storiesOf('Icon', module)
+export default {
+  component: Icon,
+  title: 'Components/Elements/Icon',
+}
 
 const IconGrid = styled('div')`
   display: flex;
@@ -41,7 +43,7 @@ const IconWrapper = styled('div')`
   width: 100%;
 `
 
-stories.add('icons', () => {
+export const Icons = () => {
   const size = select(
     'size',
     {
@@ -70,9 +72,13 @@ stories.add('icons', () => {
   ))
 
   return <IconGrid>{icons}</IconGrid>
-})
+}
 
-stories.add('sizes', () => {
+Icons.story = {
+  name: 'icons',
+}
+
+export const Sizes = () => {
   const icons = ['14', '16', '18', '24'].map(i => (
     <div
       key={i}
@@ -87,9 +93,13 @@ stories.add('sizes', () => {
   ))
 
   return <div>{icons}</div>
-})
+}
 
-stories.add('colors', () => {
+Sizes.story = {
+  name: 'sizes',
+}
+
+export const Colors = () => {
   return (
     <div>
       <div>
@@ -109,9 +119,13 @@ stories.add('colors', () => {
       </div>
     </div>
   )
-})
+}
 
-stories.add('shades', () => {
+Colors.story = {
+  name: 'colors',
+}
+
+export const Shades = () => {
   return (
     <div>
       <div>
@@ -155,9 +169,13 @@ stories.add('shades', () => {
       </div>
     </div>
   )
-})
+}
 
-stories.add('withCaret', () => {
+Shades.story = {
+  name: 'shades',
+}
+
+export const WithCaret = () => {
   const icons = ['14', '16', '18', '24'].map(i => (
     <div
       key={i}
@@ -209,4 +227,8 @@ stories.add('withCaret', () => {
       {icons}
     </div>
   )
-})
+}
+
+WithCaret.story = {
+  name: 'withCaret',
+}

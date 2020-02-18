@@ -2,7 +2,7 @@ import * as React from 'react'
 import { mount } from 'enzyme'
 import Bubble from '../Message.Bubble'
 import Message from '../Message'
-import { LoadingDots, Text } from '../../index'
+import { TypingDots, Text } from '../../index'
 
 const cx = 'c-MessageBubble'
 const ui = {
@@ -65,23 +65,23 @@ describe('Title', () => {
 })
 
 describe('Typing', () => {
-  test('Does not render a LoadingDots by default', () => {
+  test('Does not render a TypingDots by default', () => {
     const wrapper = mount(<Bubble />)
-    const o = wrapper.find(LoadingDots)
+    const o = wrapper.find(TypingDots)
 
     expect(o.length).toBe(0)
   })
 
-  test('Renders LoadingDots if typing', () => {
+  test('Renders TypingDots if typing', () => {
     const wrapper = mount(<Bubble typing />)
-    const o = wrapper.find(LoadingDots)
+    const o = wrapper.find(TypingDots)
 
     expect(o.length).toBe(1)
   })
 
-  test('Renders LoadingDots instead of children if typing', () => {
+  test('Renders TypingDots instead of children if typing', () => {
     const wrapper = mount(<Bubble typing>Mugatu</Bubble>)
-    const o = wrapper.find(LoadingDots)
+    const o = wrapper.find(TypingDots)
 
     expect(o.length).toBe(1)
     expect(o.html()).not.toContain('Mugatu')

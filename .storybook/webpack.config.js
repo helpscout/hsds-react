@@ -1,12 +1,6 @@
 const webpack = require('webpack')
 
 module.exports = ({ config }) => {
-  // Storybook StorySource AddOn
-  config.module.rules.push({
-    test: /\.stories\.jsx?$/,
-    loaders: [require.resolve('@storybook/source-loader')],
-    enforce: 'pre',
-  })
   config.resolve.extensions.push('.js', '.jsx')
 
   // Typescript

@@ -1,15 +1,9 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
-import { withKnobs, boolean, number, text } from '@storybook/addon-knobs'
+import { boolean, number, text } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
-import { storiesOf } from '@storybook/react'
 import { Pagination } from '..'
-
-export const config = {
-  TOTAL_ITEMS: 255,
-  RANGE_PER_PAGE: 50,
-}
 
 const PaginationWrapperUI = styled('div')`
   min-width: 400px;
@@ -18,14 +12,22 @@ const PaginationWrapperUI = styled('div')`
   padding: 20px;
 `
 
-const stories = storiesOf('Pagination', module)
-stories.addDecorator(withKnobs)
-stories.addDecorator(storyFn => (
-  <PaginationWrapperUI>
-    <div style={{ backgroundColor: '#fff' }}>{storyFn()}</div>
-  </PaginationWrapperUI>
-))
+export default {
+  component: Pagination,
+  title: 'Components/Wayfinding/Pagination',
+  decorators: [
+    storyFn => (
+      <PaginationWrapperUI>
+        <div style={{ backgroundColor: '#fff' }}>{storyFn()}</div>
+      </PaginationWrapperUI>
+    ),
+  ],
+}
 
+const config = {
+  TOTAL_ITEMS: 255,
+  RANGE_PER_PAGE: 50,
+}
 const subject = () => text('subject', 'Customer')
 const activePage = (cPage = 1) => number('activePage', cPage)
 
@@ -37,37 +39,53 @@ const getKnobsProps = otherKnobs => {
   }
 }
 
-stories.add('default', () => {
+export const Default = () => {
   return <Pagination {...getKnobsProps()} onChange={action('changePage')} />
-})
+}
 
-stories.add('with subject', () => {
+Default.story = {
+  name: 'default',
+}
+
+export const WithSubject = () => {
   return (
     <Pagination
       showNavigation={false}
       {...getKnobsProps({ subject: subject() })}
     />
   )
-})
+}
 
-stories.add('with singular subject', () => {
+WithSubject.story = {
+  name: 'with subject',
+}
+
+export const WithSingularSubject = () => {
   const props = {
     subject: subject(),
     totalItems: number('totalItems', 1),
   }
   return <Pagination showNavigation={false} {...props} />
-})
+}
 
-stories.add('with custom pluralized subject', () => {
+WithSingularSubject.story = {
+  name: 'with singular subject',
+}
+
+export const WithCustomPluralizedSubject = () => {
   const props = {
     subject: 'Complex',
     pluralizedSubject: 'Complexes',
     totalItems: number('totalItems', 10),
   }
   return <Pagination showNavigation={false} {...props} />
-})
+}
 
-stories.add('start of navigation', () => {
+WithCustomPluralizedSubject.story = {
+  name: 'with custom pluralized subject',
+}
+
+export const StartOfNavigation = () => {
   return (
     <Pagination
       {...getKnobsProps({ subject: subject(), activePage: activePage(1) })}
@@ -75,9 +93,13 @@ stories.add('start of navigation', () => {
       onChange={action('changePage')}
     />
   )
-})
+}
 
-stories.add('middle of navigation', () => {
+StartOfNavigation.story = {
+  name: 'start of navigation',
+}
+
+export const MiddleOfNavigation = () => {
   return (
     <Pagination
       {...getKnobsProps({ subject: subject(), activePage: activePage(2) })}
@@ -85,9 +107,13 @@ stories.add('middle of navigation', () => {
       onChange={action('changePage')}
     />
   )
-})
+}
 
-stories.add('end of navigation', () => {
+MiddleOfNavigation.story = {
+  name: 'middle of navigation',
+}
+
+export const EndOfNavigation = () => {
   return (
     <Pagination
       {...getKnobsProps({ subject: subject(), activePage: activePage(10) })}
@@ -95,9 +121,13 @@ stories.add('end of navigation', () => {
       onChange={action('changePage')}
     />
   )
-})
+}
 
-stories.add('isLoading', () => {
+EndOfNavigation.story = {
+  name: 'end of navigation',
+}
+
+export const IsLoading = () => {
   return (
     <Pagination
       {...getKnobsProps({
@@ -109,7 +139,11 @@ stories.add('isLoading', () => {
       onChange={action('changePage')}
     />
   )
-})
+}
+
+IsLoading.story = {
+  name: 'isLoading',
+}
 
 class PaginationWrapper extends React.Component {
   state = {
@@ -135,6 +169,10 @@ class PaginationWrapper extends React.Component {
   }
 }
 
-stories.add('in action', () => {
+export const InAction = () => {
   return <PaginationWrapper {...getKnobsProps({ subject: subject() })} />
-})
+}
+
+InAction.story = {
+  name: 'in action',
+}

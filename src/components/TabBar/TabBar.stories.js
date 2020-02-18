@@ -1,27 +1,27 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { MemoryRouter as Router } from 'react-router-dom'
 import { createSpec, faker } from '@helpscout/helix'
-import { withAktiv, withHsApp } from '../../utilities/storybook'
-import { withKnobs, boolean, text } from '@storybook/addon-knobs'
+import { withAktiv } from '../../utilities/storybook'
+import { boolean, text } from '@storybook/addon-knobs'
 import { TabBar } from '../index'
-import Dropdown from '../Dropdown/V2'
+import Dropdown from '../Dropdown'
 import Button from '../Button'
+
+const routerDecorator = storyFn => {
+  return <Router>{storyFn()}</Router>
+}
+
+export default {
+  component: TabBar,
+  title: 'Components/Wayfinding/TabBar',
+  decorators: [withAktiv, routerDecorator],
+}
 
 const ItemSpec = createSpec({
   id: faker.random.uuid(),
   label: faker.name.firstName(),
   value: faker.name.firstName(),
 })
-
-const routerDecorator = storyFn => {
-  return <Router>{storyFn()}</Router>
-}
-
-const stories = storiesOf('TabBar', module)
-stories.addDecorator(withKnobs)
-stories.addDecorator(withAktiv)
-stories.addDecorator(routerDecorator)
 
 const renderTabBarItem = () => {
   const itemHome = text('itemHomeText', 'Home')
@@ -59,26 +59,42 @@ const dropdownContent = (
   />
 )
 
-stories.add('default', () => <TabBar>{renderTabBarItem()}</TabBar>)
+export const Default = () => <TabBar>{renderTabBarItem()}</TabBar>
 
-stories.add('center align', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const CenterAlign = () => (
   <TabBar align="center">{renderTabBarItem()}</TabBar>
-))
+)
 
-stories.add('right align', () => (
+CenterAlign.story = {
+  name: 'center align',
+}
+
+export const RightAlign = () => (
   <TabBar align="right">{renderTabBarItem()}</TabBar>
-))
+)
 
-stories.add('with secondary content', () => {
+RightAlign.story = {
+  name: 'right align',
+}
+
+export const WithSecondaryContent = () => {
   const secContent = (
     <span>
       <b>13,456</b> items
     </span>
   )
   return <TabBar secContent={secContent}>{renderTabBarItem()}</TabBar>
-})
+}
 
-stories.add('right align with secondary content', () => {
+WithSecondaryContent.story = {
+  name: 'with secondary content',
+}
+
+export const RightAlignWithSecondaryContent = () => {
   const secContent = (
     <span>
       <b>13,456</b> items
@@ -89,25 +105,16 @@ stories.add('right align with secondary content', () => {
       {renderTabBarItem()}
     </TabBar>
   )
-})
+}
 
-stories.add('with secondary content dropdown', () => {
+RightAlignWithSecondaryContent.story = {
+  name: 'right align with secondary content',
+}
+
+export const WithSecondaryContentDropdown = () => {
   return <TabBar secContent={dropdownContent}>{renderTabBarItem()}</TabBar>
-})
+}
 
-const storiesHsApp = storiesOf('TabBar/HS App', module)
-storiesHsApp.addDecorator(withKnobs)
-storiesHsApp.addDecorator(withHsApp)
-storiesHsApp.addDecorator(routerDecorator)
-storiesHsApp.add('with secondary content', () => {
-  const secContent = (
-    <span>
-      <b>13,456</b> items
-    </span>
-  )
-  return <TabBar secContent={secContent}>{renderTabBarItem()}</TabBar>
-})
-
-storiesHsApp.add('with secondary dropdown', () => {
-  return <TabBar secContent={dropdownContent}>{renderTabBarItem()}</TabBar>
-})
+WithSecondaryContentDropdown.story = {
+  name: 'with secondary content dropdown',
+}

@@ -1,14 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
-import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { boolean, select, text } from '@storybook/addon-knobs'
 import { getColor } from '../../styles/utilities/color'
 import { Button, Flexy, Icon, Input } from '../index'
 
-const stories = storiesOf('Input', module)
+export default {
+  component: Input,
+  title: 'Components/Forms/Input',
+}
 
-stories.add('Default', () => {
+export const Default = () => {
   const props = {
     onEnterDown: action('onEnterDown'),
     onEnterUp: action('onEnterUp'),
@@ -45,55 +47,9 @@ stories.add('Default', () => {
     inlineSuffix: text('inlineSuffix', ''),
   }
   return <Input {...props} />
-})
+}
 
-stories.add('autocomplete', () => (
-  <div style={{ width: 300 }}>
-    <form autoComplete="on" action="/">
-      <Input
-        autoFocus
-        label="First name"
-        name="fname"
-        placeholder="Ron"
-        type="text"
-      />
-      <br />
-      <Button submit size="sm">
-        Submit
-      </Button>
-    </form>
-  </div>
-))
-
-stories.add('helpText', () => (
-  <div>
-    <Input helpText="This text appears below the input" />
-    <br />
-    <Input
-      helpText={
-        <div>
-          This is custom text <Icon name="emoji" inline />
-        </div>
-      }
-    />
-  </div>
-))
-
-stories.add('hintText', () => (
-  <div>
-    <Input hintText="This text appears above the input" />
-    <br />
-    <Input
-      hintText={
-        <div>
-          This is custom text <Icon name="emoji" inline />
-        </div>
-      }
-    />
-  </div>
-))
-
-stories.add('multiline', () => (
+export const Multiline = () => (
   <div>
     <Input placeholder="This is an input!" style={{ marginBottom: '5px' }} />
     <Input
@@ -103,9 +59,13 @@ stories.add('multiline', () => (
       onResize={() => console.log('Resize')}
     />
   </div>
-))
+)
 
-stories.add('multiline + char validation', () => (
+Multiline.story = {
+  name: 'multiline',
+}
+
+export const MultilineCharValidation = () => (
   <div style={{ width: 300 }}>
     <Input
       autoFocus
@@ -134,18 +94,26 @@ stories.add('multiline + char validation', () => (
       resizable
     />
   </div>
-))
+)
 
-stories.add('multiline + resizable', () => (
+MultilineCharValidation.story = {
+  name: 'multiline + char validation',
+}
+
+export const MultilineResizable = () => (
   <Input
     multiline={3}
     resizable
     autoFocus
     placeholder="This is a resizable textarea!"
   />
-))
+)
 
-stories.add('multiline + maxHeight', () => (
+MultilineResizable.story = {
+  name: 'multiline + resizable',
+}
+
+export const MultilineMaxHeight = () => (
   <Input
     autoFocus
     multiline={3}
@@ -154,9 +122,13 @@ stories.add('multiline + maxHeight', () => (
     placeholder="This is a resizable textarea with maxHeight!"
     offsetAmount={8}
   />
-))
+)
 
-stories.add('multiline + padded bottom', () => (
+MultilineMaxHeight.story = {
+  name: 'multiline + maxHeight',
+}
+
+export const MultilinePaddedBottom = () => (
   <PaddedTextArea>
     <Input
       autoFocus
@@ -166,96 +138,45 @@ stories.add('multiline + padded bottom', () => (
       placeholder="This one has a 30px bottom padding. Pressing enter for the last line preserves this spacing!"
     />
   </PaddedTextArea>
-))
+)
 
-stories.add('label', () => <Input label="Labelled" autoFocus />)
+MultilinePaddedBottom.story = {
+  name: 'multiline + padded bottom',
+}
 
-stories.add('placeholder', () => <Input placeholder="Hello" autoFocus />)
+export const Label = () => <Input label="Labelled" autoFocus />
 
-stories.add('prefix + suffix', () => (
-  <div>
-    <Input inlinePrefix="$" inlineSuffix=".00" value="Inline Prefix/Suffix" />
-  </div>
-))
+Label.story = {
+  name: 'label',
+}
 
-stories.add('prefix', () => (
-  <div>
-    <Input
-      prefix={
-        <Button kind="secondary" size="lg" isFirst>
-          Prefix
-        </Button>
-      }
-      value="Input Prefix"
-    />
-  </div>
-))
+export const Placeholder = () => <Input placeholder="Hello" autoFocus />
 
-stories.add('suffix', () => {
-  const StatefulButtonUI = ({ children, state = 'default', ...rest }) => (
-    <Button className={`is-state-${state}`} {...rest}>
-      {children}
-    </Button>
-  )
+Placeholder.story = {
+  name: 'placeholder',
+}
 
-  const StatefulButton = styled(Button)`
-    &.is-secondary.is-:disabled,
-    &.is-secondary[disabled] {
-      border-color: ${props =>
-        props.state === 'danger' && `${getColor('red.500')} !important`};
-      border-bottom-left-radius: 0;
-      border-top-left-radius: 0;
-      cursor: not-allowed;
-      pointer-events: all;
-    }
-  `
+export const Seamless = () => <Input seamless autoFocus />
 
-  return (
-    <div>
-      <p>
-        <Input
-          suffix={
-            <Button version={2} kind="secondary" size="lg" isLast>
-              Suffix
-            </Button>
-          }
-          value="Input Suffix"
-        />
-      </p>
-      <p>
-        <Input
-          errorMessage="This is incorrect!"
-          state="error"
-          suffix={
-            <StatefulButton
-              disabled
-              version={2}
-              size="lg"
-              state="danger"
-              kind="secondary"
-              isFirst
-              isLast
-              disabled
-            >
-              Suffix
-            </StatefulButton>
-          }
-          value="Input Suffix"
-        />
-      </p>
-    </div>
-  )
-})
+Seamless.story = {
+  name: 'seamless',
+}
 
-stories.add('seamless', () => <Input seamless autoFocus />)
+export const Disabled = () => <Input disabled />
 
-stories.add('disabled', () => <Input disabled />)
+Disabled.story = {
+  name: 'disabled',
+}
 
-stories.add('readonly', () => (
+export const Readonly = () => (
   <Input readOnly autoFocus value={`I can't turn left`} />
-))
+)
 
-stories.add('states', () => (
+Readonly.story = {
+  name: 'readonly',
+}
+
+export const States = () => (
   <div>
     <Input autoComplete="off" state="error" placeholder="Error" />
     <br />
@@ -276,9 +197,13 @@ stories.add('states', () => (
       removeStateStylesOnFocus
     />
   </div>
-))
+)
 
-stories.add('state: error', () => (
+States.story = {
+  name: 'states',
+}
+
+export const StateError = () => (
   <div>
     <div style={{ width: 100 }}>
       <Input state="error" errorMessage="This is incorrect!" />
@@ -299,9 +224,13 @@ stories.add('state: error', () => (
     <br />
     <Input seamless state="error" size="sm" errorMessage="This is incorrect!" />
   </div>
-))
+)
 
-stories.add('scrollock', () => (
+StateError.story = {
+  name: 'state: error',
+}
+
+export const Scrollock = () => (
   <Input
     multiline={3}
     resizable
@@ -310,9 +239,13 @@ stories.add('scrollock', () => (
     placeholder="This is a resizable textarea with scrollLock!"
     maxHeight={150}
   />
-))
+)
 
-stories.add('sizes', () => (
+Scrollock.story = {
+  name: 'scrollock',
+}
+
+export const Sizes = () => (
   <div>
     <Input autoFocus placeholder="Regular" />
     <br />
@@ -325,38 +258,11 @@ stories.add('sizes', () => (
       maxHeight={150}
     />
   </div>
-))
+)
 
-stories.add('value', () => (
-  <div>
-    <Input autoFocus placeholder="Regular" value="Derek Zoolander" />
-  </div>
-))
-
-let applyCallStopTyping
-
-stories.add('onStartTyping', () => {
-  return (
-    <div>
-      <Input
-        autoFocus
-        onStartTyping={() => console.log('typing started')}
-        onStopTyping={() => console.log('typing stopped')}
-        placeholder="Regular"
-        refApplyCallStopTyping={fn => (applyCallStopTyping = fn)}
-        typingTimeoutDelay={4000}
-        withTypingEvent={true}
-      />
-      <Button onClick={() => applyCallStopTyping()}>Apply Stop Typing</Button>
-    </div>
-  )
-})
-
-stories.add('special key + return', () => (
-  <div>
-    <Input hasInsertCarriageReturns={true} multiline={29} resizable />
-  </div>
-))
+Sizes.story = {
+  name: 'sizes',
+}
 
 const PaddedTextArea = styled('div')`
   textarea {
@@ -364,7 +270,7 @@ const PaddedTextArea = styled('div')`
   }
 `
 
-stories.add('Action', () => {
+export const Action = () => {
   const error = boolean('error', false)
   const state = error ? 'error' : null
 
@@ -422,9 +328,9 @@ stories.add('Action', () => {
   }
 
   return <Example />
-})
+}
 
-stories.add('Multi-Action', () => {
+export const MultiAction = () => {
   return (
     <Input
       autoFocus
@@ -448,4 +354,8 @@ stories.add('Multi-Action', () => {
       }
     />
   )
-})
+}
+
+MultiAction.story = {
+  name: 'Multi-Action',
+}

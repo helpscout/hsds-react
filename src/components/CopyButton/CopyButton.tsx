@@ -6,10 +6,8 @@ import { noop } from '../../utilities/other'
 import {
   CopyButtonUI,
   ConfirmationIconWrapperUI,
-  ContentWrapperUI,
+  TextUI,
 } from './CopyButton.css'
-
-import { ButtonSize } from '../Button/Button.types'
 
 export interface Props {
   canRenderFocus: boolean
@@ -19,7 +17,7 @@ export interface Props {
   onClick: (event: Event) => void
   onReset: () => void
   resetTimeout: number
-  size: ButtonSize
+  size: any
   title?: string
 }
 
@@ -32,8 +30,8 @@ class CopyButton extends React.PureComponent<Props, State> {
     canRenderFocus: false,
     onClick: noop,
     onReset: noop,
-    kind: 'tertiary',
-    resetTimeout: 1500,
+    kind: 'secondary',
+    resetTimeout: 2000,
   }
 
   state = {
@@ -94,22 +92,21 @@ class CopyButton extends React.PureComponent<Props, State> {
       className
     )
 
-    const wrapperClassName = classNames(
-      'c-CopyButton__contentWrapper',
-      shouldRenderConfirmation && 'is-copyConfirmed'
-    )
-
     return (
       <CopyButtonUI
         {...rest}
-        className={componentClassName}
         kind={kind}
         onClick={this.handleOnClick}
+        className={componentClassName}
       >
-        <ConfirmationIconWrapperUI className={wrapperClassName}>
-          <Icon className="c-CopyButton__iconConfirmation" name="tick-small" />
+        <ConfirmationIconWrapperUI>
+          <Icon
+            className="c-CopyButton__iconConfirmation"
+            name="checkmark"
+            size="24"
+          />
         </ConfirmationIconWrapperUI>
-        <ContentWrapperUI className={wrapperClassName}>Copy</ContentWrapperUI>
+        <TextUI>Copy</TextUI>
       </CopyButtonUI>
     )
   }

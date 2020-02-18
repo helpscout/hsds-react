@@ -219,10 +219,10 @@ export const TRUNCATED_CLASSNAMES = {
 }
 
 export const OTHERCOMPONENTS_CLASSNAMES = {
-  dropdownItem: 'c-DropdownV2Item',
+  dropdownItem: 'c-DropdownItem',
   truncate: 'c-Truncate',
   truncateContent: 'c-Truncate__content',
-  dropdownTrigger: 'c-DropdownV2Trigger',
+  dropdownTrigger: 'c-DropdownTrigger',
   icon: 'c-Icon',
 }
 

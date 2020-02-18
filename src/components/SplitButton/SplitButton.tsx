@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import AutoDropDown from '../AutoDropdown'
+import SearchableDropdown from '../SearchableDropdown'
 import Button from '../Button'
 import ControlGroup from '../ControlGroup'
 import Icon from '../Icon'
@@ -63,7 +63,7 @@ export class SplitButton extends React.PureComponent<Props> {
         size={size}
         state={state}
       >
-        <Icon name="caret-down" size="16" />
+        <Icon name="caret-down" size="14" />
       </OptionsTriggerButtonUI>
     )
   }
@@ -83,9 +83,10 @@ export class SplitButton extends React.PureComponent<Props> {
       triggerProps: {
         tabIndex: -1,
       },
+      autoInput: true,
     }
 
-    return <AutoDropDown {...props} />
+    return <SearchableDropdown {...props} />
   }
 
   getClassName() {

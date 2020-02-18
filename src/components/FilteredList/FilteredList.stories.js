@@ -1,7 +1,11 @@
 import * as React from 'react'
-import { storiesOf } from '@storybook/react'
-import { withKnobs, number } from '@storybook/addon-knobs'
+import { number } from '@storybook/addon-knobs'
 import { FilteredList } from '..'
+
+export default {
+  component: FilteredList,
+  title: 'Components/Text/FilteredList',
+}
 
 const items = [
   'kindalongemail@test.com',
@@ -11,40 +15,40 @@ const items = [
   'lasttest@cde.com',
 ]
 
-const stories = storiesOf('FilteredList', module)
-stories.addDecorator(withKnobs)
+export const Default = () => <FilteredList items={items} />
 
-stories.add('default', () => <FilteredList items={items} />)
-stories.add('with Limit', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const WithLimit = () => (
   <FilteredList items={items} limit={number('limit', 2)} />
-))
-stories.add('inline', () => (
+)
+
+WithLimit.story = {
+  name: 'with Limit',
+}
+
+export const Inline = () => (
   <FilteredList items={items} limit={number('limit', 2)} inline />
-))
-stories.add('inline (multiple)', () => (
+)
+
+Inline.story = {
+  name: 'inline',
+}
+
+export const InlineMultiple = () => (
   <FilteredList items={items.slice(0, 2)} inline />
-))
-stories.add('inline (single)', () => (
+)
+
+InlineMultiple.story = {
+  name: 'inline multiple',
+}
+
+export const InlineSingle = () => (
   <FilteredList items={items.slice(0, 1)} inline />
-))
+)
 
-stories.add('custom renderer', () => {
-  const items = [
-    { label: 'Google', href: 'https://google.com' },
-    { label: 'Bing', href: 'https://bing.com' },
-    { label: 'DuckDuckGo', href: 'https://duckduckgo.com' },
-  ]
-  const renderItem = item => {
-    return <a href={item.href}>{item.label}</a>
-  }
-
-  return (
-    <FilteredList
-      renderItem={renderItem}
-      items={items}
-      limit={number('limit', 2)}
-      inline
-      itemKey="label"
-    />
-  )
-})
+InlineSingle.story = {
+  name: 'inline single',
+}

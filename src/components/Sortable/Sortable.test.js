@@ -4,7 +4,6 @@ import Sortable from './Sortable'
 import List from './Sortable.List'
 import DragHandle from './Sortable.DragHandle'
 import SortableItem from './Sortable.Item'
-import SidebarCollapsibleCard from '../SidebarCollapsibleCard'
 
 describe('Sortable ClassName', () => {
   test('Has default className', () => {
@@ -144,21 +143,6 @@ describe('Sortable Item', () => {
     const o = wrapper.state().items
 
     expect(o.length).toBe(4)
-  })
-
-  test('Passes a sortable prop to child components if they support it', () => {
-    const wrapper = mount(
-      <Sortable>
-        <SidebarCollapsibleCard>Ron</SidebarCollapsibleCard>
-        <SortableItem>Champ</SortableItem>
-        <SortableItem>Brick</SortableItem>
-      </Sortable>
-    )
-    const o = wrapper.find(SidebarCollapsibleCard)
-
-    expect(o.props().sortable).toBeTruthy()
-
-    wrapper.unmount()
   })
 })
 

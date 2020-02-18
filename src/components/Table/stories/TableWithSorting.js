@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { createFakeCustomers, sortData } from '../Table.testUtils'
-import { Wrapper } from './commonComponents'
-import { Table } from '../../index'
+import Table from '../'
 
 export default class TablePlayground extends Component {
   constructor(props) {
@@ -48,30 +47,6 @@ export default class TablePlayground extends Component {
           align: 'center',
           width: '35%',
           sorter: this.sortAlphabetically,
-          renderHeaderCell: (column, sortedInfo) => {
-            return (
-              <div>
-                <em>{column.title}</em>
-                <button
-                  style={{
-                    cursor: 'pointer',
-                    marginLeft: '5px',
-                    padding: '5px',
-                    border: '0',
-                    background: 'lightgreen',
-                    fontSize: '18px',
-                  }}
-                  onClick={() => {
-                    this.sortAlphabetically(column.columnKey)
-                  }}
-                >
-                  {sortedInfo.order == null && 'Sort!'}
-                  {sortedInfo.order === 'descending' && '👇'}
-                  {sortedInfo.order === 'ascending' && '👆'}
-                </button>
-              </div>
-            )
-          },
         },
       ],
       sortedInfo: {
@@ -87,14 +62,14 @@ export default class TablePlayground extends Component {
     const { data, columns, sortedInfo, isLoading } = this.state
 
     return (
-      <Wrapper>
+      <div style={{ marginBottom: '50px' }}>
         <Table
           columns={columns}
           data={data}
           sortedInfo={sortedInfo}
           isLoading={isLoading}
         />
-      </Wrapper>
+      </div>
     )
   }
 

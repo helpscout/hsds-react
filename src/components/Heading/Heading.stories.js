@@ -1,15 +1,13 @@
 import * as React from 'react'
-import { storiesOf } from '@storybook/react'
 import { boolean, select, text } from '@storybook/addon-knobs'
-import { withArtboard } from '@helpscout/artboard'
 import Heading from '.'
 
-const stories = storiesOf('Heading', module)
-stories.addDecorator(
-  withArtboard({ width: 400, height: 200, withCenterGuides: false })
-)
+export default {
+  component: Heading,
+  title: 'Components/Text/Heading',
+}
 
-stories.add('Default', () => {
+export const Default = () => {
   const props = {
     children: text('children', 'Heading'),
     center: boolean('center', false),
@@ -35,9 +33,9 @@ stories.add('Default', () => {
     wordWrap: boolean('wordWrap', false),
   }
   return <Heading {...props} />
-})
+}
 
-stories.add('sizes', () => (
+export const Sizes = () => (
   <div>
     <Heading size="h1">Font size: h1</Heading>
     <br />
@@ -56,9 +54,13 @@ stories.add('sizes', () => (
     <Heading size="small">Font size: Small</Heading>
     <br />
   </div>
-))
+)
 
-stories.add('shades', () => (
+Sizes.story = {
+  name: 'sizes',
+}
+
+export const Shades = () => (
   <div>
     <Heading size="small">Small Heading Dark</Heading>
     <br />
@@ -67,4 +69,8 @@ stories.add('shades', () => (
     </Heading>
     <br />
   </div>
-))
+)
+
+Shades.story = {
+  name: 'shades',
+}

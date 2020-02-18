@@ -1,31 +1,23 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { SampleComponent as AvatarListSampleComponent } from '../AvatarList/AvatarList.stories'
-import { SampleComponent as TagListSampleComponent } from '../TagList/TagList.stories'
 import { Toolbar } from '../index'
 
-const stories = storiesOf('Toolbar', module)
+export default {
+  component: Toolbar,
+  title: 'Components/Conversation/Toolbar',
+}
 
-stories.add('default', () => (
+export const Default = () => (
   <Toolbar>
     <Toolbar.Item>Left Content</Toolbar.Item>
     <Toolbar.Item>Right Content</Toolbar.Item>
   </Toolbar>
-))
+)
 
-stories.add('example', () => (
-  <Toolbar>
-    <Toolbar.Item>
-      <TagListSampleComponent />
-    </Toolbar.Item>
-    <Toolbar.Block />
-    <Toolbar.Item inline>
-      <AvatarListSampleComponent />
-    </Toolbar.Item>
-  </Toolbar>
-))
+Default.story = {
+  name: 'default',
+}
 
-stories.add('placement', () => (
+export const Placement = () => (
   <div>
     <Toolbar placement="top">
       <Toolbar.Item>Left Content</Toolbar.Item>
@@ -37,9 +29,13 @@ stories.add('placement', () => (
       <Toolbar.Item>Right Content</Toolbar.Item>
     </Toolbar>
   </div>
-))
+)
 
-stories.add('shadow', () => (
+Placement.story = {
+  name: 'placement',
+}
+
+export const Shadow = () => (
   <div>
     <Toolbar placement="top" shadow>
       <Toolbar.Item>Left Content</Toolbar.Item>
@@ -53,9 +49,13 @@ stories.add('shadow', () => (
       <Toolbar.Item>Right Content</Toolbar.Item>
     </Toolbar>
   </div>
-))
+)
 
-stories.add('themes', () => (
+Shadow.story = {
+  name: 'shadow',
+}
+
+export const Themes = () => (
   <div>
     <Toolbar placement="top" shadow theme="default">
       <Toolbar.Item>Left Content</Toolbar.Item>
@@ -69,4 +69,8 @@ stories.add('themes', () => (
       <Toolbar.Item>Right Content</Toolbar.Item>
     </Toolbar>
   </div>
-))
+)
+
+Themes.story = {
+  name: 'themes',
+}

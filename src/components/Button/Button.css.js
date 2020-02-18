@@ -79,13 +79,19 @@ export const ButtonUI = styled.button`
   ${makeButtonSizeStyles()};
 
   ${props => makePrimaryStyles('primary', props)};
-  ${props => makePrimaryStyles('primaryAlt', props)};
   ${makeButtonKindStyles('secondary', config.secondary)};
-  ${makeButtonKindStyles('secondaryAlt', config.secondaryAlt)};
   ${makeButtonKindStyles('tertiary', config.tertiary)};
   ${makeButtonKindStyles('default', config.default)};
   ${makeButtonKindStyles('link', config.link)};
   ${makeButtonKindStyles('suffix', config.suffix)};
+
+  /* some overwrite */
+  &.is-primary {
+    &.is-lg,
+    &.is-xl {
+      min-width: 120px;
+    }
+  }
 `
 
 function makePrimaryStyles(name = 'primary', props = {}) {

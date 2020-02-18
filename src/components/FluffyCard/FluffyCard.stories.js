@@ -1,17 +1,23 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { FluffyCard } from '../index'
 
-const stories = storiesOf('FluffyCard', module)
+export default {
+  component: FluffyCard,
+  title: 'Components/Structural/FluffyCard',
+}
 
-stories.add('default', () => (
+export const Default = () => (
   <FluffyCard href="#">
     Elf is a 2003 American Christmas fantasy comedy film, directed by Jon
     Favreau and written by David Berenbaum.{' '}
   </FluffyCard>
-))
+)
 
-stories.add('Container', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const _Container = () => (
   <FluffyCard.Container>
     <FluffyCard href="#">
       Elf is a 2003 American Christmas fantasy comedy film, directed by Jon
@@ -25,4 +31,4 @@ stories.add('Container', () => (
       world of cynics as he goes.
     </FluffyCard>
   </FluffyCard.Container>
-))
+)

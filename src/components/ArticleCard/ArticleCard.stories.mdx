@@ -1,0 +1,81 @@
+import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
+import { boolean, text } from '@storybook/addon-knobs'
+import { createSpec, faker } from '@helpscout/helix'
+import AvatarSpec from '../../utilities/specs/avatarList.specs'
+import ArticleCard from './'
+import { Flexy, Text, Icon, StatusBadge, Avatar, AvatarList } from '../index'
+
+<Meta
+  title="Components/Structural/ArticleCard"
+  component={ArticleCard}
+/>
+
+# ArticleCard
+
+An ArticleCard component is used to encapsulate pieces of UI that share a common concept or action with some placeholders where we could insert any element (metaHeader, footer) or strings (title, content).
+
+<Preview>
+  <Story name="default">
+    <div style={{ position: 'relative' }}>
+      <ArticleCard
+        content= {text('content', faker.lorem.paragraph())}
+        href= {text('href', '#')}
+        title= {text('title', faker.lorem.sentence())}
+        isHovered= {boolean('isHovered', false)}
+        metaHeader= {boolean('metaHeader', true) && (
+          <Flexy align="top">
+            <Flexy.Block>
+              <Text faint size="12">
+                Last updated 1 day ago
+              </Text>
+            </Flexy.Block>
+            <Flexy.Item>
+              <StatusBadge count={20} status={'new'} />
+            </Flexy.Item>
+          </Flexy>
+        )}
+        footer= {boolean('footer', true) && (
+          <AvatarList max={5} size="sm" version={2}>
+            {AvatarSpec.generate(5).map(avatar => {
+              const { name, image } = avatar
+              return <Avatar image={image} key={name} name={name} status={null} />
+        })}
+    </AvatarList>)}
+      />
+    </div>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: Embed
+
+<br />
+<br />
+
+### Props
+
+<Props of={ArticleCard} />
+
+## Stories
+
+#### With custom content
+
+<Preview>
+  <Story name="with custom content">
+    <ArticleCard content={(
+      <Flexy>
+        <Flexy.Block>
+          <Text size={13} weight="500">
+            Open me
+          </Text>
+        </Flexy.Block>
+        <Flexy.Item>
+          <Icon name="minimize" shade="extraMuted" />
+        </Flexy.Item>
+      </Flexy>
+    )} />
+  </Story>
+</Preview>

@@ -1,10 +1,12 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { Button, ControlGroup, Icon, Input, Select } from '../index'
+import { ControlGroup, Input, SelectDropdown } from '../index'
 
-const stories = storiesOf('ControlGroup', module)
+export default {
+  component: ControlGroup,
+  title: 'Components/Forms/ControlGroup',
+}
 
-stories.add('default', () => (
+export const Default = () => (
   <ControlGroup>
     <ControlGroup.Item>
       <Input.AddOn>Prefix</Input.AddOn>
@@ -16,39 +18,13 @@ stories.add('default', () => (
       <Input.AddOn>Suffix</Input.AddOn>
     </ControlGroup.Item>
   </ControlGroup>
-))
+)
 
-stories.add('button', () => (
-  <ControlGroup>
-    <ControlGroup.Item>
-      <Button>Button</Button>
-    </ControlGroup.Item>
-    <ControlGroup.Item>
-      <Button>Button</Button>
-    </ControlGroup.Item>
-    <ControlGroup.Item>
-      <Button>Button</Button>
-    </ControlGroup.Item>
-  </ControlGroup>
-))
+Default.story = {
+  name: 'default',
+}
 
-stories.add('input + button', () => (
-  <ControlGroup>
-    <ControlGroup.Item>
-      <Input.AddOn>Prefix</Input.AddOn>
-    </ControlGroup.Item>
-    <ControlGroup.Block>
-      <Input value="HELLO" />
-    </ControlGroup.Block>
-    <ControlGroup.Item>
-      <Button kind="secondary" size="lg" isSuffix>
-        <Icon name="copy" />
-      </Button>
-    </ControlGroup.Item>
-  </ControlGroup>
-))
-
-stories.add('input + select', () => (
+export const InputSelect = () => (
   <ControlGroup>
     <ControlGroup.Item>
       <Input.AddOn>Prefix</Input.AddOn>
@@ -57,9 +33,13 @@ stories.add('input + select', () => (
       <Input value="HELLO" />
     </ControlGroup.Block>
     <ControlGroup.Block>
-      <Select>
+      <SelectDropdown>
         <option>Hallo</option>
-      </Select>
+      </SelectDropdown>
     </ControlGroup.Block>
   </ControlGroup>
-))
+)
+
+InputSelect.story = {
+  name: 'Input with select',
+}

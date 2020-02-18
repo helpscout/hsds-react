@@ -1,8 +1,10 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { Timestamp } from '../index'
 
-const stories = storiesOf('Timestamp', module)
+export default {
+  component: Timestamp,
+  title: 'Components/Text/Timestamp',
+}
 
 const customFormatter = timestamp => {
   const now = new Date().toISOString()
@@ -10,24 +12,36 @@ const customFormatter = timestamp => {
   return `${timestamp} (updated at ${now})`
 }
 
-stories.add('default', () => <Timestamp timestamp="10:41am" />)
+export const Default = () => <Timestamp timestamp="10:41am" />
 
-stories.add('live', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const Live = () => (
   <Timestamp timestamp={new Date().toISOString()} live />
-))
+)
 
-stories.add('formatter', () => (
+Live.story = {
+  name: 'live',
+}
+
+export const Formatter = () => (
   <Timestamp
     timestamp={new Date().toISOString()}
     live
     formatter={customFormatter}
   />
-))
+)
 
-stories.add('Time', () => (
+Formatter.story = {
+  name: 'formatter',
+}
+
+export const _Time = () => (
   <Timestamp.Time
     timestamp={new Date().toISOString()}
     live
     formatter={customFormatter}
   />
-))
+)

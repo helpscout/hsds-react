@@ -1,13 +1,12 @@
 import * as React from 'react'
-import { AvatarShape, AvatarSize } from '../Avatar/Avatar.types'
 import { classNames } from '../../utilities/classNames'
 import { AvatarUI } from './Skeleton.Avatar.css'
 
 export interface Props {
   className?: string
   children?: any
-  shape: AvatarShape
-  size: AvatarSize
+  shape: 'square' | 'rounded' | 'circle'
+  size: 'lg' | 'md' | 'smmd' | 'sm' | 'xs' | 'xxs' | ''
 }
 
 class Avatar extends React.PureComponent<Props> {

@@ -1,4 +1,4 @@
-import { DropdownProps } from '../Dropdown/V2/Dropdown.types'
+import { DropdownProps } from '../Dropdown/Dropdown.types'
 
 export interface EmojiProps {
   colons: Array<string>

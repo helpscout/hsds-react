@@ -243,7 +243,7 @@ export default class VerificationCode extends React.Component {
     return (
       <VerificationCodeFieldUI
         className={this.getClassName()}
-        innerRef={this.setVerificationCodeFieldNode}
+        ref={this.setVerificationCodeFieldNode}
         onPaste={this.handlePaste}
         onKeyDown={this.handleKeyDown}
         onMouseDown={this.handleMouseDown}
@@ -251,7 +251,7 @@ export default class VerificationCode extends React.Component {
         <ClipboardPlaceholderUI
           readOnly={true}
           tabIndex="-1"
-          innerRef={this.setClipboardPlaceholderNode}
+          ref={this.setClipboardPlaceholderNode}
         />
         {Array(numberOfChars)
           .fill(0)

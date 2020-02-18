@@ -83,7 +83,7 @@ describe('disabled prop', () => {
 
   it('disables dropdown', () => {
     const wrapper = mount(<SplitButton disabled />)
-    const el = wrapper.find('AutoDropdown')
+    const el = wrapper.find('SearchableDropdown')
 
     expect(el.prop('disabled')).toBe(true)
   })
@@ -116,14 +116,14 @@ describe('Button', () => {
   })
 })
 
-describe('AutoDropDown', () => {
-  test('Internally renders AutoDropdown component', () => {
+describe('SearchableDropdown', () => {
+  test('Internally renders SearchableDropdown component', () => {
     const wrapper = mount(
       <SplitButton>
         <div className="child">Hello</div>
       </SplitButton>
     )
-    const o = wrapper.find('AutoDropdown')
+    const o = wrapper.find('SearchableDropdown')
 
     expect(o.length).toBeTruthy()
   })

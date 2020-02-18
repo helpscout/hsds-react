@@ -1,20 +1,21 @@
 import React from 'react'
 import styled from 'styled-components'
-import { storiesOf } from '@storybook/react'
-import { withKnobs, boolean } from '@storybook/addon-knobs'
+import { boolean } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import { createSpec, faker } from '@helpscout/helix'
 import { Card, Image, Scrollable } from '../index'
+
+export default {
+  component: Scrollable,
+  title: 'Utilities/Scrollable',
+}
 
 const ContentSpec = createSpec({
   content: faker.lorem.paragraph(),
   id: faker.random.uuid(),
 })
 
-const stories = storiesOf('Scrollable', module)
-stories.addDecorator(withKnobs)
-
-stories.add('Default', () => (
+export const Default = () => (
   <Card style={{ height: 400 }} seamless>
     <Scrollable
       onScroll={action('onScroll')}
@@ -34,7 +35,7 @@ stories.add('Default', () => (
       </Card.Block>
     </Scrollable>
   </Card>
-))
+)
 
 const MainContainer = styled('div')`
   width: ${props => (props.fullWidth ? '100%' : '300px')};
@@ -50,7 +51,7 @@ const WideElement = styled('div')`
   background: plum;
 `
 
-stories.add('Horizontal', () => (
+export const Horizontal = () => (
   <div>
     <MainContainer className="MainContainer">
       <Scrollable
@@ -63,9 +64,9 @@ stories.add('Horizontal', () => (
       </Scrollable>
     </MainContainer>
   </div>
-))
+)
 
-stories.add('Horizontal window resize', () => (
+export const HorizontalWindowResize = () => (
   <MainContainer className="MainContainer" fullWidth>
     <Scrollable fadeLeft fadeRight>
       This container is 100% wide
@@ -74,9 +75,13 @@ stories.add('Horizontal window resize', () => (
       </WideElement>
     </Scrollable>
   </MainContainer>
-))
+)
 
-stories.add('scroll it all', () => (
+HorizontalWindowResize.story = {
+  name: 'Horizontal window resize',
+}
+
+export const ScrollItAll = () => (
   <MainContainer className="MainContainer" style={{ height: '400px' }}>
     <Scrollable
       fadeLeft={boolean('fadeLeft', true)}
@@ -91,4 +96,8 @@ stories.add('scroll it all', () => (
       </WideElement>
     </Scrollable>
   </MainContainer>
-))
+)
+
+ScrollItAll.story = {
+  name: 'scroll it all',
+}

@@ -1,29 +1,19 @@
 import React from 'react'
 import { createSpec, faker } from '@helpscout/helix'
-import Artboard, { GuideContainer, Guide } from '@helpscout/artboard'
-import { storiesOf } from '@storybook/react'
-import { withKnobs, text, select } from '@storybook/addon-knobs'
+import { text, select } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import { Notification } from '../index'
+
+export default {
+  component: Notification,
+  title: 'Components/Conversation/Notification',
+  excludeStories: ['notificationGuides', 'makeGuides'],
+}
 
 const NotificationSpec = createSpec({
   id: faker.random.uuid(),
   body: faker.lorem.paragraph(),
   from: faker.name.firstName(),
-})
-
-const stories = storiesOf('Notification', module)
-stories.addDecorator(withKnobs)
-stories.addDecorator(storyFn => {
-  return (
-    <Artboard
-      name="hsds-notification"
-      artboardHeight={200}
-      withCenterGuides={false}
-    >
-      <div style={{ padding: 20 }}>{storyFn()}</div>
-    </Artboard>
-  )
 })
 
 const baseGuide = {
@@ -76,7 +66,7 @@ export function makeGuides(guides) {
 
 const defaultProps = NotificationSpec.generate()
 
-stories.add('Default', () => {
+export const Default = () => {
   const { body, from } = defaultProps
   const align = select(
     'align',
@@ -98,17 +88,14 @@ stories.add('Default', () => {
   )
 
   return (
-    <GuideContainer maxWidth={300}>
-      {makeGuides(notificationGuides)}
-      <div>
-        <Notification
-          body={text('body', body)}
-          from={text('from', from)}
-          align={align}
-          type={type}
-          onClick={action('Clicked!')}
-        />
-      </div>
-    </GuideContainer>
+    <div>
+      <Notification
+        body={text('body', body)}
+        from={text('from', from)}
+        align={align}
+        type={type}
+        onClick={action('Clicked!')}
+      />
+    </div>
   )
-})
+}

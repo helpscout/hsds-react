@@ -1,15 +1,18 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { Avatar, Message } from '../../index'
 
-const stories = storiesOf('Message/Media', module)
+export default {
+  component: Message,
+  title: 'Components/Conversation/Message (Chat)',
+}
+
 const dimensions = { width: 800, height: 500 }
 const imageUrlSlow = `https://loremflickr.com/${dimensions.width}/${dimensions.height}`
 const imageUrl =
   'https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto'
 const onMediaLoad = event => console.log(event.target)
 
-stories.add('default', () => (
+export const _Media = () => (
   <Message.Provider theme="embed">
     <Message from avatar={<Avatar name="Arctic Puffin" />}>
       <Message.Chat>Hey Buddy!</Message.Chat>
@@ -24,11 +27,11 @@ stories.add('default', () => (
       <Message.Media imageUrl={imageUrl} caption="image.jpg" />
     </Message>
   </Message.Provider>
-))
+)
 
 const onErrorTryAgainClick = () => console.log('Try again!')
 
-stories.add('image:large', () => {
+export const MediaImageLarge = () => {
   const imageProps = {
     ...dimensions,
     imageUrl: imageUrlSlow,
@@ -71,9 +74,13 @@ stories.add('image:large', () => {
       </Message>
     </div>
   )
-})
+}
 
-stories.add('image:left-right', () => {
+MediaImageLarge.story = {
+  name: 'Media image:large',
+}
+
+export const MediaImageLeftRight = () => {
   const imageProps = {
     ...dimensions,
     imageUrl: imageUrlSlow,
@@ -109,9 +116,13 @@ stories.add('image:left-right', () => {
       </Message>
     </div>
   )
-})
+}
 
-stories.add('consecutive', () => {
+MediaImageLeftRight.story = {
+  name: 'Media image:left-right',
+}
+
+export const MediaConsecutive = () => {
   const imageProps = {
     ...dimensions,
     imageUrl: imageUrlSlow,
@@ -127,9 +138,13 @@ stories.add('consecutive', () => {
       </Message>
     </div>
   )
-})
+}
 
-stories.add('states', () => (
+MediaConsecutive.story = {
+  name: 'Media consecutive',
+}
+
+export const MediaStates = () => (
   <Message.Provider theme="embed">
     <Message from avatar={<Avatar name="Arctic Puffin" />}>
       <Message.Chat>Error</Message.Chat>
@@ -138,4 +153,8 @@ stories.add('states', () => (
       <Message.Media caption="image.jpg" isUploading imageUrl={imageUrl} />
     </Message>
   </Message.Provider>
-))
+)
+
+MediaStates.story = {
+  name: 'Media states',
+}

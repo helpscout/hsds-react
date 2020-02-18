@@ -1,28 +1,152 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { ScopeProvider } from '../../styled'
 import { Avatar, Link, Message, PreviewCard } from '../../index'
 
-const stories = storiesOf('Message', module)
+export default {
+  component: Message,
+  title: 'Components/Conversation/Message (Chat)',
+}
 
-stories.add('question', () => (
+export const Default = () => (
+  <div>
+    <Message from avatar={<Avatar name="Arctic Puffin" />}>
+      <Message.Question read timestamp="9:41am">
+        How's it <a>goin</a>'?
+      </Message.Question>
+    </Message>
+    <Message to>
+      <Message.Action read timestamp="9:41am">
+        Buddy became upset. <a href="#">Find out what happened</a>
+      </Message.Action>
+    </Message>
+    <Message to avatar={<Avatar name="Buddy" />}>
+      <Message.Chat read timestamp="9:41am">
+        :sob:
+        <br />
+        omgomgomg
+        {1}
+      </Message.Chat>
+      <Message.Chat read timestamp="9:41am">
+        <strong>*Frantically running through North pole*</strong>
+      </Message.Chat>
+    </Message>
+
+    <Message from>
+      <Message.Action read timestamp="9:41am">
+        Puffin joined.
+      </Message.Action>
+    </Message>
+    <Message from avatar={<Avatar name="Arctic Puffin" />}>
+      <Message.Chat read timestamp="9:41am">
+        Hey Buddy!
+      </Message.Chat>
+      <Message.Media
+        imageUrl="https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto"
+        caption="image.jpg"
+        timestamp="9:41am"
+        read
+      />
+    </Message>
+
+    <Message to avatar={<Avatar name="Buddy" />}>
+      <Message.Chat read timestamp="9:41am">
+        <strong>*NOT NOW ARCTIC PUFFIN!*</strong>
+      </Message.Chat>
+      <Message.Chat read timestamp="9:41am">
+        <Link href="https://en.wikipedia.org/wiki/Elf_(film)">
+          https://en.wikipedia.org/wiki/Elf_(film)
+        </Link>
+      </Message.Chat>
+      <Message.Content>
+        <PreviewCard
+          href="https://en.wikipedia.org/wiki/Elf_(film)"
+          title="Wikipedia: Elf (film)"
+          target="_blank"
+        >
+          Elf is a 2003 American Christmas fantasy comedy film directed by Jon
+          Favreau and written by David Berenbaum. It stars Will Ferrell, James
+          Caan, Zooey Deschanel, Mary Steenburgen, Daniel Tay, Edward Asner, and
+          Bob Newhart...
+        </PreviewCard>
+      </Message.Content>
+      <Message.Chat read timestamp="9:41am">
+        Just read that!
+      </Message.Chat>
+    </Message>
+
+    <Message from avatar={<Avatar name="Arctic Puffin" />}>
+      <Message.Chat read timestamp="9:41am">
+        :sob:
+      </Message.Chat>
+    </Message>
+
+    <Message to>
+      <Message.Action read timestamp="9:41am">
+        Buddy left the North Pole.
+      </Message.Action>
+    </Message>
+    <Message to>
+      <Message.Action read timestamp="9:41am">
+        Buddy came back to the North Pole.
+      </Message.Action>
+    </Message>
+    <Message to>
+      <Message.Action read timestamp="9:41am">
+        Marked as important.
+      </Message.Action>
+    </Message>
+
+    <Message to avatar={<Avatar name="Buddy" />}>
+      <Message.Chat
+        isNote
+        read
+        timestamp="9:41am"
+        body="Note: <em>SAAAAAAANTAAAAAAAA!</em> www.helpscout.com"
+      />
+    </Message>
+
+    <Message to>
+      <Message.Action read timestamp="9:41am">
+        Marked as super important.
+      </Message.Action>
+    </Message>
+
+    <Message from avatar={<Avatar name="Arctic Puffin" />}>
+      <Message.Chat typing />
+    </Message>
+  </div>
+)
+
+Default.story = {
+  name: 'default',
+}
+
+export const _Question = () => (
   <Message from avatar={<Avatar name="Arctic Puffin" />}>
     <Message.Question read timestamp="9:41am">
       How's it goin'?
     </Message.Question>
   </Message>
-))
+)
 
-stories.add('action', () => (
+_Question.story = {
+  name: 'question',
+}
+
+export const _Action = () => (
   <Message to>
     <Message.Action read timestamp="9:41am">
       Buddy became upset.{' '}
       <a href="https://www.helpscout.net/">Find out what happened</a>
     </Message.Action>
   </Message>
-))
+)
 
-stories.add('content', () => (
+_Action.story = {
+  name: 'action',
+}
+
+export const _Content = () => (
   <ScopeProvider scope="#Messages">
     <div id="Messages">
       <Message to avatar={<Avatar name="Buddy" />}>
@@ -91,18 +215,30 @@ stories.add('content', () => (
       </Message>
     </div>
   </ScopeProvider>
-))
+)
 
-stories.add('note', () => (
+_Content.story = {
+  name: 'content',
+}
+
+export const Note = () => (
   <Message to avatar={<Avatar name="Buddy" />}>
     <Message.Chat isNote read timestamp="9:41am">
       Note: SAAAAAAANTAAAAAAAA!
     </Message.Chat>
   </Message>
-))
+)
 
-stories.add('typing', () => (
+Note.story = {
+  name: 'note',
+}
+
+export const Typing = () => (
   <Message from avatar={<Avatar name="Arctic Puffin" />}>
     <Message.Chat typing />
   </Message>
-))
+)
+
+Typing.story = {
+  name: 'typing',
+}

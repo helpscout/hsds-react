@@ -1,17 +1,14 @@
 import React from 'react'
-import { withKnobs, boolean, number, text } from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
+import { boolean, text } from '@storybook/addon-knobs'
 import WrenchCat from '@helpscout/hsds-illos/wrench-cat'
-import { withAktiv, withHsApp } from '../../utilities/storybook'
+import { withAktiv } from '../../utilities/storybook'
 import { BlankSlate } from '../index'
 
-const stories = storiesOf('BlankSlate', module)
-stories.addDecorator(
-  withKnobs({
-    escapeHTML: false,
-  })
-)
-stories.addDecorator(withAktiv)
+export default {
+  component: BlankSlate,
+  title: 'Components/Text/BlankSlate',
+  decorators: [withAktiv],
+}
 
 const message = () =>
   text(
@@ -35,19 +32,24 @@ const getKnobsProps = otherKnobs => {
   }
 }
 
-stories.add('Default', () => {
+export const Default = () => {
   const props = { message: message(), title: title('') }
   return <BlankSlate {...getKnobsProps()} {...props} />
-})
-stories.add('HTML in message', () => {
+}
+
+export const HtmlInMessage = () => {
   const props = {
     title: title(''),
     message: htmlMessage,
   }
   return <BlankSlate {...getKnobsProps()} {...props} />
-})
+}
 
-stories.add('Illo', () => {
+HtmlInMessage.story = {
+  name: 'HTML in message',
+}
+
+export const Illo = () => {
   const props = {
     title: title(''),
     illoName: illoName(),
@@ -55,23 +57,23 @@ stories.add('Illo', () => {
     illoSize: 90,
   }
   return <BlankSlate {...getKnobsProps()} {...props} />
-})
+}
 
-stories.add('Custom Illo', () => {
+export const CustomIllo = () => {
   const props = {
     title: title(''),
     illo: <WrenchCat size={90} />,
     message: htmlMessage,
   }
   return <BlankSlate {...getKnobsProps()} {...props} />
-})
+}
 
-stories.add('Heading', () => {
+export const Heading = () => {
   const props = { title: title(), message: htmlMessage }
   return <BlankSlate {...getKnobsProps()} {...props} />
-})
+}
 
-stories.add('Light background', () => {
+export const LightBackground = () => {
   const props = {
     title: title(),
     illoName: illoName(),
@@ -80,55 +82,8 @@ stories.add('Light background', () => {
     illoSize: 90,
   }
   return <BlankSlate {...props} />
-})
+}
 
-const storiesHsApp = storiesOf('BlankSlate/HS App', module)
-storiesHsApp.addDecorator(
-  withKnobs({
-    escapeHTML: false,
-  })
-)
-storiesHsApp.addDecorator(withHsApp)
-
-storiesHsApp.add('default', () => {
-  const props = {
-    title: title(),
-    illoName: illoName(),
-    message: htmlMessage,
-    illoSize: number('illoSize', 90),
-  }
-  return <BlankSlate {...getKnobsProps()} {...props} />
-})
-
-storiesHsApp.add('Light background', () => {
-  const props = {
-    title: title(),
-    illoName: illoName(),
-    lightBackground: boolean('lightBackground', true),
-    alignTop: boolean('alignTop', false),
-    message: htmlMessage,
-    illoSize: 90,
-  }
-  return (
-    <div style={{ height: '800px' }}>
-      <BlankSlate {...props} />
-    </div>
-  )
-})
-
-storiesHsApp.add('Align top', () => {
-  const props = {
-    title: title(),
-    illoName: illoName(),
-    lightBackground: boolean('lightBackground', true),
-    alignTop: boolean('alignTop', true),
-    message: htmlMessage,
-    illoSize: 90,
-  }
-
-  return (
-    <div style={{ height: '800px' }}>
-      <BlankSlate {...props} />
-    </div>
-  )
-})
+LightBackground.story = {
+  name: 'Light background',
+}

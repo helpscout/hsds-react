@@ -107,6 +107,21 @@ describe('Actions', () => {
       )
     )
   })
+
+  test('renders buttons with custom props when applied', () => {
+    const wrapper = mount(
+      <Form
+        actionTabbable={false}
+        cancelButtonProps={{ isLoading: true }}
+        destroyButtonProps={{ isLoading: true }}
+        onCancel={() => {}}
+        onDestroy={() => {}}
+        saveButtonProps={{ isLoading: true }}
+      />
+    )
+
+    expect(wrapper.find('.is-loading').hostNodes()).toHaveLength(3)
+  })
 })
 
 function getAttribute(wrapper, selector, attribute) {

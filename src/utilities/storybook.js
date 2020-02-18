@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { HsApp } from '../components/index'
 
 export class WithAktiv extends React.Component {
   componentDidMount() {
@@ -17,12 +16,6 @@ export class WithAktiv extends React.Component {
 }
 
 export const withAktiv = storyFn => <WithAktiv>{storyFn()}</WithAktiv>
-
-export const withHsApp = storyFn => (
-  <WithAktiv>
-    <HsApp>{storyFn()}</HsApp>
-  </WithAktiv>
-)
 
 const AppUI = styled('div')`
   align-items: center;

@@ -1,16 +1,28 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { ProgressBar } from '../index'
 
-storiesOf('ProgressBar', module)
-  .add('default', () => <ProgressBar value={50} />)
-  .add('sizes', () => (
-    <div>
-      <ProgressBar value={50} size="lg" />
-      <br />
-      <ProgressBar value={50} size="md" />
-      <br />
-      <ProgressBar value={50} size="sm" />
-      <br />
-    </div>
-  ))
+export default {
+  component: ProgressBar,
+  title: 'Components/Elements/ProgressBar',
+}
+
+export const Default = () => <ProgressBar value={50} />
+
+Default.story = {
+  name: 'default',
+}
+
+export const Sizes = () => (
+  <div>
+    <ProgressBar value={50} size="lg" />
+    <br />
+    <ProgressBar value={50} size="md" />
+    <br />
+    <ProgressBar value={50} size="sm" />
+    <br />
+  </div>
+)
+
+Sizes.story = {
+  name: 'sizes',
+}

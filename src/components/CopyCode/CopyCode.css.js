@@ -6,7 +6,7 @@ export const config = {
   borderColor: getColor('border'),
   borderColorFocus: getColor('blue.500'),
   boxShadow: '0 0 0 0 transparent',
-  boxShadowFocus: `0 0 0 1px ${getColor('blue.400')}`,
+  boxShadowFocus: `0 0 0 1px ${getColor('blue.500')}`,
   fontSize: 12,
   lineHeight: 22,
   padding: 20,

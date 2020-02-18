@@ -1,10 +1,12 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { StatusBadge } from '../index'
 
-const stories = storiesOf('StatusBadge', module)
+export default {
+  component: StatusBadge,
+  title: 'Components/Badges/Badge',
+}
 
-stories.add('default', () => (
+export const _StatusBadge = () => (
   <div>
     <p>
       Regular:
@@ -19,17 +21,18 @@ stories.add('default', () => (
       <StatusBadge count="2,043,021,134" />
     </p>
   </div>
-))
+)
 
-stories.add('status', () => (
+_StatusBadge.story = {
+  name: 'status badge',
+}
+
+export const StatusNew = () => (
   <div>
-    <p>
-      New:
-      <StatusBadge count={19} status="new" />
-    </p>
-    <p>
-      Error (Offline):
-      <StatusBadge count={203021} status="offline" />
-    </p>
+    <StatusBadge count={19} status="new" />
   </div>
-))
+)
+
+StatusNew.story = {
+  name: 'status badge new',
+}

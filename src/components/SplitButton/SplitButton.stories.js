@@ -1,21 +1,14 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { createSpec, faker } from '@helpscout/helix'
-import { withArtboard } from '@helpscout/artboard'
 import Flexy from '../Flexy'
 import Button from '../Button'
 import SplitButton from '.'
 import Modal from '../Modal'
 
-const stories = storiesOf('SplitButton', module)
-
-stories.addDecorator(
-  withArtboard({
-    width: 500,
-    height: 300,
-    withCenterGuides: false,
-  })
-)
+export default {
+  component: SplitButton,
+  title: 'Components/Buttons/SplitButton',
+}
 
 const ItemSpec = createSpec({
   label: faker.lorem.words(),
@@ -28,41 +21,7 @@ const dropdownProps = {
   onSelect: value => console.log(value),
 }
 
-const buildGrid = ({ disabled = false } = {}) => {
-  const style = { marginBottom: '3px' }
-
-  return (
-    <Flexy>
-      <Flexy.Item>
-        {['tertiary', 'primary', 'primaryAlt'].map(kind => (
-          <SplitButton
-            disabled={disabled}
-            dropdownProps={dropdownProps}
-            kind={kind}
-            style={style}
-          >
-            Click Me
-          </SplitButton>
-        ))}
-      </Flexy.Item>
-      <Flexy.Item>
-        {['success', 'danger'].map(state => (
-          <SplitButton
-            disabled={disabled}
-            dropdownProps={dropdownProps}
-            kind="primary"
-            state={state}
-            style={style}
-          >
-            Click Me
-          </SplitButton>
-        ))}
-      </Flexy.Item>
-    </Flexy>
-  )
-}
-
-stories.add('Default', () => {
+export const Default = () => {
   return (
     <SplitButton
       dropdownProps={dropdownProps}
@@ -73,66 +32,72 @@ stories.add('Default', () => {
       Submit
     </SplitButton>
   )
-})
+}
 
-stories.add('Sizes and Colours', () => {
+export const Sizes = () => {
   return (
     <div>
       <SplitButton dropdownProps={dropdownProps} kind="tertiary" size="sm">
         Small
       </SplitButton>
-      <SplitButton dropdownProps={dropdownProps} kind="primaryAlt" size="md">
+      <br />
+      <SplitButton dropdownProps={dropdownProps} kind="tertiary" size="md">
         Medium
       </SplitButton>
+      <br />
       <SplitButton dropdownProps={dropdownProps} kind="primary" size="lg">
-        Primary
+        Large
       </SplitButton>
     </div>
   )
-})
+}
 
-stories.add('Colors', () => buildGrid())
+Sizes.story = {
+  name: 'Sizes',
+}
 
-stories.add('Disabled', () => buildGrid({ disabled: true }))
+export const Kind = () => {
+  return (
+    <div>
+      <SplitButton kind="primary">Primary</SplitButton>
+      <br />
+      <SplitButton kind="tertiary">Tertiary</SplitButton>
+    </div>
+  )
+}
 
-stories.add('Within Modal', () => {
-  const WordSpec = createSpec({
-    key: faker.random.uuid(),
-    children: faker.lorem.sentence(),
-  })
+Kind.story = {
+  name: 'Kind',
+}
 
-  class Example extends React.Component {
-    state = { count: 0 }
+export const State = () => {
+  return (
+    <div>
+      <SplitButton state="success">Success</SplitButton>
+      <br />
+      <SplitButton state="danger">Danger</SplitButton>
+    </div>
+  )
+}
 
-    increment = () => this.setState({ count: this.state.count + 1 })
+State.story = {
+  name: 'State',
+}
 
-    render() {
-      return (
-        <Modal trigger={<Button>Open dis modal</Button>}>
-          <Modal.Body>
-            <Button onClick={this.increment} kind="primaryAlt">
-              Update State
-            </Button>
-            <br />
-            {[...Array(this.state.count)].map(i => {
-              const content = WordSpec.generate()
-              return <p {...content} />
-            })}
-            <br />
-            <SplitButton
-              dropdownProps={{
-                ...dropdownProps,
-              }}
-              kind="primary"
-              size="lg"
-            >
-              Primary
-            </SplitButton>
-          </Modal.Body>
-        </Modal>
-      )
-    }
-  }
+export const Disabled = () => {
+  return (
+    <div>
+      <SplitButton disabled kind="primary" state="success">
+        Click Me
+      </SplitButton>
+      <br />
+      <SplitButton disabled kind="tertiary" state="danger">
+        Click Me
+      </SplitButton>
+    </div>
+  )
+}
 
-  return <Example />
-})
+Disabled.story = {
+  name: 'Disabled',
+}

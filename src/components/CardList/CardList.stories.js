@@ -1,11 +1,12 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { createSpec, faker } from '@helpscout/helix'
-import { withKnobs, boolean, text, number } from '@storybook/addon-knobs'
+import { boolean, text, number } from '@storybook/addon-knobs'
 import { ArticleCard, CardList } from '../index'
 
-const stories = storiesOf('CardList', module)
-stories.addDecorator(withKnobs)
+export default {
+  component: CardList,
+  title: 'Components/Structural/CardList',
+}
 
 const CardSpec = createSpec({
   title: faker.lorem.sentence(),
@@ -14,7 +15,7 @@ const CardSpec = createSpec({
   key: faker.random.uuid(),
 })
 
-stories.add('Default', () => {
+export const Default = () => {
   class Example extends React.Component {
     state = {
       cards: [],
@@ -44,4 +45,4 @@ stories.add('Default', () => {
   }
 
   return <Example {...props} />
-})
+}

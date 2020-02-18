@@ -1,0 +1,175 @@
+import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
+import { select, text, boolean, number } from '@storybook/addon-knobs'
+import {
+  data,
+  dataWithIds,
+  createSections,
+  onOpen,
+  onClose,
+  onSortEnd,
+} from './Accordion.storiesHelpers'
+import Accordion from './'
+import { Page, Text } from '../index'
+
+<Meta
+  title="Components/Structural/Accordion"
+  component={Accordion}
+/>
+
+# Accordion
+
+This component is a graphic control element which includes one or more
+vertically stacked section which can be expanded or collapsed.
+
+<Preview>
+  <Story name="default">
+    <Accordion
+    distance={number('distance', 5)}
+    isSortable={boolean('isSortable', false)}
+    isSeamless={boolean('isSeamless', false)}
+    allowMultiple={boolean('allowMultiple', false)}
+    pressDelay={number('pressDelay', 300)}
+    onOpen={onOpen}
+    onClose={onClose}
+    onSortEnd={onSortEnd}
+    size={select('Sizes', {extraSmall: 'xs', small: 'sm', medium: 'md', large: 'lg'}, 'md')}
+  >
+      {createSections(data)}
+    </Accordion>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: PL
+- **Usage**: Messages list, Beacon settings translations, Custom properties, Saved Replies
+
+<br />
+<br />
+
+### Props
+
+<Props of={Accordion} />
+
+<br />
+<br />
+
+## Accordion.Section
+
+This component is part of the graphical control element that is the `Accordion`.
+The `Section` houses a `Title` and `Body`. When the `Section` is open its
+`Body` is expanded, otherwise its `Body` is collapsed.
+
+Each section is assigned an auto-generated uuid which is used to track the
+open state of the section. You may optionally set an `id` prop which will be
+used instead of the uuid. This allows for programatic control of accordion
+sections using known id values.
+
+This component is to be used within an [`Accordion`](./Accordion.md).
+
+### Props
+
+<Props of={Accordion.Section} />
+
+<br />
+<br />
+
+## Accordion.Body
+
+This component is part of the graphical control element that is the `Accordion`.
+The `Body` enhances the presentation of its children by wrapping them in a
+padded element. By default the `Body` is collapsed and can be expanded by
+clicking on its adjacent `Title` in the same `Section` of the `Accordion`.
+
+This component is to be used within a `Section`.
+
+### Props
+
+<Props of={Accordion.Body} />
+
+<br />
+<br />
+
+## Accordion.Title
+
+This component is part of the graphical control element that is the `Accordion`.
+The `Title` enhances the presentation of its children by wrapping them in a
+padded element with a directional caret that indicates if the adjacent `Body`
+is expanded or collapsed. Clicking the `Title` expands or contracts the adjacent
+`Body` in the same `Section` of the `Accordion`.
+
+This component is to be used within a `Section`.
+
+### Props
+
+<Props of={Accordion.Title} />
+
+<br />
+<br />
+
+## Accordion.Link
+
+This component is an enhanced variant of `Accordion.Section`that renders a `Link`.
+This component is to be used within an `Accordion`.
+
+### Props
+
+<Props of={Accordion.Link} />
+
+## Stories
+
+#### Inside a page
+
+<Preview>
+  <Story name="Inside a page">
+    <Page>
+    <Page.Card>
+      <Page.Header subtitle="Inside a page" />
+      <Accordion
+        distance={number('distance', 5)}
+        isSortable={boolean('isSortable', false)}
+        isSeamless={boolean('isSeamless', false)}
+        allowMultiple={boolean('allowMultiple', false)}
+        pressDelay={number('pressDelay', 300)}
+        onSortEnd={onSortEnd}
+        size={select('Sizes', {extraSmall: 'xs', small: 'sm', medium: 'md', large: 'lg'}, 'md')}
+      >
+        {createSections(data)}
+      </Accordion>
+    </Page.Card>
+  </Page>
+  </Story>
+</Preview>
+
+#### Row Link
+
+<Preview>
+  <Story name="Row Link">
+    <Page>
+      <Page.Card>
+        <Accordion
+          distance={number('distance', 5)}
+          isSortable={boolean('isSortable', false)}
+          isSeamless={boolean('isSeamless', true)}
+          allowMultiple={boolean('allowMultiple', false)}
+          pressDelay={number('pressDelay', 300)}
+          onSortEnd={onSortEnd}
+          size={select('Sizes', {extraSmall: 'xs', small: 'sm', medium: 'md', large: 'lg'}, 'md')}
+        >
+          <Accordion.Link to="/">
+            <Text truncate weight={500}>
+              {text('linkOneContent', 'Link Row One')}
+            </Text>
+          </Accordion.Link>
+          <Accordion.Link to="/">
+            <Text truncate weight={500}>
+              {text('linkTwoContent', 'Link Row Two')}
+            </Text>
+          </Accordion.Link>
+        </Accordion>
+      </Page.Card>
+    </Page>
+  </Story>
+</Preview>
+

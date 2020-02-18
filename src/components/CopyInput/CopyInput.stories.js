@@ -1,14 +1,20 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { CopyInput } from '../index'
 
-const stories = storiesOf('CopyInput', module)
+export default {
+  component: CopyInput,
+  title: 'Components/Forms/CopyInput',
+}
 
-stories.add('Default', () => (
+export const Default = () => (
   <CopyInput value="testing" onCopy={action('Copy')} />
-))
+)
 
-stories.add('Read-only', () => (
+export const ReadOnly = () => (
   <CopyInput value="secretkey" onCopy={action('Copy')} readOnly />
-))
+)
+
+ReadOnly.story = {
+  name: 'Read-only',
+}

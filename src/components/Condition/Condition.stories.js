@@ -1,5 +1,4 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { withMotion } from '@helpscout/motion'
 import { faker } from '@helpscout/helix'
 import Button from '../Button'
@@ -12,11 +11,11 @@ import Select from '../Select'
 import Page from '../Page'
 
 import { boolean } from '@storybook/addon-knobs'
-import { jsxDecorator } from 'storybook-addon-jsx'
 
-const stories = storiesOf('Condition', module)
-
-stories.addDecorator(jsxDecorator)
+export default {
+  component: Condition,
+  title: 'Components/Forms/Condition',
+}
 
 const options = [
   {
@@ -347,14 +346,14 @@ class ConditionBuilder extends React.Component {
   }
 }
 
-stories.add('Default', () => {
+export const Default = () => {
   const error = boolean('error', false)
   const isWithAnd = boolean('isWithAnd', false)
 
   return <TimeOnPageCondition error={error} value={5} isWithAnd={isWithAnd} />
-})
+}
 
-stories.add('Builder', () => {
+export const Builder = () => {
   const error = boolean('error', false)
   const isAddEnabled = boolean('isAddEnabled', true)
 
@@ -368,4 +367,4 @@ stories.add('Builder', () => {
       <Page.Actions primary={<Button kind="primary">Save Changes</Button>} />
     </Page>
   )
-})
+}

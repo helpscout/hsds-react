@@ -118,7 +118,7 @@ export const AddButtonUI = styled('button')`
     outline: 0;
     color: white;
     background-color: ${getColor('blue.500')};
-    box-shadow: 0 0 0 1px white, 0 0 0 3px ${getColor('blue.400')};
+    box-shadow: 0 0 0 1px white, 0 0 0 3px ${getColor('blue.500')};
     transform: translateZ(0);
   }
 

@@ -1,34 +1,15 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { ThemeProvider } from '../styled'
-import {
-  withKnobs,
-  boolean,
-  number,
-  text,
-  select,
-} from '@storybook/addon-knobs'
+import { boolean, number, text, select } from '@storybook/addon-knobs'
 import { getColor } from '../../styles/utilities/color'
 import { action } from '@storybook/addon-actions'
-import { withArtboard } from '@helpscout/artboard'
 import { makeBrandColors } from '../../styles/utilities/color'
 import MessageCard from '.'
 
-const stories = storiesOf('MessageCard', module)
-
-stories.addDecorator(
-  withArtboard({
-    id: 'hsds-MessageCard',
-    width: 600,
-    height: 400,
-    withCenterGuides: false,
-  })
-)
-stories.addDecorator(
-  withKnobs({
-    escapeHTML: false,
-  })
-)
+export default {
+  component: MessageCard,
+  title: 'Components/Conversation/MessageCard',
+}
 
 class Story extends React.Component {
   render() {
@@ -83,4 +64,4 @@ class Story extends React.Component {
   }
 }
 
-stories.add('Default', () => <Story />)
+export const Default = () => <Story />

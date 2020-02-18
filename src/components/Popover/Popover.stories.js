@@ -1,19 +1,12 @@
 import * as React from 'react'
-import {
-  withKnobs,
-  boolean,
-  number,
-  select,
-  text,
-} from '@storybook/addon-knobs'
-import { storiesOf } from '@storybook/react'
-import { withArtboard } from '@helpscout/artboard'
+import { boolean, number, select, text } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
-import { PropProvider, Text, Popover } from '..'
+import { Text, Popover } from '..'
 
-const stories = storiesOf('Popover', module)
-stories.addDecorator(withArtboard({ width: 300, height: 100 }))
-stories.addDecorator(withKnobs)
+export default {
+  component: Popover,
+  title: 'Components/Overlay/Popover',
+}
 
 const actionLoggerProps = {
   onBeforeOpen: tooltipInstance => {
@@ -26,7 +19,7 @@ const actionLoggerProps = {
   },
 }
 
-stories.add('Default', () => {
+export const Default = () => {
   const triggerOn = select(
     'triggerOn',
     {
@@ -71,17 +64,15 @@ stories.add('Default', () => {
   }
 
   return (
-    <PropProvider value={{ Popover: { zIndex: 10 } }}>
-      <div style={{ padding: '20%', textAlign: 'center' }}>
-        <Popover {...props}>
-          <div tabIndex="0">Popover Trigger</div>
-        </Popover>
-      </div>
-    </PropProvider>
+    <div style={{ padding: '20%', textAlign: 'center' }}>
+      <Popover {...props}>
+        <div tabIndex="0">Popover Trigger</div>
+      </Popover>
+    </div>
   )
-})
+}
 
-stories.add('Render props', () => {
+export const RenderProps = () => {
   const props = {
     ...actionLoggerProps,
     renderHeader: ({ Header, Title }) => (
@@ -103,4 +94,8 @@ stories.add('Render props', () => {
       <div>Popover Trigger</div>
     </Popover>
   )
-})
+}
+
+RenderProps.story = {
+  name: 'Render props',
+}

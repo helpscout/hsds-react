@@ -176,7 +176,7 @@ export class ContentResizer extends React.PureComponent<
       // @ts-ignore
       <ContentResizerUI
         {...rest}
-        innerRef={this.setResizerNodeRef}
+        ref={this.setResizerNodeRef}
         style={this.getResizeStyles()}
         onTransitionEnd={this.resetHeight}
       >

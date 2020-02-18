@@ -1,26 +1,17 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import DotStepper from './'
-import { withKnobs, number } from '@storybook/addon-knobs'
-import { withArtboard } from '@helpscout/artboard'
+import { number } from '@storybook/addon-knobs'
 
-const stories = storiesOf('DotStepper', module)
+export default {
+  component: DotStepper,
+  title: 'Components/Wayfinding/DotStepper',
+}
 
-stories.addDecorator(
-  withArtboard({
-    width: 500,
-    height: 300,
-    withCenterGuides: false,
-    showInterface: false,
-  })
-)
-stories.addDecorator(withKnobs)
-
-stories.add('Default', () => {
+export const Default = () => {
   const props = {
     numSteps: number('numSteps', 4),
     step: number('step', 2),
   }
 
   return <DotStepper {...props} />
-})
+}

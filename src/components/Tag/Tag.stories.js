@@ -1,14 +1,13 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { withKnobs, boolean, select, text } from '@storybook/addon-knobs'
-import { withArtboard } from '@helpscout/artboard'
+import { boolean, select, text } from '@storybook/addon-knobs'
 import { Tag } from '../index'
 
-const stories = storiesOf('Tag', module)
-stories.addDecorator(withArtboard({ id: 'Tag' }))
-stories.addDecorator(withKnobs)
+export default {
+  component: Tag,
+  title: 'Components/Badges/Tag',
+}
 
-stories.add('Default', () => {
+export const Default = () => {
   const props = {
     color: select(
       'color',
@@ -39,9 +38,9 @@ stories.add('Default', () => {
     isRemoving: boolean('isRemoving', false),
   }
   return <Tag {...props} />
-})
+}
 
-stories.add('filled', () => (
+export const Filled = () => (
   <div>
     <Tag color="red" filled>
       Ron
@@ -68,9 +67,13 @@ stories.add('filled', () => (
       Ron
     </Tag>
   </div>
-))
+)
 
-stories.add('pulsing', () => (
+Filled.story = {
+  name: 'filled',
+}
+
+export const Pulsing = () => (
   <div>
     <Tag color="red" pulsing>
       Ron
@@ -97,4 +100,8 @@ stories.add('pulsing', () => (
       Ron
     </Tag>
   </div>
-))
+)
+
+Pulsing.story = {
+  name: 'pulsing',
+}

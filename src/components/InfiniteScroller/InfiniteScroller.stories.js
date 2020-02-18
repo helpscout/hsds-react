@@ -1,5 +1,4 @@
 import React, { PureComponent as Component } from 'react'
-import { storiesOf } from '@storybook/react'
 import {
   Animate,
   AnimateGroup,
@@ -10,7 +9,10 @@ import {
   Text,
 } from '../index'
 
-const stories = storiesOf('InfiniteScroller', module)
+export default {
+  component: InfiniteScroller,
+  title: 'Utilities/InfiniteScroller',
+}
 
 // Setup stuff
 const makeStoryItems = (count, start = 0) => {
@@ -85,11 +87,18 @@ class StoryComponent extends Component {
   }
 }
 
-// Stories
-stories.add('default', () => <StoryComponent />)
+export const Default = () => <StoryComponent />
 
-stories.add('modal', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const _Modal = () => (
   <Modal trigger={<a>Click</a>} isOpen>
     <StoryComponent />
   </Modal>
-))
+)
+
+_Modal.story = {
+  name: 'modal',
+}

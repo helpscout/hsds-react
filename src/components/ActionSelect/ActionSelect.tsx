@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { getUniqueKeyFromItem } from '../Dropdown/V2/Dropdown.utils'
+import { getUniqueKeyFromItem } from '../Dropdown/Dropdown.utils'
 import SelectDropdown from '../SelectDropdown'
 import ContentResizer from './ActionSelect.ContentResizer'
 import { classNames } from '../../utilities/classNames'

@@ -8,10 +8,7 @@ export const AccordionUI = styled(Accordion)`
   border: 1px solid red;
   padding-bottom: 15px;
 `
-export const IconUI = styled(Icon)`
-  left: 1px;
-  top: 1px;
-`
+export const IconUI = styled(Icon)``
 
 export const HandleUI = styled('div')`
   color: ${getColor('grey.700')};
@@ -38,10 +35,16 @@ export const SortableItemUI = styled('div')<{ isDragging?: boolean }>`
   position: relative;
   width: 100%;
   z-index: 2;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
   ${({ isDragging }) =>
     isDragging &&
     `
     background-color: ${getColor('grey.200')};
     border-bottom: none;
+    z-index: 10;
   `};
 `

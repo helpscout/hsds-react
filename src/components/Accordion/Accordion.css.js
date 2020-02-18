@@ -71,6 +71,7 @@ export const AccordionUI = styled('div')`
 
     .c-Accordion__Section__Title.is-sortable {
       background-color: white;
+      position: relative;
       .drag-handle {
         display: none;
         pointer-events: all;
@@ -137,8 +138,7 @@ export const TitleUI = styled('div')`
   font-weight: 500;
 
   &:hover,
-  &:focus,
-  &.is-open {
+  &:focus {
     background-color: ${getColor('grey.200')};
 
     .${titleClassNames.iconCaretClassName} {

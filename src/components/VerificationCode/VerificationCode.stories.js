@@ -1,14 +1,20 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import VerificationCode from './'
 
-const stories = storiesOf('VerificationCode', module)
+export default {
+  component: VerificationCode,
+  title: 'Components/Forms/VerificationCode',
+}
 
-stories.add('Default', () => {
+export const Default = () => {
   return <VerificationCode />
-})
+}
 
-stories.add('Invalid', () => {
+Default.story = {
+  name: 'default',
+}
+
+export const Invalid = () => {
   return (
     <VerificationCode
       isValid={false}
@@ -17,46 +23,8 @@ stories.add('Invalid', () => {
       }}
     />
   )
-})
-
-stories.add('In context', () => {
-  return (
-    <div>
-      <input type="text" />
-      <div style={{ margin: '50px 0' }}>
-        <VerificationCode />
-      </div>
-      <button>Cancel</button>
-      <button>Submit</button>
-    </div>
-  )
-})
-
-class ExternalValue extends React.PureComponent {
-  state = {
-    code: '123456',
-  }
-
-  handleChange = e => {
-    this.setState({ code: e.target.value })
-  }
-
-  render() {
-    const { code } = this.state
-
-    return (
-      <div>
-        <input type="text" onChange={this.handleChange} value={code} />
-        <div style={{ margin: '50px 0' }}>
-          <VerificationCode code={code} />
-        </div>
-        <button>Cancel</button>
-        <button>Submit</button>
-      </div>
-    )
-  }
 }
 
-stories.add('External value', () => {
-  return <ExternalValue />
-})
+Invalid.story = {
+  name: 'invalid',
+}

@@ -4,6 +4,7 @@ dist/
 coverage/
 src/**/*/types.js
 src/**/*/*.types.js
+src/**/*/*.mdx
 src/styles/configs/_colorway.scss
 src/styles/configs/colorway.ts
 .remake

@@ -1,7 +1,5 @@
 import React from 'react'
 import { addDecorator, addParameters } from '@storybook/react'
-import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport'
-import { create } from '@storybook/theming'
 import { withKnobs } from '@storybook/addon-knobs'
 import { withA11y } from '@storybook/addon-a11y'
 
@@ -18,19 +16,10 @@ addDecorator(withHSDSScope)
 
 addParameters({
   options: {
-    theme: create({
-      base: 'light',
-      brandTitle: 'HSDS: React',
-      brandUrl:
-        'https://github.com/helpscout/hsds-react/tree/master/src/components',
-    }),
-    isFullscreen: false,
-    panelPosition: 'bottom',
-    isToolshown: true,
-  },
-  viewport: {
-    viewports: {
-      ...INITIAL_VIEWPORTS,
-    },
+    showRoots: true,
+    storySort: (a, b) =>
+      a[1].kind === b[1].kind
+        ? 0
+        : a[1].id.localeCompare(b[1].id, undefined, { numeric: true }),
   },
 })

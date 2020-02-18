@@ -122,7 +122,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       }
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
       const { isOpen, path } = nextProps
       /* istanbul ignore else */
       if (this.routeMatches(path)) {

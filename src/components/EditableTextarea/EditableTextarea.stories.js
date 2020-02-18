@@ -1,17 +1,15 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { ContainerUI, NoteUI } from '../EditableField/EditableField.stories'
 import { withAktiv } from '../../utilities/storybook'
 import EditableTextarea from '.'
 
-const stories = storiesOf('EditableTextarea', module)
-  .addParameters({
-    options: { showPanel: false, enableShortcuts: false, isFullscreen: false },
-    a11y: { element: 'c-EditableField' },
-  })
-  .addDecorator(withAktiv)
+export default {
+  component: EditableTextarea,
+  title: 'Components/Forms/EditableTextarea',
+  decorators: [withAktiv],
+}
 
-stories.add('default', () => (
+export const Default = () => (
   <ContainerUI
     onSubmit={e => {
       e.preventDefault()
@@ -62,9 +60,13 @@ Hey, you know how I'm, like, always trying to save the planet? Here's my chance.
       maxRows={10}
     />
   </ContainerUI>
-))
+)
 
-stories.add('floating labels', () => (
+Default.story = {
+  name: 'default',
+}
+
+export const FloatingLabels = () => (
   <ContainerUI
     onSubmit={e => {
       e.preventDefault()
@@ -90,9 +92,13 @@ stories.add('floating labels', () => (
       maxRows={4}
     />
   </ContainerUI>
-))
+)
 
-stories.add('Validation', () => (
+FloatingLabels.story = {
+  name: 'floating labels',
+}
+
+export const Validation = () => (
   <ContainerUI>
     <NoteUI>
       <p>Type:</p>
@@ -117,7 +123,7 @@ stories.add('Validation', () => (
       }}
     />
   </ContainerUI>
-))
+)
 
 function validateFieldValue(payload) {
   console.log('validating')

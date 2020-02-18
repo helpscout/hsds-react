@@ -1,0 +1,114 @@
+import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
+import { withDesign } from 'storybook-addon-designs'
+import Alert from './'
+import { Button, Heading, Link, Text } from '../index'
+
+<Meta
+  title="Components/Text/Alert"
+  component={Alert}
+  parameters={{
+      design: {
+        type: 'figma',
+        url: 'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2449%3A4704'
+      }
+    }}
+/>
+
+# Alert
+
+An Alert component provides contextual feedback messages for user actions with the ability to provide additional actions.
+
+<Preview>
+  <Story name="default">
+    <Alert>Buddy!</Alert>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={Alert} />
+
+## Stories
+
+#### With content
+
+<Preview>
+  <Story name="with content">
+    <Alert>
+      <Heading size="h1">H1 Heading</Heading>
+      <Heading size="h2">H2 Heading</Heading>
+      <Heading size="h3">H3 Heading</Heading>
+      <br/>
+      <ul>
+        <li>List item</li>
+        <li>List item</li>
+        <li>List item</li>
+      </ul>
+    </Alert>
+  </Story>
+</Preview>
+
+#### Dismissible
+
+<Preview>
+  <Story name="dismissible">
+    <div>
+      <Alert dismissible>Buddy! This is dismissible.</Alert>
+      <p>Content</p>
+    </div>
+  </Story>
+</Preview>
+
+#### With Badge
+
+<Preview>
+  <Story name="with badge">
+    <div>
+      <Alert badge="Wow">Badge Buddy!</Alert>
+    </div>
+  </Story>
+</Preview>
+
+#### With Icon
+
+<Preview>
+  <Story name="with icon">
+    <div>
+      <Alert icon>Icon Buddy!</Alert>
+    </div>
+  </Story>
+</Preview>
+
+#### Status
+
+<Preview>
+  <Story name="status">
+    <div>
+      <Alert status="info">Info Buddy!</Alert>
+      <Alert status="error">Error Buddy!</Alert>
+      <Alert status="success">Success Buddy!</Alert>
+      <Alert status="warning">Warning Buddy!</Alert>
+    </div>
+  </Story>
+</Preview>
+
+#### With action on the right
+
+<Preview>
+  <Story name="action on the right">
+    <div>
+      <Alert actionRight={<Button size="sm" kind="secondary">Action!</Button>} icon>
+        Action Right Buddy with Icon!
+      </Alert>
+    </div>
+  </Story>
+</Preview>

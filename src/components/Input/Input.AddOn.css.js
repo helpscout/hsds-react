@@ -11,12 +11,12 @@ export const AddOnUI = styled('div')`
   background-color: ${config.backgroundColor};
   border: 1px solid ${config.borderColor};
   align-items: center;
-  background-color: _color(grey, 200);
   border-radius: ${config.borderRadius}px;
   display: flex;
   height: 100%;
   margin: 0;
   padding: 10px;
+  color: ${getColor('charcoal.300')};
 
   &.is-first {
     border-top-right-radius: 0;

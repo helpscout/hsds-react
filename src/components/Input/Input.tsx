@@ -120,7 +120,7 @@ export class Input extends React.PureComponent<InputProps, InputState> {
       this.props.refApplyCallStopTyping(this.callStopTyping.bind(this))
   }
 
-  componentWillReceiveProps(nextProps: InputProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: InputProps) {
     const { isFocused, value, state } = nextProps
     const prevValue = this.state.value
     const prevState = this.state.state

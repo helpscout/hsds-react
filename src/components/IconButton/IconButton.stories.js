@@ -1,11 +1,13 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { boolean, number, text, select } from '@storybook/addon-knobs'
 import IconButton from '.'
 
-const stories = storiesOf('IconButton', module)
+export default {
+  component: IconButton,
+  title: 'Components/Buttons/IconButton',
+}
 
-stories.add('Default', () => {
+export const Default = () => {
   const props = {
     icon: text('icon', 'search'),
     iconSize: number('iconSize', 24),
@@ -45,4 +47,4 @@ stories.add('Default', () => {
     withCaret: boolean('withCaret', false),
   }
   return <IconButton {...props} />
-})
+}

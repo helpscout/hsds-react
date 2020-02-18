@@ -1,7 +1,15 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { PreviewCard } from '../index'
 
-storiesOf('PreviewCard', module).add('default', () => (
+export default {
+  component: PreviewCard,
+  title: 'Components/Structural/PreviewCard',
+}
+
+export const Default = () => (
   <PreviewCard title="Preview title">Preview content text</PreviewCard>
-))
+)
+
+Default.story = {
+  name: 'default',
+}
