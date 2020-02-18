@@ -41,9 +41,7 @@ describe('Store/Render', () => {
 
     const dropdowns = wrapper.find('DropdownContainer')
 
-    
     expect(dropdowns.at(0).instance().store).not.toBe(
-      
       dropdowns.at(1).instance().store
     )
   })

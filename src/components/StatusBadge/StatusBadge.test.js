@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import StatusBadge from './index'
 import { Animate, Badge, StatusDot } from '../index'
 import { mount } from 'enzyme'

@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { cy } from '@helpscout/cyan'
 import { mount } from 'enzyme'
 import { EditableFieldActions as Actions } from '../EditableField.Actions'

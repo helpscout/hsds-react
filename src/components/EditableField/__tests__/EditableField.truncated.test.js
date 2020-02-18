@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { cy } from '@helpscout/cyan'
 import Truncated from '../EditableField.Truncated'
 import { TRUNCATED_CLASSNAMES } from '../EditableField.utils'

@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { cy } from '@helpscout/cyan'
 import { mount } from 'enzyme'
 import { EditableTextarea } from './EditableTextarea'
@@ -142,7 +141,7 @@ describe('Value', () => {
       wrapper
         .find('textarea')
         .first()
-        
+
         .getDOMNode().value
     ).toBe('hello')
 
@@ -153,7 +152,7 @@ describe('Value', () => {
       wrapper
         .find('textarea')
         .first()
-        
+
         .getDOMNode().value
     ).toBe('hello')
   })
@@ -322,7 +321,7 @@ describe('Blur', () => {
     )
 
     const textarea = wrapper.find('textarea').first()
-    
+
     textarea.getDOMNode().value = '123'
     textarea.simulate('keydown', { key: 'Enter' })
 
@@ -357,7 +356,6 @@ describe('Blur', () => {
 
     const textarea = wrapper.find('textarea').first()
 
-    
     textarea.getDOMNode().value = '8888'
 
     textarea.simulate('keydown', { key: 'Enter' })

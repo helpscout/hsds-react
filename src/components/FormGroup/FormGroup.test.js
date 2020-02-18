@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { mount } from 'enzyme'
 import FormGroup from './FormGroup'
 import FormGroupChoice from './FromGroup.Choice'

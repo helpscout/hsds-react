@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { mount } from 'enzyme'
 import Chat from '../Message.Chat'
 import { Media } from '../Message.Media'

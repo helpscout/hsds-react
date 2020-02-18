@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { mount } from 'enzyme'
 import Content from '../Page.Content'
 import { PageContext } from '../Page'

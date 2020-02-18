@@ -1,9 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import cy from '@helpscout/cyan'
 import { mount } from 'enzyme'
-
-import Bubble from '../Message.Bubble'
 import ChatBlock from '../Message.ChatBlock'
 import Chat from '../Message.Chat'
 import Caption from '../Message.Caption'

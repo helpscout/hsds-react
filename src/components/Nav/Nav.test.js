@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { mount, render } from 'enzyme'
 import { Nav } from './Nav'
 import Item from './Nav.Item'

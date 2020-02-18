@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { mount } from 'enzyme'
 import Footer from '../Modal.Footer'
 import { Toolbar } from '../../index'

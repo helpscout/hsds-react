@@ -62,7 +62,6 @@ describe('isPathActive', () => {
   })
 
   test('Returns false for non-matching paths', () => {
-    
     expect(isPathActive()).toBe(false)
     expect(isPathActive('0.1')).toBe(false)
     expect(isPathActive('1.2', '1.2.3')).toBe(false)
@@ -84,7 +83,6 @@ describe('getParentPath', () => {
   })
 
   test('Returns empty string if no path', () => {
-    
     expect(getParentPath()).toBe('')
   })
 })
@@ -98,7 +96,6 @@ describe('getNextChildPath', () => {
   })
 
   test('Returns empty string if no path', () => {
-    
     expect(getNextChildPath()).toBe('')
   })
 })
@@ -576,7 +573,7 @@ describe('getUniqueKeyFromItem', () => {
     expect(getUniqueKeyFromItem({ id: 'ron', value: 'brick' })).toBe('ron')
     // Invalid items
     expect(getUniqueKeyFromItem({})).toBe(undefined)
-    
+
     expect(getUniqueKeyFromItem()).toBe(undefined)
   })
 })

@@ -75,10 +75,10 @@ describe('Portal', () => {
   test('Fires onMenuMounted callback on mount', () => {
     const spy = jest.fn()
     const wrapper = mount(<MenuContainer isOpen={true} onMenuMounted={spy} />)
-    
+
     wrapper.instance().repositionMenuNodeCycle = spy
     const portal = wrapper.find('Portal')
-    
+
     portal.props().onOpen()
 
     expect(spy).toHaveBeenCalled()
@@ -87,10 +87,10 @@ describe('Portal', () => {
   test('Fires onMenuUnmounted callback on mount', () => {
     const spy = jest.fn()
     const wrapper = mount(<MenuContainer isOpen={true} onMenuUnmounted={spy} />)
-    
+
     wrapper.instance().repositionMenuNodeCycle = spy
     const portal = wrapper.find('Portal')
-    
+
     portal.props().onClose()
 
     expect(spy).toHaveBeenCalled()
@@ -99,12 +99,12 @@ describe('Portal', () => {
   test('Adjusts position on Portal mount', () => {
     const spy = jest.fn()
     const wrapper = mount(<MenuContainer isOpen={true} />)
-    
+
     wrapper.instance().setPositionStylesOnNode = spy
-    
+
     wrapper.instance().repositionMenuNodeCycle = spy
     const portal = wrapper.find('Portal')
-    
+
     portal.props().onOpen()
 
     expect(spy).toHaveBeenCalled()
@@ -121,7 +121,7 @@ describe('Portal', () => {
       <MenuContainer isOpen={true} triggerNode={mockTriggerNode} />
     )
     const portal = wrapper.find('Portal')
-    
+
     portal.prop('onClose')()
 
     expect(spy).toHaveBeenCalled()
@@ -349,22 +349,20 @@ describe('Style/Direction', () => {
   test('shouldDropUp returns true if set', () => {
     const wrapper = mount(<MenuContainer dropUp={true} />)
 
-    
     expect(wrapper.instance().shouldDropUp()).toBe(true)
   })
 
   test('shouldDropUp returns false if important nodes are missing', () => {
     const wrapper = mount(<MenuContainer />)
-    
+
     wrapper.instance().wrapperNode = undefined
 
-    
     expect(wrapper.instance().shouldDropUp()).toBe(false)
   })
 
   test('Renders dropUp styles, if defined', () => {
     const wrapper = mount(<MenuContainer />)
-    
+
     wrapper.instance().shouldDropDirectionUpdate = () => true
 
     wrapper.setProps({ dropUp: true })
@@ -499,7 +497,6 @@ describe('Position', () => {
     const wrapper = mount(<MenuContainer isOpen={true} positionFixed={false} />)
     const inst = wrapper.instance()
 
-    
     expect(inst.getPositionProps().position).toBe('absolute')
   })
 
@@ -507,7 +504,6 @@ describe('Position', () => {
     const wrapper = mount(<MenuContainer isOpen={true} positionFixed={true} />)
     const inst = wrapper.instance()
 
-    
     expect(inst.getPositionProps().position).toBe('fixed')
   })
 })
@@ -521,7 +517,7 @@ describe('forceHideMenuNode', () => {
       },
     }
     const inst = wrapper.instance()
-    
+
     inst.placementNode = placementNode
 
     wrapper.unmount()
@@ -547,11 +543,11 @@ describe('shouldDropDirectionUpdate', () => {
       <MenuContainer shouldDropDirectionUpdate={shouldDropDirectionUpdate} />
     )
     // Mocking Portal callbacks that open the Menu
-    
+
     wrapper.instance().didOpen = true
 
     // Mock triggering
-    
+
     wrapper.instance().shouldDropDirectionUpdate()
 
     expect(spy).toHaveBeenCalled()
@@ -569,17 +565,17 @@ describe('shouldDropDirectionUpdate', () => {
       <MenuContainer shouldDropDirectionUpdate={shouldDropDirectionUpdate} />
     )
     // Mocking Portal callbacks that open the Menu
-    
+
     wrapper.instance().didOpen = false
-    
+
     wrapper.instance().shouldDropDirectionUpdate()
 
     expect(spy).not.toHaveBeenCalled()
 
     // Mocking RAF loop, on the 2nd run
-    
+
     wrapper.instance().didOpen = true
-    
+
     wrapper.instance().shouldDropDirectionUpdate()
 
     expect(spy).toHaveBeenCalled()

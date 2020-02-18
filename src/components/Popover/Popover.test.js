@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { cy } from '@helpscout/cyan'
 import { mount } from 'enzyme'
 import { Popover } from './Popover'
@@ -7,7 +6,7 @@ import { Popover } from './Popover'
 function mountContent(Component) {
   const wrapper = mount(Component)
   const inst = wrapper.instance()
-  
+
   const Content = inst.renderContent({ close: () => {}, placement: 'top' })
 
   return mount(Content)
