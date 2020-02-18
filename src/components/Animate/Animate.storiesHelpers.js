@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Animate from '.'
 import { Card, Heading, Text } from '../index'
 

@@ -71,6 +71,7 @@ export const AccordionUI = styled('div')`
 
     .c-Accordion__Section__Title.is-sortable {
       background-color: white;
+      position: relative;
       .drag-handle {
         display: none;
         pointer-events: all;

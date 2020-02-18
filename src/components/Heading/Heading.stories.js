@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { boolean, select, text } from '@storybook/addon-knobs'
 import Heading from '.'
 

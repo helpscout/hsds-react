@@ -135,4 +135,27 @@ export class ArticleCard extends React.PureComponent {
   }
 }
 
+ArticleCard.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Content of the card. Will be truncated based on the contentLimit prop if content is a string. */
+  content: PropTypes.element,
+  /** The amount of characters to keep before truncation on the content string. */
+  contentLimit: PropTypes.number,
+  /** The `Text` font-size for the content. */
+  contentSize: PropTypes.number,
+  /** Element that will be displayed below the content */
+  footer: PropTypes.any,
+  /** Renders hovered styles. */
+  isHovered: PropTypes.bool,
+  /** Element that will be displayed above the title */
+  metaHeader: PropTypes.any,
+  /** Title of the card. Will be truncated based on the titleLimit prop */
+  title: PropTypes.string,
+  /** The amount of characters to keep before truncation on the title string. */
+  titleLimit: PropTypes.number,
+  /** The `Text` font-size for the title. */
+  titleSize: PropTypes.number,
+}
+
 export default ArticleCard

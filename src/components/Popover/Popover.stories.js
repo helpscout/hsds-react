@@ -100,12 +100,3 @@ export const RenderProps = () => {
 RenderProps.story = {
   name: 'Render props',
 }
-
-export const TestPop = () => {
-  return (
-    <Pop isOpen={true}>
-      <Pop.Reference />
-      <Pop.Popper>{() => <div className="content">Content</div>}</Pop.Popper>
-    </Pop>
-  )
-}

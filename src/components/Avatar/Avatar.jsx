@@ -1,18 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import StatusDot from '../StatusDot'
 import Icon from '../Icon'
-
 import { getEasingTiming } from '../../utilities/easing'
 import { classNames } from '../../utilities/classNames'
 import { nameToInitials } from '../../utilities/strings'
 import { noop } from '../../utilities/other'
-
 import AvatarCrop from './Avatar.Crop'
 import AvatarImage from './Avatar.Image'
-
+import { getImageSrc } from './Avatar.utils'
+import { AvatarListContext } from '../AvatarList/AvatarList'
 import {
   ActionUI,
   AvatarButtonUI,
@@ -26,9 +24,6 @@ import {
   config,
   getCircleProps,
 } from './Avatar.css'
-
-import { getImageSrc } from './Avatar.utils'
-import { AvatarListContext } from '../AvatarList/AvatarList'
 
 export class Avatar extends React.PureComponent {
   static defaultProps = {

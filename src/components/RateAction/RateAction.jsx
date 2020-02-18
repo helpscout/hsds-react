@@ -5,7 +5,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Emoticon from '../Emoticon'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { RateActionUI } from './RateAction.css'
+import { EmoticonUI, RateActionUI } from './RateAction.css'
 import { getName } from '../Emoticon/Emoticon.utils'
 
 export class RateAction extends React.PureComponent {

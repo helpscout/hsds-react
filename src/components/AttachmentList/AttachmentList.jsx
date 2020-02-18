@@ -156,4 +156,19 @@ export class AttachmentList extends React.Component {
   }
 }
 
+AttachmentList.propTypes = {
+  /** Array of `Attachment` to render */
+  children: PropTypes.arrayOf(PropTypes.element),
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Text label for the "Download All" attachment. */
+  downloadAllLabel: PropTypes.string,
+  /** The callback when the "Download All" attachment is clicked. */
+  onDownloadAllClick: PropTypes.func,
+  /** Show/hides the "Download All" attachment. */
+  showDownloadAll: PropTypes.bool,
+  /** Adds overflow styles on the list. */
+  withOverflow: PropTypes.bool,
+}
+
 export default AttachmentList
