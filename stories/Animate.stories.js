@@ -60,7 +60,7 @@ storiesOf('Animate', module)
   .add('boop', () => (
     <div>
       <p>Boop</p>
-      <Animate sequence="fade scale" delay={300} easing="bounce">
+      <Animate sequence="fade scale" delay={300} easing="boop">
         <Card>
           <Heading>Anchorman</Heading>
           <Text>Stay classy San Diego!</Text>

@@ -5,6 +5,7 @@ type CubicBezierCurve = string
 
 export const defaultEasingTiming: EasingDefaultTiming = 'ease-in-out'
 export const bounceCubicBezier: CubicBezierCurve = '0.680, -0.650, 0.265, 1.650'
+export const boopCubicBezier: CubicBezierCurve = '0.175, 0.885, 0.325, 1.2'
 
 export const customCubicBezier: Object = {
   easeInQuad: '0.550, 0.085, 0.680, 0.530',

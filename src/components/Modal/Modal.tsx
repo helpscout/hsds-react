@@ -284,6 +284,7 @@ class Modal extends React.PureComponent<ModalProps> {
       </div>
     )
 
+    const exit = !v2
     const easing = v2 ? modalV2Animation.easing : modalAnimationEasing
     const delay = v2 ? modalV2Animation.delay : modalAnimationDelay
     const duration = v2 ? modalV2Animation.duration : modalAnimationDuration
@@ -296,6 +297,7 @@ class Modal extends React.PureComponent<ModalProps> {
         duration={duration}
         easing={easing}
         in={portalIsOpen}
+        exit={exit}
         sequence={sequence}
       >
         {contentMarkup}
