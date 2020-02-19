@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 export const getDOMNode = wrapper => {
   if (!wrapper.getDOMNode || !wrapper.first) return wrapper
 

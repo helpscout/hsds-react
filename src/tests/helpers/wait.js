@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 export const wait = (time = 0) => {
   return new Promise((resolve, reject) => {
     let waitTime = setTimeout(() => {

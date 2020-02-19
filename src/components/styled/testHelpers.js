@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 /**
  * Removes style tags from the <head> and resets styled StyleSheets.
  */
