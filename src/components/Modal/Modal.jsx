@@ -160,7 +160,6 @@ class Modal extends React.PureComponent {
   }
 
   getFocusNodeIndexFromEvent = event => {
-    /* istanbul ignore if */
     if (!event || !this.cardNode || !this.documentNode) return 0
 
     const focusedNode = event.target
@@ -176,7 +175,6 @@ class Modal extends React.PureComponent {
   focusModalCard = () => {
     const { modalFocusTimeout } = this.props
     setTimeout(() => {
-      /* istanbul ignore else */
       if (this.cardNode) {
         this.cardNode.focus()
       }

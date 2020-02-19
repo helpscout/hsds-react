@@ -69,7 +69,6 @@ export class Overflow extends React.PureComponent {
       shouldFadeOnMount: hasContentOverflowX(containerNode),
     })
 
-    /* istanbul ignore next */
     // JSDOM does not provide node.clientHeight, which prevents
     // us from testing this calculation
 
@@ -99,7 +98,6 @@ export class Overflow extends React.PureComponent {
   }
 
   handleOnResize = () => {
-    /* istanbul ignore next */
     // Initial adjustHeight has been tested. Ignoring due to fragility
     // of JSDOM + timeouts.
     requestAnimationFrame(() => {
@@ -116,9 +114,8 @@ export class Overflow extends React.PureComponent {
    *
    * @param   {WheelEvent} event
    */
-  /* istanbul ignore next */
+
   remapScrollDirections = event => {
-    /* istanbul ignore next */
     if (this.props.remapScrollDirections) {
       remapScrollingPlane(event)
     }
@@ -157,7 +154,6 @@ export class Overflow extends React.PureComponent {
    * Scrolls the Overflow container to the end (right).
    */
   scrollToEnd = () => {
-    /* istanbul ignore next */
     if (!this.containerNode) return
     const scrollValue = this.containerNode.scrollWidth
 
@@ -169,12 +165,10 @@ export class Overflow extends React.PureComponent {
    *
    * @param {number} amount The amount to scroll by.
    */
-  /* istanbul ignore next */
+
   scrollContainerView = (amount = 0) => {
-    /* istanbul ignore next */
     if (!this.containerNode) return
 
-    /* istanbul ignore next */
     // Cannot be reliably + neatly tested in JSDOM.
     smoothScrollTo({
       node: this.containerNode,

@@ -100,19 +100,18 @@ export class EditableTextarea extends React.PureComponent {
       className
     )
   }
-  /* istanbul ignore next */
+
   componentDidMount() {
     this.textArea.current.addEventListener('scroll', this.debouncedScroll)
   }
 
-  /* istanbul ignore next */
   componentWillUnmount() {
     this.textArea.current.removeEventListener('scroll', this.debouncedScroll)
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     // Tested
-    /* istanbul ignore next */
+
     if (nextProps.value === this.state.value) return
 
     this.setState({
@@ -120,7 +119,6 @@ export class EditableTextarea extends React.PureComponent {
     })
   }
 
-  /* istanbul ignore next */
   componentDidUpdate(prevProps, prevState) {
     if (this.props.value !== prevProps.value) {
       this.setClampVisualCue()
@@ -130,7 +128,6 @@ export class EditableTextarea extends React.PureComponent {
     }
   }
 
-  /* istanbul ignore next */
   detectScroll = e => {
     // If the user scrolls to the bottom, remove the visual clamp cue
     const hasReachedBottom =
@@ -171,7 +168,6 @@ export class EditableTextarea extends React.PureComponent {
       id,
     }
 
-    /* istanbul ignore else */
     if (this.state.readOnly) {
       this.setState(
         {
@@ -190,11 +186,10 @@ export class EditableTextarea extends React.PureComponent {
     const code = e.key
     const isShiftPressed = e.shiftKey
 
-    /* istanbul ignore next */
     const stop = () => e.preventDefault() && e.stopPropagation()
 
     // Escape route tested
-    /* istanbul ignore else */
+
     if (!isShiftPressed && code === key.ENTER) {
       stop()
 
@@ -251,7 +246,6 @@ export class EditableTextarea extends React.PureComponent {
     const code = e.key
 
     if (code === key.ESCAPE) {
-      /* istanbul ignore next */
       e.preventDefault() && e.stopPropagation()
 
       this.textArea.current.blur()
@@ -284,7 +278,6 @@ export class EditableTextarea extends React.PureComponent {
         }
       )
     } else {
-      /* istanbul ignore else */
       if (!validated) {
         validate({
           data: {
@@ -297,7 +290,7 @@ export class EditableTextarea extends React.PureComponent {
           values: [item],
         }).then(validation => {
           // Both cases tested
-          /* istanbul ignore next */
+
           if (validation.isValid) {
             this.setState(
               {
@@ -340,12 +333,10 @@ export class EditableTextarea extends React.PureComponent {
     }
   }
 
-  /* istanbul ignore next */
   handleTextareaHeightChange = () => {
     this.setClampVisualCue()
   }
 
-  /* istanbul ignore next */
   setClampVisualCue = () => {
     this.setState({
       clamped:
@@ -356,7 +347,7 @@ export class EditableTextarea extends React.PureComponent {
   }
 
   // Tested here and in EditableField
-  /* istanbul ignore next */
+
   renderValidationInfo = () => {
     const { id } = this.props
     const { validationInfo } = this.state
@@ -424,7 +415,7 @@ export class EditableTextarea extends React.PureComponent {
           className={classNames(
             'EditableTextarea__ResizableTextarea',
             readOnly && 'is-readonly',
-            /* istanbul ignore next */ readOnly && clamped && 'is-clamped',
+            readOnly && clamped && 'is-clamped',
             !Boolean(value) && 'with-placeholder'
           )}
           overflowCueColor={overflowCueColor}

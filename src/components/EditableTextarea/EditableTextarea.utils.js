@@ -1,6 +1,5 @@
 export const COMPONENT_KEY = 'EditableTextarea'
 
-/* istanbul ignore next */
 export function scrollToTop(textArea) {
   textArea.scrollTo &&
     textArea.scrollTop > 0 &&

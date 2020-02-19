@@ -80,7 +80,6 @@ export class SearchableDropdown extends React.Component {
 
     this.props.onInputChange(inputValue)
 
-    /* istanbul ignore next */
     if (this.props.inputProps.onChange) {
       this.props.inputProps.onChange(inputValue)
     }
@@ -94,15 +93,14 @@ export class SearchableDropdown extends React.Component {
   }
 
   handleOnKeyDown = event => {
-    /* istanbul ignore else */
     if (event.keyCode === Keys.ENTER) {
       event.stopPropagation()
     }
-    /* istanbul ignore else */
+
     if (event.keyCode === Keys.TAB) {
       this.handleTabPress(event)
     }
-    /* istanbul ignore else */
+
     if (this.props.inputProps.onKeyDown) {
       this.props.inputProps.onKeyDown(event)
     }
@@ -145,7 +143,6 @@ export class SearchableDropdown extends React.Component {
 
   scrollMenuToTop = () => {
     requestAnimationFrame(() => {
-      /* istanbul ignore next */
       if (!this.menuWrapperNode) return
       this.menuWrapperNode.scrollTop = 0
     })
@@ -221,7 +218,7 @@ export class SearchableDropdown extends React.Component {
 
     if (autoInput) {
       let total = items.length
-      /* istanbul ignore next */
+
       if (hasGroups(items)) {
         total = items.reduce((p, c) => {
           if (c.type === 'group') {
@@ -249,7 +246,7 @@ export class SearchableDropdown extends React.Component {
     const isInputActive = this.isInputActive()
 
     const componentClassName = classNames('c-SearchableDropdown', className)
-    /* istanbul ignore next */
+
     const shouldEnableTabNavigation =
       enableTabNavigation || (enableTabNavigation && !isInputActive)
 

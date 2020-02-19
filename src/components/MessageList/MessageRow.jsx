@@ -170,9 +170,7 @@ export class MessageRow extends React.PureComponent {
             event.preventDefault()
           }}
           style={{
-            pointerEvents: /* istanbul ignore next */ isDraggingOnList
-              ? 'none'
-              : 'all',
+            pointerEvents: isDraggingOnList ? 'none' : 'all',
           }}
         >
           <ContentUI>

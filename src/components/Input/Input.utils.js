@@ -29,7 +29,7 @@ export const getTextAreaLineCurrent = textarea => {
  *
  * @param   {InputNode} inputNode
  */
-/* istanbul ignore next */
+
 export const moveCursorToEnd = input => {
   // Extra failsafe guard
   if (!input) return

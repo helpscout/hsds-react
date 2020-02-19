@@ -1,5 +1,5 @@
+/* istanbul ignore file */
 import React from 'react'
-import PropTypes from 'prop-types'
 import getComponentNameUtil from '@helpscout/react-utils/dist/getComponentName'
 import { includes } from './arrays'
 import { isArray, isFunction, isObject, isDefined, isString } from './is'

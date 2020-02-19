@@ -198,12 +198,10 @@ export class Input extends React.PureComponent {
       this.setValue(value)
     }
 
-    /* istanbul ignore else */
     if (state !== prevState) {
       this.setState({ state })
     }
 
-    /* istanbul ignore else */
     if (isFocused) {
       this.forceAutoFocus()
     }
@@ -250,7 +248,6 @@ export class Input extends React.PureComponent {
     const { forceAutoFocusTimeout } = this.props
 
     this.autoFocusTimeoutId = setTimeout(() => {
-      /* istanbul ignore else */
       if (this.inputNode) {
         this.inputNode.focus()
       }
@@ -264,7 +261,6 @@ export class Input extends React.PureComponent {
   // JSDOM does not provide the necessary values to test this method.
   // Mocking it would also be extremely difficult and brittle.
 
-  /* istanbul ignore next */
   scrollToBottom() {
     if (!this.props.multiline) return
     if (!this.inputNode || !isTextArea(this.inputNode)) return
@@ -289,7 +285,6 @@ export class Input extends React.PureComponent {
   }
 
   callStartTyping() {
-    /* istanbul ignore next */
     if (this.props.onStartTyping) {
       this.props.onStartTyping()
       this.setThrottler()
@@ -297,7 +292,6 @@ export class Input extends React.PureComponent {
   }
 
   callStopTyping() {
-    /* istanbul ignore next */
     if (this.state.typingTimeout) {
       this.clearThrottler()
       this.props.onStopTyping()
@@ -306,7 +300,6 @@ export class Input extends React.PureComponent {
   }
 
   clearTypingTimeout() {
-    /* istanbul ignore next */
     if (this.state.typingTimeout) {
       clearTimeout(this.state.typingTimeout)
       this.setState({ typingTimeout: undefined })
@@ -323,7 +316,6 @@ export class Input extends React.PureComponent {
   }
 
   clearThrottler() {
-    /* istanbul ignore next */
     if (this.state.typingThrottle) {
       clearInterval(this.state.typingThrottle)
       this.setState({ typingThrottle: undefined })
@@ -403,7 +395,6 @@ export class Input extends React.PureComponent {
       return
     }
 
-    /* istanbul ignore if */
     if (!isModifierKeyPressed(event)) return
     // this inserts a return into the value if a modifier key is also pressed
     event.preventDefault()
@@ -447,7 +438,6 @@ export class Input extends React.PureComponent {
   }
 
   moveCursorToEnd = () => {
-    /* istanbul ignore next */
     // Not reliably testable in JSDOM + Enzyme
     if (
       !this.props.moveCursorToEnd ||
@@ -455,10 +445,8 @@ export class Input extends React.PureComponent {
       !isTextArea(this.inputNode)
     )
       return
-    /* istanbul ignore next */
-    requestAnimationFrame(() => {
-      /* istanbul ignore next */
 
+    requestAnimationFrame(() => {
       moveCursorToEnd(this.inputNode)
     })
   }
@@ -518,7 +506,6 @@ export class Input extends React.PureComponent {
     )
   }
 
-  /* istanbul ignore next */
   getInlinePrefixSuffixClassName({ type, icon }) {
     const { multiline, seamless, state } = this.props
 
@@ -755,7 +742,7 @@ export class Input extends React.PureComponent {
 
     // Ignoring as height calculation isn't possible with JSDOM
     // (which is what Enzyme uses for tests)
-    /* istanbul ignore next */
+
     const style = multiline
       ? {
           height,

@@ -98,7 +98,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       const { path } = this.props
       this._isMounted = true
       this.setTriggerNode()
-      /* istanbul ignore else */
+
       if (this.routeMatches(path)) {
         this.openPortal()
       }
@@ -106,21 +106,19 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
     UNSAFE_componentWillReceiveProps(nextProps) {
       const { isOpen, path } = nextProps
-      /* istanbul ignore else */
+
       if (this.routeMatches(path)) {
         return this.openPortal()
       }
 
       if (isOpen === this.props.isOpen) return false
 
-      /* istanbul ignore else */
       if (isOpen !== this.state.isOpen) {
         return isOpen ? this.openPortal() : this.forceClosePortal()
       }
     }
 
     componentDidUpdate() {
-      /* istanbul ignore else */
       if (!this.state.isOpen) {
         this.refocusTriggerNode()
       }
@@ -133,21 +131,18 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     }
 
     safeSetState(state, callback) {
-      /* istanbul ignore else */
       if (this._isMounted) {
         this.setState(state, callback)
       }
     }
 
     setTriggerNode() {
-      /* istanbul ignore else */
       if (this.triggerComponent) {
         this.triggerNode = ReactDOM.findDOMNode(this.triggerComponent)
       }
     }
 
     refocusTriggerNode() {
-      /* istanbul ignore else */
       if (this.triggerNode) {
         this.triggerNode.focus()
       }
@@ -156,7 +151,6 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     // Note: This will need to be refactored when using a (future) version
     // of React Router that no longer relies/works on component.context.router
     routeMatches(path) {
-      /* istanbul ignore next */
       // Context will always exist, except for Enzyme shallow/mount rendered
       // instances.
       if (!this.context) return false
@@ -198,7 +192,6 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     }
 
     handleOnEsc = event => {
-      /* istanbul ignore else */
       if (this.state.isOpen) {
         event && event.stopPropagation()
         this.handleOnClose()
@@ -227,7 +220,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
       const triggerOnClick = (...args) => {
         const { onClick } = trigger.props
-        /* istanbul ignore else */
+
         if (isFunction(onClick)) {
           onClick(...args)
         }

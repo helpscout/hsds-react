@@ -43,7 +43,7 @@ class ChatSidebar extends React.PureComponent {
 
   handleOnStatusBarClick() {
     this.handleOnStatusBarClose()
-    /* istanbul ignore next */
+
     // Testing:
     // Note: This function cannot be tested in JSDOM. JSDOM lacks the
     // necessary DOM node numbers (like scrollY or scrollTop) to test

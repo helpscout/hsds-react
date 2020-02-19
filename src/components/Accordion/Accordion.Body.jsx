@@ -49,10 +49,10 @@ const getComponentClassName = ({
 
 export const Body = props => {
   const { className } = props
-  /* istanbul ignore next */
+
   const { isPage, isSeamless, duration, onOpen, onClose, size } =
     useContext(AccordionContext) || {}
-  /* istanbul ignore next */
+
   const { isOpen, uuid } = useContext(SectionContext) || {}
 
   const componentClassName = getComponentClassName({

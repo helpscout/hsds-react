@@ -44,11 +44,11 @@ export class EditableFieldActions extends React.Component {
       name,
       fieldValue: { value },
     } = this.props
-    /* istanbul ignore else */
+
     if (action.name === 'delete') {
       this.props.deleteAction({ action, name, event })
     }
-    /* istanbul ignore next */
+
     if (action.name === 'link') {
       window && window.open(normalizeUrl(value))
     } else {

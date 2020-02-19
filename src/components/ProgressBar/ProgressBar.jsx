@@ -17,11 +17,7 @@ class ProgressBar extends React.PureComponent {
   }
 
   getValue(val) {
-    const value =
-      val != null
-        ? val
-        : /* istanbul ignore next */
-          this.props.value
+    const value = val != null ? val : this.props.value
     const barValue = parseFloat(`${value}`)
     const normalizedBarValue =
       barValue > 100 ? 100 : barValue < 0 ? 0 : barValue

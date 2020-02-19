@@ -1,5 +1,5 @@
 // https://github.com/angus-c/just/blob/master/packages/function-debounce/index.js
-/* istanbul ignore next */
+
 export default function debounce(fn, wait, callFirst) {
   var timeout
   return function() {

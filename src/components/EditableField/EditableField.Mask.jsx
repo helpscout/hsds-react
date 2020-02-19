@@ -55,7 +55,6 @@ export class EditableFieldMask extends React.Component {
     return false
   }
 
-  /* istanbul ignore next */
   componentDidUpdate(prevProps) {
     const { name, maskTabIndex } = this.props
     const valueNode = this.valueRef
@@ -72,14 +71,12 @@ export class EditableFieldMask extends React.Component {
     }
   }
 
-  /* istanbul ignore next */
   handleValueKeyDown = event => {
     const { name, onValueKeyDown } = this.props
 
     onValueKeyDown({ event, name })
   }
 
-  /* istanbul ignore next */
   handleValueBlur = () => {
     const valueNode = this.valueRef
     valueNode && valueNode.removeAttribute('tabindex')

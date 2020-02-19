@@ -107,7 +107,7 @@ const Title = props => {
 
   const handleKeyPress = event => {
     const { ENTER, SPACE } = Keys
-    /* istanbul ignore else */
+
     if (event && (event.keyCode === ENTER || event.keyCode === SPACE)) {
       handleClick(event)
     }

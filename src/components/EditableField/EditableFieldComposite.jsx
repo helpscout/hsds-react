@@ -82,7 +82,6 @@ export class EditableFieldComposite extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    /* istanbul ignore next */
     if (!equal(this.props.children, prevProps.children)) {
       const { fields, maskItems } = this.getChildrenFromProps(this.props)
 
@@ -113,14 +112,14 @@ export class EditableFieldComposite extends React.PureComponent {
 
         Fields.forEach(field => {
           // It is tested (composite test: "component did update" line:326)
-          /* istanbul ignore next */
+
           if (field && field.classList.contains(STATES_CLASSNAMES.isActive)) {
             hasActiveFields = true
           }
         })
 
         // It is tested (composite test: "component did update" line:326)
-        /* istanbul ignore next */
+
         if (!hasActiveFields) {
           // Let's remove the transition from all but the first focus indicator
           const focusIndicators = Array.from(
@@ -128,7 +127,7 @@ export class EditableFieldComposite extends React.PureComponent {
               `.${INPUT_CLASSNAMES.focusIndicator}`
             )
           ).slice(1)
-          /* istanbul ignore next */
+
           focusIndicators.forEach(fi => {
             fi.style.transition = 'none'
           })
@@ -141,7 +140,6 @@ export class EditableFieldComposite extends React.PureComponent {
         this.groupRef.querySelectorAll(`.${INPUT_CLASSNAMES.focusIndicator}`)
       )
 
-      /* istanbul ignore next */
       focusIndicators.forEach(fi => {
         fi.removeAttribute('style')
       })
@@ -235,7 +233,7 @@ export class EditableFieldComposite extends React.PureComponent {
     const inputs = this.groupRef.querySelectorAll('input')
 
     // It is tested
-    /* istanbul ignore next */
+
     if (inputs) {
       for (let index = 0; index < inputs.length; index++) {
         const element = inputs[index]
@@ -264,7 +262,6 @@ export class EditableFieldComposite extends React.PureComponent {
       this.maskRef.removeAttribute('tabindex')
     }
     // It is tested
-    /* istanbul ignore next */
     else if (isEscape) {
       this.maskRef.removeAttribute('tabindex')
     }

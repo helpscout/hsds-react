@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 // Vendorized memoize-one to improve stability with import/require
 // Source:
 // https://github.com/alexreardon/memoize-one

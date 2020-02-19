@@ -63,11 +63,11 @@ export class AvatarImage extends React.PureComponent {
     for (let i = 0; i < this.sourceList.length; i++) {
       // if we've never seen this image before, the cache wont help.
       // no need to look further, just start loading
-      /* istanbul ignore else */
+
       if (!(this.sourceList[i] in cache)) break
 
       // if we have loaded this image before, just load it again
-      /* istanbul ignore else */
+
       if (cache[this.sourceList[i]] === true) {
         this.state = { currentIndex: i, isLoading: false, isLoaded: true }
         return
@@ -85,7 +85,7 @@ export class AvatarImage extends React.PureComponent {
 
   onLoad = () => {
     cache[this.sourceList[this.state.currentIndex]] = true
-    /* istanbul ignore else */
+
     if (this.image) {
       this.setState({ isLoaded: true })
       this.props.onLoad()
@@ -96,7 +96,7 @@ export class AvatarImage extends React.PureComponent {
     cache[this.sourceList[this.state.currentIndex]] = false
     // if the current image has already been destroyed, we are probably no longer mounted
     // no need to do anything then
-    /* istanbul ignore else */
+
     if (!this.image) return false
 
     // before loading the next image, check to see if it was ever loaded in the past
@@ -115,7 +115,7 @@ export class AvatarImage extends React.PureComponent {
       }
 
       // if we know it exists, use it!
-      /* istanbul ignore else */
+
       if (cache[src] === true) {
         this.setState({
           currentIndex: nextIndex,
@@ -127,7 +127,7 @@ export class AvatarImage extends React.PureComponent {
       }
 
       // if we know it doesn't exist, skip it!
-      /* istanbul ignore next */
+
       if (cache[src] === false) continue
     }
 
@@ -178,13 +178,13 @@ export class AvatarImage extends React.PureComponent {
 
   componentDidMount() {
     // kick off process
-    /* istanbul ignore else */
+
     if (this.state.isLoading) this.loadImg()
   }
 
   componentWillUnmount() {
     // ensure that we dont leave any lingering listeners
-    /* istanbul ignore else */
+
     if (this.image) this.unloadImg()
   }
 

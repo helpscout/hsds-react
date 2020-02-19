@@ -151,7 +151,6 @@ const Item = props => {
       showDownloadAll={showDownloadAllAttachments}
     >
       {attachments.map((attachment, index) => {
-        /* istanbul ignore next */
         // Enzyme can't test keys :s
 
         const key = attachment.id ? attachment.id : `attachment-${index}`

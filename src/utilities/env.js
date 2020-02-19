@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { isDefined } from './is'
 import get from './get'
 

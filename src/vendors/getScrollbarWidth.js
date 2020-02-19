@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 // Based on this solution
 // https://davidwalsh.name/detect-scrollbar-width
 // Slightly modified with caching, for performance

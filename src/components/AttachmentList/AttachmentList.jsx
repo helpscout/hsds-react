@@ -56,7 +56,6 @@ export class AttachmentList extends React.Component {
    * @returns {boolean} Whether new attachments have been added.
    */
   didAddNewAttachment(prevProps = this.props) {
-    /* istanbul ignore if */
     if (!this.props.children) return false
 
     const prevAttachments = React.Children.toArray(prevProps.children)

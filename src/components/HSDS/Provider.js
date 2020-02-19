@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import React from 'react'
 import ScopeProvider from '../ScopeProvider'
 import GlobalStyle from './GlobalStyle'

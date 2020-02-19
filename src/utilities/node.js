@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import closest from './closest'
 import get from './get'
 import { isNodeEnv } from './other'

@@ -347,7 +347,6 @@ export class Avatar extends React.PureComponent {
   }
 }
 
-/* istanbul ignore next */
 const AvatarConsumer = props => {
   const contextValue = React.useContext(AvatarListContext)
   if (contextValue) {

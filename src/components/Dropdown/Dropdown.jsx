@@ -37,7 +37,6 @@ export class Dropdown extends React.PureComponent {
 
     const targetNode = event.target
 
-    /* istanbul ignore else */
     // When the component is displayed in an `iframe` (e.g. Beacon) we need
     // to do an instanceof check based on the `iframe`#Element class type,
     // using the `contentWindow` prop. https://stackoverflow.com/a/26251098
@@ -72,8 +71,7 @@ export class Dropdown extends React.PureComponent {
   renderTrigger() {
     const { trigger, renderTrigger } = this.props
     const triggerComponent = renderTrigger
-      ? /* istanbul ignore next */
-        renderRenderPropComponent(renderTrigger)
+      ? renderRenderPropComponent(renderTrigger)
       : trigger
 
     return <Trigger {...this.getTriggerProps()}>{triggerComponent}</Trigger>
@@ -88,7 +86,6 @@ export class Dropdown extends React.PureComponent {
     this.menuNode = node
     this.props.menuRef(node)
 
-    /* istanbul ignore next */
     // Internally, for store
 
     if (this.props.getState().menuNode) return
@@ -100,7 +97,6 @@ export class Dropdown extends React.PureComponent {
     this.triggerNode = node
     this.props.triggerRef(node)
 
-    /* istanbul ignore next */
     // Internally, for store
 
     if (this.props.getState().triggerNode === node) return

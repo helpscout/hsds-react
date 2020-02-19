@@ -9,7 +9,6 @@ export default class TableBody extends React.Component {
   columnsCache = this.getColumnsCache(this.props.columns)
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    /* istanbul ignore else */
     if (!equal(nextProps.rows, prevState.rows) || nextProps.isTableCollapsed) {
       return { rows: TableBody.getRows(nextProps) }
     }

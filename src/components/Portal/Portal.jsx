@@ -25,7 +25,6 @@ export class Portal extends React.Component {
   }
 
   componentDidMount() {
-    /* istanbul ignore next */
     this.document = getDocumentFromComponent(this) || window.document
     this.setState(
       {
@@ -37,7 +36,6 @@ export class Portal extends React.Component {
     )
   }
 
-  /* istanbul ignore next */
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.node && this.props.className !== nextProps.className) {
       this.node.className = nextProps.className
@@ -76,7 +74,6 @@ export class Portal extends React.Component {
     if (!mountSelector && window.parent && !window.STORYBOOK_ENV) {
       mountSelector = window.parent.document.body
     }
-    /* istanbul ignore next */
 
     return mountSelector || this.document.body // fallback
   }
@@ -123,7 +120,6 @@ export class Portal extends React.Component {
   }
 
   unmountPortal = props => {
-    /* istanbul ignore next */
     if (!this.node) return
 
     const { onClose } = props
@@ -149,7 +145,6 @@ export class Portal extends React.Component {
     const { onBeforeOpen } = props
 
     if (onBeforeOpen) {
-      /* istanbul ignore next */
       if (!this.isOpening && !this.isOpen) {
         this.isOpening = true
         onBeforeOpen(() => {
@@ -167,7 +162,6 @@ export class Portal extends React.Component {
     const { onBeforeClose } = props
 
     if (onBeforeClose) {
-      /* istanbul ignore next */
       if (!this.isClosing) {
         this.isClosing = true
         onBeforeClose(() => {

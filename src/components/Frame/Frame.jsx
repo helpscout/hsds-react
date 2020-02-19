@@ -20,7 +20,7 @@ export class FrameComponent extends React.Component {
           {...rest}
         >
           <FrameContextConsumer>
-            {/* istanbul ignore next */ frameContext => {
+            {frameContext => {
               // TODO remove ignore when test fixed
               return (
                 <StyleSheetManager target={frameContext.document.head}>

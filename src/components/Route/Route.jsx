@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import warning from 'warning'
 import invariant from 'invariant'
 import React from 'react'

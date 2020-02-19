@@ -56,11 +56,10 @@ class InfiniteScroller extends React.PureComponent {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    /* istanbul ignore else */
     if (nextProps.isLoading && !this.state.isLoading) {
       this.handleOnLoading()
     }
-    /* istanbul ignore else */
+
     if (!nextProps.isLoading && this.state.isLoading) {
       this.handleOnLoaded()
     }
@@ -75,7 +74,6 @@ class InfiniteScroller extends React.PureComponent {
     }
   }
 
-  /* istanbul ignore next */
   // This method is tested, but tested in separate parts.
   // Unable to validate isNodeVisible in this method. The isNodeVisible
   // has been thoroughly tested elsewhere.
@@ -125,7 +123,6 @@ class InfiniteScroller extends React.PureComponent {
     // Once the scroll position as been re-adjusted, then load new items
     onLoaded()
 
-    /* istanbul ignore else */
     if (this._isMounted && this.state.isLoading) {
       this.setState({
         isLoading: false,
@@ -135,7 +132,7 @@ class InfiniteScroller extends React.PureComponent {
 
   getNodeScrollTop() {
     const { nodeScope } = this.state
-    /* istanbul ignore next */
+
     if (nodeScope !== window && nodeScope.scrollTop !== undefined) {
       return nodeScope.scrollTop
     } else {
@@ -145,10 +142,9 @@ class InfiniteScroller extends React.PureComponent {
 
   normalizeNodeScrollScroll(scrollTop) {
     const { nodeScope } = this.state
-    /* istanbul ignore if */
+
     if (typeof scrollTop !== 'number') return
 
-    /* istanbul ignore next */
     if (nodeScope === window && nodeScope.scrollTo) {
       nodeScope.scrollTo(window.scrollX, scrollTop)
     } else if (nodeScope.scrollTop !== undefined) {
@@ -163,14 +159,13 @@ class InfiniteScroller extends React.PureComponent {
       isNodeElement(nodeScope) || nodeScope === window ? nodeScope : null
 
     if (!nodeScope && scrollParent) {
-      /* istanbul ignore next */
       // Tested, but Instabul isn't picking up the ternary null
       nodeScope = isNodeElement(scrollParent) ? scrollParent : null
     }
 
     if (!nodeScope) {
       const node = ReactDOM.findDOMNode(this)
-      /* istanbul ignore next */
+
       // Tested for node.parentNode, but not for window.
       // This is a super fail-safe. This will always be parentNode, with the
       // exception of document or window. Cannot be tested in JSDOM/Enzyme,

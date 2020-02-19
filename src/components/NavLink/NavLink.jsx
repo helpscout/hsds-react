@@ -23,7 +23,6 @@ export const NavLink = ({
 }) => {
   const path = typeof to === 'object' ? to.pathname : to
 
-  /* istanbul ignore next */
   // Regex taken from: https://github.com/pillarjs/path-to-regexp/blob/master/index.js#L202
   const escapedPath = path && path.replace(/([.+*?=^!:${}()[\]|/\\])/g, '\\$1')
 

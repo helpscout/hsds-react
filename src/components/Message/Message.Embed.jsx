@@ -32,7 +32,6 @@ class Embed extends React.Component {
   }
 
   loadContent = () => {
-    /* istanbul ignore next */
     if (!this.node) return
 
     const iframes = this.node.getElementsByTagName('iframe')
@@ -60,7 +59,7 @@ class Embed extends React.Component {
     const componentClassName = classNames(
       'c-MessageEmbed',
       isLoading && 'is-loading',
-      /* istanbul ignore next */
+
       // Tested, but Istanbul isn't picking it up.
       theme && `is-theme-${theme}`,
       className

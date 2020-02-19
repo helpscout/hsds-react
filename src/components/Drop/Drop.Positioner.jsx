@@ -34,7 +34,7 @@ class Positioner extends React.PureComponent {
 
   constructor(props) {
     super(props)
-    /* istanbul ignore next */
+
     this.state = {
       direction: props.direction
         ? getDirections(props.direction)
@@ -74,7 +74,7 @@ class Positioner extends React.PureComponent {
 
   setTriggerNode() {
     const { trigger } = this.props
-    /* istanbul ignore next */
+
     if (!this.triggerNode) {
       this.triggerNode = isNodeElement(trigger)
         ? trigger
@@ -85,10 +85,8 @@ class Positioner extends React.PureComponent {
   getPosition() {
     const { direction, offset } = this.props
 
-    /* istanbul ignore next */
     if (!this.triggerNode || !this.contentNode) return false
 
-    /* istanbul ignore next */
     // the getOptimalViewportPosition method is tested.
     // However, I'm unable to test it with this component due to the difficulty
     // of setting up Enzyme to recognize the triggerNode
@@ -100,7 +98,6 @@ class Positioner extends React.PureComponent {
     })
   }
 
-  /* istanbul ignore next */
   updatePosition(newPosition) {
     const { autoPosition, onUpdatePosition, position, zIndex } = this.props
 
@@ -123,7 +120,6 @@ class Positioner extends React.PureComponent {
 
     this.position = pos
 
-    /* istanbul ignore next */
     applyStylesToNode(this.node, nodeStyles)
     onUpdatePosition(pos)
   }
@@ -145,7 +141,7 @@ class Positioner extends React.PureComponent {
 
     const componentClassName = classNames(
       'c-DropPositioner',
-      /* istanbul ignore next */
+
       // Tested, but istanbul is not picking it up
       direction.x && `is-${direction.x}`,
       direction.y && `is-${direction.y}`,

@@ -107,7 +107,6 @@ export class EditableFieldInput extends React.Component {
     this.setInputTitle()
 
     if (isActive) {
-      /* istanbul ignore next */
       if (document.activeElement !== this.optionsDropdownRef) {
         const inputNode = this.inputRef
         inputNode && inputNode.focus()
@@ -129,7 +128,7 @@ export class EditableFieldInput extends React.Component {
     }
 
     // Below is tested
-    /* istanbul ignore next */
+
     if (!equal(this.props.validationInfo, nextProps.validationInfo)) {
       return true
     }
@@ -141,7 +140,6 @@ export class EditableFieldInput extends React.Component {
     this.setInputTitle()
   }
 
-  /* istanbul ignore next */
   setInputTitle = () => {
     const { fieldValue } = this.props
     const inputNode = this.inputRef
@@ -174,7 +172,6 @@ export class EditableFieldInput extends React.Component {
     const { name, onInputBlur } = this.props
     const optionsNode = this.optionsDropdownRef
 
-    /* istanbul ignore next */
     if (optionsNode && optionsNode.classList.contains('is-open')) return
 
     onInputBlur({ name, event })
@@ -182,7 +179,7 @@ export class EditableFieldInput extends React.Component {
 
   handleOptionFocus = event => {
     const { disabled, name, onOptionFocus } = this.props
-    /* istanbul ignore else */
+
     if (!disabled) {
       onOptionFocus({ name, event })
     }
@@ -198,7 +195,6 @@ export class EditableFieldInput extends React.Component {
     })
   }
 
-  /* istanbul ignore next */
   handleKeyDown = event => {
     const isEnter = event.key === key.ENTER
     const isDropdownTrigger = event.target.classList.contains(
@@ -217,7 +213,7 @@ export class EditableFieldInput extends React.Component {
         // In case the value is longer than the width of the input
         // lets move the cursor to the very beginning
         // when clicking the input the cursor will be at the expected position :)
-        /* istanbul ignore else */
+
         if (inputNode && inputNode.setSelectionRange) {
           inputNode.setSelectionRange(0, 0)
         }

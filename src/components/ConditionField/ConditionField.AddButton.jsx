@@ -32,7 +32,6 @@ AddButton.defaultProps = {
   type: 'or',
 }
 
-/* istanbul ignore next */
 // @helpscout/motion prevents these animations from running within a
 // test environment.
 // JSDOM cannot run these animations, since the animation engine relies

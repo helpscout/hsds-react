@@ -129,7 +129,6 @@ export class Animate extends React.PureComponent {
   }
 }
 
-/* istanbul ignore next */
 const AnimateConsumer = props => {
   const contextValue = React.useContext(AnimateGroupContext)
 

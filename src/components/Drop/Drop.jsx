@@ -13,7 +13,6 @@ const defaultOptions = {
   zIndex: popoverWrapperBaseZIndex,
 }
 
-/* istanbul ignore next */
 export const DropComponent = (
   options = defaultOptions
 ) => ComposedComponent => {
@@ -96,10 +95,7 @@ export const DropComponent = (
   }
 
   const componentName =
-    ComposedComponent.displayName ||
-    ComposedComponent.name ||
-    /* istanbul ignore next */
-    'Component'
+    ComposedComponent.displayName || ComposedComponent.name || 'Component'
 
   Drop.displayName = `withDrop(${componentName})`
 

@@ -22,7 +22,6 @@ const wrapAvatar = (props, avatar, index) => {
 
   let zIndex = max - index
 
-  /* istanbul ignore next */
   if (stack && count > 2 && isOdd(`${count}`)) {
     if (isOdd(index)) {
       zIndex = zIndex + 1

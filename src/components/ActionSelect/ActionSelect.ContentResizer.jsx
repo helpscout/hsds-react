@@ -58,23 +58,19 @@ export class ContentResizer extends React.PureComponent {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    /* istanbul ignore else */
     if (nextProps.resizeCount !== this.props.resizeCount) {
       this.animationUpdateInterval &&
         clearInterval(this.animationUpdateInterval)
       this.handleResize(nextProps)
     }
 
-    /* istanbul ignore else */
     if (!nextProps.isOpen) {
-      /* istanbul ignore next */
       this.animationUpdateInterval &&
         clearInterval(this.animationUpdateInterval)
     }
   }
 
   safeSetState = (nextState, callback) => {
-    /* istanbul ignore else */
     if (this._isMounted) {
       this.setState(nextState, callback)
     }
@@ -110,7 +106,6 @@ export class ContentResizer extends React.PureComponent {
   }
 
   resize = props => {
-    /* istanbul ignore next */
     if (!this.node) return
 
     const { children } = props
@@ -128,7 +123,6 @@ export class ContentResizer extends React.PureComponent {
     this.props.onResize()
   }
 
-  /* istanbul ignore next */
   resetHeight = () => {
     this.safeSetState(getInitialState(this.props))
   }
@@ -155,7 +149,7 @@ export class ContentResizer extends React.PureComponent {
 
   setNodeRef = node => {
     this.node = node
-    /* istanbul ignore next */
+
     if (this.props.mainRef) {
       this.props.mainRef(node)
     }

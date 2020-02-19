@@ -73,7 +73,6 @@ export class Truncate extends React.PureComponent {
     if (props.type !== 'auto') {
       return this.getText(props) !== this.getTruncatedContent(props)
     } else {
-      /* istanbul ignore next */
       if (!this.node || !this.contentNode) return false
 
       const isContentTruncated = props.splitter

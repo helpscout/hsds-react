@@ -71,11 +71,8 @@ export class ActionSelect extends React.PureComponent {
     this._isMounted = false
   }
 
-  /* istanbul ignore next */
   UNSAFE_componentWillReceiveProps(nextProps) {
-    /* istanbul ignore next */
     if (nextProps.selectedItem !== this.props.selectedItem) {
-      /* istanbul ignore next */
       this.resizeContent()
     }
   }
@@ -103,18 +100,16 @@ export class ActionSelect extends React.PureComponent {
   }
 
   scrollIntoView = (item, props) => {
-    /* istanbul ignore next */
     if (!this.props.shouldScrollIntoView(item, props)) return
 
     const { y } = this.contentNode.getBoundingClientRect()
     const position = y
     const shouldScrollIntoView = window.scrollY < y
 
-    /* istanbul ignore next */
     if (!shouldScrollIntoView) return
 
     // Ignoring since JSDOM does not have window scroll events.
-    /* istanbul ignore next */
+
     smoothScrollTo({
       node: window,
       position,
@@ -163,7 +158,7 @@ export class ActionSelect extends React.PureComponent {
       if (!this.contentNode || !this.props.isAutoFocusNodeOnSelect) return
 
       const focusableNode = findFirstFocusableNode(this.contentNode)
-      /* istanbul ignore next */
+
       if (focusableNode) {
         focusableNode.focus()
       }

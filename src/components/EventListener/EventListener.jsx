@@ -27,12 +27,10 @@ class EventListener extends React.Component {
     this.attachListener()
   }
 
-  /* istanbul ignore next */
   UNSAFE_componentWillUpdate() {
     this.detachListener()
   }
 
-  /* istanbul ignore next */
   componentDidUpdate(prevProps) {
     if (prevProps.scope !== this.props.scope) {
       this.detachListener()

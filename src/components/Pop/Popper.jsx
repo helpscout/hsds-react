@@ -49,7 +49,6 @@ export class Popper extends React.Component {
   }
 
   handleOnClick = event => {
-    /* istanbul ignore next */
     event && event.stopPropagation()
     this.props.onClick(event)
     this.props.onContentClick(event)

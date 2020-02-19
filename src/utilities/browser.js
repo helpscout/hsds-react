@@ -1,4 +1,4 @@
-/* istanbul ignore next */
+/* istanbul ignore file */
 // Can't write tests for this in JSDOM.
 // Can't create fixture for JSDOM's built-in Navigator instance.
 export const isBrowser = browser => {

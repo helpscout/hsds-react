@@ -49,7 +49,7 @@ class Collapsible extends React.Component {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const { isOpen: willOpen } = nextProps
-    /* istanbul ignore next */
+
     if (willOpen !== this.props.isOpen) {
       this.safeSetState({ animationState: 'measuring' })
     }
@@ -66,7 +66,6 @@ class Collapsible extends React.Component {
   }
 
   safeSetState(state) {
-    /* istanbul ignore else */
     if (this._isMounted) {
       this.setState(state)
     }
@@ -91,7 +90,7 @@ class Collapsible extends React.Component {
             height: 0,
           })
           break
-        /* istanbul ignore next */
+
         /* Reliable to test in JSDOM due to timeouts */
         case 'closing':
           setTimeout(() => {
@@ -103,14 +102,10 @@ class Collapsible extends React.Component {
         case 'openingStart':
           this.safeSetState({
             animationState: 'opening',
-            height: this.heightNode
-              ? /* istanbul ignore next */
-                this.heightNode.scrollHeight
-              : /* istanbul ignore next */
-                0,
+            height: this.heightNode ? this.heightNode.scrollHeight : 0,
           })
           break
-        /* istanbul ignore next */
+
         /* Reliable to test in JSDOM due to timeouts */
         case 'opening':
           setTimeout(() => {
@@ -143,10 +138,7 @@ class Collapsible extends React.Component {
 
   collapsibleHeight(isOpen, animationState, height) {
     if (animationState === 'idle' && isOpen) {
-      return isOpen
-        ? 'auto'
-        : /* istanbul ignore next */
-          null
+      return isOpen ? 'auto' : null
     }
 
     if (animationState === 'measuring') {

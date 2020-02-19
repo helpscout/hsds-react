@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 // from https://github.com/ItsJonQ/styled-providers
 // Thank you Q!
 import React, { useMemo } from 'react'

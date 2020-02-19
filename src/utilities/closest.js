@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 // Source
 // https://github.com/ForbesLindesay/closest
 

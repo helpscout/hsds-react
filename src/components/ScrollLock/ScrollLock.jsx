@@ -15,7 +15,7 @@ export class ScrollLock extends React.PureComponent {
   componentDidMount() {
     if (this.canRender()) {
       this.node = ReactDOM.findDOMNode(this)
-      /* istanbul ignore else */
+
       if (this.node) {
         this.node.addEventListener('wheel', this.handleWheelEvent)
       }

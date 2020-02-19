@@ -40,13 +40,13 @@ export const getOptimalViewportPosition = options => {
   // The following vars are tested. However, they can only be tested for pos.top/pos.left vs other
   // ternary outcomes. This is due to a limitation of JSDOM not supporting offsetTop/offsetLeft.
   // Which is why the ternary begins by checking if the environment is node based.
-  /* istanbul ignore next */
+
   const offsetTop = isNodeEnv()
     ? pos.top
     : pos.top > triggerNode.offsetTop
     ? pos.top
     : triggerNode.offsetTop
-  /* istanbul ignore next */
+
   const offsetLeft = isNodeEnv()
     ? pos.left
     : pos.left > triggerNode.offsetLeft
@@ -55,7 +55,7 @@ export const getOptimalViewportPosition = options => {
   const viewportHeight = getViewportHeight()
   const viewportWidth = getViewportWidth()
   const posSize = offsetTop + pos.height
-  /* istanbul ignore next */
+
   // Tested, but istanbul isn't picking it up
   const triggerOffset = typeof offset !== 'undefined' ? offset : 0
   const triggerWidth = pos.width
@@ -98,7 +98,6 @@ export const getOptimalViewportPosition = options => {
       top = offsetTop + pos.height + triggerOffset
       break
 
-    /* istanbul ignore next */
     // Tested. Top is generated in the next switch case
     default:
       top = null
@@ -160,13 +159,13 @@ export const getViewportPosition = options => {
   // The following vars are tested. However, they can only be tested for pos.top/pos.left vs other
   // ternary outcomes. This is due to a limitation of JSDOM not supporting offsetTop/offsetLeft.
   // Which is why the ternary begins by checking if the environment is node based.
-  /* istanbul ignore next */
+
   const offsetTop = isNodeEnv()
     ? pos.top
     : pos.top > triggerNode.offsetTop
     ? pos.top
     : triggerNode.offsetTop
-  /* istanbul ignore next */
+
   const offsetLeft = isNodeEnv()
     ? pos.left
     : pos.left > triggerNode.offsetLeft
@@ -174,11 +173,11 @@ export const getViewportPosition = options => {
     : triggerNode.offsetLeft
   const viewportHeight = getViewportHeight()
   const posSize = offsetTop + pos.height
-  /* istanbul ignore next */
+
   // Tested, but istanbul isn't picking it up
   const triggerOffset = typeof offset !== 'undefined' ? offset : 0
   const totalOffset = triggerOffset + boundingOffset
-  /* istanbul ignore next */
+
   let directionX = direction && direction.x ? direction.x : ''
   let directionY = direction && direction.y ? direction.y : ''
 
@@ -197,7 +196,6 @@ export const getViewportPosition = options => {
       ? 'down'
       : directionY
 
-  /* istanbul ignore next */
   // Ignoring since this method will be removed once getOptimalViewportPosition
   // has been enhanced.
   switch (directionY) {
@@ -214,7 +212,6 @@ export const getViewportPosition = options => {
       break
   }
 
-  /* istanbul ignore next */
   // Ignoring since this method will be removed once getOptimalViewportPosition
   // has been enhanced.
   switch (directionX) {

@@ -103,7 +103,7 @@ class Input extends React.PureComponent {
 
   setRef = node => {
     this.props.inputRef(node)
-    /* istanbul ignore next */
+
     if (this.props.innerRef) {
       this.props.innerRef(node)
     }

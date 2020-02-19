@@ -46,7 +46,6 @@ class Switch extends React.PureComponent {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    /* istanbul ignore else */
     if (nextProps.checked !== this.state.checked) {
       this.setState({
         checked: nextProps.checked,
@@ -58,7 +57,6 @@ class Switch extends React.PureComponent {
     const { onChange, value } = this.props
     const nextChecked = !this.state.checked
 
-    /* istanbul ignore else */
     if (this.shouldAutoUpdateChecked) {
       this.setState({ checked: nextChecked })
     }

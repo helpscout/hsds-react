@@ -48,7 +48,6 @@ class ChoiceGroup extends React.PureComponent {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    /* istanbul ignore else */
     if (nextProps.value !== this.props.value) {
       this.setState({
         selectedValue: [].concat(nextProps.value),

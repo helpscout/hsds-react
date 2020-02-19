@@ -91,7 +91,6 @@ export class ChatScroller extends React.PureComponent {
     return last(messageChatNodes)
   }
 
-  /* istanbul ignore next */
   autoScrollToLatestMessage() {
     const {
       distanceForAutoScroll,
@@ -143,7 +142,7 @@ export class ChatScroller extends React.PureComponent {
 
   setNodes() {
     this.node = ReactDOM.findDOMNode(this.childRef)
-    /* istanbul ignore next */
+
     this.document = getDocumentFromComponent(this.childRef) || document
     const innerNode =
       this.node && this.node.querySelector(this.props.scrollableSelector)

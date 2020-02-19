@@ -23,7 +23,7 @@ class HeaderCell extends React.PureComponent {
 
   handleClick = () => {
     const { column, isLoading } = this.props
-    /* istanbul ignore else */
+
     if (!isLoading && column.sorter != null) {
       Array.isArray(column.columnKey)
         ? column.sorter(column.sortKey)

@@ -59,7 +59,6 @@ export class Popover extends React.PureComponent {
       )
     }
 
-    /* istanbul ignore else */
     if (header) {
       let headerContent
 

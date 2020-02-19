@@ -49,13 +49,11 @@ export default class VerificationCode extends React.Component {
 
     const { code } = this.props
 
-    /* istanbul ignore else */
     if (code) {
       code
         .slice(0, 6)
         .split('')
         .forEach((char, index, arr) => {
-          /* istanbul ignore else */
           if (this.digitInputNodes.length > 0) {
             this.digitInputNodes[index].value = char
             this.digitMaskNodes[index].innerText = char
@@ -67,9 +65,7 @@ export default class VerificationCode extends React.Component {
   componentDidUpdate(prevProps) {
     const { code } = this.props
 
-    /* istanbul ignore else */
     if (prevProps.code !== code) {
-      /* istanbul ignore else */
       if (code) {
         clearAll(this.digitInputNodes, this.digitMaskNodes)
 
@@ -77,7 +73,6 @@ export default class VerificationCode extends React.Component {
           .slice(0, 6)
           .split('')
           .forEach((char, index, arr) => {
-            /* istanbul ignore else */
             if (this.digitInputNodes.length > 0) {
               this.digitInputNodes[index].value = char
               this.digitMaskNodes[index].innerText = char
@@ -102,20 +97,17 @@ export default class VerificationCode extends React.Component {
   }
 
   handlePaste = e => {
-    /* istanbul ignore next */
     const clipboardData = e.clipboardData || window.clipboardData
     const pastedData = clipboardData.getData('Text')
 
     e.stopPropagation()
     e.preventDefault()
 
-    /* istanbul ignore else */
     if (pastedData.length > 0) {
       pastedData
         .slice(0, 6)
         .split('')
         .forEach((char, index, arr) => {
-          /* istanbul ignore else */
           if (this.digitInputNodes.length > 0) {
             this.digitInputNodes[index].value = char
             this.digitMaskNodes[index].innerText = char
@@ -131,7 +123,6 @@ export default class VerificationCode extends React.Component {
   handleKeyDown = e => {
     const { key, metaKey, ctrlKey } = e
 
-    /* istanbul ignore next */
     if ((metaKey || ctrlKey) && key === 'a') {
       selectAll(this.digitInputNodes, this.digitMaskNodes)
     } else if ((metaKey || ctrlKey) && key === 'c') {
@@ -153,7 +144,7 @@ export default class VerificationCode extends React.Component {
   }
 
   // Tested  ¯\_(ツ)_/¯
-  /* istanbul ignore next */
+
   handleMouseDown = e => {
     const activeElement = document.activeElement
     const { target } = e
@@ -185,7 +176,6 @@ export default class VerificationCode extends React.Component {
       const { numberOfChars, onChange } = this.props
       const digitMask = this.digitMaskNodes[index]
 
-      /* istanbul ignore else */
       if (key === 'Backspace') {
         let selectionText = getCleanSelectedText()
 
@@ -196,7 +186,7 @@ export default class VerificationCode extends React.Component {
           onChange('')
         } else if (value === '' && !digitMask.innerText) {
           // Tested  ¯\_(ツ)_/¯
-          /* istanbul ignore next */
+
           const prevIndex = index === 0 ? 0 : index - 1
           const previousDigit = this.digitInputNodes[prevIndex]
 

@@ -48,7 +48,6 @@ class CopyButton extends React.PureComponent {
   }
 
   safeSetState = state => {
-    /* istanbul ignore else */
     if (this._isMounted) {
       this.setState(state)
     }

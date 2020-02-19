@@ -58,12 +58,10 @@ export class Select extends React.PureComponent {
     const { isFocused, state } = nextProps
     const prevState = this.state.state
 
-    /* istanbul ignore else */
     if (state !== prevState) {
       this.setState({ state })
     }
 
-    /* istanbul ignore else */
     if (isFocused) {
       this.forceAutoFocus()
     }
@@ -89,7 +87,6 @@ export class Select extends React.PureComponent {
     })
 
     setTimeout(() => {
-      /* istanbul ignore else */
       if (this.selectNode) {
         this.selectNode.focus()
       }
@@ -164,7 +161,6 @@ export class Select extends React.PureComponent {
     )
   }
 
-  /* istanbul ignore next */
   getInlinePrefixSuffixClassName({ type, icon }) {
     const { seamless, state } = this.props
 

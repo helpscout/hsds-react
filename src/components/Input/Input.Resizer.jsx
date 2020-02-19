@@ -50,7 +50,7 @@ export class Resizer extends React.PureComponent {
     this.handleOnResize()
 
     // Re-trigger to help recalculate when used within heavier components/views.
-    /* istanbul ignore next */
+
     requestAnimationFrame(() => {
       if (this._isMounted) {
         this.handleOnResize()
@@ -84,13 +84,13 @@ export class Resizer extends React.PureComponent {
 
   // Ignoring as height calculation isn't possible with JSDOM
   // (which is what Enzyme uses for tests)
-  /* istanbul ignore next */
+
   handleOnResize = () => {
     if (!this.contentNode || !this.minimumLinesNode) return
     const contentHeight = this.contentNode.offsetHeight
     const minimumHeight = this.minimumLinesNode
       ? this.minimumLinesNode.offsetHeight
-      : /* istanbul ignore next */ 0
+      : 0
     const newHeight = Math.max(contentHeight, minimumHeight)
 
     const { currentHeight, onResize } = this.props
@@ -101,7 +101,7 @@ export class Resizer extends React.PureComponent {
   }
 
   replaceEntity(entity) {
-    return ENTITIES_TO_REPLACE[entity] || /* istanbul ignore next */ entity
+    return ENTITIES_TO_REPLACE[entity] || entity
   }
 
   getContentsForMinimumLines(minimumLines) {

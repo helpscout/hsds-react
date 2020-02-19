@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 /**
  * This exists to ensure that the imports work correctly.
  */

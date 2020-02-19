@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { createGlobalStyle } from 'styled-components'
 
 export const FONT_FAMILY =

@@ -6,7 +6,6 @@
  * Copies the selected content to user's clipboard.
  */
 export const copyToClipboard = () => {
-  /* istanbul ignore next */
   if (document && document.execCommand) {
     document.execCommand('copy')
   }
@@ -24,7 +23,6 @@ export const selectText = element => {
   if (element.nodeName === 'INPUT' || element.nodeName === 'TEXTAREA') {
     const isReadOnly = element.hasAttribute('readonly')
 
-    /* istanbul ignore if */
     if (!isReadOnly) {
       element.setAttribute('readonly', '')
     }
@@ -32,14 +30,12 @@ export const selectText = element => {
     element.select()
     element.setSelectionRange(0, element.value.length)
 
-    /* istanbul ignore if */
     if (!isReadOnly) {
       element.removeAttribute('readonly')
     }
 
     selectedText = element.value
   } else {
-    /* istanbul ignore else */
     if (element.hasAttribute('contenteditable')) {
       element.focus()
     }
@@ -56,6 +52,5 @@ export const selectText = element => {
     selectedText = selection.toString()
   }
 
-  /* istanbul ignore next */
   return selectedText || ''
 }

@@ -35,7 +35,7 @@ export class Scrollable extends React.PureComponent {
 
   applyFade = () => {
     const containerNode = this.containerNode
-    /* istanbul ignore else */
+
     if (containerNode) {
       this.applyFadeStyles({
         currentTarget: containerNode,
@@ -80,7 +80,6 @@ export class Scrollable extends React.PureComponent {
   }
 
   applyFadeStyleOffset(node) {
-    /* istanbul ignore else */
     // Guard, just in case the node element is removed.
     if (node) {
       const offset = `${this.containerNode.offsetWidth -

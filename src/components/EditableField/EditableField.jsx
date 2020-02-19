@@ -175,7 +175,7 @@ export class EditableField extends React.Component {
     }
 
     // Tested
-    /* istanbul ignore next */
+
     if (!equal(this.state.validationInfo, nextState.validationInfo)) {
       return true
     }
@@ -183,7 +183,6 @@ export class EditableField extends React.Component {
     return false
   }
 
-  /* istanbul ignore next */
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (equal(nextProps.value, this.props.value)) return
 
@@ -274,7 +273,6 @@ export class EditableField extends React.Component {
         ? this.state.initialFieldValue[0]
         : find(this.state.initialFieldValue, val => val.id === event.target.id)
 
-    /* istanbul ignore next */
     if (equal(initialField, changedField)) {
       this.setState({ activeField: EMPTY_VALUE }, () => {
         onInputBlur({ name, value: this.state.fieldValue, event })
@@ -283,7 +281,6 @@ export class EditableField extends React.Component {
       return
     }
 
-    /* istanbul ignore next */
     if (this.state.disabledItem.indexOf(changedField.id) !== -1) {
       this.setState({ activeField: EMPTY_VALUE }, () => {
         onInputBlur({ name, value: this.state.fieldValue, event })
@@ -306,7 +303,7 @@ export class EditableField extends React.Component {
         {
           activeField: EMPTY_VALUE,
           disabledItem: this.state.disabledItem.filter(
-            /* istanbul ignore next */ item => item !== changedField.id
+            item => item !== changedField.id
           ),
           fieldValue: removedEmptyFields,
           initialFieldValue: this.state.fieldValue,
@@ -332,7 +329,7 @@ export class EditableField extends React.Component {
     }
 
     // tested
-    /* istanbul ignore else */
+
     if (!changedField.validated) {
       this.setState({
         disabledItem: this.state.disabledItem.concat(changedField.id),
@@ -342,12 +339,12 @@ export class EditableField extends React.Component {
       // we can use it in validation.
       let updatedFieldValue = this.state.fieldValue.map(field => {
         // tested
-        /* istanbul ignore next */
+
         if (field.id === changedField.id) {
           return { ...changedField, validated: true }
         }
         // tested
-        /* istanbul ignore next */
+
         return field
       })
 
@@ -359,8 +356,7 @@ export class EditableField extends React.Component {
         data: {
           cause: CAUSE.BLUR,
           operation:
-            /* istanbul ignore next */ updatedFieldValue.length >
-            this.state.initialFieldValue.length
+            updatedFieldValue.length > this.state.initialFieldValue.length
               ? OPERATION.CREATE
               : OPERATION.UPDATE,
           item: changedField,
@@ -374,7 +370,7 @@ export class EditableField extends React.Component {
           // we need to recompute this.
           updatedFieldValue = this.state.fieldValue.map(field => {
             // tested
-            /* istanbul ignore next */
+
             if (field.id === changedField.id) {
               const updatedProps =
                 validation.isValid && validation.updatedProps
@@ -387,7 +383,7 @@ export class EditableField extends React.Component {
               }
             }
             // tested
-            /* istanbul ignore next */
+
             return field
           })
 
@@ -402,8 +398,7 @@ export class EditableField extends React.Component {
                   fieldValue: updatedFieldValue,
                   initialFieldValue: updatedFieldValue,
                   validationInfo: this.state.validationInfo.filter(
-                    /* istanbul ignore next */ valItem =>
-                      valItem.name !== changedField.id
+                    valItem => valItem.name !== changedField.id
                   ),
                 },
                 () => {
@@ -413,7 +408,7 @@ export class EditableField extends React.Component {
                     data: {
                       cause: CAUSE.BLUR,
                       operation:
-                        /* istanbul ignore next */ updatedFieldValue.length >
+                        updatedFieldValue.length >
                         this.state.initialFieldValue.length
                           ? OPERATION.CREATE
                           : OPERATION.UPDATE,
@@ -446,7 +441,6 @@ export class EditableField extends React.Component {
                   const unchangedByFocusEvent =
                     this.state.activeField === activeField
 
-                  /* istanbul ignore next */
                   this.setState({
                     activeField: unchangedByFocusEvent
                       ? EMPTY_VALUE
@@ -499,14 +493,14 @@ export class EditableField extends React.Component {
         })
         .catch(
           // tested
-          /* istanbul ignore next */
+
           () => {
             // tested
-            /* istanbul ignore next */
+
             this.setState(
               {
                 // tested
-                /* istanbul ignore next */
+
                 disabledItem: this.state.disabledItem.filter(
                   item => item !== name
                 ),
@@ -531,7 +525,7 @@ export class EditableField extends React.Component {
       {
         fieldValue: newFieldValue,
         validationInfo: this.state.validationInfo.filter(
-          /* istanbul ignore next */ valItem => valItem.name !== name
+          valItem => valItem.name !== name
         ),
       },
       () => {
@@ -604,7 +598,7 @@ export class EditableField extends React.Component {
         })
 
         // Skip if the field was marked as validated
-        /* istanbul ignore else */
+
         if (!impactedField.validated) {
           this.setState({ disabledItem: this.state.disabledItem.concat(name) })
 
@@ -616,8 +610,7 @@ export class EditableField extends React.Component {
             data: {
               cause: CAUSE.ENTER,
               operation:
-                /* istanbul ignore next */ updatedFieldValue.length >
-                initialFieldValue.length
+                updatedFieldValue.length > initialFieldValue.length
                   ? OPERATION.CREATE
                   : OPERATION.UPDATE,
               item: updatedFieldValue.filter(field => field.id === name)[0],
@@ -646,8 +639,7 @@ export class EditableField extends React.Component {
                     initialFieldValue: updatedFieldValue,
                     maskTabIndex: name,
                     validationInfo: this.state.validationInfo.filter(
-                      /* istanbul ignore next */ valItem =>
-                        valItem.name === name
+                      valItem => valItem.name === name
                     ),
                   },
                   () => {
@@ -658,8 +650,7 @@ export class EditableField extends React.Component {
                       data: {
                         cause: CAUSE.ENTER,
                         operation:
-                          /* istanbul ignore next */ updatedFieldValue.length >
-                          initialFieldValue.length
+                          updatedFieldValue.length > initialFieldValue.length
                             ? OPERATION.CREATE
                             : OPERATION.UPDATE,
                         item: updatedFieldValue.filter(
@@ -678,12 +669,12 @@ export class EditableField extends React.Component {
               } else {
                 updatedFieldValue = fieldValue.map(field => {
                   // tested
-                  /* istanbul ignore next */
+
                   if (field.id === name) {
                     return { ...field, validated: true }
                   }
                   // tested
-                  /* istanbul ignore next */
+
                   return field
                 })
 
@@ -712,14 +703,14 @@ export class EditableField extends React.Component {
             })
             .catch(
               // tested
-              /* istanbul ignore next */
+
               () => {
                 // tested
-                /* istanbul ignore next */
+
                 this.setState(
                   {
                     // tested
-                    /* istanbul ignore next */
+
                     disabledItem: this.state.disabledItem.filter(
                       item => item !== name
                     ),
@@ -734,7 +725,7 @@ export class EditableField extends React.Component {
   }
 
   // tested
-  /* istanbul ignore next */
+
   updateFieldValue = ({ value, name, updatedProps = {} }) => {
     const { fieldValue } = this.state
 
@@ -773,7 +764,6 @@ export class EditableField extends React.Component {
     })
   }
 
-  /* istanbul ignore next */
   handleMaskValueKeyDown = ({ event, name }) => {
     const isEnter = event.key === key.ENTER
     const isEscape = event.key === key.ESCAPE
@@ -826,13 +816,12 @@ export class EditableField extends React.Component {
 
     for (const value of fieldValue) {
       const temp = { ...value }
-      /* istanbul ignore next */
+
       if (temp.id === name && temp.option !== selection) {
         temp.option = selection
         changed = true
       }
 
-      /* istanbul ignore next */
       if (temp.id === name && temp.validated) {
         hasBeenValidated = temp.id
       }
@@ -840,7 +829,6 @@ export class EditableField extends React.Component {
       newFieldValue.push(temp)
     }
 
-    /* istanbul ignore next */
     if (changed) {
       let isItemInvalid
 
@@ -854,7 +842,6 @@ export class EditableField extends React.Component {
       const item = newFieldValue.filter(field => field.id === name)[0]
 
       this.setState({ fieldValue: newFieldValue, activeField: name }, () => {
-        /* istanbul ignore next */
         if (!isItemInvalid && item.value !== '') {
           onCommit({
             name,
@@ -877,7 +864,7 @@ export class EditableField extends React.Component {
     const { fieldValue, defaultOption } = this.state
     const isNotSingleEmptyValue =
       fieldValue[fieldValue.length - 1].value !== EMPTY_VALUE
-    /* istanbul ignore next */
+
     if (isNotSingleEmptyValue) {
       // it is tested
       const { name } = this.props
@@ -913,7 +900,6 @@ export class EditableField extends React.Component {
         validated: false,
       }
 
-      /* istanbul ignore next */
       if (defaultOption != null) {
         emptyValue.option = defaultOption
       }

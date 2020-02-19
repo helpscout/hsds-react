@@ -43,7 +43,6 @@ class CopyCode extends React.PureComponent {
   node
 
   componentDidMount() {
-    /* istanbul ignore else */
     if (this.props.autoFocus) {
       this.selectText()
     }
@@ -68,7 +67,6 @@ class CopyCode extends React.PureComponent {
   }
 
   copyToClipboard = () => {
-    /* istanbul ignore else */
     if (this.props.copyToClipboard) {
       copyToClipboard()
     }

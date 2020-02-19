@@ -29,7 +29,7 @@ class StatusBar extends React.PureComponent {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const { isOpen } = nextProps
-    /* istanbul ignore else */
+
     if (isOpen !== undefined) {
       this.setState({ isOpen })
     }

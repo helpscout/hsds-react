@@ -5,7 +5,6 @@ import Collapsible from '../Collapsible'
 import Header from './ChatInbox.Header'
 import Content from './ChatInbox.Content'
 import { classNames } from '../../utilities/classNames'
-import { noop } from '../../utilities/other'
 
 class ChatInbox extends React.Component {
   static propTypes = {
@@ -32,7 +31,7 @@ class ChatInbox extends React.Component {
 
   handleOnClickHeader = (event, onClick) => {
     const { isCollapsible } = this.props
-    /* istanbul ignore else */
+
     if (isCollapsible) {
       this.setState({ isCollapsed: !this.state.isCollapsed })
     }

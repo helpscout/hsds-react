@@ -23,7 +23,7 @@ const ItemSelectedCheck = (props = defaultProps) => {
   const componentClassnames = classNames(
     'c-ItemSelectedCheck',
     props.isSelectionClearer && 'selectionClearer',
-    /* istanbul ignore next */
+
     isClearerActive && 'is-selectionClearer-active'
   )
 

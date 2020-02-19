@@ -70,7 +70,7 @@ export class Tooltip extends React.PureComponent {
    * The rendering of both content types have been manually tested in
    * Storybook.
    */
-  /* istanbul ignore next */
+
   renderContent = renderProps => {
     const { renderContent, placement, title } = this.props
 
@@ -88,7 +88,7 @@ export class Tooltip extends React.PureComponent {
         data-cy={dataCyPopper}
         style={{ maxWidth, minWidth }}
       >
-        {this.renderContent(renderProps || /* istanbul ignore next */ {})}
+        {this.renderContent(renderProps || {})}
       </Popper>
     )
   }
@@ -128,7 +128,6 @@ export class Tooltip extends React.PureComponent {
 const TooltipConsumer = props => {
   const contextValue = React.useContext(TooltipContext)
 
-  /* istanbul ignore next */
   if (!contextValue) {
     return <Tooltip {...props} />
   }
@@ -139,7 +138,7 @@ const TooltipConsumer = props => {
 }
 
 // This fixes a test issue  ¯\_(ツ)_/¯
-/* istanbul ignore next */
+
 const importedPopProps = PopPropTypes ? PopPropTypes : {}
 Tooltip.propTypes = Object.assign(importedPopProps, {
   contentClassName: PropTypes.string,

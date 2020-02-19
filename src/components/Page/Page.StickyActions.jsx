@@ -28,7 +28,6 @@ class StickyActions extends React.PureComponent {
   }
 
   observerStart() {
-    /* istanbul ignore next */
     if (!isIntersectionObserverSupported()) return
 
     const { offset } = this.props
@@ -45,7 +44,6 @@ class StickyActions extends React.PureComponent {
   }
 
   observerStop() {
-    /* istanbul ignore next */
     if (!isIntersectionObserverSupported()) return
 
     this.observer.unobserve(this.node)
@@ -62,7 +60,6 @@ class StickyActions extends React.PureComponent {
   updateSticky = isSticky => {
     const { onStickyStart, onStickyEnd } = this.props
 
-    /* istanbul ignore else */
     if (this.state.isSticky !== isSticky) {
       this.setState({ isSticky })
 

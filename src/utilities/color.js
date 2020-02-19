@@ -14,7 +14,7 @@ const optimalTextColorValues = {
 export const componentToHex = c => {
   if (!c || typeof c !== 'number') return '00'
   const hex = c.toString(16)
-  /* istanbul ignore next */
+
   return hex.length === 1 ? `0${hex}` : hex
 }
 
@@ -27,7 +27,7 @@ export const hexToRgb = hex => {
   })
 
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
-  /* istanbul ignore next */
+
   return result
     ? {
         r: parseInt(result[1], 16),
@@ -88,7 +88,6 @@ export const rgbToHsl = (red, green, blue) => {
     const d = max - min
     s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
 
-    /* istanbul ignore next */
     /*eslint-disable */
     switch (max) {
       case r:
@@ -115,12 +114,10 @@ export const rgbToHsl = (red, green, blue) => {
 // Source
 // https://css-tricks.com/snippets/javascript/lighten-darken-color/
 export const lightenDarkenColor = (color, value) => {
-  /* istanbul ignore else */
   if (color[0] === '#') {
     color = color.slice(1)
   }
 
-  /* istanbul ignore next */
   if (color.length === 3) {
     color = color[0] + color[0] + color[1] + color[1] + color[2] + color[2]
   }

@@ -31,7 +31,6 @@ class Sortable extends React.PureComponent {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    /* istanbul ignore next */
     /* Note: There are tests for this, but for some reason, Istanbul isn't
      * picking it up */
     if (this.props.children !== nextProps.children) {
@@ -39,9 +38,7 @@ class Sortable extends React.PureComponent {
     }
   }
 
-  /* istanbul ignore next */
   remapChildrenToState(children = this.props.children) {
-    /* istanbul ignore next */
     if (!children) return
 
     const items = React.Children.map(children, (child, index) => {
@@ -73,13 +70,12 @@ class Sortable extends React.PureComponent {
 
   // Based on the implementation of react-sortable-hoc
   // https://github.com/clauderic/react-sortable-hoc/#basic-example
-  /* istanbul ignore next */
+
   onSortEnd({ oldIndex, newIndex, collection }, event) {
-    /* istanbul ignore next */
     this.setState({
       items: arrayMove(this.state.items, oldIndex, newIndex),
     })
-    /* istanbul ignore next */
+
     if (this.props.onSortEnd) {
       this.props.onSortEnd({ oldIndex, newIndex, collection }, event)
     }

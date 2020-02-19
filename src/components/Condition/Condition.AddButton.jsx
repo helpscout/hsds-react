@@ -53,14 +53,13 @@ class AddButton extends React.PureComponent {
 
   scrollIntoView = () => {
     const { scrollOffset: offset, scrollDuration: duration } = this.props
-    /* istanbul ignore next */
+
     // Guard in case component because unmounted during the click event.
     if (!this.node) return
 
     const isVisible = isNodeWithinViewport({ node: this.node, offset })
     const position = offset + window.scrollY
 
-    /* istanbul ignore next */
     // Can't easily be tested in JSDOM due to DOM calculations.
     if (isVisible) return
 

@@ -33,7 +33,6 @@ class CopyInput extends React.PureComponent {
   }
 
   getInputValue = () => {
-    /* istanbul ignore next */
     return this.inputNode ? this.inputNode.value : this.props.value
   }
 

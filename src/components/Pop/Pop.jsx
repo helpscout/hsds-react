@@ -68,7 +68,6 @@ class Pop extends React.Component {
 
     if (wasOpen === willOpen) return
 
-    /* istanbul ignore else */
     if (willOpen !== this.state.isOpen) {
       if (willOpen) {
         this.open({ type: INTERACTION_TYPE.UPDATE_IS_OPEN })
@@ -83,7 +82,6 @@ class Pop extends React.Component {
   }
 
   safeSetState = (state, callback) => {
-    /* istanbul ignore else */
     if (this._isMounted) {
       this.setState(state, callback)
     }
@@ -204,7 +202,6 @@ class Pop extends React.Component {
     return { ...wrapperStyles }
   }
 
-  /* istanbul ignore next */
   setNodeRef = node => (this.node = node)
 
   render() {
@@ -242,7 +239,6 @@ class Pop extends React.Component {
         : null
     })
 
-    /* istanbul ignore next */
     /**
      * Too difficult to text in Enzyme, due to createContext + Portal + cloning.
      */

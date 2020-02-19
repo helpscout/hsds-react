@@ -6,7 +6,6 @@ import MessageRow from './MessageRow'
 import { SortableContainer } from 'react-sortable-hoc'
 import { GlobalContext } from '../HSDS/Provider'
 
-/* istanbul ignore next */
 const SortableList = SortableContainer(({ children }) => {
   return <div>{children}</div>
 })
@@ -17,10 +16,9 @@ export const MessageList = props => {
   const [indexOfDraggedItem, setIndexOfDraggingItem] = React.useState(-1)
 
   const contextValue = React.useContext(GlobalContext)
-  /* istanbul ignore next */
+
   const scope = contextValue ? contextValue.getCurrentScope() : null
 
-  /* istanbul ignore next */
   const onSortEnd = ({ oldIndex, newIndex, collection, isKeySorting }) => {
     setDragging(false)
     setIndexOfDraggingItem(-1)
@@ -34,7 +32,6 @@ export const MessageList = props => {
     })
   }
 
-  /* istanbul ignore next */
   const onSortStart = ({ node, index, collection, isKeySorting }) => {
     setDragging(true)
     setIndexOfDraggingItem(index)
@@ -48,7 +45,6 @@ export const MessageList = props => {
     })
   }
 
-  /* istanbul ignore next */
   const getContainer = () => {
     if (scope) {
       return document.querySelector(`.${scope}`)

@@ -118,7 +118,6 @@ export class MenuContainer extends React.PureComponent {
     this.forceHideMenuNode()
   }
 
-  /* istanbul ignore next */
   // Skipping coverage for this method as it does almost exclusively DOM
   // calculations, which isn't a JSDOM's forte.
   shouldDropUp() {
@@ -179,12 +178,7 @@ export class MenuContainer extends React.PureComponent {
     return props
   }
 
-  renderItemsAsGroups = ({
-    /* istanbul ignore next */
-    id = 'group',
-    items,
-    withIndex,
-  }) => {
+  renderItemsAsGroups = ({ id = 'group', items, withIndex }) => {
     let groupStartIndex = 0
 
     return items.map((group, index) => {
@@ -198,7 +192,6 @@ export class MenuContainer extends React.PureComponent {
         <Group key={groupId} id={groupId} aria-labelledby={groupHeaderId}>
           <Item {...groupProps} id={groupHeaderId} />
           {items.map((item, index) => {
-            /* istanbul ignore next */
             const indexProp = withIndex ? index + groupStartIndex : undefined
 
             return (
@@ -234,7 +227,6 @@ export class MenuContainer extends React.PureComponent {
       }
 
       return [clearerItem].concat(items).map((item, index) => {
-        /* istanbul ignore next */
         const indexProp = withIndex ? index : undefined
         const itemProps = this.getItemProps(item, indexProp)
 
@@ -257,7 +249,6 @@ export class MenuContainer extends React.PureComponent {
     }
 
     return items.map((item, index) => {
-      /* istanbul ignore next */
       const indexProp = withIndex ? index : undefined
 
       return <Item {...this.getItemProps(item, indexProp)}>{item.label}</Item>
@@ -321,7 +312,6 @@ export class MenuContainer extends React.PureComponent {
   }
 
   forceHideMenuNode = () => {
-    /* istanbul ignore next */
     if (!this.placementNode) return
     this.placementNode.style.display = 'none'
   }
@@ -330,7 +320,6 @@ export class MenuContainer extends React.PureComponent {
     this.memoSetPositionStylesOnNode(this.getPositionProps())
   }
 
-  /* istanbul ignore next */
   repositionMenuNodeCycle = () => {
     this.updateMenuNodePosition()
     if (!this.didOpen) {
@@ -373,7 +362,6 @@ export class MenuContainer extends React.PureComponent {
       left: 0,
     }
 
-    /* istanbul ignore next */
     if (!this.node || !this.placementNode) return defaultStyles
 
     const { top, left } = this.getStylePosition()
@@ -389,7 +377,6 @@ export class MenuContainer extends React.PureComponent {
   setPositionStylesOnNode = positionData => {
     const { menuOffsetTop, onMenuReposition, triggerNode, zIndex } = this.props
 
-    /* istanbul ignore next */
     if (!this.node || !this.placementNode) return
 
     const { top, left, position } = positionData
@@ -413,14 +400,12 @@ export class MenuContainer extends React.PureComponent {
     // Provide properties via stateReducer callback
     onMenuReposition(positionProps)
 
-    /* istanbul ignore next */
     // Skipping coverage for this method as it does almost exclusively DOM
     // calculations, which isn't a JSDOM's forte.
     if (triggerNode) {
       this.placementNode.style.width = `${triggerNode.clientWidth}px`
     }
 
-    /* istanbul ignore next */
     if (this.props.forceDropDown) return
     if (!this.shouldDropDirectionUpdate(positionProps)) return
 
@@ -439,7 +424,6 @@ export class MenuContainer extends React.PureComponent {
   }
 
   setNodeRef = node => {
-    /* istanbul ignore else */
     if (node) {
       this.node = node
       this.parentNode = node.parentElement

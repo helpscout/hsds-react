@@ -81,7 +81,6 @@ export function generateFieldActions(actions) {
     : actionsArray.concat(deleteAction)
 }
 
-/* istanbul ignore next */
 export function isEllipsisActive(element) {
   if (!element) return false
 
@@ -89,7 +88,6 @@ export function isEllipsisActive(element) {
 }
 
 export function findParentByClassName(childNode, className) {
-  /* istanbul ignore next */
   if (!childNode) return
 
   let parent = childNode.parentElement

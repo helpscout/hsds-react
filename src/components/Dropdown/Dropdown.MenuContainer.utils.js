@@ -13,7 +13,7 @@ export const getComputedClientRect = (node, contentWindow) => {
   // window.scrollY / window.scrollX cannot be modified (or easily mocked)
   // within JSDOM. Manually tested in the browser, and the calculations are
   // correct.
-  /* istanbul ignore next */
+
   const computedTop = top + height + contentWindow.scrollY
   const computedLeft = left + contentWindow.scrollX
 

@@ -1,6 +1,5 @@
 import { isString } from './is'
 import { normalizeUrl } from './urls'
-import { normalize } from 'path'
 
 export const nameToInitials = (name = '') => {
   // Returning early if undefined to avoid casting undefined to "undefined"
@@ -91,7 +90,7 @@ export const repeat = (pattern, count) => {
       result += pattern
     }
     count >>= 1
-    /* istanbul ignore next */
+
     if (count <= 0) break
     pattern += pattern
   }

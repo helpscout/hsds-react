@@ -9,9 +9,8 @@
  * @returns {undefined}
  */
 export const addEventListener = (target, eventName, handler, options) => {
-  /* istanbul ignore next */
   if (!target || !target.addEventListener) return
-  /* istanbul ignore next */
+
   return target.addEventListener(eventName, handler, options)
 }
 
@@ -26,9 +25,8 @@ export const addEventListener = (target, eventName, handler, options) => {
  * @returns {undefined}
  */
 export const removeEventListener = (target, eventName, handler, options) => {
-  /* istanbul ignore next */
   if (!target || !target.removeEventListener) return
-  /* istanbul ignore next */
+
   return target.removeEventListener(eventName, handler, options)
 }
 

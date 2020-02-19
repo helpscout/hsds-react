@@ -51,7 +51,6 @@ class KeypressListener extends React.Component {
       return handler(event)
     }
 
-    /* istanbul ignore else */
     // Tested, but istanbul is being picky
     if (modifier) {
       switch (modifier) {
@@ -73,7 +72,7 @@ class KeypressListener extends React.Component {
         case 'control':
           modKey = event.ctrlKey
           break
-        /* istanbul ignore next */
+
         default:
           break
       }
