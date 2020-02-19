@@ -30,7 +30,6 @@ A Chat component provides the UI for the primary content within a [Message](./Me
 | isNote          | `bool`        | Applies "note" styles.                                            |
 | ltr             | `bool`        | Applies left-to-right text styles.                                |
 | onBubbleClick   | `func`        | Callback when the Bubble is clicked.                              |
-| primary         | `bool`        | Applies "primary" styles.                                         |
 | read            | `bool`        | Determines if the Message is read.                                |
 | rtl             | `bool`        | Applies right-to-left text styles.                                |
 | size            | `string`      | Determines the size of the component.                             |

@@ -19,7 +19,6 @@ export type MessageBubble = MessageChat & {
   body?: string
   icon?: string
   isNote?: boolean
-  primary?: boolean
   title?: string
   size?: MessageBubbleSize
   typing?: boolean

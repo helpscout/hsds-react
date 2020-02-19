@@ -53,7 +53,7 @@ describe('Title', () => {
   })
 
   test('Renders a Title if defined', () => {
-    const wrapper = mount(<Bubble title="Mugatu" primary />)
+    const wrapper = mount(<Bubble title="Mugatu" />)
     const o = wrapper.find(ui.title).first()
 
     expect(o.length).toBeTruthy()
@@ -185,12 +185,6 @@ describe('Styles', () => {
     const wrapper = mount(<Bubble isNote />)
 
     expect(wrapper.getDOMNode().classList.contains('is-note')).toBeTruthy()
-  })
-
-  test('Applies "primary" styles, if defined', () => {
-    const wrapper = mount(<Bubble primary />)
-
-    expect(wrapper.getDOMNode().classList.contains('is-primary')).toBeTruthy()
   })
 
   test('Applies "size" styles, if defined', () => {

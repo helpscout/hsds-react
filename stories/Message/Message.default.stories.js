@@ -6,11 +6,7 @@ const stories = storiesOf('Message', module)
 
 stories.add('default', () => (
   <div>
-    <Message from avatar={<Avatar name="Arctic Puffin" />}>
-      <Message.Question read timestamp="9:41am">
-        How's it <a>goin</a>'?
-      </Message.Question>
-    </Message>
+    <Message from avatar={<Avatar name="Arctic Puffin" />} />
     <Message to>
       <Message.Action read timestamp="9:41am">
         Buddy became upset. <a href="#">Find out what happened</a>

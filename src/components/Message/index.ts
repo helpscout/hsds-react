@@ -11,6 +11,5 @@ Message.Content = propConnect('MessageContent')(Message.Content)
 Message.Embed = propConnect('MessageEmbed')(Message.Embed)
 Message.Media = propConnect('MessageMedia')(Message.Media)
 Message.Provider = propConnect('MessageProvider')(Message.Provider)
-Message.Question = propConnect('MessageQuestion')(Message.Question)
 
 export default propConnect('Message')(Message)

@@ -53,18 +53,7 @@ describe('Bubble', () => {
 
   test('Passes correct props to Bubble', () => {
     const wrapper = mount(
-      <Chat
-        body="body"
-        from
-        isNote
-        ltr
-        primary
-        rtl
-        size="sm"
-        title="title"
-        to
-        typing
-      />
+      <Chat body="body" from isNote ltr rtl size="sm" title="title" to typing />
     )
     const props = wrapper.find(Bubble).instance().props
 
@@ -72,7 +61,6 @@ describe('Bubble', () => {
     expect(props.from).toBeTruthy()
     expect(props.isNote).toBeTruthy()
     expect(props.ltr).toBeTruthy()
-    expect(props.primary).toBeTruthy()
     expect(props.rtl).toBeTruthy()
     expect(props.size).toBeTruthy()
     expect(props.title).toBeTruthy()

@@ -51,7 +51,6 @@ export class Chat extends React.PureComponent<Props> {
       isNote,
       ltr,
       onBubbleClick,
-      primary,
       rtl,
       size,
       timestamp,
@@ -123,7 +122,6 @@ export class Chat extends React.PureComponent<Props> {
           className={bubbleClassName}
           onClick={onBubbleClick}
           isNote={isNote}
-          primary={primary}
           size={size}
           title={title}
           typing={typing}
