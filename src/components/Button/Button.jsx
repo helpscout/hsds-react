@@ -5,7 +5,7 @@ import { classNames } from '../../utilities/classNames'
 import { includes } from '../../utilities/arrays'
 import { noop } from '../../utilities/other'
 import RouteWrapper from '../RouteWrapper'
-import { ButtonUI, ButtonContentUI, FocusUI, SpinnerUI } from './Button.css'
+import { ButtonUI, LoadingWrapperUI, FocusUI, SpinnerUI } from './Button.css'
 import Icon from '../Icon'
 
 class Button extends React.PureComponent {
@@ -172,6 +172,8 @@ class Button extends React.PureComponent {
 
     const selector = this.isLink() ? 'a' : 'button'
 
+    const childrenMarkup = this.getChildrenMarkup()
+
     return (
       <ButtonUI
         {...getValidProps(rest)}
@@ -180,15 +182,14 @@ class Button extends React.PureComponent {
         ref={this.setRef}
         type={type}
         as={selector}
+        allowContentEventPropogation={allowContentEventPropogation}
       >
-        {isLoading ? <SpinnerUI /> : null}
-        <ButtonContentUI
-          allowContentEventPropogation={allowContentEventPropogation}
-          className="c-Button__content c-Button__content"
-          isLoading={isLoading}
-        >
-          {this.getChildrenMarkup()}
-        </ButtonContentUI>
+        {isLoading && <SpinnerUI />}
+        {isLoading ? (
+          <LoadingWrapperUI>{childrenMarkup}</LoadingWrapperUI>
+        ) : (
+          childrenMarkup
+        )}
         {this.getFocusMarkup()}
       </ButtonUI>
     )

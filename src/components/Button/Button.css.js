@@ -24,6 +24,14 @@ export const ButtonUI = styled.button`
   text-align: center;
   text-decoration: none;
 
+  ${({ allowContentEventPropogation }) =>
+    allowContentEventPropogation &&
+    `
+    * {
+      pointer-events: none;
+    }
+  `};
+
   &:hover,
   &:active,
   &:focus {
@@ -241,28 +249,13 @@ function renderStyleForProp(config, prop, attribute) {
     : ''
 }
 
-export const ButtonContentUI = styled('span')`
+export const LoadingWrapperUI = styled.span`
   align-items: inherit;
   display: inherit;
   justify-content: inherit;
   text-decoration: inherit;
   width: 100%;
-
-  ${({ allowContentEventPropogation }) =>
-    allowContentEventPropogation &&
-    `
-    pointer-events: none;
-
-    * {
-      pointer-events: none;
-    }
-  `};
-
-  ${({ isLoading }) =>
-    isLoading &&
-    `
-    opacity: 0;
-  `};
+  opacity: 0;
 `
 
 export const FocusUI = styled('span')`
