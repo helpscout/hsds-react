@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { MessageBubble } from './Message.types'
+import { MessageBubble, MessageThemeContext } from './Message.types'
 import Bubble from './Message.Bubble'
 import Caption from './Message.Caption'
 import ChatBlock, { MetaPosition } from './Message.ChatBlock'
@@ -20,18 +20,21 @@ type Props = MessageBubble & {
   error?: boolean | string
   isLoading?: boolean
   metaPosition?: MetaPosition
-  onBubbleClick: (event: Event) => void
 }
+type Context = MessageThemeContext
 
-export class Chat extends React.PureComponent<Props> {
+export class Chat extends React.PureComponent<Props, Context> {
   static defaultProps = {
-    onBubbleClick: noop,
     error: false,
     errorMessage: "Couldn't send.",
     isLoading: false,
     metaPosition: 'bottom',
   }
   static displayName = 'Message.Chat'
+
+  static contextTypes = {
+    theme: noop,
+  }
 
   render() {
     const {
@@ -50,7 +53,6 @@ export class Chat extends React.PureComponent<Props> {
       isLoading,
       isNote,
       ltr,
-      onBubbleClick,
       rtl,
       size,
       timestamp,
@@ -59,6 +61,8 @@ export class Chat extends React.PureComponent<Props> {
       typing,
       ...rest
     } = this.props
+    const { theme } = this.context
+    const isThemeEmbed = theme === 'embed'
 
     const componentClassName = classNames(
       'c-MessageChat',
@@ -114,13 +118,13 @@ export class Chat extends React.PureComponent<Props> {
         meta={metaMarkup}
         metaPosition={metaPosition}
         read={read}
+        isEmbed={isThemeEmbed}
         {...chatProps}
         {...rest}
       >
         <Bubble
           {...chatProps}
           className={bubbleClassName}
-          onClick={onBubbleClick}
           isNote={isNote}
           size={size}
           title={title}

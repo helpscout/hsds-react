@@ -1,5 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { faker } from '@helpscout/helix'
 import { Avatar, Link, Message, PreviewCard } from '../../src/index'
 
 const stories = storiesOf('Message', module)
@@ -65,6 +66,9 @@ stories.add('default', () => (
       <Message.Chat read timestamp="9:41am">
         Just read that!
       </Message.Chat>
+      <Message.Chat read timestamp="9:41am">
+        {faker.lorem.paragraphs()()}
+      </Message.Chat>
     </Message>
 
     <Message from avatar={<Avatar name="Arctic Puffin" />}>
@@ -96,6 +100,14 @@ stories.add('default', () => (
         timestamp="9:41am"
         body="Note: <em>SAAAAAAANTAAAAAAAA!</em> www.helpscout.com"
       />
+      <Message.Chat
+        read
+        timestamp="9:41am"
+        caption="Caption before the bubble"
+        metaPosition="top"
+      >
+        🦄❤️
+      </Message.Chat>
     </Message>
 
     <Message to>
