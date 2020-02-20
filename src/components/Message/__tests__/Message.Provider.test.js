@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { mount } from 'enzyme'
 import Provider from '../Message.Provider'
 import Message from '../Message'

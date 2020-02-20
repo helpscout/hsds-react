@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { mount, shallow } from 'enzyme'
 import Timeline from './Timeline'
 import Item from './Timeline.Item'

@@ -2,7 +2,6 @@ const restrictedGlobals = require('confusing-browser-globals')
 
 module.exports = {
   root: true,
-  parser: '@typescript-eslint/parser', // Specifies the ESLint parser
   env: {
     browser: true,
     commonjs: true,
@@ -10,13 +9,12 @@ module.exports = {
     jest: true,
     node: true,
   },
-  plugins: ['jsx-a11y', 'react', 'import', '@typescript-eslint'],
+  plugins: ['babel', 'jsx-a11y', 'react', 'import'],
   extends: [
-    'prettier/@typescript-eslint', // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
     'plugin:prettier/recommended', // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
   ],
+  parser: 'babel-eslint',
   parserOptions: {
-    project: './tsconfig.json',
     ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
     sourceType: 'module', // Allows for the use of imports
     ecmaFeatures: {
@@ -24,17 +22,10 @@ module.exports = {
     },
   },
   rules: {
-    // TypeScript's `noFallthroughCasesInSwitch` option is more robust (#6906)
     'default-case': 'off',
-    // 'tsc' already handles this (https://github.com/typescript-eslint/typescript-eslint/issues/291)
     'no-dupe-class-members': 'off',
-
-    // Add TypeScript specific rules (and turn off ESLint equivalents)
-    'no-array-constructor': 'off',
-    '@typescript-eslint/no-array-constructor': 'warn',
-    '@typescript-eslint/no-namespace': 'error',
-    'no-use-before-define': 'off',
-    '@typescript-eslint/no-use-before-define': [
+    'no-array-constructor': 'warn',
+    'no-use-before-define': [
       'warn',
       {
         functions: false,
@@ -43,16 +34,14 @@ module.exports = {
         typedefs: false,
       },
     ],
-    'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': [
+    'no-unused-vars': [
       'warn',
       {
         args: 'none',
         ignoreRestSiblings: true,
       },
     ],
-    'no-useless-constructor': 'off',
-    '@typescript-eslint/no-useless-constructor': 'warn',
+    'no-useless-constructor': 'warn',
 
     // http://eslint.org/docs/rules/
     'array-callback-return': 'warn',

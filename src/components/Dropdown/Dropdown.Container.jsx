@@ -165,7 +165,7 @@ export class DropdownContainer extends React.PureComponent {
     }
 
     const diffs = getShallowDiffs(this.props, nextProps)
-    /* istanbul ignore else */
+
     if (diffs.diffs.length) {
       const {
         children,

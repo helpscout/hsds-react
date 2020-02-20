@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { mount } from 'enzyme'
 import FormGroup from './FormGroup'
 import FormGroupChoice from './FromGroup.Choice'

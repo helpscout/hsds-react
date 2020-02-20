@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { mount } from 'enzyme'
 import { Pagination } from './Pagination'
 import { NavigationUI, RangeUI, InformationUI } from './Pagination.css'

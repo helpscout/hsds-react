@@ -113,7 +113,6 @@ export const setMenuNode = (state, menuNode) => {
   })
 }
 
-/* istanbul ignore next */
 export const incrementIndex = (state, modifier = 1) => {
   const { envNode, index, indexMap, items, selectionClearer } = state
 
@@ -134,7 +133,6 @@ export const incrementIndex = (state, modifier = 1) => {
   return focusItem(state, { target })
 }
 
-/* istanbul ignore next */
 export const decrementIndex = (state, modifier = 1) => {
   const { envNode, index, indexMap, items } = state
   if (!items.length || !isDefined(index)) return
@@ -151,7 +149,6 @@ export const decrementIndex = (state, modifier = 1) => {
   return focusItem(state, { target })
 }
 
-/* istanbul ignore next */
 export const focusItem = (state, event) => {
   const node = findClosestItemDOMNode(event.target)
 
@@ -181,7 +178,6 @@ export const focusItem = (state, event) => {
   })
 }
 
-/* istanbul ignore next */
 export const selectItemFromIndex = (state, event) => {
   const target = findItemDOMNode(state.index, state.envNode)
   if (!target) return
@@ -210,7 +206,6 @@ export const closeAndRefocusTriggerNode = state => {
   }
 }
 
-/* istanbul ignore next */
 export const selectItem = (state, event, eventTarget) => {
   const {
     allowMultipleSelection,
@@ -286,7 +281,7 @@ export const clearSelection = (state, event) => {
   const { selectedItem } = state
 
   // Performance guard to prevent store from updating
-  /* istanbul ignore next */
+
   if (isSelectedItemEmpty(selectedItem)) return
 
   // Trigger select callback

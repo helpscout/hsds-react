@@ -18,7 +18,7 @@
   "plugins": [
     "@babel/plugin-proposal-class-properties",
     [
-      "inline-svg",
+      "inline-react-svg",
       {
         "svgo": {
           "plugins": [

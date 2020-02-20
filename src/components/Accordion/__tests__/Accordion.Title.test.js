@@ -256,23 +256,26 @@ describe('dragHandle', () => {
 
   test('Does render drag handle if sortable', () => {
     const wrapper = mount(
-      <SectionContext.Provider value={{ isSortable: true }}>
+      <AccordionContext.Provider value={{ isSortable: true }}>
         <Title />
-      </SectionContext.Provider>
+      </AccordionContext.Provider>
     )
     const handle = wrapper.find('.c-SortableDragHandle')
-    expect(handle).toHaveLength(1)
-    expect(handle.hasClass('drag-handle')).toBe(true)
+    expect(handle.length).toBeTruthy()
+    expect(handle.first().hasClass('drag-handle')).toBe(true)
   })
 
   test('Conditionally applies a className to indicate that the drag handle is in a page', () => {
     const wrapper = mount(
-      <SectionContext.Provider value={{ isPage: true, isSortable: true }}>
+      <AccordionContext.Provider value={{ isPage: true, isSortable: true }}>
         <Title />
-      </SectionContext.Provider>
+      </AccordionContext.Provider>
     )
     expect(
-      wrapper.find('.c-SortableDragHandle').hasClass(classNames.isPageClassName)
+      wrapper
+        .find('.c-SortableDragHandle')
+        .first()
+        .hasClass(classNames.isPageClassName)
     ).toBe(true)
   })
 })

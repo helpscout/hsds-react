@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { SELECTORS, isPathActive } from './Dropdown.utils'
 
 // TODO:
@@ -141,7 +142,6 @@ export const setMenuPositionStyles = props => {
 
   const translateYUp = wrapperNode.clientHeight - menuOffset
 
-  /* istanbul ignore next */
   translateY =
     triggerNode.offsetHeight +
     (triggerNodeMenu ? triggerNodeMenu.scrollTop : 0) +
@@ -150,12 +150,10 @@ export const setMenuPositionStyles = props => {
   const predictedOffsetBottom = translateY + height + top
   const predictedFlippedOffsetTop = top - translateY - height
 
-  /* istanbul ignore next */
   const shouldDropUp =
     contentWindow.innerHeight < predictedOffsetBottom &&
     predictedFlippedOffsetTop > 0
 
-  /* istanbul ignore next */
   if (!dropRight) {
     wrapperNode.style.right = '100%'
     wrapperNode.style.paddingLeft = '0px'
@@ -166,7 +164,6 @@ export const setMenuPositionStyles = props => {
     wrapperNode.style.paddingRight = '0px'
   }
 
-  /* istanbul ignore next */
   if (dropUp) {
     if (shouldDropUp) {
       translateY = translateYUp

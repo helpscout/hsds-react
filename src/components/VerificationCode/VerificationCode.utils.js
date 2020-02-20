@@ -2,7 +2,6 @@ export const CLASSNAMES = {
   hidden: 'hidden',
 }
 
-/* istanbul ignore next */
 export function selectAll(digitInputNodes, digitMaskNodes) {
   let selection = window.getSelection()
 

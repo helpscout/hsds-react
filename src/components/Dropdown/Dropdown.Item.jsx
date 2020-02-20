@@ -80,7 +80,6 @@ export class Item extends React.PureComponent {
   menuNode
 
   componentDidMount() {
-    /* istanbul ignore else */
     if (this.node) {
       this.renderMenu()
     }
@@ -116,7 +115,6 @@ export class Item extends React.PureComponent {
 
     // Async call to coordinate with Portal adjustments
     requestAnimationFrame(() => {
-      /* istanbul ignore next */
       if (this.menuNode && this.wrapperNode && this.node && this.actionNode) {
         setMenuPositionStyles({
           contentWindow,
@@ -164,12 +162,7 @@ export class Item extends React.PureComponent {
                 <Item
                   getState={getState}
                   renderItem={renderItem}
-                  key={
-                    item.id ||
-                    item.value ||
-                    /* istanbul ignore next */
-                    getComponentKey(item, index)
-                  }
+                  key={item.id || item.value || getComponentKey(item, index)}
                   {...this.getItemProps(item)}
                 />
               ))}
@@ -245,7 +238,6 @@ export class Item extends React.PureComponent {
   setActionNodeRef = node => (this.actionNode = node)
   setWrapperNodeRef = node => (this.wrapperNode = node)
 
-  /* istanbul ignore next */
   setMenuNodeRef = node => {
     this.menuNode = node
   }

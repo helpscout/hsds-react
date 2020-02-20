@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import Animate from '.'
 import { Card, Heading, Text } from '../index'
 

@@ -5,9 +5,7 @@ import Popper, { enhancePopperStyles } from '../Popper'
 jest.mock('../Pop.Portal', () => {
   const Portal = ({ children }) => <div>{children}</div>
 
-  return {
-    default: Portal,
-  }
+  return Portal
 })
 
 const cleanUp = () => {

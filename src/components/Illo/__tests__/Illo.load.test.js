@@ -20,22 +20,28 @@ test('load defaults to an empty object', () => {
 })
 
 test('Can be set with load', () => {
+  const bulb = () => '<svg><path></path></svg>'
+  const chat = () => '<svg><path></path></svg>'
+
   const svgs = {
-    bulb: '<svg><path></path></svg>',
-    chat: '<svg><path></path></svg>',
+    bulb,
+    chat,
   }
 
   load(svgs)
   expect(svgSet).toEqual(svgs)
 
   const wrapper = mount(<Illo name="bulb" />)
-  expect(wrapper.html()).toContain(svgs.bulb)
+  expect(wrapper.find(bulb).length).toBeTruthy()
 })
 
 test('Can be reset with unload', () => {
+  const bulb = () => '<svg><path></path></svg>'
+  const chat = () => '<svg><path></path></svg>'
+
   const svgs = {
-    bulb: '<svg><path></path></svg>',
-    chat: '<svg><path></path></svg>',
+    bulb,
+    chat,
   }
 
   load(svgs)
@@ -44,5 +50,5 @@ test('Can be reset with unload', () => {
   unload()
 
   const wrapper = mount(<Illo name="bulb" />)
-  expect(wrapper.html()).not.toContain(svgs.bulb)
+  expect(wrapper.find(bulb).length).toBeFalsy()
 })

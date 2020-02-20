@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { cy } from '@helpscout/cyan'
 import Input from '../Input'
 import ConditionField from './ConditionField'

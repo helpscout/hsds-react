@@ -13,7 +13,6 @@ describe('State', () => {
   })
 
   test('Returns initialState by default', () => {
-    // @ts-ignore
     const nextState = reducer()
 
     expect(nextState).toEqual(initialState)

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { mount } from 'enzyme'
 import { MemoryRouter as Router } from 'react-router'
 import { default as Modal, ModalComponent } from '../Modal'

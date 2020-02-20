@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { shadows } from '../src/styles/configs/shadows'
 
 // const stories = storiesOf('Utilities/Shadow', module);

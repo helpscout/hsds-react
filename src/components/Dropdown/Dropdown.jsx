@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from '@helpscout/wedux'
 import { initialState } from './Dropdown.store'
 import { closeDropdown, setMenuNode, setTriggerNode } from './Dropdown.actions'
@@ -36,7 +37,6 @@ export class Dropdown extends React.PureComponent {
 
     const targetNode = event.target
 
-    /* istanbul ignore else */
     // When the component is displayed in an `iframe` (e.g. Beacon) we need
     // to do an instanceof check based on the `iframe`#Element class type,
     // using the `contentWindow` prop. https://stackoverflow.com/a/26251098
@@ -71,8 +71,7 @@ export class Dropdown extends React.PureComponent {
   renderTrigger() {
     const { trigger, renderTrigger } = this.props
     const triggerComponent = renderTrigger
-      ? /* istanbul ignore next */
-        renderRenderPropComponent(renderTrigger)
+      ? renderRenderPropComponent(renderTrigger)
       : trigger
 
     return <Trigger {...this.getTriggerProps()}>{triggerComponent}</Trigger>
@@ -87,7 +86,6 @@ export class Dropdown extends React.PureComponent {
     this.menuNode = node
     this.props.menuRef(node)
 
-    /* istanbul ignore next */
     // Internally, for store
 
     if (this.props.getState().menuNode) return
@@ -99,7 +97,6 @@ export class Dropdown extends React.PureComponent {
     this.triggerNode = node
     this.props.triggerRef(node)
 
-    /* istanbul ignore next */
     // Internally, for store
 
     if (this.props.getState().triggerNode === node) return
@@ -176,5 +173,73 @@ const ConnectedDropdown = connect(
     setTriggerNode,
   }
 )(Dropdown)
+
+const DropdownMenuDimensions = {
+  maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  maxWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  minHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  minWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+}
+
+Dropdown.propTypes = Object.assign({}, DropdownMenuDimensions, {
+  activeClassName: PropTypes.string,
+  allowMultipleSelection: PropTypes.bool,
+  cardBorderColor: PropTypes.string,
+  children: PropTypes.func,
+  className: PropTypes.string,
+  clearOnSelect: PropTypes.bool,
+  closeDropdown: PropTypes.func,
+  closeOnSelect: PropTypes.bool,
+  contentWindow: PropTypes.any,
+  direction: PropTypes.oneOf(['left', 'right']),
+  disabled: PropTypes.bool,
+  dropUp: PropTypes.bool,
+  enableLeftRightArrowNavigation: PropTypes.bool,
+  enableTabNavigation: PropTypes.bool,
+  envNode: PropTypes.any,
+  focusClassName: PropTypes.string,
+  forceDropDown: PropTypes.bool,
+  getState: PropTypes.func,
+  id: PropTypes.string,
+  index: PropTypes.string,
+  innerRef: PropTypes.func,
+  inputValue: PropTypes.string,
+  isLoading: PropTypes.bool,
+  isOpen: PropTypes.bool,
+  isFocusSelectedItemOnOpen: PropTypes.bool,
+  isSelectFirstItemOnOpen: PropTypes.bool,
+  items: PropTypes.arrayOf(PropTypes.any),
+  label: PropTypes.string,
+  menuId: PropTypes.string,
+  menuOffsetTop: PropTypes.number,
+  menuRef: PropTypes.func,
+  onBlur: PropTypes.func,
+  onClose: PropTypes.func,
+  onFocus: PropTypes.func,
+  onMenuMount: PropTypes.func,
+  onMenuUnmount: PropTypes.func,
+  onOpen: PropTypes.func,
+  onSelect: PropTypes.func,
+  openClassName: PropTypes.string,
+  positionFixed: PropTypes.bool,
+  previousIndex: PropTypes.any,
+  renderEmpty: PropTypes.any,
+  renderItem: PropTypes.any,
+  renderLoading: PropTypes.any,
+  renderTrigger: PropTypes.any,
+  selectedItem: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  selectionClearer: PropTypes.string,
+  setMenuNode: PropTypes.func,
+  setTriggerNode: PropTypes.func,
+  shouldDropDirectionUpdate: PropTypes.func,
+  stateReducer: PropTypes.func,
+  trigger: PropTypes.any,
+  triggerRef: PropTypes.func,
+  triggerStyle: PropTypes.any,
+  withScrollLock: PropTypes.bool,
+})
+
+ConnectedDropdown.propTypes = Dropdown.propTypes
 
 export default ConnectedDropdown

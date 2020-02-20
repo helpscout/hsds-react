@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { mount, render } from 'enzyme'
 import { Select } from './Select'
 

@@ -12,20 +12,20 @@ Or, even faster, you can run:
 npm install @helpscout/hsds-react --save
 ```
 
-## React (v15)
+## React (v16.8+)
 
-Blue has a couple of `peerDependencies`:
+HSDS has a couple of `peerDependencies`:
 
 - [`react`](https://www.npmjs.com/package/react)
 - [`react-dom`](https://www.npmjs.com/package/react-dom)
 
 Make sure you have these installed in your project.
 
-Blue currently runs on **React version 15**. Work is being done to add compatibility with 16+. 💪
+Blue currently runs on **React version 16**.
 
 ### Future of CSS-in-Blue
 
-We're moving towards a CSS-in-JS future, powered by [Fancy](https://github.com/helpscout/fancy), our custom CSS-in-JS solution (which uses [Emotion](https://emotion.sh/) under the hood).
+We're moving towards a CSS-in-JS future, powered by [Styled component](https://styled-components.com/).
 
 ## Next
 

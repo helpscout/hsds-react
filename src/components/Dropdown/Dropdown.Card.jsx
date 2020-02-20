@@ -45,7 +45,6 @@ export class Card extends React.PureComponent {
     })
   }
 
-  /* istanbul ignore next */
   getWidthValue() {
     const { triggerNode, width } = this.props
     if (!isDefined(width)) return null

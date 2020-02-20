@@ -3,7 +3,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { TypingDotsUI, DotUI } from './TypingDots.css'
 
-export class TypingDots extends React.PureComponent {
+class TypingDots extends React.PureComponent {
   static className = 'c-TypingDots'
 
   getClassName() {

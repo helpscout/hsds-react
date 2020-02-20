@@ -18,7 +18,7 @@ jest.mock('../Tooltip.Popper', () => {
   const Popper = ({ className, children }) => (
     <div className={className}>{children}</div>
   )
-  return { default: Popper }
+  return Popper
 })
 
 jest.mock('../../Pop', () => {
@@ -35,7 +35,7 @@ jest.mock('../../Pop', () => {
   Pop.Reference = Reference
   Pop.Popper = Popper
 
-  return { default: Pop }
+  return Pop
 })
 
 describe('Pop/Render', () => {

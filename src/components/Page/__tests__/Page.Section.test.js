@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { mount } from 'enzyme'
 import Section from '../Page.Section'
 import { PageContext } from '../Page'

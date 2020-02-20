@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import React from 'react'
 import { connect } from '@helpscout/wedux'
 import Keys from '../../constants/Keys'
@@ -160,7 +161,7 @@ class Renderer extends React.PureComponent {
 
   setNextIndex = nextIndex => {
     const { envNode } = this.props
-    /* istanbul ignore if */
+
     if (!isDefined(nextIndex)) return
 
     const target = findItemDOMNode(nextIndex, envNode)

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { WithAktiv } from '../../utilities/storybook'
 import Text from '.'
 

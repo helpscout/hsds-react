@@ -3,7 +3,7 @@ import { mount } from 'enzyme'
 import { MemoryRouter } from 'react-router'
 import OptionTile from './OptionTile'
 import FluffyCard from '../FluffyCard'
-import OptionIcon from '../OptionIcon'
+import OptionIcon from './OptionIcon'
 
 describe('ClassName', () => {
   test('Has default className', () => {

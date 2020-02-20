@@ -11,7 +11,7 @@ module.exports = api => {
       },
     ],
     [
-      'inline-svg',
+      'inline-react-svg',
       {
         svgo: {
           plugins: [

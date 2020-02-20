@@ -1,9 +1,9 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import { Toolbar } from './Toolbar'
-import { Block } from './Toolbar.Block'
-import { Item } from './Toolbar.Item'
-import { Shadow } from './Toolbar.Shadow'
+import Toolbar from './Toolbar'
+import Block from './Toolbar.Block'
+import Item from './Toolbar.Item'
+import Shadow from './Toolbar.Shadow'
 import Flexy from '../Flexy'
 
 describe('Toolbar ClassName', () => {

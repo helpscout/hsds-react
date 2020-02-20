@@ -65,7 +65,6 @@ export const incrementPathIndex = (path, amount = 1) => {
   const paths = path.split(DELIMETER)
   const nextIndexBase = paths.pop()
 
-  /* istanbul ignore if */
   if (!nextIndexBase) return path
 
   const nextIndex = parseInt(nextIndexBase, 10) + amount
@@ -76,7 +75,6 @@ export const decrementPathIndex = (path, amount = 1) => {
   const paths = path.split(DELIMETER)
   const nextIndexBase = paths.pop()
 
-  /* istanbul ignore if */
   if (!nextIndexBase) return path
 
   let nextIndex = parseInt(nextIndexBase, 10) - amount
@@ -145,10 +143,10 @@ export const getItemFromCollection = (items, value) => {
     if (itemIsActive(value, item)) {
       return item
     }
-    /* istanbul ignore else */
+
     if (item.items) {
       const child = getItemFromCollection(item.items, value)
-      /* istanbul ignore else */
+
       if (child) return child
     }
   }
@@ -225,7 +223,6 @@ export const getIndexMapFromItems = (items, path) => {
       ? getIndexMapFromItems(item.items, itemIndex)
       : {}
 
-    /* istanbul ignore else */
     if (!indexMap[itemIndex]) {
       // TODO: validate if this place is suppose to do something
       //indexMap
@@ -267,12 +264,10 @@ export const getItemProps = (state, item, index) => {
 
   let itemIndex
 
-  /* istanbul ignore else */
   if (indexMap) {
     itemIndex = Object.keys(indexMap).find(key => indexMap[key] === indexKey)
   }
 
-  /* istanbul ignore if */
   if (isDefined(index)) {
     itemIndex = !isString(index) ? index.toString() : index
   }
@@ -286,14 +281,13 @@ export const getItemProps = (state, item, index) => {
   const key =
     getComponentKey(item, index) ||
     indexKey ||
-    /* istanbul ignore next */
     `unsafeComponentKey-${item.toString()}`
 
   return {
     ...rest,
     className: classNames(
       'c-DropdownItem',
-      /* istanbul ignore next */
+
       hasSubMenu && 'has-subMenu',
       isActive && 'is-active',
       className

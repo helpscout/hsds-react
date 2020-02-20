@@ -1,6 +1,6 @@
 # Brand color
 
-Below is the brand color data structure for Fancy's `ThemeProvider` within Blue:
+Below is the brand color data structure for `ThemeProvider` within HSDS:
 
 ```js
 const theme = {
