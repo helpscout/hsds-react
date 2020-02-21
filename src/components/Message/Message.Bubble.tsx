@@ -69,18 +69,21 @@ export const Bubble = (props: Props, context: Context) => {
     className
   )
 
+  let showEmojiOnlyStyles = false
+  const hasOnlyOneChild = React.Children.count(children) === 1
+
   const childrenMarkup = React.Children.map(children, child => {
+    showEmojiOnlyStyles =
+      !isThemeEmbed && hasOnlyOneChild && textIncludesOnlyEmoji(child)
+    const fontSize = isThemeEmbed ? '13' : showEmojiOnlyStyles ? 48 : '14'
+
     return isWord(child) || isNativeSpanType(child) ? (
       <MessageBubbleBody
         className="c-MessageBubble__body"
         isEmbed={isThemeEmbed}
-        textIncludesOnlyEmoji={textIncludesOnlyEmoji(child)}
+        showEmojiOnlyStyles={showEmojiOnlyStyles}
       >
-        <Text
-          wordWrap
-          lineHeightInherit
-          size={!isThemeEmbed && textIncludesOnlyEmoji(child) ? 48 : '14'}
-        >
+        <Text wordWrap lineHeightInherit size={fontSize}>
           {child}
         </Text>
       </MessageBubbleBody>
@@ -150,6 +153,7 @@ export const Bubble = (props: Props, context: Context) => {
       {...rest}
       className={componentClassName}
       isEmbed={isThemeEmbed}
+      showEmojiOnlyStyles={showEmojiOnlyStyles}
     >
       {fromMarkup}
       {titleMarkup}

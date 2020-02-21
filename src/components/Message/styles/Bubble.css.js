@@ -31,16 +31,15 @@ export const config = {
 
 export const MessageBubbleBody = styled('span')`
   color: ${getColor('charcoal.700')};
+  line-height: 24px;
   word-break: break-word;
-  ${({ textIncludesOnlyEmoji }) => {
-    return textIncludesOnlyEmoji ? 'line-height: 1.5;' : 'line-height: 24px;'
-  }}
+
+  ${({ showEmojiOnlyStyles }) => showEmojiOnlyStyles && `line-height: 1`}
 
   ${({ isEmbed }) =>
     isEmbed &&
     `
       color: ${getColor('charcoal.500')};
-      font-size: 13px;
       line-height: 19px;
       line-height: calc(19 / 13);
     `}
@@ -154,4 +153,13 @@ export const MessageBubbleUI = styled('div')`
   &.is-theme-notifications {
     padding: ${config.padding.notification};
   }
+
+  ${({ showEmojiOnlyStyles }) =>
+    showEmojiOnlyStyles &&
+    `
+      background: none !important;
+      border: none;
+      padding-top: 0;
+      padding-bottom:0;
+    `}
 `

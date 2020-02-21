@@ -48,14 +48,14 @@ describe('Bubble', () => {
     const wrapper = mount(<Chat>Mugatu</Chat>)
     const o = wrapper.find(Bubble)
 
-    expect(o.instance().props.children).toBe('Mugatu')
+    expect(o.getElement().props.children).toBe('Mugatu')
   })
 
   test('Passes correct props to Bubble', () => {
     const wrapper = mount(
       <Chat body="body" from isNote ltr rtl size="sm" title="title" to typing />
     )
-    const props = wrapper.find(Bubble).instance().props
+    const props = wrapper.find(Bubble).getElement().props
 
     expect(props.body).toBeTruthy()
     expect(props.from).toBeTruthy()
