@@ -166,6 +166,36 @@ describe('Content', () => {
     expect(o.length).toBe(1)
     expect(wrapper.html()).toContain(parsedHTML)
   })
+
+  test('font size should be 14', () => {
+    const wrapper = mount(<Bubble to>Bye TomO</Bubble>)
+    const o = wrapper.find(Text)
+
+    expect(o.instance().props.size).toBe('14')
+  })
+
+  describe('text that includes only emoji', () => {
+    describe('when theme is not embed', () => {
+      test('font size should be 48', () => {
+        const wrapper = mount(<Bubble from>🐐🦄</Bubble>)
+        const o = wrapper.find(Text)
+
+        expect(o.instance().props.size).toBe(48)
+      })
+    })
+    describe('when theme is embed', () => {
+      test('font size should be 13', () => {
+        const wrapper = mount(
+          <Message.Provider theme="embed">
+            <Bubble from>🐐🦄</Bubble>
+          </Message.Provider>
+        )
+        const o = wrapper.find(Text)
+
+        expect(o.instance().props.size).toBe('13')
+      })
+    })
+  })
 })
 
 describe('Styles', () => {
