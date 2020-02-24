@@ -27,7 +27,9 @@ export default function deprecatedComponentTransform(file, api) {
   components.forEach(c => {
     const elements = root.findJSXElements(c)
     elements.forEach(p => {
-      const componentName = p.value.name.name
+      const componentName = p.value.name
+        ? p.value.name.name
+        : p.value.openingElement.name.name
       processDeprecatedComponent(p, componentName)
     })
 
