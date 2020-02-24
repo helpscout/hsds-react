@@ -92,8 +92,14 @@
     "babel-plugin-prismjs": "^1.1.1",
     "compute-scroll-into-view": "1.0.11",
     "dash-get": "1.0.2",
+    "execa": "^4.0.0",
     "fast-deep-equal": "^2.0.1",
+    "globby": "^11.0.0",
+    "inquirer": "^7.0.4",
     "invariant": "2.2.4",
+    "is-git-clean": "^1.1.0",
+    "jscodeshift": "^0.7.0",
+    "meow": "^6.0.1",
     "path-to-regexp": "2.4.0",
     "popper.js": "1.14.3",
     "prismjs": "^1.17.1",
@@ -160,7 +166,7 @@
     "babel-plugin-inline-react-svg": "^1.1.1",
     "babel-plugin-inline-svg": "1.0.1",
     "babel-plugin-styled-components": "^1.10.6",
-    "chalk": "1.1.3",
+    "chalk": "^1.1.3",
     "confusing-browser-globals": "^1.0.7",
     "coveralls": "3.0.9",
     "cpx": "^1.5.0",
@@ -232,5 +238,8 @@
     "hooks": {
       "pre-commit": "pretty-quick --staged"
     }
+  },
+  "bin": {
+    "hsds-codemod": "./scripts/codemod/hsds-codemod.js"
   }
 }
