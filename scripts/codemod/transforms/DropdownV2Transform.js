@@ -2,8 +2,8 @@ import { replaceModuleNames } from './ReplaceImportsTransform'
 
 // inspired by https://github.com/jcoreio/jscodeshift-transport
 export default function dropdownV2Transform(fileInfo, api) {
-  const moduleName = '/Dropdown/DropdownV2'
-  const moduleNameTarget = '/Dropdown'
+  const moduleName = 'Dropdown/DropdownV2'
+  const moduleNameTarget = 'Dropdown'
   const j = api.jscodeshift
   const root = j(fileInfo.source)
   const file = fileInfo.path

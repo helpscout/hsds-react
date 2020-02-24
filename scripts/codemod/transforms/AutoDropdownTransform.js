@@ -1,8 +1,8 @@
 import { replaceModuleNames } from './ReplaceImportsTransform'
 
 export default function autoDropdownTransform(fileInfo, api) {
-  const moduleName = '/AutoDropdown'
-  const moduleNameTarget = '/SearchableDropdown'
+  const moduleName = 'AutoDropdown'
+  const moduleNameTarget = 'SearchableDropdown'
   const j = api.jscodeshift
   const root = j(fileInfo.source)
   const file = fileInfo.path

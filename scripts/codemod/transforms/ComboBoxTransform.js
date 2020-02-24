@@ -2,8 +2,8 @@ import { replaceModuleNames } from './ReplaceImportsTransform'
 
 // inspired by https://github.com/jcoreio/jscodeshift-transport
 export default function comboBoxTransform(fileInfo, api) {
-  const moduleName = '/ComboBox'
-  const moduleNameTarget = '/SearchableDropdown'
+  const moduleName = 'ComboBox'
+  const moduleNameTarget = 'SearchableDropdown'
   const j = api.jscodeshift
   const root = j(fileInfo.source)
   const file = fileInfo.path

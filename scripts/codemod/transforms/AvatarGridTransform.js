@@ -1,8 +1,8 @@
 import { replaceModuleNames } from './ReplaceImportsTransform'
 
 export default function avatarGridTransform(fileInfo, api) {
-  const moduleName = '/AvatarGrid'
-  const moduleNameTarget = '/AvatarList'
+  const moduleName = 'AvatarGrid'
+  const moduleNameTarget = 'AvatarList'
   const j = api.jscodeshift
   const root = j(fileInfo.source)
   const file = fileInfo.path

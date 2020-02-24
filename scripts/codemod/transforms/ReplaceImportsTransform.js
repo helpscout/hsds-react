@@ -2,7 +2,10 @@
 export default function replaceImportTransform(
   file,
   api,
-  { moduleName = 'PromoCard', moduleNameTarget = 'Card' }
+  {
+    moduleName = '@helpscout/hsds-react',
+    moduleNameTarget = '@helpscout/hsds-react-next',
+  }
 ) {
   const j = api.jscodeshift
   const root = j(file.source)
