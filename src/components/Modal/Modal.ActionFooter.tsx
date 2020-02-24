@@ -30,25 +30,19 @@ class ActionFooter extends React.PureComponent<ModalActionFooterProps> {
   handleCancel = e => {
     e && e.preventDefault()
     const { onCancel } = this.props
-    if (onCancel) {
-      onCancel()
-    }
+    onCancel()
   }
 
   handlePrimaryAction = e => {
     e && e.preventDefault()
     const { onPrimaryClick } = this.props
-    if (onPrimaryClick) {
-      onPrimaryClick()
-    }
+    onPrimaryClick()
   }
 
   handleSecondaryAction = e => {
     e && e.preventDefault()
     const { onSecondaryClick } = this.props
-    if (onSecondaryClick) {
-      onSecondaryClick()
-    }
+    onSecondaryClick()
   }
 
   renderPrimaryButton() {

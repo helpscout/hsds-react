@@ -725,6 +725,24 @@ describe('Card: Focus', () => {
 describe('Modal V2', () => {
   test('Renders as default style', () => {
     mount(
+      <Modal version={2} title={'Title'} isOpen={true} trigger={trigger}>
+        <div className="TestContent">Hello</div>
+      </Modal>
+    )
+
+    const modal = document.getElementsByClassName('c-Modal')[0]
+    const style = document.querySelectorAll('.is-default')
+    const content = document.querySelectorAll('.TestContent')
+    const header = document.querySelectorAll('.c-ModalHeaderV2')
+
+    expect(modal).toBeTruthy()
+    expect(style.length).toBeTruthy()
+    expect(content.length).toBeTruthy()
+    expect(header.length).toBeTruthy()
+  })
+
+  test('Renders as default style w/description', () => {
+    mount(
       <Modal
         version={2}
         title={'Title'}
@@ -771,11 +789,61 @@ describe('Modal V2', () => {
     expect(header.length).toBeTruthy()
   })
 
+  test('Renders as branded style w/description', () => {
+    mount(
+      <Modal
+        version={2}
+        kind={MODAL_KIND.BRANDED}
+        description={'Description'}
+        title={'Title'}
+        isOpen={true}
+        trigger={trigger}
+      >
+        <div className="TestContent">Hello</div>
+      </Modal>
+    )
+
+    const modal = document.getElementsByClassName('c-Modal')[0]
+    const style = document.querySelectorAll('.is-branded')
+    const content = document.querySelectorAll('.TestContent')
+    const header = document.querySelectorAll('.c-ModalHeaderV2')
+
+    expect(modal).toBeTruthy()
+    expect(style.length).toBeTruthy()
+    expect(content.length).toBeTruthy()
+    expect(header.length).toBeTruthy()
+  })
+
   test('Renders as alert style', () => {
     mount(
       <Modal
         version={2}
         kind={MODAL_KIND.ALERT}
+        title={'Title'}
+        isOpen={true}
+        trigger={trigger}
+      >
+        <div className="TestContent">Hello</div>
+      </Modal>
+    )
+
+    const modal = document.getElementsByClassName('c-Modal')[0]
+    const style = document.querySelectorAll('.is-alert')
+    const content = document.querySelectorAll('.TestContent')
+    const header = document.querySelectorAll('.c-ModalHeaderV2')
+
+    expect(modal).toBeTruthy()
+    expect(style.length).toBeTruthy()
+    expect(content.length).toBeTruthy()
+    expect(header.length).toBeTruthy()
+  })
+
+  test('Renders as alert style w/description', () => {
+    mount(
+      <Modal
+        version={2}
+        kind={MODAL_KIND.ALERT}
+        description={'Description'}
         title={'Title'}
         description={'Description'}
         isOpen={true}
@@ -797,6 +865,30 @@ describe('Modal V2', () => {
   })
 
   test('Renders as sequence style', () => {
+    mount(
+      <Modal
+        version={2}
+        kind={MODAL_KIND.SEQUENCE}
+        title={'Title'}
+        isOpen={true}
+        trigger={trigger}
+      >
+        <div className="TestContent">Hello</div>
+      </Modal>
+    )
+
+    const modal = document.getElementsByClassName('c-Modal')[0]
+    const style = document.querySelectorAll('.is-sequence')
+    const content = document.querySelectorAll('.TestContent')
+    const header = document.querySelectorAll('.c-ModalHeaderV2')
+
+    expect(modal).toBeTruthy()
+    expect(style.length).toBeTruthy()
+    expect(content.length).toBeTruthy()
+    expect(header.length).toBeTruthy()
+  })
+
+  test('Renders as sequence style w/description', () => {
     mount(
       <Modal
         version={2}

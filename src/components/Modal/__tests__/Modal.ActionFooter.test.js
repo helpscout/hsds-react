@@ -80,7 +80,7 @@ describe('Toolbar', () => {
 })
 
 describe('Buttons', () => {
-  test('Renders Primary Button', () => {
+  test('Renders Primary Button w/ custom onClick', () => {
     const clickSpy = jest.fn()
     const buttonText = 'Primary'
     const wrapper = mount(
@@ -95,7 +95,16 @@ describe('Buttons', () => {
     expect(clickSpy).toHaveBeenCalled()
   })
 
-  test('Renders Secondary Button', () => {
+  test('Renders Primary Button', () => {
+    const buttonText = 'Primary'
+    const wrapper = mount(<ActionFooter primaryButtonText={buttonText} />)
+    const o = wrapper.find('.c-ButtonV2.is-primary').first()
+
+    expect(o.length).toBe(1)
+    expect(o.text()).toBe(buttonText)
+  })
+
+  test('Renders Secondary Button w/ custom on click', () => {
     const clickSpy = jest.fn()
     const buttonText = 'Secondary'
     const wrapper = mount(
@@ -113,9 +122,18 @@ describe('Buttons', () => {
     expect(clickSpy).toHaveBeenCalled()
   })
 
+  test('Renders Secondary Button', () => {
+    const buttonText = 'Secondary'
+    const wrapper = mount(<ActionFooter secondaryButtonText={buttonText} />)
+    const o = wrapper.find('.c-ButtonV2.is-secondary').first()
+
+    expect(o.length).toBe(1)
+    expect(o.text()).toBe(buttonText)
+  })
+
   test('Renders Alert style Secondary Button', () => {
     const clickSpy = jest.fn()
-    const buttonText = 'Secondary'
+    const buttonText = 'Something'
     const wrapper = mount(
       <ActionFooter
         kind={MODAL_KIND.ALERT}
@@ -132,7 +150,7 @@ describe('Buttons', () => {
     expect(clickSpy).toHaveBeenCalled()
   })
 
-  test('Renders default Cancel Button', () => {
+  test('Renders default Cancel Button w/ custom onClick', () => {
     const clickSpy = jest.fn()
     const buttonText = 'Cancel'
     const wrapper = mount(
@@ -145,6 +163,16 @@ describe('Buttons', () => {
 
     o.simulate('click')
     expect(clickSpy).toHaveBeenCalled()
+  })
+
+  test('Renders default Cancel Button', () => {
+    const buttonText = 'Nevermind'
+    const wrapper = mount(<ActionFooter cancelText={buttonText} />)
+    const o = wrapper.find('.c-ButtonV2.is-default').first()
+
+    expect(o.length).toBe(1)
+    expect(o.text()).toBe(buttonText)
+    o.simulate('click')
   })
 
   test('Hides default Cancel Button if specified', () => {
