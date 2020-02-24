@@ -21,9 +21,11 @@ export default function buttonTransform(fileInfo, api) {
 
   const processButtonComponent = p => {
     const jSXElement = p.value
-    jSXElement.attributes = jSXElement.attributes.filter(
-      a => a && a.name && a.name.name !== 'version'
-    )
+    jSXElement.attributes = jSXElement.attributes.filter(a => {
+      if (a.type === 'JSXSpreadAttribute') return true
+      return a && a.name && a.name.name !== 'version'
+    })
+
     jSXElement.attributes.forEach(a => {
       if (
         a &&
