@@ -62,7 +62,7 @@ function runTransform({ files, flags, parser, transformer }) {
     args.push('--print')
   }
 
-  args.push('--verbose=2')
+  args.push('--verbose=0')
 
   args.push('--ignore-pattern=**/node_modules/**')
 
@@ -78,7 +78,11 @@ function runTransform({ files, flags, parser, transformer }) {
 
   args = args.concat(files)
 
-  console.log(`Executing command: jscodeshift ${args.join(' ')}`)
+  console.log(
+    chalk.green(
+      `Executing command: ${chalk.white(`jscodeshift ${args.join(' ')}`)}}`
+    )
+  )
 
   const result = execa.sync(jscodeshiftExecutable, args, {
     stdio: 'inherit',

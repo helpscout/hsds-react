@@ -22,13 +22,23 @@ export default function buttonTransform(fileInfo, api) {
   const processButtonComponent = p => {
     const jSXElement = p.value
     jSXElement.attributes = jSXElement.attributes.filter(
-      a => a.name.name !== 'version'
+      a => a && a.name && a.name.name !== 'version'
     )
     jSXElement.attributes.forEach(a => {
-      if (a.name.name === 'kind' && a.value.value === 'primaryAlt') {
+      if (
+        a &&
+        a.name &&
+        a.name.name === 'kind' &&
+        a.value.value === 'primaryAlt'
+      ) {
         a.value.value = 'primary'
       }
-      if (a.name.name === 'kind' && a.value.value === 'secondaryAlt') {
+      if (
+        a &&
+        a.name &&
+        a.name.name === 'kind' &&
+        a.value.value === 'secondaryAlt'
+      ) {
         a.value.value = 'tertiary'
       }
     })
