@@ -76,6 +76,10 @@ export const InnerWrapperUI = styled('div')`
     min-height: 400px;
     max-height: 90%;
 
+    &.is-default {
+      width: 680px;
+    }
+
     &.is-alert {
       min-height: 179px;
       width: 440px;
@@ -99,6 +103,10 @@ export const CardUI = styled(Card)`
   outline: none;
   overflow: hidden;
 
+  &.is-default {
+    width: 680px;
+  }
+
   &.is-alert {
     min-width: 440px;
     padding-bottom: 60px;
@@ -114,7 +122,7 @@ export const CloseUI = styled('div')`
 `
 
 function makeHSAppInnerWrapperStyles(props) {
-  if (!isHSApp(props)) return ''
+  if (!isHSApp(props) || props.version === 2) return ''
 
   return `
     margin-bottom: ${config.theme.app.marginBottom};
