@@ -23,13 +23,7 @@ import { createUniqueIDFactory } from '../../utilities/id'
 import { isModifierKeyPressed } from '../../utilities/keys'
 import { isDefined } from '../../utilities/is'
 import { noop, requestAnimationFrame } from '../../utilities/other'
-import {
-  COMPONENT_KEY,
-  getTextAreaLineCurrent,
-  getTextAreaLineTotal,
-  moveCursorToEnd,
-  isTextArea,
-} from './Input.utils'
+import { COMPONENT_KEY, moveCursorToEnd, isTextArea } from './Input.utils'
 import {
   CharValidatorText,
   CharValidatorUI,
