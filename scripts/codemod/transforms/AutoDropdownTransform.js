@@ -46,7 +46,7 @@ export default function autoDropdownTransform(fileInfo, api) {
   // !!! ACTIONS
 
   // replace import path
-  replaceModuleNames(j, file, root, moduleName, moduleNameTarget)
+  replaceModuleNames(j, file, root, moduleName, moduleNameTarget, true)
 
   //replace classNames
   const cssElements = root.find(j.TemplateLiteral).filter(p => {

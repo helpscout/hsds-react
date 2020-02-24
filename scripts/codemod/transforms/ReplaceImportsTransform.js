@@ -2,10 +2,7 @@
 export default function replaceImportTransform(
   file,
   api,
-  {
-    moduleName = '@helpscout/hsds-react/',
-    moduleNameTarget = '@helpscout/hsds-react-next/',
-  }
+  { moduleName = 'PromoCard', moduleNameTarget = 'Card' }
 ) {
   const j = api.jscodeshift
   const root = j(file.source)
@@ -18,7 +15,8 @@ export const replaceModuleNames = (
   file,
   root,
   moduleName,
-  moduleNameTarget
+  moduleNameTarget,
+  replaceSpecifiers = false
 ) => {
   const replaceAction = s => {
     return s.replace(moduleName, moduleNameTarget)
@@ -29,7 +27,14 @@ export const replaceModuleNames = (
     const {
       source: { value: moduleName },
     } = node
-    const replacement = replaceAction(moduleName, { file, path: nodePath })
+    if (replaceSpecifiers) {
+      node.specifiers.forEach(s => {
+        if (s.local) {
+          s.local.name = moduleNameTarget
+        }
+      })
+    }
+    const replacement = replaceAction(moduleName)
     if (typeof replacement === 'string') node.source.value = replacement
   }
 
