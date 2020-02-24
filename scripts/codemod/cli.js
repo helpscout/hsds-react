@@ -48,7 +48,7 @@ function checkGitStatus(force) {
   }
 }
 
-function runTransform({ files, flags, parser, transformer, answers }) {
+function runTransform({ files, flags, parser, transformer }) {
   const transformerPath = path.join(transformerDirectory, `${transformer}.js`)
 
   let args = []
@@ -91,6 +91,10 @@ function runTransform({ files, flags, parser, transformer, answers }) {
 }
 
 const TRANSFORMER_INQUIRER_CHOICES = [
+  {
+    name: 'All: Run all codemod',
+    value: 'all',
+  },
   {
     name:
       'AutoDropdown: Rename AutoDropdown to SearchableDropdown and add the autoInput prop',
@@ -221,12 +225,24 @@ function run() {
         return null
       }
 
+      if (transformer === 'all') {
+        const allTransforms = TRANSFORMER_INQUIRER_CHOICES.map(t => {
+          runTransform({
+            files: filesExpanded,
+            flags: cli.flags,
+            parser: 'babel',
+            transformer: t.value,
+          })
+        })
+
+        return Promise.all(allTransforms)
+      }
+
       return runTransform({
         files: filesExpanded,
         flags: cli.flags,
         parser: 'babel',
         transformer: selectedTransformer,
-        answers: answers,
       })
     })
 }
