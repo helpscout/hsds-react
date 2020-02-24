@@ -194,33 +194,6 @@ export class Input extends React.PureComponent<InputProps, InputState> {
     }, forceAutoFocusTimeout)
   }
 
-  // JSDOM does not provide the necessary values to test this method.
-  // Mocking it would also be extremely difficult and brittle.
-
-  /* istanbul ignore next */
-  scrollToBottom() {
-    if (!this.props.multiline) return
-    if (!this.inputNode || !isTextArea(this.inputNode)) return
-    if (!isDefined(this.computedStyles.paddingBottom)) return
-
-    const { scrollTop, clientHeight } = this.inputNode
-
-    const currentLine = getTextAreaLineCurrent(this.inputNode)
-    const totalLines = getTextAreaLineTotal(this.inputNode)
-    const isLastLine = currentLine === totalLines
-
-    const scrollBottom =
-      scrollTop + clientHeight + this.computedStyles.paddingBottom
-
-    if (isLastLine) {
-      requestAnimationFrame(() => {
-        if (this.inputNode && this.inputNode.scrollTo) {
-          this.inputNode.scrollTo(0, scrollBottom)
-        }
-      })
-    }
-  }
-
   callStartTyping() {
     /* istanbul ignore next */
     if (this.props.onStartTyping) {
@@ -373,7 +346,6 @@ export class Input extends React.PureComponent<InputProps, InputState> {
     }
 
     this.props.onKeyDown(event)
-    this.scrollToBottom()
   }
 
   handleOnKeyUp = (event: Event) => {
