@@ -13,7 +13,6 @@ const chalk = require('chalk')
 const isGitClean = require('is-git-clean')
 
 const transformerDirectory = path.join(__dirname, 'transforms')
-console.log(__dirname)
 
 const jscodeshiftExecutable = require.resolve(
   '../../node_modules/jscodeshift/bin/jscodeshift.sh'
@@ -94,8 +93,46 @@ function runTransform({ files, flags, parser, transformer, answers }) {
 const TRANSFORMER_INQUIRER_CHOICES = [
   {
     name:
-      'rename-unsafe-lifecycles: Adds "UNSAFE_" prefix for renamed lifecycle hooks.',
-    value: 'rename-unsafe-lifecycles',
+      'AutoDropdown: Rename AutoDropdown to SearchableDropdown and add the autoInput prop',
+    value: 'AutoDropdownTransform',
+  },
+  {
+    name:
+      'AvatarGrid: Rename AvatarGrid to AvatarList, and add props center & grid',
+    value: 'AvatarGridTransform',
+  },
+  {
+    name:
+      'Button: Remove the version={2} prop to Button. Rename some kind value',
+    value: 'ButtonTransform',
+  },
+  {
+    name: 'ComboBox: Rename to SearchableDropdown',
+    value: 'ComboBoxTransform',
+  },
+  {
+    name: 'CssVariables: Rename --BlueXXX to --HSDSXXX',
+    value: 'CssVariablesTransform',
+  },
+  {
+    name:
+      'DeprecatedComponents: Add a TODO comment before each deprecated component (before both the import and the component usage)',
+    value: 'DeprecatedComponentsTransform',
+  },
+  {
+    name:
+      'DropdownV2: Rename the import path to Dropdown, rename classNames when needed',
+    value: 'DropdownV2Transform',
+  },
+  {
+    name:
+      'PropProvider: Add a TODO comment before PropProvider import & component usage',
+    value: 'PropProviderTransform',
+  },
+  {
+    name:
+      'ReplaceImports: Replace all hsds-react import with the next release (hsds-react-next)',
+    value: 'ReplaceImportsTransform',
   },
 ]
 
