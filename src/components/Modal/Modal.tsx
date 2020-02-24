@@ -19,7 +19,7 @@ import { isComponentNamed } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { findFocusableNodes } from '../../utilities/focus'
 import { getClosestDocument, isNodeElement } from '../../utilities/node'
-import { COMPONENT_KEY, MODAL_STYLES } from './Modal.utils'
+import { COMPONENT_KEY, MODAL_KIND, getModalKindClassName } from './Modal.utils'
 import {
   ModalUI,
   InnerWrapperUI,
@@ -62,7 +62,7 @@ class Modal extends React.PureComponent<ModalProps> {
     icon: null,
     illo: null,
     illoSize: 60,
-    kind: MODAL_STYLES.DEFAULT,
+    kind: MODAL_KIND.DEFAULT,
     modalAnimationDelay: 0,
     modalAnimationDuration: 200,
     modalAnimationEasing: 'bounce',
@@ -238,13 +238,12 @@ class Modal extends React.PureComponent<ModalProps> {
 
     const v2 = version === 2
 
+    const modalKindClassName = getModalKindClassName(kind)
+
     const componentClassName = classNames(
       'c-Modal__Card',
       v2 && 'is-v2',
-      kind === MODAL_STYLES.DEFAULT && 'is-default',
-      kind === MODAL_STYLES.ALERT && 'is-alert',
-      kind === MODAL_STYLES.BRANDED && 'is-branded',
-      kind === MODAL_STYLES.SEQUENCE && 'is-sequence',
+      modalKindClassName,
       cardClassName
     )
 
@@ -363,25 +362,21 @@ class Modal extends React.PureComponent<ModalProps> {
     } = this.props
     const v2 = version === 2
 
+    const modalKindClassName = getModalKindClassName(kind)
+
     const componentClassName = classNames(
       'c-Modal',
       v2 && 'v2',
       isOpen && 'is-open',
       state === 'danger' && 'is-danger',
-      kind === MODAL_STYLES.DEFAULT && 'is-default',
-      kind === MODAL_STYLES.ALERT && 'is-alert',
-      kind === MODAL_STYLES.BRANDED && 'is-branded',
-      kind === MODAL_STYLES.SEQUENCE && 'is-sequence',
+      modalKindClassName,
       className
     )
 
     const innerWrapperClassName = classNames(
       'c-Modal__innerWrapper',
       v2 && 'v2',
-      kind === MODAL_STYLES.DEFAULT && 'is-default',
-      kind === MODAL_STYLES.ALERT && 'is-alert',
-      kind === MODAL_STYLES.BRANDED && 'is-branded',
-      kind === MODAL_STYLES.SEQUENCE && 'is-sequence'
+      modalKindClassName
     )
 
     const styles = { ...style, zIndex }

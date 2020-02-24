@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY, MODAL_STYLES } from './Modal.utils'
+import { COMPONENT_KEY, MODAL_KIND, getModalKindClassName } from './Modal.utils'
 import {
   AlertHeaderUI,
   AlertHeaderTitleUI,
@@ -25,7 +25,7 @@ class HeaderV2 extends React.PureComponent<ModalHeaderV2Props> {
     icon: null,
     illo: null,
     illoSize: 60,
-    kind: MODAL_STYLES.DEFAULT,
+    kind: MODAL_KIND.DEFAULT,
     numSteps: 1,
     step: 1,
     title: 'Title',
@@ -121,11 +121,11 @@ class HeaderV2 extends React.PureComponent<ModalHeaderV2Props> {
 
     const componentClassName = classNames('c-ModalHeaderV2', className)
 
-    if (kind === MODAL_STYLES.BRANDED) {
+    if (kind === MODAL_KIND.BRANDED) {
       return this.renderBrandedStyle()
-    } else if (kind === MODAL_STYLES.ALERT) {
+    } else if (kind === MODAL_KIND.ALERT) {
       return this.renderAlertStyle()
-    } else if (kind === MODAL_STYLES.SEQUENCE) {
+    } else if (kind === MODAL_KIND.SEQUENCE) {
       return this.renderSequenceStyle()
     }
 

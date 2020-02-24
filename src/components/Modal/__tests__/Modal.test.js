@@ -4,6 +4,7 @@ import { MemoryRouter as Router } from 'react-router'
 import { default as Modal, ModalComponent } from '../Modal'
 import { Card, Portal, Overlay, Scrollable } from '../../index'
 import Keys from '../../../constants/Keys'
+import { MODAL_KIND } from '../Modal.utils'
 
 const trigger = <a className="trigger">Trigger</a>
 
@@ -718,5 +719,97 @@ describe('Card: Focus', () => {
     jest.runAllTimers()
 
     expect(spy).toHaveBeenCalled()
+  })
+})
+
+describe('Modal V2', () => {
+  test('Renders as default style', () => {
+    mount(
+      <Modal version={2} title={'Title'} isOpen={true} trigger={trigger}>
+        <div className="TestContent">Hello</div>
+      </Modal>
+    )
+
+    const modal = document.getElementsByClassName('c-Modal')[0]
+    const style = document.querySelectorAll('.is-default')
+    const content = document.querySelectorAll('.TestContent')
+    const header = document.querySelectorAll('.c-ModalHeaderV2')
+
+    expect(modal).toBeTruthy()
+    expect(style.length).toBeTruthy()
+    expect(content.length).toBeTruthy()
+    expect(header.length).toBeTruthy()
+  })
+
+  test('Renders as branded style', () => {
+    mount(
+      <Modal
+        version={2}
+        kind={MODAL_KIND.BRANDED}
+        title={'Title'}
+        isOpen={true}
+        trigger={trigger}
+      >
+        <div className="TestContent">Hello</div>
+      </Modal>
+    )
+
+    const modal = document.getElementsByClassName('c-Modal')[0]
+    const style = document.querySelectorAll('.is-branded')
+    const content = document.querySelectorAll('.TestContent')
+    const header = document.querySelectorAll('.c-ModalHeaderV2')
+
+    expect(modal).toBeTruthy()
+    expect(style.length).toBeTruthy()
+    expect(content.length).toBeTruthy()
+    expect(header.length).toBeTruthy()
+  })
+
+  test('Renders as alert style', () => {
+    mount(
+      <Modal
+        version={2}
+        kind={MODAL_KIND.ALERT}
+        title={'Title'}
+        isOpen={true}
+        trigger={trigger}
+      >
+        <div className="TestContent">Hello</div>
+      </Modal>
+    )
+
+    const modal = document.getElementsByClassName('c-Modal')[0]
+    const style = document.querySelectorAll('.is-alert')
+    const content = document.querySelectorAll('.TestContent')
+    const header = document.querySelectorAll('.c-ModalHeaderV2')
+
+    expect(modal).toBeTruthy()
+    expect(style.length).toBeTruthy()
+    expect(content.length).toBeTruthy()
+    expect(header.length).toBeTruthy()
+  })
+
+  test('Renders as sequence style', () => {
+    mount(
+      <Modal
+        version={2}
+        kind={MODAL_KIND.SEQUENCE}
+        title={'Title'}
+        isOpen={true}
+        trigger={trigger}
+      >
+        <div className="TestContent">Hello</div>
+      </Modal>
+    )
+
+    const modal = document.getElementsByClassName('c-Modal')[0]
+    const style = document.querySelectorAll('.is-sequence')
+    const content = document.querySelectorAll('.TestContent')
+    const header = document.querySelectorAll('.c-ModalHeaderV2')
+
+    expect(modal).toBeTruthy()
+    expect(style.length).toBeTruthy()
+    expect(content.length).toBeTruthy()
+    expect(header.length).toBeTruthy()
   })
 })

@@ -1,7 +1,8 @@
 import * as React from 'react'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY, MODAL_STYLES } from './Modal.utils'
+import { noop } from '../../utilities/other'
+import { COMPONENT_KEY, MODAL_KIND, getModalKindClassName } from './Modal.utils'
 import {
   ActionFooterUI,
   CancelButtonUI,
@@ -16,14 +17,14 @@ import Button from '../Button'
 class ActionFooter extends React.PureComponent<ModalActionFooterProps> {
   static defaultProps = {
     cancelText: 'Cancel',
-    kind: MODAL_STYLES.DEFAULT,
-    onCancel: () => {},
+    kind: MODAL_KIND.DEFAULT,
+    onCancel: noop,
     primaryButtonText: 'Save',
     secondaryButtonText: null,
     showDefaultCancel: true,
     state: '',
-    onPrimaryClick: () => {},
-    onSecondaryClick: () => {},
+    onPrimaryClick: noop,
+    onSecondaryClick: noop,
   }
 
   handleCancel = e => {
@@ -71,7 +72,7 @@ class ActionFooter extends React.PureComponent<ModalActionFooterProps> {
       return null
     }
 
-    if (kind === MODAL_STYLES.ALERT) {
+    if (kind === MODAL_KIND.ALERT) {
       return (
         <SecondaryAlertButtonUI
           kind="secondary"
@@ -116,12 +117,11 @@ class ActionFooter extends React.PureComponent<ModalActionFooterProps> {
   render() {
     const { className, kind, state, ...rest } = this.props
 
+    const modalKindClassName = getModalKindClassName(kind)
+
     const componentClassName = classNames(
       'c-ModalActionFooter',
-      kind === MODAL_STYLES.DEFAULT && 'is-default',
-      kind === MODAL_STYLES.ALERT && 'is-alert',
-      kind === MODAL_STYLES.BRANDED && 'is-branded',
-      kind === MODAL_STYLES.SEQUENCE && 'is-sequence',
+      modalKindClassName,
       state === 'danger' && 'is-danger',
       className
     )
