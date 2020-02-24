@@ -1,14 +1,24 @@
+import styled from '../../styled'
+import { getColor } from '../../../styles/utilities/color'
+import Timestamp from '../../Timestamp'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import linkStyles from '../../../styles/mixins/linkStyles.css'
 
-const css = `
+export const ActionUI = styled('div')`
   ${baseStyles}
-  padding-bottom: 4px;
-  padding-top: 4px;
-  
+
+  line-height: 22px;
+  text-align: center;
+
+  ${({ isThemeEmbed }) =>
+    !isThemeEmbed && `color: ${getColor('charcoal.700')} !important;`}
+
   a {
     ${linkStyles()}
   }
 `
-
-export default css
+export const TimestampUI = styled(Timestamp)`
+  .c-Flexy {
+    justify-content: center !important;
+  }
+`

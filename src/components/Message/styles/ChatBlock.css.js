@@ -45,11 +45,6 @@ const css = `
   }
 
   &.is-theme-embed {
-    &.is-type-action {
-      ${bem.element('block')} {
-        margin: auto;
-      }
-    }
     ${bem.element('block')} {
       max-width: 100%;
     }
@@ -66,12 +61,6 @@ const css = `
       justify-content: flex-end;
     }
 
-    ${bem.element('block')} {
-      max-width: 100%;
-    }
-  }
-
-  &.is-type-action {
     ${bem.element('block')} {
       max-width: 100%;
     }

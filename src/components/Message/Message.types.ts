@@ -1,5 +1,3 @@
-export type MessageType = 'action' | 'message' | ''
-
 export type Message = {
   children?: any
   className?: string
@@ -8,7 +6,6 @@ export type Message = {
   ltr?: boolean
   rtl?: boolean
   to?: any
-  type?: MessageType
 }
 
 export type MessageChat = Message & {
