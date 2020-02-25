@@ -1,5 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
+import { faker } from '@helpscout/helix'
 import { Avatar, Message } from '../../src/index'
 
 const stories = storiesOf('Message/Embed', module)
@@ -59,6 +60,11 @@ stories.add('default', () => (
     <Message from avatar={<Avatar name="Artic Puffin" />}>
       <Message.Embed html={html} />
     </Message>
+    <Message to avatar={<Avatar name="Dapper Duck" />}>
+      <Message.Chat read timestamp="9:41am">
+        {faker.lorem.paragraphs()()}
+      </Message.Chat>
+    </Message>
   </Message.Provider>
 ))
 
@@ -72,7 +78,7 @@ stories.add('note', () => (
 
 stories.add('left-right', () => {
   return (
-    <div>
+    <Message.Provider theme="embed">
       <Message to avatar={<Avatar name="Artic Puffin" />}>
         <Message.Chat>Agent chat</Message.Chat>
         <Message.Embed html={html} />
@@ -86,13 +92,13 @@ stories.add('left-right', () => {
         <Message.Chat isNote>Private note</Message.Chat>
         <Message.Embed isNote html={html4} />
       </Message>
-    </div>
+    </Message.Provider>
   )
 })
 
 stories.add('consecutive', () => {
   return (
-    <div>
+    <Message.Provider theme="embed">
       <Message to avatar={<Avatar name="Artic Puffin" />}>
         <Message.Chat>Agent Chat</Message.Chat>
         <Message.Embed html={html} />
@@ -100,6 +106,6 @@ stories.add('consecutive', () => {
         <Message.Embed html={html3} />
         <Message.Embed html={html4} />
       </Message>
-    </div>
+    </Message.Provider>
   )
 })

@@ -6,6 +6,7 @@ import {
   newlineToHTML,
   repeat,
   stripUrlPrefix,
+  textIncludesOnlyEmoji,
   truncateMiddle,
   wordHasSpaces,
 } from '../strings'
@@ -79,6 +80,16 @@ describe('wordHasSpaces', () => {
     expect(wordHasSpaces('super longworddddddddd')).toBeTruthy()
     expect(wordHasSpaces(' super longworddddddddd')).toBeTruthy()
   })
+})
+
+describe('textIncludesOnlyEmoji', () => {
+  expect(textIncludesOnlyEmoji()).toBeFalsy()
+  expect(textIncludesOnlyEmoji([])).toBeFalsy()
+  expect(textIncludesOnlyEmoji('')).toBeFalsy()
+  expect(textIncludesOnlyEmoji({})).toBeFalsy()
+  expect(textIncludesOnlyEmoji('ABC 😘')).toBeFalsy()
+
+  expect(textIncludesOnlyEmoji('🦄 🎂 🚀')).toBeTruthy()
 })
 
 describe('truncateMiddle', () => {

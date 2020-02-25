@@ -12,7 +12,6 @@ import Content from './Message.Content'
 import Embed from './Message.Embed'
 import Media from './Message.Media'
 import Provider from './Message.Provider'
-import Question from './Message.Question'
 import styled from '../styled'
 import { classNames } from '../../utilities/classNames'
 import {
@@ -46,7 +45,6 @@ export class Message extends React.PureComponent<Props> {
   static Embed = Embed
   static Media = Media
   static Provider = Provider
-  static Question = Question
 
   shouldShowAvatar = (): boolean => {
     const { from, showAvatar } = this.props

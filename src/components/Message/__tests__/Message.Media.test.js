@@ -48,24 +48,13 @@ describe('Chat', () => {
 
   test('Passes correct props to Chat', () => {
     const wrapper = mount(
-      <Media
-        from
-        ltr
-        primary
-        isNote
-        read
-        rtl
-        title="title"
-        timestamp="time"
-        to
-      />
+      <Media from ltr isNote read rtl title="title" timestamp="time" to />
     )
     const props = wrapper.find(Chat).instance().props
 
     expect(props.from).toBeTruthy()
     expect(props.isNote).toBeTruthy()
     expect(props.ltr).toBeTruthy()
-    expect(props.primary).toBeTruthy()
     expect(props.read).toBeTruthy()
     expect(props.rtl).toBeTruthy()
     expect(props.title).toBeTruthy()

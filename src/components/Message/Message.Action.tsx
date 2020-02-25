@@ -15,7 +15,17 @@ type Props = MessageChat & {
 type Context = MessageThemeContext
 
 export const Action = (props: Props, context: Context) => {
-  const { children, className, read, timestamp, ...rest } = props
+  const {
+    children,
+    className,
+    from,
+    ltr,
+    read,
+    rtl,
+    timestamp,
+    to,
+    ...rest
+  } = props
   const { theme } = context
 
   const componentClassName = classNames(

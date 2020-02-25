@@ -14,6 +14,5 @@ describe('Export', () => {
     cy.render(<Message.Embed />)
     cy.render(<Message.Media />)
     cy.render(<Message.Provider />)
-    cy.render(<Message.Question />)
   })
 })

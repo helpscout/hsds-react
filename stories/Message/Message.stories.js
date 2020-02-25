@@ -5,14 +5,6 @@ import { ScopeProvider } from '../../src/components/styled'
 
 const stories = storiesOf('Message', module)
 
-stories.add('question', () => (
-  <Message from avatar={<Avatar name="Arctic Puffin" />}>
-    <Message.Question read timestamp="9:41am">
-      How's it goin'?
-    </Message.Question>
-  </Message>
-))
-
 stories.add('action', () => (
   <Message to>
     <Message.Action read timestamp="9:41am">
