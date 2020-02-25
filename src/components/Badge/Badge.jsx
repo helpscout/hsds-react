@@ -5,19 +5,6 @@ import { classNames } from '../../utilities/classNames'
 import BadgeUI from './Badge.css'
 
 class Badge extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-    color: PropTypes.string,
-    count: PropTypes.bool,
-    display: PropTypes.oneOf(['block', 'inlineBlock']),
-    inverted: PropTypes.bool,
-    isSquare: PropTypes.bool,
-    size: PropTypes.string,
-    status: PropTypes.string,
-    style: PropTypes.any,
-    textColor: PropTypes.string,
-    white: PropTypes.bool,
-  }
   static defaultProps = {
     display: 'inlineBlock',
     inverted: false,
@@ -63,6 +50,28 @@ class Badge extends React.Component {
       </BadgeUI>
     )
   }
+}
+
+Badge.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** A custom color value that can be passed in */
+  color: PropTypes.string,
+  count: PropTypes.bool,
+  /** Determines the CSS `display` of the component. Default `inlineBlock`. */
+  display: PropTypes.oneOf(['block', 'inlineBlock']),
+  /** Inverts the colors of the background and text. */
+  inverted: PropTypes.bool,
+  /** Renders a square shape. */
+  isSquare: PropTypes.bool,
+  /** Adjust component size. */
+  size: PropTypes.string,
+  /** Changes the color of the component to the corresponding status. */
+  status: PropTypes.oneOf(['error', 'info', 'success', 'warning']),
+  /** Changes the color of text. */
+  textColor: PropTypes.string,
+  /** Applies a white style to the component. */
+  white: PropTypes.bool,
 }
 
 export default Badge

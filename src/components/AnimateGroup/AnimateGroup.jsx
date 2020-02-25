@@ -8,22 +8,6 @@ import { getComponentKey } from '../../utilities/component'
 export const AnimateGroupContext = React.createContext({})
 
 export class AnimateGroup extends React.PureComponent {
-  static propTypes = {
-    appear: PropTypes.any,
-    className: PropTypes.string,
-    childFactory: PropTypes.func,
-    easing: PropTypes.string,
-    enter: PropTypes.any,
-    exit: PropTypes.any,
-    delay: PropTypes.number,
-    duration: PropTypes.number,
-    sequence: PropTypes.string,
-    stagger: PropTypes.bool,
-    staggerDelay: PropTypes.number,
-    staggerDuration: PropTypes.number,
-    staggerMax: PropTypes.number,
-  }
-
   static defaultProps = {
     childFactory: child => child,
     delay: 0,
@@ -46,11 +30,9 @@ export class AnimateGroup extends React.PureComponent {
     } = this.props
 
     const duration = stagger && staggerDuration ? staggerDuration : durationProp
-
     const count = index + 1
     const countBaseValue = count > staggerMax ? staggerMax : count
     const staggerIndexDelay = delayProp + countBaseValue * staggerDelay
-
     const delay = stagger ? staggerIndexDelay : delayProp
 
     return {
@@ -90,9 +72,7 @@ export class AnimateGroup extends React.PureComponent {
       staggerDuration,
       ...rest
     } = this.props
-
     const componentClassName = classNames('c-AnimateGroup', className)
-
     const transitionGroupProps = {
       appear,
       enter,
@@ -110,6 +90,31 @@ export class AnimateGroup extends React.PureComponent {
       </TransitionGroup>
     )
   }
+}
+
+AnimateGroup.propTypes = {
+  /** Determines the CSS easing transition function. */
+  easing: PropTypes.string,
+  /** Callback function to adjust the child component for `react-transition-group`. */
+  childFactory: PropTypes.func,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** The duration (in `ms`) to delay the child animations. */
+  delay: PropTypes.number,
+  /** The duration (in `ms`) for the child animation sequence. */
+  duration: PropTypes.number,
+  /** Names of animation styles to apply to child `Animate`. */
+  sequence: PropTypes.string,
+  /** Adds an incremental delay between child `Animate` components. */
+  stagger: PropTypes.bool,
+  /** Amount of time (`ms`) to delay for `stagger`. */
+  staggerDelay: PropTypes.number,
+  /** Time (`ms`) to for staggering animation durations. */
+  staggerDuration: PropTypes.number,
+  appear: PropTypes.any,
+  exit: PropTypes.any,
+  enter: PropTypes.any,
+  staggerMax: PropTypes.number,
 }
 
 export default AnimateGroup

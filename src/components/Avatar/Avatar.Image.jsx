@@ -5,33 +5,20 @@
 // code here into an <Image /> component
 
 import React from 'react'
-import { PropTypes } from 'prop-types'
-
+import PropTypes from 'prop-types'
 import VisuallyHidden from '../VisuallyHidden'
-
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-
 import { ImageWrapperUI, ImageUI, TitleUI } from './Avatar.css'
 import { getAnimationProps } from './Avatar.utils'
 
 let cache = {}
+
 export const clearCache = () => {
   cache = {}
 }
 
 export class AvatarImage extends React.PureComponent {
-  static propTypes = {
-    animation: PropTypes.bool,
-    animationDuration: PropTypes.number,
-    animationEasing: PropTypes.string,
-    src: PropTypes.any,
-    light: PropTypes.bool,
-    name: PropTypes.string,
-    onError: PropTypes.func,
-    onLoad: PropTypes.func,
-    title: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  }
   static defaultProps = {
     animation: true,
     animationDuration: 160,
@@ -254,6 +241,18 @@ export class AvatarImage extends React.PureComponent {
     )
     return hasImage ? contentMarkup : this.getTitleMarkup()
   }
+}
+
+AvatarImage.propTypes = {
+  animation: PropTypes.bool,
+  animationDuration: PropTypes.number,
+  animationEasing: PropTypes.string,
+  src: PropTypes.any,
+  light: PropTypes.bool,
+  name: PropTypes.string,
+  onError: PropTypes.func,
+  onLoad: PropTypes.func,
+  title: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
 export default AvatarImage

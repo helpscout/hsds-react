@@ -20,17 +20,6 @@ const getIllo = ({ illo, illoName, illoSize }) => {
 }
 
 class BlankSlate extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    message: PropTypes.any,
-    title: PropTypes.string,
-    illo: React.ReactNode,
-    illoName: PropTypes.string,
-    illoSize: PropTypes.number,
-    lightBackground: PropTypes.bool,
-    alignTop: PropTypes.bool,
-  }
-
   static defaultProps = {
     lightBackground: false,
     alignTop: false,
@@ -66,6 +55,25 @@ class BlankSlate extends React.PureComponent {
       </BlankSlateUI>
     )
   }
+}
+
+BlankSlate.propTypes = {
+  /** Will aligned to the top the content of the component */
+  alignTop: PropTypes.bool,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** An instance of an Illo Component */
+  illo: React.ReactNode,
+  /** DEPRECATED. Name of the illustration, from the Illo component. */
+  illoName: PropTypes.string,
+  /** DEPRECATED. Size of the illustration, from the Illo component. */
+  illoSize: PropTypes.number,
+  /** Will add a light background to the component */
+  lightBackground: PropTypes.bool,
+  /** Message displayed in the content area. Can be HTML */
+  message: PropTypes.any,
+  /** Title displayed in the content area */
+  title: PropTypes.string,
 }
 
 export default BlankSlate

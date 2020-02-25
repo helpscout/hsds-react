@@ -13,19 +13,6 @@ import {
 } from './ArticleCard.css'
 
 export class ArticleCard extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    content: PropTypes.any,
-    contentLimit: PropTypes.number,
-    contentSize: PropTypes.number,
-    footer: PropTypes.any,
-    isHovered: PropTypes.bool,
-    metaHeader: PropTypes.any,
-    title: PropTypes.string,
-    titleLimit: PropTypes.number,
-    titleSize: PropTypes.number,
-  }
-
   static defaultProps = {
     contentLimit: 160,
     contentSize: 13,

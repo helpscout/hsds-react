@@ -24,8 +24,8 @@ export const ButtonUI = styled.button`
   text-align: center;
   text-decoration: none;
 
-  ${({ allowContentEventPropogation }) =>
-    allowContentEventPropogation &&
+  ${({ allowContentEventPropagation }) =>
+    allowContentEventPropagation &&
     `
     * {
       pointer-events: none;

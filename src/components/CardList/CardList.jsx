@@ -24,12 +24,16 @@ export class CardList extends React.PureComponent {
   }
 
   getChildrenMarkup = () => {
-    const { children } = this.props
+    const { children, animationEasing } = this.props
 
     return React.Children.map(children, (child, index) => {
       const key = getComponentKey(child, index)
 
-      return <Animate key={key}>{child}</Animate>
+      return (
+        <Animate easing={animationEasing} key={key}>
+          {child}
+        </Animate>
+      )
     })
   }
 

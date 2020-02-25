@@ -55,11 +55,8 @@ export const AvatarListUI = styled('div')`
 `
 
 export const AvatarListWrapperUI = styled.div`
-  &.is-center{
+  &.is-center {
     justify-content: center;
     text-align: center;
   }
-  /* &.is-center ${AvatarListUI} {
-    justify-content: center;
-  } */
 `

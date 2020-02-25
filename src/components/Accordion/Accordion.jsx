@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Body from './Accordion.Body'
 import Section from './Accordion.Section'
@@ -180,6 +181,33 @@ const Accordion = props => {
       </AccordionContext.Provider>
     </AccordionUI>
   )
+}
+
+Accordion.propTypes = {
+  /** Allows multiple sections to have their body revealed simultaneously. */
+  allowMultiple: PropTypes.bool,
+  /** Sections to be stacked and controlled. */
+  children: PropTypes.any,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** When isSortable is true, the distance determines how far a user must drag in order to sort. */
+  distance: PropTypes.number,
+  /** Exclude borders and horizontal padding. */
+  isSeamless: PropTypes.bool,
+  /** Enable sections to be re-ordered by drag and drop. */
+  isSortable: PropTypes.bool,
+  /** Callback to be invoked when the body of a section is revealed. */
+  onOpen: PropTypes.func,
+  /** Callback to be invoked when the body of a section is concealed. */
+  onClose: PropTypes.func,
+  /** When is sortable is true, callback to be invoked when sorting ends. */
+  onSortEnd: PropTypes.func,
+  /** An array of ids corresponding to sections that should be open. */
+  openSectionIds: PropTypes.array,
+  /** When isSortable is true and distance is 0, the time in ms that must elapse on a press in order to sort. */
+  pressDelay: PropTypes.number,
+  /** The amount of padding. */
+  size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg']),
 }
 
 Accordion.defaultProps = {

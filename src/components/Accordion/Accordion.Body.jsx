@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Collapsible from '../Collapsible'
 import { classNames } from '../../utilities/classNames'
@@ -82,5 +83,10 @@ export const Body = props => {
 }
 
 Body.displayName = 'AccordionBody'
-
+Body.propTypes = {
+  /** Content to render. */
+  children: PropTypes.any,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+}
 export default Body

@@ -9,14 +9,6 @@ import { noop } from '../../utilities/other'
 import { AttachmentListUI } from './AttachmentList.css'
 
 export class AttachmentList extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-    downloadAllLabel: PropTypes.string,
-    onDownloadAllClick: PropTypes.func,
-    showDownloadAll: PropTypes.bool,
-    withOverflow: PropTypes.bool,
-  }
-
   static defaultProps = {
     children: [],
     downloadAllLabel: 'Download All',

@@ -9,33 +9,6 @@ import { AnimateUI } from './Animate.css'
 import { AnimateGroupContext } from '../AnimateGroup/AnimateGroup'
 
 export class Animate extends React.PureComponent {
-  static propTypes = {
-    animateOnMount: PropTypes.bool,
-    block: PropTypes.bool,
-    className: PropTypes.string,
-    delay: PropTypes.number,
-    duration: PropTypes.number,
-    easing: PropTypes.string,
-    in: PropTypes.bool,
-    inline: PropTypes.bool,
-    inlineBlock: PropTypes.bool,
-    mountOnEnter: PropTypes.bool,
-    onEnter: PropTypes.func,
-    onEntered: PropTypes.func,
-    onEntering: PropTypes.func,
-    onExit: PropTypes.func,
-    onExited: PropTypes.func,
-    onExiting: PropTypes.func,
-    sequence: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string),
-    ]),
-    style: PropTypes.any,
-    timeout: PropTypes.number,
-    transitionProperty: PropTypes.string,
-    unmountOnExit: PropTypes.bool,
-  }
-
   static defaultProps = {
     animateOnMount: true,
     delay: 0,
@@ -135,10 +108,59 @@ const AnimateConsumer = props => {
   if (contextValue) {
     const newProps = { ...contextValue, ...props }
     newProps.className = classNames(props.className, contextValue.className)
+
     return <Animate {...newProps} />
   }
 
   return <Animate {...props} />
 }
+
+AnimateConsumer.propTypes = {
+  /** Automatically animates when component is rendered. */
+  animateOnMount: PropTypes.bool,
+  /** Applies `display: block` to the component. */
+  block: PropTypes.bool,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** The duration (in `ms`) to delay the animations. */
+  delay: PropTypes.number,
+  /** The duration (in `ms`) for the animation sequence. */
+  duration: PropTypes.number,
+  /** Determines the CSS easing transition function. */
+  easing: PropTypes.string,
+  /** Programatically triggering the animation. */
+  in: PropTypes.bool,
+  /** Applies `display: inline` to the component. */
+  inline: PropTypes.bool,
+  /** Applies `display: inline-block` to the component. */
+  inlineBlock: PropTypes.bool,
+  /** Mounts child component as soon as `Animate` mounts. */
+  mountOnEnter: PropTypes.bool,
+  /** Callback before the component's `enter` animation sequence. */
+  onEnter: PropTypes.func,
+  /** Callback after the component's `enter` animation sequence. */
+  onEntered: PropTypes.func,
+  /** Callback during the component's `enter` animation sequence. */
+  onEntering: PropTypes.func,
+  /** Callback after the component's `exit` animation sequence. */
+  onExit: PropTypes.func,
+  /** Callback before the component's `exit` animation sequence. */
+  onExited: PropTypes.func,
+  /** Callback during the component's `exit` animation sequence. */
+  onExiting: PropTypes.func,
+  /** Names of animation styles to apply. */
+  sequence: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
+  /** The duration (in `ms`) to apply/remove the animations. */
+  timeout: PropTypes.number,
+  /** Determines the CSS transition property. */
+  transitionProperty: PropTypes.string,
+  /** Unmounts child component as soon as `Animate` unmounts.` */
+  unmountOnExit: PropTypes.bool,
+}
+
+AnimateConsumer.defaultProps = Animate.defaultProps
 
 export default AnimateConsumer

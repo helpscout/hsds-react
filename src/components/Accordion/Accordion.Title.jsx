@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import Link from '../Link'
@@ -156,5 +157,12 @@ Title.defaultProps = {
 }
 
 Title.displayName = 'AccordionSectionTitle'
-
+Title.propTypes = {
+  /** Content to render. */
+  children: PropTypes.any,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Callback to be invoked when clicked. */
+  onClick: PropTypes.func,
+}
 export default Title

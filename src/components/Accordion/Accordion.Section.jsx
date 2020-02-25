@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { useComponentId } from './Accordion.utils'
 import { SectionUI } from './Accordion.css'
 import { AccordionContext } from './Accordion'
 import { createUniqueIDFactory } from '../../utilities/id'
@@ -65,6 +65,21 @@ export const Section = props => {
 
 Section.defaultProps = {
   isLink: false,
+}
+
+Section.propTypes = {
+  /** Content to render. */
+  children: PropTypes.any,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** The id used to track the section's open state. */
+  id: PropTypes.string,
+  /** Renders a Link based UI. */
+  isLink: PropTypes.bool,
+  /** Callback to be invoked when the section is opened. */
+  onOpen: PropTypes.func,
+  /** Callback to be invoked when the section is closed. */
+  onClose: PropTypes.func,
 }
 
 Section.displayName = 'AccordionSection'

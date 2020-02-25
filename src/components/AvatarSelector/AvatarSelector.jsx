@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { classNames } from '../../utilities/classNames'
 import Icon from '../Icon'
 import Avatar from '../Avatar'
-
 import {
   AvatarSelectorWrapperUI,
   IconAssignUI,
@@ -11,14 +10,7 @@ import {
   AvatarWrapperUI,
 } from './AvatarSelector.css.js'
 
-export default class AvatarSelector extends React.PureComponent {
-  static propTypes = {
-    image: PropTypes.string,
-    initials: PropTypes.string,
-    isOpen: PropTypes.bool,
-    name: PropTypes.string,
-    size: PropTypes.string,
-  }
+class AvatarSelector extends React.PureComponent {
   static defaultProps = {
     image: '',
     initials: '',
@@ -29,6 +21,7 @@ export default class AvatarSelector extends React.PureComponent {
 
   renderAvatar() {
     const { image, initials, name } = this.props
+
     return (
       <AvatarWrapperUI>
         <Avatar size="smmd" image={image} name={name} initials={initials} />
@@ -60,3 +53,18 @@ export default class AvatarSelector extends React.PureComponent {
     )
   }
 }
+
+AvatarSelector.propTypes = {
+  /** URL of the image. */
+  image: PropTypes.string,
+  /** Initials of image */
+  initials: PropTypes.string,
+  /** Fallback for the image. */
+  name: PropTypes.string,
+  /** Used to control the direction of the caret. */
+  isOpen: PropTypes.bool,
+  /** Size of the avatar. */
+  size: PropTypes.oneOf(['xl', 'lg', 'md', 'smmd', 'sm', 'xxs']),
+}
+
+export default AvatarSelector
