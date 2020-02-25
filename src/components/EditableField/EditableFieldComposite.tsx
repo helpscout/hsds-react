@@ -84,8 +84,10 @@ export class EditableFieldComposite extends React.PureComponent<
   }
 
   componentDidUpdate(prevProps) {
-    /* istanbul ignore next */
-    if (!equal(this.props.children, prevProps.children)) {
+    const getProps = children =>
+      React.Children.map(children, child => child.props)
+
+    if (!equal(getProps(this.props.children), getProps(prevProps.children))) {
       const { fields, maskItems } = this.getChildrenFromProps(this.props)
 
       this.setState({ fields, maskItems })
