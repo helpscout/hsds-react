@@ -101,45 +101,45 @@ const TRANSFORMER_INQUIRER_CHOICES = [
   },
   {
     name:
-      'AutoDropdown: Rename AutoDropdown to SearchableDropdown and add the autoInput prop',
+      '3.0 AutoDropdown: Rename AutoDropdown to SearchableDropdown and add the autoInput prop',
     value: 'AutoDropdownTransform',
   },
   {
     name:
-      'AvatarGrid: Rename AvatarGrid to AvatarList, and add props center & grid',
+      '3.0 AvatarGrid: Rename AvatarGrid to AvatarList, and add props center & grid',
     value: 'AvatarGridTransform',
   },
   {
     name:
-      'Button: Remove the version={2} prop to Button. Rename some kind value',
+      '3.0 Button: Remove the version={2} prop to Button. Rename some kind value',
     value: 'ButtonTransform',
   },
   {
-    name: 'ComboBox: Rename to SearchableDropdown',
+    name: '3.0 ComboBox: Rename to SearchableDropdown',
     value: 'ComboBoxTransform',
   },
   {
-    name: 'CssVariables: Rename --BlueXXX to --HSDSXXX',
+    name: '3.0 CssVariables: Rename --BlueXXX to --HSDSXXX',
     value: 'CssVariablesTransform',
   },
   {
     name:
-      'DeprecatedComponents: Add a TODO comment before each deprecated component (before both the import and the component usage)',
+      '3.0 DeprecatedComponents: Add a TODO comment before each deprecated component (before both the import and the component usage)',
     value: 'DeprecatedComponentsTransform',
   },
   {
     name:
-      'DropdownV2: Rename the import path to Dropdown, rename classNames when needed',
+      '3.0 DropdownV2: Rename the import path to Dropdown, rename classNames when needed',
     value: 'DropdownV2Transform',
   },
   {
     name:
-      'PropProvider: Add a TODO comment before PropProvider import & component usage',
+      '3.0 PropProvider: Add a TODO comment before PropProvider import & component usage',
     value: 'PropProviderTransform',
   },
   {
     name:
-      'ReplaceImports: Replace all hsds-react import with the next release (hsds-react-next)',
+      '3.0 ReplaceImports: Replace all hsds-react import with the next release (hsds-react-next)',
     value: 'ReplaceImportsTransform',
   },
 ]
