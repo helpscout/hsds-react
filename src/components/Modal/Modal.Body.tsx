@@ -17,6 +17,7 @@ class Body extends React.PureComponent<ModalBodyProps> {
     scrollable: true,
     scrollableRef: noop,
     scrollFade: true,
+    version: 1,
   }
 
   static contextTypes = {
@@ -60,12 +61,20 @@ class Body extends React.PureComponent<ModalBodyProps> {
       scrollable,
       scrollFade,
       scrollableRef,
+      version,
       ...rest
     } = this.props
 
+    // version 2 should always render seamlessly
+    // and allow a bottom fade for overflow content
+    const v2 = version === 2
+    const seamless = isSeamless || v2
+    const fadeBottom = v2
+
     const componentClassName = classNames(
       'c-ModalBody',
-      isSeamless && 'is-seamless',
+      v2 && 'is-v2',
+      seamless && 'is-seamless',
       scrollable ? 'is-scrollable' : 'is-not-scrollable',
       className
     )
@@ -75,6 +84,7 @@ class Body extends React.PureComponent<ModalBodyProps> {
         className="c-ModalBody__scrollable"
         contentClassName="c-ModalBody__scrollableContent"
         fade={scrollFade}
+        fadeBottom={fadeBottom}
         isScrollLocked={isScrollLocked}
         rounded
         onScroll={onScroll}

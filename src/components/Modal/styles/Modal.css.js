@@ -1,12 +1,17 @@
 import styled from '../../styled'
 import { isHSApp } from '../../../styles/utilities/theme'
+import { BEM } from '../../../utilities/classNames'
 import Animate from '../../Animate'
 import Card from '../../Card'
+import { getColor } from '../../../styles/utilities/color'
+
+const bem = BEM('.c-ModalBody')
 
 export const config = {
   closeOffset: '10px',
   offset: '8px',
   wrapperMaxHeight: '98%',
+  wrapperMaxWidth: '75%',
   theme: {
     app: {
       marginTop: '50px',
@@ -27,19 +32,59 @@ export const ModalUI = styled('div')`
   position: fixed;
   right: 0;
   top: 0;
+  font-family: 'Aktiv Grotesk', sans-serif !important;
+
+  &.v2.is-danger {
+    .c-Icon {
+      color: ${getColor('red', 500)};
+    }
+  }
+
+  &.v2.is-branded,
+  &.v2.is-sequence {
+    .c-ModalBody {
+      text-align: center;
+      ${bem.element('scrollableContent')} {
+        padding-top: 0px;
+      }
+    }
+  }
+
+  &.v2.is-alert {
+    .c-ModalBody {
+      text-align: center;
+    }
+  }
 `
 
 export const InnerWrapperUI = styled('div')`
   display: flex;
   justify-content: center;
   max-height: ${config.wrapperMaxHeight};
-  max-width: 100%;
+  max-width: ${config.wrapperMaxWidth};
   min-height: 0;
   position: relative;
   width: auto;
   z-index: 1;
 
   ${props => makeHSAppInnerWrapperStyles(props)};
+
+  &.v2 {
+    position: absolute;
+    top: 50px;
+    max-width: 680px;
+    min-height: 400px;
+    max-height: 90%;
+
+    &.is-default {
+      width: 680px;
+    }
+
+    &.is-alert {
+      min-height: 179px;
+      width: 440px;
+    }
+  }
 `
 
 export const AnimatedCardContainerUI = styled(Animate)`
@@ -57,6 +102,15 @@ export const CardUI = styled(Card)`
   min-height: 0;
   outline: none;
   overflow: hidden;
+
+  &.is-default {
+    width: 680px;
+  }
+
+  &.is-alert {
+    min-width: 440px;
+    padding-bottom: 60px;
+  }
 `
 
 export const CloseUI = styled('div')`
@@ -68,7 +122,7 @@ export const CloseUI = styled('div')`
 `
 
 function makeHSAppInnerWrapperStyles(props) {
-  if (!isHSApp(props)) return ''
+  if (!isHSApp(props) || props.version === 2) return ''
 
   return `
     margin-bottom: ${config.theme.app.marginBottom};

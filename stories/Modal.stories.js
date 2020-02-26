@@ -19,8 +19,11 @@ import { MemoryRouter } from 'react-router'
 import { Route } from 'react-router-dom'
 import { createSpec, faker } from '@helpscout/helix'
 import Frame from 'react-frame-component'
+import { withAktiv } from './utils'
 
-const stories = storiesOf('Modal', module)
+import SpeechBubble from '@helpscout/hsds-illos/speech-bubble'
+
+const stories = storiesOf('Modal', module).addDecorator(withAktiv)
 
 const ContentSpec = createSpec({
   content: faker.lorem.paragraph(),
@@ -138,6 +141,17 @@ stories.addDecorator(story => (
 
 stories.add('default', () => (
   <Modal trigger={<Link>Open dis modal</Link>}>
+    <Modal.Body>
+      <Heading>Title</Heading>
+      {ContentSpec.generate(8).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+  </Modal>
+))
+
+stories.add('v2 styles', () => (
+  <Modal version="2" trigger={<Link>Open dis modal</Link>}>
     <Modal.Body>
       <Heading>Title</Heading>
       {ContentSpec.generate(8).map(({ id, content }) => (
@@ -559,3 +573,236 @@ stories.add('styled', () => {
     </StyledModal>
   )
 })
+
+const storiesV2 = storiesOf('Modal/V2', module).addDecorator(withAktiv)
+
+storiesV2.add('default', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    trigger={<Link>Clicky</Link>}
+    title="Modal Title"
+  >
+    <Modal.Body version={2}>
+      {ContentSpec.generate(2).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.ActionFooter primaryButtonText="Primary" />
+  </Modal>
+))
+
+storiesV2.add('default w/ secondary button', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    trigger={<Link>Clicky</Link>}
+    title="Modal Title"
+  >
+    <Modal.Body version={2}>
+      {ContentSpec.generate(2).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.ActionFooter
+      primaryButtonText="Primary"
+      secondaryButtonText="Secondary"
+    />
+  </Modal>
+))
+
+storiesV2.add('default w/ danger state', () => (
+  <Modal
+    version={2}
+    state="danger"
+    isOpen={true}
+    trigger={<Link>Clicky</Link>}
+    icon="alert"
+    title="Change Subdomain?"
+  >
+    <Modal.Body version={2}>
+      {ContentSpec.generate(2).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.ActionFooter state="danger" primaryButtonText="Change Subdomain" />
+  </Modal>
+))
+
+storiesV2.add('default w/ very long content', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    trigger={<Link>Clicky</Link>}
+    title="Modal Title"
+  >
+    <Modal.Body version={2}>
+      {ContentSpec.generate(12).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.ActionFooter
+      primaryButtonText="Primary"
+      secondaryButtonText="Secondary"
+    />
+  </Modal>
+))
+
+storiesV2.add('branded no description, single button', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    kind="branded"
+    illo={<SpeechBubble />}
+    trigger={<Link>Clicky</Link>}
+    title="Modal Title"
+  >
+    <Modal.Body version={2}>
+      {ContentSpec.generate(1).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.ActionFooter primaryButtonText="Primary" />
+  </Modal>
+))
+
+storiesV2.add('branded w/description, danger state', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    description="Before making it official we'd really appreciate your thoughts on what we can do to improve."
+    kind="branded"
+    illo={<SpeechBubble />}
+    trigger={<Link>Clicky</Link>}
+    title="Cancel your account?"
+  >
+    <Modal.Body version={2}>
+      {ContentSpec.generate(1).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.ActionFooter
+      primaryButtonText="Cancel my account"
+      state={'danger'}
+    />
+  </Modal>
+))
+
+storiesV2.add('branded w/description, secondary button', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    description="A really interesting description about lots of really interesting things goes here which should be no more than two lines."
+    kind="branded"
+    illo={<SpeechBubble />}
+    trigger={<Link>Clicky</Link>}
+    title="Modal Title"
+  >
+    <Modal.Body version={2}>
+      {ContentSpec.generate(1).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.ActionFooter
+      primaryButtonText="Primary"
+      secondaryButtonText="Secondary"
+    />
+  </Modal>
+))
+
+storiesV2.add('branded w/ really long content', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    description="A really interesting description about lots of really interesting things goes here which should be no more than two lines."
+    kind="branded"
+    illo={<SpeechBubble />}
+    trigger={<Link>Clicky</Link>}
+    title="Modal Title"
+  >
+    <Modal.Body version={2}>
+      {ContentSpec.generate(10).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.ActionFooter
+      primaryButtonText="Primary"
+      secondaryButtonText="Secondary"
+    />
+  </Modal>
+))
+
+storiesV2.add('alert, no description', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    kind="alert"
+    trigger={<Link>Clicky</Link>}
+    title="Discard this draft?"
+  >
+    <Modal.ActionFooter
+      showDefaultCancel={false}
+      kind={'alert'}
+      primaryButtonText="Discard"
+      secondaryButtonText="Cancel"
+    />
+  </Modal>
+))
+
+storiesV2.add('alert with description', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    description="Short title providing a little more detail."
+    kind="alert"
+    trigger={<Link>Clicky</Link>}
+    title="Alert Title"
+  >
+    <Modal.ActionFooter
+      showDefaultCancel={false}
+      kind={'alert'}
+      primaryButtonText="Yes, do it"
+      secondaryButtonText="Cancel"
+    />
+  </Modal>
+))
+
+storiesV2.add('alert w/ danger state', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    kind="alert"
+    description="You're about to do a thing that could impact a lot of other things. Continue?"
+    state="danger"
+    trigger={<Link>Clicky</Link>}
+    title="Are you sure?"
+  >
+    <Modal.ActionFooter
+      showDefaultCancel={false}
+      kind={'alert'}
+      state="danger"
+      primaryButtonText="Yes, do it"
+      secondaryButtonText="Cancel"
+    />
+  </Modal>
+))
+
+storiesV2.add('sequence', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    kind="sequence"
+    description="We'll send a six digit code to confirm ownership."
+    numSteps={5}
+    step={2}
+    trigger={<Link>Clicky</Link>}
+    title="What email address would you like to connect?"
+  >
+    <Modal.Body version={2}>
+      {ContentSpec.generate(1).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.ActionFooter kind="default" primaryButtonText="Send code" />
+  </Modal>
+))
