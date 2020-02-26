@@ -28,15 +28,15 @@ stories.add('from/to', () => {
   return (
     <div>
       <Message from avatar={<Avatar name="From" />}>
+        <Message.Chat>{faker.lorem.paragraphs()()}</Message.Chat>
         <Message.Chat>{faker.lorem.sentence()()}</Message.Chat>
-        <Message.Chat>{faker.lorem.sentence()()}</Message.Chat>
-        <Message.Chat>{faker.lorem.sentence()()}</Message.Chat>
+        <Message.Chat>{faker.lorem.paragraphs()()}</Message.Chat>
         <Message.Chat>{faker.lorem.sentence()()}</Message.Chat>
       </Message>
       <Message to avatar={<Avatar name="To" />}>
         <Message.Chat>{faker.lorem.sentence()()}</Message.Chat>
         <Message.Chat>{faker.lorem.sentence()()}</Message.Chat>
-        <Message.Chat>{faker.lorem.sentence()()}</Message.Chat>
+        <Message.Chat>{faker.lorem.paragraphs()()}</Message.Chat>
         <Message.Chat>{faker.lorem.sentence()()}</Message.Chat>
       </Message>
     </div>
@@ -84,6 +84,14 @@ stories.add('states', () => {
         metaPosition="qwerty"
       >
         With custom message & meta positioned before the bubble with jibberish
+      </Message.Chat>
+      <Message.Chat
+        read
+        timestamp="9:41am"
+        caption="Caption before the bubble"
+        metaPosition="top"
+      >
+        🦄❤️
       </Message.Chat>
     </Message>
   )
