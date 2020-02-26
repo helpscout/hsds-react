@@ -6,15 +6,6 @@ import classNames from '../../utilities/classNames'
 import PropTypes from 'prop-types'
 
 export class CardList extends React.PureComponent {
-  static propTypes = {
-    animationDelay: PropTypes.number,
-    animationEasing: PropTypes.string,
-    animationSequence: PropTypes.string,
-    animationStagger: PropTypes.number,
-    className: PropTypes.string,
-    stagger: PropTypes.bool,
-  }
-
   static defaultProps = {
     animationDelay: 0,
     animationEasing: 'ease',
@@ -63,6 +54,21 @@ export class CardList extends React.PureComponent {
       </AnimateGroup>
     )
   }
+}
+
+CardList.propTypes = {
+  /** Delay of animation applied to the child Cards. */
+  animationDelay: PropTypes.number,
+  /** Easing of animation applied to the child Cards. */
+  animationEasing: PropTypes.string,
+  /** Style of animation applied to the child Cards. */
+  animationSequence: PropTypes.string,
+  /** Amount (in `ms`) to stagger the animations of the Cards. */
+  animationStagger: PropTypes.number,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Enables animation staggering for the child Cards. */
+  stagger: PropTypes.bool,
 }
 
 export default CardList

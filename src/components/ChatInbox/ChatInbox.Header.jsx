@@ -10,15 +10,6 @@ import { noop } from '../../utilities/other'
 import { HeaderUI, ContentUI } from './ChatInbox.css.js'
 
 class Header extends React.PureComponent {
-  static propTypes = {
-    avatars: PropTypes.any,
-    className: PropTypes.string,
-    count: PropTypes.number,
-    isCollapsed: PropTypes.bool,
-    isCollapsible: PropTypes.bool,
-    onClick: PropTypes.func,
-  }
-
   static defaultProps = {
     count: 0,
     isCollapsible: false,
@@ -86,6 +77,21 @@ class Header extends React.PureComponent {
       </HeaderUI>
     )
   }
+}
+
+Header.propTypes = {
+  /** AvatarList UI to render into the component. */
+  avatars: PropTypes.any,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** A new ChatList.Item count. */
+  count: PropTypes.number,
+  /** Determines the collapse state. */
+  isCollapsed: PropTypes.bool,
+  /** Renders the collapsible trigger, if enabled. */
+  isCollapsible: PropTypes.bool,
+  /** Callback function component is clicked. */
+  onClick: PropTypes.func,
 }
 
 export default Header

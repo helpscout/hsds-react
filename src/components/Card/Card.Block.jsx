@@ -7,16 +7,6 @@ import { noop } from '../../utilities/other'
 import { BlockUI } from './Card.css'
 
 class Block extends React.PureComponent {
-  static propTypes = {
-    bgMuted: PropTypes.bool,
-    className: PropTypes.string,
-    flex: PropTypes.bool,
-    scrollable: PropTypes.bool,
-    scrollableRef: PropTypes.func,
-    onScroll: PropTypes.func,
-    size: PropTypes.string,
-  }
-
   static defaultProps = {
     onScroll: noop,
     scrollableRef: noop,
@@ -72,6 +62,23 @@ class Block extends React.PureComponent {
 
     return componentMarkup
   }
+}
+
+Block.propTypes = {
+  /** Applies a muted background to the component. */
+  bgMuted: PropTypes.bool,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Adds flexbox styles to the component. */
+  flex: PropTypes.bool,
+  /** Callback function when inner Scrollable is scrolled. */
+  onScroll: PropTypes.func,
+  /** Integrates `Scrollable` into the component. */
+  scrollable: PropTypes.bool,
+  /** Retrieves the scrollable node. */
+  scrollableRef: PropTypes.func,
+  /** Adjusts the size of the component. */
+  size: PropTypes.string,
 }
 
 export default Block

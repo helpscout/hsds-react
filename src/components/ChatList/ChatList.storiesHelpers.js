@@ -3,11 +3,6 @@ import AvatarSpec from '../../utilities/specs/avatar.specs'
 import ChatSpec from '../../utilities/specs/chat.specs'
 import { Avatar, ChatList } from '../index'
 
-export default {
-  component: ChatList,
-  title: 'Components/Wayfinding/ChatList',
-}
-
 const avatars = AvatarSpec.generate(8)
 
 const getItemMarkup = () => {
@@ -47,10 +42,6 @@ export const _Item = () => {
   return <div style={{ width: 300 }}>{itemMarkup[0]}</div>
 }
 
-_Item.story = {
-  name: 'item',
-}
-
 export const List = () => {
   const itemMarkup = getItemMarkup()
   return (
@@ -61,31 +52,4 @@ export const List = () => {
       </ChatList>
     </div>
   )
-}
-
-List.story = {
-  name: 'list',
-}
-
-export const ListEmpty = () => (
-  <div style={{ width: 300 }}>
-    <ChatList />
-  </div>
-)
-
-ListEmpty.story = {
-  name: 'list: empty',
-}
-
-export const ListLoading = () => (
-  <div style={{ width: 300 }}>
-    <ChatList>
-      <ChatList.Item />
-      <ChatList.Item />
-    </ChatList>
-  </div>
-)
-
-ListLoading.story = {
-  name: 'list: loading',
 }

@@ -7,10 +7,6 @@ import Item from './ChatList.Item'
 import { ChatListUI } from './ChatList.css'
 
 class ChatList extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-  }
-
   static BlankSlate = BlankSlate
   static Item = Item
 
@@ -31,6 +27,11 @@ class ChatList extends React.Component {
       </ChatListUI>
     )
   }
+}
+
+ChatList.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
 }
 
 export default ChatList

@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 // https://github.com/angus-c/just/blob/master/packages/function-debounce/index.js
 
 export default function debounce(fn, wait, callFirst) {

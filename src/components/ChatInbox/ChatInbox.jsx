@@ -7,17 +7,6 @@ import Content from './ChatInbox.Content'
 import { classNames } from '../../utilities/classNames'
 
 class ChatInbox extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-    isCollapsible: PropTypes.bool,
-    isCollapsed: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    isCollapsible: false,
-    isCollapsed: true,
-  }
-
   static Header = Header
   static Content = Content
 
@@ -81,6 +70,15 @@ class ChatInbox extends React.Component {
       </div>
     )
   }
+}
+
+ChatInbox.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Determines the collapse state. */
+  isCollapsible: PropTypes.bool,
+  /** Enables collapsing (usign Collapsible) interactions. */
+  isCollapsed: PropTypes.bool,
 }
 
 export default ChatInbox

@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 // from https://github.com/hydrateio/react-styled-frame/blob/master/src/index.js
 // and https://github.com/styled-components/styled-components/issues/659#issuecomment-456894873
 import React from 'react'

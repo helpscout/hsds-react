@@ -10,10 +10,6 @@ import { BlankSlateUI, SpeechBubbleIlloUI, ContentUI } from './ChatList.css'
 export const defaultMessage = "You're all caught-up"
 
 class BlankSlate extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-  }
-
   static displayName = 'ChatListBlankSlate'
 
   render() {
@@ -36,6 +32,11 @@ class BlankSlate extends React.PureComponent {
       </BlankSlateUI>
     )
   }
+}
+
+BlankSlate.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
 }
 
 export default BlankSlate

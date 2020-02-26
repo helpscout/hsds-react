@@ -7,6 +7,7 @@ class Content extends React.Component {
   static propTypes = {
     className: PropTypes.string,
   }
+
   static displayName = 'ChatInboxContent'
 
   render() {

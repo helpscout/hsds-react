@@ -6,25 +6,6 @@ import { noop } from '../../utilities/other'
 import { CardUI } from './Card.css'
 
 class Card extends React.PureComponent {
-  static propTypes = {
-    autoWordWrap: PropTypes.bool,
-    borderless: PropTypes.bool,
-    className: PropTypes.string,
-    floating: PropTypes.bool,
-    flex: PropTypes.bool,
-    fullHeight: PropTypes.bool,
-    hover: PropTypes.bool,
-    href: PropTypes.string,
-    innerRef: PropTypes.func,
-    nodeRef: PropTypes.func,
-    onBlur: PropTypes.func,
-    onClick: PropTypes.func,
-    onFocus: PropTypes.func,
-    seamless: PropTypes.bool,
-    selector: PropTypes.string,
-    to: PropTypes.string,
-  }
-
   static defaultProps = {
     borderless: false,
     flex: false,
@@ -113,6 +94,37 @@ class Card extends React.PureComponent {
       </CardUI>
     )
   }
+}
+
+Card.propTypes = {
+  autoWordWrap: PropTypes.bool,
+  /** Removes the border from the component. */
+  borderless: PropTypes.bool,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Adds flexbox styles to the component. */
+  flex: PropTypes.bool,
+  floating: PropTypes.bool,
+  /** Adds full height styles. Often used with flex containers. */
+  fullHeight: PropTypes.bool,
+  /** Adds a hover style to the component. */
+  hover: PropTypes.bool,
+  innerRef: PropTypes.func,
+  /** Adds an `href` to the component. Transforms it into an `<a>` tag. */
+  href: PropTypes.string,
+  /** Callback function to retrieve the component's DOM node. */
+  nodeRef: PropTypes.func,
+  /** Callback when the component is blurred. */
+  onBlur: PropTypes.func,
+  /** Callback when the component is clicked. */
+  onClick: PropTypes.func,
+  /** Callback when the component is focused. */
+  onFocus: PropTypes.func,
+  /** Removes the padding within the component. */
+  seamless: PropTypes.bool,
+  /** Determines the HTML tag for the component. */
+  selector: PropTypes.string,
+  to: PropTypes.string,
 }
 
 export default Card

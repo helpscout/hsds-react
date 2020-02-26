@@ -143,8 +143,6 @@ export default class VerificationCode extends React.Component {
     }
   }
 
-  // Tested  ¯\_(ツ)_/¯
-
   handleMouseDown = e => {
     const activeElement = document.activeElement
     const { target } = e
@@ -185,8 +183,6 @@ export default class VerificationCode extends React.Component {
           this.digitInputNodes[0].focus()
           onChange('')
         } else if (value === '' && !digitMask.innerText) {
-          // Tested  ¯\_(ツ)_/¯
-
           const prevIndex = index === 0 ? 0 : index - 1
           const previousDigit = this.digitInputNodes[prevIndex]
 

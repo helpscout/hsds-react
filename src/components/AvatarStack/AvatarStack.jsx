@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import * as React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
