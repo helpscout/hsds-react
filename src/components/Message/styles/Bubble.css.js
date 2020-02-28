@@ -1,6 +1,5 @@
 import styled from '../../styled'
 import { getColor } from '../../../styles/utilities/color'
-import { faker } from '@helpscout/helix'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { BEM } from '../../../utilities/classNames'
 import Heading from '../../Heading'
