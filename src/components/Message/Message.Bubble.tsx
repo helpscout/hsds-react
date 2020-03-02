@@ -70,27 +70,6 @@ export const Bubble = (props: Props, context: Context) => {
   )
 
   let showEmojiOnlyStyles = false
-  const hasOnlyOneChild = React.Children.count(children) === 1
-
-  const childrenMarkup = React.Children.map(children, child => {
-    showEmojiOnlyStyles =
-      !isThemeEmbed && hasOnlyOneChild && textIncludesOnlyEmoji(child)
-    const fontSize = isThemeEmbed ? '13' : showEmojiOnlyStyles ? 48 : '14'
-
-    return isWord(child) || isNativeSpanType(child) ? (
-      <MessageBubbleBody
-        className="c-MessageBubble__body"
-        isEmbed={isThemeEmbed}
-        showEmojiOnlyStyles={showEmojiOnlyStyles}
-      >
-        <Text wordWrap lineHeightInherit size={fontSize}>
-          {child}
-        </Text>
-      </MessageBubbleBody>
-    ) : (
-      child
-    )
-  })
 
   const fromMarkup =
     isThemeNotifications && fromName ? (
@@ -121,24 +100,64 @@ export const Bubble = (props: Props, context: Context) => {
     </MessageBubbleTitle>
   ) : null
 
-  const bodyMarkup = body ? (
-    <MessageBubbleBody
-      className="c-MessageBubble__body"
-      isEmbed={isThemeEmbed}
-      dangerouslySetInnerHTML={{
-        __html: enhanceBody(body),
-      }}
-    />
-  ) : (
-    childrenMarkup
-  )
+  const hasOnlyOneChild = React.Children.count(children) === 1
+
+  const childrenMarkup = React.Children.map(children, child => {
+    showEmojiOnlyStyles =
+      !isThemeEmbed && hasOnlyOneChild && textIncludesOnlyEmoji(child)
+    const fontSize = isThemeEmbed ? '13' : showEmojiOnlyStyles ? 48 : '14'
+
+    return isWord(child) || isNativeSpanType(child) ? (
+      <MessageBubbleBody
+        className="c-MessageBubble__body"
+        isEmbed={isThemeEmbed}
+        showEmojiOnlyStyles={showEmojiOnlyStyles}
+      >
+        <Text wordWrap lineHeightInherit size={fontSize}>
+          {child}
+        </Text>
+      </MessageBubbleBody>
+    ) : (
+      child
+    )
+  })
+
+  const renderBody = () => {
+    if (!body) {
+      return childrenMarkup
+    }
+
+    showEmojiOnlyStyles = !isThemeEmbed && textIncludesOnlyEmoji(body)
+
+    if (showEmojiOnlyStyles) {
+      return (
+        <MessageBubbleBody
+          className="c-MessageBubble__body"
+          showEmojiOnlyStyles={showEmojiOnlyStyles}
+        >
+          <Text wordWrap lineHeightInherit size={48}>
+            {body}
+          </Text>
+        </MessageBubbleBody>
+      )
+    }
+    return (
+      <MessageBubbleBody
+        className="c-MessageBubble__body"
+        isEmbed={isThemeEmbed}
+        dangerouslySetInnerHTML={{
+          __html: enhanceBody(body),
+        }}
+      />
+    )
+  }
 
   const innerContentMarkup = typing ? (
     <MessageBubbleTyping className="c-MessageBubble__typing">
       <TypingDots />
     </MessageBubbleTyping>
   ) : (
-    bodyMarkup
+    renderBody()
   )
 
   const contentMarkup = (
