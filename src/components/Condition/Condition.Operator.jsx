@@ -25,9 +25,13 @@ export const Operator = props => {
 }
 
 Operator.propTypes = {
+  /** The className of the component. */
   className: PropTypes.string,
+  /** Retrieve the inner DOM node. */
   innerRef: PropTypes.func,
+  /** Renders a white border. */
   isBorderless: PropTypes.bool,
+  /** The operator. */
   type: PropTypes.oneOf(['and', 'or']),
 }
 
@@ -37,6 +41,7 @@ Operator.defaultProps = {
   isBorderless: true,
   type: 'or',
 }
+
 Operator.displayName = 'ConditionOperator'
 
 export default Operator

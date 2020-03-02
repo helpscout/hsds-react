@@ -6,17 +6,6 @@ import { noop } from '../../utilities/other'
 import { CloseButtonUI, IconUI } from './CloseButton.css'
 
 export class CloseButton extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    children: PropTypes.any,
-    innerRef: PropTypes.func,
-    onBlur: PropTypes.func,
-    onClick: PropTypes.func,
-    onFocus: PropTypes.func,
-    seamless: PropTypes.bool,
-    size: PropTypes.string,
-    title: PropTypes.string,
-  }
   static defaultProps = {
     innerRef: noop,
     onBlur: noop,
@@ -71,6 +60,24 @@ export class CloseButton extends React.PureComponent {
       </CloseButtonUI>
     )
   }
+}
+
+CloseButton.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  children: PropTypes.any,
+  innerRef: PropTypes.func,
+  /** Callback when button is blurred. */
+  onBlur: PropTypes.func,
+  /** Callback when button is clicked. */
+  onClick: PropTypes.func,
+  /** Callback when button is focused. */
+  onFocus: PropTypes.func,
+  /** Applies a seamless style to the component. */
+  seamless: PropTypes.bool,
+  size: PropTypes.string,
+  /** Custom title for the button. */
+  title: PropTypes.string,
 }
 
 export default CloseButton

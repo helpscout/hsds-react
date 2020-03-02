@@ -1,14 +1,12 @@
 import React from 'react'
 import { withMotion } from '@helpscout/motion'
 import { faker } from '@helpscout/helix'
-import Button from '../Button'
-import ConditionList from '../ConditionList'
 import Condition from '.'
+import ConditionList from '../ConditionList'
 import ConditionField from '../ConditionField'
 import Flexy from '../Flexy'
 import Input from '../Input'
 import Select from '../Select'
-import Page from '../Page'
 
 import { boolean } from '@storybook/addon-knobs'
 
@@ -155,18 +153,6 @@ const RepeatPageViewCondition = ({ error, onRemove, value, ...rest }) => (
       <ConditionField.Block>
         <ConditionField.Static>
           Repeat views of the same page
-        </ConditionField.Static>
-      </ConditionField.Block>
-    </ConditionField>
-  </Condition>
-)
-
-const PageScrollCondition = ({ onRemove, ...rest }) => (
-  <Condition options={options} value="page-scroll" {...rest}>
-    <ConditionField onRemove={onRemove}>
-      <ConditionField.Block>
-        <ConditionField.Static>
-          Triggers when the scrollbar is used
         </ConditionField.Static>
       </ConditionField.Block>
     </ConditionField>
@@ -346,25 +332,9 @@ class ConditionBuilder extends React.Component {
   }
 }
 
-export const Default = () => {
-  const error = boolean('error', false)
-  const isWithAnd = boolean('isWithAnd', false)
-
-  return <TimeOnPageCondition error={error} value={5} isWithAnd={isWithAnd} />
-}
-
 export const Builder = () => {
   const error = boolean('error', false)
   const isAddEnabled = boolean('isAddEnabled', true)
 
-  return (
-    <Page isResponsive={false}>
-      <Page.Card>
-        <Page.Section>
-          <ConditionBuilder error={error} isAddEnabled={isAddEnabled} />
-        </Page.Section>
-      </Page.Card>
-      <Page.Actions primary={<Button kind="primary">Save Changes</Button>} />
-    </Page>
-  )
+  return <ConditionBuilder error={error} isAddEnabled={isAddEnabled} />
 }

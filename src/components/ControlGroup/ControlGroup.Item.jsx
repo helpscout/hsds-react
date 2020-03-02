@@ -5,14 +5,6 @@ import { classNames } from '../../utilities/classNames'
 import { ItemUI } from './ControlGroup.css'
 
 class Item extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    children: PropTypes.any,
-    isBlock: PropTypes.bool,
-    isFirst: PropTypes.bool,
-    isNotOnly: PropTypes.bool,
-    isLast: PropTypes.bool,
-  }
   static defaultProps = {
     isBlock: false,
     isFirst: false,
@@ -61,6 +53,21 @@ class Item extends React.PureComponent {
       </ItemUI>
     )
   }
+}
+
+Item.propTypes = {
+  /** Content to render. */
+  children: PropTypes.any,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Renders with a wider responsive width. */
+  isBlock: PropTypes.bool,
+  /** Helps render component without right borders. */
+  isFirst: PropTypes.bool,
+  /** Helps render component without left/right borders. */
+  isNotOnly: PropTypes.bool,
+  /** Helps render component without left borders. */
+  isLast: PropTypes.bool,
 }
 
 export default Item

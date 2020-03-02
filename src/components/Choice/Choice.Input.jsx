@@ -13,27 +13,6 @@ import {
 } from './Choice.css'
 
 class Input extends React.PureComponent {
-  static propTypes = {
-    autoFocus: PropTypes.bool,
-    align: PropTypes.string,
-    checked: PropTypes.bool,
-    className: PropTypes.string,
-    disabled: PropTypes.bool,
-    helpText: PropTypes.string,
-    id: PropTypes.string,
-    inputRef: PropTypes.func,
-    innerRef: PropTypes.func,
-    kind: PropTypes.string,
-    onBlur: PropTypes.func,
-    onChange: PropTypes.func,
-    onFocus: PropTypes.func,
-    name: PropTypes.string,
-    readOnly: PropTypes.bool,
-    state: PropTypes.string,
-    type: PropTypes.string,
-    value: PropTypes.string,
-  }
-
   static defaultProps = {
     autoFocus: false,
     disabled: false,
@@ -187,6 +166,27 @@ class Input extends React.PureComponent {
       </InputUI>
     )
   }
+}
+
+Input.propTypes = {
+  autoFocus: PropTypes.bool,
+  align: PropTypes.string,
+  checked: PropTypes.bool,
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
+  helpText: PropTypes.string,
+  id: PropTypes.string,
+  inputRef: PropTypes.func,
+  innerRef: PropTypes.func,
+  kind: PropTypes.string,
+  onBlur: PropTypes.func,
+  onChange: PropTypes.func,
+  onFocus: PropTypes.func,
+  name: PropTypes.string,
+  readOnly: PropTypes.bool,
+  state: PropTypes.string,
+  type: PropTypes.string,
+  value: PropTypes.string,
 }
 
 export default Input

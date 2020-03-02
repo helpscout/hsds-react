@@ -17,15 +17,6 @@ import {
 } from './Condition.css'
 
 export class Condition extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    innerRef: PropTypes.func,
-    isWithAnd: PropTypes.bool,
-    options: PropTypes.arrayOf(PropTypes.any),
-    onChange: PropTypes.func,
-    value: PropTypes.string,
-  }
-
   static defaultProps = {
     innerRef: noop,
     isWithAnd: false,
@@ -85,6 +76,21 @@ export class Condition extends React.PureComponent {
       </ConditionUI>
     )
   }
+}
+
+Condition.propTypes = {
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** Retrieve the inner DOM node. */
+  innerRef: PropTypes.func,
+  /** Renders the "And" operator (top). */
+  isWithAnd: PropTypes.bool,
+  /** Collection of condition values, rendered by a [Select](../Select). */
+  options: PropTypes.arrayOf(PropTypes.any),
+  /** Callback when the `option` [Select](../Select) has changed. */
+  onChange: PropTypes.func,
+  /** The value of the condition ([Select](../Select)). */
+  value: PropTypes.string,
 }
 
 export default Condition

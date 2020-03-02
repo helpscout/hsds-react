@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Tooltip from '../Tooltip'
 import { DotStepperUI, BulletUI, ProgressBulletUI } from './DotStepper.css'
 import { classNames } from '../../utilities/classNames'
@@ -48,6 +49,13 @@ class DotStepper extends React.Component {
       </Tooltip>
     )
   }
+}
+
+DotStepper.propTypes = {
+  /** The total number of steps. */
+  numSteps: PropTypes.number,
+  /** The current step. */
+  step: PropTypes.number,
 }
 
 export default DotStepper

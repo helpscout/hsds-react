@@ -8,16 +8,6 @@ import { noop } from '../../utilities/other'
 import { smoothScrollTo, linear } from '../../utilities/smoothScroll'
 
 class AddButton extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    innerRef: PropTypes.func,
-    onClick: PropTypes.func,
-    isBorderless: PropTypes.bool,
-    scrollDuration: PropTypes.number,
-    scrollOffset: PropTypes.number,
-    type: PropTypes.oneOf(['and', 'or']),
-  }
-
   static defaultProps = {
     isBorderless: false,
     onClick: noop,
@@ -99,6 +89,23 @@ class AddButton extends React.PureComponent {
       </ButtonWrapperUI>
     )
   }
+}
+
+AddButton.propTypes = {
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** Retrieve the inner DOM node. */
+  innerRef: PropTypes.func,
+  /** Renders a white border. */
+  isBorderless: PropTypes.bool,
+  /** Callback when component is clicked. */
+  onClick: PropTypes.func,
+  /** Time (ms) it takes to scroll into view. */
+  scrollDuration: PropTypes.number,
+  /** Amount (px) used to calculate scrolling into view. */
+  scrollOffset: PropTypes.number,
+  /** The operator. */
+  type: PropTypes.oneOf(['and', 'or']),
 }
 
 export default AddButton

@@ -1,8 +1,12 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import ControlGroup from '../ControlGroup'
+import ControlGroup from './ControlGroup'
+import Block from './ControlGroup.Block'
+import Item from './ControlGroup.Item'
+import Input from '../Input'
+import Select from '../Select'
 
-describe('ClassName', () => {
+describe('ControlGroup ClassName', () => {
   test('Has default component className', () => {
     const wrapper = mount(<ControlGroup />)
     const el = wrapper.find('div.c-ControlGroup')
@@ -19,7 +23,7 @@ describe('ClassName', () => {
   })
 })
 
-describe('Item', () => {
+describe('ControlGroup Item', () => {
   test('Can render a ControlGroup.Item', () => {
     const wrapper = mount(
       <ControlGroup>
@@ -151,7 +155,7 @@ describe('Item', () => {
   })
 })
 
-describe('Block', () => {
+describe('ControlGroup Block', () => {
   test('Can render a ControlGroup.Block', () => {
     const wrapper = mount(
       <ControlGroup>
@@ -217,5 +221,108 @@ describe('Block', () => {
     expect(wrapper.find(ControlGroup.Block).prop('isFirst')).toBe(false)
     expect(wrapper.find(ControlGroup.Block).prop('isNotOnly')).toBe(false)
     expect(wrapper.find(ControlGroup.Block).prop('isLast')).toBe(true)
+  })
+})
+
+describe('ControlGroup.Block ClassName', () => {
+  test('Has default component className', () => {
+    const wrapper = mount(<Block />)
+    const el = wrapper.find('div.c-ControlGroupBlock')
+
+    expect(el.hasClass('c-ControlGroupBlock')).toBe(true)
+  })
+
+  test('Applies custom className if specified', () => {
+    const className = 'gator'
+    const wrapper = mount(<Block className={className} />)
+    const el = wrapper.find('div.c-ControlGroupBlock')
+
+    expect(el.hasClass(className)).toBe(true)
+  })
+})
+
+describe('ControlGroup.Block Content', () => {
+  test('Can render children', () => {
+    const wrapper = mount(
+      <Block>
+        <button />
+      </Block>
+    )
+
+    expect(wrapper.find('button').length).toBe(1)
+  })
+})
+
+describe('ControlGroup.Block Item', () => {
+  test('Renders a ControlGroup.Item', () => {
+    const wrapper = mount(<Block />)
+    const o = wrapper.find(Item)
+
+    expect(o.length).toBe(1)
+    expect(o.prop('isBlock')).toBe(true)
+  })
+})
+
+describe('ControlGroup.Item ClassName', () => {
+  test('Has default component className', () => {
+    const wrapper = mount(<Item />)
+    const el = wrapper.find('div.c-ControlGroupItem')
+
+    expect(el.hasClass('c-ControlGroupItem')).toBe(true)
+  })
+
+  test('Applies custom className if specified', () => {
+    const className = 'gator'
+    const wrapper = mount(<Item className={className} />)
+    const el = wrapper.find('div.c-ControlGroupItem')
+
+    expect(el.hasClass(className)).toBe(true)
+  })
+})
+
+describe('ControlGroup.Item Content', () => {
+  test('Can render children', () => {
+    const wrapper = mount(
+      <Item>
+        <button />
+      </Item>
+    )
+
+    expect(wrapper.find('button').length).toBe(1)
+  })
+
+  test('Can render control Component', () => {
+    const wrapper = mount(
+      <Item>
+        <Input />
+      </Item>
+    )
+
+    expect(wrapper.find('Input').length).toBe(1)
+  })
+})
+
+describe('ControlGroup.Item Control', () => {
+  test('Enhances control components with positioning props', () => {
+    const wrapper = mount(
+      <div>
+        <Item isFirst>
+          <Select />
+        </Item>
+        <Item isNotOnly>
+          <Input />
+        </Item>
+        <Item isNotOnly>
+          <button />
+        </Item>
+        <Item isLast>
+          <Input.AddOn />
+        </Item>
+      </div>
+    )
+
+    expect(wrapper.find(Select).prop('isFirst')).toBe(true)
+    expect(wrapper.find(Input).prop('isNotOnly')).toBe(true)
+    expect(wrapper.find(Input.AddOn).prop('isLast')).toBe(true)
   })
 })

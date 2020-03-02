@@ -11,18 +11,6 @@ import {
 } from './CopyButton.css'
 
 class CopyButton extends React.PureComponent {
-  static propTypes = {
-    canRenderFocus: PropTypes.bool,
-    children: PropTypes.any,
-    className: PropTypes.string,
-    kind: PropTypes.string,
-    onClick: PropTypes.func,
-    onReset: PropTypes.func,
-    resetTimeout: PropTypes.number,
-    size: PropTypes.any,
-    title: PropTypes.string,
-  }
-
   static defaultProps = {
     canRenderFocus: false,
     onClick: noop,
@@ -106,6 +94,18 @@ class CopyButton extends React.PureComponent {
       </CopyButtonUI>
     )
   }
+}
+
+CopyButton.propTypes = {
+  canRenderFocus: PropTypes.bool,
+  children: PropTypes.any,
+  className: PropTypes.string,
+  kind: PropTypes.string,
+  onClick: PropTypes.func,
+  onReset: PropTypes.func,
+  resetTimeout: PropTypes.number,
+  size: PropTypes.any,
+  title: PropTypes.string,
 }
 
 export default CopyButton

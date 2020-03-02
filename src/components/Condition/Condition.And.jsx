@@ -6,7 +6,6 @@ import { AndWrapperUI } from './Condition.css'
 
 export const And = props => {
   const { className, ...rest } = props
-
   const componentClassName = classNames(And.className, className)
 
   return (

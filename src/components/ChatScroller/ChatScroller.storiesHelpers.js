@@ -2,11 +2,6 @@ import React from 'react'
 import { createSpec, faker } from '@helpscout/helix'
 import { Avatar, ChatScroller, Message, Scrollable } from '../index'
 
-export default {
-  component: ChatScroller,
-  title: 'Utilities/ChatScroller',
-}
-
 const MessageSpec = createSpec({
   id: faker.random.uuid(),
   message: faker.lorem.sentence(),

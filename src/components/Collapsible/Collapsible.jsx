@@ -5,17 +5,6 @@ import { requestAnimationFrame, noop } from '../../utilities/other'
 import { CollapsibleUI } from './Collapsible.css'
 
 class Collapsible extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-    duration: PropTypes.number,
-    durationOpen: PropTypes.number,
-    durationClose: PropTypes.number,
-    isOpen: PropTypes.bool,
-    onOpen: PropTypes.func,
-    onClose: PropTypes.func,
-    style: PropTypes.any,
-  }
-
   static defaultProps = {
     duration: 300,
     isOpen: false,
@@ -216,6 +205,25 @@ class Collapsible extends React.Component {
       </CollapsibleUI>
     )
   }
+}
+
+Collapsible.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Time (ms) for the expand/collapse animation. */
+  duration: PropTypes.number,
+  /** Time (ms) for the expand animation. */
+  durationOpen: PropTypes.number,
+  /** Time (ms) for the collapse animation. */
+  durationClose: PropTypes.number,
+  /** Opens/collapses the component. */
+  isOpen: PropTypes.bool,
+  /** Callback function when the component closes. */
+  onClose: PropTypes.func,
+  /** Callback function when the component opens. */
+  onOpen: PropTypes.func,
+  /** Custom styles to be added to the component. */
+  style: PropTypes.any,
 }
 
 export default Collapsible

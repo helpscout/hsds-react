@@ -34,7 +34,7 @@ Choose an anchor:
 | helpText    | `string`   | Displays text underneath input.                           |
 | hideLabel   | `bool`     | Hides the label with [VisuallyHidden](../VisuallyHidden). |
 | id          | `string`   | ID for the input.                                         |
-| ref         | `function` | Retrieves the `input` DOM node.                           |
+| inputRef    | `function` | Retrieves the `input` DOM node.                           |
 | label       | `string`   | Label for the input.                                      |
 | name        | `string`   | Name for the input.                                       |
 | onBlur      | `function` | Callback when the input is blurred.                       |

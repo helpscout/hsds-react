@@ -20,17 +20,6 @@ require('prismjs/components/prism-c')
 require('prismjs/components/prism-objectivec')
 
 class CopyCode extends React.PureComponent {
-  static propTypes = {
-    autoFocus: PropTypes.bool,
-    className: PropTypes.string,
-    code: PropTypes.string,
-    copyToClipboard: PropTypes.bool,
-    innerRef: PropTypes.func,
-    language: PropTypes.string,
-    maxWidth: PropTypes.number,
-    onCopy: PropTypes.func,
-  }
-
   static defaultProps = {
     autoFocus: false,
     code: '',
@@ -133,6 +122,24 @@ class CopyCode extends React.PureComponent {
       </WrapperUI>
     )
   }
+}
+
+CopyCode.propTypes = {
+  className: PropTypes.string,
+  /** Automatically select `code` when component mounts. */
+  autoFocus: PropTypes.bool,
+  /** The code to be displayed within the container. */
+  code: PropTypes.string,
+  /** Enables copying to clipboard. */
+  copyToClipboard: PropTypes.bool,
+  /** Retrieves the DOM node. */
+  innerRef: PropTypes.func,
+  /** Language syntax */
+  language: PropTypes.oneOf([`c`, `java`, `javascript`, `objectivec`, `swift`]),
+  /** Sets the max width of the container. */
+  maxWidth: PropTypes.number,
+  /** Callback function when the copy button is clicked. */
+  onCopy: PropTypes.func,
 }
 
 export default CopyCode

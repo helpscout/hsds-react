@@ -4,9 +4,6 @@ import Choice from '../Choice'
 import { classNames } from '../../utilities/classNames'
 
 class Checkbox extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-  }
   render() {
     const { className, ...rest } = this.props
 
@@ -21,6 +18,10 @@ class Checkbox extends React.PureComponent {
       />
     )
   }
+}
+
+Checkbox.propTypes = {
+  className: PropTypes.string,
 }
 
 export default Checkbox

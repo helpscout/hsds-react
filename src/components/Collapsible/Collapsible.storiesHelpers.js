@@ -1,11 +1,6 @@
 import React, { PureComponent as Component } from 'react'
 import { Button, Collapsible } from '../index'
 
-export default {
-  component: Collapsible,
-  title: 'Utilities/Collapsible',
-}
-
 class SampleComponent extends Component {
   constructor() {
     super()
@@ -49,7 +44,3 @@ export const Default = () => (
     </SampleComponent>
   </div>
 )
-
-Default.story = {
-  name: 'default',
-}
