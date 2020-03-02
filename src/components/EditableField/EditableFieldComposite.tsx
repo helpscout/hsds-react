@@ -45,6 +45,8 @@ export class EditableFieldComposite extends React.PureComponent<
   groupRef: HTMLDivElement
   maskRef: HTMLDivElement
 
+  _isMounted = false
+
   setGroupNode = node => {
     this.groupRef = node
   }
@@ -83,6 +85,11 @@ export class EditableFieldComposite extends React.PureComponent<
     return { fields, maskItems }
   }
 
+  componentDidMount() {
+    /* istanbul ignore next */
+    this._isMounted = true
+  }
+
   componentDidUpdate(prevProps) {
     const getProps = children =>
       React.Children.map(children, child => child.props)
@@ -110,6 +117,9 @@ export class EditableFieldComposite extends React.PureComponent<
        * so that the focus event gets triggered right after the blur, and that is when we act
        */
       setTimeout(() => {
+        /* istanbul ignore next */
+        if (!this._isMounted) return
+
         let hasActiveFields = false
         const Fields = this.groupRef.querySelectorAll(
           `.${EDITABLEFIELD_CLASSNAMES.field}`
@@ -150,6 +160,11 @@ export class EditableFieldComposite extends React.PureComponent<
         fi.removeAttribute('style')
       })
     }
+  }
+
+  componentWillUnmount() {
+    /* istanbul ignore next */
+    this._isMounted = false
   }
 
   handleFieldFocus = passedFn => {
