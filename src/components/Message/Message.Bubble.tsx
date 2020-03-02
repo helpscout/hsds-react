@@ -131,7 +131,10 @@ export const Bubble = (props: Props, context: Context) => {
 
     if (showEmojiOnlyStyles) {
       return (
-        <MessageBubbleBody className="c-MessageBubble__body">
+        <MessageBubbleBody
+          className="c-MessageBubble__body"
+          showEmojiOnlyStyles={showEmojiOnlyStyles}
+        >
           <Text wordWrap lineHeightInherit size={48}>
             {body}
           </Text>

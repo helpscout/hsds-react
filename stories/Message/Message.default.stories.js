@@ -20,6 +20,9 @@ stories.add('default', () => (
         omgomgomg
         {1}
       </Message.Chat>
+      <Message.Chat read timestamp="9:41am" metaPosition="top">
+        🚀
+      </Message.Chat>
       <Message.Chat read timestamp="9:41am">
         <strong>*Frantically running through North pole*</strong>
       </Message.Chat>
@@ -62,6 +65,7 @@ stories.add('default', () => (
           Caan, Zooey Deschanel, Mary Steenburgen, Daniel Tay, Edward Asner, and
           Bob Newhart...
         </PreviewCard>
+        <Message.Chat read timestamp="9:41am" body="🙃" />
       </Message.Content>
       <Message.Chat read timestamp="9:41am">
         Just read that!
@@ -94,7 +98,6 @@ stories.add('default', () => (
     </Message>
 
     <Message to avatar={<Avatar name="Buddy" />}>
-      <Message.Chat read timestamp="9:41am" body="🙃" />
       <Message.Chat
         isNote
         read
