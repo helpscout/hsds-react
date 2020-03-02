@@ -94,6 +94,7 @@ stories.add('default', () => (
     </Message>
 
     <Message to avatar={<Avatar name="Buddy" />}>
+      <Message.Chat read timestamp="9:41am" body="🙃" />
       <Message.Chat
         isNote
         read

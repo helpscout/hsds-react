@@ -148,6 +148,18 @@ describe('Content', () => {
     expect(wrapper.html()).toContain('<a href="http://www.helpscout.com"')
   })
 
+  describe('when body includes only emoji content', () => {
+    test('Renders body with Text component', () => {
+      const wrapper = mount(<Bubble body="🙄" />)
+      const o = wrapper.find(ui.body).first()
+      const includesTextElement = wrapper.find(Text)
+
+      expect(o.length).toBe(1)
+      expect(includesTextElement.length).toBe(1)
+      expect(wrapper.html()).toContain('🙄')
+    })
+  })
+
   test('Converts newlines to line break elements', () => {
     const body = 'Hello\n\nGoodbye'
     const wrapper = mount(<Bubble body={body} />)
