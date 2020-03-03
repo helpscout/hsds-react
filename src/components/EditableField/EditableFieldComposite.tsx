@@ -94,6 +94,7 @@ export class EditableFieldComposite extends React.PureComponent<
     const getProps = children =>
       React.Children.map(children, child => child.props)
 
+    /* istanbul ignore next */
     if (!equal(getProps(this.props.children), getProps(prevProps.children))) {
       const { fields, maskItems } = this.getChildrenFromProps(this.props)
 
