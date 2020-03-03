@@ -6,7 +6,7 @@ export const config = {
   borderColor: getColor('border'),
   borderColorFocus: getColor('blue.500'),
   boxShadow: '0 0 0 0 transparent',
-  boxShadowFocus: `0 0 0 1px ${getColor('blue.400')}`,
+  boxShadowFocus: `0 0 0 1px ${getColor('blue.500')}`,
   fontFamily:
     '"SFMono-Regular","Roboto Mono",Consolas,"Liberation Mono",Menlo,Courier,monospace',
   fontSize: 12,
