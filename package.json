@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/hsds-react",
-  "version": "2.89.4",
+  "version": "2.89.5-beta-modal-styles-hotfix",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
