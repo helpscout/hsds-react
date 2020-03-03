@@ -55,19 +55,6 @@ export const Bubble = (props: Props, context: Context) => {
   const isThemeNotifications = theme === 'notifications'
   const isThemeEmbed = theme === 'embed'
   const fromName = from && typeof from === 'string' ? from : null
-  const componentClassName = classNames(
-    'c-MessageBubble',
-    from && 'is-from',
-    icon && 'withIcon',
-    isNote && 'is-note',
-    size && `is-${size}`,
-    ltr && !rtl && 'is-ltr',
-    !ltr && rtl && 'is-rtl',
-    theme && `is-theme-${theme}`,
-    to && 'is-to',
-    typing && 'is-typing',
-    className
-  )
 
   let showEmojiOnlyStyles = false
 
@@ -165,6 +152,21 @@ export const Bubble = (props: Props, context: Context) => {
       {iconMarkup}
       <div className="c-MessageBubble__bodyWrapper">{innerContentMarkup}</div>
     </div>
+  )
+
+  const componentClassName = classNames(
+    'c-MessageBubble',
+    from && 'is-from',
+    icon && 'withIcon',
+    isNote && 'is-note',
+    size && `is-${size}`,
+    ltr && !rtl && 'is-ltr',
+    !ltr && rtl && 'is-rtl',
+    theme && `is-theme-${theme}`,
+    to && 'is-to',
+    typing && 'is-typing',
+    showEmojiOnlyStyles && 'emoji-only',
+    className
   )
 
   return (

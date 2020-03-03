@@ -60,6 +60,15 @@ const css = `
     margin-bottom: 0;
     min-width: initial;
   }
+
+  .c-MessageChatBlock:only-child .c-MessageBubble.emoji-only {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .c-MessageChatBlock:last-child .c-MessageBubble.emoji-only {
+    padding-bottom: 0 !important;
+  }
 `
 
 export default css
