@@ -103,11 +103,11 @@ export const CardUI = styled(Card)`
   outline: none;
   overflow: hidden;
 
-  &.is-default {
+  &.v2.is-default {
     width: 680px;
   }
 
-  &.is-alert {
+  &.v2.is-alert {
     min-width: 440px;
     padding-bottom: 60px;
   }

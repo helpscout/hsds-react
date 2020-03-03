@@ -243,7 +243,7 @@ class Modal extends React.PureComponent<ModalProps> {
     const componentClassName = classNames(
       'c-Modal__Card',
       v2 && 'is-v2',
-      modalKindClassName,
+      v2 && modalKindClassName,
       cardClassName
     )
 
@@ -369,14 +369,14 @@ class Modal extends React.PureComponent<ModalProps> {
       v2 && 'v2',
       isOpen && 'is-open',
       state === 'danger' && 'is-danger',
-      modalKindClassName,
+      v2 && modalKindClassName,
       className
     )
 
     const innerWrapperClassName = classNames(
       'c-Modal__innerWrapper',
       v2 && 'v2',
-      modalKindClassName
+      v2 && modalKindClassName
     )
 
     const styles = { ...style, zIndex }
