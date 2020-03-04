@@ -99,11 +99,12 @@ export class Attachment extends React.PureComponent {
       className
     )
 
-    const sizeMarkup = size ? (
-      <Text className="c-Attachment__size" lineHeightReset>
-        {size}
-      </Text>
-    ) : null
+    const sizeMarkup =
+      !isThemePreview && size ? (
+        <Text className="c-Attachment__size" lineHeightReset>
+          {size}
+        </Text>
+      ) : null
 
     const contentMarkup = imageUrl ? (
       <span className="c-Attachment__content">

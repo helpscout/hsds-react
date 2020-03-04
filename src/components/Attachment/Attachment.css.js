@@ -65,7 +65,7 @@ export const AttachmentUI = styled.a`
   &.is-theme-preview {
     ${cardSubtleStyles()};
     border: none;
-    display: block;
+    display: inline-block;
     font-weight: 500;
     padding: 15px 17px;
 

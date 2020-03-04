@@ -1,0 +1,50 @@
+import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
+import StatusBadge from './'
+
+<Meta
+  title="Components/Badges/Badge"
+  component={StatusBadge}
+  parameters={{
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A7292'
+    }
+  }}
+/>
+
+# StatusBadge
+
+A StatusBadge component is a UI element that helps indicate the status (using `StatusDot`) of something with a `Badge` count.
+
+<Preview>
+  <Story name="status badge">
+    <div>
+    <p>
+      Regular:
+      <StatusBadge count={19} />
+    </p>
+    <p>
+      Big Number:
+      <StatusBadge count={203021} />
+    </p>
+    <p>
+      Big Number with commas:
+      <StatusBadge count="2,043,021,134" />
+    </p>
+  </div>
+  </Story>
+</Preview>
+
+### Props
+
+<Props of={StatusBadge} />
+
+### Stories
+
+#### status badge new
+
+<Preview>
+  <Story name="status badge new">
+    <StatusBadge count={19} status="new" />
+  </Story>
+</Preview>

@@ -5,11 +5,11 @@ import Badge from './'
   title="Components/Badges/Badge"
   component={Badge}
   parameters={{
-      design: {
-        type: 'figma',
-        url: 'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A7292'
-      }
-    }}
+    design: {
+      type: 'figma',
+      url: 'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A7292'
+    }
+  }}
 />
 
 # Badge
@@ -43,8 +43,14 @@ A Badge component is a UI element that helps indicate the count, state, or statu
   <Story name="Status">
     <div>
       <Badge status="error">Badger</Badge>
+      <br/>
+      <br/>
       <Badge status="info">Badger</Badge>
+      <br/>
+      <br/>
       <Badge status="success">Badger</Badge>
+      <br/>
+      <br/>
       <Badge status="warning">Badger</Badge>
     </div>
   </Story>
@@ -56,6 +62,8 @@ A Badge component is a UI element that helps indicate the count, state, or statu
   <Story name="White">
     <div>
       <Badge>Regular</Badge>
+      <br/>
+      <br/>
       <Badge white>White</Badge>
     </div>
   </Story>
@@ -67,6 +75,8 @@ A Badge component is a UI element that helps indicate the count, state, or statu
   <Story name="Sizes">
     <div>
       <Badge size="md">Regular</Badge>
+      <br/>
+      <br/>
       <Badge size="sm">Small</Badge>
     </div>
   </Story>
@@ -76,9 +86,7 @@ A Badge component is a UI element that helps indicate the count, state, or statu
 
 <Preview>
   <Story name="Square">
-    <div>
-      <Badge isSquare>Regular</Badge>
-    </div>
+    <Badge isSquare>Regular</Badge>
   </Story>
 </Preview>
 
@@ -90,12 +98,18 @@ A Badge component is a UI element that helps indicate the count, state, or statu
       <Badge status="error" inverted={true}>
         Error
       </Badge>
+      <br/>
+      <br/>
       <Badge status="info" inverted={true}>
         Info
       </Badge>
+      <br/>
+      <br/>
       <Badge status="success" inverted={true}>
         Success
       </Badge>
+      <br/>
+      <br/>
       <Badge status="warning" inverted={true}>
         Warning
       </Badge>

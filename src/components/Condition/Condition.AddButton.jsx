@@ -79,7 +79,7 @@ class AddButton extends React.PureComponent {
         <ButtonUI
           {...rest}
           className={this.getClassName()}
-          kind="secondaryAlt"
+          kind="tertiary"
           onClick={this.handleOnClick}
           size={size}
         >

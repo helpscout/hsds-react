@@ -39,14 +39,6 @@ A ChatList component is wrapper that renders a collection of `ChatList.Items`
 
 ### Stories
 
-#### Empty
-
-<Preview>
-  <Story name="Empty">
-    <ChatList />
-  </Story>
-</Preview>
-
 #### Loading
 
 <Preview>
@@ -77,10 +69,14 @@ This component will automatically render `Skeleton` if the `name` or `message` p
 A ChatList.BlankSlate component provides information when there is no content. This component has been automatically integrated into `ChatList` when there are no ChatList.Items.
 
 <Preview>
-  <Story name="Chat BlankSlate">
-    <ChatList.BlankSlate>
-        Nothing to see here.
-    </ChatList.BlankSlate>
+  <Story name="Chat BlankSlate/Empty">
+    <div>
+      <ChatList.BlankSlate>
+          Nothing to see here.
+      </ChatList.BlankSlate>
+      <br/>
+      <ChatList />
+    </div>
   </Story>
 </Preview>
 
