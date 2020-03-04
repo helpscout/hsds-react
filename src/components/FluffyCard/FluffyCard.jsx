@@ -7,23 +7,6 @@ import { noop } from '../../utilities/other'
 import { FluffyCardUI } from './FluffyCard.css'
 
 class FluffyCard extends React.PureComponent {
-  static propTypes = {
-    autoWordWrap: PropTypes.bool,
-    className: PropTypes.string,
-    flex: PropTypes.bool,
-    fullHeight: PropTypes.bool,
-    hover: PropTypes.bool,
-    href: PropTypes.string,
-    innerRef: PropTypes.func,
-    nodeRef: PropTypes.func,
-    onBlur: PropTypes.func,
-    onClick: PropTypes.func,
-    onFocus: PropTypes.func,
-    seamless: PropTypes.bool,
-    selector: PropTypes.string,
-    textAlign: PropTypes.string,
-    to: PropTypes.string,
-  }
   static defaultProps = {
     flex: false,
     floating: false,
@@ -60,6 +43,24 @@ class FluffyCard extends React.PureComponent {
       </FluffyCardUI>
     )
   }
+}
+
+FluffyCard.propTypes = {
+  autoWordWrap: PropTypes.bool,
+  className: PropTypes.string,
+  flex: PropTypes.bool,
+  fullHeight: PropTypes.bool,
+  hover: PropTypes.bool,
+  href: PropTypes.string,
+  innerRef: PropTypes.func,
+  nodeRef: PropTypes.func,
+  onBlur: PropTypes.func,
+  onClick: PropTypes.func,
+  onFocus: PropTypes.func,
+  seamless: PropTypes.bool,
+  selector: PropTypes.string,
+  textAlign: PropTypes.string,
+  to: PropTypes.string,
 }
 
 export default FluffyCard

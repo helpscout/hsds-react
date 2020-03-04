@@ -9,14 +9,7 @@ import Emoji from './EmojiPicker.Emoji'
 import { emojiSet } from './emojiSet'
 
 export class EmojiPicker extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    emojiSet: PropTypes.arrayOf(PropTypes.any),
-    renderMenu: PropTypes.any,
-    size: PropTypes.string,
-  }
   static className = 'c-EmojiPicker'
-
   static defaultProps = {
     className: '',
     direction: 'left',
@@ -78,6 +71,29 @@ export class EmojiPicker extends React.PureComponent {
       />
     )
   }
+}
+
+EmojiPicker.propTypes = {
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** An array of emoji objects. */
+  emojiSet: PropTypes.arrayOf(PropTypes.any),
+  /** Callback when item is selected. */
+  onSelect: PropTypes.func,
+  /** Callback when item is blurred. */
+  onBlur: PropTypes.func,
+  /** Callback when item is closed. */
+  onClose: PropTypes.func,
+  /** Callback when item is focused. */
+  onFocus: PropTypes.func,
+  /** Callback when item is opened. */
+  onOpen: PropTypes.func,
+  /** Callback to customize how a menu renders. */
+  renderMenu: PropTypes.any,
+  /** Callback to customize how a trigger renders. */
+  renderTrigger: PropTypes.any,
+  /** The size of the emoji. */
+  size: PropTypes.string,
 }
 
 export default EmojiPicker

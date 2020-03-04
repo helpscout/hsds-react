@@ -6,17 +6,7 @@ import { ItemWrapperUI, ItemUI } from './EmojiPicker.css'
 import { defaultEmoji } from './emojiSet'
 
 class Item extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.any,
-    hoverBackgroundColor: PropTypes.string,
-    name: PropTypes.string,
-    renderItem: PropTypes.any,
-    size: PropTypes.string,
-    symbol: PropTypes.string,
-  }
-
   static className = 'c-EmojiPickerItem'
-
   static defaultProps = {
     'data-cy': 'EmojiPickerItem',
     className: '',
@@ -53,6 +43,15 @@ class Item extends React.PureComponent {
       </ItemWrapperUI>
     )
   }
+}
+
+Item.propTypes = {
+  className: PropTypes.any,
+  hoverBackgroundColor: PropTypes.string,
+  name: PropTypes.string,
+  renderItem: PropTypes.any,
+  size: PropTypes.string,
+  symbol: PropTypes.string,
 }
 
 export default Item

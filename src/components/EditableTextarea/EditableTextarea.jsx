@@ -1,13 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import Textarea from 'react-textarea-autosize'
-
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import debounce from '../../utilities/debounce'
-
 import { ComponentUI, EditableTextareaUI, MaskUI } from './EditableTextarea.css'
 import {
   LabelTextUI,
@@ -15,34 +12,12 @@ import {
 } from '../EditableField/EditableField.css'
 import Icon from '../Icon'
 import Tooltip from '../Tooltip'
-
 import { scrollToTop } from './EditableTextarea.utils'
 import { key } from '../../constants/Keys'
 import { CAUSE, OPERATION } from '../EditableField/EditableField.constants'
 import { getValidationColor } from '../EditableField/EditableField.utils'
 
 export class EditableTextarea extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    floatingLabels: PropTypes.bool,
-    id: PropTypes.string,
-    label: PropTypes.string,
-    maxRows: PropTypes.number,
-    innerRef: PropTypes.func,
-    overflowCueColor: PropTypes.string,
-    placeholder: PropTypes.string,
-    value: PropTypes.string,
-    onCommit: PropTypes.func,
-    onChange: PropTypes.func,
-    onInputBlur: PropTypes.func,
-    onInputFocus: PropTypes.func,
-    onInputKeyDown: PropTypes.func,
-    onInputKeyUp: PropTypes.func,
-    onEnter: PropTypes.func,
-    onEscape: PropTypes.func,
-    validate: PropTypes.func,
-  }
-
   static className = 'c-EditableTextarea'
   static defaultProps = {
     floatingLabels: false,
@@ -110,8 +85,6 @@ export class EditableTextarea extends React.PureComponent {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    // Tested
-
     if (nextProps.value === this.state.value) return
 
     this.setState({
@@ -451,6 +424,45 @@ export class EditableTextarea extends React.PureComponent {
       </ComponentUI>
     )
   }
+}
+
+EditableTextarea.propTypes = {
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** The id to assign to the component. */
+  id: PropTypes.string,
+  /** Uses the "floating label" pattern with animation */
+  floatingLabels: PropTypes.bool,
+  /** The label for the field */
+  label: PropTypes.string,
+  /** The maximum number of lines the textarea will grow to (max height). */
+  maxRows: PropTypes.number,
+  /** The color of the visual cue when content is overflowing. */
+  overflowCueColor: PropTypes.string,
+  /** The placeholder of the textarea. */
+  placeholder: PropTypes.string,
+  /** The value of the textarea. */
+  value: PropTypes.string,
+  /** Function that validates the value, should always return a Promise that resolves to a Validation type */
+  validate: PropTypes.func,
+  /** Retrieve the inner DOM node. */
+  innerRef: PropTypes.func,
+  /** Fires when either the input or an option is changed */
+  onChange: PropTypes.func,
+  /** Fires when Enter is pressed on the input */
+  onEnter: PropTypes.func,
+  /** Fires when Escape is pressed on the input */
+  onEscape: PropTypes.func,
+  /** Fires when a change is “saved” (see below) */
+  onCommit: PropTypes.func,
+  /** Fired when the input is focused */
+  onInputFocus: PropTypes.func,
+  /** Fired when the input is blurred */
+  onInputBlur: PropTypes.func,
+  /** Fires on textarea keyup */
+  onInputKeyDown: PropTypes.func,
+  /** Fires on textarea keydown */
+  onInputKeyUp: PropTypes.func,
 }
 
 export default EditableTextarea

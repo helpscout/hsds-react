@@ -7,26 +7,6 @@ import { EmoticonUI, IconUI } from './Emoticon.css'
 import { getName, getIcon } from './Emoticon.utils'
 
 export class Emoticon extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    center: PropTypes.bool,
-    clickable: PropTypes.bool,
-    isActive: PropTypes.bool,
-    isDisabled: PropTypes.bool,
-    innerRef: PropTypes.func,
-    inline: PropTypes.bool,
-    name: PropTypes.oneOf([
-      'happy',
-      'sad',
-      'meh',
-      'reaction-happy',
-      'reaction-sad',
-      'reaction-okay',
-    ]),
-    title: PropTypes.string,
-    size: PropTypes.oneOf(['lg', 'md', 'sm']),
-  }
-
   static defaultProps = {
     center: false,
     clickable: true,
@@ -97,6 +77,35 @@ export class Emoticon extends React.PureComponent {
       </EmoticonUI>
     )
   }
+}
+
+Emoticon.propTypes = {
+  /** Center aligns component. */
+  center: PropTypes.bool,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Enables the component to be clickable. */
+  clickable: PropTypes.bool,
+  /** Displays the component as `inline-block`. */
+  inline: PropTypes.bool,
+  /** Determines the emoticon color. (false is monochrome grey) */
+  isActive: PropTypes.bool,
+  /** Disables the emoticon from interactions. */
+  isDisabled: PropTypes.bool,
+  /** Determines the SVG image. Required. */
+  name: PropTypes.oneOf([
+    'happy',
+    'sad',
+    'meh',
+    'reaction-happy',
+    'reaction-sad',
+    'reaction-okay',
+  ]),
+  /** Adjusts the size of the component. */
+  size: PropTypes.oneOf(['lg', 'md', 'sm']),
+  /** Provides a title on the icon. */
+  title: PropTypes.string,
+  innerRef: PropTypes.func,
 }
 
 export default Emoticon

@@ -14,13 +14,6 @@ import { key } from '../../constants/Keys'
 import equal from 'fast-deep-equal'
 
 export class EditableFieldComposite extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    size: PropTypes.string,
-    separator: PropTypes.string,
-    placeholder: PropTypes.string,
-  }
-
   static className = COMPOSITE_CLASSNAMES.component
   static defaultProps = {
     size: 'md',
@@ -331,6 +324,17 @@ export class EditableFieldComposite extends React.PureComponent {
       </EditableFieldCompositeUI>
     )
   }
+}
+
+EditableFieldComposite.propTypes = {
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** This is the text you see when all fields are empty. */
+  placeholder: PropTypes.string,
+  /** Default is "md", pass "lg" for the large option. */
+  size: PropTypes.string,
+  /** By default, each value will be separated with a non-breaking space, but you can pass any string here, like ",". */
+  separator: PropTypes.string,
 }
 
 export default EditableFieldComposite

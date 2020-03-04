@@ -51,17 +51,21 @@ Flexy.Item = Item
 Flexy.defaultProps = {
   gap: 'sm',
   baseSize: 4,
+  align: 'middle',
 }
 
 Flexy.propTypes = {
+  /** Determines the vertical alignment of Flexy child elements. */
   align: PropTypes.oneOf(['top', 'middle', 'bottom', '']),
+  /** Determines the gap (base) size between child elements. */
   baseSize: PropTypes.number,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Determines the amount of spacing between Flexy child elements. */
   gap: PropTypes.oneOf(['xl', 'lg', 'md', 'sm', 'xs', 'none', '']),
+  /** Determines the horizontal alignment of Flexy child elements. */
   just: PropTypes.oneOf(['default', 'left', 'center', 'right', '']),
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
+  children: PropTypes.any,
 }
 
 export default Flexy

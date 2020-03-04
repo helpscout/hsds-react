@@ -1,14 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import { EditableFieldActionsUI, FieldButtonUI } from './EditableField.css'
 import Icon from '../Icon'
-
 import { classNames } from '../../utilities/classNames'
 import { normalizeUrl } from '../../utilities/urls'
 import { ACTION_ICONS } from './EditableField.constants'
 import { ACTIONS_CLASSNAMES, STATES_CLASSNAMES } from './EditableField.utils'
-
 import equal from 'fast-deep-equal'
 import { noop } from '../../utilities/other'
 

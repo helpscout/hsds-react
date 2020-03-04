@@ -17,12 +17,12 @@ export const Item = ({ children, className, inline, ...rest }) => (
   </FlexyItemUI>
 )
 
-Item.propTypes = {
-  inline: PropTypes.bool,
-}
-
 Item.defaultProps = {
   inline: false,
+}
+Item.propTypes = {
+  /** Typically not necessary, but can remedy nested flexbox layout issues. */
+  inline: PropTypes.bool,
 }
 
 Item.displayName = 'FlexyItem'

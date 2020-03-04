@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import equal from 'fast-deep-equal'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { isString, isObject } from '../../utilities/is'
-
 import Text from '../Text'
 import Tooltip from '../Tooltip'
-
 import {
   FilteredListUI,
   BadgeItemUI,
@@ -16,24 +15,21 @@ import {
 } from './FilteredList.css'
 
 export class FilteredList extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-    items: PropTypes.arrayOf(PropTypes.string),
-    itemKey: PropTypes.string,
-    limit: PropTypes.number,
-    inline: PropTypes.bool,
-    renderItem: PropTypes.func,
-  }
-
   static defaultProps = {
     items: [],
     limit: 5,
   }
 
   shouldComponentUpdate(nextProps) {
-    const { items } = this.props
+    const { items, limit, inline } = this.props
 
-    if (nextProps.items.length !== items.length) {
+    if (!equal(nextProps.items, items)) {
+      return true
+    }
+    if (nextProps.limit !== limit) {
+      return true
+    }
+    if (nextProps.inline !== inline) {
       return true
     }
 
@@ -133,6 +129,19 @@ export class FilteredList extends React.Component {
       </FilteredListUI>
     )
   }
+}
+
+FilteredList.propTypes = {
+  itemKey: PropTypes.string,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** List of items that need to be filtered */
+  items: PropTypes.arrayOf(PropTypes.string),
+  /** Number of items visible */
+  limit: PropTypes.number,
+  /** Display the item inline */
+  inline: PropTypes.bool,
+  renderItem: PropTypes.func,
 }
 
 export default FilteredList
