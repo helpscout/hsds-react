@@ -34,9 +34,8 @@ stories.add('default', () => (
       </Message.Action>
     </Message>
     <Message from avatar={<Avatar name="Arctic Puffin" />}>
-      <Message.Chat read timestamp="9:41am" metaPosition="top">
-        🐐
-      </Message.Chat>
+      <Message.Chat read timestamp="9:41am" body="🙂" />
+      <Message.Chat read timestamp="9:41am" body="Hello World" />
     </Message>
     <Message from avatar={<Avatar name="Arctic Puffin" />}>
       <Message.Chat read timestamp="9:41am">
