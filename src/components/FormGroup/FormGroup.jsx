@@ -9,15 +9,11 @@ import Grid from './FromGroup.Grid'
 import { FormGroupUI } from './FormGroup.css'
 
 class FormGroup extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-  }
   static Choice = Choice
   static Grid = Grid
 
   render() {
     const { className, children, ...rest } = this.props
-
     const componentClassName = classNames('c-FormGroup', className)
 
     return (
@@ -26,6 +22,11 @@ class FormGroup extends React.PureComponent {
       </FormGroupUI>
     )
   }
+}
+
+FormGroup.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
 }
 
 export default FormGroup

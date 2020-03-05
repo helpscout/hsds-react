@@ -7,12 +7,6 @@ import { noop } from '../../utilities/other'
 import { InlineUI } from './Inline.css'
 
 export class Inline extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    innerRef: PropTypes.func,
-    size: PropTypes.oneOf(['lg', 'md', 'sm', 'xs']),
-  }
-
   static className = 'c-Inline'
   static defaultProps = {
     innerRef: noop,
@@ -40,6 +34,14 @@ export class Inline extends React.PureComponent {
       </InlineUI>
     )
   }
+}
+
+Inline.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  innerRef: PropTypes.func,
+  /** Determines the horizontal padding of the component. */
+  size: PropTypes.oneOf(['lg', 'md', 'sm', 'xs']),
 }
 
 export default Inline

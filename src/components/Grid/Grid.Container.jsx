@@ -5,20 +5,8 @@ import { classNames } from '../../utilities/classNames'
 import { ContainerUI } from './Grid.Container.css'
 
 class Container extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    fluid: PropTypes.bool, // deprecating
-    responsive: PropTypes.bool, // deprecating
-    isFluid: PropTypes.bool,
-    isResponsive: PropTypes.bool,
-    size: PropTypes.oneOf(['md', 'sm', 'xs']),
-  }
-
   static displayName = 'GridContainer'
-
   static defaultProps = {
-    fluid: false,
-    responsive: false,
     isFluid: false,
     isResponsive: false,
   }
@@ -49,6 +37,16 @@ class Container extends React.PureComponent {
       </ContainerUI>
     )
   }
+}
+
+Container.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Adds fluid styles to the component. */
+  isFluid: PropTypes.bool,
+  /** Adds responsive styles to the component. */
+  isResponsive: PropTypes.bool,
+  size: PropTypes.oneOf(['md', 'sm', 'xs']),
 }
 
 export default Container

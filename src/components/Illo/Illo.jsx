@@ -55,17 +55,29 @@ const Illo = props => {
 }
 
 Illo.propTypes = {
-  color: PropTypes.string,
-  colorSecondary: PropTypes.string,
-  colorUi: PropTypes.string,
-  colorUiDark: PropTypes.string,
-  colorUiLight: PropTypes.string,
-  colorUiTransparent: PropTypes.string,
-  colorUiWhite: PropTypes.string,
+  /** Custom class names to be added to the component. */
   className: PropTypes.string,
+  /** Custom color for SVG image on primary paths. */
+  color: PropTypes.string,
+  /** Custom color for SVG image on secondary paths. */
+  colorSecondary: PropTypes.string,
+  /** Custom color for SVG image on UI themed paths. */
+  colorUi: PropTypes.string,
+  /** Custom color for SVG image on UI dark themed paths. */
+  colorUiDark: PropTypes.string,
+  /** Custom color for SVG image on UI light themed paths. */
+  colorUiLight: PropTypes.string,
+  /** Custom color for SVG image on UI transparent themed paths. Default `transparent`. */
+  colorUiTransparent: PropTypes.string,
+  /** Custom color for SVG image on UI white themed paths. Default `white`. */
+  colorUiWhite: PropTypes.string,
+  /** Determines the SVG image. Required. */
   name: PropTypes.string,
+  /** Callback function when component is clicked. */
+  onClick: PropTypes.func,
+  /** Adjusts the size of the component. */
   size: PropTypes.oneOf(['40', '60', '72', '80', '90']),
-  style: PropTypes.any,
+  /** Provides a name for the component. */
   title: PropTypes.string,
 }
 

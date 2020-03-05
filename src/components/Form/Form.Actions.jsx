@@ -5,7 +5,6 @@ import { classNames } from '../../utilities/classNames'
 
 export class Actions extends React.PureComponent {
   static className = 'c-FormActions'
-
   static defaultProps = {
     direction: 'right',
   }
@@ -58,6 +57,10 @@ export class Actions extends React.PureComponent {
       </ActionsUI>
     )
   }
+}
+
+Actions.propTypes = {
+  direction: PropTypes.oneOf(['right', 'left']),
 }
 
 export default Actions

@@ -6,11 +6,6 @@ import { noop } from '../../utilities/other'
 import { ItemUI } from './Inline.css'
 
 export class Item extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    innerRef: PropTypes.func,
-  }
-
   static className = 'c-InlineItem'
   static defaultProps = {
     innerRef: noop,
@@ -36,6 +31,12 @@ export class Item extends React.PureComponent {
       </ItemUI>
     )
   }
+}
+
+Item.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  innerRef: PropTypes.func,
 }
 
 export default Item

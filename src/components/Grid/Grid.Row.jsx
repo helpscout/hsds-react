@@ -5,17 +5,8 @@ import { classNames } from '../../utilities/classNames'
 import { RowUI } from './Grid.Row.css'
 
 class Row extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    flex: PropTypes.bool, // deprecating
-    isFlex: PropTypes.bool,
-    size: PropTypes.oneOf(['md', 'sm', 'xs']),
-  }
-
   static displayName = 'GridRow'
-
   static defaultProps = {
-    flex: false,
     isFlex: false,
   }
 
@@ -35,6 +26,15 @@ class Row extends React.PureComponent {
       </RowUI>
     )
   }
+}
+
+Row.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Adds flex styles to the component. */
+  isFlex: PropTypes.bool,
+  /** Adds sizing styles to the component. */
+  size: PropTypes.oneOf(['md', 'sm', 'xs']),
 }
 
 export default Row

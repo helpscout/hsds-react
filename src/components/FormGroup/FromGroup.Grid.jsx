@@ -5,9 +5,6 @@ import GridComponent from '../Grid'
 import { classNames } from '../../utilities/classNames'
 
 class Grid extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-  }
   static displayName = 'FormGroupGrid'
 
   render() {
@@ -21,6 +18,11 @@ class Grid extends React.PureComponent {
       </div>
     )
   }
+}
+
+Grid.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
 }
 
 export default Grid

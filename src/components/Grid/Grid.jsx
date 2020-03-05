@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { classNames } from '../../utilities/classNames'
 
 import Container from './Grid.Container'
@@ -21,6 +22,11 @@ class Grid extends React.PureComponent {
       </Container>
     )
   }
+}
+
+Grid.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
 }
 
 export default Grid

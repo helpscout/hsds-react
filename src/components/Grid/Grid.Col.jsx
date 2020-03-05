@@ -5,11 +5,6 @@ import { classNames, variantClassNames } from '../../utilities/classNames'
 import { ColUI } from './Grid.Col.css'
 
 class Col extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  }
-
   static displayName = 'GridCol'
 
   render() {
@@ -24,6 +19,13 @@ class Col extends React.PureComponent {
       </ColUI>
     )
   }
+}
+
+Col.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Adds sizing styles to the component. */
+  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
 export default Col

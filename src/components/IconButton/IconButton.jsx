@@ -8,16 +8,6 @@ import { IconButtonUI } from './IconButton.css'
 
 export class IconButton extends React.PureComponent {
   static className = 'c-IconButton'
-
-  static propTypes = {
-    icon: PropTypes.string,
-    iconSize: PropTypes.number,
-    isBorderless: PropTypes.bool,
-    isWithHiddenTitle: PropTypes.bool,
-    innerRef: PropTypes.func,
-    withCaret: PropTypes.bool,
-  }
-
   static defaultProps = {
     ...Button.defaultProps,
     icon: 'search',
@@ -85,6 +75,35 @@ export class IconButton extends React.PureComponent {
       </IconButtonUI>
     )
   }
+}
+
+IconButton.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** The name of the icon to render. */
+  icon: PropTypes.string,
+  /** Renders a border around the [Button](../Button). */
+  isBorderless: PropTypes.bool,
+  /** Renders a caret for the icon */
+  withCaret: PropTypes.bool,
+  /** Adjusts the size of the icon. */
+  iconSize: PropTypes.oneOf([
+    8,
+    10,
+    12,
+    13,
+    14,
+    15,
+    16,
+    18,
+    20,
+    24,
+    32,
+    48,
+    52,
+  ]),
+  isWithHiddenTitle: PropTypes.bool,
+  innerRef: PropTypes.func,
 }
 
 export default IconButton

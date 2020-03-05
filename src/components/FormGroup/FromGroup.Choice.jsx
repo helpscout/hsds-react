@@ -6,13 +6,6 @@ import { classNames } from '../../utilities/classNames'
 import { FormGroupChoiceUI } from './FormGroup.css'
 
 class Choice extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    isResponsive: PropTypes.bool,
-    maxWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    style: PropTypes.any,
-  }
-
   static defaultProps = {
     isResponsive: false,
     style: {},
@@ -51,6 +44,15 @@ class Choice extends React.PureComponent {
       </FormGroupChoiceUI>
     )
   }
+}
+
+Choice.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Max-width for the component. */
+  maxWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  /** Enables responsive styling. */
+  isResponsive: PropTypes.bool,
 }
 
 export default Choice

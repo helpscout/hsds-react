@@ -5,12 +5,6 @@ import { classNames } from '../../utilities/classNames'
 import { HrUI } from './Hr.css'
 
 class Hr extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    role: PropTypes.string,
-    size: PropTypes.oneOf(['md', 'sm', 'xs', 'none']),
-  }
-
   static defaultProps = {
     role: 'separator',
     size: 'md',
@@ -32,6 +26,15 @@ class Hr extends React.PureComponent {
       />
     )
   }
+}
+
+Hr.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Aria-role for the component. */
+  role: PropTypes.string,
+  /** Adjusts the vertical margin of the component. */
+  size: PropTypes.oneOf(['md', 'sm', 'xs', 'none']),
 }
 
 export default Hr

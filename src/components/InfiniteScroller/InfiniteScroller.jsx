@@ -9,18 +9,6 @@ import { isNodeElement, isNodeVisible } from '../../utilities/node'
 import { noop } from '../../utilities/other'
 
 class InfiniteScroller extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    offset: PropTypes.number,
-    isLoading: PropTypes.bool,
-    loading: PropTypes.bool,
-    scrollParent: PropTypes.any,
-    getScrollParent: PropTypes.func,
-    onLoading: PropTypes.func,
-    onLoaded: PropTypes.func,
-    onScroll: PropTypes.func,
-  }
-
   constructor(props) {
     super(props)
 
@@ -159,7 +147,6 @@ class InfiniteScroller extends React.PureComponent {
       isNodeElement(nodeScope) || nodeScope === window ? nodeScope : null
 
     if (!nodeScope && scrollParent) {
-      // Tested, but Instabul isn't picking up the ternary null
       nodeScope = isNodeElement(scrollParent) ? scrollParent : null
     }
 
@@ -192,15 +179,12 @@ class InfiniteScroller extends React.PureComponent {
       ...rest
     } = this.props
     const { isLoading, nodeScope } = this.state
-
     const handleOnScroll = this.handleOnScroll
-
     const componentClassName = classNames(
       'c-InfiniteScroller',
       isLoading && 'is-loading',
       className
     )
-
     const loadingMarkup = loading || <LoadingDots align="center" />
     const contentMarkup = isLoading ? loadingMarkup : children
 
@@ -219,6 +203,25 @@ class InfiniteScroller extends React.PureComponent {
       </div>
     )
   }
+}
+
+InfiniteScroller.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Callback to retrieve the parentNode to listen for scroll events. */
+  getScrollParent: PropTypes.func,
+  /** Sets the component into an `isLoading` state. */
+  isLoading: PropTypes.bool,
+  /** Top buffer (`px`) before infinite scroll is triggered. */
+  offset: PropTypes.number,
+  /** Callback when component completes `onLoading`. */
+  onLoaded: PropTypes.func,
+  /** Callback when component becomes visible in the DOM, after scrolling. */
+  onLoading: PropTypes.func,
+  /** DOM node to listen to scroll events on, instead of closest parentNode (default). */
+  scrollParent: PropTypes.any,
+  onScroll: PropTypes.func,
+  loading: PropTypes.bool,
 }
 
 export default InfiniteScroller

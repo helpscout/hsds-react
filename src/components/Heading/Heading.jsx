@@ -5,33 +5,6 @@ import { classNames } from '../../utilities/classNames'
 import { HeadingUI } from './Heading.css'
 
 class Heading extends React.PureComponent {
-  static propTypes = {
-    center: PropTypes.bool,
-    className: PropTypes.string,
-    disableSelect: PropTypes.bool,
-    light: PropTypes.bool,
-    lineHeightInherit: PropTypes.bool,
-    lineHeightReset: PropTypes.bool,
-    linkStyle: PropTypes.bool,
-    noWrap: PropTypes.bool,
-    selector: PropTypes.string,
-    size: PropTypes.oneOf([
-      'h1',
-      'h2',
-      'h3',
-      'h4',
-      'h5',
-      'h6',
-      'big',
-      'md',
-      'small',
-      '',
-    ]),
-    truncate: PropTypes.bool,
-    weight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    wordWrap: PropTypes.bool,
-  }
-
   static defaultProps = {
     center: false,
     disableSelect: false,
@@ -41,6 +14,7 @@ class Heading extends React.PureComponent {
     truncate: false,
     noWrap: false,
     wordWrap: false,
+    selector: 'div',
   }
 
   render() {
@@ -78,11 +52,9 @@ class Heading extends React.PureComponent {
       className
     )
 
-    const selectorTag = selector || 'div'
-
     return (
       <HeadingUI
-        as={selectorTag}
+        as={selector}
         {...getValidProps(rest)}
         className={componentClassName}
       >
@@ -90,6 +62,46 @@ class Heading extends React.PureComponent {
       </HeadingUI>
     )
   }
+}
+
+Heading.propTypes = {
+  /** Center aligns text. */
+  center: PropTypes.bool,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Disables text selection. */
+  disableSelect: PropTypes.bool,
+  /** Lightens the heading color. */
+  light: PropTypes.bool,
+  /** Inherit the line-height from a parent selector. */
+  lineHeightInherit: PropTypes.bool,
+  /** Resets the line-height to `1`. */
+  lineHeightReset: PropTypes.bool,
+  /** Applies `Link` styles. */
+  linkStyle: PropTypes.bool,
+  /** Prevents text from wrapping. */
+  noWrap: PropTypes.bool,
+  /** Sets HTML element. */
+  selector: PropTypes.string,
+  /** Adjust heading size. */
+  size: PropTypes.oneOf([
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
+    'big',
+    'md',
+    'small',
+    '',
+  ]),
+  /** Enables CSS truncation for text. */
+  truncate: PropTypes.bool,
+  /** Adjust text weight. */
+  weight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Enables CSS `word-break` for text. */
+  wordWrap: PropTypes.bool,
 }
 
 export default Heading

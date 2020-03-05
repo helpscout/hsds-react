@@ -4,17 +4,10 @@ import {
   AnimateGroup,
   Card,
   InfiniteScroller,
-  Modal,
   Scrollable,
   Text,
 } from '../index'
 
-export default {
-  component: InfiniteScroller,
-  title: 'Utilities/InfiniteScroller',
-}
-
-// Setup stuff
 const makeStoryItems = (count, start = 0) => {
   const collection = []
   const badHash = () => Math.random() * (100 - 1) + 1
@@ -33,7 +26,7 @@ const makeStoryItems = (count, start = 0) => {
   return collection
 }
 
-class StoryComponent extends Component {
+export class StoryComponent extends Component {
   constructor() {
     super()
     this.state = {
@@ -85,20 +78,4 @@ class StoryComponent extends Component {
       </Card>
     )
   }
-}
-
-export const Default = () => <StoryComponent />
-
-Default.story = {
-  name: 'default',
-}
-
-export const _Modal = () => (
-  <Modal trigger={<a>Click</a>} isOpen>
-    <StoryComponent />
-  </Modal>
-)
-
-_Modal.story = {
-  name: 'modal',
 }
