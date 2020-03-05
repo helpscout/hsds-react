@@ -66,6 +66,10 @@ const css = `
     padding-bottom: 0 !important;
   }
 
+  .c-MessageChatBlock:first-child .c-MessageBubble.emoji-only {
+    padding-top: 0 !important;
+  }
+
   .c-MessageChatBlock:last-child .c-MessageBubble.emoji-only {
     padding-bottom: 0 !important;
   }
