@@ -48,6 +48,6 @@ function createPackageFile() {
     })
 }
 
-const files = ['README.md', 'LICENSE']
+const files = ['README.md', 'LICENSE', 'scripts/codemod/']
 
 Promise.all(files.map(file => copyFile(file))).then(() => createPackageFile())
