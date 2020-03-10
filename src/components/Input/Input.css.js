@@ -56,6 +56,10 @@ export const InputUI = styled('div')`
   &.is-focused {
     z-index: 2;
   }
+
+  &.is-disabled {
+    color: ${getColor('grey.800')};
+  }
 `
 
 export const ItemUI = styled('div')`

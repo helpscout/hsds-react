@@ -6,22 +6,6 @@ import { isStateful } from './Input.utils'
 import { BackdropUI, FocusUI } from './Input.BackdropV2.css'
 
 export class Backdrop extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    choiceKind: PropTypes.string,
-    disabled: PropTypes.bool,
-    isFilled: PropTypes.bool,
-    isFocused: PropTypes.bool,
-    isFirst: PropTypes.bool,
-    isNotOnly: PropTypes.bool,
-    isLast: PropTypes.bool,
-    isSeamless: PropTypes.bool,
-    kind: PropTypes.string,
-    readOnly: PropTypes.bool,
-    showFocus: PropTypes.bool,
-    state: PropTypes.string,
-  }
-
   static displayName = 'InputBackdropV2'
 
   static defaultProps = {
@@ -78,8 +62,6 @@ export class Backdrop extends React.PureComponent {
       isFirst && 'is-first',
       isNotOnly && 'is-notOnly',
       isLast && 'is-last',
-      // It's being tested, Istanbul not picking it up
-
       isRadio && 'is-radio',
       isStateful(this.props) && 'is-stateful',
       state && `is-${state}`
@@ -111,6 +93,23 @@ export class Backdrop extends React.PureComponent {
       </BackdropUI>
     )
   }
+}
+
+Backdrop.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  choiceKind: PropTypes.string,
+  disabled: PropTypes.bool,
+  isFilled: PropTypes.bool,
+  isFocused: PropTypes.bool,
+  isFirst: PropTypes.bool,
+  isNotOnly: PropTypes.bool,
+  isLast: PropTypes.bool,
+  isSeamless: PropTypes.bool,
+  kind: PropTypes.string,
+  readOnly: PropTypes.bool,
+  showFocus: PropTypes.bool,
+  state: PropTypes.string,
 }
 
 export default Backdrop

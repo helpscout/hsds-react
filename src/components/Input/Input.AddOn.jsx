@@ -22,9 +22,13 @@ const AddOn = props => {
 }
 
 AddOn.propTypes = {
+  /** Custom class names to be added to the component. */
   className: PropTypes.string,
+  /** Helps render component without right borders. */
   isFirst: PropTypes.bool,
+  /** Helps render component without left/right borders. */
   isNotOnly: PropTypes.bool,
+  /** Helps render component without left borders. */
   isLast: PropTypes.bool,
 }
 

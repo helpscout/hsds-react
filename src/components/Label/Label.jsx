@@ -6,13 +6,6 @@ import { isString } from '../../utilities/is'
 import { LabelUI } from './Label.css'
 
 class Label extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    for: PropTypes.string,
-    isMarginless: PropTypes.bool,
-    state: PropTypes.string,
-  }
-
   static defaultProps = {
     isMarginless: false,
     state: 'default',
@@ -49,6 +42,16 @@ class Label extends React.PureComponent {
       </LabelUI>
     )
   }
+}
+
+Label.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Determines what the label is associated with. */
+  for: PropTypes.string,
+  /** Changes the text color based on state. */
+  state: PropTypes.oneOf(['error', 'success', 'warning']),
+  isMarginless: PropTypes.bool,
 }
 
 export default Label

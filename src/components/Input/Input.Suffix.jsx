@@ -5,11 +5,6 @@ import { classNames } from '../../utilities/classNames'
 import { SuffixUI } from './Input.css'
 
 class Suffix extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    isAction: PropTypes.bool,
-    isSeamless: PropTypes.bool,
-  }
   static displayName = 'InputSuffix'
   static defaultProps = {
     isAction: false,
@@ -30,6 +25,14 @@ class Suffix extends React.PureComponent {
 
     return <SuffixUI {...getValidProps(rest)} className={componentClassName} />
   }
+}
+
+Suffix.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  isAction: PropTypes.bool,
+  /** Removes the border around the input. */
+  isSeamless: PropTypes.bool,
 }
 
 export default Suffix

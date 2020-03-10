@@ -5,10 +5,6 @@ import { classNames } from '../../utilities/classNames'
 import { PrefixUI } from './Input.css'
 
 class Prefix extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    isSeamless: PropTypes.bool,
-  }
   static displayName = 'InputPrefix'
 
   static defaultProps = {
@@ -28,6 +24,13 @@ class Prefix extends React.PureComponent {
 
     return <PrefixUI {...getValidProps(rest)} className={componentClassName} />
   }
+}
+
+Prefix.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Removes the border around the input. */
+  isSeamless: PropTypes.bool,
 }
 
 export default Prefix

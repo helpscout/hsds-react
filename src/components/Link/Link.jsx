@@ -8,24 +8,6 @@ import { wordHasSpaces } from '../../utilities/strings'
 import { LinkUI } from './Link.css'
 
 export class Link extends React.PureComponent {
-  static propTypes = {
-    autoWordWrap: PropTypes.bool,
-    block: PropTypes.bool,
-    className: PropTypes.string,
-    external: PropTypes.bool,
-    href: PropTypes.string,
-    nodeRef: PropTypes.func,
-    onBlur: PropTypes.func,
-    onClick: PropTypes.func,
-    onFocus: PropTypes.func,
-    rel: PropTypes.string,
-    noUnderline: PropTypes.bool,
-    target: PropTypes.string,
-    to: PropTypes.string,
-    voidOnClick: PropTypes.bool,
-    wordWrap: PropTypes.bool,
-  }
-
   static defaultProps = {
     autoWordWrap: true,
     block: false,
@@ -90,6 +72,33 @@ export class Link extends React.PureComponent {
       </LinkUI>
     )
   }
+}
+
+Link.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Opens link in a new tab. */
+  external: PropTypes.bool,
+  /** Address for the link. Default is `#`. */
+  href: PropTypes.string,
+  /** Callback function to retrieve the component's DOM node. */
+  nodeRef: PropTypes.func,
+  /** Callback function when the component is blurred. */
+  onBlur: PropTypes.func,
+  /** Callback function when the component is clicked. */
+  onClick: PropTypes.func,
+  /** Callback function when the component is focused. */
+  onFocus: PropTypes.func,
+  /** React Router path to navigate on click. */
+  to: PropTypes.string,
+  /** Disables click event. */
+  voidOnClick: PropTypes.bool,
+  autoWordWrap: PropTypes.bool,
+  block: PropTypes.bool,
+  rel: PropTypes.string,
+  noUnderline: PropTypes.bool,
+  target: PropTypes.string,
+  wordWrap: PropTypes.bool,
 }
 
 export default RouteWrapper(Link)

@@ -18,16 +18,6 @@ const ENTITIES_TO_REPLACE = {
 const REPLACE_REGEX = /[\n&<>]/g
 
 export class Resizer extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    contents: PropTypes.string,
-    currentHeight: PropTypes.number,
-    minimumLines: PropTypes.number,
-    offsetAmount: PropTypes.number,
-    onResize: PropTypes.func,
-    seamless: PropTypes.bool,
-  }
-
   static displayName = 'InputResizer'
 
   static defaultProps = {
@@ -155,6 +145,20 @@ export class Resizer extends React.PureComponent {
       </ResizerUI>
     )
   }
+}
+
+Resizer.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  contents: PropTypes.string,
+  currentHeight: PropTypes.number,
+  minimumLines: PropTypes.number,
+  /** Number of characters to offset (bottom-right) for multiline resizing. */
+  offsetAmount: PropTypes.number,
+  /** Callback when input is resized. */
+  onResize: PropTypes.func,
+  /** Removes the border around the input. */
+  seamless: PropTypes.bool,
 }
 
 export default Resizer

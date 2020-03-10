@@ -30,11 +30,13 @@ const Static = props => {
   )
 }
 Static.propTypes = {
+  /** Determines the alignment of the component. */
   align: PropTypes.oneOf(['left', 'center', 'right', '']),
   className: PropTypes.string,
   isBlock: PropTypes.bool,
   isCenterAlign: PropTypes.bool,
-  size: PropTypes.string,
+  /** Determines the size of the component. */
+  size: PropTypes.oneOf(['xs', 'xssm', 'sm', 'md', 'lg']),
 }
 
 Static.defaultProps = {

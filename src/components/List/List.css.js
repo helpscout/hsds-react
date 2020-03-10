@@ -86,8 +86,15 @@ export const ListUI = styled('ul')`
 
   &.is-bullet,
   &.is-number {
-    list-style-type: decimal;
     padding-left: 16px;
+  }
+
+  &.is-bullet {
+    list-style-type: disc;
+  }
+
+  &.is-number {
+    list-style-type: decimal;
   }
 `
 
