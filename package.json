@@ -90,7 +90,7 @@
     "react-dom": "^16 || ^15"
   },
   "dependencies": {
-    "@helpscout/fancy": "2.2.7",
+    "@helpscout/fancy": "2.2.8",
     "@helpscout/motion": "0.0.8",
     "@helpscout/react-utils": "1.0.6",
     "@helpscout/wedux": "0.0.11",
