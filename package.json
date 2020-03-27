@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/hsds-react",
-  "version": "2.89.8",
+  "version": "2.89.9",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -90,7 +90,7 @@
     "react-dom": "^16 || ^15"
   },
   "dependencies": {
-    "@helpscout/fancy": "2.2.7",
+    "@helpscout/fancy": "2.2.8",
     "@helpscout/motion": "0.0.8",
     "@helpscout/react-utils": "1.0.6",
     "@helpscout/wedux": "0.0.11",
