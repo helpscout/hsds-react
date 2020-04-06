@@ -1,6 +1,7 @@
 import React from 'react'
 import { ScopeProvider } from '../../styled'
 import { Avatar, Link, Message, PreviewCard } from '../../index'
+import { faker } from '@helpscout/helix'
 
 export default {
   component: Message,
@@ -9,11 +10,7 @@ export default {
 
 export const Default = () => (
   <div>
-    <Message from avatar={<Avatar name="Arctic Puffin" />}>
-      <Message.Question read timestamp="9:41am">
-        How's it <a>goin</a>'?
-      </Message.Question>
-    </Message>
+    <Message from avatar={<Avatar name="Arctic Puffin" />} />
     <Message to>
       <Message.Action read timestamp="9:41am">
         Buddy became upset. <a href="#">Find out what happened</a>
@@ -26,6 +23,9 @@ export const Default = () => (
         omgomgomg
         {1}
       </Message.Chat>
+      <Message.Chat read timestamp="9:41am" metaPosition="top">
+        🚀
+      </Message.Chat>
       <Message.Chat read timestamp="9:41am">
         <strong>*Frantically running through North pole*</strong>
       </Message.Chat>
@@ -35,6 +35,10 @@ export const Default = () => (
       <Message.Action read timestamp="9:41am">
         Puffin joined.
       </Message.Action>
+    </Message>
+    <Message from avatar={<Avatar name="Arctic Puffin" />}>
+      <Message.Chat read timestamp="9:41am" body="🙂" />
+      <Message.Chat read timestamp="9:41am" body="Hello World" />
     </Message>
     <Message from avatar={<Avatar name="Arctic Puffin" />}>
       <Message.Chat read timestamp="9:41am">
@@ -68,9 +72,13 @@ export const Default = () => (
           Caan, Zooey Deschanel, Mary Steenburgen, Daniel Tay, Edward Asner, and
           Bob Newhart...
         </PreviewCard>
+        <Message.Chat read timestamp="9:41am" body="🙃" />
       </Message.Content>
       <Message.Chat read timestamp="9:41am">
         Just read that!
+      </Message.Chat>
+      <Message.Chat read timestamp="9:41am">
+        {faker.lorem.paragraphs()()}
       </Message.Chat>
     </Message>
 
@@ -103,6 +111,14 @@ export const Default = () => (
         timestamp="9:41am"
         body="Note: <em>SAAAAAAANTAAAAAAAA!</em> www.helpscout.com"
       />
+      <Message.Chat
+        read
+        timestamp="9:41am"
+        caption="Caption before the bubble"
+        metaPosition="top"
+      >
+        🦄❤️
+      </Message.Chat>
     </Message>
 
     <Message to>
@@ -119,18 +135,6 @@ export const Default = () => (
 
 Default.story = {
   name: 'default',
-}
-
-export const _Question = () => (
-  <Message from avatar={<Avatar name="Arctic Puffin" />}>
-    <Message.Question read timestamp="9:41am">
-      How's it goin'?
-    </Message.Question>
-  </Message>
-)
-
-_Question.story = {
-  name: 'question',
 }
 
 export const _Action = () => (

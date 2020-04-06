@@ -16,7 +16,6 @@ const Content = props => {
     rtl,
     timestamp,
     to,
-    type,
     ...rest
   } = props
 
@@ -40,7 +39,6 @@ const Content = props => {
     ltr,
     read,
     rtl,
-    type,
     timestamp,
     to,
   }
@@ -70,7 +68,6 @@ Content.propTypes = {
   rtl: PropTypes.bool,
   timestamp: PropTypes.string,
   to: PropTypes.any,
-  type: PropTypes.oneOf(['action', 'message', '']),
 }
 
 Content.displayName = 'MessageContent'

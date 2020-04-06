@@ -53,7 +53,7 @@ describe('Title', () => {
   })
 
   test('Renders a Title if defined', () => {
-    const wrapper = mount(<Bubble title="Mugatu" primary />)
+    const wrapper = mount(<Bubble title="Mugatu" />)
     const o = wrapper.find(ui.title).first()
 
     expect(o.length).toBeTruthy()
@@ -148,6 +148,18 @@ describe('Content', () => {
     expect(wrapper.html()).toContain('<a href="http://www.helpscout.com"')
   })
 
+  describe('when body includes only emoji content', () => {
+    test('Renders body with Text component', () => {
+      const wrapper = mount(<Bubble body="🙄" />)
+      const o = wrapper.find(ui.body).first()
+      const includesTextElement = wrapper.find(Text)
+
+      expect(o.length).toBe(1)
+      expect(includesTextElement.length).toBe(1)
+      expect(wrapper.html()).toContain('🙄')
+    })
+  })
+
   test('Converts newlines to line break elements', () => {
     const body = 'Hello\n\nGoodbye'
     const wrapper = mount(<Bubble body={body} />)
@@ -165,6 +177,36 @@ describe('Content', () => {
 
     expect(o.length).toBe(1)
     expect(wrapper.html()).toContain(parsedHTML)
+  })
+
+  test('font size should be 14', () => {
+    const wrapper = mount(<Bubble to>Bye TomO</Bubble>)
+    const o = wrapper.find(Text)
+
+    expect(o.instance().props.size).toBe('14')
+  })
+
+  describe('text that includes only emoji', () => {
+    describe('when theme is not embed', () => {
+      test('font size should be 48', () => {
+        const wrapper = mount(<Bubble from>🐐🦄</Bubble>)
+        const o = wrapper.find(Text)
+
+        expect(o.instance().props.size).toBe(48)
+      })
+    })
+    describe('when theme is embed', () => {
+      test('font size should be 13', () => {
+        const wrapper = mount(
+          <Message.Provider theme="embed">
+            <Bubble from>🐐🦄</Bubble>
+          </Message.Provider>
+        )
+        const o = wrapper.find(Text)
+
+        expect(o.instance().props.size).toBe('13')
+      })
+    })
   })
 })
 
@@ -185,12 +227,6 @@ describe('Styles', () => {
     const wrapper = mount(<Bubble isNote />)
 
     expect(wrapper.getDOMNode().classList.contains('is-note')).toBeTruthy()
-  })
-
-  test('Applies "primary" styles, if defined', () => {
-    const wrapper = mount(<Bubble primary />)
-
-    expect(wrapper.getDOMNode().classList.contains('is-primary')).toBeTruthy()
   })
 
   test('Applies "size" styles, if defined', () => {

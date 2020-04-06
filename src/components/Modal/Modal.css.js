@@ -3,6 +3,7 @@ import { BEM } from '../../utilities/classNames'
 import Animate from '../Animate'
 import Card from '../Card'
 import Toolbar from '../Toolbar'
+import { getColor } from '../../styles/utilities/color'
 
 const modalBodyBEM = BEM('.c-ModalBody')
 
@@ -10,6 +11,7 @@ export const modalConfig = {
   closeOffset: '10px',
   offset: '8px',
   wrapperMaxHeight: '98%',
+  wrapperMaxWidth: '75%',
   theme: {
     app: {
       marginTop: '50px',
@@ -32,19 +34,62 @@ export const ModalUI = styled('div')`
   top: 0;
   font-family: var(--HSDSGlobalFontFamily);
   font-size: var(--HSDSGlobalFontSize);
+
+  &.v2.is-danger {
+    .c-Icon {
+      color: ${getColor('red.500')};
+    }
+  }
+
+  &.v2.is-branded,
+  &.v2.is-sequence {
+    .c-ModalBody {
+      text-align: center;
+      ${modalBodyBEM.element('scrollableContent')} {
+        padding-top: 0px;
+      }
+    }
+  }
+
+  &.v2.is-alert {
+    .c-ModalBody {
+      text-align: center;
+    }
+  }
 `
 
 export const InnerWrapperUI = styled('div')`
   display: flex;
   justify-content: center;
   max-height: ${modalConfig.wrapperMaxHeight};
-  max-width: 100%;
+  max-width: ${modalConfig.wrapperMaxWidth};
   min-height: 0;
   position: relative;
   width: auto;
   z-index: 1;
 
   ${props => makeHSAppInnerWrapperStyles(props)};
+
+  &.v2 {
+    position: absolute;
+    top: 50px;
+    max-width: 680px;
+    min-height: 400px;
+    max-height: 90%;
+
+    * {
+      box-sizing: border-box;
+    }
+
+    &.is-default {
+      width: 680px;
+    }
+
+    &.is-alert {
+      min-height: 179px;
+      width: 440px;
+    }
+  }
 `
 
 export const AnimatedCardContainerUI = styled(Animate)`
@@ -62,6 +107,15 @@ export const CardUI = styled(Card)`
   min-height: 0;
   outline: none;
   overflow: hidden;
+
+  &.v2.is-default {
+    width: 680px;
+  }
+
+  &.v2.is-alert {
+    min-width: 440px;
+    padding-bottom: 60px;
+  }
 `
 
 export const CloseUI = styled('div')`
@@ -110,6 +164,18 @@ export const BodyUI = styled('div')`
   &.is-seamless {
     ${modalBodyBEM.element('scrollableContent')} {
       padding: 0;
+    }
+  }
+
+  &.is-v2 {
+    padding: 0px;
+
+    ${modalBodyBEM.element('scrollableContent')} {
+      padding: 40px 90px 50px;
+
+      p:first-child {
+        margin-top: 0px;
+      }
     }
   }
 `

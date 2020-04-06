@@ -6,6 +6,9 @@ export const config = {
     app: {
       backgroundColor: 'rgba(25, 76, 110, 0.7)',
     },
+    dark: {
+      backgroundColor: '#034077',
+    },
   },
 }
 
@@ -31,6 +34,11 @@ export const OverlayUI = styled('div')`
   }
 
   ${props => makeHSAppStyles(props)};
+
+  &.is-dark {
+    background-color: ${config.theme.dark.backgroundColor};
+    opacity: 0.7;
+  }
 `
 
 function makeHSAppStyles(props) {

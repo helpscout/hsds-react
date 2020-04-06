@@ -1,8 +1,9 @@
 import React from 'react'
 import cy from '@helpscout/cyan'
 import { mount } from 'enzyme'
-import ChatBlock from '../Message.ChatBlock'
 import Chat from '../Message.Chat'
+import ChatBlock from '../Message.ChatBlock'
+import Bubble from '../Message.Bubble'
 import Caption from '../Message.Caption'
 
 const cx = 'c-MessageChat'
@@ -56,28 +57,19 @@ describe('Bubble', () => {
 
   test('Passes correct props to Bubble', () => {
     const wrapper = mount(
-      <Chat
-        body="body"
-        from
-        isNote
-        ltr
-        primary
-        size="sm"
-        title="title"
-        to
-        typing
-      />
+      <Chat body="body" from isNote ltr rtl size="sm" title="title" to typing />
     )
-    const o = wrapper.find(`.${cxBubble}`).first()
-    const classList = o.getDOMNode().classList
+    const props = wrapper.find(Bubble).getElement().props
 
-    expect(classList.contains('is-note')).toBeTruthy()
-    expect(classList.contains('is-ltr')).toBeTruthy()
-    expect(classList.contains('is-primary')).toBeTruthy()
-    expect(classList.contains('is-sm')).toBeTruthy()
-    expect(classList.contains('is-to')).toBeTruthy()
-    expect(classList.contains('is-from')).toBeTruthy()
-    expect(classList.contains('is-typing')).toBeTruthy()
+    expect(props.body).toBeTruthy()
+    expect(props.from).toBeTruthy()
+    expect(props.isNote).toBeTruthy()
+    expect(props.ltr).toBeTruthy()
+    expect(props.rtl).toBeTruthy()
+    expect(props.size).toBeTruthy()
+    expect(props.title).toBeTruthy()
+    expect(props.to).toBeTruthy()
+    expect(props.typing).toBeTruthy()
   })
 })
 

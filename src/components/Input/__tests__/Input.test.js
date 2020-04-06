@@ -168,16 +168,6 @@ describe('Events', () => {
     expect(spy).toHaveBeenCalled()
   })
 
-  test('onKeydown callback fires scrollToBottom', () => {
-    const spy = jest.fn()
-    const wrapper = mount(<Input multiline={true} onKeyDown={spy} />)
-    const input = wrapper.find('textarea')
-    wrapper.instance().scrollToBottom = spy
-
-    input.simulate('keydown')
-    expect(spy).toHaveBeenCalled()
-  })
-
   test('onResize callback is called when Input resizes', () => {
     const spy = jest.fn()
     const wrapper = mount(<Input multiline={true} onResize={spy} />)

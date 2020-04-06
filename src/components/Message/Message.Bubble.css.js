@@ -1,18 +1,15 @@
 import styled from 'styled-components'
-import Heading from '../Heading'
 import { getColor } from '../../styles/utilities/color'
-
-import variableFontSize from '../../styles/utilities/variableFontSize'
 import { BEM } from '../../utilities/classNames'
+import Heading from '../Heading'
 
 const bem = BEM('.c-MessageBubble')
 
 export const config = {
   borderRadius: {
-    md: 8,
-    sm: 3,
+    sm: 4,
+    md: 12,
   },
-  lineHeight: 'calc(19 / 13)',
   icon: {
     left: 14,
     offset: {
@@ -20,7 +17,7 @@ export const config = {
       sm: 32,
     },
   },
-  maxWidth: 500,
+  maxWidth: 700,
   padding: {
     notification: '18px 20px',
     embed: '12px 15px',
@@ -30,21 +27,31 @@ export const config = {
   },
 }
 
-export const MessageBubbleBodyUI = styled.span`
-  color: ${getColor('charcoal.500')};
-  font-size: ${variableFontSize({ fontSize: 13 })};
-  line-height: 19px;
-  line-height: ${config.lineHeight};
+export const MessageBubbleBodyUI = styled('span')`
+  color: ${getColor('charcoal.700')};
+  line-height: 24px;
   word-break: break-word;
+
+  ${({ showEmojiOnlyStyles }) => showEmojiOnlyStyles && `line-height: 1`}
+
+  ${({ isEmbed }) =>
+    isEmbed &&
+    `
+      color: ${getColor('charcoal.500')};
+      line-height: 19px;
+      line-height: calc(19 / 13);
+    `}
 `
 
-export const MessageBubbleFromUI = styled.div`
-  color: ${getColor('grey.800')};
+export const MessageBubbleFromUI = styled('div')`
+  color: ${getColor('charcoal.700')};
   margin-bottom: 5px;
   text-align: right;
+
+  ${({ isEmbed }) => isEmbed && `color: ${getColor('grey.800')};`}
 `
 
-export const MessageBubbleIconWrapperUI = styled.div`
+export const MessageBubbleIconWrapperUI = styled('div')`
   left: ${config.icon.left}px;
   position: absolute;
 `
@@ -53,15 +60,14 @@ export const MessageBubbleTitleUI = styled(Heading)`
   margin-bottom: 2px;
 `
 
-export const MessageBubbleTypingUI = styled.div`
+export const MessageBubbleTypingUI = styled('div')`
   margin-left: -5px;
   margin-right: -5px;
   padding: 7px 0;
 `
 
-export const MessageBubbleUI = styled.div`
-  background-color: ${getColor('grey.400')};
-  border: 1px solid ${getColor('grey.400')};
+export const MessageBubbleUI = styled('div')`
+  background-color: ${getColor('lavender.200')};
   border-top-left-radius: ${config.borderRadius.md}px;
   border-top-right-radius: ${config.borderRadius.md}px;
   border-bottom-right-radius: ${config.borderRadius.sm}px;
@@ -74,8 +80,7 @@ export const MessageBubbleUI = styled.div`
   word-break: break-word;
 
   &.is-from {
-    background-color: white;
-    border-color: ${getColor('grey.500')};
+    background-color: ${getColor('lavender.100')};
     border-top-left-radius: ${config.borderRadius.sm}px;
     border-top-right-radius: ${config.borderRadius.md}px;
     border-bottom-right-radius: ${config.borderRadius.md}px;
@@ -105,7 +110,6 @@ export const MessageBubbleUI = styled.div`
 
   &.is-note {
     background-color: ${getColor('yellow.200')};
-    border-color: ${getColor('yellow.400')};
     color: ${getColor('yellow.900')};
 
     * {
@@ -113,34 +117,18 @@ export const MessageBubbleUI = styled.div`
     }
   }
 
-  &.is-primary {
-    background-color: ${getColor('blue.500')};
-    border-color: ${getColor('blue.500')};
-    color: white !important;
-
-    * {
-      color: currentColor;
-    }
-
-    a {
-      text-decoration: underline;
-    }
-
-    ${bem.element('title')} {
-      color: white !important;
-      opacity: 0.6;
-    }
-  }
-
-  &.withIcon {
-    ${bem.element('content')} {
-      margin-left: ${config.icon.offset.md}px;
-    }
-  }
-
   &.is-theme-embed {
-    padding: ${config.padding.embed};
+    background-color: ${getColor('grey.400')};
+    border: 1px solid ${getColor('grey.400')};
+    border-radius: 8px 8px 3px 8px;
     max-width: 100%;
+    padding: ${config.padding.embed};
+
+    &.is-from {
+      background-color: white;
+      border-color: ${getColor('grey.500')};
+      border-radius: 3px 8px 8px 3px;
+    }
 
     ${bem.element('typing')} {
       margin-left: 0;
@@ -153,9 +141,22 @@ export const MessageBubbleUI = styled.div`
         padding-left: 4px;
       }
     }
+
+    &.is-note {
+      border-color: ${getColor('yellow.400')};
+    }
   }
 
   &.is-theme-notifications {
     padding: ${config.padding.notification};
   }
+
+  ${({ showEmojiOnlyStyles }) =>
+    showEmojiOnlyStyles &&
+    `
+      background: none !important;
+      border: none;
+      padding-left: 0;
+      padding-right:0;
+    `}
 `

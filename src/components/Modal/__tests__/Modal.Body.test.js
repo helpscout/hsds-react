@@ -16,6 +16,13 @@ describe('ClassName', () => {
 
     expect(wrapper.getDOMNode().classList.contains(customClass)).toBe(true)
   })
+
+  test('Applies v2 className if specified', () => {
+    const customClass = 'is-v2'
+    const wrapper = mount(<Body version={2} />)
+
+    expect(wrapper.getDOMNode().classList.contains(customClass)).toBe(true)
+  })
 })
 
 describe('Children', () => {

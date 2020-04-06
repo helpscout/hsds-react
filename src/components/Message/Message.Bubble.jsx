@@ -11,6 +11,7 @@ import {
   convertLinksToHTML,
   isWord,
   newlineToHTML,
+  textIncludesOnlyEmoji,
 } from '../../utilities/strings'
 
 import {
@@ -34,51 +35,28 @@ export const Bubble = (props, context) => {
     icon,
     isNote,
     ltr,
-    primary,
     rtl,
     size,
     timestamp,
     title,
     to,
-    type,
     typing,
     ...rest
   } = props
   const { theme } = context
 
   const isThemeNotifications = theme === 'notifications'
+  const isThemeEmbed = theme === 'embed'
   const fromName = from && typeof from === 'string' ? from : null
 
-  const componentClassName = classNames(
-    'c-MessageBubble',
-    from && 'is-from',
-    icon && 'withIcon',
-    isNote && 'is-note',
-    primary && 'is-primary',
-    size && `is-${size}`,
-    ltr && !rtl && 'is-ltr',
-    !ltr && rtl && 'is-rtl',
-    theme && `is-theme-${theme}`,
-    to && 'is-to',
-    typing && 'is-typing',
-    className
-  )
-
-  const childrenMarkup = React.Children.map(children, child => {
-    return isWord(child) || isNativeSpanType(child) ? (
-      <MessageBubbleBodyUI className="c-MessageBubble__body">
-        <Text lineHeightInherit wordWrap>
-          {child}
-        </Text>
-      </MessageBubbleBodyUI>
-    ) : (
-      child
-    )
-  })
+  let showEmojiOnlyStyles = false
 
   const fromMarkup =
     isThemeNotifications && fromName ? (
-      <MessageBubbleFromUI className="c-MessageBubble__from">
+      <MessageBubbleFromUI
+        className="c-MessageBubble__from"
+        isEmbed={isThemeEmbed}
+      >
         <Text className="c-MessageBubble__fromText" lineHeightReset size="11">
           {fromName}
         </Text>
@@ -102,23 +80,64 @@ export const Bubble = (props, context) => {
     </MessageBubbleTitleUI>
   ) : null
 
-  const bodyMarkup = body ? (
-    <MessageBubbleBodyUI
-      className="c-MessageBubble__body"
-      dangerouslySetInnerHTML={{
-        __html: enhanceBody(body),
-      }}
-    />
-  ) : (
-    childrenMarkup
-  )
+  const hasOnlyOneChild = React.Children.count(children) === 1
+
+  const childrenMarkup = React.Children.map(children, child => {
+    showEmojiOnlyStyles =
+      !isThemeEmbed && hasOnlyOneChild && textIncludesOnlyEmoji(child)
+    const fontSize = isThemeEmbed ? '13' : showEmojiOnlyStyles ? 48 : '14'
+
+    return isWord(child) || isNativeSpanType(child) ? (
+      <MessageBubbleBodyUI
+        className="c-MessageBubble__body"
+        isEmbed={isThemeEmbed}
+        showEmojiOnlyStyles={showEmojiOnlyStyles}
+      >
+        <Text wordWrap lineHeightInherit size={fontSize}>
+          {child}
+        </Text>
+      </MessageBubbleBodyUI>
+    ) : (
+      child
+    )
+  })
+
+  const renderBody = () => {
+    if (!body) {
+      return childrenMarkup
+    }
+
+    showEmojiOnlyStyles = !isThemeEmbed && textIncludesOnlyEmoji(body)
+
+    if (showEmojiOnlyStyles) {
+      return (
+        <MessageBubbleBodyUI
+          className="c-MessageBubble__body"
+          showEmojiOnlyStyles={showEmojiOnlyStyles}
+        >
+          <Text wordWrap lineHeightInherit size={48}>
+            {body}
+          </Text>
+        </MessageBubbleBodyUI>
+      )
+    }
+    return (
+      <MessageBubbleBodyUI
+        className="c-MessageBubble__body"
+        isEmbed={isThemeEmbed}
+        dangerouslySetInnerHTML={{
+          __html: enhanceBody(body),
+        }}
+      />
+    )
+  }
 
   const innerContentMarkup = typing ? (
     <MessageBubbleTypingUI className="c-MessageBubble__typing">
       <TypingDots />
     </MessageBubbleTypingUI>
   ) : (
-    bodyMarkup
+    renderBody()
   )
 
   const contentMarkup = (
@@ -128,8 +147,28 @@ export const Bubble = (props, context) => {
     </div>
   )
 
+  const componentClassName = classNames(
+    'c-MessageBubble',
+    from && 'is-from',
+    icon && 'withIcon',
+    isNote && 'is-note',
+    size && `is-${size}`,
+    ltr && !rtl && 'is-ltr',
+    !ltr && rtl && 'is-rtl',
+    theme && `is-theme-${theme}`,
+    to && 'is-to',
+    typing && 'is-typing',
+    showEmojiOnlyStyles && 'emoji-only',
+    className
+  )
+
   return (
-    <MessageBubbleUI className={componentClassName} {...rest}>
+    <MessageBubbleUI
+      {...rest}
+      className={componentClassName}
+      isEmbed={isThemeEmbed}
+      showEmojiOnlyStyles={showEmojiOnlyStyles}
+    >
       {fromMarkup}
       {titleMarkup}
       {contentMarkup}
@@ -152,7 +191,6 @@ Bubble.propTypes = {
   timestamp: PropTypes.string,
   title: PropTypes.string,
   to: PropTypes.any,
-  type: PropTypes.oneOf(['action', 'message', '']),
   typing: PropTypes.bool,
 }
 

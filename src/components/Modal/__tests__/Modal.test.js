@@ -4,6 +4,7 @@ import { MemoryRouter as Router } from 'react-router'
 import { default as Modal, ModalComponent } from '../Modal'
 import { Card, Portal, Overlay, Scrollable } from '../../index'
 import Keys from '../../../constants/Keys'
+import { MODAL_KIND } from '../Modal.utils'
 
 const trigger = <a className="trigger">Trigger</a>
 
@@ -718,5 +719,276 @@ describe('Card: Focus', () => {
     jest.runAllTimers()
 
     expect(spy).toHaveBeenCalled()
+  })
+})
+
+describe('Modal V2', () => {
+  test('Renders as default style', () => {
+    mount(
+      <Modal version={2} title={'Title'} isOpen={true} trigger={trigger}>
+        <div className="TestContent">Hello</div>
+      </Modal>
+    )
+
+    const modal = document.getElementsByClassName('c-Modal')[0]
+    const style = document.querySelectorAll('.is-default')
+    const content = document.querySelectorAll('.TestContent')
+    const header = document.querySelectorAll('.c-ModalHeaderV2')
+
+    expect(modal).toBeTruthy()
+    expect(style.length).toBeTruthy()
+    expect(content.length).toBeTruthy()
+    expect(header.length).toBeTruthy()
+  })
+
+  test('Renders as default style w/description', () => {
+    mount(
+      <Modal
+        version={2}
+        title={'Title'}
+        description={'Description'}
+        isOpen={true}
+        trigger={trigger}
+      >
+        <div className="TestContent">Hello</div>
+      </Modal>
+    )
+
+    const modal = document.getElementsByClassName('c-Modal')[0]
+    const style = document.querySelectorAll('.is-default')
+    const content = document.querySelectorAll('.TestContent')
+    const header = document.querySelectorAll('.c-ModalHeaderV2')
+
+    expect(modal).toBeTruthy()
+    expect(style.length).toBeTruthy()
+    expect(content.length).toBeTruthy()
+    expect(header.length).toBeTruthy()
+  })
+
+  test('Renders as branded style', () => {
+    mount(
+      <Modal
+        version={2}
+        kind={MODAL_KIND.BRANDED}
+        title={'Title'}
+        isOpen={true}
+        trigger={trigger}
+      >
+        <div className="TestContent">Hello</div>
+      </Modal>
+    )
+
+    const modal = document.getElementsByClassName('c-Modal')[0]
+    const style = document.querySelectorAll('.is-branded')
+    const content = document.querySelectorAll('.TestContent')
+    const header = document.querySelectorAll('.c-ModalHeaderV2')
+
+    expect(modal).toBeTruthy()
+    expect(style.length).toBeTruthy()
+    expect(content.length).toBeTruthy()
+    expect(header.length).toBeTruthy()
+  })
+
+  test('Renders as branded style w/description', () => {
+    mount(
+      <Modal
+        version={2}
+        kind={MODAL_KIND.BRANDED}
+        description={'Description'}
+        title={'Title'}
+        isOpen={true}
+        trigger={trigger}
+      >
+        <div className="TestContent">Hello</div>
+      </Modal>
+    )
+
+    const modal = document.getElementsByClassName('c-Modal')[0]
+    const style = document.querySelectorAll('.is-branded')
+    const content = document.querySelectorAll('.TestContent')
+    const header = document.querySelectorAll('.c-ModalHeaderV2')
+
+    expect(modal).toBeTruthy()
+    expect(style.length).toBeTruthy()
+    expect(content.length).toBeTruthy()
+    expect(header.length).toBeTruthy()
+  })
+
+  test('Renders as alert style', () => {
+    mount(
+      <Modal
+        version={2}
+        kind={MODAL_KIND.ALERT}
+        title={'Title'}
+        isOpen={true}
+        trigger={trigger}
+      >
+        <div className="TestContent">Hello</div>
+      </Modal>
+    )
+
+    const modal = document.getElementsByClassName('c-Modal')[0]
+    const style = document.querySelectorAll('.is-alert')
+    const content = document.querySelectorAll('.TestContent')
+    const header = document.querySelectorAll('.c-ModalHeaderV2')
+
+    expect(modal).toBeTruthy()
+    expect(style.length).toBeTruthy()
+    expect(content.length).toBeTruthy()
+    expect(header.length).toBeTruthy()
+  })
+
+  test('Renders as alert style w/description', () => {
+    mount(
+      <Modal
+        version={2}
+        kind={MODAL_KIND.ALERT}
+        description={'Description'}
+        title={'Title'}
+        description={'Description'}
+        isOpen={true}
+        trigger={trigger}
+      >
+        <div className="TestContent">Hello</div>
+      </Modal>
+    )
+
+    const modal = document.getElementsByClassName('c-Modal')[0]
+    const style = document.querySelectorAll('.is-alert')
+    const content = document.querySelectorAll('.TestContent')
+    const header = document.querySelectorAll('.c-ModalHeaderV2')
+
+    expect(modal).toBeTruthy()
+    expect(style.length).toBeTruthy()
+    expect(content.length).toBeTruthy()
+    expect(header.length).toBeTruthy()
+  })
+
+  test('Renders as sequence style', () => {
+    mount(
+      <Modal
+        version={2}
+        kind={MODAL_KIND.SEQUENCE}
+        title={'Title'}
+        isOpen={true}
+        trigger={trigger}
+      >
+        <div className="TestContent">Hello</div>
+      </Modal>
+    )
+
+    const modal = document.getElementsByClassName('c-Modal')[0]
+    const style = document.querySelectorAll('.is-sequence')
+    const content = document.querySelectorAll('.TestContent')
+    const header = document.querySelectorAll('.c-ModalHeaderV2')
+
+    expect(modal).toBeTruthy()
+    expect(style.length).toBeTruthy()
+    expect(content.length).toBeTruthy()
+    expect(header.length).toBeTruthy()
+  })
+
+  test('Renders as sequence style w/description', () => {
+    mount(
+      <Modal
+        version={2}
+        kind={MODAL_KIND.SEQUENCE}
+        title={'Title'}
+        description={'Description'}
+        isOpen={true}
+        trigger={trigger}
+      >
+        <div className="TestContent">Hello</div>
+      </Modal>
+    )
+
+    const modal = document.getElementsByClassName('c-Modal')[0]
+    const style = document.querySelectorAll('.is-sequence')
+    const content = document.querySelectorAll('.TestContent')
+    const header = document.querySelectorAll('.c-ModalHeaderV2')
+
+    expect(modal).toBeTruthy()
+    expect(style.length).toBeTruthy()
+    expect(content.length).toBeTruthy()
+    expect(header.length).toBeTruthy()
+  })
+
+  test('Renders with danger style', () => {
+    mount(
+      <Modal
+        version={2}
+        title={'Title'}
+        description={'Description'}
+        isOpen={true}
+        state={'danger'}
+        trigger={trigger}
+      >
+        <div className="TestContent">Hello</div>
+      </Modal>
+    )
+
+    const modal = document.getElementsByClassName('c-Modal')[0]
+    const style = document.querySelectorAll('.is-danger')
+    const content = document.querySelectorAll('.TestContent')
+    const header = document.querySelectorAll('.c-ModalHeaderV2')
+
+    expect(modal).toBeTruthy()
+    expect(style.length).toBeTruthy()
+    expect(content.length).toBeTruthy()
+    expect(header.length).toBeTruthy()
+  })
+
+  test('Renders with icon if provided', () => {
+    mount(
+      <Modal
+        version={2}
+        title={'Title'}
+        description={'Description'}
+        icon={'alert'}
+        isOpen={true}
+        state={'danger'}
+        trigger={trigger}
+      >
+        <div className="TestContent">Hello</div>
+      </Modal>
+    )
+
+    const modal = document.getElementsByClassName('c-Modal')[0]
+    const style = document.querySelectorAll('.is-danger')
+    const content = document.querySelectorAll('.TestContent')
+    const header = document.querySelectorAll('.c-ModalHeaderV2')
+    const icon = document.querySelectorAll('.c-Icon')
+
+    expect(modal).toBeTruthy()
+    expect(style.length).toBeTruthy()
+    expect(content.length).toBeTruthy()
+    expect(header.length).toBeTruthy()
+    expect(icon.length).toBeTruthy()
+  })
+
+  test('Renders with Illo when in Branded style if provided', () => {
+    mount(
+      <Modal
+        version={2}
+        title={'Title'}
+        kind={MODAL_KIND.BRANDED}
+        illo={<div className={'fake-illo'} />}
+        illoSize={42}
+        isOpen={true}
+        trigger={trigger}
+      >
+        <div className="TestContent">Hello</div>
+      </Modal>
+    )
+
+    const modal = document.getElementsByClassName('c-Modal')[0]
+    const content = document.querySelectorAll('.TestContent')
+    const header = document.querySelectorAll('.c-ModalHeaderV2')
+    const icon = document.querySelectorAll('.fake-illo')
+
+    expect(modal).toBeTruthy()
+    expect(content.length).toBeTruthy()
+    expect(header.length).toBeTruthy()
+    expect(icon.length).toBeTruthy()
   })
 })

@@ -127,6 +127,78 @@ Large.story = {
   name: 'large',
 }
 
+export const ReRender = () => {
+  const people = [
+    {
+      firstName: 'Johnny',
+      lastName: 'Cash',
+    },
+    {
+      firstName: 'Nina',
+      lastName: 'Simone',
+    },
+    {
+      firstName: 'Frank',
+      lastName: 'Sinatra',
+    },
+    {
+      firstName: 'Nancy',
+      lastName: 'Sinatra',
+    },
+    {
+      firstName: 'Django',
+      lastName: 'Reinhardt',
+    },
+  ]
+  class StatefulStory extends React.Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+        index: 0,
+      }
+    }
+
+    nextPerson = () => {
+      this.setState({
+        index: this.state.index < people.length - 1 ? this.state.index + 1 : 0,
+      })
+    }
+
+    render() {
+      const person = people[this.state.index]
+      return (
+        <div>
+          <EditableFieldComposite placeholder="Add a name">
+            <EditableField
+              label="First Name"
+              name="first_name"
+              type="text"
+              placeholder="First Name"
+              value={person.firstName}
+              validate={validateFieldValue}
+            />
+            <EditableField
+              label="Last Name"
+              name="last_name"
+              type="text"
+              placeholder="Last Name"
+              value={person.lastName}
+              validate={validateFieldValue}
+            />
+          </EditableFieldComposite>
+          <button onClick={this.nextPerson} type="button">
+            Change
+          </button>
+        </div>
+      )
+    }
+  }
+
+  return <StatefulStory />
+}
+
+ReRender.story = 're-render'
+
 function validateFieldValue(payload) {
   console.log('validating')
 

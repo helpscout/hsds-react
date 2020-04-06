@@ -1,10 +1,8 @@
 import styled from 'styled-components'
-import linkStyles from '../../styles/mixins/linkStyles.css'
 import { BEM } from '../../utilities/classNames'
 import Text from '../Text'
 
 const bem = BEM('.c-Message')
-const messageContentBem = BEM('.c-MessageContent')
 
 export const MessageUI = styled.div`
   margin-bottom: 20px;
@@ -19,6 +17,17 @@ export const MessageUI = styled.div`
   ${bem.element('from')} {
     margin-bottom: 7px;
     margin-left: 14px;
+  }
+
+  .c-MessageChatBlock:only-child .c-MessageBubble.emoji-only {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .c-MessageChatBlock:first-child .c-MessageBubble.emoji-only {
+    padding-top: 0 !important;
+  }
+  .c-MessageChatBlock:last-child .c-MessageBubble.emoji-only {
+    padding-bottom: 0 !important;
   }
 
   &.is-to {
@@ -61,15 +70,6 @@ export const MessageUI = styled.div`
   &.is-theme-notifications {
     margin-bottom: 0;
     min-width: initial;
-  }
-`
-
-export const ActionChatBlockUI = styled.div`
-  padding-bottom: 4px;
-  padding-top: 4px;
-
-  a {
-    ${linkStyles()};
   }
 `
 

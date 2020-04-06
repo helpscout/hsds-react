@@ -30,15 +30,15 @@ export const ChatFromTo = () => {
   return (
     <div>
       <Message from avatar={<Avatar name="From" />}>
+        <Message.Chat>{faker.lorem.paragraphs()()}</Message.Chat>
         <Message.Chat>{faker.lorem.sentence()()}</Message.Chat>
-        <Message.Chat>{faker.lorem.sentence()()}</Message.Chat>
-        <Message.Chat>{faker.lorem.sentence()()}</Message.Chat>
+        <Message.Chat>{faker.lorem.paragraphs()()}</Message.Chat>
         <Message.Chat>{faker.lorem.sentence()()}</Message.Chat>
       </Message>
       <Message to avatar={<Avatar name="To" />}>
         <Message.Chat>{faker.lorem.sentence()()}</Message.Chat>
         <Message.Chat>{faker.lorem.sentence()()}</Message.Chat>
-        <Message.Chat>{faker.lorem.sentence()()}</Message.Chat>
+        <Message.Chat>{faker.lorem.paragraphs()()}</Message.Chat>
         <Message.Chat>{faker.lorem.sentence()()}</Message.Chat>
       </Message>
     </div>
@@ -73,7 +73,7 @@ export const ChatStates = () => {
         caption="Caption before the bubble"
         metaPosition="top"
       >
-        With custom message & meta positioned before the bubble
+        🦄❤️
       </Message.Chat>
       <Message.Chat
         read

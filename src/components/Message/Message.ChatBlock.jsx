@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
-import Action from './Message.Action'
 import Bubble from './Message.Bubble'
 import Timestamp from '../Timestamp'
 import { classNames } from '../../utilities/classNames'
@@ -25,7 +24,6 @@ export class ChatBlock extends React.PureComponent {
     onClick: PropTypes.func,
     rtl: PropTypes.bool,
     to: PropTypes.any,
-    type: PropTypes.oneOf(['action', 'message', '']),
   }
   static contextTypes = {
     theme: noop,
@@ -41,7 +39,7 @@ export class ChatBlock extends React.PureComponent {
     const { children, icon, from, ltr, rtl, timestamp, to } = this.props
 
     return React.Children.map(children, child => {
-      return child && (child.type === Action || child.type === Bubble)
+      return child && child.type === Bubble
         ? React.cloneElement(child, {
             icon,
             from,
@@ -81,7 +79,6 @@ export class ChatBlock extends React.PureComponent {
       rtl,
       timestamp,
       to,
-      type,
       ...rest
     } = this.props
     const { theme } = this.context
@@ -91,7 +88,6 @@ export class ChatBlock extends React.PureComponent {
       from && 'is-from',
       to && 'is-to',
       theme && `is-theme-${theme}`,
-      type && `is-type-${type}`,
       className
     )
 

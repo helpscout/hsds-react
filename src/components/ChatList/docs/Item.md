@@ -1,6 +1,6 @@
 # Item
 
-A ChatList.Item component renders the UI that represents the state of a Chat converstation. This component is added as a child of [ChatList](./ChatList.md).
+A ChatList.Item component renders the UI that represents the state of a Chat conversation. This component is added as a child of [ChatList](./ChatList.md).
 
 ## Example
 

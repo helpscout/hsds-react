@@ -21,6 +21,8 @@ export class EditableFieldComposite extends React.PureComponent {
     placeholder: PropTypes.string,
   }
 
+  _isMounted = false
+
   static className = COMPOSITE_CLASSNAMES.component
   static defaultProps = {
     size: 'md',
@@ -81,8 +83,15 @@ export class EditableFieldComposite extends React.PureComponent {
     return { fields, maskItems }
   }
 
+  componentDidMount() {
+    this._isMounted = true
+  }
+
   componentDidUpdate(prevProps) {
-    if (!equal(this.props.children, prevProps.children)) {
+    const getProps = children =>
+      React.Children.map(children, child => child.props)
+
+    if (!equal(getProps(this.props.children), getProps(prevProps.children))) {
       const { fields, maskItems } = this.getChildrenFromProps(this.props)
 
       this.setState({ fields, maskItems })
@@ -105,6 +114,8 @@ export class EditableFieldComposite extends React.PureComponent {
        * so that the focus event gets triggered right after the blur, and that is when we act
        */
       setTimeout(() => {
+        if (!this._isMounted) return
+
         let hasActiveFields = false
         const Fields = this.groupRef.querySelectorAll(
           `.${EDITABLEFIELD_CLASSNAMES.field}`
@@ -144,6 +155,10 @@ export class EditableFieldComposite extends React.PureComponent {
         fi.removeAttribute('style')
       })
     }
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false
   }
 
   handleFieldFocus = passedFn => {

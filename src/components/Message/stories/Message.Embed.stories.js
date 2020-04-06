@@ -1,5 +1,6 @@
 import React from 'react'
 import { Avatar, Message } from '../../index'
+import { faker } from '@helpscout/helix'
 
 export default {
   component: Message,
@@ -62,6 +63,11 @@ export const _Embed = () => (
     <Message from avatar={<Avatar name="Artic Puffin" />}>
       <Message.Embed html={html} />
     </Message>
+    <Message to avatar={<Avatar name="Dapper Duck" />}>
+      <Message.Chat read timestamp="9:41am">
+        {faker.lorem.paragraphs()()}
+      </Message.Chat>
+    </Message>
   </Message.Provider>
 )
 
@@ -79,7 +85,7 @@ EmbedNote.story = {
 
 export const EmbedLeftRight = () => {
   return (
-    <div>
+    <Message.Provider theme="embed">
       <Message to avatar={<Avatar name="Artic Puffin" />}>
         <Message.Chat>Agent chat</Message.Chat>
         <Message.Embed html={html} />
@@ -93,7 +99,7 @@ export const EmbedLeftRight = () => {
         <Message.Chat isNote>Private note</Message.Chat>
         <Message.Embed isNote html={html4} />
       </Message>
-    </div>
+    </Message.Provider>
   )
 }
 
@@ -103,7 +109,7 @@ EmbedLeftRight.story = {
 
 export const EmbedConsecutive = () => {
   return (
-    <div>
+    <Message.Provider theme="embed">
       <Message to avatar={<Avatar name="Artic Puffin" />}>
         <Message.Chat>Agent Chat</Message.Chat>
         <Message.Embed html={html} />
@@ -111,7 +117,7 @@ export const EmbedConsecutive = () => {
         <Message.Embed html={html3} />
         <Message.Embed html={html4} />
       </Message>
-    </div>
+    </Message.Provider>
   )
 }
 

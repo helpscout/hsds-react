@@ -22,4 +22,3 @@ A ChatBlock component provides the structure for various sub-components within a
 | rtl       | `bool`          | Applies right-to-left text styles.                     |
 | timestamp | `string`        | Timestamp for the Message.                             |
 | to        | `node`/`bool`   | Provides author information and applies "To" styles.   |
-| type      | `string`        | Provides styles based on type of Message.              |

@@ -1,4 +1,4 @@
-// Generated with @helpscout/colorway (v0.5.0)
+// Generated with @helpscout/colorway (v0.6.0)
 //
 // This file was automatically generated with @helpscout/colorway
 // Please don't modify this file. Your changes will be overwritten.
@@ -121,6 +121,18 @@ const palette = {
     '800': '#304F8B',
     '900': '#142F5E',
     default: '#8AABF1',
+  },
+  lavender: {
+    '100': '#F9F9FF',
+    '200': '#EBECFF',
+    '300': '#D9DCFD',
+    '400': '#B9BEFF',
+    '500': '#9FA6FF',
+    '600': '#818AEC',
+    '700': '#6269C5',
+    '800': '#404996',
+    '900': '#232A5C',
+    default: '#9FA6FF',
   },
 }
 

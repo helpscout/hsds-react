@@ -97,6 +97,7 @@ export default class VerificationCode extends React.Component {
   }
 
   handlePaste = e => {
+    const { onChange } = this.props
     const clipboardData = e.clipboardData || window.clipboardData
     const pastedData = clipboardData.getData('Text')
 
@@ -117,6 +118,7 @@ export default class VerificationCode extends React.Component {
             }
           }
         })
+      onChange(getCurrentCodeValue(this.digitInputNodes))
     }
   }
 

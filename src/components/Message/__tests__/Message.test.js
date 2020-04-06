@@ -6,7 +6,6 @@ import Attachment from '../Message.Attachment'
 import Chat from '../Message.Chat'
 import Content from '../Message.Content'
 import Media from '../Message.Media'
-import Question from '../Message.Question'
 import { Avatar } from '../../index'
 
 const cx = 'c-Message'
@@ -92,7 +91,7 @@ describe('Content', () => {
     })
   }
 
-  const chatTypes = [Action, Attachment, Chat, Content, Media, Question]
+  const chatTypes = [Action, Attachment, Chat, Content, Media]
   chatTypes.forEach(type => {
     makeContentTest(type)
   })

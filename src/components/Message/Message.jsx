@@ -13,8 +13,8 @@ import Content from './Message.Content'
 import Embed from './Message.Embed'
 import Media from './Message.Media'
 import Provider from './Message.Provider'
-import Question from './Message.Question'
 import { classNames } from '../../utilities/classNames'
+import { getComponentName } from '../../utilities/component'
 import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import { MessageUI } from './Message.css'
@@ -40,12 +40,26 @@ export class Message extends React.PureComponent {
   static Embed = Embed
   static Media = Media
   static Provider = Provider
-  static Question = Question
 
   shouldShowAvatar = () => {
     const { from, showAvatar } = this.props
 
+    // This prevents spacing issues when children include
+    // `Message.Action` which requires the full width of the screen.
+    if (this.childrenIncludeActionTypeComponent()) return false
+
     return this.isThemeEmbed() ? (from && showAvatar) || false : !!showAvatar
+  }
+
+  childrenIncludeActionTypeComponent = () => {
+    const { children } = this.props
+    const childArray = React.Children.toArray(children)
+
+    return childArray.some(child => {
+      const componentName = getComponentName(child)
+
+      return componentName === 'MessageAction'
+    })
   }
 
   isThemeEmbed = () => {

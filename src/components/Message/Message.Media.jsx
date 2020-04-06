@@ -48,7 +48,6 @@ export class Media extends React.Component {
     title: PropTypes.string,
     to: PropTypes.any,
     tryAgainLabel: PropTypes.string,
-    type: PropTypes.oneOf(['action', 'message', '']),
     typing: PropTypes.bool,
     width: PropTypes.number,
   }
@@ -214,7 +213,6 @@ export class Media extends React.Component {
       showErrorTryAgainLink,
       thumbnailImageUrl,
       tryAgainLabel,
-      type,
       width,
       ...rest
     } = this.props
@@ -230,12 +228,6 @@ export class Media extends React.Component {
       className
     )
     const bem = BEM(componentClassName)
-
-    const captionMarkup = caption && (
-      <div className="c-MessageMedia__caption">
-        <Caption size="11">{caption}</Caption>
-      </div>
-    )
 
     const inlineCaptionMarkup = this.getCaptionMarkup()
 

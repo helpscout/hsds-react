@@ -38,12 +38,16 @@ export class Chat extends React.PureComponent {
   }
 
   static defaultProps = {
-    onBubbleClick: noop,
     error: false,
     errorMessage: "Couldn't send.",
     isLoading: false,
     metaPosition: 'bottom',
   }
+
+  static contextTypes = {
+    theme: noop,
+  }
+
   static displayName = 'Message.Chat'
 
   render() {
@@ -63,17 +67,17 @@ export class Chat extends React.PureComponent {
       isLoading,
       isNote,
       ltr,
-      onBubbleClick,
-      primary,
       rtl,
       size,
       timestamp,
       title,
       to,
       typing,
-      type,
       ...rest
     } = this.props
+
+    const { theme } = this.context
+    const isThemeEmbed = theme === 'embed'
 
     const componentClassName = classNames(
       'c-MessageChat',
@@ -91,7 +95,6 @@ export class Chat extends React.PureComponent {
       rtl,
       timestamp,
       to,
-      type,
     }
 
     const captionMarkup = caption ? (
@@ -130,19 +133,17 @@ export class Chat extends React.PureComponent {
         meta={metaMarkup}
         metaPosition={metaPosition}
         read={read}
+        isEmbed={isThemeEmbed}
         {...chatProps}
         {...rest}
       >
         <Bubble
           {...chatProps}
           className={bubbleClassName}
-          onClick={onBubbleClick}
           isNote={isNote}
-          primary={primary}
           size={size}
           title={title}
           typing={typing}
-          type={type}
         />
       </ChatBlockUI>
     )

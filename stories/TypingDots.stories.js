@@ -1,5 +1,4 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import TypingDots from '../src/components/TypingDots'
 
 export default {
