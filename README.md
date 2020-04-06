@@ -7,6 +7,7 @@
 [![npm version](https://badge.fury.io/js/%40helpscout%2Fhsds-react.svg)](https://badge.fury.io/js/%40helpscout%2Fhsds-react)
 ![node](https://img.shields.io/badge/node-8.11.4-blue.svg)
 ![npm](https://img.shields.io/badge/npm-6.9.0-blue.svg)
+[![style: styled-components](https://img.shields.io/badge/style-%F0%9F%92%85%20styled--components-orange.svg?colorB=daa357&colorA=db748e)](https://github.com/styled-components/styled-components)
 
 React components for Help Scout's Design System
 
