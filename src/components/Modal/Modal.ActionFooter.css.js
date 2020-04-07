@@ -18,8 +18,6 @@ export const ActionFooterUI = styled(Toolbar)`
     }
 
     &.is-alert {
-      padding: 0px;
-      height: auto;
       background-color: white;
       justify-content: center;
       margin: auto;
