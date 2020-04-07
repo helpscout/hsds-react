@@ -97,21 +97,6 @@ Nested.story = {
   name: 'nested',
 }
 
-export const V2Styles = () => (
-  <Modal version="2" trigger={<Link>Open dis modal</Link>}>
-    <Modal.Body>
-      <Heading>Title</Heading>
-      {ContentSpec.generate(8).map(({ id, content }) => (
-        <p key={id}>{content}</p>
-      ))}
-    </Modal.Body>
-  </Modal>
-)
-
-V2Styles.story = {
-  name: 'V2/styles',
-}
-
 export const V2Default = () => (
   <Modal
     version={2}
