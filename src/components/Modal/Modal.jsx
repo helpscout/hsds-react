@@ -288,7 +288,7 @@ class Modal extends React.PureComponent {
       seamless,
       step,
       style,
-      title,
+      headerLabel,
       version,
       ...rest
     } = this.props
@@ -313,7 +313,7 @@ class Modal extends React.PureComponent {
         illo={illo}
         illoSize={illoSize}
         description={description}
-        title={title}
+        label={headerLabel}
         kind={kind}
         numSteps={numSteps}
         step={step}

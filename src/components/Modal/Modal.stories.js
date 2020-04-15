@@ -102,7 +102,7 @@ export const V2Default = () => (
     version={2}
     isOpen={true}
     trigger={<Link>Clicky</Link>}
-    title="Modal Title"
+    headerLabel="Modal Title"
   >
     <Modal.Body version={2}>
       {ContentSpec.generate(2).map(({ id, content }) => (
@@ -122,7 +122,7 @@ export const V2WithSecondaryButton = () => (
     version={2}
     isOpen={true}
     trigger={<Link>Clicky</Link>}
-    title="Modal Title"
+    headerLabel="Modal Title"
   >
     <Modal.Body version={2}>
       {ContentSpec.generate(2).map(({ id, content }) => (
@@ -147,7 +147,7 @@ export const V2WithDangerButton = () => (
     isOpen={true}
     trigger={<Link>Clicky</Link>}
     icon="alert"
-    title="Change Subdomain?"
+    headerLabel="Change Subdomain?"
   >
     <Modal.Body version={2}>
       {ContentSpec.generate(2).map(({ id, content }) => (
@@ -167,7 +167,7 @@ export const V2WithVeryLongContent = () => (
     version={2}
     isOpen={true}
     trigger={<Link>Clicky</Link>}
-    title="Modal Title"
+    headerLabel="Modal Title"
   >
     <Modal.Body version={2}>
       {ContentSpec.generate(12).map(({ id, content }) => (
@@ -192,7 +192,7 @@ export const V2BrandNoDescriptionSingleButton = () => (
     kind="branded"
     illo={<SpeechBubble />}
     trigger={<Link>Clicky</Link>}
-    title="Modal Title"
+    headerLabel="Modal Title"
   >
     <Modal.Body version={2}>
       {ContentSpec.generate(1).map(({ id, content }) => (
@@ -215,7 +215,7 @@ export const V2BrandedDescriptionDangerButton = () => (
     kind="branded"
     illo={<SpeechBubble />}
     trigger={<Link>Clicky</Link>}
-    title="Cancel your account?"
+    headerLabel="Cancel your account?"
   >
     <Modal.Body version={2}>
       {ContentSpec.generate(1).map(({ id, content }) => (
@@ -241,7 +241,7 @@ export const V2BrandedDescriptionSecondaryButton = () => (
     kind="branded"
     illo={<SpeechBubble />}
     trigger={<Link>Clicky</Link>}
-    title="Modal Title"
+    headerLabel="Modal Title"
   >
     <Modal.Body version={2}>
       {ContentSpec.generate(1).map(({ id, content }) => (
@@ -267,7 +267,7 @@ export const V2ReallyLongContent = () => (
     kind="branded"
     illo={<SpeechBubble />}
     trigger={<Link>Clicky</Link>}
-    title="Modal Title"
+    headerLabel="Modal Title"
   >
     <Modal.Body version={2}>
       {ContentSpec.generate(10).map(({ id, content }) => (
@@ -291,7 +291,7 @@ export const V2AlertNoDescription = () => (
     isOpen={true}
     kind="alert"
     trigger={<Link>Clicky</Link>}
-    title="Discard this draft?"
+    headerLabel="Discard this draft?"
   >
     <Modal.ActionFooter
       showDefaultCancel={false}
@@ -313,7 +313,7 @@ export const V2AlertWithDescription = () => (
     description="Short title providing a little more detail."
     kind="alert"
     trigger={<Link>Clicky</Link>}
-    title="Alert Title"
+    headerLabel="Alert Title"
   >
     <Modal.ActionFooter
       showDefaultCancel={false}
@@ -336,7 +336,7 @@ export const V2AlertWithDangerState = () => (
     description="You're about to do a thing that could impact a lot of other things. Continue?"
     state="danger"
     trigger={<Link>Clicky</Link>}
-    title="Are you sure?"
+    headerLabel="Are you sure?"
   >
     <Modal.ActionFooter
       showDefaultCancel={false}
@@ -361,7 +361,7 @@ export const V2Sequence = () => (
     numSteps={5}
     step={2}
     trigger={<Link>Clicky</Link>}
-    title="What email address would you like to connect?"
+    headerLabel="What email address would you like to connect?"
   >
     <Modal.Body version={2}>
       {ContentSpec.generate(1).map(({ id, content }) => (
