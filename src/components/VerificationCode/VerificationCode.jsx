@@ -51,6 +51,8 @@ export default class VerificationCode extends React.Component {
 
     const { code, autofocus } = this.props
 
+    let startIndex = 0
+
     if (code) {
       code
         .slice(0, 6)
@@ -59,12 +61,13 @@ export default class VerificationCode extends React.Component {
           if (this.digitInputNodes.length > 0) {
             this.digitInputNodes[index].value = char
             this.digitMaskNodes[index].innerText = char
+            if (char) startIndex = index
           }
         })
     }
 
-    if (autofocus && this.digitInputNodes[0]) {
-      this.digitInputNodes[0].focus()
+    if (autofocus && this.digitInputNodes[startIndex]) {
+      this.digitInputNodes[startIndex].focus()
     }
   }
 
@@ -133,13 +136,14 @@ export default class VerificationCode extends React.Component {
 
     if ((metaKey || ctrlKey) && key === 'a') {
       selectAll(this.digitInputNodes, this.digitMaskNodes)
+      e.preventDefault()
     } else if ((metaKey || ctrlKey) && key === 'c') {
-      const selectionText = getCleanSelectedText()
-
+      const selectionText = this.digitMaskNodes.map(el => el.innerText).join('')
       this.clipboardPlaceholderRef.value = selectionText
       this.clipboardPlaceholderRef.select()
       copyToClipboard()
-      selectAll(this.digitInputNodes, this.digitMaskNodes)
+      // if we trigger selectAll to close of the copy action, it interfere with the value copied over
+      setTimeout(() => selectAll(this.digitInputNodes, this.digitMaskNodes), 50)
     } else if (key === 'Enter') {
       const { onEnter } = this.props
       const code = this.digitInputNodes
