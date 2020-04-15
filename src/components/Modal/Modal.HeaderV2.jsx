@@ -25,23 +25,17 @@ class HeaderV2 extends React.PureComponent {
     kind: MODAL_KIND.DEFAULT,
     numSteps: 1,
     step: 1,
-    headerLabel: 'Title',
+    title: 'Title',
   }
 
   renderAlertStyle() {
-    const {
-      className,
-      children,
-      description,
-      headerLabel,
-      ...rest
-    } = this.props
+    const { className, children, description, title, ...rest } = this.props
 
     const componentClassName = classNames('c-ModalHeaderV2', className)
 
     return (
       <AlertHeaderUI {...rest} className={componentClassName} placement={'top'}>
-        {<AlertHeaderTitleUI>{headerLabel}</AlertHeaderTitleUI>}
+        {<AlertHeaderTitleUI>{title}</AlertHeaderTitleUI>}
         {description ? (
           <AlertHeaderDescriptionUI>{description}</AlertHeaderDescriptionUI>
         ) : null}
@@ -57,7 +51,7 @@ class HeaderV2 extends React.PureComponent {
       description,
       illo,
       illoSize,
-      headerLabel,
+      title,
       ...rest
     } = this.props
 
@@ -72,7 +66,7 @@ class HeaderV2 extends React.PureComponent {
         {illo ? (
           <BrandedHeaderImageUI size={illoSize}>{illo}</BrandedHeaderImageUI>
         ) : null}
-        {<BrandedHeaderTitleUI>{headerLabel}</BrandedHeaderTitleUI>}
+        {<BrandedHeaderTitleUI>{title}</BrandedHeaderTitleUI>}
         {description ? (
           <HeaderDescriptionUI>{description}</HeaderDescriptionUI>
         ) : null}
@@ -89,7 +83,7 @@ class HeaderV2 extends React.PureComponent {
       illo,
       numSteps,
       step,
-      headerLabel,
+      title,
       ...rest
     } = this.props
 
@@ -102,7 +96,7 @@ class HeaderV2 extends React.PureComponent {
         placement={'top'}
       >
         <DotStepperUI numSteps={numSteps} step={step} />
-        {<BrandedHeaderTitleUI>{headerLabel}</BrandedHeaderTitleUI>}
+        {<BrandedHeaderTitleUI>{title}</BrandedHeaderTitleUI>}
         {description ? (
           <HeaderDescriptionUI>{description}</HeaderDescriptionUI>
         ) : null}
@@ -118,7 +112,7 @@ class HeaderV2 extends React.PureComponent {
       description,
       icon,
       kind,
-      headerLabel,
+      title,
       ...rest
     } = this.props
 
@@ -135,7 +129,7 @@ class HeaderV2 extends React.PureComponent {
     return (
       <HeaderUI {...rest} className={componentClassName} placement={'top'}>
         {icon ? <Icon name={icon} key={icon} size={'20'} /> : null}
-        {<HeaderTitleUI>{headerLabel}</HeaderTitleUI>}
+        {<HeaderTitleUI>{title}</HeaderTitleUI>}
         {children}
       </HeaderUI>
     )
