@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import VerificationCode from './'
 
 export default {
@@ -32,7 +32,7 @@ Invalid.story = {
 export const AutoFocus = () => {
   return (
     <VerificationCode
-      autofocus={true}
+      autoFocus={true}
       onChange={val => {
         console.log(val)
       }}
@@ -47,7 +47,7 @@ AutoFocus.story = {
 export const AutoFocusWithCode = () => {
   return (
     <VerificationCode
-      autofocus={true}
+      autoFocus={true}
       code="002006"
       onChange={val => {
         console.log(val)
@@ -64,7 +64,7 @@ export const AutoFocusWithHalfCode = () => {
   return (
     <div>
       <VerificationCode
-        autofocus={true}
+        autoFocus={true}
         code="002"
         onChange={val => {
           console.log(val)
@@ -77,4 +77,29 @@ export const AutoFocusWithHalfCode = () => {
 
 AutoFocusWithHalfCode.story = {
   name: 'autofocus with half code',
+}
+
+export const AutoSubmit = () => {
+  const [code, setCode] = useState()
+  return (
+    <div>
+      <VerificationCode
+        autoFocus={true}
+        autoSubmit={true}
+        onChange={val => {
+          console.log(val)
+        }}
+        onEnter={val => {
+          setCode(val)
+        }}
+      />
+      <p>
+        Submitted code: <b>{code}</b>
+      </p>
+    </div>
+  )
+}
+
+AutoSubmit.story = {
+  name: 'autoSubmit',
 }
