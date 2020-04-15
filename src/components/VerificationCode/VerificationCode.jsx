@@ -24,6 +24,7 @@ import Tooltip from '../Tooltip'
 
 export default class VerificationCode extends React.Component {
   static propTypes = {
+    autofocus: PropTypes.bool,
     code: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     isValid: PropTypes.bool,
     numberOfChars: PropTypes.number,
@@ -32,6 +33,7 @@ export default class VerificationCode extends React.Component {
   }
 
   static defaultProps = {
+    autofocus: false,
     code: '',
     isValid: true,
     numberOfChars: 6,
@@ -47,7 +49,7 @@ export default class VerificationCode extends React.Component {
       this.verificationCodeFieldRef.querySelectorAll('.DigitMask')
     )
 
-    const { code } = this.props
+    const { code, autofocus } = this.props
 
     if (code) {
       code
@@ -59,6 +61,10 @@ export default class VerificationCode extends React.Component {
             this.digitMaskNodes[index].innerText = char
           }
         })
+    }
+
+    if (autofocus && this.digitInputNodes[0]) {
+      this.digitInputNodes[0].focus()
     }
   }
 
