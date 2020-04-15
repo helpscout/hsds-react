@@ -27,6 +27,7 @@ class CopyInput extends React.PureComponent {
   }
 
   inputNode
+  copyButtonNode
 
   copyToClipboard = () => {
     copyToClipboard()
@@ -61,12 +62,20 @@ class CopyInput extends React.PureComponent {
         className={componentClassName}
         inputRef={this.setNodeRef}
         isSubtleReadOnly
+        onKeyUp={e => {
+          if (e.key === 'Enter') {
+            e.preventDefault()
+            this.copyButtonNode.click()
+            return false
+          }
+        }}
         suffix={
           <CopyButton
             onClick={this.handleCopyClick.bind(this)}
             size="lg"
             isLast
             style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
+            innerRef={node => (this.copyButtonNode = node)}
           />
         }
       />
