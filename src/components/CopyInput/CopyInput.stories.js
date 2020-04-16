@@ -8,7 +8,7 @@ export default {
 }
 
 export const Default = () => (
-  <CopyInput value="testing" onCopy={action('Copy')} />
+  <CopyInput autoFocus={true} value="testing" onCopy={action('Copy')} />
 )
 
 export const ReadOnly = () => (

@@ -24,6 +24,8 @@ import Tooltip from '../Tooltip'
 
 export default class VerificationCode extends React.Component {
   static propTypes = {
+    autoFocus: PropTypes.bool,
+    autoSubmit: PropTypes.bool,
     code: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     isValid: PropTypes.bool,
     numberOfChars: PropTypes.number,
@@ -32,6 +34,8 @@ export default class VerificationCode extends React.Component {
   }
 
   static defaultProps = {
+    autoFocus: false,
+    autoSubmit: false,
     code: '',
     isValid: true,
     numberOfChars: 6,
@@ -47,30 +51,37 @@ export default class VerificationCode extends React.Component {
       this.verificationCodeFieldRef.querySelectorAll('.DigitMask')
     )
 
-    const { code } = this.props
+    const { code, autoFocus, numberOfChars } = this.props
+
+    let startIndex = 0
 
     if (code) {
       code
-        .slice(0, 6)
+        .slice(0, numberOfChars)
         .split('')
         .forEach((char, index, arr) => {
           if (this.digitInputNodes.length > 0) {
             this.digitInputNodes[index].value = char
             this.digitMaskNodes[index].innerText = char
+            if (char) startIndex = index
           }
         })
+    }
+
+    if (autoFocus && this.digitInputNodes[startIndex]) {
+      this.digitInputNodes[startIndex].focus()
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { code } = this.props
+    const { code, numberOfChars } = this.props
 
     if (prevProps.code !== code) {
       if (code) {
         clearAll(this.digitInputNodes, this.digitMaskNodes)
 
         code
-          .slice(0, 6)
+          .slice(0, numberOfChars)
           .split('')
           .forEach((char, index, arr) => {
             if (this.digitInputNodes.length > 0) {
@@ -96,8 +107,17 @@ export default class VerificationCode extends React.Component {
     this.clipboardPlaceholderRef = node
   }
 
+  handleChange = value => {
+    const { onChange, onEnter, autoSubmit, numberOfChars } = this.props
+    onChange(value)
+
+    if (autoSubmit && value.length === numberOfChars) {
+      onEnter(value)
+    }
+  }
+
   handlePaste = e => {
-    const { onChange } = this.props
+    const { numberOfChars } = this.props
     const clipboardData = e.clipboardData || window.clipboardData
     const pastedData = clipboardData.getData('Text')
 
@@ -106,7 +126,7 @@ export default class VerificationCode extends React.Component {
 
     if (pastedData.length > 0) {
       pastedData
-        .slice(0, 6)
+        .slice(0, numberOfChars)
         .split('')
         .forEach((char, index, arr) => {
           if (this.digitInputNodes.length > 0) {
@@ -118,7 +138,7 @@ export default class VerificationCode extends React.Component {
             }
           }
         })
-      onChange(getCurrentCodeValue(this.digitInputNodes))
+      this.handleChange(getCurrentCodeValue(this.digitInputNodes))
     }
   }
 
@@ -127,13 +147,14 @@ export default class VerificationCode extends React.Component {
 
     if ((metaKey || ctrlKey) && key === 'a') {
       selectAll(this.digitInputNodes, this.digitMaskNodes)
+      e.preventDefault()
     } else if ((metaKey || ctrlKey) && key === 'c') {
-      const selectionText = getCleanSelectedText()
-
+      const selectionText = this.digitMaskNodes.map(el => el.innerText).join('')
       this.clipboardPlaceholderRef.value = selectionText
       this.clipboardPlaceholderRef.select()
       copyToClipboard()
-      selectAll(this.digitInputNodes, this.digitMaskNodes)
+      // if we trigger selectAll to close of the copy action, it interfere with the value copied over
+      setTimeout(() => selectAll(this.digitInputNodes, this.digitMaskNodes), 50)
     } else if (key === 'Enter') {
       const { onEnter } = this.props
       const code = this.digitInputNodes
@@ -175,7 +196,7 @@ export default class VerificationCode extends React.Component {
 
     if (key !== 'Meta') {
       const { value } = e.target
-      const { numberOfChars, onChange } = this.props
+      const { numberOfChars } = this.props
       const digitMask = this.digitMaskNodes[index]
 
       if (key === 'Backspace') {
@@ -185,7 +206,7 @@ export default class VerificationCode extends React.Component {
           clearAll(this.digitInputNodes, this.digitMaskNodes)
           showInputDigits(this.digitInputNodes, this.digitMaskNodes)
           this.digitInputNodes[0].focus()
-          onChange('')
+          this.handleChange('')
         } else if (value === '' && !digitMask.innerText) {
           // Tested  ¯\_(ツ)_/¯
 
@@ -194,10 +215,10 @@ export default class VerificationCode extends React.Component {
 
           digitMask.innerText = value
           previousDigit && previousDigit.select()
-          onChange(getCurrentCodeValue(this.digitInputNodes))
+          this.handleChange(getCurrentCodeValue(this.digitInputNodes))
         } else {
           digitMask.innerText = value
-          onChange(getCurrentCodeValue(this.digitInputNodes))
+          this.handleChange(getCurrentCodeValue(this.digitInputNodes))
         }
       } else if (key === 'ArrowLeft') {
         const prevIndex = index === 0 ? 0 : index - 1
@@ -219,7 +240,7 @@ export default class VerificationCode extends React.Component {
         digitMask.innerText = value
         nextDigit && nextDigit.select()
 
-        onChange(getCurrentCodeValue(this.digitInputNodes))
+        this.handleChange(getCurrentCodeValue(this.digitInputNodes))
       }
     }
   }

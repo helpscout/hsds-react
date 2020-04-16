@@ -416,6 +416,7 @@ class Modal extends React.PureComponent {
       kind,
       state,
       style,
+      title,
       version,
       zIndex,
       ...rest
