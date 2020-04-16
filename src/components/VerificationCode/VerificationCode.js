@@ -100,7 +100,7 @@ export default class VerificationCode extends React.Component {
 
   handleChange = value => {
     const { onChange, onEnter, autoSubmit, numberOfChars } = this.props
-    this.handleChange(value)
+    onChange(value)
 
     if (autoSubmit && value.length === numberOfChars) {
       onEnter(value)
@@ -156,6 +156,7 @@ export default class VerificationCode extends React.Component {
     /* istanbul ignore next */
     if ((metaKey || ctrlKey) && key === 'a') {
       selectAll(this.digitInputNodes, this.digitMaskNodes)
+      e.preventDefault()
     } else if ((metaKey || ctrlKey) && key === 'c') {
       const selectionText = this.digitMaskNodes.map(el => el.innerText).join('')
 

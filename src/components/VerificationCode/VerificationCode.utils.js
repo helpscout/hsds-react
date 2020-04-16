@@ -10,7 +10,7 @@ export function selectAll(digitInputNodes, digitMaskNodes) {
     selection.removeAllRanges()
   }
 
-  let lastIndex = 0
+  let lastIndex = -1
 
   digitInputNodes.forEach((digitInputNode, index) => {
     digitInputNode.classList.add(CLASSNAMES.hidden)
@@ -21,7 +21,14 @@ export function selectAll(digitInputNodes, digitMaskNodes) {
     }
   })
 
-  selection.setBaseAndExtent(digitMaskNodes[0], 0, digitMaskNodes[lastIndex], 1)
+  if (lastIndex > -1) {
+    selection.setBaseAndExtent(
+      digitMaskNodes[0],
+      0,
+      digitMaskNodes[lastIndex],
+      1
+    )
+  }
 }
 
 export function clearAll(digitInputNodes, digitMaskNodes) {

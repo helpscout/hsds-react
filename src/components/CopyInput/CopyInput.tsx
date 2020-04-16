@@ -64,11 +64,10 @@ class CopyInput extends React.PureComponent<Props> {
         className={componentClassName}
         inputRef={this.setNodeRef}
         isSubtleReadOnly
-        onKeyUp={e => {
+        onKeyUp={(e: any) => {
           if (e.key === 'Enter') {
             e.preventDefault()
             this.copyButtonNode.click()
-            return false
           }
         }}
         suffix={
@@ -77,7 +76,9 @@ class CopyInput extends React.PureComponent<Props> {
             size="lg"
             isLast
             style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
-            innerRef={node => (this.copyButtonNode = node)}
+            buttonRef={node => {
+              this.copyButtonNode = node
+            }}
           />
         }
       />
