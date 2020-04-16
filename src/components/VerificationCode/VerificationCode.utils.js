@@ -10,16 +10,25 @@ export function selectAll(digitInputNodes, digitMaskNodes) {
     selection.removeAllRanges()
   }
 
+  let lastIndex = -1
+
   digitInputNodes.forEach((digitInputNode, index) => {
     digitInputNode.classList.add(CLASSNAMES.hidden)
     digitMaskNodes[index].classList.remove(CLASSNAMES.hidden)
 
     if (digitMaskNodes[index].innerText) {
-      let range = document.createRange()
-      range.selectNode(digitMaskNodes[index])
-      selection.addRange(range)
+      lastIndex = index
     }
   })
+
+  if (lastIndex > -1) {
+    selection.setBaseAndExtent(
+      digitMaskNodes[0],
+      0,
+      digitMaskNodes[lastIndex],
+      1
+    )
+  }
 }
 
 export function clearAll(digitInputNodes, digitMaskNodes) {

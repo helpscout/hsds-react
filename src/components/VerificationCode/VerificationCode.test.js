@@ -338,3 +338,54 @@ describe('Input click', () => {
     })
   })
 })
+
+describe('Autofocus', () => {
+  test('Does not autoFocus by default', () => {
+    jest.useFakeTimers()
+    const wrapper = mount(<VerificationCode />)
+    const input = wrapper.instance().digitInputNodes[0]
+    jest.runAllTimers()
+    const focusedElement = document.activeElement
+    expect(focusedElement === input).toBeFalsy()
+  })
+
+  test('Autofocuses if specified', () => {
+    jest.useFakeTimers()
+    const wrapper = mount(<VerificationCode autoFocus />)
+    const input = wrapper.instance().digitInputNodes[0]
+    jest.runAllTimers()
+    const focusedElement = document.activeElement
+    expect(focusedElement === input).toBeTruthy()
+  })
+
+  test('Autofocuses based on code length, if specified', () => {
+    const code = '002'
+    jest.useFakeTimers()
+    const wrapper = mount(<VerificationCode autoFocus code={code} />)
+    const input = wrapper.instance().digitInputNodes[code.length - 1]
+    jest.runAllTimers()
+    const focusedElement = document.activeElement
+    expect(focusedElement === input).toBeTruthy()
+  })
+})
+
+describe('AutoSubmit', () => {
+  test('should call onEnter when the number of character was reached', () => {
+    const TEXT = '123456'
+
+    const onEnterSpy = jest.fn()
+
+    const eventMock = {
+      preventDefault: jest.fn(),
+      stopPropagation: jest.fn(),
+      clipboardData: {
+        getData: t => TEXT,
+      },
+    }
+    const wrapper = mount(<VerificationCode autoSubmit onEnter={onEnterSpy} />)
+
+    wrapper.simulate('paste', eventMock)
+
+    expect(onEnterSpy).toHaveBeenCalledWith(`${TEXT}`)
+  })
+})

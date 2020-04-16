@@ -6,7 +6,7 @@ import { CopyInput } from '../src/index'
 const stories = storiesOf('CopyInput', module)
 
 stories.add('Default', () => (
-  <CopyInput value="testing" onCopy={action('Copy')} />
+  <CopyInput autoFocus={true} value="testing" onCopy={action('Copy')} />
 ))
 
 stories.add('Read-only', () => (

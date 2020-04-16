@@ -356,6 +356,7 @@ class Modal extends React.PureComponent<ModalProps> {
       kind,
       state,
       style,
+      title,
       version,
       zIndex,
       ...rest
