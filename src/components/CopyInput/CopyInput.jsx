@@ -44,7 +44,6 @@ class CopyInput extends React.PureComponent {
   handleCopyClick = () => {
     this.selectText()
     this.copyToClipboard()
-    console.log('handleCopyClick', this.getInputValue())
     this.props.onCopy(this.getInputValue())
   }
 
