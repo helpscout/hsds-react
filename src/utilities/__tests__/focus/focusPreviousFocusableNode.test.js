@@ -13,7 +13,7 @@ test('Focuses previous node, and returns previous node', () => {
   document.body.innerHTML = `
     <span>Nope</span>
     <input type='text' value='NEXT' />
-    <a>Current</a>
+    <a href="#">Current</a>
     <div>Nope</div>
     <select><option>Yes</option></select>
     <textarea>Yes</textarea>
@@ -42,7 +42,7 @@ test('Focuses previous node within scope', () => {
     <span>Nope</span>
     <div class="scope">
       <input type='text' value='NEXT' />
-      <a>Current</a>
+      <a href="#">Current</a>
     </div>
     <div>Nope</div>
     <select><option>Yes</option></select>
@@ -71,7 +71,7 @@ test('Focuses last focusable node if there are no previous nodes', () => {
   }
 
   document.body.innerHTML = `
-    <a>Current</a>
+    <a href="#">Current</a>
     <span>Nope</span>
     <div>Nope</div>
     <select><option>Yes</option></select>

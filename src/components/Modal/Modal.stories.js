@@ -140,6 +140,31 @@ V2WithSecondaryButton.story = {
   name: 'V2/with secondary button',
 }
 
+export const V2WithDisabledPrimary = () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    trigger={<Link>Clicky</Link>}
+    title="Modal Title"
+  >
+    <Modal.Body version={2}>
+      {ContentSpec.generate(2).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.ActionFooter
+      primaryButtonText="Primary"
+      secondaryButtonDisabled={true}
+      primaryButtonDisabled={true}
+      secondaryButtonText="Secondary"
+    />
+  </Modal>
+)
+
+V2WithDisabledPrimary.story = {
+  name: 'V2/with disabled buttons',
+}
+
 export const V2WithDangerButton = () => (
   <Modal
     version={2}
@@ -173,6 +198,9 @@ export const V2WithVeryLongContent = () => (
       {ContentSpec.generate(12).map(({ id, content }) => (
         <p key={id}>{content}</p>
       ))}
+      <p>
+        <a href="#">focusable anchor</a> and <a>not focusable anchor</a>
+      </p>
     </Modal.Body>
     <Modal.ActionFooter
       primaryButtonText="Primary"
