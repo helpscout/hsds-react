@@ -14,7 +14,7 @@ test('Returns next focusable node', () => {
   document.body.innerHTML = `
     <span>Nope</span>
     <input type='text' value='Yes' />
-    <a>NEXT</a>
+    <a href="#">NEXT</a>
     <div>Nope</div>
     <select><option>Yes</option></select>
     <textarea>Yes</textarea>
@@ -34,7 +34,7 @@ test('Returns next focusable node', () => {
 
 test('Returns next focusable node within scope', () => {
   document.body.innerHTML = `
-    <a>Yes</a>
+    <a href="#">Yes</a>
     <span>Nope</span>
     <div>Nope</div>
     <select><option>Yes</option></select>

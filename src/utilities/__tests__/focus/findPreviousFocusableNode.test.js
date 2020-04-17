@@ -13,7 +13,7 @@ test('Returns falsey if with invalid args found', () => {
 test('Returns previous focusable node', () => {
   document.body.innerHTML = `
     <span>Nope</span>
-    <a>PREV</a>
+    <a href="#">PREV</a>
     <input type='text' value='Yes' />
     <div>Nope</div>
     <select><option>Yes</option></select>
@@ -34,7 +34,7 @@ test('Returns previous focusable node', () => {
 
 test('Returns previous focusable node within scope', () => {
   document.body.innerHTML = `
-    <a>Yes</a>
+    <a href="#">Yes</a>
     <span>Nope</span>
     <div>Nope</div>
     <select><option>Yes</option></select>

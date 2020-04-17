@@ -14,7 +14,7 @@ test('Returns empty nodeList if no focusable nodes found', () => {
 
 test('Returns a list of focusable nodes', () => {
   document.body.innerHTML = `
-    <a>Yes</a>
+    <a href="#">Yes</a>
     <span>Nope</span>
     <input type='text' value='Yes' />
     <div>Nope</div>
@@ -24,6 +24,8 @@ test('Returns a list of focusable nodes', () => {
     <span tabindex="-1">Nope</span>
     <span tabindex="0">Yup</span>
     <span tabindex="10">Yup</span>
+    <button disabled>disabled button</button>
+    <a>not focusable anchor</a>
   `
   const o = findFocusableNodes()
   expect(o instanceof NodeList).toBeTruthy()
@@ -32,7 +34,7 @@ test('Returns a list of focusable nodes', () => {
 
 test('Returns a list of focusable nodes within scope', () => {
   document.body.innerHTML = `
-    <a>Yes</a>
+    <a href="#">Yes</a>
     <span>Nope</span>
     <input type='text' value='Yes' />
     <div>Nope</div>

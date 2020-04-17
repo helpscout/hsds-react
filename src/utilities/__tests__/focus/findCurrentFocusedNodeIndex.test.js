@@ -12,7 +12,7 @@ test('Returns falsey if with node (arg) is invalid', () => {
 test('Returns index of current focused node', () => {
   document.body.innerHTML = `
     <span>Nope</span>
-    <a>Yes</a>
+    <a href="#">Yes</a>
     <input type='text' value='Yes' />
     <div>Nope</div>
     <select><option>Yes</option></select>
@@ -31,7 +31,7 @@ test('Returns index of current focused node', () => {
 test("Returns false if current node isn't focusable", () => {
   document.body.innerHTML = `
     <span class="nope">Nope</span>
-    <a>Yes</a>
+    <a href="#">Yes</a>
     <input type='text' value='Yes' />
     <div>Nope</div>
     <select><option>Yes</option></select>
