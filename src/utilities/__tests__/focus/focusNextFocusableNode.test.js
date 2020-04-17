@@ -12,7 +12,7 @@ test('Focuses next node, and returns next node', () => {
 
   document.body.innerHTML = `
     <span>Nope</span>
-    <a>Current</a>
+    <a href="#">Current</a>
     <input type='text' value='NEXT' />
     <div>Nope</div>
     <select><option>Yes</option></select>
@@ -41,7 +41,7 @@ test('Focuses next node within scope', () => {
   document.body.innerHTML = `
     <span>Nope</span>
     <div class="scope">
-      <a>Current</a>
+      <a href="#">Current</a>
       <input type='text' value='NEXT' />
     </div>
     <div>Nope</div>
@@ -80,7 +80,7 @@ test('Focuses first focusable node if there are no next nodes', () => {
     <span tabindex="-1">Nope</span>
     <span tabindex="0">Yup</span>
     <span tabindex="10">Yup</span>
-    <a>Current</a>
+    <a href="#">Current</a>
   `
 
   const n = document.querySelector('a')

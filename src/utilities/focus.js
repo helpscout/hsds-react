@@ -1,7 +1,7 @@
 import { getNodeScope, getWindowFromNode, isNodeElement } from './node'
 
 export const FOCUSABLE_SELECTOR =
-  'a,frame,iframe,input:not([type=hidden]),select,textarea,button:not([tabindex="-1"]),*[tabindex]:not([tabindex="-1"])'
+  'a[href],frame,iframe,input:not([type=hidden]):not([disabled]),select,textarea,button:not([disabled]):not([tabindex="-1"]),*[tabindex]:not([tabindex="-1"])'
 
 export const findFocusableNodes = nodeScope => {
   const scope = getNodeScope(nodeScope)

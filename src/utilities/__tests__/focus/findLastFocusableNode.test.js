@@ -21,7 +21,7 @@ test('Returns last focusable node', () => {
     <span tabindex="-1">Nope</span>
     <span tabindex="0">Yup</span>
     <span tabindex="10">Yup</span>
-    <a>Yes</a>
+    <a href="#">Yes</a>
     <span>Nope</span>
   `
   const o = findLastFocusableNode()

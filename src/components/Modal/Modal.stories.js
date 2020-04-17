@@ -198,6 +198,9 @@ export const V2WithVeryLongContent = () => (
       {ContentSpec.generate(12).map(({ id, content }) => (
         <p key={id}>{content}</p>
       ))}
+      <p>
+        <a href="#">focusable anchor</a> and <a>not focusable anchor</a>
+      </p>
     </Modal.Body>
     <Modal.ActionFooter
       primaryButtonText="Primary"
