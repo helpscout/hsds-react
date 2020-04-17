@@ -1,7 +1,7 @@
 import { getNodeScope, getWindowFromNode, isNodeElement } from './node'
 
 export const FOCUSABLE_SELECTOR =
-  'a,frame,iframe,input:not([type=hidden]),select,textarea,button:not([tabindex="-1"]),*[tabindex]:not([tabindex="-1"])'
+  'a[href],frame,iframe,input:not([type=hidden]):not([disabled]),select,textarea,button:not([disabled]):not([tabindex="-1"]),*[tabindex]:not([tabindex="-1"])'
 
 export const findFocusableNodes = nodeScope => {
   const scope = getNodeScope(nodeScope)
@@ -101,8 +101,8 @@ export const incrementFocusIndex = options => {
         currentIndex === null
           ? 0
           : currentIndex <= 0
-            ? itemCount
-            : currentIndex - 1
+          ? itemCount
+          : currentIndex - 1
     } else {
       newFocusIndex =
         currentIndex === null ? 0 : currentIndex <= 0 ? 0 : currentIndex - 1
@@ -115,15 +115,15 @@ export const incrementFocusIndex = options => {
         currentIndex === null
           ? 0
           : itemCount <= currentIndex
-            ? 0
-            : currentIndex + 1
+          ? 0
+          : currentIndex + 1
     } else {
       newFocusIndex =
         currentIndex === null
           ? 0
           : itemCount <= currentIndex
-            ? currentIndex
-            : currentIndex + 1
+          ? currentIndex
+          : currentIndex + 1
     }
   }
 

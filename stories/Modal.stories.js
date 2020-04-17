@@ -611,6 +611,27 @@ storiesV2.add('default w/ secondary button', () => (
   </Modal>
 ))
 
+storiesV2.add('default w/ disabled buttons', () => (
+  <Modal
+    version={2}
+    isOpen={true}
+    trigger={<Link>Clicky</Link>}
+    title="Modal Title"
+  >
+    <Modal.Body version={2}>
+      {ContentSpec.generate(2).map(({ id, content }) => (
+        <p key={id}>{content}</p>
+      ))}
+    </Modal.Body>
+    <Modal.ActionFooter
+      primaryButtonText="Primary"
+      secondaryButtonDisabled={true}
+      primaryButtonDisabled={true}
+      secondaryButtonText="Secondary"
+    />
+  </Modal>
+))
+
 storiesV2.add('default w/ danger state', () => (
   <Modal
     version={2}
@@ -640,6 +661,9 @@ storiesV2.add('default w/ very long content', () => (
       {ContentSpec.generate(12).map(({ id, content }) => (
         <p key={id}>{content}</p>
       ))}
+      <p>
+        <a href="#">focusable anchor</a> and <a>not focusable anchor</a>
+      </p>
     </Modal.Body>
     <Modal.ActionFooter
       primaryButtonText="Primary"

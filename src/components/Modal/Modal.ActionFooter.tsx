@@ -19,12 +19,14 @@ class ActionFooter extends React.PureComponent<ModalActionFooterProps> {
     cancelText: 'Cancel',
     kind: MODAL_KIND.DEFAULT,
     onCancel: noop,
-    primaryButtonText: 'Save',
-    secondaryButtonText: null,
-    showDefaultCancel: true,
-    state: '',
     onPrimaryClick: noop,
     onSecondaryClick: noop,
+    primaryButtonText: 'Save',
+    primaryButtonDisabled: false,
+    secondaryButtonText: null,
+    secondaryButtonDisabled: false,
+    showDefaultCancel: true,
+    state: '',
   }
 
   handleCancel = e => {
@@ -46,7 +48,7 @@ class ActionFooter extends React.PureComponent<ModalActionFooterProps> {
   }
 
   renderPrimaryButton() {
-    const { primaryButtonText, state } = this.props
+    const { primaryButtonText, state, primaryButtonDisabled } = this.props
     return (
       <PrimaryButtonUI
         state={state}
@@ -54,6 +56,7 @@ class ActionFooter extends React.PureComponent<ModalActionFooterProps> {
         size="lg"
         version={2}
         onClick={this.handlePrimaryAction}
+        disabled={primaryButtonDisabled}
       >
         {primaryButtonText}
       </PrimaryButtonUI>
@@ -61,34 +64,25 @@ class ActionFooter extends React.PureComponent<ModalActionFooterProps> {
   }
 
   renderSecondaryButton() {
-    const { kind, secondaryButtonText } = this.props
+    const { kind, secondaryButtonText, secondaryButtonDisabled } = this.props
     if (!secondaryButtonText) {
       return null
     }
 
-    if (kind === MODAL_KIND.ALERT) {
-      return (
-        <SecondaryAlertButtonUI
-          kind="secondary"
-          size="lg"
-          version={2}
-          onClick={this.handleSecondaryAction}
-        >
-          {secondaryButtonText}
-        </SecondaryAlertButtonUI>
-      )
-    } else {
-      return (
-        <SecondaryButtonUI
-          kind="secondary"
-          size="lg"
-          version={2}
-          onClick={this.handleSecondaryAction}
-        >
-          {secondaryButtonText}
-        </SecondaryButtonUI>
-      )
-    }
+    const ButtonComponent: any =
+      kind === MODAL_KIND.ALERT ? SecondaryAlertButtonUI : SecondaryButtonUI
+
+    return (
+      <ButtonComponent
+        kind="secondary"
+        size="lg"
+        version={2}
+        onClick={this.handleSecondaryAction}
+        disabled={secondaryButtonDisabled}
+      >
+        {secondaryButtonText}
+      </ButtonComponent>
+    )
   }
 
   renderCancelButton() {

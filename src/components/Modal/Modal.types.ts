@@ -69,7 +69,9 @@ export type ModalActionFooterProps = {
   cancelText?: string
   kind?: string
   primaryButtonText?: string
+  primaryButtonDisabled?: boolean
   secondaryButtonText?: string
+  secondaryButtonDisabled?: boolean
   showDefaultCancel?: boolean
   state?: string
   onCancel: () => void
