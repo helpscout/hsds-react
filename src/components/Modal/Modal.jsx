@@ -184,6 +184,7 @@ class Modal extends React.PureComponent {
 
     if (focusedNodeIndex === focusableNodes.length - 1) {
       event.preventDefault()
+      focusableNodes[0].focus()
     }
   }
 
@@ -191,10 +192,12 @@ class Modal extends React.PureComponent {
     const { containTabKeyPress } = this.props
     if (!containTabKeyPress || !this.cardNode || !this.documentNode) return
 
+    const focusableNodes = findFocusableNodes(this.cardNode)
     const focusedNodeIndex = this.getFocusNodeIndexFromEvent(event)
 
     if (focusedNodeIndex === 0) {
       event.preventDefault()
+      focusableNodes[focusableNodes.length - 1].focus()
     }
   }
 
