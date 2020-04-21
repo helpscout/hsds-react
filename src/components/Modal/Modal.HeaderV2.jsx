@@ -20,7 +20,7 @@ class HeaderV2 extends React.PureComponent {
   static defaultProps = {
     description: null,
     icon: null,
-    iconSize: '20',
+    iconSize: '24',
     illo: null,
     illoSize: 60,
     kind: MODAL_KIND.DEFAULT,
