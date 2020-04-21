@@ -64,7 +64,7 @@ class Modal extends React.PureComponent {
     isHsApp: PropTypes.bool,
     isOpen: PropTypes.bool,
     icon: PropTypes.string,
-    iconSize: PropTypes.string,
+    iconSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     illo: PropTypes.string,
     illoSize: PropTypes.number,
     kind: PropTypes.string,
@@ -112,7 +112,7 @@ class Modal extends React.PureComponent {
     containTabKeyPress: true,
     description: null,
     icon: null,
-    iconSize: '20',
+    iconSize: '24',
     illo: null,
     illoSize: 60,
     isHsApp: false,
@@ -200,7 +200,8 @@ class Modal extends React.PureComponent {
     if (focusedNodeIndex === 0) {
       event.preventDefault()
       const i = focusableNodes.length - 1
-      if (focusableNodes && focusableNodes[i]) focusableNodes[i].focus()
+      if (i > -1 && focusableNodes && focusableNodes[i])
+        focusableNodes[i].focus()
     }
   }
 
