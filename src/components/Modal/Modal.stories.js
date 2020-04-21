@@ -172,6 +172,7 @@ export const V2WithDangerButton = () => (
     isOpen={true}
     trigger={<Link>Clicky</Link>}
     icon="alert"
+    iconSize="24"
     title="Change Subdomain?"
   >
     <Modal.Body version={2}>

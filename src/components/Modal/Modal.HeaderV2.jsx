@@ -20,6 +20,7 @@ class HeaderV2 extends React.PureComponent {
   static defaultProps = {
     description: null,
     icon: null,
+    iconSize: '20',
     illo: null,
     illoSize: 60,
     kind: MODAL_KIND.DEFAULT,
@@ -111,6 +112,7 @@ class HeaderV2 extends React.PureComponent {
       children,
       description,
       icon,
+      iconSize,
       kind,
       title,
       ...rest
@@ -128,7 +130,7 @@ class HeaderV2 extends React.PureComponent {
 
     return (
       <HeaderUI {...rest} className={componentClassName} placement={'top'}>
-        {icon ? <Icon name={icon} key={icon} size={'20'} /> : null}
+        {icon ? <Icon name={icon} key={icon} size={iconSize} /> : null}
         {<HeaderTitleUI>{title}</HeaderTitleUI>}
         {children}
       </HeaderUI>

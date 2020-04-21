@@ -64,6 +64,7 @@ class Modal extends React.PureComponent {
     isHsApp: PropTypes.bool,
     isOpen: PropTypes.bool,
     icon: PropTypes.string,
+    iconSize: PropTypes.string,
     illo: PropTypes.string,
     illoSize: PropTypes.number,
     kind: PropTypes.string,
@@ -111,6 +112,7 @@ class Modal extends React.PureComponent {
     containTabKeyPress: true,
     description: null,
     icon: null,
+    iconSize: '20',
     illo: null,
     illoSize: 60,
     isHsApp: false,
@@ -279,6 +281,7 @@ class Modal extends React.PureComponent {
       className,
       description,
       icon,
+      iconSize,
       illo,
       illoSize,
       kind,
@@ -313,6 +316,7 @@ class Modal extends React.PureComponent {
     const headerMarkup = v2 ? (
       <HeaderV2
         icon={icon}
+        iconSize={iconSize}
         illo={illo}
         illoSize={illoSize}
         description={description}
