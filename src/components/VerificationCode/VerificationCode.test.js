@@ -382,7 +382,9 @@ describe('AutoSubmit', () => {
         getData: t => TEXT,
       },
     }
-    const wrapper = mount(<VerificationCode autoSubmit onEnter={onEnterSpy} />)
+    const wrapper = mount(
+      <VerificationCode autoSubmitPaste onEnter={onEnterSpy} />
+    )
 
     wrapper.simulate('paste', eventMock)
 

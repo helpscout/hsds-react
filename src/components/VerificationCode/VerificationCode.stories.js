@@ -79,13 +79,13 @@ AutoFocusWithHalfCode.story = {
   name: 'autofocus with half code',
 }
 
-export const AutoSubmit = () => {
+export const AutoSubmitOnPaste = () => {
   const [code, setCode] = useState()
   return (
     <div>
       <VerificationCode
         autoFocus={true}
-        autoSubmit={true}
+        autoSubmitPaste={true}
         onChange={val => {
           console.log(val)
         }}
@@ -100,6 +100,31 @@ export const AutoSubmit = () => {
   )
 }
 
-AutoSubmit.story = {
-  name: 'autoSubmit',
+AutoSubmitOnPaste.story = {
+  name: 'autoSubmit on paste',
+}
+
+export const AutoSubmitOnKeyUp = () => {
+  const [code, setCode] = useState()
+  return (
+    <div>
+      <VerificationCode
+        autoFocus={true}
+        autoSubmitKeyUp={true}
+        onChange={val => {
+          console.log(val)
+        }}
+        onEnter={val => {
+          setCode(val)
+        }}
+      />
+      <p>
+        Submitted code: <b>{code}</b>
+      </p>
+    </div>
+  )
+}
+
+AutoSubmitOnKeyUp.story = {
+  name: 'autoSubmit on keyup',
 }
