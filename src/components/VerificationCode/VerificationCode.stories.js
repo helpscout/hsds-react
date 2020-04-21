@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { storiesOf } from '@storybook/react'
 import VerificationCode from './'
 
@@ -57,13 +57,34 @@ stories.add('AutoFocus with half code', () => {
   )
 })
 
-stories.add('AutoFocus with auto submit', () => {
+stories.add('AutoFocus with auto submit on paste', () => {
   const [code, setCode] = useState()
   return (
     <div>
       <VerificationCode
         autoFocus={true}
-        autoSubmit={true}
+        autoSubmitPaste={true}
+        onChange={val => {
+          console.log(val)
+        }}
+        onEnter={val => {
+          setCode(val)
+        }}
+      />
+      <p>
+        Submitted code: <b>{code}</b>
+      </p>
+    </div>
+  )
+})
+
+stories.add('AutoFocus with auto submit on key up', () => {
+  const [code, setCode] = useState()
+  return (
+    <div>
+      <VerificationCode
+        autoFocus={true}
+        autoSubmitKeyUp={true}
         onChange={val => {
           console.log(val)
         }}

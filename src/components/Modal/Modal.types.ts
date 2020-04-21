@@ -15,6 +15,7 @@ export interface ModalProps extends PortalProps {
   isOpen: boolean
   kind?: string
   icon?: string
+  iconSize?: any
   illo?: any
   illoSize?: number
   modalAnimationDelay: number
@@ -100,6 +101,7 @@ export type ModalHeaderV2Props = {
   className?: string
   description?: string
   icon?: string
+  iconSize?: any
   illo?: any
   illoSize?: number
   kind?: string

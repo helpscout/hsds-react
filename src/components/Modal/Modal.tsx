@@ -60,6 +60,7 @@ class Modal extends React.PureComponent<ModalProps> {
     closeIconRepositionDelay: 0,
     containTabKeyPress: true,
     icon: null,
+    iconSize: '24',
     illo: null,
     illoSize: 60,
     kind: MODAL_KIND.DEFAULT,
@@ -130,6 +131,7 @@ class Modal extends React.PureComponent<ModalProps> {
 
     if (focusedNodeIndex === focusableNodes.length - 1) {
       event.preventDefault()
+      if (focusableNodes && focusableNodes[0]) focusableNodes[0].focus()
     }
   }
 
@@ -141,6 +143,10 @@ class Modal extends React.PureComponent<ModalProps> {
 
     if (focusedNodeIndex === 0) {
       event.preventDefault()
+      const focusableNodes = findFocusableNodes(this.cardNode)
+      const i = focusableNodes.length - 1
+      if (i > -1 && focusableNodes && focusableNodes[i])
+        focusableNodes[i].focus()
     }
   }
 
@@ -219,6 +225,7 @@ class Modal extends React.PureComponent<ModalProps> {
       className,
       description,
       icon,
+      iconSize,
       illo,
       illoSize,
       kind,
@@ -253,6 +260,7 @@ class Modal extends React.PureComponent<ModalProps> {
     const headerMarkup = v2 ? (
       <HeaderV2
         icon={icon}
+        iconSize={iconSize}
         illo={illo}
         illoSize={illoSize}
         description={description}
