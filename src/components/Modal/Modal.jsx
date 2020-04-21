@@ -65,7 +65,7 @@ class Modal extends React.PureComponent {
     isOpen: PropTypes.bool,
     icon: PropTypes.string,
     iconSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    illo: PropTypes.string,
+    illo: PropTypes.any,
     illoSize: PropTypes.number,
     kind: PropTypes.string,
     modalAnimationDelay: PropTypes.number,
