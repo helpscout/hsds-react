@@ -126,7 +126,7 @@ Arrow.propTypes = {
   color: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.any,
-  arrowRef: PropTypes.node,
+  arrowRef: PropTypes.any,
   placement: PropTypes.string,
   offset: PropTypes.number,
   size: PropTypes.number,

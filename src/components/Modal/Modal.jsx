@@ -64,7 +64,8 @@ class Modal extends React.PureComponent {
     isHsApp: PropTypes.bool,
     isOpen: PropTypes.bool,
     icon: PropTypes.string,
-    illo: PropTypes.string,
+    iconSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    illo: PropTypes.any,
     illoSize: PropTypes.number,
     kind: PropTypes.string,
     modalAnimationDelay: PropTypes.number,
@@ -111,6 +112,7 @@ class Modal extends React.PureComponent {
     containTabKeyPress: true,
     description: null,
     icon: null,
+    iconSize: '24',
     illo: null,
     illoSize: 60,
     isHsApp: false,
@@ -184,6 +186,7 @@ class Modal extends React.PureComponent {
 
     if (focusedNodeIndex === focusableNodes.length - 1) {
       event.preventDefault()
+      if (focusableNodes && focusableNodes[0]) focusableNodes[0].focus()
     }
   }
 
@@ -191,10 +194,14 @@ class Modal extends React.PureComponent {
     const { containTabKeyPress } = this.props
     if (!containTabKeyPress || !this.cardNode || !this.documentNode) return
 
+    const focusableNodes = findFocusableNodes(this.cardNode)
     const focusedNodeIndex = this.getFocusNodeIndexFromEvent(event)
 
     if (focusedNodeIndex === 0) {
       event.preventDefault()
+      const i = focusableNodes.length - 1
+      if (i > -1 && focusableNodes && focusableNodes[i])
+        focusableNodes[i].focus()
     }
   }
 
@@ -276,6 +283,7 @@ class Modal extends React.PureComponent {
       className,
       description,
       icon,
+      iconSize,
       illo,
       illoSize,
       kind,
@@ -310,6 +318,7 @@ class Modal extends React.PureComponent {
     const headerMarkup = v2 ? (
       <HeaderV2
         icon={icon}
+        iconSize={iconSize}
         illo={illo}
         illoSize={illoSize}
         description={description}
