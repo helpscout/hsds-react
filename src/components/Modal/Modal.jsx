@@ -186,7 +186,7 @@ class Modal extends React.PureComponent {
 
     if (focusedNodeIndex === focusableNodes.length - 1) {
       event.preventDefault()
-      focusableNodes[0].focus()
+      if (focusableNodes && focusableNodes[0]) focusableNodes[0].focus()
     }
   }
 
@@ -199,7 +199,8 @@ class Modal extends React.PureComponent {
 
     if (focusedNodeIndex === 0) {
       event.preventDefault()
-      focusableNodes[focusableNodes.length - 1].focus()
+      const i = focusableNodes.length - 1
+      if (focusableNodes && focusableNodes[i]) focusableNodes[i].focus()
     }
   }
 
