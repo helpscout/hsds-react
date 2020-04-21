@@ -25,7 +25,8 @@ import Tooltip from '../Tooltip'
 export default class VerificationCode extends React.Component {
   static propTypes = {
     autoFocus: PropTypes.bool,
-    autoSubmit: PropTypes.bool,
+    autoSubmitPaste: PropTypes.bool,
+    autoSubmitKeyUp: PropTypes.bool,
     code: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     isValid: PropTypes.bool,
     numberOfChars: PropTypes.number,
@@ -35,7 +36,8 @@ export default class VerificationCode extends React.Component {
 
   static defaultProps = {
     autoFocus: false,
-    autoSubmit: false,
+    autoSubmitPaste: false,
+    autoSubmitKeyUp: false,
     code: '',
     isValid: true,
     numberOfChars: 6,
@@ -99,12 +101,8 @@ export default class VerificationCode extends React.Component {
   }
 
   handleChange = value => {
-    const { onChange, onEnter, autoSubmit, numberOfChars } = this.props
+    const { onChange } = this.props
     onChange(value)
-
-    if (autoSubmit && value.length === numberOfChars) {
-      onEnter(value)
-    }
   }
 
   getClassName() {
@@ -122,7 +120,7 @@ export default class VerificationCode extends React.Component {
   }
 
   handlePaste = e => {
-    const { numberOfChars } = this.props
+    const { numberOfChars, autoSubmitPaste, onEnter } = this.props
     /* istanbul ignore next */
     const clipboardData = e.clipboardData || window.clipboardData
     const pastedData = clipboardData.getData('Text')
@@ -146,7 +144,12 @@ export default class VerificationCode extends React.Component {
             }
           }
         })
-      this.handleChange(getCurrentCodeValue(this.digitInputNodes))
+      const value = getCurrentCodeValue(this.digitInputNodes)
+      this.handleChange(value)
+
+      if (autoSubmitPaste && value.length === numberOfChars) {
+        onEnter(value)
+      }
     }
   }
 
@@ -206,7 +209,7 @@ export default class VerificationCode extends React.Component {
 
     if (key !== 'Meta') {
       const { value } = e.target
-      const { numberOfChars } = this.props
+      const { numberOfChars, autoSubmitKeyUp, onEnter } = this.props
       const digitMask = this.digitMaskNodes[index]
 
       /* istanbul ignore else */
@@ -251,7 +254,12 @@ export default class VerificationCode extends React.Component {
         digitMask.innerText = value
         nextDigit && nextDigit.select()
 
-        this.handleChange(getCurrentCodeValue(this.digitInputNodes))
+        const currentCodeValue = getCurrentCodeValue(this.digitInputNodes)
+        this.handleChange(currentCodeValue)
+
+        if (autoSubmitKeyUp && currentCodeValue.length === numberOfChars) {
+          onEnter(currentCodeValue)
+        }
       }
     }
   }
