@@ -14,9 +14,7 @@ const isGitClean = require('is-git-clean')
 
 const transformerDirectory = path.join(__dirname, 'transforms')
 
-const jscodeshiftExecutable = require.resolve(
-  '../../node_modules/jscodeshift/bin/jscodeshift.sh'
-)
+const jscodeshiftExecutable = require.resolve('jscodeshift/bin/jscodeshift.sh')
 
 function checkGitStatus(force) {
   let clean = false
