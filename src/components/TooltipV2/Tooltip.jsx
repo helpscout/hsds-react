@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from 'react'
 import Tippy from '@tippyjs/react/headless'
 
-import { TooltipUI, ArrowUI } from './Tooltip.css'
+import { TooltipUI, ArrowUI, TooltipAnimationUI } from './Tooltip.css'
 
 import { GlobalContext } from '../HSDS/Provider'
 
@@ -35,19 +35,21 @@ const Tooltip = props => {
     ? renderContentProp
     : attrs => {
         const toolTipComponent = (
-          <TooltipUI
-            className="box"
-            tabIndex="-1"
-            arrowSize={arrowSize}
-            animationDuration={animationDuration}
-            data-entered={isEntered}
-            minWidth={minWidth}
-            maxWidth={maxWidth}
-            {...attrs}
-          >
-            <span dangerouslySetInnerHTML={{ __html: title }} />
-            <ArrowUI size={arrowSize} data-popper-arrow />
-          </TooltipUI>
+          <TooltipAnimationUI>
+            <TooltipUI
+              className="box"
+              tabIndex="-1"
+              arrowSize={arrowSize}
+              animationDuration={animationDuration}
+              minWidth={minWidth}
+              maxWidth={maxWidth}
+              data-entered={isEntered}
+              {...attrs}
+            >
+              <span dangerouslySetInnerHTML={{ __html: title }} />
+              <ArrowUI size={arrowSize} data-popper-arrow />
+            </TooltipUI>
+          </TooltipAnimationUI>
         )
 
         return <div className={scope}>{toolTipComponent}</div>

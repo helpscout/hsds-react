@@ -45,34 +45,48 @@ export const TooltipUI = styled.div`
   ${({ minWidth }) => (minWidth ? `min-width: ${minWidth}px` : '')};
 
   &[data-placement^='top'] {
-    transform: translateY(12px);
     ${ArrowUI} {
       bottom: calc((${({ arrowSize }) => arrowSize}px / 2) * -1);
     }
   }
 
   &[data-placement^='bottom'] {
-    transform: translateY(-12px);
     ${ArrowUI} {
       top: calc((${({ arrowSize }) => arrowSize}px / 2) * -1);
     }
   }
 
   &[data-placement^='left'] {
-    transform: translateX(12px);
     ${ArrowUI} {
       right: calc((${({ arrowSize }) => arrowSize}px / 2) * -1);
     }
   }
 
   &[data-placement^='right'] {
-    transform: translateX(-12px);
     ${ArrowUI} {
       left: calc((${({ arrowSize }) => arrowSize}px / 2) * -1);
     }
   }
+`
 
-  &[data-entered='true'] {
+export const TooltipAnimationUI = styled.div`
+  [data-placement^='top'] {
+    transform: translateY(12px);
+  }
+
+  [data-placement^='bottom'] {
+    transform: translateY(-12px);
+  }
+
+  [data-placement^='left'] {
+    transform: translateX(12px);
+  }
+
+  [data-placement^='right'] {
+    transform: translateX(-12px);
+  }
+
+  [data-entered='true'] {
     transform: translate(0);
     opacity: 1;
   }
