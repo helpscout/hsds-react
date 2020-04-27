@@ -119,6 +119,12 @@ export const MessageBubbleUI = styled('div')`
     }
   }
 
+  &.is-typing {
+    background: none;
+    border: 0;
+    padding-top: 7px;
+  }
+
   &.is-theme-embed {
     background-color: ${getColor('grey.400')};
     border: 1px solid ${getColor('grey.400')};
