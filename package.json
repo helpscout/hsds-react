@@ -236,6 +236,6 @@
     }
   },
   "bin": {
-    "hsds-codemod": "./scripts/codemod/hsds-codemod.js"
+    "hsds-codemod": "./codemod/hsds-codemod.js"
   }
 }
