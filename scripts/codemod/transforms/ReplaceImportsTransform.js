@@ -4,7 +4,7 @@ export default function replaceImportTransform(
   api,
   {
     moduleName = '@helpscout/hsds-react',
-    moduleNameTarget = '@helpscout/hsds-react-next',
+    moduleNameTarget = 'helpscout-hsds-react-next',
   }
 ) {
   const j = api.jscodeshift
