@@ -137,7 +137,7 @@ const TRANSFORMER_INQUIRER_CHOICES = [
   },
   {
     name:
-      '3.0 ReplaceImports: Replace all hsds-react import with the next release (hsds-react-next)',
+      '3.0 ReplaceImports: Replace all hsds-react import with the next release',
     value: 'ReplaceImportsTransform',
   },
 ]
@@ -212,6 +212,30 @@ function run() {
         when: !cli.input[0],
         pageSize: TRANSFORMER_INQUIRER_CHOICES.length,
         choices: TRANSFORMER_INQUIRER_CHOICES,
+      },
+      {
+        type: 'input',
+        name: 'originalImportName',
+        message: 'Enter the original package name',
+        when: function(answers) {
+          return (
+            answers.transformer === 'all' ||
+            answers.transformer === 'ReplaceImportsTransform'
+          )
+        },
+        default: '@helpscout/hsds-react',
+      },
+      {
+        type: 'input',
+        name: 'importName',
+        message: 'Enter the new package name',
+        when: function(answers) {
+          const isReplaceImports =
+            answers.transformer === 'all' ||
+            answers.transformer === 'ReplaceImportsTransform'
+          return isReplaceImports && answers.originalImportName
+        },
+        default: 'helpscout-hsds-react-next',
       },
     ])
     .then(answers => {
