@@ -8,3 +8,11 @@ const stories = storiesOf('CopyButton', module)
 stories.add('Default', () => (
   <CopyButton onClick={action('Click')} onReset={action('Reset')} />
 ))
+
+stories.add('Medium', () => (
+  <CopyButton onClick={action('Click')} onReset={action('Reset')} size="md" />
+))
+
+stories.add('Small', () => (
+  <CopyButton onClick={action('Click')} onReset={action('Reset')} size="sm" />
+))
