@@ -73,9 +73,10 @@ class CopyInput extends React.PureComponent<Props> {
         suffix={
           <CopyButton
             onClick={this.handleCopyClick.bind(this)}
-            size="lg"
             isLast
+            size="lg"
             style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
+            tabIndex="-1"
             buttonRef={node => {
               this.copyButtonNode = node
             }}
