@@ -1,157 +1,133 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Pop from '../Pop'
-import Popper from './Tooltip.Popper'
-import { classNames } from '../../utilities/classNames'
-import { noop } from '../../utilities/other'
+import React, { createContext, useContext, useState } from 'react'
+import Tippy from '@tippyjs/react/headless'
 import { isFunction } from '../../utilities/is'
-import { renderChildrenSafely } from '../../utilities/component'
-import { getColor } from '../../styles/utilities/color'
-import { PopPropTypes } from '../Pop/Pop'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { classNames } from '../../utilities/classNames'
 
-export const TooltipContext = React.createContext({})
+import {
+  ArrowUI,
+  TooltipAnimationUI,
+  TooltipTriggerUI,
+  TooltipUI,
+} from './Tooltip.css'
 
-export class Tooltip extends React.PureComponent {
-  static defaultProps = {
-    arrowClassName: 'c-TooltipArrow',
-    arrowSize: 12,
-    animationDelay: 100,
-    animationDuration: 100,
-    animationSequence: 'fade up',
-    color: getColor('charcoal.700'),
-    closeOnContentClick: false,
-    closeOnMouseLeave: true,
-    dataCyPopper: 'TooltipContent',
-    innerRef: noop,
-    isOpen: false,
-    modifiers: {},
-    placement: 'top',
-    triggerOn: 'hover',
-    zIndex: 9999,
-  }
+import { GlobalContext } from '../HSDS/Provider'
 
-  static className = 'c-Tooltip'
-  static arrowClassName = 'c-TooltipArrow'
-  static contentClassName = 'c-TooltipPopper'
-  static Popper = Popper
+export const TooltipContext = createContext({})
 
-  getClassName() {
-    const { className } = this.props
+const getClassName = className => classNames('c-Tooltip', className)
 
-    return classNames(Tooltip.className, className)
-  }
+const Tooltip = props => {
+  const {
+    animationDelay,
+    animationDuration,
+    arrowSize,
+    children,
+    className,
+    closeOnContentClick,
+    display,
+    isOpen,
+    minWidth,
+    maxWidth,
+    placement,
+    renderContent,
+    title,
+    triggerOn,
+    zIndex: zIndexProp,
+    ...rest
+  } = props
+  const { getCurrentScope } = useContext(GlobalContext) || {}
+  const { zIndex = zIndexProp } = useContext(TooltipContext) || {}
+  const [isEntered, setEntered] = useState(animationDuration === 0)
 
-  getArrowClassName() {
-    const { arrowClassName } = this.props
+  const scope = getCurrentScope ? getCurrentScope() : null
+  const trigger = triggerOn === 'hover' ? 'mouseenter' : triggerOn
 
-    return classNames(Tooltip.arrowClassName, arrowClassName)
-  }
+  const shouldRenderTooltip =
+    title || (renderContent && isFunction(renderContent))
 
-  getContentClassName() {
-    const { contentClassName } = this.props
-
-    return classNames(Tooltip.contentClassName, contentClassName)
-  }
-
-  hasRenderContentProp = () => {
-    const { renderContent } = this.props
-
-    return renderContent && isFunction(renderContent)
-  }
-
-  shouldRenderPopper = () => {
-    return this.props.title || this.hasRenderContentProp()
-  }
-
-  /**
-   * Pop, which uses Popper.js, uses document.createRange. Enzyme/JSDOM
-   * doesn't like it when this function fires from a (grand)parent component.
-   * The rendering of both content types have been manually tested in
-   * Storybook.
-   */
-
-  renderContent = renderProps => {
-    const { renderContent, placement, title } = this.props
-
-    if (!this.hasRenderContentProp()) return renderChildrenSafely(title)
-
-    return renderContent({ ...renderProps, placement, title })
-  }
-
-  renderPopper = renderProps => {
-    const { dataCyPopper, maxWidth, minWidth } = this.props
-
-    return (
-      <Popper
-        className={this.getContentClassName()}
-        data-cy={dataCyPopper}
-        style={{ maxWidth, minWidth }}
-      >
-        {this.renderContent(renderProps || {})}
-      </Popper>
-    )
-  }
-
-  render() {
-    const { className, children, color, ...rest } = this.props
-    const dataCy = this.props['data-cy'] || 'Tooltip'
-
-    if (!this.shouldRenderPopper()) {
-      return children ? (
-        <span {...getValidProps(rest)} className={this.getClassName()}>
-          {children}
-        </span>
-      ) : null
-    }
-
-    return (
-      <Pop {...rest} className={this.getClassName()} data-cy={dataCy}>
-        <Pop.Reference
-          className="c-Tooltip__reference"
-          data-cy="ToolTipReference"
+  const render = attrs => {
+    const toolTipComponent = (
+      <TooltipAnimationUI>
+        <TooltipUI
+          className={getClassName(className)}
+          tabIndex="-1"
+          arrowSize={arrowSize}
+          animationDuration={animationDuration}
+          minWidth={minWidth}
+          maxWidth={maxWidth}
+          data-entered={isEntered}
+          {...attrs}
         >
-          {children}
-        </Pop.Reference>
-        <Pop.Popper
-          arrowClassName={this.getArrowClassName()}
-          arrowColor={color}
-          className={this.getClassName()}
-        >
-          {this.renderPopper}
-        </Pop.Popper>
-      </Pop>
+          {renderContent ? (
+            renderContent()
+          ) : (
+            <span dangerouslySetInnerHTML={{ __html: title }} />
+          )}
+          <ArrowUI size={arrowSize} data-popper-arrow />
+        </TooltipUI>
+      </TooltipAnimationUI>
     )
+
+    return <div className={scope}>{toolTipComponent}</div>
   }
+
+  const onShow = () => {
+    setTimeout(() => setEntered(true), animationDelay)
+  }
+
+  const onHide = () => {
+    setEntered(false)
+  }
+
+  const extraProps = {}
+  if (zIndex) {
+    extraProps.zIndex = zIndex
+  }
+
+  if (closeOnContentClick) {
+    extraProps.interactive = true
+    extraProps.interactiveBorder = 20
+  }
+
+  const tippyProps = {
+    onHide,
+    onShow,
+    placement,
+    render,
+    trigger,
+    showOnCreate: isOpen,
+    ...rest,
+    ...extraProps,
+  }
+
+  if (!shouldRenderTooltip) {
+    return children ? (
+      <span {...getValidProps(rest)} className={getClassName(className)}>
+        {children}
+      </span>
+    ) : null
+  }
+
+  return (
+    <Tippy {...tippyProps}>
+      <TooltipTriggerUI tabIndex="0" display={display}>
+        {children}
+      </TooltipTriggerUI>
+    </Tippy>
+  )
 }
 
-const TooltipConsumer = props => {
-  const contextValue = React.useContext(TooltipContext)
-
-  if (!contextValue) {
-    return <Tooltip {...props} />
-  }
-
-  const newProps = { ...props, ...contextValue }
-
-  return <Tooltip {...newProps} />
+Tooltip.defaultProps = {
+  animationDelay: 0,
+  animationDuration: 200,
+  arrowSize: 12,
+  display: null,
+  isOpen: false,
+  placement: 'top',
+  triggerOn: 'mouseenter focus',
 }
 
-// This fixes a test issue  ¯\_(ツ)_/¯
+Tooltip.propTypes = {}
 
-const importedPopProps = PopPropTypes ? PopPropTypes : {}
-Tooltip.propTypes = Object.assign(importedPopProps, {
-  contentClassName: PropTypes.string,
-  color: PropTypes.string,
-  dataCyPopper: PropTypes.string,
-  innerRef: PropTypes.func,
-  minWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  maxWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  renderContent: PropTypes.func,
-  theme: PropTypes.string,
-  title: PropTypes.any,
-})
-
-TooltipConsumer.propTypes = Tooltip.propTypes
-
-export default TooltipConsumer
+export default Tooltip

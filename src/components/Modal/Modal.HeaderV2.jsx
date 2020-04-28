@@ -14,6 +14,7 @@ import {
   HeaderTitleUI,
 } from './Modal.HeaderV2.css'
 
+import DotStepper from '../DotStepper'
 import Icon from '../Icon'
 
 class HeaderV2 extends React.PureComponent {
@@ -96,7 +97,9 @@ class HeaderV2 extends React.PureComponent {
         className={componentClassName}
         placement={'top'}
       >
-        <DotStepperUI numSteps={numSteps} step={step} />
+        <DotStepperUI>
+          <DotStepper numSteps={numSteps} step={step} />
+        </DotStepperUI>
         {<BrandedHeaderTitleUI>{title}</BrandedHeaderTitleUI>}
         {description ? (
           <HeaderDescriptionUI>{description}</HeaderDescriptionUI>

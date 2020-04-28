@@ -5,7 +5,7 @@ import Tooltip, { TooltipContext } from '.'
 
 export default {
   component: Tooltip,
-  title: 'Components/Overlay/Tooltip',
+  title: 'Components/Overlay/TooltipV2',
 }
 
 export const Default = () => {
@@ -25,6 +25,16 @@ export const Default = () => {
       right: 'right',
       bottom: 'bottom',
       left: 'left',
+      'auto-start': 'auto-start',
+      'auto-end': 'auto-end',
+      'right-start': 'right-start',
+      'right-end': 'right-end',
+      'left-start': 'left-start',
+      'left-end': 'left-end',
+      'bottom-start': 'bottom-start',
+      'bottom-end': 'bottom-end',
+      'top-start': 'top-start',
+      'top-end': 'top-end',
     },
     'top'
   )
@@ -56,11 +66,9 @@ export const Default = () => {
   }
 
   return (
-    <TooltipContext.Provider value={{ zIndex: 10 }}>
+    <TooltipContext.Provider value={{ zIndex: 256 }}>
       <div style={{ padding: '20%', textAlign: 'center' }}>
-        <Tooltip {...props}>
-          <div>Tooltip Trigger</div>
-        </Tooltip>
+        <Tooltip {...props}>Tooltip Trigger V2</Tooltip>
       </div>
     </TooltipContext.Provider>
   )

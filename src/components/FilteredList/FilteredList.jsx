@@ -64,6 +64,7 @@ export class FilteredList extends React.Component {
 
   renderBadgeContent = () => {
     const { limit, items } = this.props
+    console.log(items)
     return items.slice(limit, items.length).map(item => {
       const value = this.getItemValue(item)
       return (
