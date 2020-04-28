@@ -5,7 +5,7 @@ const bem = BEM('.c-Message')
 
 const css = `
   ${baseStyles}
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   min-width: 320px;
 
   ${bem.element('avatar-block')} {
@@ -49,7 +49,6 @@ const css = `
   }
 
   &.is-theme-embed {
-    margin-bottom: 20px;
     min-width: initial;
 
     ${bem.element('avatar-block')} {

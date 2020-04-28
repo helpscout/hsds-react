@@ -9,6 +9,7 @@ export const ActionUI = styled('div')`
 
   line-height: 22px;
   text-align: center;
+  margin: 10px 0;
 
   ${({ isThemeEmbed }) =>
     !isThemeEmbed && `color: ${getColor('charcoal.700')} !important;`}
