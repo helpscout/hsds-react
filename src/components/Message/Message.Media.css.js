@@ -31,7 +31,7 @@ export const MediaUI = styled(Chat)`
     transition: opacity 200ms linear;
   }
 
-  ${bem.element('bubble')}.c-messagebubble {
+  ${bem.element('bubble') + '.c-MessageBubble'} {
     background-color: white;
     border: none;
     box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1),
@@ -105,7 +105,7 @@ export const MediaUI = styled(Chat)`
   }
 
   &.is-error {
-    ${bem.element('bubble')}.c-messagebubble {
+    ${bem.element('bubble') + '.c-MessageBubble'} {
       box-shadow: 0 0 0 1px ${getColor('red.400')} inset;
       color: ${getColor('red.500')};
 
