@@ -65,7 +65,8 @@ const Tooltip = props => {
     ...rest
   } = props
   const { getCurrentScope } = useContext(GlobalContext) || {}
-  const { zIndex = zIndexProp } = useContext(TooltipContext) || {}
+  const { zIndex = zIndexProp, animationDuration: animationDurationContext } =
+    useContext(TooltipContext) || {}
   const [isEntered, setEntered] = useState(animationDuration === 0)
 
   const scope = getCurrentScope ? getCurrentScope() : null
@@ -75,10 +76,14 @@ const Tooltip = props => {
   const hasRender = renderProp && isFunction(renderProp)
   const shouldRenderTooltip = title || hasRenderContent || hasRender
 
+  const duration = animationDurationContext
+    ? animationDurationContext
+    : animationDuration
+
   const tooltipProps = {
     className: getClassName(className),
     arrowSize,
-    animationDuration,
+    animationDuration: duration,
     'data-entered': isEntered,
     maxWidth,
     minWidth,
