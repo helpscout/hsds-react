@@ -85,7 +85,7 @@ class CopyButton extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const { className, kind, ...rest } = this.props
+    const { className, kind, size, ...rest } = this.props
     const { shouldRenderConfirmation } = this.state
 
     const componentClassName = classNames(
@@ -99,16 +99,19 @@ class CopyButton extends React.PureComponent<Props, State> {
       shouldRenderConfirmation && 'is-copyConfirmed'
     )
 
+    const iconSize = size === 'sm' ? 'tick-small' : 'tick-large'
+
     return (
       <CopyButtonUI
         {...rest}
         className={componentClassName}
         kind={kind}
         onClick={this.handleOnClick}
+        size={size}
         version={2}
       >
         <ConfirmationIconWrapperUI className={wrapperClassName}>
-          <Icon className="c-CopyButton__iconConfirmation" name="tick-small" />
+          <Icon className="c-CopyButton__iconConfirmation" name={iconSize} />
         </ConfirmationIconWrapperUI>
         <ContentWrapperUI className={wrapperClassName}>Copy</ContentWrapperUI>
       </CopyButtonUI>
