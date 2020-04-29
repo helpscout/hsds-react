@@ -17,6 +17,7 @@ import {
   CloseWrapperUI,
   ContentUI,
   IconWrapperUI,
+  ActionRightUI,
 } from './styles/Alert.css'
 
 export interface Props {
@@ -75,7 +76,7 @@ export class Alert extends React.PureComponent<Props, State> {
       </BadgeWrapperUI>
     ) : icon ? (
       <IconWrapperUI className={cx.icon}>
-        <Icon name="alert" size="20" />
+        <Icon name="alert" size="24" />
       </IconWrapperUI>
     ) : null
 
@@ -86,7 +87,7 @@ export class Alert extends React.PureComponent<Props, State> {
     const { actionRight, dismissible, children } = this.props
 
     const actionRightMarkup = actionRight && (
-      <div className={cx.actionRight}>{actionRight}</div>
+      <ActionRightUI className={cx.actionRight}>{actionRight}</ActionRightUI>
     )
 
     const closeButtonMarkup = dismissible && (
