@@ -65,7 +65,7 @@ export const Popover = props => {
   const render = ({ scope, ...tooltipProps }) => {
     const toolTipComponent = (
       <TooltipAnimationUI>
-        <PopoverUI {...tooltipProps}>
+        <PopoverUI {...tooltipProps} data-cy="PopoverContent">
           <PopoverHeader header={header} renderHeader={renderHeader} />
           <PopoverContent content={content} renderContent={renderContent} />
           <ArrowPopoverUI size={arrowSize} data-popper-arrow />
@@ -80,7 +80,6 @@ export const Popover = props => {
     <Tooltip
       {...rest}
       className={getClassName(className)}
-      closeOnMouseLeave={false}
       data-cy="Popover"
       innerRef={innerRef}
       render={render}

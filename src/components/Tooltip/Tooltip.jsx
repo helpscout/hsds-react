@@ -51,6 +51,8 @@ const Tooltip = props => {
     closeOnContentClick,
     closeOnEscPress,
     display,
+    'data-cy': dataCy,
+    innerRef,
     isOpen,
     minWidth,
     maxWidth,
@@ -78,9 +80,10 @@ const Tooltip = props => {
     arrowSize,
     animationDuration,
     'data-entered': isEntered,
-    scope: scope,
-    minWidth,
     maxWidth,
+    minWidth,
+    ref: innerRef,
+    scope: scope,
     tabIndex: '-1',
   }
 
