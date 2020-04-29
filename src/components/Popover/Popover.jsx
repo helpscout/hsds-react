@@ -31,14 +31,20 @@ const PopoverContent = ({ content, renderContent }) => {
 const PopoverHeader = ({ header, renderHeader }) => {
   if (!header && !renderHeader) return null
 
-  if (renderHeader) return renderHeader()
+  let headerContent
 
-  if (header) {
-    return (
-      <HeaderUI>
-        {isPlainContent(header) ? <HeadingUI>{header}</HeadingUI> : header}
-      </HeaderUI>
+  if (renderHeader) {
+    headerContent = renderHeader()
+  } else if (header) {
+    headerContent = isPlainContent(header) ? (
+      <HeadingUI>{header}</HeadingUI>
+    ) : (
+      header
     )
+  }
+
+  if (headerContent) {
+    return <HeaderUI>{headerContent}</HeaderUI>
   }
 
   return null

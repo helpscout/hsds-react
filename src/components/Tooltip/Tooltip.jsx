@@ -1,5 +1,8 @@
 import React, { createContext, useContext, useState } from 'react'
+import PropTypes from 'prop-types'
+
 import Tippy from '@tippyjs/react/headless'
+
 import { isFunction } from '../../utilities/is'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
@@ -17,6 +20,27 @@ export const TooltipContext = createContext({})
 
 const getClassName = className => classNames('c-Tooltip', className)
 
+const hideOnEsc = {
+  name: 'hideOnEsc',
+  defaultValue: true,
+  fn({ hide }) {
+    function onKeyDown(event) {
+      if (event.keyCode === 27) {
+        hide()
+      }
+    }
+
+    return {
+      onShow() {
+        document.addEventListener('keydown', onKeyDown)
+      },
+      onHide() {
+        document.removeEventListener('keydown', onKeyDown)
+      },
+    }
+  },
+}
+
 const Tooltip = props => {
   const {
     animationDelay,
@@ -25,6 +49,7 @@ const Tooltip = props => {
     children,
     className,
     closeOnContentClick,
+    closeOnEscPress,
     display,
     isOpen,
     minWidth,
@@ -95,15 +120,21 @@ const Tooltip = props => {
     extraProps.zIndex = zIndex
   }
 
-  if (closeOnContentClick) {
+  if (!closeOnContentClick) {
     extraProps.interactive = true
     extraProps.interactiveBorder = 20
+  }
+
+  const plugins = []
+  if (closeOnEscPress) {
+    plugins.push(hideOnEsc)
   }
 
   const tippyProps = {
     onHide,
     onShow,
     placement,
+    plugins,
     render,
     trigger,
     showOnCreate: isOpen,
@@ -132,12 +163,15 @@ Tooltip.defaultProps = {
   animationDelay: 0,
   animationDuration: 200,
   arrowSize: 12,
+  closeOnEscPress: true,
   display: null,
   isOpen: false,
   placement: 'top',
   triggerOn: 'mouseenter focus',
 }
 
-Tooltip.propTypes = {}
+Tooltip.propTypes = {
+  closeOnEscPress: PropTypes.bool,
+}
 
 export default Tooltip
