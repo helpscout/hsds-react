@@ -96,7 +96,6 @@
     "fast-deep-equal": "^2.0.1",
     "invariant": "2.2.4",
     "path-to-regexp": "2.4.0",
-    "popper.js": "1.14.3",
     "prismjs": "^1.17.1",
     "react-popper": "^2.2.2",
     "react-sortable-hoc": "^1.10.0",
