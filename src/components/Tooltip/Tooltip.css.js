@@ -24,6 +24,7 @@ export const ArrowUI = styled.span`
     height: calc(${({ size }) => size}px - 4px);
     width: calc(${({ size }) => size}px - 4px);
     margin: 2px;
+    left: 0;
   }
 
   &.is-hidden {

@@ -30,6 +30,7 @@ const Tooltip = props => {
     minWidth,
     maxWidth,
     placement,
+    render: renderProp,
     renderContent,
     title,
     triggerOn,
@@ -43,22 +44,25 @@ const Tooltip = props => {
   const scope = getCurrentScope ? getCurrentScope() : null
   const trigger = triggerOn === 'hover' ? 'mouseenter' : triggerOn
 
-  const shouldRenderTooltip =
-    title || (renderContent && isFunction(renderContent))
+  const hasRenderContent = renderContent && isFunction(renderContent)
+  const hasRender = renderProp && isFunction(renderProp)
+  const shouldRenderTooltip = title || hasRenderContent || hasRender
 
-  const render = attrs => {
+  const tooltipProps = {
+    className: getClassName(className),
+    arrowSize,
+    animationDuration,
+    'data-entered': isEntered,
+    scope: scope,
+    minWidth,
+    maxWidth,
+    tabIndex: '-1',
+  }
+
+  const renderTooltip = ({ scope, ...props }) => {
     const toolTipComponent = (
       <TooltipAnimationUI>
-        <TooltipUI
-          className={getClassName(className)}
-          tabIndex="-1"
-          arrowSize={arrowSize}
-          animationDuration={animationDuration}
-          minWidth={minWidth}
-          maxWidth={maxWidth}
-          data-entered={isEntered}
-          {...attrs}
-        >
+        <TooltipUI {...props}>
           {renderContent ? (
             renderContent()
           ) : (
@@ -70,6 +74,12 @@ const Tooltip = props => {
     )
 
     return <div className={scope}>{toolTipComponent}</div>
+  }
+
+  const render = attrs => {
+    const props = { ...tooltipProps, ...attrs }
+    if (renderProp) return renderProp(props)
+    return renderTooltip(props)
   }
 
   const onShow = () => {

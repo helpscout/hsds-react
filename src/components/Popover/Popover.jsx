@@ -1,106 +1,91 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { renderRenderPropComponent } from '../../utilities/component'
-import { HeaderUI, HeadingUI } from './Popover.css'
-import Text from '../Text'
-import Tooltip from '../Tooltip/Tooltip'
 import { isPlainContent } from './Popover.utils'
 
-export class Popover extends React.PureComponent {
-  static className = 'c-Popover'
-  static defaultProps = {
-    ...Tooltip.defaultProps,
-    color: 'white',
-    innerRef: noop,
-  }
+import { ArrowPopoverUI, HeaderUI, HeadingUI, PopoverUI } from './Popover.css'
 
-  getClassName() {
-    const { className } = this.props
-    return classNames(Popover.className, className)
-  }
+import Text from '../Text'
 
-  getRenderProps(renderProps) {
-    return {
-      ...renderProps,
-      Header: HeaderUI,
-      Title: HeadingUI,
+import Tooltip from '../Tooltip'
+import { TooltipAnimationUI } from '../Tooltip/Tooltip.css'
+
+const getClassName = className => classNames('c-Popover', className)
+
+const PopoverContent = ({ content, renderContent }) => {
+  if (renderContent) return renderContent()
+
+  if (content) {
+    if (isPlainContent(content)) {
+      return <Text>{content}</Text>
+    } else {
+      return content
     }
   }
 
-  renderPopoverContent = renderProps => {
-    const { content, renderContent } = this.props
-
-    if (renderContent) {
-      return renderRenderPropComponent(
-        renderContent,
-        this.getRenderProps(renderProps)
-      )
-    }
-
-    if (content) {
-      if (isPlainContent(content)) {
-        return <Text>{content}</Text>
-      } else {
-        return content
-      }
-    }
-  }
-
-  renderPopoverHeader = renderProps => {
-    const { header, renderHeader } = this.props
-    if (!header && !renderHeader) return null
-
-    if (renderHeader) {
-      return renderRenderPropComponent(
-        renderHeader,
-        this.getRenderProps(renderProps)
-      )
-    }
-
-    if (header) {
-      let headerContent
-
-      if (isPlainContent(header)) {
-        headerContent = <HeadingUI>{header}</HeadingUI>
-      } else {
-        headerContent = header
-      }
-
-      return <HeaderUI>{headerContent}</HeaderUI>
-    }
-  }
-
-  renderContent = renderProps => {
-    const { close, placement } = renderProps
-    return (
-      <div className="c-PopoverContentBody">
-        {this.renderPopoverHeader({ close, placement })}
-        {this.renderPopoverContent({ close, placement })}
-      </div>
-    )
-  }
-
-  render() {
-    const { innerRef, ...rest } = this.props
-
-    return (
-      <Tooltip
-        {...rest}
-        arrowClassName="c-PopoverArrow"
-        arrowSize={12}
-        contentClassName="c-PopoverContent"
-        className={this.getClassName()}
-        closeOnMouseLeave={false}
-        data-cy="Popover"
-        dataCyPopper="PopoverContent"
-        innerRef={innerRef}
-        renderContent={this.renderContent}
-      />
-    )
-  }
+  return null
 }
+
+const PopoverHeader = ({ header, renderHeader }) => {
+  if (!header && !renderHeader) return null
+
+  if (renderHeader) return renderHeader()
+
+  if (header) {
+    return (
+      <HeaderUI>
+        {isPlainContent(header) ? <HeadingUI>{header}</HeadingUI> : header}
+      </HeaderUI>
+    )
+  }
+
+  return null
+}
+
+export const Popover = props => {
+  const {
+    arrowSize,
+    innerRef,
+    header,
+    renderHeader,
+    content,
+    renderContent,
+    className,
+    ...rest
+  } = props
+
+  const render = ({ scope, ...tooltipProps }) => {
+    const toolTipComponent = (
+      <TooltipAnimationUI>
+        <PopoverUI {...tooltipProps}>
+          <PopoverHeader header={header} renderHeader={renderHeader} />
+          <PopoverContent content={content} renderContent={renderContent} />
+          <ArrowPopoverUI size={arrowSize} data-popper-arrow />
+        </PopoverUI>
+      </TooltipAnimationUI>
+    )
+
+    return <div className={scope}>{toolTipComponent}</div>
+  }
+
+  return (
+    <Tooltip
+      {...rest}
+      className={getClassName(className)}
+      closeOnMouseLeave={false}
+      data-cy="Popover"
+      innerRef={innerRef}
+      render={render}
+      trigger="click"
+    />
+  )
+}
+
+Popover.defaultProps = Object.assign(Tooltip.defaultProps, {
+  innerRef: noop,
+})
 
 Popover.propTypes = Object.assign(Tooltip.propTypes, {
   className: PropTypes.string,
