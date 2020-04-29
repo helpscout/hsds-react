@@ -4,7 +4,7 @@ A Drop component is a High-Order Component that connects a component with [Porta
 
 ## Deprecation
 
-This component will be deprecated. Please use [Pop](../Pop) instead.
+This component will be deprecated. Please use [react-popper](https://github.com/popperjs/react-popper) instead.
 
 ## Example
 

@@ -14,16 +14,10 @@ The contents of Popover can be customized by using `renderHeader` and/or `render
 
 ```jsx
 <Popover
-  renderHeader={({ Header, Title, close }) => (
-    <Header>
-      <Title>My Title</Title>
-      <button onClick={close}>Close Popover</button>
-    </Header>
-  )}
-  renderContent={({ close }) => (
+  renderHeader={() => <Heading>My Title</Heading>}
+  renderContent={() => (
     <div>
       <p>My Content</p>
-      <button onClick={close}>Close Popover</button>
     </div>
   )}
 />
@@ -43,22 +37,4 @@ The contents of Popover can be customized by using `renderHeader` and/or `render
 | renderHeader        | `Function`        | Renders a component within the Popover. Is prioritized over `header`  |
 | triggerOn           | `string`          | Determines how to engage the component.                               |
 
-### renderHeader({ close, placement, Header, Title })
-
-| Prop      | Type              | Description                             |
-| --------- | ----------------- | --------------------------------------- |
-| close     | `Function`        | Callback function to close the Popover. |
-| placement | `string`          | Placement of the Popover.               |
-| Header    | `React.Component` | Component to render the Header.         |
-| Title     | `React.Component` | Component to render the Title.          |
-
-### renderContent({ close, placement, Header, Title })
-
-| Prop      | Type              | Description                             |
-| --------- | ----------------- | --------------------------------------- |
-| close     | `Function`        | Callback function to close the Popover. |
-| placement | `string`          | Placement of the Popover.               |
-| Header    | `React.Component` | Component to render the Header.         |
-| Title     | `React.Component` | Component to render the Title.          |
-
-This component is powered by [Pop](../../Pop/docs/Pop.md). After additional props, check out [Pop's documentation](../../Pop/docs/Pop.md).
+Tooltip is powered by [react-tippy](https://github.com/atomiks/tippyjs-react) and [react-popper](https://github.com/popperjs/react-popper). You can see all available props that can be passed to [Tippy here](https://atomiks.github.io/tippyjs/v6/all-props).
