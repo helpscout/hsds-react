@@ -6,7 +6,10 @@ import propConnect from '../../PropProvider/propConnect'
 import { TriggerUI } from './Dropdown.css.js'
 import Keys from '../../../constants/Keys'
 import { classNames } from '../../../utilities/classNames'
-import { namespaceComponent } from '../../../utilities/component'
+import {
+  namespaceComponent,
+  renderRenderPropComponent,
+} from '../../../utilities/component'
 import { noop } from '../../../utilities/other'
 import { COMPONENT_KEY } from './Dropdown.utils'
 
@@ -41,6 +44,8 @@ export class Trigger extends React.PureComponent<Props> {
     style: {},
     toggleOpen: noop,
   }
+
+  state = { isHovered: false }
 
   handleOnClick = (event: Event) => {
     this.props.onClick(event)
@@ -87,6 +92,14 @@ export class Trigger extends React.PureComponent<Props> {
     }
   }
 
+  renderChildren() {
+    const { children } = this.props
+    const { isHovered } = this.state
+    const renderedChildren = renderRenderPropComponent(children, { isHovered })
+
+    return renderedChildren ? renderedChildren : children
+  }
+
   render() {
     const {
       className,
@@ -118,7 +131,11 @@ export class Trigger extends React.PureComponent<Props> {
         onFocus={onFocus}
         onClick={this.handleOnClick}
         onKeyDown={this.handleOnKeyDown}
-      />
+        onMouseOver={() => this.setState({ isHovered: true })}
+        onMouseLeave={() => this.setState({ isHovered: false })}
+      >
+        {this.renderChildren()}
+      </TriggerUI>
     )
   }
 }
