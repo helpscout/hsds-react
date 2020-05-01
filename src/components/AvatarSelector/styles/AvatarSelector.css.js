@@ -37,7 +37,8 @@ export const AvatarSelectorWrapperUI = styled('div')`
     }
   }
 
-  &:hover {
+  &:hover,
+  &.is-hovered {
     background-color: ${getColor('grey.500')};
   }
 `
