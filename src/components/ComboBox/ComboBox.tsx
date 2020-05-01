@@ -57,6 +57,12 @@ export class ComboBox extends React.Component<ComboBoxProps, ComboBoxState> {
     this._isMounted = false
   }
 
+  componentWillReceiveProps(props) {
+    if (props.isOpen !== this.props.isOpen) {
+      this.setState({ isOpen: props.isOpen })
+    }
+  }
+
   shouldDropDirectionUpdate = positionProps => {
     if (this.state.inputValue) return false
 
