@@ -14,11 +14,15 @@ export const MenuContainerUI = styled('div')`
   position: absolute;
 
   &.is-dropUp {
-    bottom: 100%;
+    bottom: calc(100% + 5px);
   }
 
   &.is-dropLeft {
     right: 0%;
+  }
+
+  &:not(.is-dropUp) {
+    top: 5px;
   }
 
   .c-DropdownV2Block + .c-DropdownV2Block {
