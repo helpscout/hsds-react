@@ -10,3 +10,11 @@ export default {
 export const Default = () => (
   <CopyButton onClick={action('Click')} onReset={action('Reset')} />
 )
+
+export const Medium = () => (
+  <CopyButton onClick={action('Click')} onReset={action('Reset')} size="md" />
+)
+
+export const Small = () => (
+  <CopyButton onClick={action('Click')} onReset={action('Reset')} size="sm" />
+)

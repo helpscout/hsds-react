@@ -79,7 +79,7 @@ class CopyButton extends React.PureComponent {
   }
 
   render() {
-    const { className, kind, ...rest } = this.props
+    const { className, kind, size, ...rest } = this.props
     const { shouldRenderConfirmation } = this.state
 
     const componentClassName = classNames(
@@ -88,18 +88,21 @@ class CopyButton extends React.PureComponent {
       className
     )
 
+    const iconSize = size === 'sm' ? '20' : '24'
+
     return (
       <CopyButtonUI
         {...rest}
         kind={kind}
         onClick={this.handleOnClick}
+        size={size}
         className={componentClassName}
       >
         <ConfirmationIconWrapperUI>
           <Icon
             className="c-CopyButton__iconConfirmation"
             name="checkmark"
-            size="24"
+            size={iconSize}
           />
         </ConfirmationIconWrapperUI>
         <TextUI>Copy</TextUI>

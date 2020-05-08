@@ -14,9 +14,7 @@ const isGitClean = require('is-git-clean')
 
 const transformerDirectory = path.join(__dirname, 'transforms')
 
-const jscodeshiftExecutable = require.resolve(
-  '../../node_modules/jscodeshift/bin/jscodeshift.sh'
-)
+const jscodeshiftExecutable = require.resolve('jscodeshift/bin/jscodeshift.sh')
 
 function checkGitStatus(force) {
   let clean = false
@@ -48,7 +46,7 @@ function checkGitStatus(force) {
   }
 }
 
-function runTransform({ files, flags, parser, transformer }) {
+function runTransform({ files, flags, parser, transformer, opts }) {
   const transformerPath = path.join(transformerDirectory, `${transformer}.js`)
 
   let args = []
@@ -71,6 +69,14 @@ function runTransform({ files, flags, parser, transformer }) {
   args.push('--extensions=jsx,js')
 
   args = args.concat(['--transform', transformerPath])
+
+  // add more arguments per Transform (coming from prompt answers)
+  switch (transformer) {
+    case 'ReplaceImportsTransform':
+      args.push('--moduleName', opts.moduleName)
+      args.push('--moduleNameTarget', opts.moduleNameTarget)
+      break
+  }
 
   if (flags.jscodeshift) {
     args = args.concat(flags.jscodeshift)
@@ -139,7 +145,7 @@ const TRANSFORMER_INQUIRER_CHOICES = [
   },
   {
     name:
-      '3.0 ReplaceImports: Replace all hsds-react import with the next release (hsds-react-next)',
+      '3.0 ReplaceImports: Replace all hsds-react import with the next release',
     value: 'ReplaceImportsTransform',
   },
 ]
@@ -215,9 +221,33 @@ function run() {
         pageSize: TRANSFORMER_INQUIRER_CHOICES.length,
         choices: TRANSFORMER_INQUIRER_CHOICES,
       },
+      {
+        type: 'input',
+        name: 'moduleName',
+        message: 'Enter the original package name',
+        when: function(answers) {
+          return (
+            answers.transformer === 'all' ||
+            answers.transformer === 'ReplaceImportsTransform'
+          )
+        },
+        default: '@helpscout/hsds-react',
+      },
+      {
+        type: 'input',
+        name: 'moduleNameTarget',
+        message: 'Enter the new package name',
+        when: function(answers) {
+          const isReplaceImports =
+            answers.transformer === 'all' ||
+            answers.transformer === 'ReplaceImportsTransform'
+          return isReplaceImports && answers.moduleName
+        },
+        default: 'helpscout-hsds-react-next',
+      },
     ])
     .then(answers => {
-      const { files, transformer } = answers
+      const { files, transformer, ...opts } = answers
 
       const filesBeforeExpansion = cli.input[1] || files
       const filesExpanded = expandFilePathsIfNeeded([filesBeforeExpansion])
@@ -236,6 +266,7 @@ function run() {
             flags: cli.flags,
             parser: 'babel',
             transformer: t.value,
+            opts,
           })
         })
 
@@ -247,6 +278,7 @@ function run() {
         flags: cli.flags,
         parser: 'babel',
         transformer: selectedTransformer,
+        opts,
       })
     })
 }
