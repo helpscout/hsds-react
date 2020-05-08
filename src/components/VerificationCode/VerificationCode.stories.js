@@ -1,4 +1,7 @@
 import React, { useState } from 'react'
+import React from 'react'
+import { storiesOf } from '@storybook/react'
+
 import VerificationCode from './'
 
 export default {
@@ -106,6 +109,7 @@ AutoSubmitOnPaste.story = {
 
 export const AutoSubmitOnKeyUp = () => {
   const [code, setCode] = useState()
+
   return (
     <div>
       <VerificationCode

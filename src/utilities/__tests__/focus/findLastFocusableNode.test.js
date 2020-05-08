@@ -12,7 +12,7 @@ test('Returns falsey if no focusable nodes found', () => {
 test('Returns last focusable node', () => {
   document.body.innerHTML = `
     <span>Nope</span>
-    <a>Yup</a>
+    <a href="#">Yup</a>
     <input type='text' value='Yes' />
     <div>Nope</div>
     <select><option>Yes</option></select>
@@ -32,7 +32,7 @@ test('Returns last focusable node', () => {
 
 test('Returns first focusable node within scope', () => {
   document.body.innerHTML = `
-    <a>Yes</a>
+    <a href="#">Yes</a>
     <span>Nope</span>
     <input type='text' value='Yes' />
     <div>Nope</div>

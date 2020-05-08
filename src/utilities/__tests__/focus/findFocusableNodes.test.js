@@ -34,7 +34,7 @@ test('Returns a list of focusable nodes', () => {
 
 test('Returns a list of focusable nodes within scope', () => {
   document.body.innerHTML = `
-    <a>Yes</a>
+    <a href="#">Yes</a>
     <span>Nope</span>
     <input type='text' value='Yes' />
     <div>Nope</div>
