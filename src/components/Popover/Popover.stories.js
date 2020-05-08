@@ -1,8 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import { boolean, number, select, text } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
-import { Text, Popover, Pop } from '..'
+import { Text, Popover, Heading } from '..'
 
 export default {
   component: Popover,
@@ -47,17 +47,13 @@ export const Default = () => {
     ...actionLoggerProps,
     animationDelay: number('animationDelay', 100),
     animationDuration: number('animationDuration', 100),
-    animationSequence: text('animationSequence', 'fade up'),
-    closeOnBodyClick: boolean('closeOnBodyClick', true),
     closeOnEscPress: boolean('closeOnEscPress', true),
     closeOnContentClick: boolean('closeOnContentClick', false),
-    onContentClick: action('onContentClick'),
     onOpen: action('onOpen'),
     onClose: action('onClose'),
     isOpen: boolean('isOpen', true),
     triggerOn: triggerOn,
     placement: placement,
-    showArrow: boolean('showArrow', true),
     header: text('header', ''),
     content: text('content', 'Hello'),
     minWidth: number('minWidth', ''),
@@ -76,17 +72,13 @@ export const Default = () => {
 export const RenderProps = () => {
   const props = {
     ...actionLoggerProps,
-    renderHeader: ({ Header, Title }) => (
-      <Header>
-        <Title>My Title</Title>
-      </Header>
-    ),
-    renderContent: ({ close }) => (
+    renderHeader: () => <Heading>Render header</Heading>,
+    renderContent: () => (
       <div>
         <p>
           <Text>My Content</Text>
         </p>
-        <button onClick={close}>Close</button>
+        <button>Close</button>
       </div>
     ),
   }

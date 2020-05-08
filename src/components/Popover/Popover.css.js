@@ -1,16 +1,71 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import { getShadow } from '../../styles/utilities/shadow'
+
+import { ArrowUI, TooltipUI } from '../Tooltip/Tooltip.css'
+
 import Heading from '../Heading'
 
 export const config = {
   borderColor: getColor('grey.600'),
   boxShadow: getShadow(100),
   padding: '15px',
+  background: 'white',
 }
 
-// popover styling has been move to Tooltip.css & Pop/Arrow.css
-// to account for a className merge behavior change within styled-components
+export const ArrowPopoverUI = styled(ArrowUI)`
+  &:before {
+    background: ${config.background};
+    border: 1px solid ${config.borderColor};
+  }
+
+  /* ghost */
+  &:after {
+    content: '';
+    background: ${config.background};
+    position: absolute;
+    transform: rotate(45deg);
+    height: calc(${({ size }) => size}px - 4px);
+    width: calc(${({ size }) => size}px - 4px);
+    margin: 2px;
+    border-color: transparent;
+    box-shadow: none;
+    left: 0;
+  }
+`
+
+export const PopoverUI = styled(TooltipUI)`
+  background: ${config.background};
+  border: 1px solid ${config.borderColor};
+  box-shadow: ${config.boxShadow};
+  color: inherit;
+  font-size: inherit;
+  padding: ${config.padding};
+
+  &[data-placement^='top'] ${ArrowPopoverUI} {
+    &:after {
+      bottom: 1px;
+    }
+  }
+
+  &[data-placement^='bottom'] ${ArrowPopoverUI} {
+    &:after {
+      top: 1px;
+    }
+  }
+
+  &[data-placement^='left'] ${ArrowPopoverUI} {
+    &:after {
+      left: -1px;
+    }
+  }
+
+  &[data-placement^='right'] ${ArrowPopoverUI} {
+    &:after {
+      left: 1px;
+    }
+  }
+`
 
 export const HeaderUI = styled('div')`
   border-bottom: 1px solid ${config.borderColor};

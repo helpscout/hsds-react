@@ -2,8 +2,6 @@ import styled from 'styled-components'
 import Toolbar from '../Toolbar'
 import { getColor } from '../../styles/utilities/color'
 
-import DotStepper from '../DotStepper'
-
 export const HeaderUI = styled(Toolbar)`
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
@@ -83,8 +81,8 @@ export const AlertHeaderTitleUI = styled(BrandedHeaderTitleUI)`
   margin: 0px;
 `
 
-export const DotStepperUI = styled(DotStepper)`
-  padding-bottom: 30px;
+export const DotStepperUI = styled.div`
+  margin-bottom: 30px;
 `
 
 export default HeaderUI

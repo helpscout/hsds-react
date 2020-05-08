@@ -1,29 +1,16 @@
 import React from 'react'
-import { cy } from '@helpscout/cyan'
 import { mount } from 'enzyme'
-import { Popover } from './Popover'
-
-function mountContent(Component) {
-  const wrapper = mount(Component)
-  const inst = wrapper.instance()
-
-  const Content = inst.renderContent({ close: () => {}, placement: 'top' })
-
-  return mount(Content)
-}
+import Popover from './Popover'
 
 describe('className', () => {
-  test('Has default className', () => {
-    cy.render(<Popover />)
-
-    expect(cy.get('.c-Popover').exists()).toBeTruthy()
-  })
-
   test('Can render custom className', () => {
-    const customClassName = 'blue'
-    cy.render(<Popover className={customClassName} />)
+    const wrapper = mount(
+      <Popover className="derek">
+        <div />
+      </Popover>
+    )
 
-    expect(cy.get(`.${customClassName}`).exists()).toBeTruthy()
+    expect(wrapper.hasClass('derek')).toBe(true)
   })
 })
 
@@ -38,33 +25,31 @@ describe('Tooltip', () => {
 
 describe('renderContent', () => {
   test('Can render content', () => {
-    const wrapper = mountContent(<Popover content="Hello" />)
-
-    expect(wrapper.text()).toBe('Hello')
+    let wrapper = mount(<Popover isOpen content="Hello" />)
+    expect(wrapper.find('PopoverContent').text()).toContain('Hello')
   })
 
   test('Can render header', () => {
-    const wrapper = mountContent(<Popover header="Title" />)
-
-    expect(wrapper.text()).toBe('Title')
+    let wrapper = mount(<Popover isOpen header="Hello" />)
+    expect(wrapper.find('PopoverHeader').text()).toContain('Hello')
   })
 
   test('Can render header and content (string)', () => {
-    const wrapper = mountContent(<Popover header="Title" content="Content" />)
+    const wrapper = mount(<Popover header="Title" content="Content" />)
 
-    expect(wrapper.text()).toContain('Title')
-    expect(wrapper.text()).toContain('Content')
+    expect(wrapper.find('PopoverContent').text()).toContain('Content')
+    expect(wrapper.find('PopoverHeader').text()).toContain('Title')
   })
 
   test('Can render header and content (number)', () => {
-    const wrapper = mountContent(<Popover header={123} content={456} />)
+    const wrapper = mount(<Popover header={123} content={456} />)
 
-    expect(wrapper.text()).toContain('123')
-    expect(wrapper.text()).toContain('456')
+    expect(wrapper.find('PopoverContent').text()).toContain('456')
+    expect(wrapper.find('PopoverHeader').text()).toContain('123')
   })
 
   test('Can render header and content (components)', () => {
-    const wrapper = mountContent(
+    const wrapper = mount(
       <Popover header={<div>123</div>} content={<div>456</div>} />
     )
 
@@ -72,46 +57,16 @@ describe('renderContent', () => {
     expect(wrapper.text()).toContain('456')
   })
 
-  test('Provides renderHeader with render props', () => {
-    const spy = jest.fn()
-    mountContent(<Popover renderHeader={spy} content="Content" />)
-    const callback = spy.mock.calls[0][0]
-
-    expect(typeof callback.close).toBe('function')
-    expect(typeof callback.placement).toBe('string')
-    expect(callback.Header).toBeTruthy()
-    expect(callback.Title).toBeTruthy()
-  })
-
-  test('Provides renderContent with render props', () => {
-    const spy = jest.fn()
-    mountContent(<Popover renderContent={spy} />)
-    const callback = spy.mock.calls[0][0]
-
-    expect(typeof callback.close).toBe('function')
-    expect(typeof callback.placement).toBe('string')
-    expect(callback.Header).toBeTruthy()
-    expect(callback.Title).toBeTruthy()
-  })
-
-  test('Renders renderHeader over header', () => {
-    const wrapper = mountContent(
-      <Popover
-        renderHeader={({ Title }) => <Title>Hai</Title>}
-        header="Hello"
-      />
-    )
+  test('Renders renderHeader inside header', () => {
+    const wrapper = mount(<Popover renderHeader={() => <div>Hai</div>} />)
 
     expect(wrapper.text()).not.toContain('Hello')
     expect(wrapper.text()).toContain('Hai')
   })
 
   test('Renders renderContent over content', () => {
-    const wrapper = mountContent(
-      <Popover
-        renderContent={({ Title }) => <Title>Hai</Title>}
-        content="Hello"
-      />
+    const wrapper = mount(
+      <Popover renderContent={() => <div>Hai</div>} content="Hello" />
     )
 
     expect(wrapper.text()).not.toContain('Hello')
