@@ -61,12 +61,12 @@ describe('Tippy', () => {
     expect(pop.triggerOn).toBe(props.trigger)
   })
 
-  test('Passes interactive props when closeOnContentClick', () => {
+  test('Passes interactive props when closeOnContentClick is false', () => {
     const props = {
       placement: 'bottom',
       triggerOn: 'click',
       title: 'Pop',
-      closeOnContentClick: true,
+      closeOnContentClick: false,
     }
     const wrapper = mount(<Tooltip {...props} />)
     const pop = wrapper.find(Tippy).props()

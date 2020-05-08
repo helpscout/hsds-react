@@ -51,7 +51,7 @@ const Tooltip = props => {
     closeOnContentClick,
     closeOnEscPress,
     display,
-    'data-cy': dataCy,
+    'data-cy': dataCy = 'Tooltip',
     innerRef,
     isOpen,
     minWidth,
@@ -160,7 +160,7 @@ const Tooltip = props => {
 
   return (
     <Tippy {...tippyProps}>
-      <TooltipTriggerUI tabIndex="0" display={display}>
+      <TooltipTriggerUI tabIndex="0" display={display} data-cy={dataCy}>
         {children}
       </TooltipTriggerUI>
     </Tippy>
