@@ -9,6 +9,7 @@ import { TriggerUI } from './Dropdown.css.js'
 import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import { renderRenderPropComponent } from '../../utilities/component'
 
 export class Trigger extends React.PureComponent {
   static displayName = 'DropdownTrigger'
@@ -42,6 +43,8 @@ export class Trigger extends React.PureComponent {
     style: {},
     toggleOpen: noop,
   }
+
+  state = { isHovered: false }
 
   handleOnClick = event => {
     this.props.onClick(event)
@@ -88,6 +91,14 @@ export class Trigger extends React.PureComponent {
     }
   }
 
+  renderChildren() {
+    const { children } = this.props
+    const { isHovered } = this.state
+    const renderedChildren = renderRenderPropComponent(children, { isHovered })
+
+    return renderedChildren ? renderedChildren : children
+  }
+
   render() {
     const {
       className,
@@ -119,8 +130,12 @@ export class Trigger extends React.PureComponent {
         onFocus={onFocus}
         onClick={this.handleOnClick}
         onKeyDown={this.handleOnKeyDown}
+        onMouseOver={() => this.setState({ isHovered: true })}
+        onMouseLeave={() => this.setState({ isHovered: false })}
         data-cy="DropdownTrigger"
-      />
+      >
+        {this.renderChildren()}
+      </TriggerUI>
     )
   }
 }

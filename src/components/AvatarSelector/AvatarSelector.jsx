@@ -15,6 +15,7 @@ export default class AvatarSelector extends React.PureComponent {
   static propTypes = {
     image: PropTypes.string,
     initials: PropTypes.string,
+    isHovered: PropTypes.bool,
     isOpen: PropTypes.bool,
     name: PropTypes.string,
     size: PropTypes.string,
@@ -22,6 +23,7 @@ export default class AvatarSelector extends React.PureComponent {
   static defaultProps = {
     image: '',
     initials: '',
+    isHovered: false,
     isOpen: false,
     name: '',
     size: 'lg',
@@ -45,8 +47,12 @@ export default class AvatarSelector extends React.PureComponent {
   }
 
   render() {
-    const { image, initials, isOpen, name, size } = this.props
-    const classnames = classNames('c-AvatarSelector', isOpen ? 'is-open' : '')
+    const { image, initials, isHovered, isOpen, name, size } = this.props
+    const classnames = classNames(
+      'c-AvatarSelector',
+      isOpen ? 'is-open' : '',
+      isHovered && 'is-hovered'
+    )
 
     return (
       <AvatarSelectorWrapperUI className={classnames} tabIndex="0" size={size}>

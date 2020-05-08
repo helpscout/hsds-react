@@ -59,6 +59,12 @@ export class SearchableDropdown extends React.Component {
     this._isMounted = false
   }
 
+  UNSAFE_componentWillReceiveProps(props) {
+    if (props.isOpen !== this.props.isOpen) {
+      this.setState({ isOpen: props.isOpen })
+    }
+  }
+
   shouldDropDirectionUpdate = positionProps => {
     if (this.state.inputValue) return false
 

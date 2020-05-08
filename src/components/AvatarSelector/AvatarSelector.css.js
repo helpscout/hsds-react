@@ -31,7 +31,8 @@ export const AvatarSelectorWrapperUI = styled('div')`
 
   &:hover,
   &:focus,
-  &.is-open {
+  &.is-open,
+  &.is-hovered {
     background-color: white;
     color: ${getColor('charcoal.500')};
   }

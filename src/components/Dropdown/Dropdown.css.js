@@ -14,11 +14,15 @@ export const MenuContainerUI = styled('div')`
   font-size: var(--HSDSGlobalFontSize);
 
   &.is-dropUp {
-    bottom: 100%;
+    bottom: calc(100% + 5px);
   }
 
   &.is-dropLeft {
     right: 0%;
+  }
+
+  &:not(.is-dropUp) {
+    top: 5px;
   }
 
   .c-DropdownBlock + .c-DropdownBlock {
