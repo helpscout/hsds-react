@@ -11,7 +11,7 @@ module.exports = api => {
       },
     ],
     [
-      'inline-svg',
+      'inline-react-svg',
       {
         svgo: {
           plugins: [
@@ -23,7 +23,13 @@ module.exports = api => {
         },
       },
     ],
-    'emotion',
+    [
+      'babel-plugin-styled-components',
+      {
+        displayName: true,
+        fileName: true,
+      },
+    ],
   ]
 
   if (isTest) {

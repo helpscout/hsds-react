@@ -1,20 +1,40 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Divider from '../Dropdown.Divider'
+import { Divider } from '../Dropdown.Divider'
+import { hasClass } from '../../../tests/helpers/enzyme'
 
-describe('ClassName', () => {
-  test('Has default className', () => {
+describe('className', () => {
+  test('Has a default className', () => {
     const wrapper = mount(<Divider />)
-    const el = wrapper.find('div.c-DropdownDivider')
 
-    expect(el.length).toBe(1)
+    expect(hasClass(wrapper, 'c-DropdownDivider')).toBe(true)
   })
 
-  test('Applies custom className if specified', () => {
-    const customClass = 'piano-key-neck-tie'
-    const wrapper = mount(<Divider className={customClass} />)
-    const el = wrapper.find('div.c-DropdownDivider')
+  test('Accepts custom className', () => {
+    const wrapper = mount(<Divider className="ron" />)
 
-    expect(el.hasClass(customClass)).toBeTruthy()
+    expect(hasClass(wrapper, 'ron')).toBe(true)
+  })
+})
+
+describe('children', () => {
+  test('Does not render children', () => {
+    const wrapper = mount(
+      <Divider>
+        <div className="ron">Ron</div>
+      </Divider>
+    )
+
+    expect(wrapper.find('div.ron').length).toBeFalsy()
+  })
+})
+
+describe('ref', () => {
+  test('Can set an ref to a DOM node', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Divider innerRef={spy} />)
+    const el = wrapper.getDOMNode()
+
+    expect(spy).toHaveBeenCalledWith(el)
   })
 })

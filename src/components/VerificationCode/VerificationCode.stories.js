@@ -1,14 +1,21 @@
 import React, { useState } from 'react'
-import { storiesOf } from '@storybook/react'
+
 import VerificationCode from './'
 
-const stories = storiesOf('VerificationCode', module)
+export default {
+  component: VerificationCode,
+  title: 'Components/Forms/VerificationCode',
+}
 
-stories.add('Default', () => {
+export const Default = () => {
   return <VerificationCode />
-})
+}
 
-stories.add('Invalid', () => {
+Default.story = {
+  name: 'default',
+}
+
+export const Invalid = () => {
   return (
     <VerificationCode
       isValid={false}
@@ -17,9 +24,13 @@ stories.add('Invalid', () => {
       }}
     />
   )
-})
+}
 
-stories.add('AutoFocus', () => {
+Invalid.story = {
+  name: 'invalid',
+}
+
+export const AutoFocus = () => {
   return (
     <VerificationCode
       autoFocus={true}
@@ -28,9 +39,13 @@ stories.add('AutoFocus', () => {
       }}
     />
   )
-})
+}
 
-stories.add('AutoFocus with code', () => {
+AutoFocus.story = {
+  name: 'autofocus',
+}
+
+export const AutoFocusWithCode = () => {
   return (
     <VerificationCode
       autoFocus={true}
@@ -40,9 +55,13 @@ stories.add('AutoFocus with code', () => {
       }}
     />
   )
-})
+}
 
-stories.add('AutoFocus with half code', () => {
+AutoFocusWithCode.story = {
+  name: 'autofocus with code',
+}
+
+export const AutoFocusWithHalfCode = () => {
   return (
     <div>
       <VerificationCode
@@ -55,9 +74,13 @@ stories.add('AutoFocus with half code', () => {
       <p>test</p>
     </div>
   )
-})
+}
 
-stories.add('AutoFocus with auto submit on paste', () => {
+AutoFocusWithHalfCode.story = {
+  name: 'autofocus with half code',
+}
+
+export const AutoSubmitOnPaste = () => {
   const [code, setCode] = useState()
   return (
     <div>
@@ -76,10 +99,15 @@ stories.add('AutoFocus with auto submit on paste', () => {
       </p>
     </div>
   )
-})
+}
 
-stories.add('AutoFocus with auto submit on key up', () => {
+AutoSubmitOnPaste.story = {
+  name: 'autoSubmit on paste',
+}
+
+export const AutoSubmitOnKeyUp = () => {
   const [code, setCode] = useState()
+
   return (
     <div>
       <VerificationCode
@@ -97,46 +125,8 @@ stories.add('AutoFocus with auto submit on key up', () => {
       </p>
     </div>
   )
-})
-
-stories.add('In context', () => {
-  return (
-    <div>
-      <input type="text" />
-      <div style={{ margin: '50px 0' }}>
-        <VerificationCode />
-      </div>
-      <button>Cancel</button>
-      <button>Submit</button>
-    </div>
-  )
-})
-
-class ExternalValue extends React.PureComponent {
-  state = {
-    code: '123456',
-  }
-
-  handleChange = e => {
-    this.setState({ code: e.target.value })
-  }
-
-  render() {
-    const { code } = this.state
-
-    return (
-      <div>
-        <input type="text" onChange={this.handleChange} value={code} />
-        <div style={{ margin: '50px 0' }}>
-          <VerificationCode code={code} />
-        </div>
-        <button>Cancel</button>
-        <button>Submit</button>
-      </div>
-    )
-  }
 }
 
-stories.add('External value', () => {
-  return <ExternalValue />
-})
+AutoSubmitOnKeyUp.story = {
+  name: 'autoSubmit on keyup',
+}

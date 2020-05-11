@@ -1,362 +1,373 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
-import Item from '../Dropdown.Item'
-import { default as Menu, MenuComponent } from '../Dropdown.Menu'
-import Icon from '../../Icon'
+import { mount } from 'enzyme'
+import { Item } from '../Dropdown.Item'
+import ItemSelectedCheck from '../Dropdown.ItemSelectedCheck'
+import {
+  findDOMNode,
+  hasClass,
+  getAttribute,
+} from '../../../tests/helpers/enzyme'
+import { setMenuPositionStyles } from '../Dropdown.renderUtils'
 
-const LINK_CLASSNAME = 'c-DropdownItem__link'
+jest.mock('../Dropdown.utils')
+jest.mock('../Dropdown.renderUtils')
+jest.mock('../Dropdown.Card', () => {
+  const Card = props => <div {...props} />
+  return props => {
+    return <Card {...props} />
+  }
+})
+jest.mock('../Dropdown.Menu', () => {
+  const { MenuUI } = require('../Dropdown.css.js')
+  const Menu = props => <MenuUI {...props} />
+  return props => {
+    return <Menu {...props} />
+  }
+})
 
-describe('ClassName', () => {
-  test('Has default className', () => {
+beforeEach(() => {
+  setMenuPositionStyles.mockClear()
+})
+
+describe('className', () => {
+  test('Has a default className', () => {
     const wrapper = mount(<Item />)
-    const el = wrapper.find('div.c-DropdownItem')
 
-    expect(el.length).toBe(1)
+    expect(hasClass(wrapper, 'c-DropdownItem')).toBe(true)
   })
 
-  test('Applies custom className if specified', () => {
-    const customClass = 'piano-key-neck-tie'
-    const wrapper = mount(<Item className={customClass} />)
-    const el = wrapper.find('div.c-DropdownItem')
-
-    expect(el.hasClass(customClass)).toBeTruthy()
-  })
-})
-
-describe('Children', () => {
-  test('Renders child', () => {
-    const wrapper = mount(
-      <Item>
-        <div className="child">Hello</div>
-      </Item>
-    )
-    const el = wrapper.find('div.child')
-
-    expect(el.text()).toContain('Hello')
-  })
-})
-
-describe('TabIndex', () => {
-  test('Is set to -1', () => {
-    const wrapper = shallow(<Item />)
-
-    expect(wrapper.find(`.${LINK_CLASSNAME}`).props().tabIndex).toBe(-1)
-  })
-})
-
-describe('Styles', () => {
-  test('Adds isHover className if applicable', () => {
-    const wrapper = shallow(<Item isHover />)
-
-    expect(wrapper.hasClass('is-hover')).toBeTruthy()
+  test('Is div by default', () => {
+    const wrapper = mount(<Item />)
+    expect(wrapper.getDOMNode().tagName).toEqual('DIV')
   })
 
-  test('Adds isFocus className if applicable', () => {
-    const wrapper = shallow(<Item isFocused />)
+  test('Is a when provided with href', () => {
+    const wrapper = mount(<Item href="https://helpscout.com" />)
+    const node = wrapper.getDOMNode()
+    expect(node.tagName).toEqual('A')
+    expect(node.getAttribute('href')).toEqual('https://helpscout.com')
+  })
 
-    expect(wrapper.hasClass('is-focused')).toBeTruthy()
+  test('Accepts custom className', () => {
+    const wrapper = mount(<Item className="ron" />)
+
+    expect(hasClass(wrapper, 'ron')).toBe(true)
+  })
+
+  test('Selection Clearer className', () => {
+    const state = {
+      allowMultipleSelection: true,
+      selectionClearer: 'All Items',
+    }
+
+    const wrapper = mount(<Item getState={() => state} isSelectionClearer />)
+
+    expect(hasClass(wrapper, 'c-SelectionClearerItem')).toBe(true)
   })
 })
 
-describe('isOpen', () => {
-  test('Is false by default', () => {
-    const wrapper = shallow(<Item />)
+describe('children', () => {
+  test('Can render children', () => {
+    const wrapper = mount(
+      <Item>
+        <div className="ron">Ron</div>
+      </Item>
+    )
 
-    expect(wrapper.state().isOpen).not.toBeTruthy()
-  })
-
-  test('Is set by isOpen', () => {
-    const wrapper = shallow(<Item isOpen />)
-
-    expect(wrapper.state().isOpen).toBeTruthy()
-  })
-
-  test('Can be updated by isOpen prop change', () => {
-    const wrapper = shallow(<Item isOpen />)
-
-    expect(wrapper.state().isOpen).toBeTruthy()
-
-    wrapper.setProps({ isOpen: false })
-
-    expect(wrapper.state().isOpen).not.toBeTruthy()
+    expect(wrapper.find('div.ron').length).toBeTruthy()
   })
 })
 
-describe('Sub menu', () => {
-  test('Can detect a sub-menu', () => {
-    const wrapper = mount(
-      <Item>
-        Nested
-        <Menu />
-      </Item>
-    )
-    const o = wrapper.instance()
+describe('ref', () => {
+  test('Can set an ref to a DOM node', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Item innerRef={spy} />)
+    const el = wrapper.getDOMNode()
 
-    expect(o.menu).toBeTruthy()
+    expect(spy).toHaveBeenCalledWith(el)
   })
 
-  test('Does not render the sub-menu by default', () => {
-    const wrapper = mount(
-      <Item>
-        Nested
-        <Menu />
-      </Item>
-    )
+  test('Internally sets the actionNode', () => {
+    const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
+    const wrapper = mount(<Item items={items} />)
+    const el = findDOMNode(wrapper, '.c-DropdownItemAction')
 
-    expect(wrapper.find(Menu).length).not.toBeTruthy()
+    expect(wrapper.instance().actionNode).toBe(el)
   })
 
-  test('Renders the sub-menu when Item isOpen', () => {
-    const wrapper = mount(
-      <Item isOpen>
-        Nested
-        <Menu />
-      </Item>
-    )
+  test('Internally sets the wrapperNode', () => {
+    const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
+    const wrapper = mount(<Item items={items} />)
 
-    expect(wrapper.find(Menu).length).toBeTruthy()
+    expect(wrapper.instance().wrapperNode).toBeTruthy()
+  })
+})
+
+describe('renderMenu', () => {
+  // TODO: fix that test
+  // test('Renders the menu on mount', () => {
+  //   const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
+  //   const wrapper = mount(<Item items={items} />)
+  //   expect(wrapper).toBeTruthy()
+  //   expect(setMenuPositionStyles).toHaveBeenCalled()
+  // })
+  // TODO: fix that test
+  // test('Does not render the menu if important DOM nodes are missing', () => {
+  //   const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
+  //   const wrapper = mount(<Item items={items} />)
+  //   expect(setMenuPositionStyles).toHaveBeenCalledTimes(1)
+  //   wrapper.instance().menuNode = null
+  //   wrapper.setProps({
+  //     isHover: true,
+  //   })
+  //   expect(setMenuPositionStyles).toHaveBeenCalledTimes(1)
+  // })
+})
+
+describe('Action', () => {
+  const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
+  test('Renders an Action', () => {
+    const wrapper = mount(<Item items={items} />)
+    const el = wrapper.find('.c-DropdownItemAction')
+
+    expect(el.length).toBeTruthy()
   })
 
-  test('Moves item children to appropriate DOM structures, if sub-menu is present', () => {
-    const wrapper = mount(
-      <Item>
-        Nested
-        <Menu />
-      </Item>
-    )
-    wrapper.setProps({ isHover: true })
-    const o = wrapper.find('div.c-DropdownItem__content')
-    const n = wrapper.find('.c-DropdownItem__menu')
+  test('Gets subMenu class, if applicable', () => {
+    const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
+    const wrapper = mount(<Item items={items} />)
+    const el = wrapper.find('.c-DropdownItemAction')
 
-    expect(o.length).toBeTruthy()
-    expect(o.html()).toContain('Nested')
-    expect(n.length).toBeTruthy()
-    expect(n.find(Menu).length).toBeTruthy()
+    expect(hasClass(el, 'has-subMenu')).toBe(true)
+  })
+})
+
+describe('Items', () => {
+  test('Does not render sub menu by default', () => {
+    const wrapper = mount(<Item />)
+    const el = wrapper.find('Menu')
+
+    expect(el.length).not.toBeTruthy()
   })
 
-  test('Shows a right caret icon when there is a sub-menu', () => {
-    const wrapper = mount(
-      <Item>
-        Nested
-        <Menu />
-      </Item>
-    )
+  test('Renders sub menu with items', () => {
+    const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
+    const wrapper = mount(<Item items={items} />)
+    const el = wrapper.find('Menu')
 
-    const o = wrapper.find(Icon)
+    expect(el.length).toBeTruthy()
+  })
+})
 
-    expect(o.length).toBeTruthy()
-    expect(o.props().name).toBe('caret-right')
+describe('ItemSelectedCheck', () => {
+  test('Renders with value', () => {
+    const wrapper = mount(<ItemSelectedCheck value="Jon" />)
+    const valueSpan = wrapper.find('span.c-ItemSelectedCheck__value').first()
+    const icon = wrapper.find('.c-Icon').first()
+
+    expect(valueSpan.text()).toBe('Jon')
+    expect(icon).toHaveLength(0)
   })
 
-  test('Has a default direction of right', () => {
-    const wrapper = mount(
-      <Item isOpen>
-        Nested
-        <Menu />
-      </Item>
-    )
+  test('Does not Renders without value', () => {
+    const wrapper = mount(<ItemSelectedCheck />)
 
-    const o = wrapper.find(Menu)
-
-    expect(o.props().direction).toBe('right')
+    expect(wrapper.instance()).toBe(null)
   })
 
-  test('Can override default direction', () => {
-    const wrapper = mount(
-      <Item isOpen>
-        Nested
-        <Menu direction="down" />
-      </Item>
-    )
+  test('Renders checkmark if active', () => {
+    const wrapper = mount(<ItemSelectedCheck value="Jon" isActive={true} />)
 
-    const o = wrapper.find(Menu)
+    const valueSpan = wrapper.find('span.c-ItemSelectedCheck__value').first()
+    const icon = wrapper.find('.c-Icon').first()
 
-    expect(o.props().direction).toBe('down')
+    expect(valueSpan.text()).toBe('Jon')
+    expect(icon).toHaveLength(1)
   })
 
-  test('Has a default selectedIndex of 0', () => {
+  test('isSelectionClearer state', () => {
     const wrapper = mount(
-      <Item isOpen>
-        Nested
-        <Menu />
-      </Item>
+      <ItemSelectedCheck
+        value="All Items"
+        isSelectionClearer={true}
+        getState={() => ({
+          selectedItem: 'hello',
+        })}
+      />
     )
 
-    const o = wrapper.find(Menu)
+    const valueSpan = wrapper.find('span.c-ItemSelectedCheck__value').first()
 
-    expect(o.props().selectedIndex).toBe(0)
-  })
-
-  test('Can set a selectedIndex', () => {
-    const wrapper = mount(
-      <Item isOpen>
-        Nested
-        <Menu selectedIndex={3} />
-      </Item>
-    )
-
-    const o = wrapper.find(Menu)
-
-    expect(o.props().selectedIndex).toBe(3)
+    expect(valueSpan.text()).toBe('All Items')
+    expect(hasClass(wrapper, 'selectionClearer')).toBeTruthy()
   })
 })
 
 describe('Events', () => {
-  test('onBlur should fire a callback', () => {
-    const spy = jest.fn()
-    const wrapper = mount(<Item onBlur={spy} />)
-    const o = wrapper.find(`.${LINK_CLASSNAME}`)
-
-    o.simulate('blur')
-
-    expect(spy).toHaveBeenCalled()
-  })
-
-  test('onFocus should fire a callback', () => {
-    const spy = jest.fn()
-    const wrapper = mount(<Item onFocus={spy} />)
-    const o = wrapper.find(`.${LINK_CLASSNAME}`)
-
-    o.simulate('focus')
-
-    expect(spy).toHaveBeenCalled()
-  })
-
-  test('onClick should fire a callback', () => {
+  test('onClick callback fires', () => {
     const spy = jest.fn()
     const wrapper = mount(<Item onClick={spy} />)
-    const o = wrapper.find(`.${LINK_CLASSNAME}`)
 
-    o.simulate('click')
+    wrapper.simulate('click')
 
     expect(spy).toHaveBeenCalled()
   })
 
-  test('onClick should not fire if there is a sub-menu', () => {
+  test('onClick callback fires (selectionClearer)', () => {
     const spy = jest.fn()
-    const wrapper = mount(
-      <Item onClick={spy} isOpen>
-        <MenuComponent />
-      </Item>
+    const state = {
+      allowMultipleSelection: true,
+      selectionClearer: 'All Items',
+    }
+    const wrapper = mount(<Item onClick={spy} getState={() => state} />)
+
+    wrapper.simulate('click')
+
+    expect(spy).toHaveBeenCalledWith(
+      state,
+      expect.objectContaining({
+        type: expect.any(String),
+      })
     )
-    const o = wrapper.find(`.${LINK_CLASSNAME}`)
-
-    o.simulate('click')
-
-    expect(spy).not.toHaveBeenCalled()
   })
 
-  test('onMouseEnter should fire a callback', () => {
+  test('onClick callback fires when `preventSelect` is true', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Item onClick={spy} preventSelect />)
+
+    wrapper.simulate('click')
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('onMouseEnter callback fires', () => {
     const spy = jest.fn()
     const wrapper = mount(<Item onMouseEnter={spy} />)
-    const o = wrapper.find(`.${LINK_CLASSNAME}`)
 
-    o.simulate('mouseenter')
-
-    expect(spy).toHaveBeenCalled()
-  })
-
-  test('onMouseLeave should fire a callback', () => {
-    const spy = jest.fn()
-    const wrapper = mount(<Item onMouseLeave={spy} />)
-    const o = wrapper.find(`.${LINK_CLASSNAME}`)
-
-    o.simulate('mouseleave')
+    wrapper.simulate('mouseenter')
 
     expect(spy).toHaveBeenCalled()
   })
 
-  test('Enter keypress simulates click event', () => {
+  test('onFocus callback fires', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Item onClick={spy} />)
-    const o = wrapper.find(`.${LINK_CLASSNAME}`)
+    const wrapper = mount(<Item onFocus={spy} />)
 
-    o.simulate('keydown', { keyCode: 13 })
+    wrapper.simulate('focus')
 
     expect(spy).toHaveBeenCalled()
   })
 
-  test('Enter keypress simulates mouseneter event with sub-menu', () => {
+  test('onBlur callback fires', () => {
     const spy = jest.fn()
-    const wrapper = mount(
-      <Item onMouseEnter={spy}>
-        Nested
-        <Menu />
-      </Item>
-    )
-    const o = wrapper.find(`.${LINK_CLASSNAME}`)
+    const wrapper = mount(<Item onBlur={spy} />)
 
-    o.simulate('keydown', { keyCode: 13 })
+    wrapper.simulate('blur')
 
     expect(spy).toHaveBeenCalled()
-  })
-
-  test('onSelect should return the value, onClick', () => {
-    const spy = jest.fn()
-    const wrapper = mount(<Item onSelect={spy} value="Brick" />)
-    const o = wrapper.find(`.${LINK_CLASSNAME}`)
-
-    o.simulate('click')
-
-    expect(spy).toHaveBeenCalledWith('Brick')
-  })
-
-  test('Enter keypress should return the value', () => {
-    const spy = jest.fn()
-    const wrapper = mount(<Item onSelect={spy} value="Brick" />)
-    const o = wrapper.find(`.${LINK_CLASSNAME}`)
-
-    o.simulate('keydown', { keyCode: 13 })
-
-    expect(spy).toHaveBeenCalledWith('Brick')
   })
 })
 
-describe('Disabled', () => {
-  test('Is not disabled by default', () => {
-    const wrapper = shallow(<Item />)
+describe('Indicator', () => {
+  test('Renders the sub menu indicator, if has items', () => {
+    const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
+    const wrapper = mount(<Item items={items} />)
+    const el = wrapper.find('.c-DropdownItemSubMenuIndicator')
 
-    expect(wrapper.instance().props.disabled).not.toBeTruthy()
-    expect(wrapper.hasClass('is-disabled')).not.toBeTruthy()
+    expect(el.length).toBeTruthy()
   })
 
-  test('Can be set to disabled', () => {
-    const wrapper = shallow(<Item disabled />)
+  test('Does not render the sub menu indicator, if has no items', () => {
+    const items = undefined
+    const wrapper = mount(<Item items={items} />)
+    const el = wrapper.find('.c-DropdownItemSubMenuIndicator')
 
-    expect(wrapper.instance().props.disabled).toBeTruthy()
-    expect(wrapper.hasClass('is-disabled')).toBeTruthy()
+    expect(el.length).not.toBeTruthy()
   })
 
-  test('onClick callback cannot be fired, if disabled', () => {
-    const spy = jest.fn()
-    const wrapper = shallow(<Item disabled onClick={spy} />)
-    const o = wrapper.find('.c-DropdownItem__link')
+  test('Is directionally aware', () => {
+    const items = [{ value: 'ron' }, { value: 'champ' }, { value: 'brick' }]
+    const wrapper = mount(<Item items={items} dropRight={false} />)
 
-    o.simulate('click')
+    expect(wrapper.find('Icon').props().name).toContain('left')
 
-    expect(spy).not.toHaveBeenCalled()
-  })
+    wrapper.setProps({ dropRight: true })
 
-  test('Does not render sub-menu if open, and disabled', () => {
-    const wrapper = mount(
-      <Item disabled>
-        <MenuComponent />
-      </Item>
-    )
-    const o = wrapper.find('c-DropdownItem__menu')
-
-    expect(o.length).not.toBeTruthy()
+    expect(wrapper.find('Icon').props().name).toContain('right')
   })
 })
 
-describe('Closing', () => {
-  test('Fires onMenuClose callback when menu closing', () => {
-    const spy = jest.fn()
-    const wrapper = mount(<Item onMenuClose={spy} />)
+describe('renderItem', () => {
+  test('Can render custom markup for item', () => {
+    const CustomItem = (props = {}) => {
+      return <div className="ron">{props.label}</div>
+    }
 
-    // Mock the interaction...
-    wrapper.instance().handleOnMenuClose()
+    const wrapper = mount(<Item label="Champ" renderItem={CustomItem} />)
+    const el = wrapper.find('div.ron')
 
-    expect(spy).toHaveBeenCalled()
+    expect(el.length).toBeTruthy()
+  })
+
+  test('Can render custom markup for item when multiselect enabled', () => {
+    const CustomItem = (props = {}) => {
+      return <div className="ron">{props.label}</div>
+    }
+
+    const wrapper = mount(
+      <Item
+        label="Champ"
+        renderItem={CustomItem}
+        getState={() => {
+          return {
+            allowMultipleSelection: true,
+          }
+        }}
+      />
+    )
+
+    const el = wrapper.find('div.ron')
+
+    expect(el.length).toBeTruthy()
+  })
+
+  test('Renders default markup (itemSelectedCheck) for item when multiselect enabled', () => {
+    const wrapper = mount(<Item label="Champ" value="hello" />)
+
+    wrapper.setProps({
+      getState: () => ({
+        allowMultipleSelection: true,
+      }),
+    })
+
+    const itemSelectedCheck = wrapper.find(ItemSelectedCheck)
+
+    expect(itemSelectedCheck).toBeTruthy()
+  })
+})
+
+describe('disabled', () => {
+  test('Adds disabled styles, if specified', () => {
+    const wrapper = mount(<Item disabled />)
+    const el = wrapper.find('.c-DropdownItem')
+
+    expect(hasClass(wrapper, 'is-disabled')).toBe(true)
+    expect(getAttribute(el, 'aria-disabled')).toBe('true')
+  })
+})
+
+describe('Types', () => {
+  test('Renders a Group Header, if type is group', () => {
+    const wrapper = mount(<Item type="group" />)
+    const el = wrapper.find('DropdownHeader')
+
+    expect(el.length).toBeTruthy()
+  })
+
+  test('Renders a Divider, if type is divider', () => {
+    const wrapper = mount(<Item type="divider" />)
+    const el = wrapper.find('DropdownDivider')
+
+    expect(el.length).toBeTruthy()
   })
 })

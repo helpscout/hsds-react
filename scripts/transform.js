@@ -8,10 +8,6 @@ glob('stories/*.js', (err, files) => {
     const filename = path.basename(file)
 
     let ext = '.stories.js'
-    // const content = fs.readFileSync(file)
-    // if (content.indexOf("from 'react'") >= 0) {
-    //   ext = '.tsx'
-    // }
 
     const newFile = path.join(dirname, filename.replace('.js', ext))
 

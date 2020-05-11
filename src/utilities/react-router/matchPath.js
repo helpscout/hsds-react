@@ -1,5 +1,5 @@
+/* istanbul ignore file */
 /**
- * Do not convert this file to TypeScript!
  * This exists to ensure that the imports work correctly.
  */
 // Source

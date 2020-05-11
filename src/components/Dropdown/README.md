@@ -18,8 +18,8 @@ Check out the [docs for V2](./V2/docs/).
 
 The Dropdown component is comprised of smaller components:
 
-* [Dropdown](./docs/Dropdown.md)
-* [Trigger](./docs/Trigger.md)
-* [Menu](./docs/Menu.md)
-* [Item](./docs/Item.md)
-* [Divider](./docs/Divider.md)
+- [Dropdown](./docs/Dropdown.md)
+- [Trigger](./docs/Trigger.md)
+- [Menu](./docs/Menu.md)
+- [Item](./docs/Item.md)
+- [Divider](./docs/Divider.md)

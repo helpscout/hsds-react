@@ -62,14 +62,14 @@ describe('Body', () => {
     const wrapper = mount(<Item body="Mugatu" />)
     const o = wrapper.find(ui.content)
 
-    expect(o.text()).toContain('Mugatu')
+    expect(o.first().text()).toContain('Mugatu')
   })
 
   test('Renders body content over children', () => {
     const wrapper = mount(<Item body="Mugatu">Zoolander</Item>)
     const o = wrapper.find(ui.content)
 
-    expect(o.text()).toContain('Mugatu')
+    expect(o.first().text()).toContain('Mugatu')
   })
 
   test('Renders body with URLs converted to links', () => {
@@ -77,7 +77,7 @@ describe('Body', () => {
     const wrapper = mount(<Item body={body} />)
     const o = wrapper.find(ui.content)
 
-    expect(o.html()).toContain('<a href="http://www.helpscout.com"')
+    expect(o.first().html()).toContain('<a href="http://www.helpscout.com"')
   })
 
   test('Converts newlines to line break elements', () => {
@@ -85,7 +85,7 @@ describe('Body', () => {
     const wrapper = mount(<Item body={body} />)
     const o = wrapper.find(ui.content)
 
-    expect(o.html()).toContain('Hello<br><br>Goodbye')
+    expect(o.first().html()).toContain('Hello<br><br>Goodbye')
   })
 
   test('Escapes HTML in the body', () => {
@@ -93,7 +93,7 @@ describe('Body', () => {
     const wrapper = mount(<Item body={body} />)
     const o = wrapper.find(ui.content)
 
-    expect(o.html()).toContain('&lt;div&gt;Mugatu&lt;/div&gt;')
+    expect(o.first().html()).toContain('&lt;div&gt;Mugatu&lt;/div&gt;')
   })
 
   test('Does not escape HTML in the body when it is safe', () => {
@@ -101,7 +101,7 @@ describe('Body', () => {
     const wrapper = mount(<Item body={body} isBodySafe />)
     const o = wrapper.find(ui.content)
 
-    expect(o.html()).toContain(body)
+    expect(o.first().html()).toContain(body)
   })
 })
 
@@ -128,7 +128,7 @@ describe('Author', () => {
     const o = wrapper.find(ui.author)
 
     expect(o.length).toBe(1)
-    expect(o.html()).toContain(props.author.name)
+    expect(o.first().html()).toContain(props.author.name)
   })
 
   test('Renders within header', () => {
@@ -163,7 +163,7 @@ describe('Timestamp', () => {
     const o = wrapper.find(ui.createdAt)
 
     expect(o.length).toBe(1)
-    expect(o.html()).toContain(props.createdAt)
+    expect(o.first().html()).toContain(props.createdAt)
   })
 
   test('Renders within header', () => {
@@ -197,7 +197,7 @@ describe('Type', () => {
         },
         type: ITEM_TYPES.lineItem,
       }
-      const wrapper = shallow(<Item {...props} />)
+      const wrapper = mount(<Item {...props} />)
       const o = wrapper.find(Item.LineItem)
 
       expect(o.length).toBe(1)

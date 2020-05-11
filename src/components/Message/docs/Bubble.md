@@ -16,6 +16,7 @@ A Bubble component provides the visual container for the primary text-based cont
 | from      | `node`/`bool` | Provides author information and applies "From" styles.       |
 | isNote    | `bool`        | Applies "note" styles.                                       |
 | ltr       | `bool`        | Applies left-to-right text styles.                           |
+| primary   | `bool`        | Applies "primary" styles.                                    |
 | read      | `bool`        | Determines if the Message is read.                           |
 | rtl       | `bool`        | Applies right-to-left text styles.                           |
 | size      | `string`      | Determines the size of the component.                        |

@@ -1,157 +1,225 @@
 import React from 'react'
-import { shallow } from 'enzyme'
-import Trigger from '../Dropdown.Trigger'
-import { Button, Icon } from '../../'
+import { mount } from 'enzyme'
+import createStore from '../Dropdown.store'
+import { Provider } from '@helpscout/wedux'
+import Keys from '../../../constants/Keys'
+import ConnectedTrigger, { Trigger, mapStateToProps } from '../Dropdown.Trigger'
+import { hasClass, getAttribute } from '../../../tests/helpers/enzyme'
 
-describe('ClassName', () => {
-  test('Has default className', () => {
-    const wrapper = shallow(<Trigger />)
+describe('className', () => {
+  test('Has a default className', () => {
+    const wrapper = mount(<Trigger />)
 
-    expect(wrapper.hasClass('c-DropdownTrigger')).toBeTruthy()
+    expect(hasClass(wrapper, 'c-DropdownTrigger')).toBe(true)
   })
 
-  test('Applies custom className if specified', () => {
-    const customClass = 'piano-key-neck-tie'
-    const wrapper = shallow(<Trigger className={customClass} />)
+  test('Accepts custom className', () => {
+    const wrapper = mount(<Trigger className="ron" />)
 
-    expect(wrapper.hasClass(customClass)).toBeTruthy()
-  })
-})
-
-describe('Active', () => {
-  test('Is not active by default', () => {
-    const wrapper = shallow(<Trigger />)
-
-    expect(wrapper.props().isActive).not.toBeTruthy()
-  })
-
-  test('Adds active className, if set', () => {
-    const wrapper = shallow(<Trigger isActive />)
-
-    expect(wrapper.hasClass('is-active')).toBeTruthy()
-  })
-
-  test('Adds active className to non-text child, if set', () => {
-    const wrapper = shallow(
-      <Trigger isActive>
-        <a>Link</a>
-      </Trigger>
-    )
-    const o = wrapper.find('a')
-
-    expect(o.hasClass('is-active')).toBeTruthy()
+    expect(hasClass(wrapper, 'ron')).toBe(true)
   })
 })
 
-describe('Children', () => {
-  test('Can render a text-node child, with default button markup', () => {
-    const wrapper = shallow(<Trigger>Text</Trigger>)
-    const o = wrapper.find(Button)
-
-    expect(o.length).toBeTruthy()
-    expect(o.find(Icon).length).toBeTruthy()
-  })
-
-  test('Can render a non-text-node child, while preserving props', () => {
-    const wrapper = shallow(
-      <Trigger className="buddy-link" style={{ background: 'red' }}>
-        <a>Link</a>
+describe('children', () => {
+  test('Can render children', () => {
+    const wrapper = mount(
+      <Trigger>
+        <div className="ron">Ron</div>
       </Trigger>
     )
 
-    const o = wrapper.find('a')
-    const n = wrapper.find(Button)
-
-    expect(o.length).toBeTruthy()
-    expect(o.hasClass('c-DropdownTrigger')).toBeTruthy()
-    expect(o.hasClass('buddy-link')).toBeTruthy()
-    expect(o.props().style.background).toBe('red')
-    expect(o.props().tabIndex).toBe(0)
-    expect(n.length).not.toBeTruthy()
-  })
-
-  test('Only accepts a single child component', () => {
-    const wrapper = () =>
-      shallow(
-        <Trigger className="buddy-link" style={{ background: 'red' }}>
-          <a>Link</a>
-          <a>Link Two</a>
-        </Trigger>
-      )
-
-    expect(wrapper).toThrow(Error, /React.Children.only/)
+    expect(wrapper.find('div.ron').length).toBeTruthy()
   })
 })
 
-describe('Callbacks', () => {
-  test('onBlur callback can be fired', () => {
+describe('Accessibility', () => {
+  test('aria-expanded matches open state', () => {
+    const wrapper = mount(<Trigger isOpen={false} />)
+
+    expect(getAttribute(wrapper, 'aria-expanded')).toBe('false')
+
+    wrapper.setProps({ isOpen: true })
+
+    expect(getAttribute(wrapper, 'aria-expanded')).toBe('true')
+  })
+
+  test('Can set an ID', () => {
+    const wrapper = mount(<Trigger id="dropdown-trigger-ron" />)
+
+    expect(getAttribute(wrapper, 'id')).toBe('dropdown-trigger-ron')
+  })
+})
+
+describe('ref', () => {
+  test('Can set an ref to a DOM node', () => {
     const spy = jest.fn()
-    const wrapper = shallow(<Trigger onBlur={spy} />)
+    const wrapper = mount(<Trigger triggerRef={spy} />)
+    const el = wrapper.getDOMNode()
+
+    expect(spy).toHaveBeenCalledWith(el)
+  })
+})
+
+describe('Events', () => {
+  test('onBlur can be fired', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Trigger onBlur={spy} />)
 
     wrapper.simulate('blur')
 
     expect(spy).toHaveBeenCalled()
   })
 
-  test('onClick callback can be fired', () => {
+  test('onClick can be fired', () => {
     const spy = jest.fn()
-    const wrapper = shallow(<Trigger onClick={spy} />)
-    const o = wrapper.find(Button)
+    const wrapper = mount(<Trigger onClick={spy} />)
 
-    o.simulate('click')
+    wrapper.simulate('click')
 
     expect(spy).toHaveBeenCalled()
   })
 
-  test('onFocus callback can be fired', () => {
+  test('onFocus can be fired', () => {
     const spy = jest.fn()
-    const wrapper = shallow(<Trigger onFocus={spy} />)
+    const wrapper = mount(<Trigger onFocus={spy} />)
 
     wrapper.simulate('focus')
 
     expect(spy).toHaveBeenCalled()
   })
-})
 
-describe('Direction', () => {
-  test('Has a default direction of down', () => {
-    const wrapper = shallow(<Trigger />)
-
-    expect(wrapper.hasClass('is-down')).toBeTruthy()
-  })
-
-  test('Can set custom direction', () => {
-    const wrapper = shallow(<Trigger direction="up" />)
-
-    expect(wrapper.hasClass('is-down')).not.toBeTruthy()
-    expect(wrapper.hasClass('is-up')).toBeTruthy()
-  })
-})
-
-describe('Style', () => {
-  test('Can accept custom styles', () => {
-    const wrapper = shallow(<Trigger style={{ padding: 200 }} />)
-
-    expect(wrapper.props().style.padding).toBe(200)
-  })
-})
-
-describe('Click', () => {
-  test('Prevents defaultEvent on click', () => {
+  test('onKeydown can be fired', () => {
     const spy = jest.fn()
-    const wrapper = shallow(<Trigger />)
+    const wrapper = mount(<Trigger onKeyDown={spy} />)
 
-    wrapper.instance().handleOnClick({ preventDefault: spy })
+    wrapper.simulate('keydown')
+
+    expect(spy).toHaveBeenCalled()
+  })
+})
+
+describe('Actions', () => {
+  test('Toggles open on click', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Trigger toggleOpen={spy} isOpen={false} />)
+
+    wrapper.simulate('click')
+
+    expect(spy).toHaveBeenCalledTimes(1)
+
+    wrapper.simulate('click')
+
+    expect(spy).toHaveBeenCalledTimes(2)
+  })
+
+  test('Opens dropdown when down arrow key is pressed', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <Trigger toggleOpen={spy} openDropdown={spy} isOpen={false} />
+    )
+
+    wrapper.simulate('keydown', { keyCode: Keys.DOWN_ARROW })
 
     expect(spy).toHaveBeenCalled()
   })
 
-  test('Fires onClick callback', () => {
+  test('Opens dropdown when Enter key is pressed', () => {
     const spy = jest.fn()
-    const wrapper = shallow(<Trigger onClick={spy} />)
+    const wrapper = mount(
+      <Trigger toggleOpen={spy} openDropdown={spy} isOpen={false} />
+    )
 
-    wrapper.instance().handleOnClick()
+    wrapper.simulate('keydown', { keyCode: Keys.ENTER })
 
     expect(spy).toHaveBeenCalled()
+  })
+
+  test('Closes dropdown when Tab+Shift key is pressed', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <Trigger toggleOpen={spy} closeDropdown={spy} isOpen={true} />
+    )
+
+    wrapper.simulate('keydown', { keyCode: Keys.TAB, shiftKey: true })
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Does not closes dropdown when Tab key is pressed (without shift)', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <Trigger toggleOpen={spy} closeDropdown={spy} isOpen={true} />
+    )
+
+    wrapper.simulate('keydown', { keyCode: Keys.TAB, shiftKey: false })
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('Open dropdown fires, only when dropdown is closed', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <Trigger toggleOpen={spy} openDropdown={spy} isOpen={true} />
+    )
+
+    wrapper.simulate('keydown', { keyCode: Keys.DOWN_ARROW })
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('Close dropdown fires, only when dropdown is closed', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <Trigger toggleOpen={spy} closeDropdown={spy} isOpen={false} />
+    )
+
+    wrapper.simulate('keydown', { keyCode: Keys.TAB, shiftKey: true })
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+})
+
+describe('ConnectedTrigger', () => {
+  test('Can render', () => {
+    const wrapper = mount(
+      <Provider store={createStore()}>
+        <ConnectedTrigger />
+      </Provider>
+    )
+    const el = wrapper.find('.c-DropdownTrigger')
+
+    expect(wrapper).toBeTruthy()
+    expect(el.length).toBeTruthy()
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('Can pass triggerProps to Trigger', () => {
+    const triggerProps = {
+      zIndex: 999,
+      tabIndex: -1,
+      'aria-hidden': true,
+    }
+    const props = mapStateToProps({
+      triggerProps,
+    })
+
+    expect(props).toEqual(triggerProps)
+  })
+})
+
+describe('Disable', () => {
+  test('Renders the disabled in the DOM node', () => {
+    const wrapper = mount(<Trigger disabled={true} />)
+    const el = wrapper.find('span.c-DropdownTrigger')
+
+    expect(el.prop('disabled')).toBe(true)
+  })
+
+  test('Renders disabled styles', () => {
+    const wrapper = mount(<Trigger disabled={true} />)
+    const el = wrapper.find('span.c-DropdownTrigger')
+
+    expect(el.hasClass('is-disabled')).toBe(true)
   })
 })

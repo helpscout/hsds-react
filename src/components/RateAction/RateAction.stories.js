@@ -1,15 +1,18 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import RateAction from '.'
 
-const stories = storiesOf('RateAction', module)
+export default {
+  component: RateAction,
+  title: 'Components/Badges/RateAction',
+}
+
 const font =
   '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
 
 const SIZES = ['lg', 'md', 'sm']
 const REACTIONS_EMOTICONS = ['reaction-happy', 'reaction-okay', 'reaction-sad']
 
-stories.add('Default', () => {
+export const Default = () => {
   return (
     <div style={{ fontFamily: font }}>
       <h4>Default</h4>
@@ -23,9 +26,9 @@ stories.add('Default', () => {
       ))}
     </div>
   )
-})
+}
 
-stories.add('withCircle', () => {
+export const WithBorder = () => {
   return (
     <div style={{ fontFamily: font }}>
       <h4>With Circle</h4>
@@ -49,7 +52,41 @@ stories.add('withCircle', () => {
       ))}
     </div>
   )
-})
+}
+
+WithBorder.story = {
+  name: 'with border',
+}
+
+export const WithCircle = () => {
+  return (
+    <div style={{ fontFamily: font }}>
+      <h4>With Circle</h4>
+      {REACTIONS_EMOTICONS.map(iconName => (
+        <div style={{ margin: '0 0 15px', clear: 'both' }}>
+          <span style={{ float: 'left', marginRight: 20 }}>{iconName}: </span>
+          {SIZES.map(size => (
+            <div
+              style={{
+                height: 64,
+                float: 'left',
+                verticalAlign: 'middle',
+                display: 'table-cell',
+                marginLeft: 32,
+              }}
+            >
+              <RateAction size={size} name={iconName} withCircle={true} />
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+WithCircle.story = {
+  name: 'with circle',
+}
 
 class Play extends React.Component {
   state = {
@@ -115,9 +152,9 @@ class Play extends React.Component {
     )
   }
 }
-stories.add('Active', () => <Play />)
+export const Active = () => <Play />
 
-stories.add('Disabled', () => {
+export const Disabled = () => {
   return (
     <div style={{ fontFamily: font }}>
       {REACTIONS_EMOTICONS.map(iconName => (
@@ -130,4 +167,4 @@ stories.add('Disabled', () => {
       ))}
     </div>
   )
-})
+}

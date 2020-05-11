@@ -2,8 +2,7 @@
 
 In this guide, we'll walk through creating a custom component in HSDS!
 
-All Components in HSDS are or have been updated to TypeScript, do not fret! You can write your components in regular old JavaScript, just make sure the extensions are '.ts' or '.tsx' (if your file contains jsx, you want .tsx) things will work as normal.
-We do enocurage you to have a look at other components and follow how thay are put together, you might learn a thing or two, which is always a good thing!
+We do encourage you to have a look at other components and follow how thay are put together, you might learn a thing or two, which is always a good thing!
 
 We'll be created a `Strong` component, an enhancement to the default HTML `strong` primitive.
 
@@ -30,9 +29,8 @@ hsds-react/
 
 Under our newly created `Strong/` directory, we'll need to create a few files:
 
-* `index.ts`
-* `Strong.tsx`
-* `Strong.utils.ts`
+- `index.js`
+- `Strong.jsx`
 
 If your component will be styled (not all are!) add a `styles` folder and put a `Strong.css.js` file in it
 
@@ -41,27 +39,24 @@ hsds-react/
   └── src/
       └── components/
           └── Strong/
-              └── styles/
-                  └── Strong.css.js
-              ├── index.ts
-              ├── Strong.tsx
-              └── Strong.utils.ts
+              └── Strong.css.js
+              ├── index.js
+              ├── Strong.jsx
+              └── Strong.utils.js
 ```
 
-The **`index.ts`** file is the main file allow the consuming App/component to use `Strong`. It also "connects" our component to `PropProvider`, allowing the user to more easily customize `Strong` ([more on that later](#propConnect)!).
+The **`index.js`** file is the main file allow the consuming App/component to use `Strong`.
 
-The **`String.tsx`** file our actual React component.
+The **`String.jsx`** file our actual React component.
 
 ## Base component code
 
-Add the starting React component boilerplate for `Strong.tsx`:
+Add the starting React component boilerplate for `Strong.jsx`:
 
 ```jsx
-import * as React from 'react'
+import React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { COMPONENT_KEY } from './Strong.utils.ts'
 import { StrongUI } from './styles/Strong.css.js'
 
 class Strong extends React.PureComponent {
@@ -86,27 +81,10 @@ class Strong extends React.PureComponent {
   }
 }
 
-namespaceComponent(COMPONENT_KEY, Strong)
-
 export default Strong
 ```
 
 Whoa 😳! Lots of stuff going on already!
-
-#### TypeScript
-
-HSDS uses [TypeScript](https://www.typescriptlang.org/) for typing. You can write your component in JS, and add the TypeScript layer little by little.
-Here are a couple of relevant links to get you started:
-
-* [JSX in TypeScript](https://www.typescriptlang.org/docs/handbook/jsx.html)
-* [Understanding TypeScript’s type notation](http://2ality.com/2018/04/type-notation-typescript.html)
-* [Typescript, React, JSX](https://basarat.gitbooks.io/typescript/docs/jsx/react.html)
-
-Notice how our example at the moment does not include anything TypeScript wise yet.
-
-**Important**
-
-I just told you a lie, TypeScript requires that specific way to import React: `import * as React from 'react'` so no `import React, { PureComponent as Component } from 'react'`
 
 #### `Strong.css.js`
 
@@ -122,10 +100,10 @@ If you're expecting your Component to have a bunch of deeply nested, logic heavy
 
 Compared to Stateless-Functional Components, the pros are many, which include:
 
-* Ability to reference DOM nodes
-* Standardized component structure
-* Access to React [lifecycle hooks](https://reactjs.org/docs/state-and-lifecycle.html)
-* Prop-diffing, so that it doesn't re-render all the time (this is a big one)
+- Ability to reference DOM nodes
+- Standardized component structure
+- Access to React [lifecycle hooks](https://reactjs.org/docs/state-and-lifecycle.html)
+- Prop-diffing, so that it doesn't re-render all the time (this is a big one)
 
 #### `componentClassName`
 
@@ -151,37 +129,25 @@ These modifier classNames should typically be prefixed with words like `is-`, `h
 
 HSDS's components are designed to be used as if they were default HTML elements. The `...rest` pattern allows for users to pass in custom (but HTML-supported) props like:
 
-* `aria` roles
-* `data-` attributes
-* `title`
+- `aria` roles
+- `data-` attributes
+- `title`
 
 (Just to name a few)
 
 It also allows for the user to hook into default React props, like:
 
-* `onMouseEnter`
-* `onClick`
-* `htmlFor`
+- `onMouseEnter`
+- `onClick`
+- `htmlFor`
 
 `getValidProps()` is a special [utility function](https://helpscout.gitbook.io/react-utils) that filters out non-default HTML/React props. This prevents React from throwing errors if non-default props are accidentally passed during the Object spread process.
 
 Wonderful 🙏! You've created the base for `Strong`, that's performant, easy to extend, and Flow typed.
 
-#### `namespaceComponent`
-
-This is a Higher-Order component that sets up the internal namespacing within HSDS. It allows for HSDS components to reliably type-check each other.
-
-`COMPONENT_KEY` is the namespace for the component, in our case, `Strong`. This key normally resides in the "utils" file.
-
 ## Utils
 
-Your component might need different functions, constants or other stuff that don't need to live inside of it, the place to put those is inside your utils file: `Strong.utils.ts`, at the minimum, this file is where the `COMPONENT_KEY` lives:
-
-**Strong.utils.ts**
-
-```ts
-export const COMPONENT_KEY = 'Strong'
-```
+Your component might need different functions, constants or other stuff that don't need to live inside of it, the place to put those is inside your utils file: `Strong.utils.js`.
 
 ## Exporting
 
@@ -189,19 +155,11 @@ We'll need to export `Strong` to make it simpler to import and use. This is all 
 
 ```jsx
 import Strong from './Strong'
-import { propConnect } from '../PropProvider'
-import { COMPONENT_KEY } from './Strong.utils.ts'
 
-export default propConnect(COMPONENT_KEY)(Strong)
+export default Strong
 ```
 
 Whoa 😳! More stuff!
-
-#### `propConnect`
-
-`propConnect` is a special Higher-Order Component that works very similar to [Redux's](https://redux.js.org/) `connect`. It hooks up our `Strong` component to HSDS's `PropProvider`, which allows the user to more [easily override props](https://github.com/helpscout/hsds-react/blob/master/src/components/PropProvider/docs/Provider.md).
-
-We provide it with the (`string`) namespace (`COMPONENT_KEY`), as well as the actual Component.
 
 ## More Exporting
 
@@ -222,47 +180,16 @@ export { default as Strong } from './Strong'
 ...
 ```
 
-## Adding TypeScript types
-
-When working with TypeScript on A react component, one of the things it brings to the table is a different way to generate a component's "prop types", you no longer need the separate package 'prop-types' as you will be using TS's type system. Let's add this to our example, first, create a new file: `Strong.types.ts`
-
-```
-hsds-react/
-  └── src/
-      └── components/
-          └── Strong/
-              └── styles/
-                  └── Strong.css.js
-              ├── index.ts
-              ├── Strong.tsx
-              └── Strong.types.ts
-```
-
-**Strong.types.ts**
-
-Notice the convention to define the component prop types: `ComponentNameProps`, for state types use: `ComponentNameState`
-
-```ts
-export type StrongProps = {
-  children?: any
-  className?: string
-  isSuperBold: boolean
-}
-```
-
-**Strong.tsx**
+**Strong.jsx**
 
 ```jsx
-import * as React from 'react'
+import React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { namespaceComponent } from '../../utilities/component'
 import { StrongUI } from './styles/Strong.css.js'
-import { StrongProps } from './Strong.types.ts'
 
-export const COMPONENT_KEY = 'Strong'
-
-class Strong extends React.PureComponent<StrongProps> {
+class Strong extends React.PureComponent {
   static defaultProps = {
     isSuperBold: false,
   }
@@ -283,8 +210,6 @@ class Strong extends React.PureComponent<StrongProps> {
     )
   }
 }
-
-namespaceComponent(COMPONENT_KEY, Strong)
 
 export default Strong
 ```
@@ -310,31 +235,11 @@ hsds-react/
               └── styles/
                   ├── Table.Cell.css.js
                   └── Table.css.js
-              ├── index.ts
-              ├── Table.tsx
-              ├── Table.Cell.tsx
-              ├── Table.utils.ts
-              └── Table.types.ts
+              ├── index.js
+              ├── Table.jsx
+              ├── Table.Cell.jsx
+              ├── Table.utils.js
 ```
-
-#### Types
-
-```ts
-export type TableProps = {
-  /* ... */
-}
-export type TableState = {
-  /* ... */
-}
-export type TableCellProps = {
-  /* ... */
-}
-export type TableCellState = {
-  /* ... */
-}
-```
-
-In general, the pattern looks like `Component.SubComponent`...
 
 ## Next
 
@@ -342,4 +247,4 @@ Let's add some [styles](stying.md)!
 
 ## See also
 
-* [react-utils](https://helpscout.gitbook.io/react-utils)
+- [react-utils](https://helpscout.gitbook.io/react-utils)

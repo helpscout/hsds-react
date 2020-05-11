@@ -65,6 +65,5 @@ describe('Control', () => {
     expect(wrapper.find(Select).prop('isFirst')).toBe(true)
     expect(wrapper.find(Input).prop('isNotOnly')).toBe(true)
     expect(wrapper.find(Input.AddOn).prop('isLast')).toBe(true)
-    expect(wrapper.find('button').prop('isNotOnly')).toBe(undefined)
   })
 })

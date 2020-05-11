@@ -1,369 +1,140 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import { Dropdown } from '../Dropdown'
-import { MenuComponent } from '../Dropdown.Menu'
 
-describe('Classname', () => {
-  test('Has default className', () => {
-    const wrapper = shallow(<Dropdown />)
+const documentEvents = {
+  click: event => undefined,
+  keydown: event => undefined,
+}
 
-    expect(wrapper.hasClass('c-Dropdown')).toBeTruthy()
-  })
-
-  test('Can accept custom classNames', () => {
-    const wrapper = shallow(<Dropdown className="ron" />)
-
-    expect(wrapper.hasClass('ron')).toBeTruthy()
-  })
-
-  test('Has isOpen className', () => {
-    const wrapper = shallow(<Dropdown isOpen />)
-
-    expect(wrapper.hasClass('is-open')).toBeTruthy()
-  })
+jest.mock('../Dropdown.Trigger', () => {
+  const Trigger = props => <div />
+  return () => <Trigger />
 })
-
-describe('Style', () => {
-  test('Can accept custom styles', () => {
-    const wrapper = shallow(<Dropdown style={{ background: 'red' }} />)
-
-    expect(wrapper.props().style.background).toBe('red')
-  })
-})
-
-describe('Children', () => {
-  test('Can render a non Trigger/Menu child component', () => {
-    const wrapper = mount(
-      <Dropdown>
-        <div className="ron">Ron</div>
-      </Dropdown>
-    )
-    const o = wrapper.find('.ron')
-
-    expect(o.length).toBe(1)
-  })
-
-  test('Can render a single Trigger child component', () => {
-    const wrapper = mount(
-      <Dropdown>
-        <Dropdown.Trigger />
-      </Dropdown>
-    )
-    const o = wrapper.find(Dropdown.Trigger)
-
-    expect(o.length).toBe(1)
-  })
-
-  test('Can render a single Menu child component', () => {
-    const wrapper = mount(
-      <Dropdown>
-        <Dropdown.Menu />
-      </Dropdown>
-    )
-    const o = wrapper.find(Dropdown.Menu)
-
-    expect(o.length).toBe(1)
-  })
-
-  test('Does not render a Menu if not open', () => {
-    const wrapper = mount(
-      <Dropdown>
-        <Dropdown.Trigger />
-        <Dropdown.Menu />
-      </Dropdown>
-    )
-    const o = wrapper.find(Dropdown.Menu)
-
-    expect(o.length).toBe(0)
-  })
-
-  test('Can a Menu if open', () => {
-    const wrapper = mount(
-      <Dropdown isOpen>
-        <Dropdown.Trigger />
-        <Dropdown.Menu />
-      </Dropdown>
-    )
-    const o = wrapper.find(Dropdown.Menu)
-
-    expect(o.length).toBe(1)
-  })
-
-  test('Can render a non-trigger + menu children components', () => {
-    const wrapper = mount(
-      <Dropdown isOpen>
-        <a>Trigger</a>
-        <Dropdown.Menu />
-      </Dropdown>
-    )
-    const m = wrapper.find(Dropdown.Menu)
-    const o = wrapper.find('a')
-
-    expect(m.length).toBe(1)
-    expect(o.length).toBe(1)
-  })
-
-  test('Can render a Trigger + non-menu children components', () => {
-    const wrapper = mount(
-      <Dropdown>
-        <Dropdown.Trigger />
-        <div className="other">Other guys</div>
-      </Dropdown>
-    )
-    const m = wrapper.find(Dropdown.Trigger)
-    const o = wrapper.find('.other')
-
-    expect(m.length).toBe(1)
-    expect(o.length).toBe(1)
-  })
-
-  test('Can render a Trigger + Menu children components', () => {
-    const wrapper = mount(
-      <Dropdown isOpen>
-        <Dropdown.Trigger />
-        <Dropdown.Menu />
-      </Dropdown>
-    )
-    const m = wrapper.find(Dropdown.Menu)
-    const o = wrapper.find(Dropdown.Trigger)
-
-    expect(m.length).toBe(1)
-    expect(o.length).toBe(1)
-  })
-})
-
-describe('Open', () => {
-  test('Updates isOpen state on isOpen prop change', () => {
-    const wrapper = mount(<Dropdown />)
-
-    expect(wrapper.state().isOpen).not.toBeTruthy()
-    wrapper.setProps({ isOpen: true })
-    expect(wrapper.state().isOpen).toBeTruthy()
-  })
-})
-
-describe('Selected', () => {
-  test('Fires onSelect callback on item click', () => {
-    const spy = jest.fn()
-    const wrapper = mount(
-      <Dropdown onSelect={spy} isOpen>
-        <Dropdown.Trigger />
-        <MenuComponent>
-          <Dropdown.Item value="Ron" />
-        </MenuComponent>
-      </Dropdown>
-    )
-    const o = wrapper.find(Dropdown.Item)
-    o.instance().handleOnClick({ stopPropagation: () => {} })
-
-    expect(spy).toHaveBeenCalledWith('Ron')
-  })
+jest.mock('../Dropdown.MenuContainer', () => {
+  const MenuContainer = props => <div />
+  return () => <MenuContainer />
 })
 
 describe('Click events', () => {
-  test('Does not open when document.body is clicked', () => {
-    const wrapper = mount(<Dropdown />)
-    wrapper.instance().handleOnBodyClick({
-      target: document.body,
+  beforeEach(() => {
+    document.addEventListener = jest.fn((event, handler) => {
+      documentEvents[event] = handler
     })
-
-    expect(wrapper.state().isOpen).toBeFalsy()
   })
 
-  test('Closes when document.body is clicked', () => {
-    const wrapper = mount(<Dropdown isOpen />)
-    wrapper.instance().handleOnBodyClick({
-      target: document.body,
-    })
-
-    expect(wrapper.state().isOpen).toBeFalsy()
+  afterEach(() => {
+    document.addEventListener.mockRestore()
   })
 
-  test('Closes when triggerNode is clicked', () => {
-    const wrapper = mount(
-      <Dropdown isOpen>
-        <Dropdown.Trigger />
-      </Dropdown>
-    )
-    const o = wrapper.instance()
-
-    o.handleOnBodyClick({
-      target: o.triggerNode,
-    })
-
-    expect(wrapper.state().isOpen).toBeFalsy()
-  })
-
-  test('Opens when triggerNode is clicked', () => {
-    const wrapper = mount(
-      <Dropdown>
-        <Dropdown.Trigger />
-      </Dropdown>
-    )
-    const o = wrapper.instance()
-
-    o.handleOnBodyClick({
-      target: o.triggerNode,
-    })
-
-    expect(wrapper.state().isOpen).toBeTruthy()
-  })
-})
-
-describe('SelectedIndex', () => {
-  test('Passes selectedIndex to Menu', () => {
-    const wrapper = mount(
-      <Dropdown isOpen selectedIndex={3}>
-        <Dropdown.Trigger />
-        <MenuComponent />
-      </Dropdown>
-    )
-    const o = wrapper.find(MenuComponent)
-
-    expect(o.props().selectedIndex).toBe(3)
-  })
-
-  test('Respects selectedIndex set on Menu', () => {
-    const wrapper = mount(
-      <Dropdown isOpen selectedIndex={3}>
-        <Dropdown.Trigger />
-        <MenuComponent selectedIndex={2} />
-      </Dropdown>
-    )
-    const o = wrapper.find(MenuComponent)
-
-    expect(o.props().selectedIndex).toBe(2)
-  })
-})
-
-describe('Focus', () => {
-  test('Sets internal focus state when Trigger is focused', done => {
-    const wrapper = mount(
-      <Dropdown isOpen>
-        <Dropdown.Trigger />
-      </Dropdown>
-    )
-    const o = wrapper.find(Dropdown.Trigger)
-
-    o.simulate('focus')
-
-    setTimeout(() => {
-      expect(wrapper.instance().isFocused).toBeTruthy()
-      done()
-    }, 1)
-  })
-})
-
-describe('Keyboard events', () => {
-  test('Open on down arrow press', () => {
-    const wrapper = mount(<Dropdown />)
-    const o = wrapper.instance()
-    o.isFocused = true
-    o.handleDownArrow()
-
-    expect(o.state.isOpen).toBeTruthy()
-    expect(o.state.selectedIndex).toBe(0)
-  })
-
-  test('Do not open on down arrow press, if not focused', () => {
-    const wrapper = mount(<Dropdown />)
-    const o = wrapper.instance()
-    o.isFocused = false
-    o.handleDownArrow()
-
-    expect(o.state.isOpen).not.toBeTruthy()
-    expect(o.state.selectedIndex).toBe(undefined)
-  })
-
-  test('Close on tab press', () => {
+  test('Closes dropdown on document.body click, outside of menu', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Dropdown isOpen onClose={spy} />)
-    const o = wrapper.instance()
-    o.handleTab({ preventDefault: () => {} })
+    const wrapper = mount(<Dropdown isOpen={true} closeDropdown={spy} />)
+    const outsideNode = document.createElement('div')
+    const mockMenuNode = document.createElement('div')
 
-    expect(o.state.isOpen).not.toBeTruthy()
+    wrapper.instance()['menuNode'] = mockMenuNode
+
+    documentEvents.click({ target: outsideNode })
+
     expect(spy).toHaveBeenCalled()
   })
 
-  test('Close on shift+tab press', () => {
+  test('Does not trigger closeDropdown if event is falsy', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Dropdown isOpen onClose={spy} />)
-    const o = wrapper.instance()
-    o.handleShiftTab({ preventDefault: () => {} })
+    const wrapper = mount(<Dropdown isOpen={false} closeDropdown={spy} />)
 
-    expect(o.state.isOpen).not.toBeTruthy()
-    expect(spy).toHaveBeenCalled()
-  })
-})
+    wrapper.instance()['menuNode'] = undefined
 
-describe('Mounting', () => {
-  test('Tracks mount status internally', () => {
-    const wrapper = mount(<Dropdown isOpen />)
-    const o = wrapper.instance()
+    documentEvents.click()
 
-    expect(o._isMounted).toBe(true)
-
-    wrapper.unmount()
-
-    expect(o._isMounted).toBe(false)
-  })
-})
-
-describe('Tab Navigation', () => {
-  test('Is not enabled by default', () => {
-    const spy = jest.fn()
-    const spyEvent = jest.fn()
-    const mockEvent = {
-      preventDefault: spyEvent,
-    }
-
-    const wrapper = mount(<Dropdown isOpen />)
-
-    const o = wrapper.instance()
-    o.handleOnMenuClose = spy
-
-    o.handleTab(mockEvent)
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spyEvent).toHaveBeenCalledTimes(1)
-
-    o.handleShiftTab(mockEvent)
-    expect(spy).toHaveBeenCalledTimes(2)
-    expect(spyEvent).toHaveBeenCalledTimes(2)
-  })
-
-  test('Does not close menu, if enabled', () => {
-    const spy = jest.fn()
-    const spyEvent = jest.fn()
-    const mockEvent = {
-      preventDefault: spyEvent,
-    }
-
-    const wrapper = mount(<Dropdown isOpen enableTabNavigation />)
-
-    const o = wrapper.instance()
-    o.handleOnMenuClose = spy
-
-    o.handleTab(mockEvent)
     expect(spy).not.toHaveBeenCalled()
-    expect(spyEvent).not.toHaveBeenCalled()
-
-    o.handleShiftTab(mockEvent)
-    expect(spy).not.toHaveBeenCalled()
-    expect(spyEvent).not.toHaveBeenCalled()
   })
 
-  test('Refocuses the trigger when closed', () => {
+  test('Does not trigger closeDropdown if there is no menu', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Dropdown isOpen enableTabNavigation />)
+    const wrapper = mount(<Dropdown isOpen={false} closeDropdown={spy} />)
+    const outsideNode = document.createElement('div')
 
-    const o = wrapper.instance()
-    o.triggerNode = {
-      focus: spy,
-    }
+    wrapper.instance()['menuNode'] = undefined
 
-    o.handleOnMenuClose()
+    documentEvents.click({ target: outsideNode })
 
-    expect(spy).toHaveBeenCalled()
-    expect(o.isFocused).toBe(true)
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('Does not trigger closeDropdown if already closed on document.body click', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Dropdown isOpen={false} closeDropdown={spy} />)
+    const outsideNode = document.createElement('div')
+    const mockMenuNode = document.createElement('div')
+
+    wrapper.instance()['menuNode'] = mockMenuNode
+
+    documentEvents.click({ target: outsideNode })
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('Does not trigger closeDropdown if target is trigger', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Dropdown isOpen={false} closeDropdown={spy} />)
+    const mockTriggerNode = document.createElement('div')
+    const mockMenuNode = document.createElement('div')
+
+    wrapper.instance()['triggerNode'] = mockTriggerNode
+    wrapper.instance()['menuNode'] = mockMenuNode
+
+    documentEvents.click({ target: mockTriggerNode })
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('Does not trigger closeDropdown if target is within menu', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Dropdown isOpen={false} closeDropdown={spy} />)
+    const targetNode = document.createElement('div')
+    const mockMenuNode = document.createElement('div')
+    mockMenuNode.appendChild(targetNode)
+
+    wrapper.instance()['menuNode'] = mockMenuNode
+
+    documentEvents.click({ target: targetNode })
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+})
+
+describe('setMenuNode', () => {
+  test('Does not setMenuNode, if already defined', () => {
+    const spy = jest.fn()
+    const mockGetState = () => ({
+      menuNode: true,
+    })
+
+    const wrapper = mount(
+      <Dropdown getState={mockGetState} setMenuNode={spy} />
+    )
+    wrapper.setProps({ isOpen: true })
+    wrapper.update()
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+})
+
+describe('setTriggerNode', () => {
+  test('Does not setTriggerNode, if already defined', () => {
+    const spy = jest.fn()
+    const mockGetState = () => ({
+      triggerNode: true,
+    })
+
+    const wrapper = mount(
+      <Dropdown getState={mockGetState} setTriggerNode={spy} />
+    )
+    wrapper.setProps({ isOpen: true })
+    wrapper.update()
+
+    expect(spy).not.toHaveBeenCalled()
   })
 })

@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import { default as BlankSlate } from '../ChatList.BlankSlate'
-import { SpeechBubbleIlloUI } from '../styles/BlankSlate.css'
+import { SpeechBubbleIlloUI } from '../ChatList.css'
 import { Text } from '../../index'
 
 describe('ClassName', () => {

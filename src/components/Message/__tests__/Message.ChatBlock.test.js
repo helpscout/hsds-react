@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { mount } from 'enzyme'
 import Action from '../Message.Action'
 import ChatBlock from '../Message.ChatBlock'
@@ -69,14 +69,24 @@ describe('To/From', () => {
     const wrapper = mount(<ChatBlock from />)
     const o = wrapper.find(`.${cx}`)
 
-    expect(o.getDOMNode().classList.contains('is-from')).toBeTruthy()
+    expect(
+      o
+        .first()
+        .getDOMNode()
+        .classList.contains('is-from')
+    ).toBeTruthy()
   })
 
   test('Applies "to" styles, if defined', () => {
     const wrapper = mount(<ChatBlock to />)
     const o = wrapper.find(`.${cx}`)
 
-    expect(o.getDOMNode().classList.contains('is-to')).toBeTruthy()
+    expect(
+      o
+        .first()
+        .getDOMNode()
+        .classList.contains('is-to')
+    ).toBeTruthy()
   })
 })
 
@@ -89,6 +99,6 @@ describe('Context', () => {
     )
     const el = wrapper.find(`.${cx}`)
 
-    expect(el.props().className).toContain('is-theme-embed')
+    expect(el.first().props().className).toContain('is-theme-embed')
   })
 })

@@ -5,7 +5,7 @@ import Input from '../Input'
 import Resizer from '../Input.Resizer'
 import Badge from '../../Badge'
 import Animate from '../../Animate'
-import { CharValidatorUI } from '../styles/Input.css'
+import { CharValidatorUI } from '../Input.css'
 
 jest.useFakeTimers()
 
@@ -171,7 +171,7 @@ describe('Events', () => {
   test('onResize callback is called when Input resizes', () => {
     const spy = jest.fn()
     const wrapper = mount(<Input multiline={true} onResize={spy} />)
-    const resizer = wrapper.find('Resizer')
+    const resizer = wrapper.find('InputResizer')
 
     resizer.instance().handleOnResize()
 
@@ -254,7 +254,7 @@ describe('value', () => {
   test('Does not update the state if new value is the same as previous value', () => {
     const lifecycleSpy = jest.spyOn(
       Input.prototype,
-      'componentWillReceiveProps'
+      'UNSAFE_componentWillReceiveProps'
     )
     const stateSpy = jest.spyOn(Input.prototype, 'setState')
 
@@ -270,7 +270,7 @@ describe('value', () => {
   test('Does update the state if new value is different than previous value', () => {
     const lifecycleSpy = jest.spyOn(
       Input.prototype,
-      'componentWillReceiveProps'
+      'UNSAFE_componentWillReceiveProps'
     )
     const stateSpy = jest.spyOn(Input.prototype, 'setState')
 
@@ -442,12 +442,6 @@ describe('HintText', () => {
     const o = wrapper.find(ui.hintText).first()
     expect(o.exists()).toBeTruthy()
     expect(o.text()).toBe('Hint text')
-  })
-
-  test('Does not pass state to hintText', () => {
-    const wrapper = mount(<Input hintText="Hint text" state="error" />)
-    const o = wrapper.find(ui.hintText).first()
-    expect(o.props().state).not.toBeTruthy()
   })
 
   test('Accepts React components', () => {
@@ -895,8 +889,8 @@ describe('Suffix', () => {
   })
 })
 
-describe('innerRef', () => {
-  test('Can retrieve innerRef DOM node', () => {
+describe('ref', () => {
+  test('Can retrieve ref DOM node', () => {
     const spy = jest.fn()
     const wrapper = mount(<Input innerRef={spy} />)
     const o = wrapper.find('input').getDOMNode()

@@ -1,14 +1,12 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { action as addonAction } from '@storybook/addon-actions'
-import { withKnobs, text, boolean, object } from '@storybook/addon-knobs'
-import styled from '../styled'
+import styled from 'styled-components'
+import { text, boolean, object } from '@storybook/addon-knobs'
 import { Form, FormGroup, FormLabel, Input } from '../index'
-import Readme from './README.md'
 
-const action = name => (...args) => {
-  addonAction(name)(...args)
-  console.log(name, { args })
+export default {
+  component: Form,
+  title: 'Components/Forms/Form',
+  excludeStories: ['ContainerUI'],
 }
 
 export const ContainerUI = styled('div')`
@@ -17,11 +15,7 @@ export const ContainerUI = styled('div')`
   }
 `
 
-const stories = storiesOf('Form', module)
-
-stories.addDecorator(withKnobs).addParameters({ readme: { sidebar: Readme } })
-
-stories.add('with save, cancel and delete buttons', () => {
+export const WithSaveCancelDelete = () => {
   class SampleForm extends React.Component {
     state = {
       text: 'Sample Text',
@@ -72,9 +66,13 @@ stories.add('with save, cancel and delete buttons', () => {
   }
 
   return <SampleForm />
-})
+}
 
-stories.add('with save and cancel buttons', () => {
+WithSaveCancelDelete.story = {
+  name: 'with save, cancel and delete buttons',
+}
+
+export const WithSaveCancelButtons = () => {
   class SampleForm extends React.Component {
     state = {
       text: 'Sample Text',
@@ -119,9 +117,13 @@ stories.add('with save and cancel buttons', () => {
   }
 
   return <SampleForm />
-})
+}
 
-stories.add('with save and delete buttons', () => {
+WithSaveCancelButtons.story = {
+  name: 'with save and cancel buttons',
+}
+
+export const WithSaveDeleteButtons = () => {
   class SampleForm extends React.Component {
     state = {
       text: 'Sample Text',
@@ -165,9 +167,12 @@ stories.add('with save and delete buttons', () => {
   }
 
   return <SampleForm />
-})
+}
+WithSaveDeleteButtons.story = {
+  name: 'with save and delete buttons',
+}
 
-stories.add('with only save button', () => {
+export const WithOnlySaveButton = () => {
   class SampleForm extends React.Component {
     state = {
       text: 'Sample Text',
@@ -205,9 +210,12 @@ stories.add('with only save button', () => {
   }
 
   return <SampleForm />
-})
+}
+WithOnlySaveButton.story = {
+  name: 'with only save button',
+}
 
-stories.add('with unfocusable buttons', () => {
+export const WithUnfocusableButtons = () => {
   class SampleForm extends React.Component {
     state = {
       text: 'Sample Text',
@@ -248,9 +256,12 @@ stories.add('with unfocusable buttons', () => {
   }
 
   return <SampleForm />
-})
+}
+WithUnfocusableButtons.story = {
+  name: 'with unfocusable buttons',
+}
 
-stories.add('with custom button props', () => {
+export const WithCustomButtonProps = () => {
   class SampleForm extends React.Component {
     state = {
       text: 'Sample Text',
@@ -308,4 +319,7 @@ stories.add('with custom button props', () => {
   }
 
   return <SampleForm />
-})
+}
+WithCustomButtonProps.story = {
+  name: 'with custom button props',
+}

@@ -1,8 +1,8 @@
 import React from 'react'
 import { cy } from '@helpscout/cyan'
 import { mount } from 'enzyme'
-import Accordion from '../Accordion'
-import Section, { SectionWithUuid } from '../Accordion.Section'
+import Accordion, { AccordionContext } from '../Accordion'
+import Section, { SectionContext } from '../Accordion.Section'
 import Title, { classNameStrings as classNames } from '../Accordion.Title'
 import Keys from '../../../constants/Keys'
 
@@ -91,13 +91,17 @@ describe('ClassNames', () => {
 describe('setOpen', () => {
   test('Attempts to open the section by uuid when clicked', () => {
     const spy = jest.fn()
+    const uuid = 'test'
     const wrapper = mount(
-      <SectionWithUuid setOpen={spy}>
-        <Title />
-      </SectionWithUuid>
+      <AccordionContext.Provider value={{ setOpen: spy }}>
+        <Section>
+          <SectionContext.Provider value={{ uuid, isOpen: false }}>
+            <Title />
+          </SectionContext.Provider>
+        </Section>
+      </AccordionContext.Provider>
     )
     const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
-    const uuid = wrapper.state('uuid')
 
     o.simulate('click')
 
@@ -105,43 +109,59 @@ describe('setOpen', () => {
   })
 
   test('Attempts to close the open section by uuid when clicked', () => {
+    // here
     const spy = jest.fn()
+    const uuid = 'test'
     const wrapper = mount(
-      <SectionWithUuid isOpen setOpen={spy}>
-        <Title />
-      </SectionWithUuid>
+      <AccordionContext.Provider value={{ setOpen: spy }}>
+        <Section>
+          <SectionContext.Provider value={{ uuid, isOpen: true }}>
+            <Title />
+          </SectionContext.Provider>
+        </Section>
+      </AccordionContext.Provider>
     )
     const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
-    const uuid = wrapper.state('uuid')
+
     o.simulate('click')
     expect(spy).toBeCalledWith(uuid, false)
   })
 
   test('Attempts to open the section by uuid when the enter or space key is pressed', () => {
+    // here
     ;[Keys.ENTER, Keys.SPACE].forEach(keyCode => {
       const spy = jest.fn()
+      const uuid = 'test'
       const wrapper = mount(
-        <SectionWithUuid setOpen={spy}>
-          <Title />
-        </SectionWithUuid>
+        <AccordionContext.Provider value={{ setOpen: spy }}>
+          <Section>
+            <SectionContext.Provider value={{ uuid, isOpen: false }}>
+              <Title />
+            </SectionContext.Provider>
+          </Section>
+        </AccordionContext.Provider>
       )
       const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
-      const uuid = wrapper.state('uuid')
       o.simulate('keydown', { keyCode })
       expect(spy).toBeCalledWith(uuid, true)
     })
   })
 
   test('Attempts to close the open section by uuid when the enter or space key is pressed', () => {
+    // here
     ;[Keys.ENTER, Keys.SPACE].forEach(keyCode => {
       const spy = jest.fn()
+      const uuid = 'test'
       const wrapper = mount(
-        <SectionWithUuid isOpen setOpen={spy}>
-          <Title />
-        </SectionWithUuid>
+        <AccordionContext.Provider value={{ setOpen: spy }}>
+          <Section>
+            <SectionContext.Provider value={{ uuid, isOpen: true }}>
+              <Title />
+            </SectionContext.Provider>
+          </Section>
+        </AccordionContext.Provider>
       )
       const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
-      const uuid = wrapper.state('uuid')
       o.simulate('keydown', { keyCode })
       expect(spy).toBeCalledWith(uuid, false)
     })
@@ -150,14 +170,22 @@ describe('setOpen', () => {
 
 describe('Link', () => {
   test('Renders a link, if to is defined', () => {
-    const wrapper = mount(<Title to="/" isOpen={true} />)
+    const wrapper = mount(
+      <SectionContext.Provider value={{ isOpen: true }}>
+        <Title to="/" />
+      </SectionContext.Provider>
+    )
     const el = wrapper.find(`a.${classNames.baseComponentClassName}`)
 
     expect(el.hasClass('is-link')).toBeTruthy()
   })
 
   test('Renders a link, if href is defined', () => {
-    const wrapper = mount(<Title href="/" isOpen={true} />)
+    const wrapper = mount(
+      <SectionContext.Provider value={{ isOpen: true }}>
+        <Title href="/" />
+      </SectionContext.Provider>
+    )
     const el = wrapper.find(`a.${classNames.baseComponentClassName}`)
 
     expect(el.hasClass('is-link')).toBeTruthy()
@@ -178,14 +206,22 @@ describe('Link', () => {
 
 describe('isOpen', () => {
   test('Renders open styles, if defined', () => {
-    const wrapper = mount(<Title isOpen={true} />)
+    const wrapper = mount(
+      <SectionContext.Provider value={{ isOpen: true }}>
+        <Title />
+      </SectionContext.Provider>
+    )
     const el = wrapper.find(`div.${classNames.baseComponentClassName}`)
 
     expect(el.hasClass('is-open')).toBeTruthy()
   })
 
   test('Always render non-open styles, if isLink', () => {
-    const wrapper = mount(<Title to="/" isOpen={true} />)
+    const wrapper = mount(
+      <SectionContext.Provider value={{ isOpen: true }}>
+        <Title to="/" />
+      </SectionContext.Provider>
+    )
     const el = wrapper.find(`a.${classNames.baseComponentClassName}`)
 
     expect(el.hasClass('is-open')).toBeFalsy()
@@ -219,20 +255,27 @@ describe('dragHandle', () => {
   })
 
   test('Does render drag handle if sortable', () => {
-    const wrapper = mount(<Title isSortable />)
+    const wrapper = mount(
+      <AccordionContext.Provider value={{ isSortable: true }}>
+        <Title />
+      </AccordionContext.Provider>
+    )
     const handle = wrapper.find('.c-SortableDragHandle')
-    expect(handle).toHaveLength(1)
-    expect(handle.hasClass('drag-handle')).toBe(true)
+    expect(handle.length).toBeTruthy()
+    expect(handle.first().hasClass('drag-handle')).toBe(true)
   })
 
   test('Conditionally applies a className to indicate that the drag handle is in a page', () => {
-    const wrapper = mount(<Title isSortable />)
+    const wrapper = mount(
+      <AccordionContext.Provider value={{ isPage: true, isSortable: true }}>
+        <Title />
+      </AccordionContext.Provider>
+    )
     expect(
-      wrapper.find('.c-SortableDragHandle').hasClass(classNames.isPageClassName)
-    ).toBe(false)
-    wrapper.setProps({ isPage: true, isSortable: true })
-    expect(
-      wrapper.find('.c-SortableDragHandle').hasClass(classNames.isPageClassName)
+      wrapper
+        .find('.c-SortableDragHandle')
+        .first()
+        .hasClass(classNames.isPageClassName)
     ).toBe(true)
   })
 })

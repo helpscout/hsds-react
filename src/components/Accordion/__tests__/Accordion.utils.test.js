@@ -1,65 +1,16 @@
-import { mapConnectedPropsAsProps } from '../Accordion.utils'
+import { stringifyArray } from '../Accordion.utils'
 
-describe('mapConnectedPropsAsProps', () => {
-  test('Tests isOpen against sections, if applicable', () => {
-    const connectedProps = {
-      sections: {
-        a: true,
-        b: false,
-      },
-      uuid: 'a',
-    }
+describe('stringifyArray', () => {
+  test('Convert an array to a string', () => {
+    const arr = ['test', '1', '2', '3']
 
-    const props = mapConnectedPropsAsProps(connectedProps)
-
-    expect(props.isOpen).toBe(true)
+    expect(stringifyArray(arr)).toBe('1,2,3,test')
   })
 
-  test('Returns false if no sections are open', () => {
-    const connectedProps = {
-      sections: {
-        a: false,
-        b: false,
-      },
-      uuid: 'a',
-    }
+  test('Stringify array is the same no matter the elements order', () => {
+    const arr1 = ['1', '2', '3']
+    const arr2 = ['3', '2', '1']
 
-    const props = mapConnectedPropsAsProps(connectedProps)
-
-    expect(props.isOpen).toBe(false)
-  })
-
-  test('Falls back to isOpen prop, if sections is empty', () => {
-    const connectedProps = {
-      sections: {},
-      uuid: 'a',
-      isOpen: true,
-    }
-
-    const props = mapConnectedPropsAsProps(connectedProps)
-
-    expect(props.isOpen).toBe(true)
-  })
-
-  test('Falls back to isOpen prop, if sections is undefined', () => {
-    const connectedProps = {
-      uuid: 'a',
-      isOpen: true,
-    }
-
-    const props = mapConnectedPropsAsProps(connectedProps)
-
-    expect(props.isOpen).toBe(true)
-  })
-
-  test('Passes uuid through', () => {
-    const connectedProps = {
-      uuid: 'a',
-      isOpen: true,
-    }
-
-    const props = mapConnectedPropsAsProps(connectedProps)
-
-    expect(props.uuid).toBe('a')
+    expect(stringifyArray(arr1)).toBe(stringifyArray(arr2))
   })
 })

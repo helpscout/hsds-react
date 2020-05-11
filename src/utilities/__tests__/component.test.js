@@ -1,101 +1,36 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import {
-  COMPONENT_NAMESPACE_KEY,
   getComponentName,
-  getRegisteredComponents,
   getComponentKey,
-  namespaceComponent,
   renderRenderPropComponent,
   renderChildrenSafely,
   renderAsSingleChild,
-  unwrapNamespace,
-  __clearRegisteredComponents,
 } from '../component'
 
 describe('getComponentName', () => {
-  test('Returns undefined, if no namespace is set', () => {
+  test('return component name', () => {
     const Compo = () => {}
 
-    expect(getComponentName(Compo)).toBe(undefined)
-  })
-
-  test('Does not use the React.displayName as a namespace', () => {
-    const Compo = () => {}
-    Compo.displayName = 'DisplayName'
-
-    expect(getComponentName(Compo)).toBe(undefined)
+    expect(getComponentName(Compo)).toBe('Compo')
   })
 
   test('Can get a SFC component name', () => {
     const Compo = () => {}
-    Compo[COMPONENT_NAMESPACE_KEY] = 'Hello'
+    Compo.displayName = 'Hello'
 
     expect(getComponentName(Compo)).toBe('Hello')
   })
 
   test('Can get a React.Component class component name', () => {
     class Compo extends React.Component {
+      static displayName = 'Hello'
       render() {
         return null
       }
     }
-
-    Compo[COMPONENT_NAMESPACE_KEY] = 'Hello'
 
     expect(getComponentName(Compo)).toBe('Hello')
-  })
-
-  test('Can get a component namespace using React.Children', () => {
-    class Compo extends React.Component {
-      render() {
-        return null
-      }
-    }
-
-    Compo[COMPONENT_NAMESPACE_KEY] = 'Hello'
-
-    const Parent = props => {
-      React.Children.map(props.children, child => {
-        expect(getComponentName(child)).toBe('Hello')
-      })
-
-      return null
-    }
-
-    mount(
-      <Parent>
-        <Compo />
-      </Parent>
-    )
-  })
-})
-
-describe('namespaceComponent', () => {
-  test('Sets the namespace to the unique KEY', () => {
-    const Compo = () => {}
-    namespaceComponent('New')(Compo)
-
-    expect(getComponentName(Compo)).toBe('New')
-    expect(Compo[COMPONENT_NAMESPACE_KEY]).toBe('New')
-  })
-})
-
-describe('getRegisteredComponents', () => {
-  beforeEach(() => {
-    __clearRegisteredComponents()
-  })
-
-  test('Retrieves a list of namespace registered components', () => {
-    const CompoA = () => {}
-    const CompoB = () => {}
-
-    namespaceComponent('A')(CompoA)
-    namespaceComponent('B')(CompoB)
-
-    expect(getRegisteredComponents()).toContain('A')
-    expect(getRegisteredComponents()).toContain('B')
-    expect(getRegisteredComponents().length).toBe(2)
   })
 })
 
@@ -190,7 +125,6 @@ describe('renderRenderPropComponent', () => {
       disabled: true,
     }
     const result = renderRenderPropComponent(
-      // @ts-ignore
       <CryLaughingComponent title="custom" />,
       props
     )
@@ -213,7 +147,6 @@ describe('renderRenderPropComponent', () => {
     }
     const result = renderRenderPropComponent(
       ({ disabled }) => (
-        // @ts-ignore
         <CryLaughingComponent title="custom" disabled={disabled} />
       ),
       props
@@ -415,7 +348,11 @@ describe('renderAsSingleChild', () => {
       renderAsSingleChild(children, 'section', { className: 'Hello' })
 
     const wrapper = mount(
-      <Comp>{data.map(d => <InnerComponent {...d} />)}</Comp>
+      <Comp>
+        {data.map(d => (
+          <InnerComponent {...d} />
+        ))}
+      </Comp>
     )
 
     expect(wrapper.find('p').length).toBe(1)
@@ -441,34 +378,13 @@ describe('renderAsSingleChild', () => {
       renderAsSingleChild(children, 'section', { className: 'Hello' })
 
     const wrapper = mount(
-      <Comp>{data.map(d => <InnerComponent {...d} />)}</Comp>
+      <Comp>
+        {data.map(d => (
+          <InnerComponent {...d} />
+        ))}
+      </Comp>
     )
 
     expect(wrapper.find('p').length).toBe(3)
-  })
-})
-
-describe('unwrapNamespace', () => {
-  test('Returns falsy as is', () => {
-    expect(unwrapNamespace('')).toBe('')
-    expect(unwrapNamespace(null)).toBe(null)
-  })
-
-  test('Returns (flat) unwrapped namespace without modification', () => {
-    const namespace = 'someComponent'
-
-    expect(unwrapNamespace(namespace)).toBe('someComponent')
-  })
-
-  test('Unwraps a single level wrapper', () => {
-    const namespace = 'connect(someComponent)'
-
-    expect(unwrapNamespace(namespace)).toBe('someComponent')
-  })
-
-  test('Unwraps a multi-level wrapper', () => {
-    const namespace = 'propConnected(withRouter(connect(someComponent)))'
-
-    expect(unwrapNamespace(namespace)).toBe('someComponent')
   })
 })

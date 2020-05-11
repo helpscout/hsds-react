@@ -1,10 +1,9 @@
-import * as React from 'react'
-import { storiesOf } from '@storybook/react'
+import React from 'react'
 import { shadows } from '../src/styles/configs/shadows'
 
-const stories = storiesOf('Shadow', module)
+// const stories = storiesOf('Utilities/Shadow', module);
 
-stories.add('Default', () => {
+export const Default = () => {
   return (
     <div>
       <h3>Shadows</h3>
@@ -29,4 +28,4 @@ stories.add('Default', () => {
       })}
     </div>
   )
-})
+}

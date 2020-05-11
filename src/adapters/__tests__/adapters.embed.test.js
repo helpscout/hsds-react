@@ -7,6 +7,7 @@ import {
   svgSet as illoSet,
   unload as unloadIllos,
 } from '../../components/Illo/Illo.utils'
+import { getComponentName } from '../../utilities/component'
 
 afterEach(() => {
   unloadIcons()
@@ -17,6 +18,6 @@ test('Loads SVG into Icon and Illo', () => {
   expect(Object.keys(iconSet).length).toBeGreaterThan(0)
   expect(Object.keys(illoSet).length).toBeGreaterThan(0)
 
-  expect(iconSet.chat).toContain('svg')
+  expect(getComponentName(iconSet.chat)).toBeTruthy()
   expect(iconSet.activity).toBeFalsy()
 })

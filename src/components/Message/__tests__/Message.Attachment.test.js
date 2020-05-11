@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { mount } from 'enzyme'
 import Attachment from '../Message.Attachment'
 import Chat from '../Message.Chat'

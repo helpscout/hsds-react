@@ -1,7 +1,6 @@
-import * as React from 'react'
+import React from 'react'
 import { mount } from 'enzyme'
 import Page from '../Page'
-import ConnectedPage from '../index'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -50,14 +49,14 @@ describe('Responsive', () => {
 
   test('Passes responsive config to sub-components', () => {
     const wrapper = mount(
-      <ConnectedPage isResponsive={true}>
-        <ConnectedPage.Card>
-          <ConnectedPage.Section>
-            <ConnectedPage.Header />
-          </ConnectedPage.Section>
-        </ConnectedPage.Card>
-        <ConnectedPage.Actions />
-      </ConnectedPage>
+      <Page isResponsive={true}>
+        <Page.Card>
+          <Page.Section>
+            <Page.Header />
+          </Page.Section>
+        </Page.Card>
+        <Page.Actions />
+      </Page>
     )
 
     expect(

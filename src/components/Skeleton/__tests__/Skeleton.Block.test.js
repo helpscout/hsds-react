@@ -1,10 +1,10 @@
-import * as React from 'react'
+import React from 'react'
 import { mount } from 'enzyme'
-import Block from '../Skeleton.Block'
+import SkeletonBlock from '../Skeleton.Block'
 
 describe('className', () => {
   test('Has default className', () => {
-    const wrapper = mount(<Block />)
+    const wrapper = mount(<SkeletonBlock />)
 
     expect(
       wrapper.getDOMNode().classList.contains('c-SkeletonBlock')
@@ -12,7 +12,7 @@ describe('className', () => {
   })
 
   test('Accepts custom classNames', () => {
-    const wrapper = mount(<Block className="ron" />)
+    const wrapper = mount(<SkeletonBlock className="ron" />)
 
     expect(
       wrapper.getDOMNode().classList.contains('c-SkeletonBlock')
@@ -23,7 +23,7 @@ describe('className', () => {
 
 describe('Accessibility', () => {
   test('Has role defined', () => {
-    const wrapper = mount(<Block />)
+    const wrapper = mount(<SkeletonBlock />)
     const o = wrapper.find('[role="presentation"]').first()
 
     expect(o.length).toBe(1)
@@ -32,7 +32,7 @@ describe('Accessibility', () => {
 
 describe('Styles', () => {
   test('Can render custom styles', () => {
-    const wrapper = mount(<Block style={{ background: 'red' }} />)
+    const wrapper = mount(<SkeletonBlock style={{ background: 'red' }} />)
 
     expect(wrapper.props().style.background).toBe('red')
   })
@@ -40,7 +40,7 @@ describe('Styles', () => {
 
 describe('Animations', () => {
   test('Can disable animations', () => {
-    const wrapper = mount(<Block withAnimations={true} />)
+    const wrapper = mount(<SkeletonBlock withAnimations={true} />)
 
     expect(wrapper.getDOMNode().classList.contains('is-withAnimations')).toBe(
       true

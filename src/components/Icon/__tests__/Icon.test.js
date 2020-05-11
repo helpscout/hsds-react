@@ -16,6 +16,12 @@ describe('ClassName', () => {
     expect(wrapper.getDOMNode().classList.contains(className)).toBe(true)
   })
 
+  test('Applies inline className if specified', () => {
+    const wrapper = mount(<Icon name="emoji" inline />)
+
+    expect(wrapper.getDOMNode().classList.contains('is-inline')).toBe(true)
+  })
+
   test('Applies icon name className', () => {
     const className = 'channel-4'
     const wrapper = mount(<Icon name="emoji" className={className} />)

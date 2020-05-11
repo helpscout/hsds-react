@@ -4,7 +4,7 @@ In this guide, we'll walk through styling our newly created [custom `Strong` com
 
 ## CSS-in-JS
 
-HSDS uses CSS-in-JS techniques for styling, powered by [Fancy](https://helpscout.gitbook.io/fancy).
+HSDS uses CSS-in-JS techniques for styling, powered by [styled-component](https://styled-components.com/).
 
 Start by creating a dedicated `styles/` directory under `Strong/`:
 
@@ -36,11 +36,10 @@ The `.css.js` file extension is a convention HSDS uses to distinguish dedicated 
 Add the starting styled component boilerplate for `Strong.css.js`:
 
 ```jsx
-import baseStyles from '../../../styles/resets/baseStyles.css.js'
-import styled from '../../styled'
+import styled from 'styled-components'
 
 export const StrongUI = styled('strong')`
-  ${baseStyles} font-weight: 600;
+  font-weight: 600;
 
   &.is-superBold {
     font-weight: 900;
@@ -51,16 +50,6 @@ export default StrongUI
 ```
 
 Whoa 😳! Lots of stuff! What is this stuff!
-
-#### `baseStyles`
-
-These are initial styles used for **every single** HSDS component. HSDS is designed to work out-of-the-box, with no reliance on normalizers or resets. As such, basic reset styles like `box-sizing: border-box;` and `font-family` are manually added to every component.
-
-Add your desired custom styling after adding `${baseStyles}`.
-
-#### `styled`
-
-`styled` is an adapter for [Fancy](https://helpscout.gitbook.io/fancy), and works just like `styled` from [Styled Components](https://www.styled-components.com) or [Emotion](https://emotion.sh/).
 
 #### `StrongUI`
 
@@ -84,5 +73,4 @@ Let's [write a story](storybook.md) to see this thing in a browser!
 
 ## See also
 
-* [Fancy](https://helpscout.gitbook.io/fancy)
-* [Emotion](https://emotion.sh/)
+- [Styled component](https://styled-components.com/)

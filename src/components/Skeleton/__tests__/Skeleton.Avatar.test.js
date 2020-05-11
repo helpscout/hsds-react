@@ -1,10 +1,10 @@
-import * as React from 'react'
+import React from 'react'
 import { mount } from 'enzyme'
-import Avatar from '../Skeleton.Avatar'
+import SkeletonAvatar from '../Skeleton.Avatar'
 
 describe('className', () => {
   test('Has default className', () => {
-    const wrapper = mount(<Avatar />)
+    const wrapper = mount(<SkeletonAvatar />)
 
     expect(
       wrapper.getDOMNode().classList.contains('c-SkeletonAvatar')
@@ -12,7 +12,7 @@ describe('className', () => {
   })
 
   test('Accepts custom classNames', () => {
-    const wrapper = mount(<Avatar className="ron" />)
+    const wrapper = mount(<SkeletonAvatar className="ron" />)
 
     expect(
       wrapper.getDOMNode().classList.contains('c-SkeletonAvatar')
@@ -23,13 +23,13 @@ describe('className', () => {
 
 describe('Styles', () => {
   test('Can render size styles, if defined', () => {
-    const wrapper = mount(<Avatar size="sm" />)
+    const wrapper = mount(<SkeletonAvatar size="sm" />)
 
     expect(wrapper.getDOMNode().classList.contains('is-sm')).toBeTruthy()
   })
 
   test('Can render shape styles, if defined', () => {
-    const wrapper = mount(<Avatar shape="square" />)
+    const wrapper = mount(<SkeletonAvatar shape="square" />)
 
     expect(wrapper.getDOMNode().classList.contains('is-square')).toBeTruthy()
   })

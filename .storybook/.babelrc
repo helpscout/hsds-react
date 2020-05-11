@@ -18,7 +18,7 @@
   "plugins": [
     "@babel/plugin-proposal-class-properties",
     [
-      "inline-svg",
+      "inline-react-svg",
       {
         "svgo": {
           "plugins": [
@@ -30,7 +30,13 @@
         }
       }
     ],
-    "emotion"
+    [
+      "babel-plugin-styled-components",
+      {
+        "displayName": true,
+        "fileName": true
+      }
+    ]
   ],
   "exclude": ["node_modules"]
 }

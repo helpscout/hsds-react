@@ -1,11 +1,16 @@
 import React from 'react'
+import { act } from 'react-dom/test-utils'
 import { mount } from 'enzyme'
-import { Accordion, classNameStrings as classNames } from '../Accordion'
+import Accordion, {
+  classNameStrings as classNames,
+  getSortableProps,
+} from '../Accordion'
 import Section, {
   classNameStrings as sectionClassNames,
 } from '../Accordion.Section'
 import Title, { classNameStrings as titleClassNames } from '../Accordion.Title'
 import Body, { classNameStrings as bodyClassNames } from '../Accordion.Body'
+import Sortable from '../../Sortable'
 
 describe('ClassNames', () => {
   test('Has default className', () => {
@@ -98,125 +103,149 @@ describe('Content', () => {
 
 describe('State', () => {
   test('It should only track the value of one section if allow multiple is not enabled', () => {
-    const wrapper = mount(<Accordion />)
-    const instance = wrapper.instance()
-    expect(wrapper.state('sections')).toEqual({})
-    instance.setOpen('123', true)
-    expect(wrapper.state('sections')).toEqual({ '123': true })
-    instance.setOpen('456', true)
-    expect(wrapper.state('sections')).toEqual({ '456': true })
+    const wrapper = mount(
+      <Accordion>
+        <Accordion.Section>
+          <Accordion.Title>Title 1</Accordion.Title>
+        </Accordion.Section>
+        <Accordion.Section>
+          <Accordion.Title>Title 2</Accordion.Title>
+        </Accordion.Section>
+      </Accordion>
+    )
+
+    expect(wrapper.find('.is-open').length).toEqual(0)
+    wrapper
+      .find(Accordion.Title)
+      .first()
+      .simulate('click')
+    expect(
+      wrapper
+        .find('.c-Accordion__Section')
+        .first()
+        .getDOMNode()
+        .classList.contains('is-open')
+    ).toBeTruthy()
+    expect(
+      wrapper
+        .find('.c-Accordion__Section')
+        .last()
+        .getDOMNode()
+        .classList.contains('is-open')
+    ).toBeFalsy()
+
+    wrapper
+      .find(Accordion.Title)
+      .last()
+      .simulate('click')
+    expect(
+      wrapper
+        .find('.c-Accordion__Section')
+        .first()
+        .getDOMNode()
+        .classList.contains('is-open')
+    ).toBeFalsy()
+    expect(
+      wrapper
+        .find('.c-Accordion__Section')
+        .last()
+        .getDOMNode()
+        .classList.contains('is-open')
+    ).toBeTruthy()
   })
 
   test('It should track the value of multiple sections if allow multiple is enabled', () => {
-    const wrapper = mount(<Accordion allowMultiple />)
-    const instance = wrapper.instance()
-    expect(wrapper.state('sections')).toEqual({})
-    instance.setOpen('123', true)
-    expect(wrapper.state('sections')).toEqual({ '123': true })
-    instance.setOpen('456', true)
-    expect(wrapper.state('sections')).toEqual({ '123': true, '456': true })
+    const wrapper = mount(
+      <Accordion allowMultiple>
+        <Accordion.Section>
+          <Accordion.Title>Title 1</Accordion.Title>
+        </Accordion.Section>
+        <Accordion.Section>
+          <Accordion.Title>Title 2</Accordion.Title>
+        </Accordion.Section>
+      </Accordion>
+    )
+
+    expect(wrapper.find('.is-open').length).toEqual(0)
+    wrapper
+      .find(Accordion.Title)
+      .first()
+      .simulate('click')
+    expect(
+      wrapper
+        .find('.c-Accordion__Section')
+        .first()
+        .getDOMNode()
+        .classList.contains('is-open')
+    ).toBeTruthy()
+    expect(
+      wrapper
+        .find('.c-Accordion__Section')
+        .last()
+        .getDOMNode()
+        .classList.contains('is-open')
+    ).toBeFalsy()
+
+    wrapper
+      .find(Accordion.Title)
+      .last()
+      .simulate('click')
+    expect(
+      wrapper
+        .find('.c-Accordion__Section')
+        .first()
+        .getDOMNode()
+        .classList.contains('is-open')
+    ).toBeTruthy()
+    expect(
+      wrapper
+        .find('.c-Accordion__Section')
+        .last()
+        .getDOMNode()
+        .classList.contains('is-open')
+    ).toBeTruthy()
   })
 
   test('It should track the value of all programatically opened sections', () => {
-    const wrapper = mount(<Accordion openSectionIds={[1, 2]} />)
-    expect(wrapper.state('sections')).toEqual({ 1: true, 2: true })
+    const wrapper = mount(
+      <Accordion openSectionIds={[1]}>
+        <Accordion.Section id={1}>
+          <Accordion.Title>Title 1</Accordion.Title>
+        </Accordion.Section>
+        <Accordion.Section id={2}>
+          <Accordion.Title>Title 2</Accordion.Title>
+        </Accordion.Section>
+      </Accordion>
+    )
+
+    expect(
+      wrapper
+        .find('.c-Accordion__Section')
+        .first()
+        .getDOMNode()
+        .classList.contains('is-open')
+    ).toBeTruthy()
     wrapper.setProps({ openSectionIds: [4, 5, 6] })
-    expect(wrapper.state('sections')).toEqual({ 4: true, 5: true, 6: true })
-    wrapper.setProps({ openSectionIds: [] })
-    expect(wrapper.state('sections')).toEqual({})
-  })
-})
-
-describe('forceSetOpen', () => {
-  test('It should invoke forceSetOpen if the openSectionIds change', () => {
-    const wrapper = mount(<Accordion openSectionIds={[1, 2]} />)
-    const instance = wrapper.instance()
-    const spy = jest.spyOn(instance, 'forceSetOpen')
-    wrapper.setProps({ openSectionIds: [3, 4] })
-    expect(spy).toHaveBeenCalledTimes(1)
-  })
-
-  test('It should not invoke forceSetOpen if the openSectionIds did not change', () => {
-    const wrapper = mount(<Accordion openSectionIds={[1, 2]} />)
-    const instance = wrapper.instance()
-    const spy = jest.spyOn(instance, 'forceSetOpen')
-    wrapper.setProps({ size: 'lg' })
-    expect(spy).not.toHaveBeenCalled()
-  })
-})
-
-describe('onOpen', () => {
-  test('It should pass an array of open section ids as the second argument to the callback', () => {
-    const spy = jest.fn()
-    const wrapper = mount(<Accordion onOpen={spy} openSectionIds={[1, 2]} />)
-    const instance = wrapper.instance()
-    instance.onOpen(1)
-    expect(spy).toHaveBeenCalledWith(1, ['1', '2'])
-    wrapper.setState({ sections: { 6: true, 7: false } })
-    instance.onOpen(1)
-    expect(spy).toHaveBeenCalledWith(1, ['6'])
-  })
-})
-
-describe('onClose', () => {
-  test('It should pass an array of open section ids as the second argument to the callback', () => {
-    const spy = jest.fn()
-    const wrapper = mount(<Accordion onClose={spy} openSectionIds={[1, 2]} />)
-    const instance = wrapper.instance()
-    instance.onClose(1)
-    expect(spy).toHaveBeenCalledWith(1, ['1', '2'])
-    wrapper.setProps({ openSectionIds: [6] })
-    instance.onClose(1)
-    expect(spy).toHaveBeenCalledWith(1, ['6'])
+    expect(
+      wrapper
+        .find('.c-Accordion__Section')
+        .first()
+        .getDOMNode()
+        .classList.contains('is-open')
+    ).toBeFalsy()
   })
 })
 
 describe('sorting', () => {
-  test('Adds a classname to indicate the accordion is sortable', () => {
+  test('Uses Sortable under the hood is sorting enabled', () => {
     const wrapper = mount(<Accordion />)
-    expect(
-      wrapper
-        .find('.c-Accordion')
-        .first()
-        .hasClass('is-sortable')
-    ).toBe(false)
-    wrapper.setProps({ isSortable: true })
-    expect(
-      wrapper
-        .find('.c-Accordion')
-        .first()
-        .hasClass('is-sortable')
-    ).toBe(true)
-  })
+    expect(wrapper.find(Sortable).length).toBeFalsy()
 
-  test('Adds a classname to indicate the accordion is being sorted', () => {
-    const wrapper = mount(<Accordion isSortable />)
-    const instance = wrapper.instance()
-    expect(
-      wrapper
-        .find('.c-Accordion')
-        .first()
-        .hasClass('is-sorting')
-    ).toBe(false)
-    instance.handleOnSortStart()
-    wrapper.update()
-    expect(
-      wrapper
-        .find('.c-Accordion')
-        .first()
-        .hasClass('is-sorting')
-    ).toBe(true)
-  })
+    act(() => {
+      wrapper.setProps({ isSortable: true })
+    })
 
-  test('Updates the state during sorting', () => {
-    const wrapper = mount(<Accordion isSortable />)
-    const instance = wrapper.instance()
-
-    expect(wrapper.state().isSorting).toBe(false)
-    instance.handleOnSortStart()
-    expect(wrapper.state().isSorting).toBe(true)
-    instance.handleOnSortEnd()
-    expect(wrapper.state().isSorting).toBe(false)
+    expect(wrapper.find(Sortable).length).toBeTruthy()
   })
 
   test('Invokes onSortEnd callback after sorting', () => {
@@ -224,28 +253,27 @@ describe('sorting', () => {
     const nextIndex = 5
     const spy = jest.fn()
     const wrapper = mount(<Accordion isSortable onSortEnd={spy} />)
-    const instance = wrapper.instance()
+    const sortable = wrapper.find(Sortable)
+
     expect(spy).not.toHaveBeenCalled()
-    instance.handleOnSortEnd(prevIndex, nextIndex)
+
+    act(() => {
+      sortable.prop('onSortEnd')(prevIndex, nextIndex)
+    })
+
     expect(spy).toHaveBeenCalledWith(prevIndex, nextIndex)
   })
 
   test('distance takes precendent over pressDelay', () => {
-    const wrapper = mount(
-      <Accordion distance={15} isSortable pressDelay={300} />
-    )
-    const instance = wrapper.instance()
-    const props = instance.getSortableProps()
+    const props = getSortableProps({ distance: 15, pressDelay: 300 })
+
     expect(props.distance).toEqual(15)
     expect(props.pressDelay).toBeUndefined()
   })
 
   test('pressDelay can be set if distance is less than or equal to zero', () => {
-    const wrapper = mount(
-      <Accordion distance={0} isSortable pressDelay={300} />
-    )
-    const instance = wrapper.instance()
-    const props = instance.getSortableProps()
+    const props = getSortableProps({ distance: 0, pressDelay: 300 })
+
     expect(props.distance).toBeUndefined()
     expect(props.pressDelay).toEqual(300)
   })

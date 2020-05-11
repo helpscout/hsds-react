@@ -2,16 +2,13 @@ export const CLASSNAMES = {
   hidden: 'hidden',
 }
 
-/* istanbul ignore next */
 export function selectAll(digitInputNodes, digitMaskNodes) {
   let selection = window.getSelection()
 
   if (selection.rangeCount > 0) {
     selection.removeAllRanges()
   }
-
-  let lastIndex = -1
-
+  let lastIndex = 0
   digitInputNodes.forEach((digitInputNode, index) => {
     digitInputNode.classList.add(CLASSNAMES.hidden)
     digitMaskNodes[index].classList.remove(CLASSNAMES.hidden)
@@ -21,14 +18,7 @@ export function selectAll(digitInputNodes, digitMaskNodes) {
     }
   })
 
-  if (lastIndex > -1) {
-    selection.setBaseAndExtent(
-      digitMaskNodes[0],
-      0,
-      digitMaskNodes[lastIndex],
-      1
-    )
-  }
+  selection.setBaseAndExtent(digitMaskNodes[0], 0, digitMaskNodes[lastIndex], 1)
 }
 
 export function clearAll(digitInputNodes, digitMaskNodes) {

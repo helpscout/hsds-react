@@ -1,6 +1,5 @@
-import styled from '../styled'
+import styled from 'styled-components'
 import { BEM } from '../../utilities/classNames'
-import baseStyles from '../../styles/resets/baseStyles.css'
 import cardStyles, {
   cardSubtleStyles,
 } from '../../styles/mixins/cardStyles.css'
@@ -35,9 +34,9 @@ export const ErrorBorderUI = styled('div')`
   `};
 `
 
-const css = `
-  ${linkStyles()}
-  ${baseStyles}
+export const AttachmentUI = styled.a`
+  ${linkStyles()};
+
   background-color: white;
   border: 1px solid ${getColor('grey.500')};
   border-radius: 9999px;
@@ -57,16 +56,14 @@ const css = `
     }
   }
 
-  // Modifiers
   &.is-action {
     ${bem.element('name')} {
       text-decoration: none;
     }
   }
 
-  // Themes
   &.is-theme-preview {
-    ${cardSubtleStyles()}
+    ${cardSubtleStyles()};
     border: none;
     display: block;
     font-weight: 500;
@@ -108,7 +105,7 @@ const css = `
   }
 
   ${bem.element('closeButton')} {
-    ${cardStyles()}
+    ${cardStyles()};
     display: none;
     border-radius: 9999px !important;
     position: absolute;
@@ -124,5 +121,3 @@ const css = `
     }
   }
 `
-
-export default css

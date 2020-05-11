@@ -1,13 +1,13 @@
-import * as React from 'react'
+import React from 'react'
 import cy from '@helpscout/cyan'
 import { mount } from 'enzyme'
-
-import Bubble from '../Message.Bubble'
-import ChatBlock from '../Message.ChatBlock'
 import Chat from '../Message.Chat'
+import ChatBlock from '../Message.ChatBlock'
+import Bubble from '../Message.Bubble'
 import Caption from '../Message.Caption'
 
 const cx = 'c-MessageChat'
+const cxBubble = 'c-MessageBubble'
 const ui = {
   caption: `.${cx}__caption`,
   error: `.${cx}__error`,
@@ -32,23 +32,27 @@ describe('ClassNames', () => {
 describe('Bubble', () => {
   test('Contains Bubble component', () => {
     const wrapper = mount(<Chat />)
-    const o = wrapper.find(Bubble)
-
+    const o = wrapper.find(`.${cxBubble}`).first()
     expect(o.length).toBeTruthy()
   })
 
   test('Bubble does not inherit component classNames', () => {
     const wrapper = mount(<Chat />)
-    const o = wrapper.find(Bubble)
+    const o = wrapper.find(`.${cxBubble}`).first()
 
     expect(o.getDOMNode().classList.contains(cx)).not.toBeTruthy()
   })
 
   test('Renders content inside of Bubble', () => {
     const wrapper = mount(<Chat>Mugatu</Chat>)
-    const o = wrapper.find(Bubble)
+    const o = wrapper.find(`.${cxBubble}`)
+    expect(o.first().text()).toContain('Mugatu')
+  })
 
-    expect(o.getElement().props.children).toBe('Mugatu')
+  test('Renders body inside of Bubble', () => {
+    const wrapper = mount(<Chat body="bodytest">Mugatu</Chat>)
+    const o = wrapper.find(`.c-MessageBubble__body`)
+    expect(o.first().text()).toContain('bodytest')
   })
 
   test('Passes correct props to Bubble', () => {

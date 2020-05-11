@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { mount } from 'enzyme'
 import Embed from '../Message.Embed'
 import LoadingDots from '../../LoadingDots'
@@ -72,6 +72,6 @@ describe('Content', () => {
 
 describe('Display name', () => {
   test('Has a display name', () => {
-    expect(Embed.displayName).toEqual('Styled(Message.Embed)')
+    expect(Embed.displayName).toEqual('Message.Embed')
   })
 })

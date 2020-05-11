@@ -17,4 +17,4 @@ Actionable HTML [buttons](../Button) with an [Icon](../Icon).
 | isBorderless | `boolean` | `true`   | Renders a border around the [Button](../Button). |
 | withCaret    | `boolean` | `false`  | Renders a caret with the [Icon](../Icon).        |
 
-This component is an extension of the [Button (V2)](../Button) component. For additional props, check out the [documentation](../Button/docs/ButtonV2.md).
+This component is an extension of the [Button](../Button) component. For additional props, check out the [documentation](../Button/README.md).

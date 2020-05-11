@@ -1,8 +1,8 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import Accordion from '../Accordion'
+import Accordion, { AccordionContext } from '../Accordion'
 import Collapsible from '../../Collapsible'
-import Section from '../Accordion.Section'
+import Section, { SectionContext } from '../Accordion.Section'
 import Body, { classNameStrings as classNames } from '../Accordion.Body'
 
 describe('ClassNames', () => {
@@ -104,21 +104,35 @@ describe('open', () => {
 describe('Events', () => {
   test('Fires onOpen callback on open', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Body onOpen={spy} uuid="body001" />)
+    const uuid = 'body001'
+    const wrapper = mount(
+      <AccordionContext.Provider value={{ onOpen: spy }}>
+        <SectionContext.Provider value={{ uuid }}>
+          <Body />
+        </SectionContext.Provider>
+      </AccordionContext.Provider>
+    )
     const comp = wrapper.find(Collapsible)
 
     comp.instance().props.onOpen()
 
-    expect(spy).toHaveBeenCalledWith('body001')
+    expect(spy).toHaveBeenCalledWith(uuid)
   })
 
   test('Fires onClose callback on close', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Body onClose={spy} uuid="body001" />)
+    const uuid = 'body001'
+    const wrapper = mount(
+      <AccordionContext.Provider value={{ onClose: spy }}>
+        <SectionContext.Provider value={{ uuid }}>
+          <Body />
+        </SectionContext.Provider>
+      </AccordionContext.Provider>
+    )
     const comp = wrapper.find(Collapsible)
 
     comp.instance().props.onClose()
 
-    expect(spy).toHaveBeenCalledWith('body001')
+    expect(spy).toHaveBeenCalledWith(uuid)
   })
 })

@@ -29,13 +29,7 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 Actions (typically [Buttons](../Button)) can be embedded within the `Input` using the `action` prop:
 
 ```jsx
-<Input
-  action={
-    <Button version={2} size="sm">
-      Submit
-    </Button>
-  }
-/>
+<Input action={<Button size="sm">Submit</Button>} />
 ```
 
 The `Button` should be one step smaller compared to the `Input`.
@@ -66,7 +60,7 @@ Note: Be sure the version for `Button` is at least version 2.
 | id                       | `string`                   | ID for the input.                                                          |
 | inlinePrefix             | `string`                   | Text to appear before the input.                                           |
 | inlineSuffix             | `string`                   | Text to after before the input.                                            |
-| innerRef                 | `Function`                 | Retrieves the `input` DOM node.                                            |
+| ref                      | `Function`                 | Retrieves the `input` DOM node.                                            |
 | isFirst                  | `boolean`                  | Helps render component without right borders.                              |
 | isFocused                | `string`                   | Determines if the component is focused.                                    |
 | isLast                   | `boolean`                  | Helps render component without left borders.                               |

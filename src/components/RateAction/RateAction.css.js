@@ -1,5 +1,4 @@
-import styled from '../styled'
-import baseStyles from '../../styles/resets/baseStyles.css'
+import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import { rgba } from '../../utilities/color'
 import { reactionEmoticonsColours } from '../Emoticon/Emoticon.css'
@@ -35,7 +34,6 @@ export const RateActionUI = styled('button')`
       height: calc(100%);
     }
 
-    ${baseStyles};
     -webkit-appearance: none;
     border-radius: 50%;
     border: none;
@@ -86,7 +84,6 @@ export const RateActionUI = styled('button')`
     }
 
     &:after {
-      ${baseStyles};
       content: '';
       border-radius: 50%;
       border: ${({ withCircle }) =>

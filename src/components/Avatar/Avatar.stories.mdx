@@ -1,0 +1,213 @@
+import { ThemeProvider } from 'styled-components'
+import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
+import { boolean, select } from '@storybook/addon-knobs'
+import { action } from '@storybook/addon-actions'
+import AvatarSpec from '../../utilities/specs/avatar.specs'
+import Avatar from './'
+import { Flexy } from '../index'
+
+<Meta
+  title="Components/Badges/Avatar"
+  component={Avatar}
+/>
+
+# Avatar
+
+Displays a user's avatar image, or their initials if an image isn't available.
+
+<Preview>
+  <Story name="default">
+    <Avatar
+      name={AvatarSpec.generate().name}
+      image={AvatarSpec.generate().image}
+    />
+    <br />
+    <Avatar
+      name={AvatarSpec.generate().name}
+      image={AvatarSpec.generate().image}
+    />
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: PL
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={Avatar} />
+
+### Stories
+
+#### With initials
+
+When an image fails to load and no fallback is provided (or fails too), displays the initials of the name by default, or use custom initials.
+
+<Preview>
+  <Story name="With initials">
+    <Avatar name={AvatarSpec.generate().name} image="https://notfound" />
+  </Story>
+</Preview>
+
+#### Themed
+
+This component can be themed using a [ThemeProvider](../styled).
+
+<Preview>
+  <Story name="Themed">
+    <ThemeProvider theme={{ brandColor: { brandColor: 'red' } }}>
+      <Avatar name={AvatarSpec.generate().name} image="https://notfound" />
+    </ThemeProvider>
+    <br />
+    <ThemeProvider theme={{ brandColor: { brandColor: 'green' } }}>
+      <Avatar name={AvatarSpec.generate().name} image="https://notfound" />
+    </ThemeProvider>
+    <br />
+    <ThemeProvider theme={{ brandColor: { brandColor: 'blue' } }}>
+      <Avatar name={AvatarSpec.generate().name} image="https://notfound" />
+    </ThemeProvider>
+  </Story>
+</Preview>
+
+#### Status
+
+<Preview>
+  <Story name="Status">
+    <div style={{ background: 'dodgerblue', padding: 20 }}>
+      <Flexy just="left">
+        <Avatar
+          borderColor="dodgerblue"
+          name={AvatarSpec.generate().name}
+          image={AvatarSpec.generate().image}
+          status="online"
+          shape="square"
+          showStatusBorderColor
+          size="lg"
+        />
+        <Avatar
+          borderColor="dodgerblue"
+          image={AvatarSpec.generate().image}
+          name={AvatarSpec.generate().name}
+          outerBorderColor="white"
+          showStatusBorderColor
+          size="lg"
+          status="offline"
+        />
+        <Avatar
+          borderColor="dodgerblue"
+          name={AvatarSpec.generate().name}
+          image={AvatarSpec.generate().image}
+          shape="rounded"
+          showStatusBorderColor
+          status="busy"
+          size="lg"
+        />
+      </Flexy>
+      <br />
+      <Flexy just="left">
+        <Avatar
+          borderColor="dodgerblue"
+          name={AvatarSpec.generate().name}
+          image={AvatarSpec.generate().image}
+          showStatusBorderColor
+          status="online"
+          shape="square"
+        />
+        <Avatar
+          borderColor="dodgerblue"
+          name={AvatarSpec.generate().name}
+          image={AvatarSpec.generate().image}
+          showStatusBorderColor
+          status="offline"
+        />
+        <Avatar
+          borderColor="dodgerblue"
+          name={AvatarSpec.generate().name}
+          image={AvatarSpec.generate().image}
+          shape="rounded"
+          showStatusBorderColor
+          status="busy"
+        />
+      </Flexy>
+      <br />
+      <Flexy just="left">
+        <Avatar
+          borderColor="dodgerblue"
+          name={AvatarSpec.generate().name}
+          image={AvatarSpec.generate().image}
+          showStatusBorderColor
+          status="online"
+          shape="square"
+          size="sm"
+        />
+        <Avatar
+          borderColor="dodgerblue"
+          name={AvatarSpec.generate().name}
+          image={AvatarSpec.generate().image}
+          showStatusBorderColor
+          status="offline"
+          size="sm"
+        />
+        <Avatar
+          borderColor="dodgerblue"
+          name={AvatarSpec.generate().name}
+          image={AvatarSpec.generate().image}
+          shape="rounded"
+          showStatusBorderColor
+          status="busy"
+          size="sm"
+        />
+      </Flexy>
+    </div>
+  </Story>
+</Preview>
+
+#### With border
+
+<Preview>
+  <Story name="With border">
+    <div style={{ background: 'orangered', padding: 20 }}>
+      <Avatar
+        borderColor="orangered"
+        outerBorderColor="white"
+        name={AvatarSpec.generate().name}
+        showStatusBorderColor
+        size="lg"
+        status="online"
+      />
+    </div>
+  </Story>
+</Preview>
+
+#### With action
+
+<Preview>
+  <Story name="With action">
+    <Avatar
+      name={AvatarSpec.generate().name}
+      image={AvatarSpec.generate().image}
+      active={boolean('Is Active', false)}
+      actionable={boolean('Actionable', true)}
+      animateActionBorder={boolean('Animate', false)}
+      actionIcon={select('Icon', ['trash', 'plus-large', 'hyphen'], 'trash')}
+      actionIconSize={select(
+        'Icon Size',
+        ['12', '16', '18', '24', '32', '48', '52'],
+        '24'
+      )}
+      size={select(
+        'Avatar Size',
+        ['lg', 'md', 'smmd', 'sm', 'xs', 'xxs'],
+        'lg'
+      )}
+      shape={select('Shape', ['circle', 'square', 'rounded'], 'circle')}
+      onActionClick={action('handle click action')}
+      fallbackImage="https://d33v4339jhl8k0.cloudfront.net/customer-avatar/01.png"
+    />
+  </Story>
+</Preview>

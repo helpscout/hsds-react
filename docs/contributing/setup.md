@@ -46,7 +46,7 @@ Fantastic ✌️! You've got HSDS up and running on your computer.
 
 ## Code editor
 
-You can use **whatever code editor you like**! HSDS is typed using [TypeScript](https://www.typescriptlang.org/). Because of this, we recommend using [Visual Studio Code](https://code.visualstudio.com/).
+You can use **whatever code editor you like**! We recommend using [Visual Studio Code](https://code.visualstudio.com/).
 
 ## Git branch
 
