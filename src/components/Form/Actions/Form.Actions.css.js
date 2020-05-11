@@ -2,7 +2,7 @@ import baseStyles from '../../../styles/resets/baseStyles.css'
 import styled from '../../styled'
 
 export const config = {
-  marginBottom: 100,
+  marginBottom: 20,
   marginTop: 30,
   spacing: 10,
 }
