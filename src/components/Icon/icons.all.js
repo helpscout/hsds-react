@@ -65,6 +65,7 @@ import cog from '../../icons/cog.svg'
 import compose from '../../icons/compose.svg'
 import connection from '../../icons/connection.svg'
 import copy from '../../icons/copy.svg'
+import copySmall from '../../icons/copy-small.svg'
 import crossLarge from '../../icons/cross-large.svg'
 import crossMedium from '../../icons/cross-medium.svg'
 import crossMediumAlt from '../../icons/cross-medium-alt.svg'
@@ -288,6 +289,7 @@ const ICONS = {
   collapse: minus,
   compose,
   connection,
+  'copy-small': copySmall,
   copy,
   'cross-large': crossLarge,
   'cross-medium-alt': crossMediumAlt,
