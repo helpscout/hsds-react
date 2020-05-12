@@ -326,7 +326,7 @@ export class MenuContainer extends React.PureComponent {
       this.didOpen = true
     }
     if (isBrowserEnv()) {
-      requestAnimationFrame(this.repositionMenuNodeCycle)
+      this.positionRAF = requestAnimationFrame(this.repositionMenuNodeCycle)
     }
   }
 
@@ -341,6 +341,12 @@ export class MenuContainer extends React.PureComponent {
     this.didOpen = false
     // End the reposition cycle
     cancelAnimationFrame(this.positionRAF)
+
+    // This call busts the out-of-date memorized props for
+    // `memoSetPositionStylesOnNode` with the default settings provided by
+    // `getPositionProps` when the `node` or `placementNode` are not defined.
+    this.updateMenuNodePosition()
+
     this.props.closeDropdown()
     this.focusTriggerNodeOnClose()
   }
