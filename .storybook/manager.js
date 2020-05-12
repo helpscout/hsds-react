@@ -3,7 +3,7 @@ import theme from './theme'
 
 addons.setConfig({
   theme,
-  showPanel: true,
+  showPanel: false,
   enableShortcuts: false,
   selectedPanel: 'knobs',
 })
