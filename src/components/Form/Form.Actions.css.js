@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const config = {
-  marginBottom: 100,
+  marginBottom: 20,
   marginTop: 30,
   spacing: 10,
 }
