@@ -228,7 +228,7 @@ Dropdown.propTypes = Object.assign({}, DropdownMenuDimensions, {
   renderItem: PropTypes.any,
   renderLoading: PropTypes.any,
   renderTrigger: PropTypes.any,
-  selectedItem: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  selectedItem: PropTypes.any,
   selectionClearer: PropTypes.string,
   setMenuNode: PropTypes.func,
   setTriggerNode: PropTypes.func,

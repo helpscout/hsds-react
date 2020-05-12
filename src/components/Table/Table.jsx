@@ -220,7 +220,7 @@ export const columnShape = PropTypes.shape({
 })
 
 export const dataShape = PropTypes.shape({
-  id: PropTypes.string,
+  id: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
   key: PropTypes.any,
 })
 
