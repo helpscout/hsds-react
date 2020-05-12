@@ -188,7 +188,7 @@
     "jest-cli": "^24.7.1",
     "jest-watch-typeahead": "^0.3.0",
     "mkdirp": "0.5.1",
-    "np": "6.2.0",
+    "np": "6.2.3",
     "nyc": "^15.0.0",
     "object-assign": "4.1.1",
     "object-values": "2.0.0",
