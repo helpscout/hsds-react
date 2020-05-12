@@ -83,11 +83,11 @@ describe('Illo', () => {
 
   test('Render illo size if set in props', () => {
     const wrapper = mount(
-      <BlankSlate illoName="chatListBlankSlate" illoSize={90} />
+      <BlankSlate illoName="chatListBlankSlate" illoSize="90" />
     )
     const o = wrapper.find(Illo)
 
-    expect(o.first().prop('size')).toBe(90)
+    expect(o.first().prop('size')).toBe('90')
   })
 
   test('Render custom illo', () => {
@@ -97,8 +97,8 @@ describe('Illo', () => {
   })
 
   test('Maintains props on custom illo', () => {
-    const wrapper = mount(<BlankSlate illo={<WrenchCat size={90} />} />)
+    const wrapper = mount(<BlankSlate illo={<WrenchCat size="90" />} />)
     const o = wrapper.find(WrenchCat)
-    expect(o.first().prop('size')).toBe(90)
+    expect(o.first().prop('size')).toBe('90')
   })
 })

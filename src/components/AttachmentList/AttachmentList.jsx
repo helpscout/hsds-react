@@ -18,7 +18,6 @@ export class AttachmentList extends React.Component {
   }
 
   static defaultProps = {
-    children: [],
     downloadAllLabel: 'Download All',
     onDownloadAllClick: noop,
     showDownloadAll: true,
@@ -156,8 +155,6 @@ export class AttachmentList extends React.Component {
 }
 
 AttachmentList.propTypes = {
-  /** Array of `Attachment` to render */
-  children: PropTypes.arrayOf(PropTypes.element),
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
   /** Text label for the "Download All" attachment. */

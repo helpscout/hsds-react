@@ -15,7 +15,7 @@ import { noop } from '../../utilities/other'
 export class EditableFieldActions extends React.Component {
   static propTypes = {
     actions: PropTypes.arrayOf(PropTypes.object),
-    name: PropTypes.string,
+    name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     fieldValue: PropTypes.object,
     validationInfo: PropTypes.object,
     deleteAction: PropTypes.func,

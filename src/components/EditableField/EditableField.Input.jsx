@@ -44,7 +44,7 @@ export class EditableFieldInput extends React.Component {
     fieldValue: PropTypes.object,
     inline: PropTypes.bool,
     isActive: PropTypes.bool,
-    name: PropTypes.string,
+    name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     placeholder: PropTypes.string,
     type: PropTypes.string,
     validationInfo: PropTypes.object,

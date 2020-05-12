@@ -18,7 +18,7 @@ import {
 export class FilteredList extends React.Component {
   static propTypes = {
     className: PropTypes.string,
-    items: PropTypes.arrayOf(PropTypes.string),
+    items: PropTypes.arrayOf(PropTypes.any),
     itemKey: PropTypes.string,
     limit: PropTypes.number,
     inline: PropTypes.bool,

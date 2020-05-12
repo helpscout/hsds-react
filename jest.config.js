@@ -30,7 +30,7 @@ module.exports = {
     '<rootDir>/src/**/__tests__/**/*.test.(js|jsx)',
     '<rootDir>/src/**/?(*.)(spec|test).js?(x)',
   ],
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
   testURL: 'http://localhost',
   transform: {
     '^.+\\.[t|j]sx?$': 'babel-jest',

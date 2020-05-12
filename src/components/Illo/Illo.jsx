@@ -64,7 +64,7 @@ Illo.propTypes = {
   colorUiWhite: PropTypes.string,
   className: PropTypes.string,
   name: PropTypes.string,
-  size: PropTypes.oneOf(['40', '60', '72', '80', '90']),
+  size: PropTypes.oneOf(['40', 40, '60', 60, '72', 72, '80', 80, '90', 90]),
   style: PropTypes.any,
   title: PropTypes.string,
 }

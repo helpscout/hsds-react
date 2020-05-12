@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { classNames } from '../../utilities/classNames'
-import { generateCellKey } from './Table.utils'
-import { TABLE_CLASSNAME, columnShape, dataShape } from './Table'
+import { generateCellKey, columnShape, dataShape } from './Table.utils'
+import { TABLE_CLASSNAME } from './Table'
 import Cell from './Table.Cell'
 
 export default class TableRow extends React.PureComponent {
@@ -32,7 +32,7 @@ export default class TableRow extends React.PureComponent {
 }
 
 TableRow.propTypes = {
-  columns: PropTypes.arrayOf(columnShape),
-  row: dataShape,
+  columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
+  row: PropTypes.shape(dataShape),
   onRowClick: PropTypes.func,
 }

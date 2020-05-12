@@ -24,7 +24,7 @@ class BlankSlate extends React.PureComponent {
     className: PropTypes.string,
     message: PropTypes.any,
     title: PropTypes.string,
-    illo: React.ReactNode,
+    illo: PropTypes.any,
     illoName: PropTypes.string,
     illoSize: PropTypes.number,
     lightBackground: PropTypes.bool,

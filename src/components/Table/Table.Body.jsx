@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import equal from 'fast-deep-equal'
 import Row from './Table.Row'
-import { columnShape, dataShape } from './Table'
+import { columnShape, dataShape } from './Table.utils'
 
 export default class TableBody extends React.Component {
   state = { rows: [] }
@@ -79,9 +79,9 @@ export default class TableBody extends React.Component {
 }
 
 TableBody.propTypes = {
-  columns: PropTypes.arrayOf(columnShape),
+  columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
   isTableCollapsed: PropTypes.bool,
   maxRowsToDisplay: PropTypes.number,
-  rows: PropTypes.arrayOf(dataShape),
+  rows: PropTypes.arrayOf(PropTypes.shape(dataShape)),
   onRowClick: PropTypes.func,
 }
