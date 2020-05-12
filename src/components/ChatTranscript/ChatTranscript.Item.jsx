@@ -190,7 +190,7 @@ Item.propTypes = {
   params: PropTypes.any,
   showDownloadAllAttachments: PropTypes.bool,
   timestamp: PropTypes.string,
-  type: PropTypes.oneOf(['line_item' | 'message' | 'note']),
+  type: PropTypes.oneOf(['line_item', 'message', 'note']),
 }
 
 Item.defaultProps = {

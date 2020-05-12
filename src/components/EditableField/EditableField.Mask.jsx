@@ -15,20 +15,6 @@ import equal from 'fast-deep-equal'
 import { noop } from '../../utilities/other'
 
 export class EditableFieldMask extends React.Component {
-  static propTypes = {
-    actions: PropTypes.any,
-    disabled: PropTypes.bool,
-    emphasize: PropTypes.bool,
-    fieldValue: PropTypes.any,
-    maskTabIndex: PropTypes.any,
-    name: PropTypes.string,
-    placeholder: PropTypes.string,
-    type: PropTypes.string,
-    validationInfo: PropTypes.object,
-    valueOptions: PropTypes.arrayOf(PropTypes.any),
-    onValueKeyDown: PropTypes.func,
-  }
-
   static defaultProps = {
     disabled: false,
     emphasize: false,
@@ -133,6 +119,20 @@ export class EditableFieldMask extends React.Component {
       </EditableFieldMaskUI>
     )
   }
+}
+
+EditableFieldMask.propTypes = {
+  actions: PropTypes.any,
+  disabled: PropTypes.bool,
+  emphasize: PropTypes.bool,
+  fieldValue: PropTypes.any,
+  maskTabIndex: PropTypes.any,
+  name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  placeholder: PropTypes.string,
+  type: PropTypes.string,
+  validationInfo: PropTypes.object,
+  valueOptions: PropTypes.arrayOf(PropTypes.any),
+  onValueKeyDown: PropTypes.func,
 }
 
 export default EditableFieldMask

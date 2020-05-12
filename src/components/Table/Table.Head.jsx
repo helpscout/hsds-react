@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import equal from 'fast-deep-equal'
 import HeaderCell from './Table.HeaderCell'
 import { TABLE_CLASSNAME } from './Table'
-import { generateCellKey } from './Table.utils'
-import { columnShape } from './Table'
+import { generateCellKey, columnShape } from './Table.utils'
 
 class Head extends React.Component {
   shouldComponentUpdate(nextProps) {
@@ -41,7 +40,7 @@ class Head extends React.Component {
 }
 
 Head.propTypes = {
-  columns: PropTypes.arrayOf(columnShape),
+  columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
   isLoading: PropTypes.bool,
   sortedInfo: PropTypes.shape({
     columnKey: PropTypes.string,

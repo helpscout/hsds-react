@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Icon from '../Icon'
 import { SortableCellUI, HeaderCellUI } from './Table.css'
-import { TABLE_CLASSNAME, columnShape } from './Table'
+import { TABLE_CLASSNAME } from './Table'
+import { columnShape } from './Table.utils'
 
 class HeaderCell extends React.PureComponent {
   getColumnSortStatus = () => {
@@ -81,7 +82,7 @@ class HeaderCell extends React.PureComponent {
 }
 
 HeaderCell.propTypes = {
-  columns: PropTypes.arrayOf(columnShape),
+  columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
   isLoading: PropTypes.bool,
   sortedInfo: PropTypes.shape({
     columnKey: PropTypes.string,

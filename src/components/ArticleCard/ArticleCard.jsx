@@ -139,7 +139,7 @@ ArticleCard.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
   /** Content of the card. Will be truncated based on the contentLimit prop if content is a string. */
-  content: PropTypes.element,
+  content: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   /** The amount of characters to keep before truncation on the content string. */
   contentLimit: PropTypes.number,
   /** The `Text` font-size for the content. */

@@ -14,6 +14,8 @@ import Scrollable from '../Scrollable'
 import { TableWrapperUI, TableUI, LoadingUI } from './Table.css'
 import { defaultSkin, chooseSkin } from './Table.skins'
 
+import { columnShape, dataShape } from './Table.utils'
+
 import Body from './Table.Body'
 import Head from './Table.Head'
 
@@ -205,30 +207,11 @@ export class Table extends React.Component {
   }
 }
 
-export const columnShape = PropTypes.shape({
-  title: PropTypes.string,
-  columnKey: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string),
-  ]),
-  width: PropTypes.string,
-  align: PropTypes.string,
-  renderCell: PropTypes.func,
-  renderHeaderCell: PropTypes.func,
-  sortKey: PropTypes.string,
-  sorter: PropTypes.func,
-})
-
-export const dataShape = PropTypes.shape({
-  id: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
-  key: PropTypes.any,
-})
-
 Table.propTypes = {
   className: PropTypes.string,
   tableClassName: PropTypes.string,
-  columns: PropTypes.arrayOf(columnShape),
-  data: PropTypes.arrayOf(dataShape),
+  columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
+  data: PropTypes.arrayOf(PropTypes.shape(dataShape)),
   expanderText: PropTypes.any,
   maxRowsToDisplay: PropTypes.number,
   containerWidth: PropTypes.string,

@@ -62,7 +62,7 @@ StatusBadge.propTypes = {
   /** Custom class names to be added to the component.  */
   className: PropTypes.string,
   /** Count to display within the Badge. */
-  count: PropTypes.number,
+  count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   /** Color for the StatusDot's outer border. */
   outerBorderColor: PropTypes.string,
   /** Status style to render to the StatusDot. */

@@ -1,7 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Truncate from '../Truncate'
 import { CellUI } from './Table.css'
-import { TABLE_CLASSNAME, columnShape, dataShape } from './Table'
+import { TABLE_CLASSNAME } from './Table'
+import { columnShape, dataShape } from './Table.utils'
 
 export default class Cell extends React.PureComponent {
   getCompoundColumnCellData = () => {
@@ -58,6 +60,6 @@ export default class Cell extends React.PureComponent {
 }
 
 Cell.propTypes = {
-  column: columnShape,
-  row: dataShape,
+  column: PropTypes.shape(columnShape),
+  row: PropTypes.shape(dataShape),
 }
