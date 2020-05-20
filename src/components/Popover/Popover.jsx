@@ -59,6 +59,7 @@ export const Popover = props => {
     content,
     renderContent,
     className,
+    triggerOn,
     ...rest
   } = props
 
@@ -83,13 +84,14 @@ export const Popover = props => {
       data-cy="Popover"
       innerRef={innerRef}
       render={render}
-      trigger="click"
+      trigger={triggerOn}
     />
   )
 }
 
 Popover.defaultProps = Object.assign(Tooltip.defaultProps, {
   innerRef: noop,
+  triggerOn: 'click',
 })
 
 Popover.propTypes = Object.assign(Tooltip.propTypes, {

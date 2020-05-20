@@ -25,7 +25,7 @@ export const Default = () => {
     'triggerOn',
     {
       click: 'click',
-      hover: 'hover',
+      hover: 'mouseenter',
     },
     'click'
   )
