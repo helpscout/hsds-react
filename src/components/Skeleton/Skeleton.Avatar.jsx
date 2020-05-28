@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { classNames } from '../../utilities/classNames'
 import { AvatarUI } from './Skeleton.Avatar.css'
+import { config as avatarConfig } from '../Avatar/Avatar.css'
 
 class SkeletonAvatar extends React.PureComponent {
   static displayName = 'Skeleton.Avatar'
@@ -31,7 +32,7 @@ SkeletonAvatar.propTypes = {
   /** Shape of the avatar. */
   shape: PropTypes.oneOf(['circle', 'rounded', 'square']),
   /** Size of the avatar. */
-  size: PropTypes.oneOf(['xl', 'lg', 'md', 'sm']),
+  size: PropTypes.oneOf(Object.keys(avatarConfig.size)),
   /** Enables animations for the component. */
   withAnimations: PropTypes.bool,
 }
