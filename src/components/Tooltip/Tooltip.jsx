@@ -51,7 +51,7 @@ const Tooltip = props => {
     closeOnContentClick,
     closeOnEscPress,
     display,
-    'data-cy': dataCy = 'Tooltip',
+    'data-cy': dataCy,
     innerRef,
     isOpen,
     minWidth,
@@ -64,6 +64,7 @@ const Tooltip = props => {
     zIndex: zIndexProp,
     ...rest
   } = props
+
   const { getCurrentScope } = useContext(GlobalContext) || {}
   const { zIndex = zIndexProp, animationDuration: animationDurationContext } =
     useContext(TooltipContext) || {}
@@ -172,6 +173,7 @@ Tooltip.defaultProps = {
   animationDuration: 200,
   arrowSize: 12,
   closeOnEscPress: true,
+  'data-cy': 'Tooltip',
   display: null,
   isOpen: false,
   placement: 'top',

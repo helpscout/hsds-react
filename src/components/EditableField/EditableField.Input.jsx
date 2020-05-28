@@ -88,6 +88,7 @@ export class EditableFieldInput extends React.Component {
   fieldInputContentRef
   optionsDropdownRef
   inputRef
+  inputWrapperRef = React.createRef()
 
   setFieldInputContentNode = node => {
     this.fieldInputContentRef = node
@@ -300,6 +301,7 @@ export class EditableFieldInput extends React.Component {
           display="block"
           placement="top-end"
           title={validationInfo.message}
+          appendTo={this.inputWrapperRef.current}
         >
           <Icon name={validationInfo.icon || DEFAULT_ICON} size={24} />
         </Tooltip>
@@ -339,6 +341,7 @@ export class EditableFieldInput extends React.Component {
           className={INPUT_CLASSNAMES.inputWrapper}
           placeholder={placeholder}
           value={fieldValue.value}
+          ref={this.inputWrapperRef}
         >
           <InputUI
             {...getValidProps(rest)}
