@@ -89,12 +89,12 @@ export const Popover = props => {
   )
 }
 
-Popover.defaultProps = Object.assign(Tooltip.defaultProps, {
+Popover.defaultProps = Object.assign({}, Tooltip.defaultProps, {
   innerRef: noop,
   triggerOn: 'click',
 })
 
-Popover.propTypes = Object.assign(Tooltip.propTypes, {
+Popover.propTypes = Object.assign({}, Tooltip.propTypes, {
   className: PropTypes.string,
   content: PropTypes.any,
   children: PropTypes.any,
