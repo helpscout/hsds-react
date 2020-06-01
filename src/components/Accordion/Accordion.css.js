@@ -72,7 +72,6 @@ export const AccordionUI = styled('div')`
     }
 
     .c-Accordion__Section__Title.is-sortable {
-      background-color: inherit;
       position: relative;
       .drag-handle {
         display: none;
@@ -131,10 +130,35 @@ export const SectionUI = styled('div')`
 
   &.is-info {
     background: ${getColor('blue.100')};
+
+    .is-highlighted {
+      color: ${getColor('blue.500')};
+    }
   }
 
   &.is-error {
     background: ${getColor('red.100')};
+
+    .is-highlighted {
+      color: ${getColor('red.500')};
+    }
+  }
+
+  &:hover,
+  &:focus {
+    background-color: ${getColor('grey.200')};
+
+    .${titleClassNames.iconCaretClassName} {
+      color: ${getColor('text.slightlyMuted')};
+    }
+
+    .Accordion__Heading {
+      color: #253642;
+    }
+
+    .Accordion__Subheading {
+      color: #556575;
+    }
   }
 `
 
@@ -146,15 +170,6 @@ export const TitleUI = styled('div')`
   padding: 18px 20px;
   text-decoration: none;
   font-weight: 500;
-
-  &:hover,
-  &:focus {
-    background-color: ${getColor('grey.200')};
-
-    .${titleClassNames.iconCaretClassName} {
-      color: ${getColor('text.slightlyMuted')};
-    }
-  }
 
   &:focus {
     outline: none;
@@ -226,7 +241,6 @@ export const TitleUI = styled('div')`
   }
 
   &.is-sortable {
-    background-color: ${getColor('grey.200')};
     cursor: pointer;
     overflow: hidden;
     user-select: none;
@@ -239,7 +253,6 @@ export const TitleUI = styled('div')`
     }
 
     .drag-handle {
-      /* color: ${getColor('grey.800')}; */
       color: #405261;
       cursor: move;
       display: inline-block;

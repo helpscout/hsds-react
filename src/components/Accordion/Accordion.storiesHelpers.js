@@ -37,16 +37,3 @@ export const createSections = data =>
 export const onOpen = id => console.log('Open', id)
 export const onClose = id => console.log('Close', id)
 export const onSortEnd = (...args) => console.log('Sorted', ...args)
-
-export const createMultiLineLinks = data =>
-  data.map((datum, index) => (
-    <Accordion.Link
-      key={index}
-      status={datum.status}
-      badge={datum.badge}
-      to="/"
-    >
-      <Accordion.Heading>{datum.title}</Accordion.Heading>
-      <Accordion.Subheading>{datum.subtitle}</Accordion.Subheading>
-    </Accordion.Link>
-  ))
