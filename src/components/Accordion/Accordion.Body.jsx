@@ -15,6 +15,7 @@ export const classNameStrings = {
   isSizeSmClassName: 'is-sm',
   isSizeMdClassName: 'is-md',
   isSizeLgClassName: 'is-lg',
+  isSizeXlClassName: 'is-xl',
 }
 
 const getComponentClassName = ({
@@ -33,6 +34,7 @@ const getComponentClassName = ({
     isSizeSmClassName,
     isSizeMdClassName,
     isSizeLgClassName,
+    isSizeXlClassName,
   } = classNameStrings
   return classNames(
     baseComponentClassName,
@@ -43,6 +45,7 @@ const getComponentClassName = ({
     size && size === 'sm' && isSizeSmClassName,
     size && size === 'md' && isSizeMdClassName,
     size && size === 'lg' && isSizeLgClassName,
+    size && size === 'xl' && isSizeXlClassName,
     className
   )
 }

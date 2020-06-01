@@ -1,5 +1,7 @@
 import styled from 'styled-components'
-
+import Badge from '../Badge'
+import Flexy from '../Flexy'
+import Text from '../Text'
 import { breakpoint } from '../../styles/mixins/breakpoints.css'
 import { getColor } from '../../styles/utilities/color'
 import { pageBreakpointsConfig } from '../Page/Page.config.css'
@@ -47,7 +49,7 @@ export const AccordionUI = styled('div')`
         left: -15px;
       }
       &.is-page .drag-handle {
-        left: 15px;
+        left: 39px;
       }
       &:hover .drag-handle {
         display: inline-block;
@@ -70,7 +72,7 @@ export const AccordionUI = styled('div')`
     }
 
     .c-Accordion__Section__Title.is-sortable {
-      background-color: white;
+      background-color: inherit;
       position: relative;
       .drag-handle {
         display: none;
@@ -126,6 +128,14 @@ export const BodyUI = styled('div')`
 export const SectionUI = styled('div')`
   background: white;
   position: relative;
+
+  &.is-info {
+    background: ${getColor('blue.100')};
+  }
+
+  &.is-error {
+    background: ${getColor('red.100')};
+  }
 `
 
 export const TitleUI = styled('div')`
@@ -180,6 +190,11 @@ export const TitleUI = styled('div')`
     }
   }
 
+  &.is-xl {
+    ${setFontSize(13)};
+    padding: 25px 100px;
+  }
+
   &.is-md {
     padding: 14px 20px;
   }
@@ -220,11 +235,12 @@ export const TitleUI = styled('div')`
       left: -15px;
     }
     &.is-page .drag-handle {
-      left: 15px;
+      left: 39px;
     }
 
     .drag-handle {
-      color: ${getColor('grey.800')};
+      /* color: ${getColor('grey.800')}; */
+      color: #405261;
       cursor: move;
       display: inline-block;
       pointer-events: none;
@@ -234,4 +250,24 @@ export const TitleUI = styled('div')`
       transform: translateY(-50%);
     }
   }
+`
+
+export const TitleContentUI = styled(Flexy)`
+  pointer-events: none;
+`
+
+export const BadgeUI = styled(Badge)`
+  padding-bottom: 2px;
+  padding-top: 2px;
+`
+
+export const HeadingUI = styled(Text)`
+  color: #314351;
+  line-height: 18px;
+  margin-bottom: 6px;
+`
+
+export const SubheadingUI = styled(Text)`
+  color: #748494;
+  line-height: 17px;
 `

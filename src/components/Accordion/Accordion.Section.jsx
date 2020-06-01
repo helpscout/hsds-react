@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { useComponentId } from './Accordion.utils'
 import { SectionUI } from './Accordion.css'
 import { AccordionContext } from './Accordion'
 import { createUniqueIDFactory } from '../../utilities/id'
@@ -14,9 +13,11 @@ export const classNameStrings = {
   baseComponentClassName: 'c-Accordion__Section',
   isOpenClassName: 'is-open',
   isSeamlessClassName: 'is-seamless',
+  isStatusInfoClassName: 'is-info',
+  isStatusErrorClassName: 'is-error',
 }
 
-const getComponentClassName = ({ className, isOpen, isLink }) => {
+const getComponentClassName = ({ className, isOpen, isLink, status }) => {
   let { isSeamless } = useContext(AccordionContext) || {}
 
   if (isLink) isSeamless = false
@@ -25,12 +26,16 @@ const getComponentClassName = ({ className, isOpen, isLink }) => {
     baseComponentClassName,
     isOpenClassName,
     isSeamlessClassName,
+    isStatusInfoClassName,
+    isStatusErrorClassName,
   } = classNameStrings
 
   return classNames(
     baseComponentClassName,
     isOpen && isOpenClassName,
     isSeamless && isSeamlessClassName,
+    status && status === 'info' && isStatusInfoClassName,
+    status && status === 'error' && isStatusErrorClassName,
     className
   )
 }

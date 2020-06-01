@@ -3,6 +3,7 @@ import { select, text, boolean, number } from '@storybook/addon-knobs'
 import {
   data,
   dataWithIds,
+  createMultiLineLinks,
   createSections,
   onOpen,
   onClose,
@@ -167,6 +168,33 @@ This component is to be used within an `Accordion`.
               {text('linkTwoContent', 'Link Row Two')}
             </Text>
           </Accordion.Link>
+        </Accordion>
+      </Page.Card>
+    </Page>
+  </Story>
+</Preview>
+
+#### Multi-Line
+
+<Preview>
+  <Story name="Multi-Line">
+    <Page>
+      <Page.Card>
+        <Accordion
+          distance={number('distance', 5)}
+          isSortable={boolean('isSortable', true)}
+          allowMultiple={boolean('allowMultiple', false)}
+          pressDelay={number('pressDelay', 300)}
+          onSortEnd={onSortEnd}
+          size={select('Sizes', {extraSmall: 'xs', small: 'sm', medium: 'md', large: 'lg', extraLarge: 'xl'}, 'xl')}
+        >
+        {
+          createMultiLineLinks([
+            { title: 'Message Name', subtitle: 'Last seen yesterday' },
+            { title: 'Message Name', subtitle: 'Last seen yesterday', status: 'info', badge: 'Incomplete' },
+            { title: 'Message Name', subtitle: 'Last seen yesterday', status: 'error', badge: 'Paused' }
+          ])
+        }
         </Accordion>
       </Page.Card>
     </Page>

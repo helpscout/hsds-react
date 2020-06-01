@@ -5,6 +5,7 @@ import { withA11y } from '@storybook/addon-a11y'
 
 import '../src/adapters/app'
 import './storybook.css'
+import './font-hs-app.css'
 
 import HSDS from '../src/components/HSDS'
 

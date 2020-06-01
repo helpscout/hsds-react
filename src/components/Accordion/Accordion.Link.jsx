@@ -5,7 +5,7 @@ import { renderChildrenSafely } from '../../utilities/component'
 
 // Higher-order wrapper to render an enhanced Accordion.Section and Accordion.Title
 export const Link = props => {
-  const { children, to, href, title, ...rest } = props
+  const { badge, children, href, status, title, to, ...rest } = props
 
   const isLink = !!(to || href)
   const isOpen = false
@@ -15,14 +15,17 @@ export const Link = props => {
     children,
     isOpen,
     isLink,
+    status,
     title,
   }
 
   const titleProps = {
-    to,
+    badge,
     href,
     isOpen,
+    status,
     title,
+    to,
   }
 
   return (

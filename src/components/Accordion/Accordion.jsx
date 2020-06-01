@@ -1,8 +1,10 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Body from './Accordion.Body'
-import Section from './Accordion.Section'
+import Heading from './Accordion.Heading'
 import Link from './Accordion.Link'
+import Section from './Accordion.Section'
+import Subheading from './Accordion.Subheading'
 import Title from './Accordion.Title'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -43,7 +45,6 @@ const getComponentClassName = ({
     isPage && isPageClassName,
     isSeamless && isSeamlessClassName,
     isSortable && isSortableClassName,
-
     isSorting && isSortingClassName,
     className
   )
@@ -196,8 +197,10 @@ Accordion.defaultProps = {
 }
 
 Accordion.Body = Body
+Accordion.Heading = Heading
 Accordion.Link = Link
 Accordion.Section = Section
+Accordion.Subheading = Subheading
 Accordion.Title = Title
 
 export default Accordion

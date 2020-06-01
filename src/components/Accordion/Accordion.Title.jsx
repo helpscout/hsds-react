@@ -5,7 +5,7 @@ import Link from '../Link'
 import Icon from '../Icon'
 import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
-import { TitleUI } from './Accordion.css'
+import { BadgeUI, TitleContentUI, TitleUI } from './Accordion.css'
 import { SectionContext } from './Accordion.Section'
 import { AccordionContext } from './Accordion'
 import { noop } from '../../utilities/other'
@@ -23,6 +23,7 @@ export const classNameStrings = {
   isSizeSmClassName: 'is-sm',
   isSizeMdClassName: 'is-md',
   isSizeLgClassName: 'is-lg',
+  isSizeXlClassName: 'is-xl',
 }
 
 const getComponentClassName = ({
@@ -45,6 +46,7 @@ const getComponentClassName = ({
     isSizeSmClassName,
     isSizeMdClassName,
     isSizeLgClassName,
+    isSizeXlClassName,
   } = classNameStrings
 
   return classNames(
@@ -58,6 +60,7 @@ const getComponentClassName = ({
     size && size === 'sm' && isSizeSmClassName,
     size && size === 'md' && isSizeMdClassName,
     size && size === 'lg' && isSizeLgClassName,
+    size && size === 'xl' && isSizeXlClassName,
     className
   )
 }
@@ -77,7 +80,7 @@ const getDragHandleClassName = isPage => {
 }
 
 const Title = props => {
-  const { children, className, onClick, ...rest } = props
+  const { badge, children, className, onClick, status, ...rest } = props
   const { uuid, isOpen } = useContext(SectionContext) || {}
   const { isPage, isSeamless, setOpen = noop, size, isSorting, isSortable } =
     useContext(AccordionContext) || {}
@@ -113,6 +116,8 @@ const Title = props => {
     }
   }
 
+  const handleMouseDown = event => event.preventDefault()
+
   const iconProps = {
     className: classNameStrings.iconCaretClassName,
     faint: !isIconOpen,
@@ -120,8 +125,20 @@ const Title = props => {
     size: 14,
   }
 
+  const badgeMarkup = badge ? (
+    <Flexy.Item>
+      <BadgeUI status={status} inverted={true}>
+        {badge}
+      </BadgeUI>
+    </Flexy.Item>
+  ) : null
+
   const dragHandle = isSortable ? (
-    <SortableDragHandle className={getDragHandleClassName(isPage)} />
+    <SortableDragHandle
+      className={getDragHandleClassName(isPage)}
+      iconSize={isPage ? '24' : '20'}
+      onDragStart={handleMouseDown}
+    />
   ) : null
 
   const id = `accordion__section__title--${uuid}`
@@ -141,12 +158,13 @@ const Title = props => {
       as={isLink ? Link : 'div'}
     >
       {dragHandle}
-      <Flexy>
+      <TitleContentUI>
         <Flexy.Block>{children}</Flexy.Block>
+        {badgeMarkup}
         <Flexy.Item>
           <Icon {...iconProps} />
         </Flexy.Item>
-      </Flexy>
+      </TitleContentUI>
     </TitleUI>
   )
 }
