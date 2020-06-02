@@ -128,7 +128,9 @@ export const SectionUI = styled('div')`
   background: white;
   position: relative;
 
-  &.is-info {
+  &.is-info,
+  &.is-info:hover,
+  &.is-info:focus {
     background: ${getColor('blue.100')};
 
     .is-highlighted {
@@ -136,7 +138,9 @@ export const SectionUI = styled('div')`
     }
   }
 
-  &.is-error {
+  &.is-error,
+  &.is-error:hover,
+  &.is-error:focus {
     background: ${getColor('red.100')};
 
     .is-highlighted {
