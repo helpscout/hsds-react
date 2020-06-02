@@ -163,6 +163,7 @@ import searchMedium from '../../icons/search-medium.svg'
 import searchSmall from '../../icons/search-small.svg'
 import shoppingCart from '../../icons/shopping-cart.svg'
 import sign from '../../icons/sign.svg'
+import smallDragHandle from '../../icons/small-drag-handle.svg'
 import smallPaperclip from '../../icons/small-paperclip.svg'
 import socialAboutMe from '../../icons/social-aboutme.svg'
 import socialAol from '../../icons/social-aol.svg'
@@ -396,6 +397,7 @@ const ICONS = {
   search,
   'shopping-cart': shoppingCart,
   sign,
+  'small-drag-handle': smallDragHandle,
   'small-paperclip': smallPaperclip,
   'social-about-me': socialAboutMe,
   'social-aol': socialAol,

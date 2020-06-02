@@ -6,6 +6,8 @@ export const COMPONENT_KEY = {
   Body: 'AccordionBody',
   Section: 'AccordionSection',
   Title: 'AccordionTitle',
+  Heading: 'AccordionHeading',
+  Subheading: 'AccordionSubheading',
 }
 
 export const withUuid = (nextUuid: Function) => (

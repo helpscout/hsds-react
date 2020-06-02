@@ -1,4 +1,7 @@
 import styled from '../../styled'
+import Badge from '../../Badge'
+import Flexy from '../../Flexy'
+import Text from '../../Text'
 import baseStyles from '../../../styles/resets/baseStyles.css'
 import { breakpoint } from '../../../styles/mixins/breakpoints.css'
 import { getColor } from '../../../styles/utilities/color'
@@ -45,14 +48,6 @@ export const AccordionUI = styled('div')`
     .c-Accordion__Section__Title {
       user-select: none;
 
-      &.is-seamless .drag-handle {
-        left: -15px;
-      }
-
-      &.is-page .drag-handle {
-        left: 15px;
-      }
-
       &:hover .drag-handle {
         display: inline-block;
       }
@@ -75,8 +70,6 @@ export const AccordionUI = styled('div')`
     }
 
     .c-Accordion__Section__Title.is-sortable {
-      background-color: white;
-
       .drag-handle {
         display: none;
         pointer-events: all;
@@ -135,6 +128,36 @@ export const SectionUI = styled('div')`
   ${baseStyles};
   background: white;
   position: relative;
+
+  &.is-info,
+  &.is-info:hover,
+  &.is-info:focus {
+    background: ${getColor('blue.100')};
+    .is-highlighted {
+      color: ${getColor('blue.500')};
+    }
+  }
+  &.is-error,
+  &.is-error:hover,
+  &.is-error:focus {
+    background: ${getColor('red.100')};
+    .is-highlighted {
+      color: ${getColor('red.500')};
+    }
+  }
+
+  &:hover,
+  &:focus {
+    background-color: ${getColor('grey.200')};
+  }
+
+  .c-Accordion__Heading {
+    color: #253642;
+  }
+
+  .c-Accordion__Subheading {
+    color: #556575;
+  }
 `
 
 export const makeTitleUI = (selector: 'div') => {
@@ -169,6 +192,11 @@ export const makeTitleUI = (selector: 'div') => {
       }
     }
 
+    &.is-xl {
+      ${setFontSize(13)};
+      padding: 25px 100px;
+    }
+
     &.is-md {
       padding: 14px 20px;
     }
@@ -200,13 +228,12 @@ export const makeTitleUI = (selector: 'div') => {
     }
 
     &.is-sortable {
-      background-color: ${getColor('grey.200')};
       cursor: pointer;
       overflow: hidden;
       user-select: none;
 
       .drag-handle {
-        color: ${getColor('grey.800')};
+        color: #405261;
         cursor: move;
         display: inline-block;
         pointer-events: none;
@@ -221,8 +248,30 @@ export const makeTitleUI = (selector: 'div') => {
       }
 
       &.is-page .drag-handle {
-        left: 15px;
+        left: 14px;
+
+        ${breakpoint(PageConfig.breakpoint.widescreen, `left: 39px;`)};
       }
     }
   `
 }
+
+export const TitleContentUI = styled(Flexy)`
+  pointer-events: none;
+`
+
+export const BadgeUI = styled(Badge)`
+  padding-bottom: 2px;
+  padding-top: 2px;
+`
+
+export const HeadingUI = styled(Text)`
+  color: #314351;
+  line-height: 18px;
+  margin-bottom: 6px;
+`
+
+export const SubheadingUI = styled(Text)`
+  color: #748494;
+  line-height: 17px;
+`

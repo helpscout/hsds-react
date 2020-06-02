@@ -7,10 +7,12 @@ import { renderChildrenSafely } from '../../utilities/component'
 // Accordion.Title
 export const Link = props => {
   const {
+    badge,
     children,
     isSeamless: isSeamlessProp,
     to,
     href,
+    status,
     title,
     ...rest
   } = props
@@ -24,13 +26,16 @@ export const Link = props => {
     isOpen,
     isSeamless,
     isLink,
+    status,
     title,
   }
 
   const titleProps = {
+    badge,
     to,
     href,
     isOpen,
+    status,
     title,
   }
 

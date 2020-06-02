@@ -15,22 +15,29 @@ export const classNameStrings = {
   baseComponentClassName: 'c-Accordion__Section',
   isOpenClassName: 'is-open',
   isSeamlessClassName: 'is-seamless',
+  isStatusInfoClassName: 'is-info',
+  isStatusErrorClassName: 'is-error',
 }
 
 const getComponentClassName = ({
   className,
   isOpen,
   isSeamless,
+  status,
 }: SectionProps): string => {
   const {
     baseComponentClassName,
     isOpenClassName,
     isSeamlessClassName,
+    isStatusInfoClassName,
+    isStatusErrorClassName,
   } = classNameStrings
   return classNames(
     baseComponentClassName,
     isOpen && isOpenClassName,
     isSeamless && isSeamlessClassName,
+    status && status === 'info' && isStatusInfoClassName,
+    status && status === 'error' && isStatusErrorClassName,
     className
   )
 }

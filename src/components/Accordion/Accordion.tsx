@@ -4,7 +4,9 @@ import { AccordionProps, AccordionState } from './Accordion.types'
 import PropProvider from '../PropProvider'
 import propConnect from '../PropProvider/propConnect'
 import Body from './Accordion.Body'
+import Heading from './Accordion.Heading.jsx'
 import Section from './Accordion.Section'
+import Subheading from './Accordion.Subheading.jsx'
 import Link from './Accordion.Link'
 import Title from './Accordion.Title'
 import { classNames } from '../../utilities/classNames'
@@ -64,8 +66,10 @@ export class Accordion extends React.PureComponent<
   AccordionState
 > {
   static Body = Body
+  static Heading = Heading
   static Link = Link
   static Section = Section
+  static Subheading = Subheading
   static Title = Title
 
   static defaultProps = {
@@ -160,6 +164,8 @@ export class Accordion extends React.PureComponent<
       [COMPONENT_KEY.Section]: props,
       [COMPONENT_KEY.Title]: props,
       [COMPONENT_KEY.Body]: props,
+      [COMPONENT_KEY.Heading]: props,
+      [COMPONENT_KEY.Subheading]: props,
     }
   }
 

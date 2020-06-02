@@ -1,4 +1,4 @@
-export type Sizes = 'xs' | 'sm' | 'md' | 'lg'
+export type Sizes = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 export type AccordionProps = {
   allowMultiple?: boolean
@@ -52,10 +52,12 @@ export type SectionProps = {
   sections: object
   setOpen: () => void
   size?: Sizes
+  status?: string
   uuid: string
 }
 
 export type TitleProps = {
+  badge?: string
   children: Node
   className?: string
   href?: string
@@ -69,6 +71,7 @@ export type TitleProps = {
   onClose?: (uuid: string) => void
   setOpen: (uuid: string, isOpen?: boolean) => void
   size?: Sizes
+  status?: string
   to?: string
   uuid: string
 }

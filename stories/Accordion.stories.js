@@ -274,6 +274,57 @@ stories.add('Row (Link)', () => {
   )
 })
 
+stories.add('Multi-Line', () => {
+  return (
+    <Page>
+      <Page.Card>
+        <Accordion
+          distance={5}
+          isSortable={true}
+          allowMultiple={false}
+          pressDelay={300}
+          onSortEnd={() => {}}
+          size="xl"
+        >
+          <Accordion.Link to="/">
+            <Accordion.Heading>March 40% Offer</Accordion.Heading>
+            <Accordion.Subheading>
+              Viewed 104 times. Last seen yesterday
+            </Accordion.Subheading>
+          </Accordion.Link>
+          <Accordion.Link to="/">
+            <Accordion.Heading>General NPS</Accordion.Heading>
+            <Accordion.Subheading>
+              Viewed 20k times. Last seen 10 min ago
+            </Accordion.Subheading>
+          </Accordion.Link>
+          <Accordion.Link to="/">
+            <Accordion.Heading>Menswear Range Promo</Accordion.Heading>
+            <Accordion.Subheading>
+              Viewed 1 time. Last seen 8:31am
+            </Accordion.Subheading>
+          </Accordion.Link>
+          <Accordion.Link to="/" status="info" badge="Incomplete">
+            <Accordion.Heading>New Account Onboarding</Accordion.Heading>
+            <Accordion.Subheading>
+              <span className="is-highlighted">Finish Setup. </span>
+              <span>40% complete</span>
+            </Accordion.Subheading>
+          </Accordion.Link>
+          <Accordion.Link to="/" status="error" badge="Paused">
+            <Accordion.Heading>Business Outreach (Sales)</Accordion.Heading>
+            <Accordion.Subheading>
+              <span className="is-highlighted">
+                Message paused because of an issue
+              </span>
+            </Accordion.Subheading>
+          </Accordion.Link>
+        </Accordion>
+      </Page.Card>
+    </Page>
+  )
+})
+
 const storiesHsApp = storiesOf('Accordion/HS App', module)
 storiesHsApp.addDecorator(withAktiv)
 storiesHsApp.addDecorator(withHsApp)

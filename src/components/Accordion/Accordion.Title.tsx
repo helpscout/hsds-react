@@ -8,7 +8,7 @@ import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
 import { memoize } from '../../utilities/memoize'
 import { noop } from '../../utilities/other'
-import { makeTitleUI } from './styles/Accordion.css'
+import { BadgeUI, TitleContentUI, makeTitleUI } from './styles/Accordion.css'
 import { TitleProps, TitleState } from './Accordion.types'
 import { COMPONENT_KEY, mapConnectedPropsAsProps } from './Accordion.utils'
 import SortableDragHandle from '../Sortable/Sortable.DragHandle'
@@ -25,6 +25,7 @@ export const classNameStrings = {
   isSizeSmClassName: 'is-sm',
   isSizeMdClassName: 'is-md',
   isSizeLgClassName: 'is-lg',
+  isSizeXlClassName: 'is-xl',
 }
 
 const getComponentClassName = ({
@@ -47,6 +48,7 @@ const getComponentClassName = ({
     isSizeSmClassName,
     isSizeMdClassName,
     isSizeLgClassName,
+    isSizeXlClassName,
     isSortableClassName,
   } = classNameStrings
 
@@ -63,6 +65,7 @@ const getComponentClassName = ({
     size && size === 'sm' && isSizeSmClassName,
     size && size === 'md' && isSizeMdClassName,
     size && size === 'lg' && isSizeLgClassName,
+    size && size === 'xl' && isSizeXlClassName,
     className
   )
 }
@@ -124,12 +127,27 @@ class Title extends React.Component<TitleProps, TitleState> {
     }
   }
 
+  handleMouseDown = (event: Event) => {
+    event.preventDefault()
+  }
+
   getTitleUI() {
     const selector = this.getIsLink() ? Link : 'div'
 
     // TODO: fix typescript complains
     // @ts-ignore
     return this.makeTitleUI(selector)
+  }
+
+  renderBadge() {
+    const { badge, status } = this.props
+    return badge ? (
+      <Flexy.Item>
+        <BadgeUI status={status} inverted={true}>
+          {badge}
+        </BadgeUI>
+      </Flexy.Item>
+    ) : null
   }
 
   renderIcon() {
@@ -152,7 +170,7 @@ class Title extends React.Component<TitleProps, TitleState> {
   }
 
   render() {
-    const { children, isOpen, isSortable, uuid, ...rest } = this.props
+    const { children, isOpen, isPage, isSortable, uuid, ...rest } = this.props
 
     const id = `accordion__section__title--${uuid}`
     const ariaControls = `accordion__section__body--${uuid}`
@@ -162,7 +180,11 @@ class Title extends React.Component<TitleProps, TitleState> {
     const restProps = this.getIsLink() ? rest : getValidProps(rest)
 
     const dragHandle = isSortable ? (
-      <SortableDragHandle className={getDragHandleClassName(this.props)} />
+      <SortableDragHandle
+        className={getDragHandleClassName(this.props)}
+        iconSize={isPage ? '24' : '20'}
+        onDragStart={this.handleMouseDown}
+      />
     ) : null
 
     return (
@@ -178,10 +200,11 @@ class Title extends React.Component<TitleProps, TitleState> {
         tabIndex="0"
       >
         {dragHandle}
-        <Flexy>
+        <TitleContentUI>
           <Flexy.Block>{children}</Flexy.Block>
+          <Flexy.Item>{this.renderBadge()}</Flexy.Item>
           <Flexy.Item>{this.renderIcon()}</Flexy.Item>
-        </Flexy>
+        </TitleContentUI>
       </TitleUI>
     )
   }
