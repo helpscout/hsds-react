@@ -156,11 +156,11 @@ export const SectionUI = styled('div')`
       color: ${getColor('text.slightlyMuted')};
     }
 
-    .Accordion__Heading {
+    .c-Accordion__Heading {
       color: #253642;
     }
 
-    .Accordion__Subheading {
+    .c-Accordion__Subheading {
       color: #556575;
     }
   }

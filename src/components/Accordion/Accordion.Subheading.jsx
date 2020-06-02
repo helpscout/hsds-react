@@ -6,7 +6,7 @@ export default ({ children }) => (
     truncate
     weight={400}
     size={13}
-    className="Accordion__Subheading"
+    className="c-Accordion__Subheading"
   >
     {children}
   </SubheadingUI>
