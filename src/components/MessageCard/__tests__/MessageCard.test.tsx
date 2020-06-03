@@ -96,6 +96,13 @@ describe('Body', () => {
     expect(o.length).toBe(1)
     expect(o.html()).toContain('Santa!')
   })
+
+  test('Renders html in body', () => {
+    const wrapper = mount(<MessageCard body="<span>Santa!</span>" />)
+    const o = wrapper.find(BodyUI)
+
+    expect(o.html()).toContain('<span>Santa!</span>')
+  })
 })
 
 describe('Title', () => {
