@@ -1,5 +1,7 @@
 import styled from 'styled-components'
-
+import Badge from '../Badge'
+import Flexy from '../Flexy'
+import Text from '../Text'
 import { breakpoint } from '../../styles/mixins/breakpoints.css'
 import { getColor } from '../../styles/utilities/color'
 import { pageBreakpointsConfig } from '../Page/Page.config.css'
@@ -47,7 +49,7 @@ export const AccordionUI = styled('div')`
         left: -15px;
       }
       &.is-page .drag-handle {
-        left: 15px;
+        left: 39px;
       }
       &:hover .drag-handle {
         display: inline-block;
@@ -70,7 +72,6 @@ export const AccordionUI = styled('div')`
     }
 
     .c-Accordion__Section__Title.is-sortable {
-      background-color: white;
       position: relative;
       .drag-handle {
         display: none;
@@ -126,6 +127,43 @@ export const BodyUI = styled('div')`
 export const SectionUI = styled('div')`
   background: white;
   position: relative;
+
+  &.is-info,
+  &.is-info:hover,
+  &.is-info:focus {
+    background: ${getColor('blue.100')};
+
+    .is-highlighted {
+      color: ${getColor('blue.500')};
+    }
+  }
+
+  &.is-error,
+  &.is-error:hover,
+  &.is-error:focus {
+    background: ${getColor('red.100')};
+
+    .is-highlighted {
+      color: ${getColor('red.500')};
+    }
+  }
+
+  &:hover,
+  &:focus {
+    background-color: ${getColor('grey.200')};
+
+    .${titleClassNames.iconCaretClassName} {
+      color: ${getColor('text.slightlyMuted')};
+    }
+
+    .c-Accordion__Heading {
+      color: #253642;
+    }
+
+    .c-Accordion__Subheading {
+      color: #556575;
+    }
+  }
 `
 
 export const TitleUI = styled('div')`
@@ -136,15 +174,6 @@ export const TitleUI = styled('div')`
   padding: 18px 20px;
   text-decoration: none;
   font-weight: 500;
-
-  &:hover,
-  &:focus {
-    background-color: ${getColor('grey.200')};
-
-    .${titleClassNames.iconCaretClassName} {
-      color: ${getColor('text.slightlyMuted')};
-    }
-  }
 
   &:focus {
     outline: none;
@@ -180,6 +209,11 @@ export const TitleUI = styled('div')`
     }
   }
 
+  &.is-xl {
+    ${setFontSize(13)};
+    padding: 25px 100px;
+  }
+
   &.is-md {
     padding: 14px 20px;
   }
@@ -211,7 +245,6 @@ export const TitleUI = styled('div')`
   }
 
   &.is-sortable {
-    background-color: ${getColor('grey.200')};
     cursor: pointer;
     overflow: hidden;
     user-select: none;
@@ -220,11 +253,11 @@ export const TitleUI = styled('div')`
       left: -15px;
     }
     &.is-page .drag-handle {
-      left: 15px;
+      left: 39px;
     }
 
     .drag-handle {
-      color: ${getColor('grey.800')};
+      color: #405261;
       cursor: move;
       display: inline-block;
       pointer-events: none;
@@ -234,4 +267,24 @@ export const TitleUI = styled('div')`
       transform: translateY(-50%);
     }
   }
+`
+
+export const TitleContentUI = styled(Flexy)`
+  pointer-events: none;
+`
+
+export const BadgeUI = styled(Badge)`
+  padding-bottom: 2px;
+  padding-top: 2px;
+`
+
+export const HeadingUI = styled(Text)`
+  color: #314351;
+  line-height: 18px;
+  margin-bottom: 6px;
+`
+
+export const SubheadingUI = styled(Text)`
+  color: #748494;
+  line-height: 17px;
 `
