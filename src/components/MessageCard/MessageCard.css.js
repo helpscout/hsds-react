@@ -2,9 +2,7 @@ import styled from 'styled-components'
 import Card from '../Card'
 import Button from '../Button'
 import Heading from '../Heading'
-import Text from '../Text'
 import { makeFontFamily, setFontSize } from '../../styles/utilities/font'
-import variableFontSize from '../../styles/utilities/variableFontSize'
 import { getColor } from '../../styles/utilities/color'
 const fontFamily = makeFontFamily('Barlow')
 
