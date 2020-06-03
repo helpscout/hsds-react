@@ -92,12 +92,7 @@ export class MessageCard extends React.PureComponent {
     const withMargin = title || subtitle
 
     return body ? (
-      <BodyUI
-        block
-        withMargin={withMargin}
-        data-cy="beacon-message-body-content"
-        shade="slightlyMuted"
-      >
+      <BodyUI withMargin={withMargin} data-cy="beacon-message-body-content">
         <div dangerouslySetInnerHTML={{ __html: body }} />
       </BodyUI>
     ) : null
