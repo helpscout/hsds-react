@@ -90,6 +90,7 @@ export class MessageCard extends React.PureComponent {
   renderBody() {
     const { body, title, subtitle } = this.props
     const withMargin = title || subtitle
+
     return body ? (
       <BodyUI
         block
@@ -97,7 +98,7 @@ export class MessageCard extends React.PureComponent {
         data-cy="beacon-message-body-content"
         shade="slightlyMuted"
       >
-        {this.getTruncatedText(body, 500)}
+        <div dangerouslySetInnerHTML={{ __html: body }} />
       </BodyUI>
     ) : null
   }
