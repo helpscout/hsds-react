@@ -221,6 +221,23 @@ export const BodyUI = styled.div`
       outline-width: 0;
     }
   }
+
+  b,
+  strong {
+    font-weight: bold;
+    color: ${getColor('charcoal.800')};
+  }
+  i,
+  em {
+    font-style: italic;
+  }
+  u {
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+  }
+  s {
+    text-decoration: line-through;
+  }
 `
 
 export const ActionUI = styled('div')`
