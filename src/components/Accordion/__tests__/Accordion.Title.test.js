@@ -52,7 +52,7 @@ describe('ClassNames', () => {
   })
 
   test('Applies a className to indicate that the Title is in the specified size accordion', () => {
-    ;['xs', 'sm', 'md', 'lg'].forEach(size => {
+    ;['xs', 'sm', 'md', 'lg', 'xl'].forEach(size => {
       const wrapper = mount(
         <Accordion size={size}>
           <Section>
@@ -63,16 +63,6 @@ describe('ClassNames', () => {
       const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
       expect(o.hasClass(`is-${size}`)).toBe(true)
     })
-
-    const wrapper = mount(
-      <Accordion size="xl">
-        <Section>
-          <Title />
-        </Section>
-      </Accordion>
-    )
-    const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
-    expect(o.hasClass('is-xl')).toBe(false)
   })
 
   test('Applies a className to indicate that the Title is in an Accordion embedded in a page', () => {
