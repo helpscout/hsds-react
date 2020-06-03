@@ -259,7 +259,7 @@ function run() {
         return null
       }
 
-      if (transformer === 'all') {
+      if (selectedTransformer === 'all') {
         const allTransforms = TRANSFORMER_INQUIRER_CHOICES.map(t => {
           runTransform({
             files: filesExpanded,
