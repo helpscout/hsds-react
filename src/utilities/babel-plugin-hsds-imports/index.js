@@ -9,7 +9,9 @@ function _default(babel) {
     name: 'hsds-component-import',
     visitor: {
       ImportDeclaration(path, state) {
-        const packages = state.opts.packages || ['@helpscout/hsds-react']
+        const packages = state.opts.packages
+          ? [].concat(state.opts.packages)
+          : ['@helpscout/hsds-react']
         let packageName = path.node.source.value
 
         if (shouldBail(packageName, packages)) return null
@@ -50,6 +52,7 @@ function _default(babel) {
 function shouldBail(packageName, packages) {
   if (!packageName) return true
   if (packageName.includes('utilities')) return true
+  if (packageName.includes('adapters')) return true
   let found = false
 
   for (let i = 0; i < packages.length; i++) {

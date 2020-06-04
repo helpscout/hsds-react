@@ -53,6 +53,12 @@ pluginTester({
       `,
     },
     {
+      title: 'Should not change HSDS adapters',
+      code: `
+      import '@helpscout/hsds-react/adapters/app'
+      `,
+    },
+    {
       title: 'Should work with mixed stuff',
       code: `
       import Button from '@helpscout/hsds-react'
@@ -67,6 +73,17 @@ pluginTester({
       title: 'Should work with options',
       pluginOptions: {
         packages: ['hsds-react-next'],
+      },
+      code: `
+      import Button from 'hsds-react-next'
+      import Page from 'hsds-react-next/components/Page'
+      import { Hello } from 'hsds-react-next'
+      `,
+    },
+    {
+      title: 'Should work with options (single)',
+      pluginOptions: {
+        packages: 'hsds-react-next',
       },
       code: `
       import Button from 'hsds-react-next'
