@@ -23,17 +23,22 @@ export class FilteredList extends React.Component {
     limit: PropTypes.number,
     inline: PropTypes.bool,
     renderItem: PropTypes.func,
+    tooltipAppendTo: PropTypes.object,
   }
 
   static defaultProps = {
     items: [],
     limit: 5,
+    tooltipAppendTo: 'parent',
   }
 
   shouldComponentUpdate(nextProps) {
-    const { items } = this.props
+    const { items, tooltipAppendTo } = this.props
 
     if (nextProps.items.length !== items.length) {
+      return true
+    }
+    if (tooltipAppendTo !== nextProps.tooltipAppendTo) {
       return true
     }
 
@@ -77,9 +82,11 @@ export class FilteredList extends React.Component {
 
   renderBadge() {
     const { limit, items } = this.props
-
     return (
-      <Tooltip renderContent={this.renderBadgeContent}>
+      <Tooltip
+        closeOnContentClick={true}
+        renderContent={this.renderBadgeContent}
+      >
         <BadgeUI isSquare data-cy="FilteredList.Badge">
           +{items.length - limit}
         </BadgeUI>

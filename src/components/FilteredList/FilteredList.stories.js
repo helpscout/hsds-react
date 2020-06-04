@@ -13,6 +13,7 @@ const items = [
   'test@cde.com',
   'anothertest@cde.com',
   'lasttest@cde.com',
+  'unbelievablylongemailaddress2374829e28732@test.com',
 ]
 
 export const Default = () => <FilteredList items={items} />
@@ -22,7 +23,9 @@ Default.story = {
 }
 
 export const WithLimit = () => (
-  <FilteredList items={items} limit={number('limit', 2)} />
+  <div>
+    <FilteredList items={items} limit={number('limit', 2)} />
+  </div>
 )
 
 WithLimit.story = {
