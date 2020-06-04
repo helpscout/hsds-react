@@ -1,0 +1,157 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[
+  `hsds-component-import Should change destructured hsds imports to default style imports (1 item): Should change destructured hsds imports to default style imports (1 item) 1`
+] = `
+
+import { Tooltip } from '@helpscout/hsds-react/components/'
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import Tooltip from '@helpscout/hsds-react/components/Tooltip'
+
+
+`
+
+exports[
+  `hsds-component-import Should change destructured hsds imports to default style imports (2+ items): Should change destructured hsds imports to default style imports (2+ items) 1`
+] = `
+
+import { Tooltip, Select } from '@helpscout/hsds-react/components/'
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import Select from '@helpscout/hsds-react/components/Select'
+import Tooltip from '@helpscout/hsds-react/components/Tooltip'
+
+
+`
+
+exports[
+  `hsds-component-import Should make sure that "components" is in the transformed path in default imports: Should make sure that "components" is in the transformed path in default imports 1`
+] = `
+
+import Button from '@helpscout/hsds-react'
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import Button from '@helpscout/hsds-react/components/Button'
+
+
+`
+
+exports[
+  `hsds-component-import Should make sure that "components" is in the transformed path in destructured imports: Should make sure that "components" is in the transformed path in destructured imports 1`
+] = `
+
+import { Tooltip, Select } from '@helpscout/hsds-react'
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import Select from '@helpscout/hsds-react/components/Select'
+import Tooltip from '@helpscout/hsds-react/components/Tooltip'
+
+
+`
+
+exports[
+  `hsds-component-import Should not change HSDS utilities: Should not change HSDS utilities 1`
+] = `
+
+import { getColor } from '@helpscout/hsds-react/styles/utilities/color'
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import { getColor } from '@helpscout/hsds-react/styles/utilities/color'
+
+
+`
+
+exports[
+  `hsds-component-import Should not change default imports: Should not change default imports 1`
+] = `
+
+import Page from '@helpscout/hsds-react/components/Page'
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import Page from '@helpscout/hsds-react/components/Page'
+
+
+`
+
+exports[
+  `hsds-component-import Should not change imports that are not hsds or in the options: Should not change imports that are not hsds or in the options 1`
+] = `
+
+import React from 'react'
+import _ from 'lodash'
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import React from 'react'
+import _ from 'lodash'
+
+
+`
+
+exports[
+  `hsds-component-import Should work with mixed stuff: Should work with mixed stuff 1`
+] = `
+
+import Button from '@helpscout/hsds-react'
+import Page from '@helpscout/hsds-react/components/Page'
+import { Hello } from '@helpscout/hsds-react'
+import { Tooltip, Select } from '@helpscout/hsds-react/components/'
+import React from 'react'
+import { getColor } from '@helpscout/hsds-react/styles/utilities/color'
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import Select from '@helpscout/hsds-react/components/Select'
+import Tooltip from '@helpscout/hsds-react/components/Tooltip'
+import Hello from '@helpscout/hsds-react/components/Hello'
+import Page from '@helpscout/hsds-react/components/Page'
+import Button from '@helpscout/hsds-react/components/Button'
+import React from 'react'
+import { getColor } from '@helpscout/hsds-react/styles/utilities/color'
+
+
+`
+
+exports[
+  `hsds-component-import Should work with options (2+): Should work with options (2+) 1`
+] = `
+
+import Button from 'hsds-react-next'
+import Page from 'hsds-react-next/components/Page'
+import { Hello } from 'hsds-react-next'
+import { Tooltip, Select } from '@helpscout/hsds-react/components/'
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import Select from '@helpscout/hsds-react/components/Select'
+import Tooltip from '@helpscout/hsds-react/components/Tooltip'
+import Hello from 'hsds-react-next/components/Hello'
+import Page from 'hsds-react-next/components/Page'
+import Button from 'hsds-react-next/components/Button'
+
+
+`
+
+exports[
+  `hsds-component-import Should work with options: Should work with options 1`
+] = `
+
+import Button from 'hsds-react-next'
+import Page from 'hsds-react-next/components/Page'
+import { Hello } from 'hsds-react-next'
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import Hello from 'hsds-react-next/components/Hello'
+import Page from 'hsds-react-next/components/Page'
+import Button from 'hsds-react-next/components/Button'
+
+
+`
