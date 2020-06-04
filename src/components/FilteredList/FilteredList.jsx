@@ -23,22 +23,17 @@ export class FilteredList extends React.Component {
     limit: PropTypes.number,
     inline: PropTypes.bool,
     renderItem: PropTypes.func,
-    tooltipAppendTo: PropTypes.object,
   }
 
   static defaultProps = {
     items: [],
     limit: 5,
-    tooltipAppendTo: 'parent',
   }
 
   shouldComponentUpdate(nextProps) {
-    const { items, tooltipAppendTo } = this.props
+    const { items } = this.props
 
     if (nextProps.items.length !== items.length) {
-      return true
-    }
-    if (tooltipAppendTo !== nextProps.tooltipAppendTo) {
       return true
     }
 
