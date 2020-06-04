@@ -23,9 +23,7 @@ Default.story = {
 }
 
 export const WithLimit = () => (
-  <div>
-    <FilteredList items={items} limit={number('limit', 2)} />
-  </div>
+  <FilteredList items={items} limit={number('limit', 2)} />
 )
 
 WithLimit.story = {
