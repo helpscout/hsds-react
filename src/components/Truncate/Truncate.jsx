@@ -154,8 +154,8 @@ export class Truncate extends React.PureComponent {
     )
     const content = shouldShowTooltip ? (
       <Tooltip
+        closeOnContentClick={true}
         {...tooltipProps}
-        display="block"
         placement={tooltipPlacement}
         title={title || this.getText()}
       >

@@ -77,9 +77,11 @@ export class FilteredList extends React.Component {
 
   renderBadge() {
     const { limit, items } = this.props
-
     return (
-      <Tooltip renderContent={this.renderBadgeContent}>
+      <Tooltip
+        closeOnContentClick={true}
+        renderContent={this.renderBadgeContent}
+      >
         <BadgeUI isSquare data-cy="FilteredList.Badge">
           +{items.length - limit}
         </BadgeUI>
