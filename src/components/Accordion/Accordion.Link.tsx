@@ -9,6 +9,7 @@ export const Link = props => {
   const {
     badge,
     children,
+    isCompact,
     isSeamless: isSeamlessProp,
     to,
     href,
@@ -34,6 +35,7 @@ export const Link = props => {
     badge,
     to,
     href,
+    isCompact,
     isOpen,
     status,
     title,

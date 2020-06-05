@@ -16,6 +16,7 @@ import SortableDragHandle from '../Sortable/Sortable.DragHandle'
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion__Section__Title',
   iconCaretClassName: 'c-AccordionTitleCaretIcon',
+  isCompactClassName: 'is-compact',
   isLinkClassName: 'is-link',
   isOpenClassName: 'is-open',
   isPageClassName: 'is-page',
@@ -31,6 +32,7 @@ export const classNameStrings = {
 const getComponentClassName = ({
   className,
   href,
+  isCompact,
   isOpen,
   isPage,
   isSeamless,
@@ -40,6 +42,7 @@ const getComponentClassName = ({
 }: TitleProps): string => {
   const {
     baseComponentClassName,
+    isCompactClassName,
     isLinkClassName,
     isOpenClassName,
     isPageClassName,
@@ -56,6 +59,7 @@ const getComponentClassName = ({
 
   return classNames(
     baseComponentClassName,
+    isCompact && isCompactClassName,
     isLink && isLinkClassName,
     !isLink && isOpen && isOpenClassName,
     isPage && isPageClassName,
@@ -78,6 +82,7 @@ const getDragHandleClassName = ({ isPage }: TitleProps): string => {
 
 class Title extends React.Component<TitleProps, TitleState> {
   static defaultProps = {
+    isCompact: false,
     isOpen: false,
     isPage: false,
     isSeamless: false,

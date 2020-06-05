@@ -129,6 +129,11 @@ export const SectionUI = styled('div')`
   background: white;
   position: relative;
 
+  &.is-link:hover,
+  &.is-link:focus {
+    background-color: ${getColor('grey.200')};
+  }
+
   &.is-info,
   &.is-info:hover,
   &.is-info:focus {
@@ -144,11 +149,6 @@ export const SectionUI = styled('div')`
     .is-highlighted {
       color: ${getColor('red.500')};
     }
-  }
-
-  &:hover,
-  &:focus {
-    background-color: ${getColor('grey.200')};
   }
 
   .c-Accordion__Heading {
@@ -207,6 +207,15 @@ export const makeTitleUI = (selector: 'div') => {
 
     &.is-xs {
       padding: 6px 20px;
+    }
+
+    &.is-compact {
+      padding-bottom: 17px;
+      padding-top: 17px;
+
+      .c-Accordion__Heading {
+        margin-bottom: 0;
+      }
     }
 
     &.is-seamless {

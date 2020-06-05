@@ -286,6 +286,12 @@ stories.add('Multi-Line', () => {
           onSortEnd={() => {}}
           size="xl"
         >
+          <Accordion.Link to="/" isCompact>
+            <Accordion.Heading muted>Paused Message Row</Accordion.Heading>
+          </Accordion.Link>
+          <Accordion.Link to="/" isCompact>
+            <Accordion.Heading>Compact Row</Accordion.Heading>
+          </Accordion.Link>
           <Accordion.Link to="/">
             <Accordion.Heading>March 40% Offer</Accordion.Heading>
             <Accordion.Subheading>

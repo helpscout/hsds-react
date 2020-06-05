@@ -13,6 +13,7 @@ const nextUuid = createUniqueIDFactory('AccordionSection')
 
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion__Section',
+  isLinkClassName: 'is-link',
   isOpenClassName: 'is-open',
   isSeamlessClassName: 'is-seamless',
   isStatusInfoClassName: 'is-info',
@@ -21,12 +22,14 @@ export const classNameStrings = {
 
 const getComponentClassName = ({
   className,
+  isLink,
   isOpen,
   isSeamless,
   status,
 }: SectionProps): string => {
   const {
     baseComponentClassName,
+    isLinkClassName,
     isOpenClassName,
     isSeamlessClassName,
     isStatusInfoClassName,
@@ -34,6 +37,7 @@ const getComponentClassName = ({
   } = classNameStrings
   return classNames(
     baseComponentClassName,
+    isLink && isLinkClassName,
     isOpen && isOpenClassName,
     isSeamless && isSeamlessClassName,
     status && status === 'info' && isStatusInfoClassName,
