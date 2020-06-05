@@ -14,7 +14,7 @@ export class Truncate extends React.PureComponent {
     limit: 0,
     showTooltipOnTruncate: false,
     tooltipModifiers: {},
-    tooltipPlacement: 'top',
+    tooltipPlacement: 'top-start',
     tooltipProps: {},
     type: 'auto',
   }
