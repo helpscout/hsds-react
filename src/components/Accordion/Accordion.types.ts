@@ -61,6 +61,7 @@ export type TitleProps = {
   children: Node
   className?: string
   href?: string
+  isCompact: boolean
   isOpen: boolean
   isPage: boolean
   isSeamless: boolean
