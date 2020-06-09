@@ -13,6 +13,7 @@ const items = [
   'test@cde.com',
   'anothertest@cde.com',
   'lasttest@cde.com',
+  'unbelievablylongemailaddress2374829e28732@test.com',
 ]
 
 export const Default = () => <FilteredList items={items} />

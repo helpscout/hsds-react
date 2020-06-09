@@ -44,11 +44,14 @@ export const TooltipUI = styled.div`
   font-size: 12px;
   max-width: 300px;
   padding: 6px 8px;
-  word-break: break-word;
   transition-property: transform, visibility, opacity;
   transition-duration: ${({ animationDuration }) => animationDuration}ms;
   transition-timing-function: ease-in-out;
   opacity: 0;
+  word-break: break-all;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 
   ${({ maxWidth }) => (maxWidth ? `max-width: ${maxWidth}px` : '')};
   ${({ minWidth }) => (minWidth ? `min-width: ${minWidth}px` : '')};
