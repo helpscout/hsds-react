@@ -5,28 +5,6 @@ import { classNames } from '../../utilities/classNames'
 import BadgeUI from './Badge.css'
 
 class Badge extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-    color: PropTypes.string,
-    count: PropTypes.bool,
-    display: PropTypes.oneOf(['block', 'inlineBlock']),
-    inverted: PropTypes.bool,
-    isSquare: PropTypes.bool,
-    size: PropTypes.string,
-    status: PropTypes.string,
-    style: PropTypes.any,
-    textColor: PropTypes.string,
-    white: PropTypes.bool,
-  }
-  static defaultProps = {
-    display: 'inlineBlock',
-    inverted: false,
-    color: '',
-    textColor: '',
-  }
-
-  static displayName = 'Badge'
-
   render() {
     const {
       children,
@@ -63,6 +41,30 @@ class Badge extends React.Component {
       </BadgeUI>
     )
   }
+}
+
+Badge.propTypes = {
+  className: PropTypes.string,
+  color: PropTypes.string,
+  count: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  display: PropTypes.oneOf(['block', 'inlineBlock']),
+  inverted: PropTypes.bool,
+  isSquare: PropTypes.bool,
+  size: PropTypes.string,
+  status: PropTypes.string,
+  style: PropTypes.any,
+  textColor: PropTypes.string,
+  white: PropTypes.bool,
+}
+
+Badge.defaultProps = {
+  'data-cy': 'Badge',
+  display: 'inlineBlock',
+  inverted: false,
+  color: '',
+  textColor: '',
 }
 
 export default Badge

@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import StatusBar from '../StatusBar'
 import { classNames } from '../../utilities/classNames'
 
@@ -10,26 +11,6 @@ import { smoothScrollTo } from '../../utilities/smoothScroll'
 import { ChatSidebarUI, StatusBarWrapperUI, ContentUI } from './ChatSidebar.css'
 
 class ChatSidebar extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    isShowStatusBar: PropTypes.bool,
-    newMessageCount: PropTypes.number,
-    onHideStatusBar: PropTypes.func,
-    onStatusBarClose: PropTypes.func,
-    onShowStatusBar: PropTypes.func,
-    onScroll: PropTypes.func,
-    statusBarScrollTopOffset: PropTypes.number,
-  }
-
-  static defaultProps = {
-    isShowStatusBar: false,
-    newMessageCount: 0,
-    onHideStatusBar: noop,
-    onShowStatusBar: noop,
-    onScroll: noop,
-    statusBarScrollTopOffset: 100,
-  }
-
   constructor(props) {
     super(props)
 
@@ -137,7 +118,7 @@ class ChatSidebar extends React.PureComponent {
     )
 
     return (
-      <ChatSidebarUI className={componentClassName} {...rest}>
+      <ChatSidebarUI className={componentClassName} {...getValidProps(rest)}>
         {statusBarMarkup}
         <ContentUI
           className="c-ChatSidebar__content"
@@ -150,6 +131,29 @@ class ChatSidebar extends React.PureComponent {
       </ChatSidebarUI>
     )
   }
+}
+
+ChatSidebar.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  isShowStatusBar: PropTypes.bool,
+  newMessageCount: PropTypes.number,
+  onHideStatusBar: PropTypes.func,
+  onStatusBarClose: PropTypes.func,
+  onShowStatusBar: PropTypes.func,
+  onScroll: PropTypes.func,
+  statusBarScrollTopOffset: PropTypes.number,
+}
+
+ChatSidebar.defaultProps = {
+  'data-cy': 'ChatSidebar',
+  isShowStatusBar: false,
+  newMessageCount: 0,
+  onHideStatusBar: noop,
+  onShowStatusBar: noop,
+  onScroll: noop,
+  statusBarScrollTopOffset: 100,
 }
 
 export default ChatSidebar

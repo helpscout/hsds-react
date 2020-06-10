@@ -4,14 +4,8 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 
 class Content extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-  }
-  static displayName = 'ChatInboxContent'
-
   render() {
     const { className, children, ...rest } = this.props
-
     const componentClassName = classNames('c-ChatInboxContent', className)
 
     return (
@@ -20,6 +14,16 @@ class Content extends React.Component {
       </div>
     )
   }
+}
+
+Content.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+}
+
+Content.defaultProps = {
+  'data-cy': 'ChatInboxContent',
 }
 
 export default Content

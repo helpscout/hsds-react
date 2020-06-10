@@ -4,23 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { ItemUI } from './ControlGroup.css'
 
-class Item extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    children: PropTypes.any,
-    isBlock: PropTypes.bool,
-    isFirst: PropTypes.bool,
-    isNotOnly: PropTypes.bool,
-    isLast: PropTypes.bool,
-  }
-  static defaultProps = {
-    isBlock: false,
-    isFirst: false,
-    isNotOnly: false,
-    isLast: false,
-  }
-  static displayName = 'ControlGroupItem'
-
+class ControlGroupItem extends React.PureComponent {
   getChildrenMarkup = () => {
     const { children, isFirst, isNotOnly, isLast } = this.props
 
@@ -44,7 +28,6 @@ class Item extends React.PureComponent {
       isLast,
       ...rest
     } = this.props
-
     const componentClassName = classNames(
       'c-ControlGroupItem',
       isBlock && 'is-block',
@@ -52,7 +35,6 @@ class Item extends React.PureComponent {
       isLast && 'is-last',
       className
     )
-
     const childrenMarkup = this.getChildrenMarkup()
 
     return (
@@ -63,4 +45,23 @@ class Item extends React.PureComponent {
   }
 }
 
-export default Item
+ControlGroupItem.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.any,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  isBlock: PropTypes.bool,
+  isFirst: PropTypes.bool,
+  isNotOnly: PropTypes.bool,
+  isLast: PropTypes.bool,
+}
+
+ControlGroupItem.defaultProps = {
+  'data-cy': 'ControlGroupItem',
+  isBlock: false,
+  isFirst: false,
+  isNotOnly: false,
+  isLast: false,
+}
+
+export default ControlGroupItem

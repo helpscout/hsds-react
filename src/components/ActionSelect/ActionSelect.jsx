@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { getUniqueKeyFromItem } from '../Dropdown/Dropdown.utils'
 import SelectDropdown from '../SelectDropdown'
 import ContentResizer from './ActionSelect.ContentResizer'
@@ -182,6 +183,7 @@ export class ActionSelect extends React.PureComponent {
       onAnimationEnd,
       onAnimationUpdate,
       onResize,
+      'data-cy': dataCy,
       ...rest
     } = this.props
 
@@ -190,12 +192,12 @@ export class ActionSelect extends React.PureComponent {
     return (
       <ActionSelectUI
         className={this.getClassName()}
-        data-cy={this.props['data-cy']}
+        data-cy={dataCy}
         ref={innerRef}
       >
         <div className="c-ActionSelectDropdownWrapper">
           <SelectDropdown
-            {...rest}
+            {...getValidProps(rest)}
             onOpen={this.handleOnOpen}
             onClose={this.handleOnClose}
             data-cy="ActionSelectDropdown"

@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { escapeHTML, newlineToHTML } from '../../utilities/strings'
 import compose from '@helpscout/react-utils/dist/compose'
-
 import { LineItemUI } from './ChatTranscript.css'
 
 const enhanceBody = compose(newlineToHTML, escapeHTML)
@@ -45,7 +45,7 @@ const LineItem = props => {
   )
 
   return (
-    <LineItemUI className={componentClassName} {...rest}>
+    <LineItemUI className={componentClassName} {...getValidProps(rest)}>
       <Text
         className="c-ChatTranscriptLineItem__content"
         block
@@ -64,6 +64,8 @@ LineItem.propTypes = {
   children: PropTypes.any,
   className: PropTypes.string,
   createdAt: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   isBodySafe: PropTypes.bool,
   timestamp: PropTypes.string,
 }
@@ -71,8 +73,7 @@ LineItem.propTypes = {
 LineItem.defaultProps = {
   body: '',
   createdAt: '',
+  'data-cy': 'ChatTranscript.Item.LineItem',
 }
-
-LineItem.displayName = 'ChatTranscript.Item.LineItem'
 
 export default LineItem

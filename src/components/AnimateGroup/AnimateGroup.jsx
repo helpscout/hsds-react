@@ -12,6 +12,7 @@ export class AnimateGroup extends React.PureComponent {
     appear: PropTypes.any,
     className: PropTypes.string,
     childFactory: PropTypes.func,
+    'data-cy': PropTypes.string,
     easing: PropTypes.string,
     enter: PropTypes.any,
     exit: PropTypes.any,
@@ -26,6 +27,7 @@ export class AnimateGroup extends React.PureComponent {
 
   static defaultProps = {
     childFactory: child => child,
+    'data-cy': 'AnimateGroup',
     delay: 0,
     easing: 'ease-in-out',
     stagger: false,

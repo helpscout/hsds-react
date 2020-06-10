@@ -7,21 +7,6 @@ import { noop } from '../../utilities/other'
 import { BlockUI } from './Card.css'
 
 class Block extends React.PureComponent {
-  static propTypes = {
-    bgMuted: PropTypes.bool,
-    className: PropTypes.string,
-    flex: PropTypes.bool,
-    scrollable: PropTypes.bool,
-    scrollableRef: PropTypes.func,
-    onScroll: PropTypes.func,
-    size: PropTypes.string,
-  }
-
-  static defaultProps = {
-    onScroll: noop,
-    scrollableRef: noop,
-  }
-
   render() {
     const {
       bgMuted,
@@ -72,6 +57,24 @@ class Block extends React.PureComponent {
 
     return componentMarkup
   }
+}
+
+Block.propTypes = {
+  bgMuted: PropTypes.bool,
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  flex: PropTypes.bool,
+  scrollable: PropTypes.bool,
+  scrollableRef: PropTypes.func,
+  onScroll: PropTypes.func,
+  size: PropTypes.string,
+}
+
+Block.defaultProps = {
+  'data-cy': 'Block',
+  onScroll: noop,
+  scrollableRef: noop,
 }
 
 export default Block

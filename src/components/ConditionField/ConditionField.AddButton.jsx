@@ -1,4 +1,5 @@
 import React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { withMotion } from '../Motion'
 import Condition from '../Condition'
 import { classNames } from '../../utilities/classNames'
@@ -6,16 +7,14 @@ import { AddButtonContentUI } from './ConditionField.css'
 
 export const AddButton = props => {
   const { className, ...rest } = props
-
   const componentClassName = classNames(AddButton.className, className)
 
   return (
     <div data-cy="ConditionFieldAddButtonWrapper">
       <AddButtonContentUI>
         <Condition.AddButton
-          {...rest}
+          {...getValidProps(rest)}
           className={componentClassName}
-          data-cy="ConditionFieldAddButton"
         />
       </AddButtonContentUI>
     </div>
@@ -27,6 +26,7 @@ AddButton.className = 'c-ConditionFieldAddButton'
 AddButton.defaultProps = {
   animationDuration: 250,
   animationEasing: 'linear',
+  'data-cy': 'ConditionFieldAddButton',
   isBorderless: true,
   isWithMotion: true,
   type: 'or',
@@ -77,7 +77,5 @@ const AnimatedComponent = withMotion({
     }).finished
   },
 })(AddButton)
-
-AnimatedComponent.displayName = 'ConditionAddButton'
 
 export default AnimatedComponent

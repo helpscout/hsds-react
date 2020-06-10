@@ -2,17 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import Block from './ControlGroup.Block'
-import Item from './ControlGroup.Item'
+import ControlGroupBlock from './ControlGroup.Block'
+import ControlGroupItem from './ControlGroup.Item'
 import { ControlGroupUI } from './ControlGroup.css'
 
 class ControlGroup extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-  }
-
-  static Block = Block
-  static Item = Item
+  static Block = ControlGroupBlock
+  static Item = ControlGroupItem
 
   getChildrenMarkup = () => {
     const { children } = this.props
@@ -20,7 +16,8 @@ class ControlGroup extends React.PureComponent {
     if (!children) return null
 
     return React.Children.map(children, (child, index) => {
-      if (child.type !== Item && child.type !== Block) return child
+      if (child.type !== ControlGroupItem && child.type !== ControlGroupBlock)
+        return child
 
       return React.cloneElement(child, {
         isFirst: index === 0 && children.length > 1,
@@ -32,9 +29,7 @@ class ControlGroup extends React.PureComponent {
 
   render() {
     const { children, className, ...rest } = this.props
-
     const componentClassName = classNames('c-ControlGroup', className)
-
     const childrenMarkup = this.getChildrenMarkup()
 
     return (
@@ -43,6 +38,14 @@ class ControlGroup extends React.PureComponent {
       </ControlGroupUI>
     )
   }
+}
+
+ControlGroup.propTypes = {
+  className: PropTypes.string,
+}
+
+ControlGroup.defaultProps = {
+  'data-cy': 'ControlGroup',
 }
 
 export default ControlGroup

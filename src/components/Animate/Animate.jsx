@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { Transition } from 'react-transition-group'
 import { getSequenceNames } from '../../utilities/animation'
 import { classNames } from '../../utilities/classNames'
@@ -16,6 +17,7 @@ export class Animate extends React.PureComponent {
     delay: PropTypes.number,
     duration: PropTypes.number,
     easing: PropTypes.string,
+    'data-cy': PropTypes.string,
     in: PropTypes.bool,
     inline: PropTypes.bool,
     inlineBlock: PropTypes.bool,
@@ -39,6 +41,7 @@ export class Animate extends React.PureComponent {
   static defaultProps = {
     animateOnMount: true,
     delay: 0,
+    'data-cy': 'Animate',
     duration: 300,
     easing: 'ease-in-out',
     in: true,
@@ -99,7 +102,7 @@ export class Animate extends React.PureComponent {
 
     return (
       <Transition
-        {...rest}
+        {...getValidProps(rest)}
         mountOnEnter={mountOnEnter}
         unmountOnExit={unmountOnExit}
         appear={animateOnMount}

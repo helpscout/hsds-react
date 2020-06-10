@@ -7,17 +7,6 @@ import Content from './ChatInbox.Content'
 import { classNames } from '../../utilities/classNames'
 
 class ChatInbox extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-    isCollapsible: PropTypes.bool,
-    isCollapsed: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    isCollapsible: false,
-    isCollapsed: true,
-  }
-
   static Header = Header
   static Content = Content
 
@@ -81,6 +70,20 @@ class ChatInbox extends React.Component {
       </div>
     )
   }
+}
+
+ChatInbox.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  isCollapsible: PropTypes.bool,
+  isCollapsed: PropTypes.bool,
+}
+
+ChatInbox.defaultProps = {
+  'data-cy': 'ChatInbox',
+  isCollapsible: false,
+  isCollapsed: true,
 }
 
 export default ChatInbox

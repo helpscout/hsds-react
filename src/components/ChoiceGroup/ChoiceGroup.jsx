@@ -15,26 +15,6 @@ import RadioCard from '../RadioCard'
 const uniqueID = createUniqueIDFactory('ChoiceGroup')
 
 class ChoiceGroup extends React.PureComponent {
-  static propTypes = {
-    align: PropTypes.oneOf(['horizontal', 'vertical']),
-    className: PropTypes.string,
-    choiceMaxWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    isResponsive: PropTypes.bool,
-    onBlur: PropTypes.func,
-    onChange: PropTypes.func,
-    onFocus: PropTypes.func,
-    multiSelect: PropTypes.bool,
-    name: PropTypes.string,
-    value: PropTypes.any,
-  }
-  static defaultProps = {
-    align: 'vertical',
-    isResponsive: false,
-    onBlur: noop,
-    onChange: noop,
-    onFocus: noop,
-  }
-
   multiSelect = true
 
   constructor(props) {
@@ -147,10 +127,8 @@ class ChoiceGroup extends React.PureComponent {
       name,
       ...rest
     } = this.props
-
     const { multiSelect } = this.state
     const isMultiSelect = multiSelectSetting || multiSelect
-
     const componentClassName = classNames(
       'c-ChoiceGroup',
       align && `is-align-${align}`,
@@ -158,7 +136,6 @@ class ChoiceGroup extends React.PureComponent {
       isResponsive && 'is-responsive',
       className
     )
-
     const childrenMarkup = this.getChildrenMarkup()
 
     return (
@@ -177,6 +154,29 @@ class ChoiceGroup extends React.PureComponent {
       </FormLabelContext.Consumer>
     )
   }
+}
+
+ChoiceGroup.propTypes = {
+  align: PropTypes.oneOf(['horizontal', 'vertical']),
+  className: PropTypes.string,
+  choiceMaxWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  isResponsive: PropTypes.bool,
+  onBlur: PropTypes.func,
+  onChange: PropTypes.func,
+  onFocus: PropTypes.func,
+  multiSelect: PropTypes.bool,
+  name: PropTypes.string,
+  value: PropTypes.any,
+}
+ChoiceGroup.defaultProps = {
+  align: 'vertical',
+  'data-cy': 'ChoiceGroup',
+  isResponsive: false,
+  onBlur: noop,
+  onChange: noop,
+  onFocus: noop,
 }
 
 export default ChoiceGroup

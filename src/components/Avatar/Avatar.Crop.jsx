@@ -1,9 +1,17 @@
 import React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { CropUI } from './Avatar.css'
 
 export const AvatarCrop = props => {
-  const { className, children, isImageLoaded, withShadow, hasImage } = props
+  const {
+    className,
+    children,
+    isImageLoaded,
+    withShadow,
+    hasImage,
+    ...rest
+  } = props
 
   const componentClassName = classNames(
     'c-Avatar__crop',
@@ -13,19 +21,23 @@ export const AvatarCrop = props => {
   )
 
   return (
-    <CropUI className={componentClassName} hasImage={hasImage}>
+    <CropUI
+      className={componentClassName}
+      hasImage={hasImage}
+      {...getValidProps(rest)}
+    >
       {children}
     </CropUI>
   )
 }
 
+AvatarCrop.displayName = 'AvatarCrop'
 AvatarCrop.defaultProps = {
   animationDuration: 160,
   animationEasing: 'ease',
+  'data-cy': AvatarCrop.displayName,
   isImageLoaded: false,
   withShadow: false,
 }
-
-AvatarCrop.displayName = 'AvatarCrop'
 
 export default AvatarCrop

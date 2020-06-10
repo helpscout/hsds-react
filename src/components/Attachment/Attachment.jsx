@@ -15,6 +15,7 @@ export const Provider = AttachmentProvider
 export class Attachment extends React.PureComponent {
   static propTypes = {
     className: PropTypes.string,
+    'data-cy': PropTypes.string,
     download: PropTypes.any,
     id: PropTypes.string,
     imageUrl: PropTypes.string,
@@ -31,6 +32,7 @@ export class Attachment extends React.PureComponent {
   }
 
   static defaultProps = {
+    'data-cy': 'Attachment',
     mime: 'image/png',
     name: 'image.png',
     onClick: noop,

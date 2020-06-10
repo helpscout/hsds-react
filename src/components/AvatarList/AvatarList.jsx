@@ -122,6 +122,8 @@ AvatarList.propTypes = {
   avatarsClassName: PropTypes.string,
   borderColor: PropTypes.string,
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   max: PropTypes.number,
   grid: PropTypes.bool,
   size: PropTypes.string,
@@ -132,6 +134,7 @@ AvatarList.propTypes = {
 AvatarList.defaultProps = {
   animationEasing: 'ease',
   animationSequence: 'fade',
+  'data-cy': 'AvatarList',
   max: 4,
   grid: false,
   center: false,

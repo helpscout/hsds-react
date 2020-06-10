@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Text from '../Text'
 import Truncate from '../Truncate'
 import { classNames } from '../../utilities/classNames'
@@ -18,6 +19,7 @@ export class ArticleCard extends React.PureComponent {
     content: PropTypes.any,
     contentLimit: PropTypes.number,
     contentSize: PropTypes.number,
+    'data-cy': PropTypes.string,
     footer: PropTypes.any,
     isHovered: PropTypes.bool,
     metaHeader: PropTypes.any,
@@ -29,6 +31,7 @@ export class ArticleCard extends React.PureComponent {
   static defaultProps = {
     contentLimit: 160,
     contentSize: 13,
+    'data-cy': 'ArticleCard',
     isHovered: false,
     titleLimit: 120,
     titleSize: 13,
@@ -109,6 +112,8 @@ export class ArticleCard extends React.PureComponent {
       content,
       contentLimit,
       contentSize,
+      'data-cy': dataCy,
+
       footer,
       isHovered,
       metaHeader,
@@ -125,7 +130,7 @@ export class ArticleCard extends React.PureComponent {
     )
 
     return (
-      <ArticleCardUI {...rest} className={componentClassName}>
+      <ArticleCardUI {...getValidProps(rest)} className={componentClassName}>
         {this.renderMetaHeader()}
         {this.renderTitle()}
         {this.renderContent()}
@@ -144,6 +149,8 @@ ArticleCard.propTypes = {
   contentLimit: PropTypes.number,
   /** The `Text` font-size for the content. */
   contentSize: PropTypes.number,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   /** Element that will be displayed below the content */
   footer: PropTypes.any,
   /** Renders hovered styles. */

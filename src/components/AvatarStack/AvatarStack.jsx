@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { AvatarListContext } from '../AvatarList/AvatarList'
@@ -9,16 +9,6 @@ import { AvatarStackLayeringUI, ItemUI } from './AvatarStack.css'
 import Animate from '../Animate'
 
 export class AvatarStack extends React.PureComponent {
-  static defaultProps = {
-    animationDuration: 300,
-    animationEasing: 'ease',
-    animationSequence: 'fade',
-    borderColor: 'white',
-    max: 5,
-    shape: 'circle',
-    showStatusBorderColor: true,
-  }
-
   getAvatars = () => {
     return React.Children.toArray(this.props.children)
   }
@@ -180,6 +170,8 @@ AvatarStack.propTypes = {
   borderColor: PropTypes.string,
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   /** Number of avatars to display before truncating. */
   max: PropTypes.number,
   /** Color for the Avatar's outer border. */
@@ -190,6 +182,17 @@ AvatarStack.propTypes = {
   showStatusBorderColor: PropTypes.bool,
   /** Size of the avatars. */
   size: PropTypes.oneOf(['lg', 'md', 'smmd', 'sm', 'xs', 'xxs', '']),
+}
+
+AvatarStack.defaultProps = {
+  animationDuration: 300,
+  animationEasing: 'ease',
+  animationSequence: 'fade',
+  borderColor: 'white',
+  'data-cy': 'AvatarStack',
+  max: 5,
+  shape: 'circle',
+  showStatusBorderColor: true,
 }
 
 export default AvatarStack

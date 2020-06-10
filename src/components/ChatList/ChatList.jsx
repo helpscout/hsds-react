@@ -7,10 +7,6 @@ import Item from './ChatList.Item'
 import { ChatListUI } from './ChatList.css'
 
 class ChatList extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-  }
-
   static BlankSlate = BlankSlate
   static Item = Item
 
@@ -31,6 +27,16 @@ class ChatList extends React.Component {
       </ChatListUI>
     )
   }
+}
+
+ChatList.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+}
+
+ChatList.defaultProps = {
+  'data-cy': 'ChatList',
 }
 
 export default ChatList

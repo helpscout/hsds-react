@@ -68,10 +68,10 @@ export const Section = props => {
   )
 }
 
+Section.displayName = 'AccordionSection'
 Section.defaultProps = {
+  'data-cy': Section.displayName,
   isLink: false,
 }
-
-Section.displayName = 'AccordionSection'
 
 export default Section

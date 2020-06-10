@@ -184,6 +184,7 @@ const Accordion = props => {
 }
 
 Accordion.defaultProps = {
+  'data-cy': 'Accordion',
   distance: 5,
   isPage: false,
   isSeamless: false,

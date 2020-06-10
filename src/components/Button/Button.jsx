@@ -14,6 +14,7 @@ class Button extends React.PureComponent {
     buttonRef: PropTypes.func,
     canRenderFocus: PropTypes.bool,
     className: PropTypes.string,
+    'data-cy': PropTypes.string,
     disabled: PropTypes.bool,
     disableOnLoading: PropTypes.bool,
     kind: PropTypes.string,
@@ -41,6 +42,7 @@ class Button extends React.PureComponent {
     allowContentEventPropogation: true,
     buttonRef: noop,
     canRenderFocus: true,
+    'data-cy': 'Button',
     disable: false,
     disableOnLoading: true,
     kind: 'default',
@@ -184,7 +186,7 @@ class Button extends React.PureComponent {
         as={selector}
         allowContentEventPropogation={allowContentEventPropogation}
       >
-        {isLoading && <SpinnerUI />}
+        {isLoading && <SpinnerUI className="c-Button--spinner" />}
         {isLoading ? (
           <LoadingWrapperUI>{childrenMarkup}</LoadingWrapperUI>
         ) : (

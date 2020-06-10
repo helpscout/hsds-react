@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import IconButton from '../IconButton'
 import Tooltip from '../Tooltip'
@@ -11,30 +12,7 @@ import { noop } from '../../utilities/other'
 import { FieldCloseWrapperUI } from './ConditionField.css'
 
 export class ConditionField extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    innerRef: PropTypes.func,
-    closeIcon: PropTypes.string,
-    isWithOr: PropTypes.bool,
-    isWithRemove: PropTypes.bool,
-    onRemove: PropTypes.func,
-    removeTitle: PropTypes.string,
-    tooltipDelay: PropTypes.number,
-    tooltipDuration: PropTypes.number,
-  }
-
   static className = 'c-ConditionField'
-  static defaultProps = {
-    closeIcon: 'collapse',
-    innerRef: noop,
-    isWithOr: false,
-    isWithRemove: true,
-    onRemove: noop,
-    removeTitle: 'Remove',
-    tooltipDelay: 800,
-    tooltipDuration: 60,
-  }
-
   static Static = Static
   static Group = Group
   static Block = Flexy.Block
@@ -69,10 +47,9 @@ export class ConditionField extends React.PureComponent {
       <div data-cy="ConditionFieldWrapper">
         {this.renderOperator()}
         <Flexy
-          {...rest}
+          {...getValidProps(rest)}
           innerRef={innerRef}
           className={this.getClassName()}
-          data-cy="ConditionField"
         >
           <Flexy.Block data-cy="ConditionFieldContentWrapper">
             <Flexy align="top" gap="md">
@@ -98,6 +75,32 @@ export class ConditionField extends React.PureComponent {
       </div>
     )
   }
+}
+
+ConditionField.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  innerRef: PropTypes.func,
+  closeIcon: PropTypes.string,
+  isWithOr: PropTypes.bool,
+  isWithRemove: PropTypes.bool,
+  onRemove: PropTypes.func,
+  removeTitle: PropTypes.string,
+  tooltipDelay: PropTypes.number,
+  tooltipDuration: PropTypes.number,
+}
+
+ConditionField.defaultProps = {
+  closeIcon: 'collapse',
+  'data-cy': 'ConditionField',
+  innerRef: noop,
+  isWithOr: false,
+  isWithRemove: true,
+  onRemove: noop,
+  removeTitle: 'Remove',
+  tooltipDelay: 800,
+  tooltipDuration: 60,
 }
 
 export default ConditionField

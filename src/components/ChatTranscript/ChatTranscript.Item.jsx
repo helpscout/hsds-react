@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import LineItem from './ChatTranscript.LineItem'
 import Attachment from '../Attachment'
 import Flexy from '../Flexy'
@@ -163,7 +164,7 @@ const Item = props => {
   ) : null
 
   return (
-    <ItemUI className={componentClassName} {...rest}>
+    <ItemUI className={componentClassName} {...getValidProps(rest)}>
       <ItemContentWrapperUI className="c-ChatTranscriptItem__contentWrapper">
         {headerMarkup}
         {contentMarkup}
@@ -183,6 +184,8 @@ Item.propTypes = {
   chatId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   className: PropTypes.string,
   createdAt: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   isBodySafe: PropTypes.bool,
   onAttachmentClick: PropTypes.func,
@@ -199,13 +202,12 @@ Item.defaultProps = {
     name: 'Name',
   },
   createdAt: '',
+  'data-cy': 'ChatTranscript.Item',
   onAttachmentClick: noop,
   onDownloadAllAttachmentClick: noop,
   showDownloadAllAttachments: true,
   type: 'message',
 }
-
-Item.displayName = 'ChatTranscript.Item'
 
 Item.LineItem = LineItem
 

@@ -169,10 +169,10 @@ const Title = props => {
   )
 }
 
+Title.displayName = 'AccordionTitle'
 Title.defaultProps = {
+  'data-cy': Title.displayName,
   onClick: noop,
 }
-
-Title.displayName = 'AccordionSectionTitle'
 
 export default Title

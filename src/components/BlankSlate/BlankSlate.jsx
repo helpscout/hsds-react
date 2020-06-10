@@ -1,10 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Illo from '../Illo'
 import { classNames } from '../../utilities/classNames'
-
 import { BlankSlateUI, HeadingUI, TextUI, IlloUI } from './BlankSlate.css'
 
 const getIllo = ({ illo, illoName, illoSize }) => {
@@ -20,23 +18,6 @@ const getIllo = ({ illo, illoName, illoSize }) => {
 }
 
 class BlankSlate extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    message: PropTypes.any,
-    title: PropTypes.string,
-    illo: PropTypes.any,
-    illoName: PropTypes.string,
-    illoSize: PropTypes.number,
-    lightBackground: PropTypes.bool,
-    alignTop: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    lightBackground: false,
-    alignTop: false,
-    illoSize: 80,
-  }
-
   render() {
     const {
       className,
@@ -66,6 +47,26 @@ class BlankSlate extends React.PureComponent {
       </BlankSlateUI>
     )
   }
+}
+
+BlankSlate.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  message: PropTypes.any,
+  title: PropTypes.string,
+  illo: PropTypes.any,
+  illoName: PropTypes.string,
+  illoSize: PropTypes.number,
+  lightBackground: PropTypes.bool,
+  alignTop: PropTypes.bool,
+}
+
+BlankSlate.defaultProps = {
+  'data-cy': 'BlankSlate',
+  lightBackground: false,
+  alignTop: false,
+  illoSize: 80,
 }
 
 export default BlankSlate

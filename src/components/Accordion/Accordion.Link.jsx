@@ -1,4 +1,5 @@
 import React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Section from './Accordion.Section'
 import Title from './Accordion.Title'
 import { renderChildrenSafely } from '../../utilities/component'
@@ -29,12 +30,15 @@ export const Link = props => {
   }
 
   return (
-    <Section {...sectionProps}>
+    <Section {...getValidProps(sectionProps)}>
       <Title {...titleProps}>{renderChildrenSafely(children)}</Title>
     </Section>
   )
 }
 
 Link.displayName = 'AccordionLink'
+Link.defaultProps = {
+  'data-cy': Link.displayName,
+}
 
 export default Link

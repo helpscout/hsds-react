@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Animate from '../Animate'
 import Badge from '../Badge'
 import Flexy from '../Flexy'
@@ -14,7 +15,6 @@ import Text from '../Text'
 import Timestamp from '../Timestamp'
 import Truncate from '../Truncate'
 import { classNames } from '../../utilities/classNames'
-
 import {
   ItemUI,
   BlockUI,
@@ -31,37 +31,6 @@ import {
 } from './ChatList.css'
 
 class Item extends React.Component {
-  static propTypes = {
-    avatar: PropTypes.any,
-    className: PropTypes.string,
-    isAssigned: PropTypes.bool,
-    isFocused: PropTypes.bool,
-    isTyping: PropTypes.bool,
-    isViewing: PropTypes.bool,
-    isWaiting: PropTypes.bool,
-    message: PropTypes.string,
-    messageLimit: PropTypes.number,
-    name: PropTypes.string,
-    newMessageCount: PropTypes.number,
-    tags: PropTypes.any,
-    timestamp: PropTypes.string,
-    timestampFormatter: PropTypes.func,
-  }
-
-  static defaultProps = {
-    isAssigned: false,
-    isFocused: false,
-    isViewing: false,
-    isWaiting: false,
-    isTyping: false,
-    messageLimit: 65,
-    newMessageCount: 0,
-    tags: [],
-    timestampFormatter: timestamp => timestamp,
-  }
-
-  static displayName = 'ChatListItem'
-
   render() {
     const {
       avatar,
@@ -82,7 +51,6 @@ class Item extends React.Component {
     } = this.props
 
     const isLoading = (message === undefined || name === undefined) && !isTyping
-
     const componentClassName = classNames(
       'c-ChatListItem',
       isAssigned && 'is-assigned',
@@ -210,7 +178,12 @@ class Item extends React.Component {
     return (
       <Animate sequence="fade">
         <div className="c-ChatListItemWrapper">
-          <ItemUI {...rest} className={componentClassName} block noUnderline>
+          <ItemUI
+            {...getValidProps(rest)}
+            className={componentClassName}
+            block
+            noUnderline
+          >
             {viewingMarkup}
             <BlockUI className="c-ChatListItem__block">
               <HeadingUI className="c-ChatListItem__heading" gap="md">
@@ -231,6 +204,38 @@ class Item extends React.Component {
       </Animate>
     )
   }
+}
+
+Item.propTypes = {
+  avatar: PropTypes.any,
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  isAssigned: PropTypes.bool,
+  isFocused: PropTypes.bool,
+  isTyping: PropTypes.bool,
+  isViewing: PropTypes.bool,
+  isWaiting: PropTypes.bool,
+  message: PropTypes.string,
+  messageLimit: PropTypes.number,
+  name: PropTypes.string,
+  newMessageCount: PropTypes.number,
+  tags: PropTypes.any,
+  timestamp: PropTypes.string,
+  timestampFormatter: PropTypes.func,
+}
+
+Item.defaultProps = {
+  'data-cy': 'ChatListItem',
+  isAssigned: false,
+  isFocused: false,
+  isViewing: false,
+  isWaiting: false,
+  isTyping: false,
+  messageLimit: 65,
+  newMessageCount: 0,
+  tags: [],
+  timestampFormatter: timestamp => timestamp,
 }
 
 export default Item

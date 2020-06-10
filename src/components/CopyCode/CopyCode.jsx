@@ -2,10 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-
 import { noop } from '../../utilities/other'
 import { copyToClipboard, selectText } from '../../utilities/clipboard'
-
 import {
   CopyButtonUI,
   CopyCodeUI,
@@ -20,26 +18,6 @@ require('prismjs/components/prism-c')
 require('prismjs/components/prism-objectivec')
 
 class CopyCode extends React.PureComponent {
-  static propTypes = {
-    autoFocus: PropTypes.bool,
-    className: PropTypes.string,
-    code: PropTypes.string,
-    copyToClipboard: PropTypes.bool,
-    innerRef: PropTypes.func,
-    language: PropTypes.string,
-    maxWidth: PropTypes.number,
-    onCopy: PropTypes.func,
-  }
-
-  static defaultProps = {
-    autoFocus: false,
-    code: '',
-    copyToClipboard: true,
-    innerRef: noop,
-    language: 'javascript',
-    maxWidth: 500,
-    onCopy: noop,
-  }
   node
 
   componentDidMount() {
@@ -133,6 +111,30 @@ class CopyCode extends React.PureComponent {
       </WrapperUI>
     )
   }
+}
+
+CopyCode.propTypes = {
+  autoFocus: PropTypes.bool,
+  className: PropTypes.string,
+  code: PropTypes.string,
+  copyToClipboard: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  innerRef: PropTypes.func,
+  language: PropTypes.string,
+  maxWidth: PropTypes.number,
+  onCopy: PropTypes.func,
+}
+
+CopyCode.defaultProps = {
+  autoFocus: false,
+  code: '',
+  copyToClipboard: true,
+  'data-cy': 'CopyCode',
+  innerRef: noop,
+  language: 'javascript',
+  maxWidth: 500,
+  onCopy: noop,
 }
 
 export default CopyCode

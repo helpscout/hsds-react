@@ -1,20 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Item from './ControlGroup.Item'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import ControlGroupItem from './ControlGroup.Item'
 import { classNames } from '../../utilities/classNames'
 
-class Block extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-  }
-  static displayName = 'ControlGroupBlock'
+class ControlGroupBlock extends React.PureComponent {
   render() {
-    const { className } = this.props
-
+    const { className, ...rest } = this.props
     const componentClassName = classNames('c-ControlGroupBlock', className)
 
-    return <Item {...this.props} className={componentClassName} isBlock />
+    return (
+      <ControlGroupItem
+        {...getValidProps(rest)}
+        className={componentClassName}
+        isBlock
+      />
+    )
   }
 }
 
-export default Block
+ControlGroupBlock.propTypes = {
+  className: PropTypes.string,
+}
+
+ControlGroupBlock.defaultProps = {
+  'data-cy': 'ControlGroupBlock',
+}
+
+export default ControlGroupBlock

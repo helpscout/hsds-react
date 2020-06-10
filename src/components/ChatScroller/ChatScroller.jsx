@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFromComponent'
 import getShallowDiffs from '@helpscout/react-utils/dist/getShallowDiffs'
 import { smoothScrollTo } from '../../utilities/smoothScroll'
@@ -9,34 +10,6 @@ import { allDefined } from '../../utilities/check'
 import { noop } from '../../utilities/other'
 
 export class ChatScroller extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    distanceForAutoScroll: PropTypes.number,
-    forceScrollToBottomProp: PropTypes.any,
-    isTyping: PropTypes.bool,
-    lastMessageId: PropTypes.string,
-    messages: PropTypes.arrayOf(PropTypes.any),
-    messageSelectors: PropTypes.string,
-    offsetThreshold: PropTypes.number,
-    propsToCheck: PropTypes.arrayOf(PropTypes.string),
-    onScroll: PropTypes.func,
-    scrollCondition: PropTypes.func,
-    scrollableSelector: PropTypes.string,
-    scrollableNode: PropTypes.any,
-    smoothScrollDuration: PropTypes.number,
-  }
-
-  static defaultProps = {
-    distanceForAutoScroll: 150,
-    isTyping: false,
-    messageSelectors: '.c-MessageChat, .c-MessageAction',
-    offsetThreshold: 0.3,
-    onScroll: noop,
-    propsToCheck: ['messages', 'lastMessageId', 'isTyping'],
-    scrollableSelector: '.c-ScrollableNode',
-    smoothScrollDuration: 100,
-  }
-
   childRef
   document = null
   node
@@ -154,15 +127,47 @@ export class ChatScroller extends React.PureComponent {
   setChildNodeRef = ref => (this.childRef = ref)
 
   render() {
-    const { children } = this.props
+    const { children, ...rest } = this.props
     if (!children) return null
 
     const child = React.Children.only(children)
 
     return React.cloneElement(child, {
       ref: this.setChildNodeRef,
+      ...{ ...getValidProps(rest) },
     })
   }
+}
+
+ChatScroller.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  distanceForAutoScroll: PropTypes.number,
+  forceScrollToBottomProp: PropTypes.any,
+  isTyping: PropTypes.bool,
+  lastMessageId: PropTypes.string,
+  messages: PropTypes.arrayOf(PropTypes.any),
+  messageSelectors: PropTypes.string,
+  offsetThreshold: PropTypes.number,
+  propsToCheck: PropTypes.arrayOf(PropTypes.string),
+  onScroll: PropTypes.func,
+  scrollCondition: PropTypes.func,
+  scrollableSelector: PropTypes.string,
+  scrollableNode: PropTypes.any,
+  smoothScrollDuration: PropTypes.number,
+}
+
+ChatScroller.defaultProps = {
+  'data-cy': 'ChatScroller',
+  distanceForAutoScroll: 150,
+  isTyping: false,
+  messageSelectors: '.c-MessageChat, .c-MessageAction',
+  offsetThreshold: 0.3,
+  onScroll: noop,
+  propsToCheck: ['messages', 'lastMessageId', 'isTyping'],
+  scrollableSelector: '.c-ScrollableNode',
+  smoothScrollDuration: 100,
 }
 
 /**

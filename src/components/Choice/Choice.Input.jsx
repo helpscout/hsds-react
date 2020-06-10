@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Backdrop from '../Input/Input.BackdropV2'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
@@ -13,40 +14,6 @@ import {
 } from './Choice.css'
 
 class Input extends React.PureComponent {
-  static propTypes = {
-    autoFocus: PropTypes.bool,
-    align: PropTypes.string,
-    checked: PropTypes.bool,
-    className: PropTypes.string,
-    disabled: PropTypes.bool,
-    helpText: PropTypes.string,
-    id: PropTypes.string,
-    inputRef: PropTypes.func,
-    innerRef: PropTypes.func,
-    kind: PropTypes.string,
-    onBlur: PropTypes.func,
-    onChange: PropTypes.func,
-    onFocus: PropTypes.func,
-    name: PropTypes.string,
-    readOnly: PropTypes.bool,
-    state: PropTypes.string,
-    type: PropTypes.string,
-    value: PropTypes.string,
-  }
-
-  static defaultProps = {
-    autoFocus: false,
-    disabled: false,
-    onBlur: noop,
-    onChange: noop,
-    onFocus: noop,
-    inputRef: noop,
-    innerRef: noop,
-    readOnly: false,
-    type: 'checkbox',
-    value: '',
-  }
-
   state = {
     isFocused: false,
   }
@@ -124,6 +91,7 @@ class Input extends React.PureComponent {
       state,
       type,
       value,
+      ...rest
     } = this.props
 
     const { isFocused } = this.state
@@ -139,19 +107,16 @@ class Input extends React.PureComponent {
       type && `is-${type}`,
       className
     )
-
     const inputClassName = classNames(
       'c-InputField',
       'c-ChoiceInput__input',
       type && `is-${type}`
     )
-
     const isCustomRadio = kind === 'custom'
-
     const iconMarkup = this.getIconMarkup()
 
     return (
-      <InputUI className={componentClassName}>
+      <InputUI className={componentClassName} {...getValidProps(rest)}>
         <InputInputUI
           autoFocus={autoFocus}
           aria-describedby={helpText || undefined}
@@ -187,6 +152,43 @@ class Input extends React.PureComponent {
       </InputUI>
     )
   }
+}
+
+Input.propTypes = {
+  autoFocus: PropTypes.bool,
+  align: PropTypes.string,
+  checked: PropTypes.bool,
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  disabled: PropTypes.bool,
+  helpText: PropTypes.string,
+  id: PropTypes.string,
+  inputRef: PropTypes.func,
+  innerRef: PropTypes.func,
+  kind: PropTypes.string,
+  onBlur: PropTypes.func,
+  onChange: PropTypes.func,
+  onFocus: PropTypes.func,
+  name: PropTypes.string,
+  readOnly: PropTypes.bool,
+  state: PropTypes.string,
+  type: PropTypes.string,
+  value: PropTypes.string,
+}
+
+Input.defaultProps = {
+  autoFocus: false,
+  'data-cy': 'ChoiceInput',
+  disabled: false,
+  onBlur: noop,
+  onChange: noop,
+  onFocus: noop,
+  inputRef: noop,
+  innerRef: noop,
+  readOnly: false,
+  type: 'checkbox',
+  value: '',
 }
 
 export default Input

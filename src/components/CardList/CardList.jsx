@@ -1,4 +1,5 @@
 import React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Animate from '../Animate'
 import AnimateGroup from '../AnimateGroup'
 import { getComponentKey } from '../../utilities/component'
@@ -6,23 +7,6 @@ import classNames from '../../utilities/classNames'
 import PropTypes from 'prop-types'
 
 export class CardList extends React.PureComponent {
-  static propTypes = {
-    animationDelay: PropTypes.number,
-    animationEasing: PropTypes.string,
-    animationSequence: PropTypes.string,
-    animationStagger: PropTypes.number,
-    className: PropTypes.string,
-    stagger: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    animationDelay: 0,
-    animationEasing: 'ease',
-    animationSequence: 'fade up',
-    animationStagger: 60,
-    stagger: true,
-  }
-
   getChildrenMarkup = () => {
     const { children } = this.props
 
@@ -47,7 +31,7 @@ export class CardList extends React.PureComponent {
 
     return (
       <AnimateGroup
-        {...rest}
+        {...getValidProps(rest)}
         delay={animationDelay}
         easing={animationEasing}
         className={componentClassName}
@@ -59,6 +43,26 @@ export class CardList extends React.PureComponent {
       </AnimateGroup>
     )
   }
+}
+
+CardList.propTypes = {
+  animationDelay: PropTypes.number,
+  animationEasing: PropTypes.string,
+  animationSequence: PropTypes.string,
+  animationStagger: PropTypes.number,
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  stagger: PropTypes.bool,
+}
+
+CardList.defaultProps = {
+  animationDelay: 0,
+  animationEasing: 'ease',
+  animationSequence: 'fade up',
+  animationStagger: 60,
+  'data-cy': 'CardList',
+  stagger: true,
 }
 
 export default CardList
