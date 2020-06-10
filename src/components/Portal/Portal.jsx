@@ -68,13 +68,18 @@ export class Portal extends React.Component {
     // 2. Fallback to <Portal.Container />
     mountSelector =
       mountSelector || document.querySelector(`#${portalContainerId}`)
-    // 3. Fallback to document.body
 
-    // 3- is inside an iframe
-    if (!mountSelector && window.parent && !window.STORYBOOK_ENV) {
+    // 3- is inside an iframe, but not the one created by storybook/cypress
+    if (
+      !mountSelector &&
+      window.parent &&
+      !window.STORYBOOK_ENV &&
+      !window.Cypress
+    ) {
       mountSelector = window.parent.document.body
     }
 
+    // 4. Fallback to document.body
     return mountSelector || this.document.body // fallback
   }
 
