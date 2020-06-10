@@ -5,11 +5,11 @@ import getShallowDiffs from '@helpscout/react-utils/dist/getShallowDiffs'
 import createStore, { initialState } from './Dropdown.store'
 import Dropdown from './Dropdown'
 import actionTypes from './Dropdown.actionTypes'
-import Block from './Dropdown.Block'
+import DropdownBlock from './Dropdown.Block'
 import Card from './Dropdown.Card'
-import Divider from './Dropdown.Divider'
-import Group from './Dropdown.Group'
-import Header from './Dropdown.Header'
+import DropdownDivider from './Dropdown.Divider'
+import DropdownGroup from './Dropdown.Group'
+import DropdownHeader from './Dropdown.Header'
 import Item from './Dropdown.Item'
 import Menu from './Dropdown.Menu'
 import {
@@ -49,11 +49,11 @@ export class DropdownContainer extends React.PureComponent {
   }
 
   static actionTypes = actionTypes
-  static Block = Block
+  static Block = DropdownBlock
   static Card = Card
-  static Divider = Divider
-  static Group = Group
-  static Header = Header
+  static Divider = DropdownDivider
+  static Group = DropdownGroup
+  static Header = DropdownHeader
   static Item = Item
   static Menu = Menu
   static Trigger = Trigger

@@ -2,24 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-
 import { FormGroupChoiceUI } from './FormGroup.css'
 
-class Choice extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    isResponsive: PropTypes.bool,
-    maxWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    style: PropTypes.any,
-  }
-
-  static defaultProps = {
-    isResponsive: false,
-    style: {},
-  }
-
-  static displayName = 'FormGroupChoice'
-
+class FormGroupChoice extends React.PureComponent {
   render() {
     const {
       className,
@@ -53,4 +38,19 @@ class Choice extends React.PureComponent {
   }
 }
 
-export default Choice
+FormGroupChoice.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  isResponsive: PropTypes.bool,
+  maxWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  style: PropTypes.any,
+}
+
+FormGroupChoice.defaultProps = {
+  'data-cy': 'FormGroupChoice',
+  isResponsive: false,
+  style: {},
+}
+
+export default FormGroupChoice

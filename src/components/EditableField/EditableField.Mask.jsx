@@ -1,28 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import {
   EditableFieldMaskUI,
   MaskValueUI,
   MaskOptionUI,
 } from './EditableField.css'
-import Truncated from './EditableField.Truncated'
+import EditableFieldTruncated from './EditableField.Truncated'
 import Truncate from '../Truncate'
-
 import { MASK_CLASSNAMES, STATES_CLASSNAMES } from './EditableField.utils'
 import { classNames } from '../../utilities/classNames'
 import equal from 'fast-deep-equal'
 import { noop } from '../../utilities/other'
 
 export class EditableFieldMask extends React.Component {
-  static defaultProps = {
-    disabled: false,
-    emphasize: false,
-    maskTabIndex: null,
-    type: 'text',
-    onValueKeyDown: noop,
-  }
-
   valueRef
 
   setValueNode = node => {
@@ -78,10 +69,12 @@ export class EditableFieldMask extends React.Component {
       type,
       validationInfo,
       valueOptions,
+      ...rest
     } = this.props
 
     return (
       <EditableFieldMaskUI
+        {...getValidProps(rest)}
         className={classNames(
           MASK_CLASSNAMES.component,
           disabled && STATES_CLASSNAMES.isDisabled,
@@ -106,7 +99,7 @@ export class EditableFieldMask extends React.Component {
           numberOfActions={actions ? actions.length : 0}
         >
           {fieldValue.value ? (
-            <Truncated
+            <EditableFieldTruncated
               string={fieldValue.value}
               splitter={type === 'email' ? '@' : undefined}
             />
@@ -133,6 +126,15 @@ EditableFieldMask.propTypes = {
   validationInfo: PropTypes.object,
   valueOptions: PropTypes.arrayOf(PropTypes.any),
   onValueKeyDown: PropTypes.func,
+}
+
+EditableFieldMask.defaultProps = {
+  'data-cy': 'EditableFieldMask',
+  disabled: false,
+  emphasize: false,
+  maskTabIndex: null,
+  type: 'text',
+  onValueKeyDown: noop,
 }
 
 export default EditableFieldMask

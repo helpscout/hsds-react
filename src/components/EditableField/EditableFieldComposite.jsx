@@ -1,33 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import equal from 'fast-deep-equal'
+import { classNames } from '../../utilities/classNames'
+import { key } from '../../constants/Keys'
 import { EditableFieldCompositeUI, ComposedMaskUI } from './EditableField.css'
-
 import {
   STATES_CLASSNAMES,
   COMPOSITE_CLASSNAMES,
   EDITABLEFIELD_CLASSNAMES,
   INPUT_CLASSNAMES,
 } from './EditableField.utils'
-import { classNames } from '../../utilities/classNames'
-import { key } from '../../constants/Keys'
-import equal from 'fast-deep-equal'
 
 export class EditableFieldComposite extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    size: PropTypes.string,
-    separator: PropTypes.string,
-    placeholder: PropTypes.string,
-  }
+  static className = COMPOSITE_CLASSNAMES.component
 
   _isMounted = false
-
-  static className = COMPOSITE_CLASSNAMES.component
-  static defaultProps = {
-    size: 'md',
-    separator: '',
-  }
 
   constructor(props) {
     super(props)
@@ -319,11 +307,12 @@ export class EditableFieldComposite extends React.PureComponent {
   }
 
   render() {
-    const { size, className } = this.props
+    const { size, className, ...rest } = this.props
     const { fields, hasActiveFields } = this.state
 
     return (
       <EditableFieldCompositeUI
+        {...getValidProps(rest)}
         className={classNames(
           className && className,
           EditableFieldComposite.className,
@@ -346,6 +335,21 @@ export class EditableFieldComposite extends React.PureComponent {
       </EditableFieldCompositeUI>
     )
   }
+}
+
+EditableFieldComposite.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  size: PropTypes.string,
+  separator: PropTypes.string,
+  placeholder: PropTypes.string,
+}
+
+EditableFieldComposite.defaultProps = {
+  'data-cy': 'EditableFieldComposite',
+  size: 'md',
+  separator: '',
 }
 
 export default EditableFieldComposite

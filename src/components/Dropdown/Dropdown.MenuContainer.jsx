@@ -5,7 +5,7 @@ import Animate from '../Animate'
 import Card from './Dropdown.Card'
 import Menu from './Dropdown.Menu'
 import MenuPortal from './Dropdown.MenuPortal'
-import Group from './Dropdown.Group'
+import DropdownGroup from './Dropdown.Group'
 import Item from './Dropdown.Item'
 import Renderer from './Dropdown.Renderer'
 import {
@@ -189,7 +189,11 @@ export class MenuContainer extends React.PureComponent {
       if (!items.length) return null
 
       const groupedItemsMarkup = (
-        <Group key={groupId} id={groupId} aria-labelledby={groupHeaderId}>
+        <DropdownGroup
+          key={groupId}
+          id={groupId}
+          aria-labelledby={groupHeaderId}
+        >
           <Item {...groupProps} id={groupHeaderId} />
           {items.map((item, index) => {
             const indexProp = withIndex ? index + groupStartIndex : undefined
@@ -200,7 +204,7 @@ export class MenuContainer extends React.PureComponent {
               </Item>
             )
           })}
-        </Group>
+        </DropdownGroup>
       )
 
       // This ensures that the set(s) have the current path index.

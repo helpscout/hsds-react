@@ -1,3 +1,3 @@
-import Container from '../FluffyCard/FluffyCard.Container'
+import FluffyCardContainer from '../FluffyCard/FluffyCard.Container'
 
-export default Container
+export default FluffyCardContainer

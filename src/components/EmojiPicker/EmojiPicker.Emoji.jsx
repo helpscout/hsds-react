@@ -4,20 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 
 class Emoji extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    name: PropTypes.string,
-    symbol: PropTypes.string,
-  }
-
   static className = 'c-EmojiPickerView'
-
-  static defaultProps = {
-    'data-cy': 'EmojiPickerEmoji',
-    className: '',
-    name: 'Unicorn Face',
-    symbol: '🦄',
-  }
 
   getClassName() {
     const { className } = this.props
@@ -39,6 +26,19 @@ class Emoji extends React.PureComponent {
       </span>
     )
   }
+}
+
+Emoji.propTypes = {
+  className: PropTypes.string,
+  name: PropTypes.string,
+  symbol: PropTypes.string,
+}
+
+Emoji.defaultProps = {
+  'data-cy': 'EmojiPickerEmoji',
+  className: '',
+  name: 'Unicorn Face',
+  symbol: '🦄',
 }
 
 export default Emoji

@@ -5,17 +5,7 @@ import { classNames } from '../../utilities/classNames'
 import { DividerUI } from './Dropdown.css'
 import { noop } from '../../utilities/other'
 
-export class Divider extends React.PureComponent {
-  static displayName = 'DropdownDivider'
-
-  static propTypes = {
-    innerRef: PropTypes.func,
-  }
-
-  static defaultProps = {
-    innerRef: noop,
-  }
-
+export class DropdownDivider extends React.PureComponent {
   render() {
     const { className, children, innerRef, ...rest } = this.props
     const componentClassName = classNames('c-DropdownDivider', className)
@@ -32,4 +22,15 @@ export class Divider extends React.PureComponent {
   }
 }
 
-export default Divider
+DropdownDivider.propTypes = {
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  innerRef: PropTypes.func,
+}
+
+DropdownDivider.defaultProps = {
+  'data-cy': 'DropdownDivider',
+  innerRef: noop,
+}
+
+export default DropdownDivider

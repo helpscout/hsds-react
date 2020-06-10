@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import {
   EditableFieldInputUI,
   InputUI,
@@ -11,15 +10,12 @@ import {
   FocusIndicatorUI,
   ValidationIconUI,
 } from './EditableField.css'
-
 import Dropdown from '../Dropdown'
 import Icon from '../Icon'
 import Tooltip from '../Tooltip'
 import Truncate from '../Truncate'
-
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { ACTION_ICONS, FIELDTYPES } from './EditableField.constants'
-
 import {
   findParentByClassName,
   isEllipsisActive,
@@ -37,53 +33,7 @@ import { noop } from '../../utilities/other'
 import equal from 'fast-deep-equal'
 
 export class EditableFieldInput extends React.Component {
-  static propTypes = {
-    actions: PropTypes.arrayOf(PropTypes.object),
-    className: PropTypes.string,
-    disabled: PropTypes.bool,
-    fieldValue: PropTypes.object,
-    inline: PropTypes.bool,
-    isActive: PropTypes.bool,
-    name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    placeholder: PropTypes.string,
-    type: PropTypes.string,
-    validationInfo: PropTypes.object,
-    valueOptions: PropTypes.arrayOf(PropTypes.object),
-    innerRef: PropTypes.func,
-    onInputFocus: PropTypes.func,
-    onInputBlur: PropTypes.func,
-    onOptionFocus: PropTypes.func,
-    onOptionBlur: PropTypes.func,
-    onOptionSelection: PropTypes.func,
-    onChange: PropTypes.func,
-    onKeyDown: PropTypes.func,
-    onKeyPress: PropTypes.func,
-    onKeyUp: PropTypes.func,
-    deleteAction: PropTypes.func,
-    customAction: PropTypes.func,
-  }
-
   static className = INPUT_CLASSNAMES.component
-  static defaultProps = {
-    disabled: false,
-    fieldValue: '',
-    isActive: false,
-    inline: false,
-    placeholder: '',
-    type: FIELDTYPES.text,
-    innerRef: noop,
-    onInputFocus: noop,
-    onInputBlur: noop,
-    onOptionFocus: noop,
-    onOptionSelection: noop,
-    onOptionBlur: noop,
-    onChange: noop,
-    onKeyDown: noop,
-    onKeyPress: noop,
-    onKeyUp: noop,
-    deleteAction: noop,
-    customAction: noop,
-  }
 
   fieldInputContentRef
   optionsDropdownRef
@@ -368,6 +318,56 @@ export class EditableFieldInput extends React.Component {
       </EditableFieldInputUI>
     )
   }
+}
+
+EditableFieldInput.propTypes = {
+  actions: PropTypes.arrayOf(PropTypes.object),
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  disabled: PropTypes.bool,
+  fieldValue: PropTypes.object,
+  inline: PropTypes.bool,
+  isActive: PropTypes.bool,
+  name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  placeholder: PropTypes.string,
+  type: PropTypes.string,
+  validationInfo: PropTypes.object,
+  valueOptions: PropTypes.arrayOf(PropTypes.object),
+  innerRef: PropTypes.func,
+  onInputFocus: PropTypes.func,
+  onInputBlur: PropTypes.func,
+  onOptionFocus: PropTypes.func,
+  onOptionBlur: PropTypes.func,
+  onOptionSelection: PropTypes.func,
+  onChange: PropTypes.func,
+  onKeyDown: PropTypes.func,
+  onKeyPress: PropTypes.func,
+  onKeyUp: PropTypes.func,
+  deleteAction: PropTypes.func,
+  customAction: PropTypes.func,
+}
+
+EditableFieldInput.defaultProps = {
+  'data-cy': 'EditableFieldInput',
+  disabled: false,
+  fieldValue: '',
+  isActive: false,
+  inline: false,
+  placeholder: '',
+  type: FIELDTYPES.text,
+  innerRef: noop,
+  onInputFocus: noop,
+  onInputBlur: noop,
+  onOptionFocus: noop,
+  onOptionSelection: noop,
+  onOptionBlur: noop,
+  onChange: noop,
+  onKeyDown: noop,
+  onKeyPress: noop,
+  onKeyUp: noop,
+  deleteAction: noop,
+  customAction: noop,
 }
 
 export default EditableFieldInput

@@ -32,22 +32,7 @@ import { isDefined } from '../../utilities/is'
 import { scrollIntoView } from '../../utilities/scrolling'
 import { noop } from '../../utilities/other'
 
-class Renderer extends React.PureComponent {
-  static displayName = 'DropdownRenderer'
-
-  static defaultProps = {
-    activeClassName: 'is-active',
-    decrementIndex: noop,
-    enableLeftRightArrowNavigation: false,
-    enableTabNavigation: true,
-    focusClassName: 'is-focused',
-    focusItem: noop,
-    incrementIndex: noop,
-    items: [],
-    openClassName: 'is-open',
-    selectItemFromIndex: noop,
-  }
-
+class DropdownRenderer extends React.PureComponent {
   modifier = 1
 
   handleTab = event => {
@@ -335,6 +320,7 @@ class Renderer extends React.PureComponent {
   }
 
   render() {
+    const { envNode, 'data-cy': dataCy } = this.props
     // We'll update the DOM for every render cycle
     // It may feel "wrong"... But, this is FAR cheaper than
     // relying on React to do it.
@@ -345,15 +331,29 @@ class Renderer extends React.PureComponent {
     this.optimizedRender()
 
     return (
-      <div className="c-DropdownRendererNode">
+      <div className="c-DropdownRendererNode" data-cy={dataCy}>
         <KeypressListener
           handler={this.handleOnKeyDown}
           type="keydown"
-          scope={this.props.envNode}
+          scope={envNode}
         />
       </div>
     )
   }
+}
+
+DropdownRenderer.defaultProps = {
+  activeClassName: 'is-active',
+  'data-cy': 'DropdownRenderer',
+  decrementIndex: noop,
+  enableLeftRightArrowNavigation: false,
+  enableTabNavigation: true,
+  focusClassName: 'is-focused',
+  focusItem: noop,
+  incrementIndex: noop,
+  items: [],
+  openClassName: 'is-open',
+  selectItemFromIndex: noop,
 }
 
 const ConnectedRenderer = connect(
@@ -406,6 +406,6 @@ const ConnectedRenderer = connect(
     decrementIndex,
     selectItemFromIndex,
   }
-)(Renderer)
+)(DropdownRenderer)
 
 export default ConnectedRenderer

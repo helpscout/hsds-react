@@ -8,27 +8,7 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { isDefined, isNumber } from '../../utilities/is'
 
-export class Card extends React.PureComponent {
-  static displayName = 'DropdownCard'
-
-  static propTypes = {
-    borderColor: PropTypes.string,
-    className: PropTypes.string,
-    innerRef: PropTypes.func,
-    minWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    minHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    maxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    maxWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    width: PropTypes.any,
-    triggerNode: PropTypes.any,
-    style: PropTypes.any,
-  }
-
-  static defaultProps = {
-    cardRef: noop,
-    style: {},
-  }
-
+export class DropdownCard extends React.PureComponent {
   static className = 'c-DropdownCard'
 
   state = {
@@ -78,8 +58,7 @@ export class Card extends React.PureComponent {
 
   render() {
     const { className, children, cardRef, ...rest } = this.props
-
-    const componentClassName = classNames(Card.className, className)
+    const componentClassName = classNames(DropdownCard.className, className)
 
     return (
       <CardUI
@@ -93,6 +72,27 @@ export class Card extends React.PureComponent {
       </CardUI>
     )
   }
+}
+
+DropdownCard.propTypes = {
+  borderColor: PropTypes.string,
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  innerRef: PropTypes.func,
+  minWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  minHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  maxHeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  maxWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  width: PropTypes.any,
+  triggerNode: PropTypes.any,
+  style: PropTypes.any,
+}
+
+DropdownCard.defaultProps = {
+  cardRef: noop,
+  'data-cy': 'DropdownCard',
+  style: {},
 }
 
 const ConnectedCard = connect(
@@ -118,6 +118,6 @@ const ConnectedCard = connect(
       width,
     }
   }
-)(Card)
+)(DropdownCard)
 
 export default ConnectedCard

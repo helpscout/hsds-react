@@ -6,24 +6,10 @@ import Heading from '../Heading'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
-export class Header extends React.PureComponent {
-  static displayName = 'DropdownHeader'
-
-  static propTypes = {
-    className: PropTypes.string,
-    innerRef: PropTypes.func,
-    label: PropTypes.string,
-  }
-
-  static defaultProps = {
-    innerRef: noop,
-  }
-
+export class DropdownHeader extends React.PureComponent {
   render() {
     const { className, children, innerRef, label, ...rest } = this.props
     const componentClassName = classNames('c-DropdownHeader', className)
-
-    const textLabel = children || label
 
     return (
       <HeaderUI
@@ -33,11 +19,24 @@ export class Header extends React.PureComponent {
         tabIndex={null}
       >
         <Heading size="small" light>
-          {textLabel}
+          {children || label}
         </Heading>
       </HeaderUI>
     )
   }
 }
 
-export default Header
+DropdownHeader.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  innerRef: PropTypes.func,
+  label: PropTypes.string,
+}
+
+DropdownHeader.defaultProps = {
+  'data-cy': 'DropdownHeader',
+  innerRef: noop,
+}
+
+export default DropdownHeader

@@ -1,14 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Tooltip from '../Tooltip'
 import { DotStepperUI, BulletUI, ProgressBulletUI } from './DotStepper.css'
 import { classNames } from '../../utilities/classNames'
 
 class DotStepper extends React.Component {
-  static defaultProps = {
-    numSteps: 1,
-    step: 1,
-  }
-
   getClassName() {
     const { className } = this.props
     return classNames('c-DotStepper', className)
@@ -37,10 +34,9 @@ class DotStepper extends React.Component {
     return (
       <Tooltip title={title} placement="bottom" trigger="click">
         <DotStepperUI
-          data-cy="DotStepper"
           aria-label={title}
           className={this.getClassName()}
-          {...rest}
+          {...getValidProps(rest)}
         >
           {this.renderSteps()}
           <ProgressBulletUI step={step} />
@@ -48,6 +44,18 @@ class DotStepper extends React.Component {
       </Tooltip>
     )
   }
+}
+
+DotStepper.propTypes = {
+  'data-cy': PropTypes.string,
+  numSteps: PropTypes.number,
+  step: PropTypes.number,
+}
+
+DotStepper.defaultProps = {
+  'data-cy': 'DotStepper',
+  numSteps: 1,
+  step: 1,
 }
 
 export default DotStepper

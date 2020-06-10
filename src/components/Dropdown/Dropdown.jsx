@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { connect } from '@helpscout/wedux'
 import { initialState } from './Dropdown.store'
 import { closeDropdown, setMenuNode, setTriggerNode } from './Dropdown.actions'
@@ -12,21 +13,7 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { renderRenderPropComponent } from '../../utilities/component'
 
-// TODO: migrate/create PropTypes for Dropdown
 export class Dropdown extends React.PureComponent {
-  static defaultProps = {
-    ...initialState,
-    allowMultipleSelection: false,
-    contentWindow: window,
-    'data-cy': 'Dropdown',
-    disabled: false,
-    innerRef: noop,
-    menuRef: noop,
-    setMenuNode: noop,
-    setTriggerNode: noop,
-    triggerRef: noop,
-  }
-
   node
   triggerNode
   menuNode
@@ -131,13 +118,13 @@ export class Dropdown extends React.PureComponent {
   }
 
   render() {
-    const { className, envNode, id } = this.props
+    const { className, envNode, id, ...rest } = this.props
     const componentClassName = classNames(className, 'c-Dropdown')
 
     return (
       <DropdownUI
+        {...getValidProps(rest)}
         className={componentClassName}
-        data-cy={this.props['data-cy']}
         ref={this.setNodeRef}
         id={id}
       >
@@ -239,6 +226,19 @@ Dropdown.propTypes = Object.assign({}, DropdownMenuDimensions, {
   triggerStyle: PropTypes.any,
   withScrollLock: PropTypes.bool,
 })
+
+Dropdown.defaultProps = {
+  ...initialState,
+  allowMultipleSelection: false,
+  contentWindow: window,
+  'data-cy': 'Dropdown',
+  disabled: false,
+  innerRef: noop,
+  menuRef: noop,
+  setMenuNode: noop,
+  setTriggerNode: noop,
+  triggerRef: noop,
+}
 
 ConnectedDropdown.propTypes = Dropdown.propTypes
 

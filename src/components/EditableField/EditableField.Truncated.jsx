@@ -1,17 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { TruncatedUI } from './EditableField.css'
 import Truncate from '../Truncate'
-
 import { TRUNCATED_CLASSNAMES } from './EditableField.utils'
 
-const Truncated = ({ string, splitter }) => {
+const EditableFieldTruncated = ({ string, splitter, ...rest }) => {
   if (splitter) {
     const [first, second] = string.split(splitter)
 
     return (
       <TruncatedUI
+        {...getValidProps(rest)}
         className={`${TRUNCATED_CLASSNAMES.component} ${TRUNCATED_CLASSNAMES.withSplitter}`}
       >
         <span className={`${TRUNCATED_CLASSNAMES.firstChunk}`}>{first}</span>
@@ -24,16 +24,23 @@ const Truncated = ({ string, splitter }) => {
   }
 
   return (
-    <Truncate className={`${TRUNCATED_CLASSNAMES.component}`}>
+    <Truncate
+      {...getValidProps(rest)}
+      className={`${TRUNCATED_CLASSNAMES.component}`}
+    >
       {string}
     </Truncate>
   )
 }
 
-Truncated.propTypes = {
+EditableFieldTruncated.propTypes = {
   className: PropTypes.string,
   string: PropTypes.string,
   splitter: PropTypes.string,
 }
 
-export default Truncated
+EditableFieldTruncated.defaultProps = {
+  'data-cy': 'EditableFieldTruncated',
+}
+
+export default EditableFieldTruncated

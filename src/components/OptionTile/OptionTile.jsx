@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Container from './OptionTile.Container'
+import FluffyCardContainer from './OptionTile.Container'
 import Centralize from '../Centralize'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
@@ -16,7 +16,7 @@ class OptionTile extends React.PureComponent {
     textAlign: 'center',
   }
 
-  static Container = Container
+  static Container = FluffyCardContainer
 
   render() {
     const {

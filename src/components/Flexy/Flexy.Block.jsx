@@ -3,7 +3,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { FlexyBlockUI } from './Flexy.css'
 
-export const Block = ({ children, className = '', ...rest }) => (
+export const FlexyBlock = ({ children, className = '', ...rest }) => (
   <FlexyBlockUI
     {...getValidProps(rest)}
     className={classNames('c-Flexy__block', className)}
@@ -12,6 +12,8 @@ export const Block = ({ children, className = '', ...rest }) => (
   </FlexyBlockUI>
 )
 
-Block.displayName = 'FlexyBlock'
+FlexyBlock.defaultProps = {
+  'data-cy': 'FlexyBlock',
+}
 
-export default Block
+export default FlexyBlock

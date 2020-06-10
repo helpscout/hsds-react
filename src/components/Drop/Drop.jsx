@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import PortalWrapper from '../PortalWrapper'
-import Positioner from './Drop.Positioner'
+import DropPositioner from './Drop.Positioner'
 import { classNames } from '../../utilities/classNames'
 
 const popoverWrapperBaseZIndex = 1020
@@ -20,6 +21,8 @@ export const DropComponent = (
 
   class Drop extends React.PureComponent {
     static propTypes = {
+      /** Data attr for Cypress tests. */
+      'data-cy': PropTypes.string,
       trigger: PropTypes.any,
       direction: PropTypes.string,
       wrapperClassName: PropTypes.string,
@@ -41,6 +44,7 @@ export const DropComponent = (
     }
 
     static defaultProps = {
+      'data-cy': 'Drop',
       direction: 'down',
       wrapperClassName: 'c-DropWrapper',
     }
@@ -72,7 +76,7 @@ export const DropComponent = (
 
       return (
         <div className={componentClassName}>
-          <Positioner
+          <DropPositioner
             autoPosition={autoPosition}
             direction={direction}
             offset={offset}
@@ -86,9 +90,9 @@ export const DropComponent = (
               onClose={onClose}
               onOpen={onOpen}
               style={style}
-              {...rest}
+              {...getValidProps(rest)}
             />
-          </Positioner>
+          </DropPositioner>
         </div>
       )
     }
@@ -106,6 +110,6 @@ const Drop = (options = defaultOptions) => ComposedComponent => {
   return PortalWrapper(options)(DropComponent(options)(ComposedComponent))
 }
 
-Drop.Positioner = Positioner
+Drop.Positioner = DropPositioner
 
 export default Drop

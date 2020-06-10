@@ -1,38 +1,12 @@
 import React from 'react'
-import Actions from './Form.Actions'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { classNames } from '../../utilities/classNames'
+import FormActions from './Form.Actions'
 import Button from '../Button'
 
-import { classNames } from '../../utilities/classNames'
-
 export class Form extends React.PureComponent {
-  static Actions = Actions
-
-  static defaultProps = {
-    actionTabbable: true,
-    cancelText: 'Cancel',
-    destroyText: 'Delete',
-    onSave: evt => {
-      evt && evt.preventDefault()
-    },
-    saveText: 'Save',
-  }
-
-  static propTypes = {
-    actionDirection: PropTypes.string,
-    actionTabbable: PropTypes.bool,
-    cancelButtonProps: PropTypes.object,
-    cancelText: PropTypes.string,
-    children: PropTypes.any,
-    className: PropTypes.string,
-    destroyButtonProps: PropTypes.object,
-    destroyText: PropTypes.string,
-    onCancel: PropTypes.func,
-    onDestroy: PropTypes.func,
-    onSave: PropTypes.func,
-    saveButtonProps: PropTypes.object,
-    saveText: PropTypes.string,
-  }
+  static Actions = FormActions
 
   render() {
     const {
@@ -49,6 +23,7 @@ export class Form extends React.PureComponent {
       onSave,
       saveButtonProps,
       saveText,
+      ...rest
     } = this.props
 
     const componentClassName = classNames('c-Form', className)
@@ -96,7 +71,11 @@ export class Form extends React.PureComponent {
     )
 
     return (
-      <form onSubmit={onSave} className={componentClassName}>
+      <form
+        {...getValidProps(rest)}
+        onSubmit={onSave}
+        className={componentClassName}
+      >
         {children}
         <Form.Actions
           direction={actionDirection}
@@ -107,6 +86,35 @@ export class Form extends React.PureComponent {
       </form>
     )
   }
+}
+
+Form.defaultProps = {
+  actionTabbable: true,
+  cancelText: 'Cancel',
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  destroyText: 'Delete',
+  onSave: evt => {
+    evt && evt.preventDefault()
+  },
+  saveText: 'Save',
+}
+
+Form.propTypes = {
+  actionDirection: PropTypes.string,
+  actionTabbable: PropTypes.bool,
+  cancelButtonProps: PropTypes.object,
+  cancelText: PropTypes.string,
+  children: PropTypes.any,
+  className: PropTypes.string,
+  'data-cy': 'Form',
+  destroyButtonProps: PropTypes.object,
+  destroyText: PropTypes.string,
+  onCancel: PropTypes.func,
+  onDestroy: PropTypes.func,
+  onSave: PropTypes.func,
+  saveButtonProps: PropTypes.object,
+  saveText: PropTypes.string,
 }
 
 export default Form

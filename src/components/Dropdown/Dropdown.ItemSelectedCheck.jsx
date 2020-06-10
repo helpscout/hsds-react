@@ -1,45 +1,52 @@
 import React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { isSelectedItemEmpty } from './Dropdown.utils'
 import { ItemSelectedCheckUI, SelectedCheckmarkUI } from './Dropdown.css'
 
-const defaultProps = {
-  value: '',
-  isActive: false,
-  isSelectionClearer: false,
-  getState: noop,
-}
-
-const ItemSelectedCheck = (props = defaultProps) => {
+const DropdownItemSelectedCheck = props => {
+  const {
+    getState,
+    isSelectionClearer,
+    isActive,
+    label,
+    value,
+    ...rest
+  } = props
   let isClearerActive = false
-  const state = props.getState()
+  const state = getState()
 
-  if (props.isSelectionClearer && state) {
+  if (isSelectionClearer && state) {
     isClearerActive = isSelectedItemEmpty(state.selectedItem)
   }
 
   const componentClassnames = classNames(
     'c-ItemSelectedCheck',
-    props.isSelectionClearer && 'selectionClearer',
-
+    isSelectionClearer && 'selectionClearer',
     isClearerActive && 'is-selectionClearer-active'
   )
 
-  const content = props.label || props.value
-
   return (
-    <ItemSelectedCheckUI className={componentClassnames}>
-      <span className="c-ItemSelectedCheck__value">{content}</span>
+    <ItemSelectedCheckUI
+      className={componentClassnames}
+      {...getValidProps(rest)}
+    >
+      <span className="c-ItemSelectedCheck__value">{label || value}</span>
       <SelectedCheckmarkUI>
-        {props.isActive || isClearerActive ? <Icon name="check" /> : null}
+        {isActive || isClearerActive ? <Icon name="check" /> : null}
       </SelectedCheckmarkUI>
     </ItemSelectedCheckUI>
   )
 }
 
-ItemSelectedCheck.defaultProps = defaultProps
-ItemSelectedCheck.displayName = 'DropdownItemSelectedCheck'
+DropdownItemSelectedCheck.defaultProps = {
+  value: '',
+  'data-cy': 'DropdownItemSelectedCheck',
+  isActive: false,
+  isSelectionClearer: false,
+  getState: noop,
+}
 
-export default ItemSelectedCheck
+export default DropdownItemSelectedCheck
