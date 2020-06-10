@@ -5,13 +5,6 @@ import { noop } from '../../utilities/other'
 import { handleWheelEvent } from './ScrollLock.utils'
 
 export class ScrollLock extends React.PureComponent {
-  static defaultProps = {
-    isDisabled: false,
-    direction: 'y',
-    stopPropagation: false,
-    onWheel: noop,
-  }
-
   componentDidMount() {
     if (this.canRender()) {
       this.node = ReactDOM.findDOMNode(this)
@@ -54,6 +47,13 @@ ScrollLock.propTypes = {
   isDisabled: PropTypes.bool,
   stopPropagation: PropTypes.bool,
   onWheel: PropTypes.func,
+}
+
+ScrollLock.defaultProps = {
+  isDisabled: false,
+  direction: 'y',
+  stopPropagation: false,
+  onWheel: noop,
 }
 
 export default ScrollLock

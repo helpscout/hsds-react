@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import SearchableDropdown from '../SearchableDropdown'
 import Icon from '../Icon'
 import Text from '../Text'
@@ -21,27 +22,6 @@ import { isObject } from '../../utilities/is'
 import Dropdown from '../Dropdown'
 
 export class SelectDropdown extends React.PureComponent {
-  static defaultProps = {
-    ...initialState,
-    clearOnSelect: false,
-    errorIcon: 'alert',
-    items: [],
-    limit: 15,
-    autoInput: true,
-    isFocused: false,
-    isFocusSelectedItemOnOpen: true,
-    onBlur: noop,
-    onChange: noop,
-    onFocus: noop,
-    placeholder: 'Select',
-    maxWidth: '100%',
-    menuOffsetTop: 3,
-    state: 'default',
-    trigger: undefined,
-    width: '100%',
-    value: undefined,
-  }
-
   state = {
     isFocused: this.props.isFocused,
     selectedItem:
@@ -171,13 +151,12 @@ export class SelectDropdown extends React.PureComponent {
   }
 
   render() {
+    const { 'data-cy': dataCy, ...rest } = this.props
+
     return (
-      <SelectDropdownUI
-        className="c-SelectDropdownWrapper"
-        data-cy="SelectDropdown"
-      >
+      <SelectDropdownUI className="c-SelectDropdownWrapper" data-cy={dataCy}>
         <SearchableDropdown
-          {...this.props}
+          {...getValidProps(rest)}
           className={this.getClassName()}
           renderTrigger={this.renderTrigger()}
           selectedItem={this.state.selectedItem}
@@ -193,6 +172,8 @@ export class SelectDropdown extends React.PureComponent {
 
 SelectDropdown.propTypes = Object.assign({}, Dropdown.propTypes, {
   autoInput: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   errorIcon: PropTypes.string,
   errorMessage: PropTypes.string,
   isFocused: PropTypes.bool,
@@ -202,5 +183,27 @@ SelectDropdown.propTypes = Object.assign({}, Dropdown.propTypes, {
   state: PropTypes.oneOf(['default', 'error', 'success', 'warning', '', null]),
   value: PropTypes.any,
 })
+
+SelectDropdown.defaultProps = {
+  ...initialState,
+  clearOnSelect: false,
+  'data-cy': 'SelectDropdown',
+  errorIcon: 'alert',
+  items: [],
+  limit: 15,
+  autoInput: true,
+  isFocused: false,
+  isFocusSelectedItemOnOpen: true,
+  onBlur: noop,
+  onChange: noop,
+  onFocus: noop,
+  placeholder: 'Select',
+  maxWidth: '100%',
+  menuOffsetTop: 3,
+  state: 'default',
+  trigger: undefined,
+  width: '100%',
+  value: undefined,
+}
 
 export default SelectDropdown

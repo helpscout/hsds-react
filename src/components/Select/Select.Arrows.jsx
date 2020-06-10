@@ -1,14 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { SelectArrowsUI } from './Select.css'
 
 export class SelectArrows extends React.PureComponent {
-  static defaultProps = {
-    state: 'default',
-  }
-
   render() {
     const { className, state, ...rest } = this.props
     const componentClassName = classNames(
@@ -19,12 +14,17 @@ export class SelectArrows extends React.PureComponent {
 
     return (
       <SelectArrowsUI
-        role="presentation"
         {...getValidProps(rest)}
+        role="presentation"
         className={componentClassName}
       />
     )
   }
+}
+
+SelectArrows.defaultProps = {
+  'data-cy': 'SelectArrows',
+  state: 'default',
 }
 
 export default SelectArrows

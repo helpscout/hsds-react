@@ -3,12 +3,6 @@ import PropTypes from 'prop-types'
 import { noop } from '../../utilities/other'
 
 class SleepDetector extends React.Component {
-  static defaultProps = {
-    buffer: 5000,
-    interval: 10000,
-    onWake: noop,
-  }
-
   constructor(props) {
     super(props)
 
@@ -17,8 +11,8 @@ class SleepDetector extends React.Component {
 
   UNSAFE_componentWillMount() {
     this.clearInterval()
-    const { interval, buffer } = this.props
 
+    const { interval, buffer } = this.props
     const intervalId = setInterval(() => {
       const { onWake } = this.props
       const { lastRun } = this.state
@@ -53,6 +47,12 @@ SleepDetector.propTypes = {
   buffer: PropTypes.number,
   interval: PropTypes.number,
   onWake: PropTypes.func,
+}
+
+SleepDetector.defaultProps = {
+  buffer: 5000,
+  interval: 10000,
+  onWake: noop,
 }
 
 export default SleepDetector

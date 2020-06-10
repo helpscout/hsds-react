@@ -6,13 +6,12 @@ import { HeaderUI, SubTitleUI, HeadingUI } from './Page.css'
 import { PageContext } from './Page'
 
 const Title = props => {
-  const { headingLevel, isSecondary, className, children, ...rest } = props
+  const { headingLevel, isSecondary, className, children } = props
   const componentClassName = classNames('c-PageHeading', className)
 
   return (
     <div className="c-PageHeader__title">
       <HeadingUI
-        {...getValidProps(rest)}
         selector={headingLevel || 'h1'}
         size={isSecondary ? 'h4' : 'md'}
         className={componentClassName}
@@ -29,9 +28,8 @@ const Subtitle = ({ children }) => (
   </SubTitleUI>
 )
 
-export const Header = props => {
+export const PageHeader = props => {
   const { isResponsive } = useContext(PageContext)
-
   const {
     className,
     render,
@@ -41,7 +39,6 @@ export const Header = props => {
     withBottomMargin,
     ...rest
   } = props
-
   const componentClassName = classNames(
     'c-PageHeader',
     isResponsive && 'is-responsive',
@@ -64,12 +61,11 @@ export const Header = props => {
   )
 }
 
-Header.displayName = 'Page.Header'
-
-Header.defaultProps = {
+PageHeader.defaultProps = {
+  'data-cy': 'PageHeader',
   title: 'Title',
   withBorder: true,
   withBottomMargin: true,
 }
 
-export default Header
+export default PageHeader

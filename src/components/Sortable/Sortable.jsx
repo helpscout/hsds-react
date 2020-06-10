@@ -1,14 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import DragHandle from './Sortable.DragHandle'
-import Item from './Sortable.Item'
-import List from './Sortable.List'
 import { includes } from '../../utilities/arrays'
 import arrayMove from '../../utilities/arrayMove.lib'
 import { noop } from '../../utilities/other'
-
-export { default as arrayMove } from '../../utilities/arrayMove.lib'
+import SortableDragHandle from './Sortable.DragHandle'
+import SortableItem from './Sortable.Item'
+import SortableList from './Sortable.List'
 
 class Sortable extends React.PureComponent {
   constructor(props) {
@@ -18,12 +17,6 @@ class Sortable extends React.PureComponent {
       items: [],
     }
     this.onSortEnd = this.onSortEnd.bind(this)
-  }
-
-  static defaultProps = {
-    onSortStart: noop,
-    onSortMove: noop,
-    onSortEnd: noop,
   }
 
   UNSAFE_componentWillMount() {
@@ -59,9 +52,9 @@ class Sortable extends React.PureComponent {
         child.props.sortable !== undefined ? { sortable: true } : {}
 
       return (
-        <Item key={key} index={index}>
+        <SortableItem key={key} index={index}>
           {React.cloneElement(child, childProps)}
-        </Item>
+        </SortableItem>
       )
     })
 
@@ -90,21 +83,19 @@ class Sortable extends React.PureComponent {
       onSortEnd,
       ...rest
     } = this.props
-
     const { items } = this.state
-
     const componentClassName = classNames('c-Sortable', className)
     const helperClassName = classNames('is-sorting', helperClass)
 
     return (
       <div className={componentClassName}>
-        <List
+        <SortableList
+          {...getValidProps(rest)}
           dragHandle={useDragHandle}
           helperClass={helperClassName}
           items={items}
           onSortEnd={this.onSortEnd}
           useDragHandle={useDragHandle}
-          {...rest}
         />
       </div>
     )
@@ -114,6 +105,8 @@ class Sortable extends React.PureComponent {
 Sortable.propTypes = {
   axis: PropTypes.oneOf(['x', 'y', 'xy']),
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   distance: PropTypes.number,
   lockAxis: PropTypes.string,
   helperClass: PropTypes.string,
@@ -141,8 +134,17 @@ Sortable.propTypes = {
   getHelperDimensions: PropTypes.func,
 }
 
-Sortable.DragHandle = DragHandle
-Sortable.Item = Item
-Sortable.List = List
+Sortable.defaultProps = {
+  'data-cy': 'Sortable',
+  onSortStart: noop,
+  onSortMove: noop,
+  onSortEnd: noop,
+}
+
+Sortable.DragHandle = SortableDragHandle
+Sortable.Item = SortableItem
+Sortable.List = SortableList
+
+export { default as arrayMove } from '../../utilities/arrayMove.lib'
 
 export default Sortable

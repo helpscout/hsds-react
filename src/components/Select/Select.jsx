@@ -20,21 +20,6 @@ const PLACEHOLDER_VALUE = '__placeholder__'
 const uniqueID = createUniqueIDFactory('Select')
 
 export class Select extends React.PureComponent {
-  static defaultProps = {
-    autoFocus: false,
-    disabled: false,
-    errorIcon: 'alert',
-    innerRef: noop,
-    forceAutoFocusTimeout: 120,
-    onBlur: noop,
-    onChange: noop,
-    onFocus: noop,
-    options: [],
-    removeStateStylesOnFocus: false,
-    seamless: false,
-    value: '',
-  }
-
   static Arrows = Arrows
 
   optionClassName = 'c-Select__option'
@@ -421,6 +406,8 @@ Select.propTypes = {
   autoFocus: PropTypes.bool,
   children: PropTypes.any,
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   disabled: PropTypes.bool,
   errorIcon: PropTypes.string,
   errorMessage: PropTypes.string,
@@ -458,6 +445,22 @@ Select.propTypes = {
   tabIndex: PropTypes.number,
   value: PropTypes.string,
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+}
+
+Select.defaultProps = {
+  autoFocus: false,
+  'data-cy': 'Select',
+  disabled: false,
+  errorIcon: 'alert',
+  innerRef: noop,
+  forceAutoFocusTimeout: 120,
+  onBlur: noop,
+  onChange: noop,
+  onFocus: noop,
+  options: [],
+  removeStateStylesOnFocus: false,
+  seamless: false,
+  value: '',
 }
 
 export default Select

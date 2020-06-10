@@ -8,16 +8,7 @@ import Progress from './Stepper.Progress'
 import { StepUI, LineUI, CircleUI, GhostTitleUI } from './Stepper.css'
 
 export class Step extends React.PureComponent {
-  static displayName = 'Stepper.Step'
-
   static className = 'c-StepperStep'
-  static defaultProps = {
-    isActive: false,
-    isClickable: false,
-    index: 0,
-    innerRef: noop,
-    onClick: noop,
-  }
 
   getClassName() {
     const { className, isActive, isClickable } = this.props
@@ -70,6 +61,15 @@ Step.propTypes = {
   isActive: PropTypes.bool,
   isClickable: PropTypes.bool,
   onClick: PropTypes.func,
+}
+
+Step.defaultProps = {
+  'data-cy': 'Step',
+  isActive: false,
+  isClickable: false,
+  index: 0,
+  innerRef: noop,
+  onClick: noop,
 }
 
 export default Step

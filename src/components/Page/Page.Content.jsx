@@ -4,7 +4,7 @@ import { classNames } from '../../utilities/classNames'
 import { ContentUI } from './Page.css'
 import { PageContext } from './Page'
 
-export const Content = ({ children, className, ...rest }) => {
+export const PageContent = ({ children, className, ...rest }) => {
   const { isResponsive } = useContext(PageContext)
 
   const componentClassName = classNames(
@@ -20,6 +20,8 @@ export const Content = ({ children, className, ...rest }) => {
   )
 }
 
-Content.displayName = 'Page.Content'
+PageContent.defaultProps = {
+  'data-cy': 'PageContent',
+}
 
-export default Content
+export default PageContent

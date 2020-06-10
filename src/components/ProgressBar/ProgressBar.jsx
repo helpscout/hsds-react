@@ -1,15 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { ProgressBarUI, BarUI } from './ProgressBar.css'
 
 class ProgressBar extends React.PureComponent {
-  static defaultProps = {
-    onChange: noop,
-    value: 0,
-  }
-
   UNSAFE_componentWillReceiveProps(nextProps) {
     const { onChange } = this.props
     const value = this.getValueAsPercent(nextProps.value)
@@ -47,13 +43,13 @@ class ProgressBar extends React.PureComponent {
 
     return (
       <ProgressBarUI
+        {...getValidProps(rest)}
         className={componentClassName}
         role="progressbar"
         aria-valuenow={Number(value)}
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuetext={description}
-        {...rest}
       >
         <BarUI
           className="c-ProgressBar__bar"
@@ -66,10 +62,18 @@ class ProgressBar extends React.PureComponent {
 
 ProgressBar.propTypes = {
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   description: PropTypes.string,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['xs', 'xssm', 'sm', 'md', 'lg', '', null]),
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+}
+
+ProgressBar.defaultProps = {
+  'data-cy': 'ProgressBar',
+  onChange: noop,
+  value: 0,
 }
 
 export default ProgressBar

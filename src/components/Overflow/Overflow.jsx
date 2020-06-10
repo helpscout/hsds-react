@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import EventListener from '../EventListener'
 import { classNames } from '../../utilities/classNames'
 import { remapScrollingPlane } from '../../utilities/scrolling'
@@ -14,18 +15,6 @@ import { noop, requestAnimationFrame } from '../../utilities/other'
 import { OverflowUI } from './Overflow.css'
 
 export class Overflow extends React.PureComponent {
-  static defaultProps = {
-    initialHeightAdjustDelay: 30,
-    isScrollable: true,
-    onScroll: noop,
-    onWheel: noop,
-    refApplyFade: noop,
-    refScrollToEnd: noop,
-    remapScrollDirections: false,
-    scrollableRef: noop,
-    scrollOnClickFade: true,
-  }
-
   state = {
     shouldFadeOnMount: false,
   }
@@ -231,7 +220,7 @@ export class Overflow extends React.PureComponent {
     )
 
     return (
-      <OverflowUI className={componentClassName} {...rest}>
+      <OverflowUI {...getValidProps(rest)} className={componentClassName}>
         {faderLeftMarkup}
         <div
           className="c-Overflow__container"
@@ -255,6 +244,8 @@ Overflow.propTypes = {
   backgroundColor: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.any,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   refApplyFade: PropTypes.func,
   refScrollToEnd: PropTypes.func,
   initialHeightAdjustDelay: PropTypes.number,
@@ -264,6 +255,19 @@ Overflow.propTypes = {
   remapScrollDirections: PropTypes.bool,
   scrollableRef: PropTypes.func,
   scrollOnClickFade: PropTypes.bool,
+}
+
+Overflow.defaultProps = {
+  'data-cy': 'Overflow',
+  initialHeightAdjustDelay: 30,
+  isScrollable: true,
+  onScroll: noop,
+  onWheel: noop,
+  refApplyFade: noop,
+  refScrollToEnd: noop,
+  remapScrollDirections: false,
+  scrollableRef: noop,
+  scrollOnClickFade: true,
 }
 
 export default Overflow

@@ -1,19 +1,26 @@
 import React, { useContext } from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { SectionUI } from './Page.css'
 import { PageContext } from './Page'
 
-export const Section = ({ children, className }) => {
+export const PageSection = ({ children, className, ...rest }) => {
   const { isResponsive } = useContext(PageContext)
-
   const componentClassName = classNames(
     'c-PageSection',
     isResponsive && 'is-responsive',
     className
   )
 
-  return <SectionUI className={componentClassName}>{children}</SectionUI>
+  return (
+    <SectionUI {...getValidProps(rest)} className={componentClassName}>
+      {children}
+    </SectionUI>
+  )
 }
-Section.displayName = 'Page.Section'
 
-export default Section
+PageSection.defaultProps = {
+  'data-cy': 'PageSection',
+}
+
+export default PageSection

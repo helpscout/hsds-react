@@ -5,12 +5,6 @@ import { classNames } from '../../utilities/classNames'
 import { OverlayUI } from './Overlay.css'
 
 class Overlay extends React.PureComponent {
-  static defaultProps = {
-    fixed: false,
-    isHsApp: false,
-    transparent: false,
-  }
-
   render() {
     const {
       children,
@@ -45,9 +39,18 @@ class Overlay extends React.PureComponent {
 Overlay.propTypes = {
   children: PropTypes.any,
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   isHsApp: PropTypes.bool,
   fixed: PropTypes.bool,
   transparent: PropTypes.bool,
+}
+
+Overlay.defaultProps = {
+  'data-cy': 'Overlay',
+  fixed: false,
+  isHsApp: false,
+  transparent: false,
 }
 
 export default Overlay

@@ -14,19 +14,6 @@ import { noop } from '../../utilities/other'
 import { ScrollableUI, ContentUI, FaderUI } from './Scrollable.css'
 
 export class Scrollable extends React.PureComponent {
-  static defaultProps = {
-    backgroundColor: 'white',
-    fade: false,
-    fadeBottom: false,
-    fadeLeft: false,
-    fadeRight: false,
-    faderSize: 28,
-    innerRef: noop,
-    onScroll: noop,
-    scrollableRef: noop,
-    isScrollLocked: true,
-  }
-
   containernode
 
   componentDidMount() {
@@ -279,6 +266,8 @@ Scrollable.propTypes = {
   backgroundColor: PropTypes.string,
   className: PropTypes.string,
   contentClassName: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   fade: PropTypes.bool,
   fadeBottom: PropTypes.bool,
   fadeLeft: PropTypes.bool,
@@ -290,6 +279,20 @@ Scrollable.propTypes = {
   scrollableRef: PropTypes.func,
   isScrollLocked: PropTypes.bool,
   scrollLockDirection: PropTypes.string,
+}
+
+Scrollable.defaultProps = {
+  backgroundColor: 'white',
+  'data-cy': 'Scrollable',
+  fade: false,
+  fadeBottom: false,
+  fadeLeft: false,
+  fadeRight: false,
+  faderSize: 28,
+  innerRef: noop,
+  onScroll: noop,
+  scrollableRef: noop,
+  isScrollLocked: true,
 }
 
 export default Scrollable

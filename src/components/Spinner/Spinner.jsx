@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import VisuallyHidden from '../VisuallyHidden'
 import { classNames } from '../../utilities/classNames'
 import { isString } from '../../utilities/is'
@@ -8,13 +9,6 @@ import { SpinnerUI, SpinnerSVGUI, SpinnerCircleUI } from './Spinner.css'
 
 export class Spinner extends React.PureComponent {
   static className = 'c-Spinner'
-  static defaultProps = {
-    color: 'currentColor',
-    isRounded: true,
-    shade: 'default',
-    size: 16,
-    speed: 1400,
-  }
 
   getClassName() {
     const { className } = this.props
@@ -39,7 +33,7 @@ export class Spinner extends React.PureComponent {
 
     return (
       <SpinnerUI
-        {...rest}
+        {...getValidProps(rest)}
         aria-busy={true}
         className={this.getClassName()}
         spinnerSize={spinnerSize}
@@ -73,10 +67,21 @@ export class Spinner extends React.PureComponent {
 Spinner.propTypes = {
   className: PropTypes.string,
   color: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   shade: PropTypes.string,
   isRounded: PropTypes.bool,
   speed: PropTypes.number,
   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+}
+
+Spinner.defaultProps = {
+  color: 'currentColor',
+  'data-cy': 'Spinner',
+  isRounded: true,
+  shade: 'default',
+  size: 16,
+  speed: 1400,
 }
 
 export default Spinner

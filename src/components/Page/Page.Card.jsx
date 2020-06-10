@@ -3,7 +3,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { CardUI } from './Page.css'
 
-export const Card = ({ children, className, ...rest }) => (
+export const PageCard = ({ children, className, ...rest }) => (
   <CardUI
     {...getValidProps(rest)}
     className={classNames('c-PageCard', className)}
@@ -12,6 +12,8 @@ export const Card = ({ children, className, ...rest }) => (
   </CardUI>
 )
 
-Card.displayName = 'Page.Card'
+PageCard.defaultProps = {
+  'data-cy': 'PageCard',
+}
 
-export default Card
+export default PageCard

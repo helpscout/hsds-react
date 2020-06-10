@@ -1,15 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { ProgressLineUI } from './Stepper.css'
 
 export class StepperProgress extends React.PureComponent {
   static className = 'c-StepperStepProgress'
-  static defaultProps = {
-    isActive: false,
-    innerRef: noop,
-  }
 
   getClassName() {
     const { className, isActive } = this.props
@@ -25,7 +22,7 @@ export class StepperProgress extends React.PureComponent {
 
     return (
       <ProgressLineUI
-        {...rest}
+        {...getValidProps(rest)}
         className={this.getClassName()}
         ref={innerRef}
       />
@@ -35,8 +32,16 @@ export class StepperProgress extends React.PureComponent {
 
 StepperProgress.propTypes = {
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   innerRef: PropTypes.func,
   isActive: PropTypes.bool,
+}
+
+StepperProgress.defaultProps = {
+  'data-cy': 'StepperProgress',
+  isActive: false,
+  innerRef: noop,
 }
 
 export default StepperProgress

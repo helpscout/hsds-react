@@ -1,10 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { SortableContainer } from 'react-sortable-hoc'
 import { classNames } from '../../utilities/classNames'
 
-const List = SortableContainer(props => {
+const SortableList = SortableContainer(props => {
   const {
     className,
     dragHandle: useDragHandle,
@@ -13,9 +12,7 @@ const List = SortableContainer(props => {
     sortable,
     ...rest
   } = props
-
   const componentClassName = classNames('c-SortableList', className)
-
   const itemsMarkup = items
     ? items.map((item, index) => {
         const { index: itemIndex, ...itemRest } = item.props
@@ -36,4 +33,8 @@ const List = SortableContainer(props => {
   )
 })
 
-export default List
+SortableList.defaultProps = {
+  'data-cy': 'SortableList',
+}
+
+export default SortableList

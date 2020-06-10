@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Icon from '../Icon'
 import ChoiceGroupContext from '../ChoiceGroup/ChoiceGroup.Context'
 import { classNames } from '../../utilities/classNames'
 import { includes } from '../../utilities/arrays'
-
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isFunction, isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
@@ -20,21 +20,6 @@ import {
 const uniqueID = createUniqueIDFactory('RadioCard')
 
 class RadioCard extends React.PureComponent {
-  static defaultProps = {
-    checked: false,
-    content: null,
-    heading: null,
-    icon: 'fab-chat',
-    iconSize: 52,
-    innerRef: noop,
-    inputRef: noop,
-    isFocused: false,
-    maxWidth: null,
-    onBlur: noop,
-    onChange: noop,
-    onFocus: noop,
-  }
-
   defaultIcon = 'fab-chat'
 
   constructor(props) {
@@ -168,7 +153,7 @@ class RadioCard extends React.PureComponent {
         {this.getHeadingMarkup()}
         {this.getContentMarkup()}
         <Radio
-          {...rest}
+          {...getValidProps(rest)}
           checked={isChecked}
           kind="custom"
           id={id}
@@ -201,6 +186,8 @@ RadioCard.propTypes = {
   checked: PropTypes.bool,
   className: PropTypes.string,
   content: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   heading: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   icon: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   iconSize: PropTypes.number,
@@ -214,6 +201,22 @@ RadioCard.propTypes = {
   onFocus: PropTypes.func,
   title: PropTypes.string,
   value: PropTypes.string,
+}
+
+RadioCard.defaultProps = {
+  checked: false,
+  content: null,
+  'data-cy': 'RadioCard',
+  heading: null,
+  icon: 'fab-chat',
+  iconSize: 52,
+  innerRef: noop,
+  inputRef: noop,
+  isFocused: false,
+  maxWidth: null,
+  onBlur: noop,
+  onChange: noop,
+  onFocus: noop,
 }
 
 export default RadioCard

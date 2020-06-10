@@ -11,7 +11,6 @@ export class Portal extends React.Component {
     timeout: 0,
   }
   static Container = Container
-  static displayName = 'Portal'
 
   document = null
   node = null
