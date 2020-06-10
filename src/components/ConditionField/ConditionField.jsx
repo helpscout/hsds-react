@@ -4,17 +4,17 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import IconButton from '../IconButton'
 import Tooltip from '../Tooltip'
-import Group from './ConditionField.Group'
-import Or from './ConditionField.Or'
-import Static from './ConditionField.Static'
+import ConditionFieldGroup from './ConditionField.Group'
+import ConditionFieldOr from './ConditionField.Or'
+import ConditionFieldStatic from './ConditionField.Static'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { FieldCloseWrapperUI } from './ConditionField.css'
 
 export class ConditionField extends React.PureComponent {
   static className = 'c-ConditionField'
-  static Static = Static
-  static Group = Group
+  static Static = ConditionFieldStatic
+  static Group = ConditionFieldGroup
   static Block = Flexy.Block
   static Item = Flexy.Item
 
@@ -27,7 +27,7 @@ export class ConditionField extends React.PureComponent {
     const { isWithOr } = this.props
     if (!isWithOr) return null
 
-    return <Or />
+    return <ConditionFieldOr />
   }
 
   render() {
