@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { StaticUI } from './Input.Static.css'
 
-const Static = props => {
+const InputStatic = props => {
   const {
     align,
     className,
@@ -24,25 +25,27 @@ const Static = props => {
   )
 
   return (
-    <StaticUI className={componentClassName} {...rest}>
+    <StaticUI {...getValidProps(rest)} className={componentClassName}>
       {children}
     </StaticUI>
   )
 }
-Static.propTypes = {
+
+InputStatic.propTypes = {
   align: PropTypes.oneOf(['left', 'center', 'right', '']),
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   isBlock: PropTypes.bool,
   isCenterAlign: PropTypes.bool,
   size: PropTypes.string,
 }
 
-Static.defaultProps = {
+InputStatic.defaultProps = {
+  'data-cy': 'InputStatic',
   isBlock: false,
   isCenterAlign: false,
   size: 'md',
 }
 
-Static.displayName = 'InputStatic'
-
-export default Static
+export default InputStatic

@@ -1,7 +1,7 @@
 import React, { createContext } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import Item from './List.Item'
+import ListItem from './List.Item'
 import { ListUI } from './List.css'
 
 export const ListContext = createContext()
@@ -17,7 +17,6 @@ export const List = props => {
     type,
     ...rest
   } = props
-
   const componentClassName = classNames(
     'c-List',
     border === 'dot' && 'is-dotted',
@@ -28,9 +27,7 @@ export const List = props => {
     type && `is-${type}`,
     className
   )
-
   const as = type === 'number' ? 'ol' : 'ul'
-
   const contextValue = {
     borderStyle: border,
     isListItem: type === 'bullet' || type === 'number',
@@ -48,10 +45,11 @@ export const List = props => {
   )
 }
 
-List.Item = Item
+List.Item = ListItem
 
 List.defaultProps = {
   border: '',
+  'data-cy': 'List',
   display: 'block',
   inlineSize: 'md',
   role: 'list',

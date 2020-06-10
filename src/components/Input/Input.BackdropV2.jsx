@@ -5,35 +5,7 @@ import { classNames } from '../../utilities/classNames'
 import { isStateful } from './Input.utils'
 import { BackdropUI, FocusUI } from './Input.BackdropV2.css'
 
-export class Backdrop extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    choiceKind: PropTypes.string,
-    disabled: PropTypes.bool,
-    isFilled: PropTypes.bool,
-    isFocused: PropTypes.bool,
-    isFirst: PropTypes.bool,
-    isNotOnly: PropTypes.bool,
-    isLast: PropTypes.bool,
-    isSeamless: PropTypes.bool,
-    kind: PropTypes.string,
-    readOnly: PropTypes.bool,
-    showFocus: PropTypes.bool,
-    state: PropTypes.string,
-  }
-
-  static displayName = 'InputBackdropV2'
-
-  static defaultProps = {
-    disabled: false,
-    isFilled: false,
-    isFocused: false,
-    readOnly: false,
-    seamless: false,
-    showFocus: true,
-    state: 'default',
-  }
-
+export class InputBackdropV2 extends React.PureComponent {
   static className = 'c-InputBackdropV2'
   static focusClassName = 'c-InputBackdropV2__focus'
 
@@ -53,7 +25,7 @@ export class Backdrop extends React.PureComponent {
     } = this.props
 
     return classNames(
-      Backdrop.className,
+      InputBackdropV2.className,
       choiceKind && `is-${choiceKind}`,
       disabled && 'is-disabled',
       isFilled && 'is-filled',
@@ -74,7 +46,7 @@ export class Backdrop extends React.PureComponent {
     const isRadio = choiceKind === 'radio'
 
     return classNames(
-      Backdrop.focusClassName,
+      InputBackdropV2.focusClassName,
       isFirst && 'is-first',
       isNotOnly && 'is-notOnly',
       isLast && 'is-last',
@@ -113,4 +85,33 @@ export class Backdrop extends React.PureComponent {
   }
 }
 
-export default Backdrop
+InputBackdropV2.propTypes = {
+  className: PropTypes.string,
+  choiceKind: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  disabled: PropTypes.bool,
+  isFilled: PropTypes.bool,
+  isFocused: PropTypes.bool,
+  isFirst: PropTypes.bool,
+  isNotOnly: PropTypes.bool,
+  isLast: PropTypes.bool,
+  isSeamless: PropTypes.bool,
+  kind: PropTypes.string,
+  readOnly: PropTypes.bool,
+  showFocus: PropTypes.bool,
+  state: PropTypes.string,
+}
+
+InputBackdropV2.defaultProps = {
+  'data-cy': 'InputBackdropV2',
+  disabled: false,
+  isFilled: false,
+  isFocused: false,
+  readOnly: false,
+  seamless: false,
+  showFocus: true,
+  state: 'default',
+}
+
+export default InputBackdropV2

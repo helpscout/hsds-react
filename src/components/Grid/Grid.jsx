@@ -1,26 +1,29 @@
 import React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-
-import Container from './Grid.Container'
-import Row from './Grid.Row'
-import Col from './Grid.Col'
+import GridContainer from './Grid.Container'
+import GridRow from './Grid.Row'
+import GridCol from './Grid.Col'
 
 class Grid extends React.PureComponent {
-  static Container = Container
-  static Row = Row
-  static Col = Col
+  static Container = GridContainer
+  static Row = GridRow
+  static Col = GridCol
 
   render() {
     const { className, children, ...rest } = this.props
-
     const componentClassName = classNames('c-Grid', className)
 
     return (
-      <Container className={componentClassName} {...rest}>
-        <Row>{children}</Row>
-      </Container>
+      <GridContainer className={componentClassName} {...getValidProps(rest)}>
+        <GridRow>{children}</GridRow>
+      </GridContainer>
     )
   }
+}
+
+Grid.defaultProps = {
+  'data-cy': 'Grid',
 }
 
 export default Grid

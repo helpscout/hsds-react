@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Backdrop from '../Input/Input.BackdropV2'
+import InputBackdropV2 from '../Input/Input.BackdropV2'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -134,7 +134,7 @@ class Input extends React.PureComponent {
           type={type}
           value={value}
         />
-        <Backdrop
+        <InputBackdropV2
           choiceKind={type}
           disabled={disabled}
           kind={kind}

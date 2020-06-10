@@ -1,4 +1,5 @@
 import React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import PropTypes from 'prop-types'
 import EventListener from '../EventListener'
 import { classNames } from '../../utilities/classNames'
@@ -17,28 +18,7 @@ const ENTITIES_TO_REPLACE = {
 }
 const REPLACE_REGEX = /[\n&<>]/g
 
-export class Resizer extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    contents: PropTypes.string,
-    currentHeight: PropTypes.number,
-    minimumLines: PropTypes.number,
-    offsetAmount: PropTypes.number,
-    onResize: PropTypes.func,
-    seamless: PropTypes.bool,
-  }
-
-  static displayName = 'InputResizer'
-
-  static defaultProps = {
-    contents: '',
-    currentHeight: null,
-    minimumLines: 1,
-    offsetAmount: 0,
-    onResize: noop,
-    seamless: false,
-  }
-
+export class InputResizer extends React.PureComponent {
   static className = 'c-InputResizer'
 
   contentNode
@@ -69,7 +49,7 @@ export class Resizer extends React.PureComponent {
   getClassName() {
     const { className } = this.props
 
-    return classNames(Resizer.className, className)
+    return classNames(InputResizer.className, className)
   }
 
   getContentClassName() {
@@ -141,10 +121,14 @@ export class Resizer extends React.PureComponent {
   }
 
   render() {
-    const { contents } = this.props
+    const { contents, ...rest } = this.props
 
     return (
-      <ResizerUI aria-hidden className={this.getClassName()}>
+      <ResizerUI
+        {...getValidProps(rest)}
+        aria-hidden
+        className={this.getClassName()}
+      >
         <EventListener event="resize" handler={this.handleOnResize} />
         <GhostUI
           ref={this.setContentNodeRef}
@@ -157,4 +141,26 @@ export class Resizer extends React.PureComponent {
   }
 }
 
-export default Resizer
+InputResizer.propTypes = {
+  className: PropTypes.string,
+  contents: PropTypes.string,
+  currentHeight: PropTypes.number,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  minimumLines: PropTypes.number,
+  offsetAmount: PropTypes.number,
+  onResize: PropTypes.func,
+  seamless: PropTypes.bool,
+}
+
+InputResizer.defaultProps = {
+  contents: '',
+  currentHeight: null,
+  'data-cy': 'InputResizer',
+  minimumLines: 1,
+  offsetAmount: 0,
+  onResize: noop,
+  seamless: false,
+}
+
+export default InputResizer

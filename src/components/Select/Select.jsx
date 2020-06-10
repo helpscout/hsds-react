@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FormLabelContext from '../FormLabel/Context'
-import Backdrop from '../Input/Input.BackdropV2'
+import InputBackdropV2 from '../Input/Input.BackdropV2'
 import HelpText from '../HelpText'
 import Label from '../Label'
 import Icon from '../Icon'
@@ -387,7 +387,7 @@ export class Select extends React.PureComponent {
               {this.getSelectMarkup(props)}
               <Arrows className="c-SelectIcon" state={state} />
               {errorMarkup}
-              <Backdrop
+              <InputBackdropV2
                 className="c-Select__backdrop"
                 disabled={disabled}
                 isFirst={isFirst}

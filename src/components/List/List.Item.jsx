@@ -4,11 +4,9 @@ import { classNames } from '../../utilities/classNames'
 import { ItemUI } from './List.css'
 import { ListContext } from './List'
 
-export const Item = props => {
+export const ListItem = props => {
   const contextValue = useContext(ListContext)
-
   const mergedProps = { ...props, ...contextValue }
-
   const {
     borderStyle,
     children,
@@ -18,7 +16,6 @@ export const Item = props => {
     type,
     ...rest
   } = mergedProps
-
   const componentClassName = classNames(
     'c-List__item',
     borderStyle && 'is-bordered',
@@ -36,10 +33,10 @@ export const Item = props => {
   )
 }
 
-Item.displayName = 'ListItem'
-Item.defaultProps = {
+ListItem.defaultProps = {
+  'data-cy': 'ListItem',
   isListItem: false,
   role: 'listitem',
 }
 
-export default Item
+export default ListItem

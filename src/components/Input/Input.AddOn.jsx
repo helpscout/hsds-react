@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { AddOnUI } from './Input.AddOn.css'
 
-const AddOn = props => {
+const InputAddOn = props => {
   const { className, children, isFirst, isNotOnly, isLast, ...rest } = props
-
   const componentClassName = classNames(
     'c-InputAddOn',
     isFirst && 'is-first',
@@ -15,25 +15,26 @@ const AddOn = props => {
   )
 
   return (
-    <AddOnUI className={componentClassName} {...rest}>
+    <AddOnUI className={componentClassName} {...getValidProps(rest)}>
       {children}
     </AddOnUI>
   )
 }
 
-AddOn.propTypes = {
+InputAddOn.propTypes = {
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   isFirst: PropTypes.bool,
   isNotOnly: PropTypes.bool,
   isLast: PropTypes.bool,
 }
 
-AddOn.defaultProps = {
+InputAddOn.defaultProps = {
+  'data-cy': 'InputAddOn',
   isFirst: false,
   isNotOnly: false,
   isLast: false,
 }
 
-AddOn.displayName = 'InputAddOn'
-
-export default AddOn
+export default InputAddOn

@@ -4,7 +4,6 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Centralize from '../Centralize'
 import VisuallyHidden from '../VisuallyHidden'
 import { classNames } from '../../utilities/classNames'
-
 import { IlloUI, IconUI } from './Illo.css'
 import { svgSet } from './Illo.utils'
 
@@ -63,6 +62,8 @@ Illo.propTypes = {
   colorUiTransparent: PropTypes.string,
   colorUiWhite: PropTypes.string,
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   name: PropTypes.string,
   size: PropTypes.oneOf(['40', 40, '60', 60, '72', 72, '80', 80, '90', 90]),
   style: PropTypes.any,
@@ -77,6 +78,7 @@ Illo.defaultProps = {
   colorUiLight: '',
   colorUiTransparent: 'transparent',
   colorUiWhite: 'white',
+  'data-cy': 'Illo',
   size: '60',
 }
 

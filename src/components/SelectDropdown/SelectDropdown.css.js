@@ -1,4 +1,4 @@
-import Backdrop from '../Input/Input.BackdropV2'
+import InputBackdropV2 from '../Input/Input.BackdropV2'
 import styled from 'styled-components'
 
 export const SelectDropdownUI = styled('div')`
@@ -64,7 +64,7 @@ export const ArrowsUI = styled('div')`
   }
 `
 
-export const BackdropUI = styled(Backdrop)`
+export const BackdropUI = styled(InputBackdropV2)`
   border-color: #c1cbd4;
 
   &:not(.is-error) {

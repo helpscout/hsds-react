@@ -4,25 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { ContainerUI } from './Grid.Container.css'
 
-class Container extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    fluid: PropTypes.bool, // deprecating
-    responsive: PropTypes.bool, // deprecating
-    isFluid: PropTypes.bool,
-    isResponsive: PropTypes.bool,
-    size: PropTypes.oneOf(['md', 'sm', 'xs']),
-  }
-
-  static displayName = 'GridContainer'
-
-  static defaultProps = {
-    fluid: false,
-    responsive: false,
-    isFluid: false,
-    isResponsive: false,
-  }
-
+class GridContainer extends React.PureComponent {
   render() {
     const {
       className,
@@ -51,4 +33,23 @@ class Container extends React.PureComponent {
   }
 }
 
-export default Container
+GridContainer.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  fluid: PropTypes.bool, // deprecating
+  responsive: PropTypes.bool, // deprecating
+  isFluid: PropTypes.bool,
+  isResponsive: PropTypes.bool,
+  size: PropTypes.oneOf(['md', 'sm', 'xs']),
+}
+
+GridContainer.defaultProps = {
+  'data-cy': 'GridContainer',
+  fluid: false,
+  responsive: false,
+  isFluid: false,
+  isResponsive: false,
+}
+
+export default GridContainer

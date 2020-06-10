@@ -5,21 +5,13 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { ItemUI } from './Inline.css'
 
-export class Item extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    innerRef: PropTypes.func,
-  }
-
+export class InlineItem extends React.PureComponent {
   static className = 'c-InlineItem'
-  static defaultProps = {
-    innerRef: noop,
-  }
-  static displayName = 'InlineItem'
 
   getClassName() {
     const { className } = this.props
-    return classNames(Item.className, className)
+
+    return classNames(InlineItem.className, className)
   }
 
   render() {
@@ -38,4 +30,16 @@ export class Item extends React.PureComponent {
   }
 }
 
-export default Item
+InlineItem.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  innerRef: PropTypes.func,
+}
+
+InlineItem.defaultProps = {
+  'data-cy': 'InlineItem',
+  innerRef: noop,
+}
+
+export default InlineItem
