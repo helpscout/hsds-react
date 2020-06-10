@@ -24,4 +24,8 @@ class TypingDots extends React.PureComponent {
   }
 }
 
+TypingDots.defaultProps = {
+  'data-cy': 'TypingDots',
+}
+
 export default TypingDots

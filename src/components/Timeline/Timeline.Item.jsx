@@ -7,13 +7,9 @@ import { classNames } from '../../utilities/classNames'
 import { TimelineItemUI } from './Timeline.css'
 
 class TimelineItem extends React.PureComponent {
-  static displayName = 'Timeline.Item'
-
   render() {
     const { children, className, timestamp, ...rest } = this.props
-
     const componentClassName = classNames('c-TimelineItem', className)
-
     const timestampMarkup = timestamp ? (
       <Flexy.Item className="c-TimelineItem__timestamp">
         <Timestamp timestamp={timestamp} />
@@ -39,6 +35,10 @@ TimelineItem.propTypes = {
   children: PropTypes.any,
   className: PropTypes.string,
   timestamp: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+}
+
+TimelineItem.defaultProps = {
+  'data-cy': 'TimelineItem',
 }
 
 export default TimelineItem

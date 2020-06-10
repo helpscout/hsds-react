@@ -1,13 +1,11 @@
 import React, { useContext, useState, useCallback, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import Truncate from '../Truncate'
 import { classNames } from '../../utilities/classNames'
 import { noop, promiseNoop } from '../../utilities/other'
-import PropTypes from 'prop-types'
-
 import { TagListContext } from '../TagList/TagList'
-
 import {
   AnimateUI,
   TagWrapperUI,
@@ -130,19 +128,6 @@ export const Tag = props => {
   )
 }
 
-Tag.defaultProps = {
-  animationDuration: 100,
-  color: 'grey',
-  display: 'inlineBlock',
-  isRemovable: false,
-  isRemoving: false,
-  onBeforeRemove: promiseNoop,
-  onRemove: noop,
-  showTooltipOnTruncate: true,
-  value: '',
-  size: 'sm',
-}
-
 Tag.propTypes = {
   animationDuration: PropTypes.number,
   allCaps: PropTypes.bool,
@@ -158,6 +143,8 @@ Tag.propTypes = {
     'red',
     'yellow',
   ]),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   display: PropTypes.oneOf(['block', 'inlineBlock']),
   filled: PropTypes.bool,
   id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -168,6 +155,20 @@ Tag.propTypes = {
   showTooltipOnTruncate: PropTypes.bool,
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   size: PropTypes.oneOf(['sm', 'md']),
+}
+
+Tag.defaultProps = {
+  animationDuration: 100,
+  color: 'grey',
+  'data-cy': 'Tag',
+  display: 'inlineBlock',
+  isRemovable: false,
+  isRemoving: false,
+  onBeforeRemove: promiseNoop,
+  onRemove: noop,
+  showTooltipOnTruncate: true,
+  value: '',
+  size: 'sm',
 }
 
 export default Tag

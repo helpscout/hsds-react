@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import Flexy from '../Flexy'
 import Icon from '../Icon'
@@ -8,11 +9,6 @@ import Time from './Timestamp.Time'
 import { TimestampUI } from './Timestamp.css'
 
 class Timestamp extends React.Component {
-  static defaultProps = {
-    live: false,
-    read: false,
-    timestamp: '9:41am',
-  }
   static Time = Time
 
   render() {
@@ -38,7 +34,7 @@ class Timestamp extends React.Component {
     ) : null
 
     return (
-      <TimestampUI className={componentClassName} {...rest}>
+      <TimestampUI {...getValidProps(rest)} className={componentClassName}>
         <Flexy gap="xs" just="left">
           <Flexy.Item>
             <Text size="12" faint disableSelect noWrap>
@@ -64,6 +60,13 @@ Timestamp.propTypes = {
   muted: PropTypes.bool,
   read: PropTypes.bool,
   timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+}
+
+Timestamp.defaultProps = {
+  'data-cy': 'Timestamp',
+  live: false,
+  read: false,
+  timestamp: '9:41am',
 }
 
 export default Timestamp

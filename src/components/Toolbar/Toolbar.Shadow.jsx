@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { ShadowUI } from './Toolbar.css'
 
@@ -12,12 +13,13 @@ export const ToolbarShadow = props => {
     className
   )
 
-  return <ShadowUI {...rest} className={componentClassName} />
+  return <ShadowUI {...getValidProps(rest)} className={componentClassName} />
 }
 
 ToolbarShadow.defaultProps = {
   placement: 'top',
 }
+
 ToolbarShadow.propTypes = {
   placement: PropTypes.oneOf(['top', 'bottom']),
 }

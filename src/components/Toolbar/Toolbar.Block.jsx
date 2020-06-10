@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import { classNames } from '../../utilities/classNames'
 
 export class ToolbarBlock extends React.PureComponent {
-  static displayName = 'Toolbar.Block'
   static className = 'c-ToolbarBlock'
 
   getClassName() {
@@ -21,7 +21,7 @@ export class ToolbarBlock extends React.PureComponent {
     }
 
     return (
-      <Flexy.Block {...rest} className={this.getClassName()}>
+      <Flexy.Block {...getValidProps(rest)} className={this.getClassName()}>
         {children}
       </Flexy.Block>
     )
@@ -31,6 +31,10 @@ export class ToolbarBlock extends React.PureComponent {
 ToolbarBlock.propTypes = {
   className: PropTypes.string,
   children: PropTypes.any,
+}
+
+ToolbarBlock.defaultProps = {
+  'data-cy': 'ToolbarBlock',
 }
 
 export default ToolbarBlock

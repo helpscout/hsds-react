@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Block from './Toolbar.Block'
 import Item from './Toolbar.Item'
 import Shadow from './Toolbar.Shadow'
@@ -7,18 +8,9 @@ import { classNames } from '../../utilities/classNames'
 import { WrapperUI, ToolbarUI } from './Toolbar.css'
 
 export class Toolbar extends React.PureComponent {
-  static defaultProps = {
-    placement: 'top',
-    seamless: false,
-    shadow: false,
-    size: 'sm',
-    theme: 'default',
-  }
-
   static Block = Block
   static Item = Item
   static Shadow = Shadow
-
   static className = 'c-Toolbar'
 
   getClassName() {
@@ -55,7 +47,7 @@ export class Toolbar extends React.PureComponent {
 
     return (
       <WrapperUI className="c-ToolbarWrapper">
-        <ToolbarUI {...rest} className={this.getClassName()}>
+        <ToolbarUI {...getValidProps(rest)} className={this.getClassName()}>
           {children}
         </ToolbarUI>
         {this.renderShadow()}
@@ -72,6 +64,15 @@ Toolbar.propTypes = {
   seamless: PropTypes.bool,
   size: PropTypes.oneOf(['xl', 'lg', 'md', 'sm', 'xs']),
   theme: PropTypes.oneOf(['default', 'note']),
+}
+
+Toolbar.defaultProps = {
+  'data-cy': 'Toolbar',
+  placement: 'top',
+  seamless: false,
+  shadow: false,
+  size: 'sm',
+  theme: 'default',
 }
 
 export default Toolbar

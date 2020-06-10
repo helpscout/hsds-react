@@ -9,15 +9,11 @@ import { TabBarUI, SecContentUI, ToolbarUI } from './TabBar.css'
 
 export class TabBar extends React.Component {
   static className = 'c-TabBar'
-  static defaultProps = {
-    innerRef: noop,
-    align: 'left',
-  }
-
   static Item = Nav.Item
 
   getClassName() {
     const { className } = this.props
+
     return classNames(TabBar.className, className)
   }
 
@@ -47,9 +43,17 @@ export class TabBar extends React.Component {
 TabBar.propTypes = {
   className: PropTypes.string,
   children: PropTypes.any,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   innerRef: PropTypes.func,
   secContent: PropTypes.any,
   align: PropTypes.oneOf(['left', 'center', 'right']),
+}
+
+TabBar.defaultProps = {
+  align: 'left',
+  'data-cy': 'TabBar',
+  innerRef: noop,
 }
 
 export default TabBar

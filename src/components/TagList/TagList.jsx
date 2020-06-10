@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-
 import Inline from '../Inline'
 import Overflow from '../Overflow'
 import { classNames } from '../../utilities/classNames'
@@ -9,9 +8,7 @@ import { noop, promiseNoop } from '../../utilities/other'
 import { TagListUI, ClearAllUI } from './TagList.css'
 
 export const tagListClassName = 'c-TagList'
-
 export const TagListContext = React.createContext()
-
 export const TagList = props => {
   const {
     overflowFade,
@@ -54,7 +51,6 @@ export const TagList = props => {
   })
 
   const componentMarkup = <Inline size={size}>{childrenMarkup}</Inline>
-
   const contextValue = { onBeforeRemove, isRemovable, onRemove: handleOnRemove }
 
   return (
@@ -72,6 +68,8 @@ export const TagList = props => {
 
 TagList.propTypes = {
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   onRemove: PropTypes.func,
   onRemoveAll: PropTypes.func,
   overflowFade: PropTypes.bool,
@@ -82,6 +80,7 @@ TagList.propTypes = {
 }
 
 TagList.defaultProps = {
+  'data-cy': 'TagList',
   onBeforeRemove: promiseNoop,
   onRemove: noop,
   onRemoveAll: noop,
