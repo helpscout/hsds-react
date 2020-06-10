@@ -457,6 +457,7 @@ class Modal extends React.PureComponent {
         className={componentClassName}
         role="document"
         style={styles}
+        data-cy="Modal"
       >
         <KeypressListener
           keyCode={Keys.TAB}
