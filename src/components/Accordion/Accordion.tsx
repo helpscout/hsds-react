@@ -83,6 +83,7 @@ export class Accordion extends React.PureComponent<
     openSectionIds: [],
     pressDelay: 0,
     size: 'md',
+    useWindowAsScrollContainer: false,
   }
 
   state = {
@@ -175,13 +176,19 @@ export class Accordion extends React.PureComponent<
   }
 
   render() {
-    const { children, isSortable, ...rest } = this.props
+    const {
+      children,
+      isSortable,
+      useWindowAsScrollContainer,
+      ...rest
+    } = this.props
     const componentClassName = getComponentClassName(this.props, this.state)
     const sortableProps = this.getSortableProps()
     const content = isSortable ? (
       <Sortable
         helperClass="is-sorting-item"
         lockAxis="y"
+        useWindowAsScrollContainer={useWindowAsScrollContainer}
         onSortStart={this.handleOnSortStart}
         onSortEnd={this.handleOnSortEnd}
         {...sortableProps}

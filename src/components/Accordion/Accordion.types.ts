@@ -15,6 +15,7 @@ export type AccordionProps = {
   openSectionIds?: Array<any>
   pressDelay: number
   size?: Sizes
+  useWindowAsScrollContainer?: boolean
 }
 
 export type AccordionState = {
