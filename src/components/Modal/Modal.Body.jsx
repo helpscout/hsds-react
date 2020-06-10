@@ -6,35 +6,7 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { BodyUI } from './Modal.css'
 
-class Body extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    innerRef: PropTypes.func,
-    isScrollLocked: PropTypes.bool,
-    isSeamless: PropTypes.bool,
-    onScroll: PropTypes.func,
-    scrollable: PropTypes.bool,
-    scrollableRef: PropTypes.func,
-    scrollFade: PropTypes.bool,
-    version: PropTypes.number,
-  }
-  static displayName = 'Modal.Body'
-
-  static defaultProps = {
-    innerRef: noop,
-    isScrollLocked: true,
-    isSeamless: false,
-    onScroll: noop,
-    scrollable: true,
-    scrollableRef: noop,
-    scrollFade: true,
-    version: 1,
-  }
-
-  static contextTypes = {
-    positionCloseNode: noop,
-  }
-
+class ModalBody extends React.PureComponent {
   node
   scrollableNode
 
@@ -119,4 +91,34 @@ class Body extends React.PureComponent {
   }
 }
 
-export default Body
+ModalBody.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  innerRef: PropTypes.func,
+  isScrollLocked: PropTypes.bool,
+  isSeamless: PropTypes.bool,
+  onScroll: PropTypes.func,
+  scrollable: PropTypes.bool,
+  scrollableRef: PropTypes.func,
+  scrollFade: PropTypes.bool,
+  version: PropTypes.number,
+}
+
+ModalBody.defaultProps = {
+  'data-cy': 'ModalBody',
+  innerRef: noop,
+  isScrollLocked: true,
+  isSeamless: false,
+  onScroll: noop,
+  scrollable: true,
+  scrollableRef: noop,
+  scrollFade: true,
+  version: 1,
+}
+
+ModalBody.contextTypes = {
+  positionCloseNode: noop,
+}
+
+export default ModalBody

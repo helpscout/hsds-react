@@ -1,27 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { ContentUI } from './Modal.css'
-import Body from './Modal.Body'
+import ModalBody from './Modal.Body'
 
-class Content extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    scrollableRef: PropTypes.func,
-  }
-  static displayName = 'Modal.Content'
-  static defaultProps = {
-    scrollableRef: noop,
-  }
-
+class ModalContent extends React.PureComponent {
   render() {
     const { className, children, scrollableRef, ...rest } = this.props
-
     const componentClassName = classNames('c-ModalContent', className)
-
     const childrenMarkup = React.Children.map(children, child => {
-      if (child && child.type === Body) {
+      if (child && child.type === ModalBody) {
         return React.cloneElement(child, {
           scrollableRef,
         })
@@ -31,11 +21,23 @@ class Content extends React.PureComponent {
     })
 
     return (
-      <ContentUI className={componentClassName} {...rest}>
+      <ContentUI {...getValidProps(rest)} className={componentClassName}>
         {childrenMarkup}
       </ContentUI>
     )
   }
 }
 
-export default Content
+ModalContent.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  scrollableRef: PropTypes.func,
+}
+
+ModalContent.defaultProps = {
+  'data-cy': 'ModalContent',
+  scrollableRef: noop,
+}
+
+export default ModalContent

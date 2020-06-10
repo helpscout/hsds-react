@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
-import Bubble from './Message.Bubble'
+import MessageBubble from './Message.Bubble'
 import Timestamp from '../Timestamp'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -39,7 +39,7 @@ export class ChatBlock extends React.PureComponent {
     const { children, icon, from, ltr, rtl, timestamp, to } = this.props
 
     return React.Children.map(children, child => {
-      return child && child.type === Bubble
+      return child && child.type === MessageBubble
         ? React.cloneElement(child, {
             icon,
             from,

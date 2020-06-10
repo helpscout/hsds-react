@@ -1,4 +1,5 @@
 import React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { MODAL_KIND, getModalKindClassName } from './Modal.utils'
@@ -10,21 +11,7 @@ import {
   SecondaryButtonUI,
 } from './Modal.ActionFooter.css'
 
-class ActionFooter extends React.PureComponent {
-  static defaultProps = {
-    cancelText: 'Cancel',
-    kind: MODAL_KIND.DEFAULT,
-    onCancel: noop,
-    onPrimaryClick: noop,
-    onSecondaryClick: noop,
-    primaryButtonText: 'Save',
-    primaryButtonDisabled: false,
-    secondaryButtonText: null,
-    secondaryButtonDisabled: false,
-    showDefaultCancel: true,
-    state: '',
-  }
-
+class ModalActionFooter extends React.PureComponent {
   handleCancel = e => {
     e && e.preventDefault()
     const { onCancel } = this.props
@@ -61,6 +48,7 @@ class ActionFooter extends React.PureComponent {
 
   renderSecondaryButton() {
     const { kind, secondaryButtonText, secondaryButtonDisabled } = this.props
+
     if (!secondaryButtonText) {
       return null
     }
@@ -83,9 +71,11 @@ class ActionFooter extends React.PureComponent {
 
   renderCancelButton() {
     const { cancelText, showDefaultCancel } = this.props
+
     if (!(showDefaultCancel && cancelText)) {
       return null
     }
+
     return (
       <CancelButtonUI
         className="is-cancel"
@@ -112,7 +102,7 @@ class ActionFooter extends React.PureComponent {
 
     return (
       <ActionFooterUI
-        {...rest}
+        {...getValidProps(rest)}
         className={componentClassName}
         gap="md"
         placement="bottom"
@@ -126,6 +116,19 @@ class ActionFooter extends React.PureComponent {
   }
 }
 
-ActionFooter.displayName = 'ModalActionFooter'
+ModalActionFooter.defaultProps = {
+  cancelText: 'Cancel',
+  'data-cy': 'ModalActionFooter',
+  kind: MODAL_KIND.DEFAULT,
+  onCancel: noop,
+  onPrimaryClick: noop,
+  onSecondaryClick: noop,
+  primaryButtonText: 'Save',
+  primaryButtonDisabled: false,
+  secondaryButtonText: null,
+  secondaryButtonDisabled: false,
+  showDefaultCancel: true,
+  state: '',
+}
 
-export default ActionFooter
+export default ModalActionFooter

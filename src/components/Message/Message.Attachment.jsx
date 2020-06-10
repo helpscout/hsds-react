@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Link from '../Link'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
@@ -7,7 +8,7 @@ import { noop } from '../../utilities/other'
 import { TextUI } from './Message.css'
 import MessageChat from './Message.Chat'
 
-export const Attachment = (props, context) => {
+export const MessageAttachment = (props, context) => {
   const {
     body,
     children,
@@ -34,9 +35,7 @@ export const Attachment = (props, context) => {
     'c-MessageAttachment__text',
     !url && 'has-noUrl'
   )
-
   const title = download && filename ? `Download ${filename}` : null
-
   const filenameMarkup = url ? (
     <Link
       className="c-MessageAttachment__link"
@@ -58,7 +57,7 @@ export const Attachment = (props, context) => {
 
   return (
     <MessageChat
-      {...rest}
+      {...getValidProps(rest)}
       bubbleClassName="c-MessageMedia__bubble"
       caption={isUploading ? uploadingMessage : null}
       className={componentClassName}
@@ -71,9 +70,11 @@ export const Attachment = (props, context) => {
   )
 }
 
-Attachment.propTypes = {
+MessageAttachment.propTypes = {
   body: PropTypes.string,
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   download: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   errorMessage: PropTypes.string,
@@ -98,7 +99,8 @@ Attachment.propTypes = {
   url: PropTypes.string,
 }
 
-Attachment.defaultProps = {
+MessageAttachment.defaultProps = {
+  'data-cy': 'MessageAttachment',
   download: true,
   onClick: noop,
   openDownloadInNewTab: true,
@@ -107,10 +109,8 @@ Attachment.defaultProps = {
   uploadingMessage: 'Uploading…',
 }
 
-Attachment.contextTypes = {
+MessageAttachment.contextTypes = {
   theme: noop,
 }
 
-Attachment.displayName = 'MessageAttachment'
-
-export default Attachment
+export default MessageAttachment

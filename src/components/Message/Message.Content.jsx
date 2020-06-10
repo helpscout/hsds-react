@@ -5,7 +5,7 @@ import PreviewCardContext from '../PreviewCard/PreviewCard.Context'
 import { classNames } from '../../utilities/classNames'
 import { ContentUI } from './Message.Content.css'
 
-const Content = props => {
+const MessageContent = props => {
   const {
     children,
     className,
@@ -58,8 +58,10 @@ const Content = props => {
   )
 }
 
-Content.propTypes = {
+MessageContent.propTypes = {
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   from: PropTypes.any,
   isNote: PropTypes.bool,
   ltr: PropTypes.bool,
@@ -70,6 +72,8 @@ Content.propTypes = {
   to: PropTypes.any,
 }
 
-Content.displayName = 'MessageContent'
+MessageContent.defaultProps = {
+  'data-cy': 'MessageContent',
+}
 
-export default Content
+export default MessageContent

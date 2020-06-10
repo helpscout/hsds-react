@@ -1,55 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import Bubble from './Message.Bubble'
-import Caption from './Message.Caption'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import MessageBubble from './Message.Bubble'
+import MessageCaption from './Message.Caption'
 import Flexy from '../Flexy'
 import Spinner from '../Spinner'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { ChatBlockUI } from './Message.Chat.css'
 
-export class Chat extends React.PureComponent {
-  static propTypes = {
-    body: PropTypes.string,
-    bubbleClassName: PropTypes.string,
-    caption: PropTypes.string,
-    captionSize: PropTypes.string,
-    className: PropTypes.string,
-    error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-    errorMessage: PropTypes.string,
-    from: PropTypes.any,
-    icon: PropTypes.string,
-    isLoading: PropTypes.bool,
-    isNote: PropTypes.bool,
-    ltr: PropTypes.bool,
-    metaPosition: PropTypes.oneOf(['top', 'bottom']),
-    onBubbleClick: PropTypes.func,
-    onClick: PropTypes.func,
-    primary: PropTypes.bool,
-    read: PropTypes.bool,
-    rtl: PropTypes.bool,
-    size: PropTypes.oneOf(['md', 'sm', '']),
-    timestamp: PropTypes.string,
-    title: PropTypes.string,
-    to: PropTypes.any,
-    type: PropTypes.oneOf(['action', 'message', '']),
-    typing: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    error: false,
-    errorMessage: "Couldn't send.",
-    isLoading: false,
-    metaPosition: 'bottom',
-  }
-
-  static contextTypes = {
-    theme: noop,
-  }
-
-  static displayName = 'Message.Chat'
-
+export class MessageChat extends React.PureComponent {
   render() {
     const {
       body,
@@ -98,9 +58,9 @@ export class Chat extends React.PureComponent {
     }
 
     const captionMarkup = caption ? (
-      <Caption className="c-MessageChat__caption" size={captionSize}>
+      <MessageCaption className="c-MessageChat__caption" size={captionSize}>
         {caption}
-      </Caption>
+      </MessageCaption>
     ) : null
 
     const loadingMarkup = isLoading ? (
@@ -111,9 +71,9 @@ export class Chat extends React.PureComponent {
 
     const errorMarkup = error ? (
       <div className="c-MessageChat__error">
-        <Caption className="c-MessageChat__errorMessage">
+        <MessageCaption className="c-MessageChat__errorMessage">
           {typeof error === 'string' ? error : errorMessage}
-        </Caption>
+        </MessageCaption>
       </div>
     ) : null
 
@@ -129,15 +89,15 @@ export class Chat extends React.PureComponent {
 
     return (
       <ChatBlockUI
+        {...getValidProps(rest)}
         className={componentClassName}
         meta={metaMarkup}
         metaPosition={metaPosition}
         read={read}
         isEmbed={isThemeEmbed}
         {...chatProps}
-        {...rest}
       >
-        <Bubble
+        <MessageBubble
           {...chatProps}
           className={bubbleClassName}
           isNote={isNote}
@@ -150,4 +110,45 @@ export class Chat extends React.PureComponent {
   }
 }
 
-export default Chat
+MessageChat.propTypes = {
+  body: PropTypes.string,
+  bubbleClassName: PropTypes.string,
+  caption: PropTypes.string,
+  captionSize: PropTypes.string,
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  errorMessage: PropTypes.string,
+  from: PropTypes.any,
+  icon: PropTypes.string,
+  isLoading: PropTypes.bool,
+  isNote: PropTypes.bool,
+  ltr: PropTypes.bool,
+  metaPosition: PropTypes.oneOf(['top', 'bottom']),
+  onBubbleClick: PropTypes.func,
+  onClick: PropTypes.func,
+  primary: PropTypes.bool,
+  read: PropTypes.bool,
+  rtl: PropTypes.bool,
+  size: PropTypes.oneOf(['md', 'sm', '']),
+  timestamp: PropTypes.string,
+  title: PropTypes.string,
+  to: PropTypes.any,
+  type: PropTypes.oneOf(['action', 'message', '']),
+  typing: PropTypes.bool,
+}
+
+MessageChat.contextTypes = {
+  theme: noop,
+}
+
+MessageChat.defaultProps = {
+  'data-cy': 'MessageChat',
+  error: false,
+  errorMessage: "Couldn't send.",
+  isLoading: false,
+  metaPosition: 'bottom',
+}
+
+export default MessageChat

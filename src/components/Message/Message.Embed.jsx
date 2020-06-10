@@ -1,30 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import LoadingDots from '../LoadingDots'
 import { classNames } from '../../utilities/classNames'
 import { EmbedUI } from './Message.Embed.css'
 
-class Embed extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-    from: PropTypes.any,
-    isNote: PropTypes.bool,
-    ltr: PropTypes.bool,
-    onClick: PropTypes.func,
-    read: PropTypes.bool,
-    rtl: PropTypes.bool,
-    timestamp: PropTypes.string,
-    to: PropTypes.any,
-    type: PropTypes.oneOf(['action', 'message', '']),
-    html: PropTypes.string,
-  }
-  static displayName = 'Message.Embed'
-
+class MessageEmbed extends React.Component {
   state = {
     isLoading: true,
   }
   context
-
   node
 
   componentDidMount() {
@@ -59,15 +44,13 @@ class Embed extends React.Component {
     const componentClassName = classNames(
       'c-MessageEmbed',
       isLoading && 'is-loading',
-
-      // Tested, but Istanbul isn't picking it up.
       theme && `is-theme-${theme}`,
       className
     )
 
     return (
       <EmbedUI
-        {...rest}
+        {...getValidProps(rest)}
         bubbleClassName="c-MessageEmbed__bubble"
         className={componentClassName}
       >
@@ -82,4 +65,22 @@ class Embed extends React.Component {
   }
 }
 
-export default Embed
+MessageEmbed.propTypes = {
+  className: PropTypes.string,
+  from: PropTypes.any,
+  isNote: PropTypes.bool,
+  ltr: PropTypes.bool,
+  onClick: PropTypes.func,
+  read: PropTypes.bool,
+  rtl: PropTypes.bool,
+  timestamp: PropTypes.string,
+  to: PropTypes.any,
+  type: PropTypes.oneOf(['action', 'message', '']),
+  html: PropTypes.string,
+}
+
+MessageEmbed.defaultProps = {
+  'data-cy': 'MessageEmbed',
+}
+
+export default MessageEmbed

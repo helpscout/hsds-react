@@ -16,34 +16,13 @@ import {
   ErrorWrapperUI,
 } from './Nav.css'
 
-export class Item extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-    disabled: PropTypes.bool,
-    error: PropTypes.string,
-    exact: PropTypes.bool,
-    href: PropTypes.string,
-    innerRef: PropTypes.func,
-    isActive: PropTypes.any,
-    location: PropTypes.any,
-    to: PropTypes.string,
-    strict: PropTypes.bool,
-  }
-
-  static displayName = 'Nav.Item'
-
+export class NavItem extends React.Component {
   static className = 'c-NavItem'
   static contentClassName = 'c-NavItemContent'
-  static defaultProps = {
-    disabled: false,
-    error: '',
-    exact: true,
-    innerRef: noop,
-  }
 
   getClassName() {
     const { className, disabled } = this.props
-    return classNames(Item.className, disabled && 'is-disabled', className)
+    return classNames(NavItem.className, disabled && 'is-disabled', className)
   }
 
   getLinkProps() {
@@ -80,7 +59,7 @@ export class Item extends React.Component {
   renderContent = ({ isActive }) => {
     const { children } = this.props
     const componentClassName = classNames(
-      Item.contentClassName,
+      NavItem.contentClassName,
       isActive && 'is-active'
     )
 
@@ -131,4 +110,26 @@ export class Item extends React.Component {
   }
 }
 
-export default Item
+NavItem.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  disabled: PropTypes.bool,
+  error: PropTypes.string,
+  exact: PropTypes.bool,
+  href: PropTypes.string,
+  innerRef: PropTypes.func,
+  isActive: PropTypes.any,
+  location: PropTypes.any,
+  to: PropTypes.string,
+  strict: PropTypes.bool,
+}
+
+NavItem.defaultProps = {
+  'data-cy': 'NavItem',
+  disabled: false,
+  error: '',
+  exact: true,
+  innerRef: noop,
+}
+export default NavItem
