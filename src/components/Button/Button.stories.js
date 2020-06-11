@@ -100,7 +100,7 @@ export const Default = () => {
     ),
     spinButtonOnLoading: boolean('spinButtonOnLoading', false),
   }
-  return <Button {...props} />
+  return <Button {...props} data-cy="Button" />
 }
 
 Default.story = {
