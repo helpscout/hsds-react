@@ -10,7 +10,6 @@ class ModalContent extends React.PureComponent {
     className: PropTypes.string,
     scrollableRef: PropTypes.func,
   }
-  static displayName = 'Modal.Content'
   static defaultProps = {
     scrollableRef: noop,
   }

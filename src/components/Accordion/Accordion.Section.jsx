@@ -48,7 +48,7 @@ const getIsOpen = ({ isLink, isOpen, uuid }) => {
   return !!(Object.keys(sections).length ? sections[uuid] : isOpen)
 }
 
-export const Section = props => {
+export const AccordionSection = props => {
   const { children, ...rest } = props
 
   const [uuid] = useState(props.id || nextUuid())
@@ -68,10 +68,9 @@ export const Section = props => {
   )
 }
 
-Section.displayName = 'AccordionSection'
-Section.defaultProps = {
-  'data-cy': Section.displayName,
+AccordionSection.defaultProps = {
+  'data-cy': 'AccordionSection',
   isLink: false,
 }
 
-export default Section
+export default AccordionSection

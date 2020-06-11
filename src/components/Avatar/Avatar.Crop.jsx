@@ -31,7 +31,6 @@ export const AvatarCrop = props => {
   )
 }
 
-AvatarCrop.displayName = 'AvatarCrop'
 AvatarCrop.defaultProps = {
   animationDuration: 160,
   animationEasing: 'ease',

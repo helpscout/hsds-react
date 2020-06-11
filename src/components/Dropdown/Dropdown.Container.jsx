@@ -33,8 +33,6 @@ import { isDefined } from '../../utilities/is'
 const uniqueID = createUniqueIDFactory('hsds-dropdown-')
 
 export class DropdownContainer extends React.PureComponent {
-  static displayName = 'DropdownContainer'
-
   static defaultProps = {
     ...initialState,
     onBlur: noop,

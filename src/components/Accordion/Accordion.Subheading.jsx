@@ -1,7 +1,7 @@
 import React from 'react'
 import { SubheadingUI } from './Accordion.css'
 
-const Subheading = ({ children }) => (
+const AccordionSubheading = ({ children }) => (
   <SubheadingUI
     truncate
     weight={400}
@@ -12,9 +12,8 @@ const Subheading = ({ children }) => (
   </SubheadingUI>
 )
 
-Subheading.displayName = 'AccordionSubheading'
-Subheading.defaultProps = {
-  'data-cy': Subheading.displayName,
+AccordionSubheading.defaultProps = {
+  'data-cy': 'AccordionSubheading',
 }
 
-export default Subheading
+export default AccordionSubheading

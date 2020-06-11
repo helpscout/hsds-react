@@ -33,8 +33,6 @@ export class ChatBlock extends React.PureComponent {
     metaPosition: 'bottom',
   }
 
-  static displayName = 'Message.ChatBlock'
-
   getChildrenMarkup = () => {
     const { children, icon, from, ltr, rtl, timestamp, to } = this.props
 

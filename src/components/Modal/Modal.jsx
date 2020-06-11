@@ -170,7 +170,7 @@ class Modal extends React.PureComponent {
 
       if (
         child &&
-        (displayName === 'Modal.Content' || displayName === 'Modal.Body')
+        (displayName === 'ModalContent' || displayName === 'ModalBody')
       ) {
         return React.cloneElement(child, {
           scrollableRef: this.setScrollableNode,

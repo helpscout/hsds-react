@@ -79,7 +79,7 @@ const getDragHandleClassName = isPage => {
   return classNames('drag-handle', isPage && isPageClassName)
 }
 
-const Title = props => {
+const AccordionTitle = props => {
   const { badge, children, className, onClick, status, ...rest } = props
   const { uuid, isOpen } = useContext(SectionContext) || {}
   const { isPage, isSeamless, setOpen = noop, size, isSorting, isSortable } =
@@ -169,10 +169,9 @@ const Title = props => {
   )
 }
 
-Title.displayName = 'AccordionTitle'
-Title.defaultProps = {
-  'data-cy': Title.displayName,
+AccordionTitle.defaultProps = {
+  'data-cy': 'AccordionTitle',
   onClick: noop,
 }
 
-export default Title
+export default AccordionTitle

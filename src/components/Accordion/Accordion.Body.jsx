@@ -50,7 +50,7 @@ const getComponentClassName = ({
   )
 }
 
-export const Body = props => {
+export const AccordionBody = props => {
   const { className } = props
   const { isPage, isSeamless, duration, onOpen, onClose, size } =
     useContext(AccordionContext) || {}
@@ -81,9 +81,8 @@ export const Body = props => {
   )
 }
 
-Body.displayName = 'AccordionBody'
-Body.defaultProps = {
-  'data-cy': Body.displayName,
+AccordionBody.defaultProps = {
+  'data-cy': 'AccordionBody',
 }
 
-export default Body
+export default AccordionBody

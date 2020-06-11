@@ -4,8 +4,6 @@ import { classNames } from '../../utilities/classNames'
 import { TextUI } from './Skeleton.Text.css'
 
 class SkeletonText extends React.PureComponent {
-  static displayName = 'Skeleton.Text'
-
   static defaultProps = {
     heading: false,
     style: {},
