@@ -9,58 +9,6 @@ import { ButtonUI, LoadingWrapperUI, FocusUI, SpinnerUI } from './Button.css'
 import Icon from '../Icon'
 
 class Button extends React.PureComponent {
-  static propTypes = {
-    allowContentEventPropogation: PropTypes.bool,
-    buttonRef: PropTypes.func,
-    canRenderFocus: PropTypes.bool,
-    className: PropTypes.string,
-    'data-cy': PropTypes.string,
-    disabled: PropTypes.bool,
-    disableOnLoading: PropTypes.bool,
-    kind: PropTypes.string,
-    href: PropTypes.string,
-    innerRef: PropTypes.any,
-    isActive: PropTypes.bool,
-    isBlock: PropTypes.bool,
-    isFirst: PropTypes.bool,
-    isFocused: PropTypes.bool,
-    isHovered: PropTypes.bool,
-    isNotOnly: PropTypes.bool,
-    isLast: PropTypes.bool,
-    isLoading: PropTypes.bool,
-    isSuffix: PropTypes.bool,
-    shape: PropTypes.string,
-    size: PropTypes.string,
-    spinButtonOnLoading: PropTypes.bool,
-    state: PropTypes.string,
-    submit: PropTypes.bool,
-    theme: PropTypes.string,
-    to: PropTypes.string,
-  }
-
-  static defaultProps = {
-    allowContentEventPropogation: true,
-    buttonRef: noop,
-    canRenderFocus: true,
-    'data-cy': 'Button',
-    disable: false,
-    disableOnLoading: true,
-    kind: 'default',
-    innerRef: noop,
-    isActive: false,
-    isBlock: false,
-    isFocused: false,
-    isFirst: false,
-    isHovered: false,
-    isNotOnly: false,
-    isLast: false,
-    isSuffix: false,
-    shape: 'default',
-    size: 'md',
-    spinButtonOnLoading: false,
-    submit: false,
-  }
-
   isLink() {
     // TODO: Resolve data-bypass
     // const { href, 'data-bypass': dataBypass } = this.props
@@ -171,9 +119,7 @@ class Button extends React.PureComponent {
     )
 
     const type = submit ? 'submit' : 'button'
-
     const selector = this.isLink() ? 'a' : 'button'
-
     const childrenMarkup = this.getChildrenMarkup()
 
     return (
@@ -196,6 +142,58 @@ class Button extends React.PureComponent {
       </ButtonUI>
     )
   }
+}
+
+Button.propTypes = {
+  allowContentEventPropogation: PropTypes.bool,
+  buttonRef: PropTypes.func,
+  canRenderFocus: PropTypes.bool,
+  className: PropTypes.string,
+  'data-cy': PropTypes.string,
+  disabled: PropTypes.bool,
+  disableOnLoading: PropTypes.bool,
+  kind: PropTypes.string,
+  href: PropTypes.string,
+  innerRef: PropTypes.any,
+  isActive: PropTypes.bool,
+  isBlock: PropTypes.bool,
+  isFirst: PropTypes.bool,
+  isFocused: PropTypes.bool,
+  isHovered: PropTypes.bool,
+  isNotOnly: PropTypes.bool,
+  isLast: PropTypes.bool,
+  isLoading: PropTypes.bool,
+  isSuffix: PropTypes.bool,
+  shape: PropTypes.string,
+  size: PropTypes.string,
+  spinButtonOnLoading: PropTypes.bool,
+  state: PropTypes.string,
+  submit: PropTypes.bool,
+  theme: PropTypes.string,
+  to: PropTypes.string,
+}
+
+Button.defaultProps = {
+  allowContentEventPropogation: true,
+  buttonRef: noop,
+  canRenderFocus: true,
+  'data-cy': 'Button',
+  disable: false,
+  disableOnLoading: true,
+  kind: 'default',
+  innerRef: noop,
+  isActive: false,
+  isBlock: false,
+  isFocused: false,
+  isFirst: false,
+  isHovered: false,
+  isNotOnly: false,
+  isLast: false,
+  isSuffix: false,
+  shape: 'default',
+  size: 'md',
+  spinButtonOnLoading: false,
+  submit: false,
 }
 
 export default RouteWrapper(Button)

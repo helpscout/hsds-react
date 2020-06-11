@@ -2,7 +2,6 @@
 // https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/modules/NavLink.js
 
 import React from 'react'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Route from '../Route'
 import Link from '../Link'
 import { classNames } from '../../utilities/classNames'
@@ -44,7 +43,7 @@ export const NavLink = ({
 
         return (
           <Link
-            {...getValidProps(rest)}
+            {...rest}
             to={to}
             className={componentClassName}
             style={isActive ? { ...style, ...activeStyle } : style}

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import MessageButton from './MessageCard.Button'
+import MessageCardButton from './MessageCard.Button'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import Animate from '../Animate'
@@ -16,7 +16,7 @@ import Truncate from '../Truncate'
 
 export class MessageCard extends React.PureComponent {
   static className = 'c-MessageCard'
-  static Button = MessageButton
+  static Button = MessageCardButton
 
   getClassName() {
     const { align, className, isMobile, isWithBoxShadow } = this.props

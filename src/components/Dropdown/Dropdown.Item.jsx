@@ -191,14 +191,7 @@ export class DropdownItem extends React.PureComponent {
   }
 
   render() {
-    const {
-      className,
-      disabled,
-      href,
-      isSelectionClearer,
-      type,
-      ...rest
-    } = this.props
+    const { className, disabled, href, isSelectionClearer, type } = this.props
     const hasSubMenu = this.hasSubMenu()
 
     const componentClassName = classNames(
@@ -217,7 +210,7 @@ export class DropdownItem extends React.PureComponent {
 
     return (
       <ItemUI
-        {...getValidProps(rest)}
+        {...getValidProps(this.props)}
         className={componentClassName}
         aria-disabled={disabled}
         onClick={this.handleOnClick}

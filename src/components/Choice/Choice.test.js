@@ -56,7 +56,6 @@ describe('Children', () => {
         <div className="milk">Was a bad choice</div>
       </Choice>
     )
-    const input = wrapper.find('input')
     const o = wrapper.find('.milk')
 
     expect(o.length).toBeTruthy()
@@ -70,7 +69,6 @@ describe('Children', () => {
         <div className="milk">Was a bad choice</div>
       </Choice>
     )
-    const input = wrapper.find('input')
     const o = wrapper.find('.milk')
 
     expect(o.length).toBeTruthy()

@@ -57,12 +57,12 @@ describe('Menu/Item', () => {
   test('Renders an Emoji correctly within a Menu/Item', () => {
     cy.render(<EmojiPicker isOpen={true} />)
 
-    expect(cy.getByCy('EmojiPickerMenu').exists()).toBeTruthy()
-    expect(cy.getByCy('EmojiPickerItem').exists()).toBeTruthy()
+    expect(cy.get('.c-EmojiPickerMenu').exists()).toBeTruthy()
+    expect(cy.get('.c-EmojiPickerItem').exists()).toBeTruthy()
 
     expect(
       cy
-        .getByCy('EmojiPickerItem')
+        .get('.c-EmojiPickerItem')
         .find('[data-cy="EmojiPickerEmoji"]')
         .exists()
     ).toBeTruthy()

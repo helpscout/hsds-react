@@ -6,13 +6,13 @@ import { HeaderUI } from './Modal.css'
 
 class ModalHeader extends React.PureComponent {
   render() {
-    const { className, children, ...rest } = this.props
-
+    const { className, children, shadow, ...rest } = this.props
     const componentClassName = classNames('c-ModalHeader', className)
 
     return (
       <HeaderUI
         {...getValidProps(rest)}
+        shadow={shadow}
         className={componentClassName}
         placement="top"
       >

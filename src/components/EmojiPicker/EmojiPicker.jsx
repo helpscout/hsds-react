@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import Dropdown from '../Dropdown'
@@ -34,13 +33,21 @@ export class EmojiPicker extends React.PureComponent {
   }
 
   renderMenu = menu => {
-    return <MenuUI {...menu} data-cy="EmojiPickerMenu" />
+    return (
+      <MenuUI
+        {...menu}
+        data-cy="EmojiPickerMenu"
+        className="c-EmojiPickerMenu"
+      />
+    )
   }
 
   renderItem = item => {
     const { size } = this.props
 
-    return <EmojiPickerItem {...item} size={size} />
+    return (
+      <EmojiPickerItem {...item} size={size} className="c-EmojiPickerItem" />
+    )
   }
 
   render() {
@@ -48,7 +55,7 @@ export class EmojiPicker extends React.PureComponent {
 
     return (
       <Dropdown
-        {...getValidProps(rest)}
+        {...rest}
         className={this.getClassName()}
         items={emojiSet}
         renderMenu={this.renderMenu}

@@ -1,5 +1,4 @@
 import React from 'react'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Dropdown from '../Dropdown'
 import { isItemsEmpty, hasGroups } from '../Dropdown/Dropdown.utils'
 import { initialState } from '../Dropdown/Dropdown.store'
@@ -159,7 +158,6 @@ export class SearchableDropdown extends React.Component {
 
   renderItems = dropdownProps => {
     const { items, renderItems, renderItemsAsGroups, hasGroups } = dropdownProps
-
     const { customFilter } = this.props
     const { inputValue } = this.state
 
@@ -239,7 +237,7 @@ export class SearchableDropdown extends React.Component {
       enableTabNavigation || (enableTabNavigation && !isInputActive)
 
     return {
-      ...getValidProps(rest),
+      ...rest,
       className: componentClassName,
       enableTabNavigation: shouldEnableTabNavigation,
       inputValue,

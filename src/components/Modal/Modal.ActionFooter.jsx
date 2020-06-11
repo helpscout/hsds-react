@@ -89,7 +89,7 @@ class ModalActionFooter extends React.PureComponent {
   }
 
   render() {
-    const { className, kind, state, ...rest } = this.props
+    const { className, kind, state, shadow, ...rest } = this.props
 
     const modalKindClassName = getModalKindClassName(kind)
 
@@ -107,6 +107,7 @@ class ModalActionFooter extends React.PureComponent {
         gap="md"
         placement="bottom"
         size="md"
+        shadow={shadow}
       >
         {this.renderCancelButton()}
         {this.renderSecondaryButton()}

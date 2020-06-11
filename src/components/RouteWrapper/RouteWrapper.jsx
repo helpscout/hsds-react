@@ -83,7 +83,7 @@ const RouteWrapper = WrappedComponent => {
     onClick: PropTypes.func,
     replace: PropTypes.bool,
     target: PropTypes.string,
-    to: PropTypes.string,
+    o: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   }
 
   return hoistNonReactStatics(RouteWrapperComponent, WrappedComponent)
@@ -95,7 +95,7 @@ RouteWrapper.propTypes = {
   onClick: PropTypes.func,
   replace: PropTypes.bool,
   target: PropTypes.string,
-  to: PropTypes.string,
+  o: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 }
 
 export default RouteWrapper

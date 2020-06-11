@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { Divider } from '../Dropdown.Divider'
+import { DropdownDivider as Divider } from '../Dropdown.Divider'
 import { hasClass } from '../../../tests/helpers/enzyme'
 
 describe('className', () => {

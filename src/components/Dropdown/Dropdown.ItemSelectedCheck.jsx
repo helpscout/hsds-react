@@ -1,52 +1,45 @@
 import React from 'react'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { isSelectedItemEmpty } from './Dropdown.utils'
 import { ItemSelectedCheckUI, SelectedCheckmarkUI } from './Dropdown.css'
 
-const DropdownItemSelectedCheck = props => {
-  const {
-    getState,
-    isSelectionClearer,
-    isActive,
-    label,
-    value,
-    ...rest
-  } = props
-  let isClearerActive = false
-  const state = getState()
+const defaultProps = {
+  value: '',
+  isActive: false,
+  isSelectionClearer: false,
+  getState: noop,
+}
 
-  if (isSelectionClearer && state) {
+const DropdownItemSelectedCheck = (props = defaultProps) => {
+  let isClearerActive = false
+  const state = props.getState()
+
+  if (props.isSelectionClearer && state) {
     isClearerActive = isSelectedItemEmpty(state.selectedItem)
   }
 
   const componentClassnames = classNames(
     'c-ItemSelectedCheck',
-    isSelectionClearer && 'selectionClearer',
+    props.isSelectionClearer && 'selectionClearer',
+
     isClearerActive && 'is-selectionClearer-active'
   )
 
+  const content = props.label || props.value
+
   return (
-    <ItemSelectedCheckUI
-      className={componentClassnames}
-      {...getValidProps(rest)}
-    >
-      <span className="c-ItemSelectedCheck__value">{label || value}</span>
+    <ItemSelectedCheckUI className={componentClassnames}>
+      <span className="c-ItemSelectedCheck__value">{content}</span>
       <SelectedCheckmarkUI>
-        {isActive || isClearerActive ? <Icon name="check" /> : null}
+        {props.isActive || isClearerActive ? <Icon name="check" /> : null}
       </SelectedCheckmarkUI>
     </ItemSelectedCheckUI>
   )
 }
 
-DropdownItemSelectedCheck.defaultProps = {
-  value: '',
-  'data-cy': 'DropdownItemSelectedCheck',
-  isActive: false,
-  isSelectionClearer: false,
-  getState: noop,
-}
+DropdownItemSelectedCheck.defaultProps = defaultProps
+DropdownItemSelectedCheck.displayName = 'DropdownItemSelectedCheck'
 
 export default DropdownItemSelectedCheck

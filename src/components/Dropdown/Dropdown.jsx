@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { connect } from '@helpscout/wedux'
 import { initialState } from './Dropdown.store'
 import { closeDropdown, setMenuNode, setTriggerNode } from './Dropdown.actions'
@@ -118,15 +117,15 @@ export class Dropdown extends React.PureComponent {
   }
 
   render() {
-    const { className, envNode, id, ...rest } = this.props
+    const { className, envNode, id, 'data-cy': dataCy } = this.props
     const componentClassName = classNames(className, 'c-Dropdown')
 
     return (
       <DropdownUI
-        {...getValidProps(rest)}
         className={componentClassName}
         ref={this.setNodeRef}
         id={id}
+        data-cy={dataCy}
       >
         {this.renderAriaLive()}
         <EventListener

@@ -97,8 +97,8 @@ describe('Illo', () => {
   })
 
   test('Maintains props on custom illo', () => {
-    const wrapper = mount(<BlankSlate illo={<WrenchCat size="90" />} />)
+    const wrapper = mount(<BlankSlate illo={<WrenchCat size={90} />} />)
     const o = wrapper.find(WrenchCat)
-    expect(o.first().prop('size')).toBe('90')
+    expect(o.first().prop('size')).toBe(90)
   })
 })

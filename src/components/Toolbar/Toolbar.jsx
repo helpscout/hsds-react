@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Block from './Toolbar.Block'
 import Item from './Toolbar.Item'
 import Shadow from './Toolbar.Shadow'
@@ -47,7 +46,7 @@ export class Toolbar extends React.PureComponent {
 
     return (
       <WrapperUI className="c-ToolbarWrapper">
-        <ToolbarUI {...getValidProps(rest)} className={this.getClassName()}>
+        <ToolbarUI {...rest} className={this.getClassName()}>
           {children}
         </ToolbarUI>
         {this.renderShadow()}

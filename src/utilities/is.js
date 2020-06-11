@@ -1,3 +1,5 @@
+import React from 'react'
+
 export function isDefined(value) {
   return value !== undefined && value !== null
 }
@@ -47,4 +49,12 @@ export function isObject(value) {
 
 export function isPlainObject(value) {
   return Object.prototype.toString.call(value) === '[object Object]'
+}
+
+export function isElement(element) {
+  return React.isValidElement(element)
+}
+
+export function isDOMTypeElement(element) {
+  return isElement(element) && typeof element.type === 'string'
 }

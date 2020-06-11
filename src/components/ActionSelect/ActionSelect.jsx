@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { getUniqueKeyFromItem } from '../Dropdown/Dropdown.utils'
 import SelectDropdown from '../SelectDropdown'
 import ContentResizer from './ActionSelect.ContentResizer'
@@ -197,7 +196,7 @@ export class ActionSelect extends React.PureComponent {
       >
         <div className="c-ActionSelectDropdownWrapper">
           <SelectDropdown
-            {...getValidProps(rest)}
+            {...rest}
             onOpen={this.handleOnOpen}
             onClose={this.handleOnClose}
             data-cy="ActionSelectDropdown"

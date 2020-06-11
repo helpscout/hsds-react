@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Block from './Card.Block'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -57,7 +56,6 @@ class Card extends React.PureComponent {
     const extraStaticProps = {
       as: selector,
       href,
-
       ref: nodeRef,
     }
 
@@ -76,7 +74,7 @@ class Card extends React.PureComponent {
         : { ...sharedProps, ...extraStaticProps }
 
     return (
-      <CardUI {...getValidProps(rest)} {...props}>
+      <CardUI {...rest} {...props}>
         {children}
       </CardUI>
     )

@@ -66,7 +66,7 @@ Link.propTypes = {
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
   external: PropTypes.bool,
-  href: PropTypes.string,
+  href: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   nodeRef: PropTypes.func,
   onBlur: PropTypes.func,
   onClick: PropTypes.func,
@@ -74,7 +74,7 @@ Link.propTypes = {
   rel: PropTypes.string,
   noUnderline: PropTypes.bool,
   target: PropTypes.string,
-  to: PropTypes.string,
+  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   voidOnClick: PropTypes.bool,
   wordWrap: PropTypes.bool,
 }

@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { includes } from '../../utilities/arrays'
 import arrayMove from '../../utilities/arrayMove.lib'
@@ -90,7 +89,7 @@ class Sortable extends React.PureComponent {
     return (
       <div className={componentClassName}>
         <SortableList
-          {...getValidProps(rest)}
+          {...rest}
           dragHandle={useDragHandle}
           helperClass={helperClassName}
           items={items}

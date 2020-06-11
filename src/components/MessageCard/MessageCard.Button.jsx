@@ -5,7 +5,7 @@ import { ActionButtonUI } from './MessageCard.css'
 import { noop } from '../../utilities/other'
 import Truncate from '../Truncate'
 
-export class MessageButton extends React.PureComponent {
+export class MessageCardButton extends React.PureComponent {
   render() {
     const { children, ...rest } = this.props
 
@@ -17,7 +17,7 @@ export class MessageButton extends React.PureComponent {
   }
 }
 
-MessageButton.propTypes = {
+MessageCardButton.propTypes = {
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
   kind: PropTypes.string,
@@ -26,7 +26,7 @@ MessageButton.propTypes = {
   size: PropTypes.string,
 }
 
-MessageButton.defaultProps = {
+MessageCardButton.defaultProps = {
   'data-cy': 'beacon-message-cta',
   kind: 'primary',
   onClick: noop,
@@ -34,4 +34,4 @@ MessageButton.defaultProps = {
   size: 'xl',
 }
 
-export default MessageButton
+export default MessageCardButton

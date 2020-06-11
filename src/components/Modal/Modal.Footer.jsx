@@ -6,13 +6,14 @@ import { FooterUI } from './Modal.css'
 
 class ModalFooter extends React.PureComponent {
   render() {
-    const { className, children, ...rest } = this.props
+    const { className, children, shadow, ...rest } = this.props
     const componentClassName = classNames('c-ModalFooter', className)
 
     return (
       <FooterUI
         {...getValidProps(rest)}
         className={componentClassName}
+        shadow={shadow}
         placement="bottom"
       >
         {children}

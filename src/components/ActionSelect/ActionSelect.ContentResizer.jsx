@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Animate from '../Animate'
 import { ContentUI, ContentResizerUI } from './ActionSelect.css'
 import { getEasingTiming } from '../../utilities/easing'
@@ -176,7 +175,7 @@ export class ContentResizer extends React.PureComponent {
 
     return (
       <ContentResizerUI
-        {...getValidProps(rest)}
+        {...rest}
         ref={this.setResizerNodeRef}
         style={this.getResizeStyles()}
         onTransitionEnd={this.resetHeight}

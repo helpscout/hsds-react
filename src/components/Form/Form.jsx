@@ -88,18 +88,6 @@ export class Form extends React.PureComponent {
   }
 }
 
-Form.defaultProps = {
-  actionTabbable: true,
-  cancelText: 'Cancel',
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  destroyText: 'Delete',
-  onSave: evt => {
-    evt && evt.preventDefault()
-  },
-  saveText: 'Save',
-}
-
 Form.propTypes = {
   actionDirection: PropTypes.string,
   actionTabbable: PropTypes.bool,
@@ -107,7 +95,8 @@ Form.propTypes = {
   cancelText: PropTypes.string,
   children: PropTypes.any,
   className: PropTypes.string,
-  'data-cy': 'Form',
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   destroyButtonProps: PropTypes.object,
   destroyText: PropTypes.string,
   onCancel: PropTypes.func,
@@ -115,6 +104,17 @@ Form.propTypes = {
   onSave: PropTypes.func,
   saveButtonProps: PropTypes.object,
   saveText: PropTypes.string,
+}
+
+Form.defaultProps = {
+  actionTabbable: true,
+  cancelText: 'Cancel',
+  destroyText: 'Delete',
+  'data-cy': 'Form',
+  onSave: evt => {
+    evt && evt.preventDefault()
+  },
+  saveText: 'Save',
 }
 
 export default Form

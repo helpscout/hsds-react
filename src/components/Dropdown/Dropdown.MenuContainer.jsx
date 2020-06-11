@@ -36,68 +36,6 @@ const uniqueID = createUniqueIDFactory('DropdownMenuContainer')
 const clearerID = createUniqueIDFactory('hsds-dropdown-theallclearer')
 
 export class MenuContainer extends React.PureComponent {
-  static displayName = 'DropdownContainer'
-
-  static propTypes = {
-    allowMultipleSelection: PropTypes.bool,
-    animationDuration: PropTypes.number,
-    animationSequence: PropTypes.string,
-    className: PropTypes.string,
-    clearSelection: PropTypes.func,
-    closeDropdown: PropTypes.func,
-    contentWindow: PropTypes.object,
-    dropRight: PropTypes.bool,
-    dropUp: PropTypes.bool,
-    forceDropDown: PropTypes.bool,
-    focusItem: PropTypes.func,
-    getState: PropTypes.func,
-    id: PropTypes.string,
-    innerRef: PropTypes.func,
-    isLoading: PropTypes.bool,
-    isOpen: PropTypes.bool,
-    items: PropTypes.arrayOf(PropTypes.object),
-    menuOffsetTop: PropTypes.number,
-    onMenuMounted: PropTypes.func,
-    onMenuReposition: PropTypes.func,
-    onMenuUnmounted: PropTypes.func,
-    positionFixed: PropTypes.bool,
-    renderEmpty: PropTypes.any,
-    renderLoading: PropTypes.any,
-    selectItem: PropTypes.func,
-    selectionClearer: PropTypes.string,
-    shouldDropDirectionUpdate: PropTypes.func,
-    shouldRefocusOnClose: PropTypes.func,
-    triggerId: PropTypes.string,
-    triggerNode: PropTypes.any,
-    zIndex: PropTypes.number,
-  }
-
-  static defaultProps = {
-    animationDuration: 80,
-    animationSequence: 'fade down',
-    closeDropdown: noop,
-    contentWindow: window,
-    dropRight: true,
-    dropUp: false,
-    forceDropDown: false,
-    focusItem: noop,
-    getState: noop,
-    menuRef: noop,
-    isLoading: false,
-    isOpen: true,
-    items: [],
-    menuOffsetTop: 0,
-    onMenuMounted: noop,
-    onMenuReposition: noop,
-    onMenuUnmounted: noop,
-    positionFixed: false,
-    shouldDropDirectionUpdate: () => true,
-    shouldRefocusOnClose: () => true,
-    selectItem: noop,
-    clearSelection: noop,
-    zIndex: 1080,
-  }
-
   id = uniqueID()
   didOpen = false
   node
@@ -150,7 +88,6 @@ export class MenuContainer extends React.PureComponent {
 
   getMenuProps() {
     const { dropRight, isOpen, items, id, triggerId } = this.props
-
     const shouldDropUp = this.shouldDropUp()
 
     return {
@@ -507,6 +444,66 @@ export class MenuContainer extends React.PureComponent {
       </div>
     )
   }
+}
+
+MenuContainer.propTypes = {
+  allowMultipleSelection: PropTypes.bool,
+  animationDuration: PropTypes.number,
+  animationSequence: PropTypes.string,
+  className: PropTypes.string,
+  clearSelection: PropTypes.func,
+  closeDropdown: PropTypes.func,
+  contentWindow: PropTypes.object,
+  dropRight: PropTypes.bool,
+  dropUp: PropTypes.bool,
+  forceDropDown: PropTypes.bool,
+  focusItem: PropTypes.func,
+  getState: PropTypes.func,
+  id: PropTypes.string,
+  innerRef: PropTypes.func,
+  isLoading: PropTypes.bool,
+  isOpen: PropTypes.bool,
+  items: PropTypes.arrayOf(PropTypes.any),
+  menuOffsetTop: PropTypes.number,
+  onMenuMounted: PropTypes.func,
+  onMenuReposition: PropTypes.func,
+  onMenuUnmounted: PropTypes.func,
+  positionFixed: PropTypes.bool,
+  renderEmpty: PropTypes.any,
+  renderLoading: PropTypes.any,
+  selectItem: PropTypes.func,
+  selectionClearer: PropTypes.string,
+  shouldDropDirectionUpdate: PropTypes.func,
+  shouldRefocusOnClose: PropTypes.func,
+  triggerId: PropTypes.string,
+  triggerNode: PropTypes.any,
+  zIndex: PropTypes.number,
+}
+
+MenuContainer.defaultProps = {
+  animationDuration: 80,
+  animationSequence: 'fade down',
+  closeDropdown: noop,
+  contentWindow: window,
+  dropRight: true,
+  dropUp: false,
+  forceDropDown: false,
+  focusItem: noop,
+  getState: noop,
+  menuRef: noop,
+  isLoading: false,
+  isOpen: true,
+  items: [],
+  menuOffsetTop: 0,
+  onMenuMounted: noop,
+  onMenuReposition: noop,
+  onMenuUnmounted: noop,
+  positionFixed: false,
+  shouldDropDirectionUpdate: () => true,
+  shouldRefocusOnClose: () => true,
+  selectItem: noop,
+  clearSelection: noop,
+  zIndex: 1080,
 }
 
 const ConnectedMenuContainer = connect(

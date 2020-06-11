@@ -3,7 +3,10 @@ import { mount } from 'enzyme'
 import createStore from '../Dropdown.store'
 import { Provider } from '@helpscout/wedux'
 import Keys from '../../../constants/Keys'
-import ConnectedTrigger, { Trigger, mapStateToProps } from '../Dropdown.Trigger'
+import ConnectedTrigger, {
+  DropdownTrigger as Trigger,
+  mapStateToProps,
+} from '../Dropdown.Trigger'
 import { hasClass, getAttribute } from '../../../tests/helpers/enzyme'
 
 describe('className', () => {

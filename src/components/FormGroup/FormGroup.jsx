@@ -28,7 +28,7 @@ FormGroup.propTypes = {
   'data-cy': PropTypes.string,
 }
 
-FormGroup.propTypes = {
+FormGroup.defaultProps = {
   'data-cy': 'FormGroup',
 }
 

@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Choice from '../Choice'
 import { classNames } from '../../utilities/classNames'
 
@@ -12,7 +11,7 @@ export const Radio = ({ kind: kindProp, className, ...rest }) => {
 
   return (
     <Choice
-      {...getValidProps(rest)}
+      {...rest}
       className={componentClassName}
       componentID="Radio"
       kind={kind}

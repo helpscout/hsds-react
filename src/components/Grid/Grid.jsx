@@ -1,5 +1,4 @@
 import React from 'react'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import GridContainer from './Grid.Container'
 import GridRow from './Grid.Row'
@@ -15,7 +14,7 @@ class Grid extends React.PureComponent {
     const componentClassName = classNames('c-Grid', className)
 
     return (
-      <GridContainer className={componentClassName} {...getValidProps(rest)}>
+      <GridContainer className={componentClassName} {...rest}>
         <GridRow>{children}</GridRow>
       </GridContainer>
     )

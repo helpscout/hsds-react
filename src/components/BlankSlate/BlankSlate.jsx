@@ -57,7 +57,7 @@ BlankSlate.propTypes = {
   title: PropTypes.string,
   illo: PropTypes.any,
   illoName: PropTypes.string,
-  illoSize: PropTypes.number,
+  illoSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   lightBackground: PropTypes.bool,
   alignTop: PropTypes.bool,
 }

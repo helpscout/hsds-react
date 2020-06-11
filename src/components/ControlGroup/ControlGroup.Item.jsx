@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
+import { isDOMTypeElement } from '../../utilities/is'
 import { ItemUI } from './ControlGroup.css'
 
 class ControlGroupItem extends React.PureComponent {
@@ -11,11 +12,15 @@ class ControlGroupItem extends React.PureComponent {
     if (!children) return null
 
     return React.Children.map(children, (child, index) => {
-      return React.cloneElement(child, {
-        isFirst,
-        isNotOnly,
-        isLast,
-      })
+      let props = isDOMTypeElement(child)
+        ? {}
+        : {
+            isFirst,
+            isNotOnly,
+            isLast,
+          }
+
+      return React.cloneElement(child, props)
     })
   }
 
@@ -26,6 +31,7 @@ class ControlGroupItem extends React.PureComponent {
       isBlock,
       isFirst,
       isLast,
+      isNotOnly,
       ...rest
     } = this.props
     const componentClassName = classNames(
@@ -38,7 +44,7 @@ class ControlGroupItem extends React.PureComponent {
     const childrenMarkup = this.getChildrenMarkup()
 
     return (
-      <ItemUI className={componentClassName} {...getValidProps(rest)}>
+      <ItemUI {...getValidProps(rest)} className={componentClassName}>
         {childrenMarkup}
       </ItemUI>
     )

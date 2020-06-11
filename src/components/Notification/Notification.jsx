@@ -44,16 +44,17 @@ export class Notification extends React.PureComponent {
     this._isMounted = false
   }
 
-  safeSetState(state) {
-    if (this._isMounted) {
-      this.setState(state)
-    }
-  }
-
   forceDismiss() {
-    this.safeSetState({
-      isActive: false,
-    })
+    if (this._isMounted) {
+      this.setState(
+        {
+          isActive: false,
+        },
+        () => {
+          this.props.onDismiss(this.props)
+        }
+      )
+    }
   }
 
   handleOnExited = () => {
@@ -61,7 +62,11 @@ export class Notification extends React.PureComponent {
   }
 
   handleOnTimeout = () => {
-    this.forceDismiss()
+    const { isDismissable } = this.props
+
+    if (isDismissable) {
+      this.forceDismiss()
+    }
   }
 
   handleOnClick = event => {
@@ -142,9 +147,7 @@ export class Notification extends React.PureComponent {
       'data-cy': dataCy,
       ...rest
     } = this.props
-
     const { isActive } = this.state
-
     const componentClassName = classNames(
       'c-Notification',
       'c-MessageBubbleWrapper',
@@ -153,7 +156,6 @@ export class Notification extends React.PureComponent {
       type && `is-${type}`,
       className
     )
-
     const messageProps = {
       body: null,
       children: this.renderContent(),
@@ -172,9 +174,9 @@ export class Notification extends React.PureComponent {
       >
         <Message.Provider theme="notifications">
           <Message.Chat
-            {...getValidProps(rest)}
             bubbleClassName="c-Notification__messageBubble"
             className="c-Notification__message"
+            {...rest}
             {...messageProps}
           />
         </Message.Provider>
@@ -198,7 +200,7 @@ Notification.propTypes = {
   from: PropTypes.string,
   isActive: PropTypes.bool,
   isDismissable: PropTypes.bool,
-  id: PropTypes.string,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onClick: PropTypes.func,
   onDismiss: PropTypes.func,
   timeout: PropTypes.number,

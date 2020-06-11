@@ -1,4 +1,5 @@
 import React from 'react'
+import { act } from 'react-dom/test-utils'
 import { cy } from '@helpscout/cyan'
 import Page from '../Page'
 import Actions from '../Page.Actions'
@@ -129,7 +130,9 @@ describe('Sticky', () => {
   test('Can remove sticky wrapper', () => {
     const wrapper = cy.render(<Actions isSticky={true} />)
 
-    wrapper.setProps({ isSticky: false })
+    act(() => {
+      wrapper.setProps({ isSticky: false })
+    })
 
     const el = wrapper.find('.c-PageActions__stickyWrapper')
 
@@ -198,24 +201,27 @@ describe('Sticky', () => {
       <Actions isSticky onStickyStart={startSpy} onStickyEnd={endSpy} />
     )
 
-    // Mock the IntersectionObserver event
-    changes = [
-      {
-        intersectionRatio: 1,
-      },
-    ]
-    handler(changes)
+    act(() => {
+      // Mock the IntersectionObserver event
+      changes = [
+        {
+          intersectionRatio: 1,
+        },
+      ]
+      handler(changes)
+    })
 
     expect(endSpy).toHaveBeenCalled()
     expect(startSpy).not.toHaveBeenCalled()
 
-    // Mock the IntersectionObserver event
-    changes = [
-      {
-        intersectionRatio: 0.977,
-      },
-    ]
-    handler(changes)
+    act(() => {
+      changes = [
+        {
+          intersectionRatio: 0.977,
+        },
+      ]
+      handler(changes)
+    })
 
     expect(startSpy).toHaveBeenCalled()
   })

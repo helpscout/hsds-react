@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { Menu } from '../Dropdown.Menu'
+import { DropdownMenu as Menu } from '../Dropdown.Menu'
 import { hasClass } from '../../../tests/helpers/enzyme'
 
 const baseSelector = 'div.c-DropdownMenu'

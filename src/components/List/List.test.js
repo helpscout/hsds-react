@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount, render } from 'enzyme'
 import { List } from './List'
-import { Item } from './List.Item'
+import { ListItem as Item } from './List.Item'
 
 describe('List ClassName', () => {
   test('Has default className', () => {

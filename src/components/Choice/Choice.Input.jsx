@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import InputBackdropV2 from '../Input/Input.BackdropV2'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
@@ -91,7 +90,7 @@ class Input extends React.PureComponent {
       state,
       type,
       value,
-      ...rest
+      'data-cy': dataCy,
     } = this.props
 
     const { isFocused } = this.state
@@ -116,7 +115,7 @@ class Input extends React.PureComponent {
     const iconMarkup = this.getIconMarkup()
 
     return (
-      <InputUI className={componentClassName} {...getValidProps(rest)}>
+      <InputUI className={componentClassName}>
         <InputInputUI
           autoFocus={autoFocus}
           aria-describedby={helpText || undefined}
@@ -133,6 +132,7 @@ class Input extends React.PureComponent {
           readOnly={readOnly}
           type={type}
           value={value}
+          data-cy={dataCy}
         />
         <InputBackdropV2
           choiceKind={type}

@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { Group } from '../Dropdown.Group'
+import { DropdownGroup as Group } from '../Dropdown.Group'
 import { hasClass } from '../../../tests/helpers/enzyme'
 
 describe('className', () => {

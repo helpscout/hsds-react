@@ -198,7 +198,7 @@ InfiniteScroller.propTypes = {
   className: PropTypes.string,
   offset: PropTypes.number,
   isLoading: PropTypes.bool,
-  loading: PropTypes.bool,
+  loading: PropTypes.any,
   scrollParent: PropTypes.any,
   getScrollParent: PropTypes.func,
   onLoading: PropTypes.func,

@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import SearchableDropdown from '../SearchableDropdown'
 import Icon from '../Icon'
 import Text from '../Text'
@@ -156,7 +155,7 @@ export class SelectDropdown extends React.PureComponent {
     return (
       <SelectDropdownUI className="c-SelectDropdownWrapper" data-cy={dataCy}>
         <SearchableDropdown
-          {...getValidProps(rest)}
+          {...rest}
           className={this.getClassName()}
           renderTrigger={this.renderTrigger()}
           selectedItem={this.state.selectedItem}

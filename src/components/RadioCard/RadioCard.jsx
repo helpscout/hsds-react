@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Icon from '../Icon'
 import ChoiceGroupContext from '../ChoiceGroup/ChoiceGroup.Context'
 import { classNames } from '../../utilities/classNames'
@@ -153,7 +152,7 @@ class RadioCard extends React.PureComponent {
         {this.getHeadingMarkup()}
         {this.getContentMarkup()}
         <Radio
-          {...getValidProps(rest)}
+          {...rest}
           checked={isChecked}
           kind="custom"
           id={id}
@@ -185,17 +184,33 @@ class RadioCard extends React.PureComponent {
 RadioCard.propTypes = {
   checked: PropTypes.bool,
   className: PropTypes.string,
-  content: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  content: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+    PropTypes.func,
+  ]),
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
-  heading: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  heading: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+    PropTypes.func,
+  ]),
+  icon: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+    PropTypes.func,
+  ]),
   iconSize: PropTypes.number,
   id: PropTypes.string,
   innerRef: PropTypes.func,
   inputRef: PropTypes.func,
   isFocused: PropTypes.bool,
-  maxWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  maxWidth: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.func,
+  ]),
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
@@ -205,15 +220,12 @@ RadioCard.propTypes = {
 
 RadioCard.defaultProps = {
   checked: false,
-  content: null,
   'data-cy': 'RadioCard',
-  heading: null,
   icon: 'fab-chat',
   iconSize: 52,
   innerRef: noop,
   inputRef: noop,
   isFocused: false,
-  maxWidth: null,
   onBlur: noop,
   onChange: noop,
   onFocus: noop,

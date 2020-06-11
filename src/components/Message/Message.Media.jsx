@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Link from '../Link'
 import Spinner from '../Spinner'
 import Modal from '../Modal'
@@ -216,7 +215,7 @@ export class MessageMedia extends React.Component {
 
     return (
       <MediaUI
-        {...getValidProps(rest)}
+        {...rest}
         bubbleClassName="c-MessageMedia__bubble"
         className={componentClassName}
         size="sm"
