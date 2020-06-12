@@ -110,7 +110,7 @@ export const MessageBubbleUI = styled('div')`
     }
   }
 
-  &.is-note {
+  &.is-note:not(.is-typing) {
     background-color: ${getColor('yellow.200')};
     color: ${getColor('yellow.900')};
 
