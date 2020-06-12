@@ -187,6 +187,12 @@ This component is to be used within an `Accordion`.
           onSortEnd={onSortEnd}
           size={select('Sizes', {extraSmall: 'xs', small: 'sm', medium: 'md', large: 'lg', extraLarge: 'xl'}, 'xl')}
         >
+          <Accordion.Link to="/" isCompact>
+            <Accordion.Heading muted>Paused Message Row</Accordion.Heading>
+          </Accordion.Link>
+          <Accordion.Link to="/" isCompact>
+            <Accordion.Heading>Compact Row</Accordion.Heading>
+          </Accordion.Link>
           <Accordion.Link to="/">
             <Accordion.Heading>March 40% Offer</Accordion.Heading>
             <Accordion.Subheading>Viewed 104 times. Last seen yesterday</Accordion.Subheading>

@@ -84,6 +84,7 @@ const Accordion = props => {
     size,
     isSortable,
     onSortEnd,
+    useWindowAsScrollContainer,
     ...rest
   } = props
 
@@ -157,6 +158,7 @@ const Accordion = props => {
           setIsSorting(false)
           onSortEnd(...args)
         }}
+        useWindowAsScrollContainer={useWindowAsScrollContainer}
         {...getSortableProps(rest)}
       >
         {children}
@@ -194,6 +196,7 @@ Accordion.defaultProps = {
   openSectionIds: [],
   pressDelay: 0,
   size: 'md',
+  useWindowAsScrollContainer: false,
 }
 
 Accordion.Body = Body
