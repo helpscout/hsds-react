@@ -60,7 +60,7 @@ class Modal extends React.PureComponent {
   documentnode
   cardnode
   closenode
-  scrollablenode
+  scrollableNode
 
   UNSAFE_componentWillMount() {
     this.documentNode = getClosestDocument(ReactDOM.findDOMNode(this))
@@ -319,6 +319,7 @@ class Modal extends React.PureComponent {
   render() {
     const {
       className,
+      'data-cy': dataCy,
       isOpen,
       isHsApp,
       kind,
@@ -350,9 +351,9 @@ class Modal extends React.PureComponent {
       <ModalUI
         {...getValidProps(rest)}
         className={componentClassName}
+        data-cy={dataCy}
         role="document"
         style={styles}
-        data-cy="Modal"
       >
         <KeypressListener
           keyCode={Keys.TAB}

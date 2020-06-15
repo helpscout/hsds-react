@@ -6,6 +6,7 @@ import { ContentUI } from './Modal.css'
 import Body from './Modal.Body'
 
 class ModalContent extends React.PureComponent {
+  static displayName = 'ModalContent'
   static propTypes = {
     className: PropTypes.string,
     scrollableRef: PropTypes.func,

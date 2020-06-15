@@ -9,6 +9,7 @@ import { BodyUI } from './Modal.css'
 class ModalBody extends React.PureComponent {
   node
   scrollableNode
+  static displayName = 'ModalBody'
 
   componentDidMount() {
     this.positionCloseNode()
