@@ -100,8 +100,8 @@ Nested.story = {
 export const V2Default = () => (
   <Modal
     version={2}
-    isOpen={true}
-    trigger={<Link>Clicky</Link>}
+    isOpen={false}
+    trigger={<button>open modal</button>}
     title="Modal Title"
   >
     <Modal.Body version={2}>

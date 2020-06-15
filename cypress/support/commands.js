@@ -4,17 +4,16 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
-Cypress.Commands.add('visitStory', (kind = '', name = '') => {
-  const url = getStoryBookUrl(kind, name)
+Cypress.Commands.add('visitStory', (id = '') => {
+  const url = getStoryBookUrl(id)
 
   return cy.visit(url)
 })
 
 /**
  * Generates the iFrame URL for a given component/story.
- * @param {string} kind The Component
- * @param {string} name The name of the Story
+ * @param {string} id the url id attribute of a story
  */
-function getStoryBookUrl(kind = 'ArticleCard', name = 'Content') {
-  return `iframe.html?selectedKind=${kind}&selectedStory=${name}`
+function getStoryBookUrl(id = '') {
+  return `iframe.html?id=${id}`
 }

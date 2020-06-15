@@ -1,5 +1,5 @@
 beforeEach(() => {
-  cy.visitStory('Pagination', 'in action')
+  cy.visitStory('components-wayfinding-pagination--in-action')
 })
 
 describe('Pagination / range', () => {
@@ -24,10 +24,10 @@ describe('Pagination / navigation', () => {
     cy.get('[data-cy="Pagination-firstButton"]').should('exist')
   })
 
-  it('Last/Next should be disabled on last page', () => {
+  it('Last/Next should not exists on last page', () => {
     cy.get('[data-cy="Pagination-lastButton"]:first').click()
-    cy.get('[data-cy="Pagination-lastButton"]').should('be.disabled')
-    cy.get('[data-cy="Pagination-nextButton"]').should('be.disabled')
+    cy.get('[data-cy="Pagination-lastButton"]').should('not.exist')
+    cy.get('[data-cy="Pagination-nextButton"]').should('not.exist')
   })
 
   it('Can increase current page', () => {
@@ -38,9 +38,10 @@ describe('Pagination / navigation', () => {
       const nextValue = originalValue + 50
 
       cy.get('[data-cy="Pagination-nextButton"]:first').click()
-      cy
-        .get('[data-cy="Pagination-startRange"]')
-        .should('be', nextValue.toString())
+      cy.get('[data-cy="Pagination-startRange"]').should(
+        'be',
+        nextValue.toString()
+      )
     })
   })
 
@@ -54,9 +55,10 @@ describe('Pagination / navigation', () => {
       const nextValue = originalValue - 50
 
       cy.get('[data-cy="Pagination-prevButton"]:first').click()
-      cy
-        .get('[data-cy="Pagination-startRange"]')
-        .should('be', nextValue.toString())
+      cy.get('[data-cy="Pagination-startRange"]').should(
+        'be',
+        nextValue.toString()
+      )
     })
   })
 })
@@ -70,9 +72,10 @@ describe('Pagination / keyboard', () => {
       originalValue = parseInt(originalValue, 10)
       const nextValue = originalValue + 50
 
-      cy
-        .get('[data-cy="Pagination-startRange"]')
-        .should('be', nextValue.toString())
+      cy.get('[data-cy="Pagination-startRange"]').should(
+        'be',
+        nextValue.toString()
+      )
     })
   })
 
@@ -86,9 +89,10 @@ describe('Pagination / keyboard', () => {
 
       cy.get('body').trigger('keydown', { keyCode: 74, which: 74 })
 
-      cy
-        .get('[data-cy="Pagination-startRange"]')
-        .should('be', nextValue.toString())
+      cy.get('[data-cy="Pagination-startRange"]').should(
+        'be',
+        nextValue.toString()
+      )
     })
   })
 })
