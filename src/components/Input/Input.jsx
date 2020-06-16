@@ -433,6 +433,7 @@ export class Input extends React.PureComponent {
         <Tooltip
           animationDelay={0}
           animationDuration={0}
+          appendTo={document.body}
           display="block"
           placement="top-end"
           title={errorMessage}
