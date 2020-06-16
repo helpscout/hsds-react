@@ -1,13 +1,17 @@
 'use strict'
-Object.defineProperty(exports, '__esModule', {
-  value: true,
-})
-exports.default = _default
+const { readdirSync, statSync } = require('fs')
+const { join, resolve } = require('path')
 
-var Components = _interopRequireWildcard(require('../../components'))
-var COMPONENT_NAMES = Object.keys(Components)
+const dirs = p => readdirSync(p).filter(f => statSync(join(p, f)).isDirectory())
+let COMPONENT_NAMES = []
 
-function _default(babel) {
+try {
+  COMPONENT_NAMES = dirs(resolve(__dirname, '../../components'))
+} catch (e) {
+  throw new Error('Components dir not found')
+}
+
+module.exports = function(babel) {
   const { types: t } = babel
 
   return {
@@ -57,6 +61,9 @@ function _default(babel) {
 
 function areAllValidComponents(specifiers) {
   if (!specifiers.length) return false
+  if (!COMPONENT_NAMES.length) return false
+  // If Button is not present something odd happened, bail
+  if (!COMPONENT_NAMES.includes('Button')) return false
 
   for (let i = 0; i < specifiers.length; i++) {
     if (!COMPONENT_NAMES.includes(specifiers[i].local.name)) {
@@ -79,45 +86,4 @@ function isWrongPackage(packageName, packages) {
   }
 
   return !found
-}
-
-function _getRequireWildcardCache() {
-  if (typeof WeakMap !== 'function') return null
-  var cache = new WeakMap()
-  _getRequireWildcardCache = function() {
-    return cache
-  }
-  return cache
-}
-function _interopRequireWildcard(obj) {
-  if (obj && obj.__esModule) {
-    return obj
-  }
-  if (obj === null || (typeof obj !== 'object' && typeof obj !== 'function')) {
-    return { default: obj }
-  }
-  var cache = _getRequireWildcardCache()
-  if (cache && cache.has(obj)) {
-    return cache.get(obj)
-  }
-  var newObj = {}
-  var hasPropertyDescriptor =
-    Object.defineProperty && Object.getOwnPropertyDescriptor
-  for (var key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      var desc = hasPropertyDescriptor
-        ? Object.getOwnPropertyDescriptor(obj, key)
-        : null
-      if (desc && (desc.get || desc.set)) {
-        Object.defineProperty(newObj, key, desc)
-      } else {
-        newObj[key] = obj[key]
-      }
-    }
-  }
-  newObj.default = obj
-  if (cache) {
-    cache.set(obj, newObj)
-  }
-  return newObj
 }
