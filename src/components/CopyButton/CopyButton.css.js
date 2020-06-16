@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import Button from '../Button'
+import Icon from '../Icon'
 
 export const config = {
   copyConfirmed: {
@@ -10,6 +11,10 @@ export const config = {
 }
 
 export const TextUI = styled.span`
+  display: inline-flex;
+  transition: opacity linear 150ms;
+`
+export const IconUI = styled(Icon)`
   display: inline-flex;
   transition: opacity linear 150ms;
 `
@@ -36,11 +41,27 @@ export const CopyButtonUI = styled(Button)`
 
   &.c-CopyButton {
     min-width: 60px;
+
+    &.is-with-icon {
+      min-width: 40px;
+      max-width: 40px;
+      padding: 0;
+      text-align: center;
+      background: ${getColor('grey.200')};
+      color: ${getColor('charcoal.300')};
+
+      &:hover {
+        background: ${getColor('blue.100')};
+      }
+    }
   }
 
   &.is-copyConfirmed {
     border-color: ${config.copyConfirmed.background} !important;
     ${TextUI} {
+      opacity: 0;
+    }
+    ${IconUI} {
       opacity: 0;
     }
     ${ConfirmationIconWrapperUI} {
