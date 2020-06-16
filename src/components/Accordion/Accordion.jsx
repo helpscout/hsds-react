@@ -99,7 +99,21 @@ const Accordion = props => {
   const isSeamless = accordion.isSeamless || isSeamlessProps
 
   useEffect(() => {
-    setOpenSections(buildOpenSections(openSectionIds))
+    let sectionIds = {}
+
+    if (openSectionIds.length === 0) {
+      setOpenSections(sectionIds)
+      return
+    }
+
+    const { allowMultiple } = props
+
+    if (!allowMultiple) {
+      sectionIds[openSectionIds[0]] = true
+    } else {
+      sectionIds = buildOpenSections(openSectionIds)
+    }
+    setOpenSections(sectionIds)
   }, [stringifyArray(openSectionIds)])
 
   const onClose = uuid => {

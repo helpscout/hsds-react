@@ -1,5 +1,5 @@
 import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
-import { select, text, boolean, number } from '@storybook/addon-knobs'
+import { select, text, boolean, number, array } from '@storybook/addon-knobs'
 import {
   data,
   dataWithIds,
@@ -29,12 +29,13 @@ vertically stacked section which can be expanded or collapsed.
     isSeamless={boolean('isSeamless', false)}
     allowMultiple={boolean('allowMultiple', false)}
     pressDelay={number('pressDelay', 300)}
+    openSectionIds={array('openSectionIds', [])}
     onOpen={onOpen}
     onClose={onClose}
     onSortEnd={onSortEnd}
     size={select('Sizes', {extraSmall: 'xs', small: 'sm', medium: 'md', large: 'lg'}, 'md')}
   >
-      {createSections(data)}
+      {createSections(dataWithIds)}
     </Accordion>
   </Story>
 </Preview>
