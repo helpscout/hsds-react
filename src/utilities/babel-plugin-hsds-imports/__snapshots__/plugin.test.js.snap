@@ -92,11 +92,45 @@ import _ from 'lodash'
 
 `;
 
+exports[`hsds-component-import Should not change on inexistent/invalid components on a multiple import: Should not change on inexistent/invalid components on a multiple import 1`] = `
+
+import { Button, Hello } from '@helpscout/hsds-react'
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import { Button, Hello } from '@helpscout/hsds-react'
+
+
+`;
+
+exports[`hsds-component-import Should not change on inexistent/invalid components: Should not change on inexistent/invalid components 1`] = `
+
+import { Hello } from '@helpscout/hsds-react'
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import { Hello } from '@helpscout/hsds-react'
+
+
+`;
+
+exports[`hsds-component-import Should not change other imports: Should not change other imports 1`] = `
+
+import { OverlayUI } from '@helpscout/hsds-react/components/Overlay/Overlay.css'
+import Keys from '@helpscout/hsds-react/constants/Keys'
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import { OverlayUI } from '@helpscout/hsds-react/components/Overlay/Overlay.css'
+import Keys from '@helpscout/hsds-react/constants/Keys'
+
+
+`;
+
 exports[`hsds-component-import Should work with mixed stuff: Should work with mixed stuff 1`] = `
 
 import Button from '@helpscout/hsds-react'
 import Page from '@helpscout/hsds-react/components/Page'
-import { Hello } from '@helpscout/hsds-react'
 import { Tooltip, Select } from '@helpscout/hsds-react/components/'
 import React from 'react'
 import { getColor } from '@helpscout/hsds-react/styles/utilities/color'
@@ -105,7 +139,6 @@ import { getColor } from '@helpscout/hsds-react/styles/utilities/color'
 
 import Select from '@helpscout/hsds-react/components/Select'
 import Tooltip from '@helpscout/hsds-react/components/Tooltip'
-import Hello from '@helpscout/hsds-react/components/Hello'
 import Page from '@helpscout/hsds-react/components/Page'
 import Button from '@helpscout/hsds-react/components/Button'
 import React from 'react'
@@ -118,14 +151,12 @@ exports[`hsds-component-import Should work with options (2+): Should work with o
 
 import Button from 'hsds-react-next'
 import Page from 'hsds-react-next/components/Page'
-import { Hello } from 'hsds-react-next'
 import { Tooltip, Select } from '@helpscout/hsds-react/components/'
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
 import Select from '@helpscout/hsds-react/components/Select'
 import Tooltip from '@helpscout/hsds-react/components/Tooltip'
-import Hello from 'hsds-react-next/components/Hello'
 import Page from 'hsds-react-next/components/Page'
 import Button from 'hsds-react-next/components/Button'
 
@@ -136,11 +167,9 @@ exports[`hsds-component-import Should work with options (single): Should work wi
 
 import Button from 'hsds-react-next'
 import Page from 'hsds-react-next/components/Page'
-import { Hello } from 'hsds-react-next'
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-import Hello from 'hsds-react-next/components/Hello'
 import Page from 'hsds-react-next/components/Page'
 import Button from 'hsds-react-next/components/Button'
 
@@ -151,11 +180,9 @@ exports[`hsds-component-import Should work with options: Should work with option
 
 import Button from 'hsds-react-next'
 import Page from 'hsds-react-next/components/Page'
-import { Hello } from 'hsds-react-next'
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-import Hello from 'hsds-react-next/components/Hello'
 import Page from 'hsds-react-next/components/Page'
 import Button from 'hsds-react-next/components/Button'
 

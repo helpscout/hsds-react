@@ -47,6 +47,26 @@ pluginTester({
       `,
     },
     {
+      title: 'Should not change on inexistent/invalid components',
+      code: `
+      import { Hello } from '@helpscout/hsds-react'
+      `,
+    },
+    {
+      title:
+        'Should not change on inexistent/invalid components on a multiple import',
+      code: `
+      import { Button, Hello } from '@helpscout/hsds-react'
+      `,
+    },
+    {
+      title: 'Should not change other imports',
+      code: `
+      import { OverlayUI } from '@helpscout/hsds-react/components/Overlay/Overlay.css'
+      import Keys from '@helpscout/hsds-react/constants/Keys'
+      `,
+    },
+    {
       title: 'Should not change HSDS utilities',
       code: `
       import { getColor } from '@helpscout/hsds-react/styles/utilities/color'
@@ -63,7 +83,6 @@ pluginTester({
       code: `
       import Button from '@helpscout/hsds-react'
       import Page from '@helpscout/hsds-react/components/Page'
-      import { Hello } from '@helpscout/hsds-react'
       import { Tooltip, Select } from '@helpscout/hsds-react/components/'
       import React from 'react'
       import { getColor } from '@helpscout/hsds-react/styles/utilities/color'
@@ -77,7 +96,6 @@ pluginTester({
       code: `
       import Button from 'hsds-react-next'
       import Page from 'hsds-react-next/components/Page'
-      import { Hello } from 'hsds-react-next'
       `,
     },
     {
@@ -88,7 +106,6 @@ pluginTester({
       code: `
       import Button from 'hsds-react-next'
       import Page from 'hsds-react-next/components/Page'
-      import { Hello } from 'hsds-react-next'
       `,
     },
     {
@@ -99,7 +116,6 @@ pluginTester({
       code: `
       import Button from 'hsds-react-next'
       import Page from 'hsds-react-next/components/Page'
-      import { Hello } from 'hsds-react-next'
       import { Tooltip, Select } from '@helpscout/hsds-react/components/'
       `,
     },
