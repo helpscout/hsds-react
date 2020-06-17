@@ -9,7 +9,6 @@ class Timeline extends React.PureComponent {
 
   render() {
     const { children, className, ...rest } = this.props
-
     const componentClassName = classNames('c-Timeline', className)
 
     return (
@@ -23,6 +22,10 @@ class Timeline extends React.PureComponent {
 Timeline.propTypes = {
   children: PropTypes.any,
   className: PropTypes.string,
+}
+
+Timeline.defaultProps = {
+  'data-cy': 'Timeline',
 }
 
 export default Timeline

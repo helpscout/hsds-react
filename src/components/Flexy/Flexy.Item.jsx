@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { FlexyItemUI } from './Flexy.css'
 
-export const Item = ({ children, className, inline, ...rest }) => (
+export const FlexyItem = ({ children, className, inline, ...rest }) => (
   <FlexyItemUI
     {...getValidProps(rest)}
     className={classNames(
@@ -17,14 +17,15 @@ export const Item = ({ children, className, inline, ...rest }) => (
   </FlexyItemUI>
 )
 
-Item.propTypes = {
+FlexyItem.propTypes = {
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   inline: PropTypes.bool,
 }
 
-Item.defaultProps = {
+FlexyItem.defaultProps = {
   inline: false,
+  'data-cy': 'FlexyItem',
 }
 
-Item.displayName = 'FlexyItem'
-
-export default Item
+export default FlexyItem

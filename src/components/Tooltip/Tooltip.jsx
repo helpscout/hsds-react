@@ -1,19 +1,15 @@
 import React, { createContext, useContext, useState } from 'react'
 import PropTypes from 'prop-types'
-
 import Tippy from '@tippyjs/react/headless'
-
 import { isFunction } from '../../utilities/is'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-
 import {
   ArrowUI,
   TooltipAnimationUI,
   TooltipTriggerUI,
   TooltipUI,
 } from './Tooltip.css'
-
 import { GlobalContext } from '../HSDS/Provider'
 
 export const TooltipContext = createContext({})
@@ -168,6 +164,10 @@ const Tooltip = props => {
   )
 }
 
+Tooltip.propTypes = {
+  closeOnEscPress: PropTypes.bool,
+}
+
 Tooltip.defaultProps = {
   animationDelay: 0,
   animationDuration: 200,
@@ -178,10 +178,6 @@ Tooltip.defaultProps = {
   isOpen: false,
   placement: 'top',
   triggerOn: 'mouseenter focus',
-}
-
-Tooltip.propTypes = {
-  closeOnEscPress: PropTypes.bool,
 }
 
 export default Tooltip

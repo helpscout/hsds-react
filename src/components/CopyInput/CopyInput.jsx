@@ -3,29 +3,11 @@ import PropTypes from 'prop-types'
 import CopyButton from '../CopyButton'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-
 import { copyToClipboard, selectText } from '../../utilities/clipboard'
 import { noop } from '../../utilities/other'
 import { CopyInputUI } from './CopyInput.css'
 
 class CopyInput extends React.PureComponent {
-  static propTypes = {
-    copyToClipboard: PropTypes.bool,
-    className: PropTypes.string,
-    innerRef: PropTypes.func,
-    onCopy: PropTypes.func,
-    readOnly: PropTypes.bool,
-    value: PropTypes.string,
-  }
-
-  static defaultProps = {
-    copyToClipboard: true,
-    innerRef: noop,
-    onCopy: noop,
-    readOnly: true,
-    value: '',
-  }
-
   inputNode
   copyButtonNode
 
@@ -82,6 +64,26 @@ class CopyInput extends React.PureComponent {
       />
     )
   }
+}
+
+CopyInput.propTypes = {
+  copyToClipboard: PropTypes.bool,
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  innerRef: PropTypes.func,
+  onCopy: PropTypes.func,
+  readOnly: PropTypes.bool,
+  value: PropTypes.string,
+}
+
+CopyInput.defaultProps = {
+  copyToClipboard: true,
+  'data-cy': 'CopyInput',
+  innerRef: noop,
+  onCopy: noop,
+  readOnly: true,
+  value: '',
 }
 
 export default CopyInput

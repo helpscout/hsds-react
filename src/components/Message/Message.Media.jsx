@@ -3,78 +3,13 @@ import PropTypes from 'prop-types'
 import Link from '../Link'
 import Spinner from '../Spinner'
 import Modal from '../Modal'
-import Caption from './Message.Caption'
+import MessageCaption from './Message.Caption'
 import classNames, { BEM } from '../../utilities/classNames'
 import { isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import { MediaUI, ImageUI } from './Message.Media.css'
 
-export class Media extends React.Component {
-  static propTypes = {
-    body: PropTypes.string,
-    caption: PropTypes.string,
-    className: PropTypes.string,
-    error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-    errorMessage: PropTypes.string,
-    from: PropTypes.any,
-    height: PropTypes.number,
-    icon: PropTypes.string,
-    imageAlt: PropTypes.string,
-    imageUrl: PropTypes.string,
-    isNote: PropTypes.bool,
-    isUploading: PropTypes.bool,
-    ltr: PropTypes.bool,
-    maxHeight: PropTypes.number,
-    maxWidth: PropTypes.number,
-    modalAnimationDuration: PropTypes.number,
-    modalAnimationEasing: PropTypes.string,
-    modalAnimationSequence: PropTypes.string,
-    modalCardClassName: PropTypes.string,
-    modalClassName: PropTypes.string,
-    modalWrapperClassName: PropTypes.string,
-    onClick: PropTypes.func,
-    onErrorTryAgainClick: PropTypes.func,
-    onMediaClick: PropTypes.func,
-    onMediaLoad: PropTypes.func,
-    openMediaInModal: PropTypes.bool,
-    overlayAnimationDuration: PropTypes.number,
-    primary: PropTypes.bool,
-    read: PropTypes.bool,
-    rtl: PropTypes.bool,
-    showErrorTryAgainLink: PropTypes.bool,
-    size: PropTypes.oneOf(['md', 'sm', '']),
-    thumbnailImageUrl: PropTypes.string,
-    timestamp: PropTypes.string,
-    title: PropTypes.string,
-    to: PropTypes.any,
-    tryAgainLabel: PropTypes.string,
-    typing: PropTypes.bool,
-    width: PropTypes.number,
-  }
-
-  static defaultProps = {
-    className: '',
-    errorMessage: `Couldn't send.`,
-    onErrorTryAgainClick: noop,
-    onMediaClick: noop,
-    onMediaLoad: noop,
-    openMediaInModal: true,
-    maxHeight: 250,
-    maxWidth: 350,
-    modalAnimationDuration: 250,
-    modalAnimationEasing: 'ease',
-    overlayAnimationDuration: 250,
-    modalAnimationSequence: 'fade up',
-    showErrorTryAgainLink: true,
-    tryAgainLabel: 'Try again',
-    isUploading: false,
-  }
-  static contextTypes = {
-    theme: noop,
-  }
-
-  static displayName = 'Message.Media'
-
+export class MessageMedia extends React.Component {
   /**
    * Retrieves the appropriate caption for the media.
    *
@@ -109,11 +44,11 @@ export class Media extends React.Component {
     return (
       shouldRender && (
         <div className="c-MessageMedia__caption">
-          <Caption size="11">
+          <MessageCaption size="11">
             {spinnerMarkup}
             {captionText}
             {tryAgainMarkup}
-          </Caption>
+          </MessageCaption>
         </div>
       )
     )
@@ -218,19 +153,15 @@ export class Media extends React.Component {
     } = this.props
 
     const { theme } = this.context
-
     const isThemeEmbed = theme === 'embed'
     const maybeOpenMediaInModal = !isThemeEmbed && openMediaInModal
-
     const componentClassName = classNames(
       'c-MessageMedia',
       error && 'is-error',
       className
     )
     const bem = BEM(componentClassName)
-
     const inlineCaptionMarkup = this.getCaptionMarkup()
-
     const mediaMarkup = this.getMediaMarkup({
       src: thumbnailImageUrl || imageUrl,
       maxWidth,
@@ -240,7 +171,6 @@ export class Media extends React.Component {
       maxWidth: 980,
       maxHeight: 820,
     })
-
     const mediaContainerMarkup = imageUrl ? (
       maybeOpenMediaInModal ? (
         <div className="c-MessageMedia__mediaContainer">
@@ -296,4 +226,71 @@ export class Media extends React.Component {
   }
 }
 
-export default Media
+MessageMedia.propTypes = {
+  body: PropTypes.string,
+  caption: PropTypes.string,
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  errorMessage: PropTypes.string,
+  from: PropTypes.any,
+  height: PropTypes.number,
+  icon: PropTypes.string,
+  imageAlt: PropTypes.string,
+  imageUrl: PropTypes.string,
+  isNote: PropTypes.bool,
+  isUploading: PropTypes.bool,
+  ltr: PropTypes.bool,
+  maxHeight: PropTypes.number,
+  maxWidth: PropTypes.number,
+  modalAnimationDuration: PropTypes.number,
+  modalAnimationEasing: PropTypes.string,
+  modalAnimationSequence: PropTypes.string,
+  modalCardClassName: PropTypes.string,
+  modalClassName: PropTypes.string,
+  modalWrapperClassName: PropTypes.string,
+  onClick: PropTypes.func,
+  onErrorTryAgainClick: PropTypes.func,
+  onMediaClick: PropTypes.func,
+  onMediaLoad: PropTypes.func,
+  openMediaInModal: PropTypes.bool,
+  overlayAnimationDuration: PropTypes.number,
+  primary: PropTypes.bool,
+  read: PropTypes.bool,
+  rtl: PropTypes.bool,
+  showErrorTryAgainLink: PropTypes.bool,
+  size: PropTypes.oneOf(['md', 'sm', '']),
+  thumbnailImageUrl: PropTypes.string,
+  timestamp: PropTypes.string,
+  title: PropTypes.string,
+  to: PropTypes.any,
+  tryAgainLabel: PropTypes.string,
+  typing: PropTypes.bool,
+  width: PropTypes.number,
+}
+
+MessageMedia.defaultProps = {
+  className: '',
+  'data-cy': 'MessageMedia',
+  errorMessage: `Couldn't send.`,
+  onErrorTryAgainClick: noop,
+  onMediaClick: noop,
+  onMediaLoad: noop,
+  openMediaInModal: true,
+  maxHeight: 250,
+  maxWidth: 350,
+  modalAnimationDuration: 250,
+  modalAnimationEasing: 'ease',
+  overlayAnimationDuration: 250,
+  modalAnimationSequence: 'fade up',
+  showErrorTryAgainLink: true,
+  tryAgainLabel: 'Try again',
+  isUploading: false,
+}
+
+MessageMedia.contextTypes = {
+  theme: noop,
+}
+
+export default MessageMedia

@@ -5,22 +5,7 @@ import { BlockUI } from './Dropdown.css'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
-export class Block extends React.PureComponent {
-  static displayName = 'DropdownBlock'
-
-  static propTypes = {
-    className: PropTypes.string,
-    innerRef: PropTypes.func,
-    isSeamless: PropTypes.bool,
-    isStretchy: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    innerRef: noop,
-    isSeamless: false,
-    isStretchy: false,
-  }
-
+export class DropdownBlock extends React.PureComponent {
   render() {
     const {
       children,
@@ -50,4 +35,20 @@ export class Block extends React.PureComponent {
   }
 }
 
-export default Block
+DropdownBlock.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  innerRef: PropTypes.func,
+  isSeamless: PropTypes.bool,
+  isStretchy: PropTypes.bool,
+}
+
+DropdownBlock.defaultProps = {
+  'data-cy': 'DropdownBlock',
+  innerRef: noop,
+  isSeamless: false,
+  isStretchy: false,
+}
+
+export default DropdownBlock

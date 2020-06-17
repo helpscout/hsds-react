@@ -1,12 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { calculateTimeoutPeriod } from '../../utilities/timestamp'
 
 class Time extends React.Component {
-  static defaultProps = {
-    formatter: timestamp => timestamp,
-    live: false,
-  }
   timeoutId = undefined
   _isMounted = false
 
@@ -64,10 +61,10 @@ class Time extends React.Component {
   }
 
   render() {
-    const { className, formatter, timestamp } = this.props
+    const { className, formatter, timestamp, ...rest } = this.props
 
     return (
-      <time className={className} dateTime={timestamp}>
+      <time {...getValidProps(rest)} className={className} dateTime={timestamp}>
         {formatter(timestamp)}
       </time>
     )
@@ -76,9 +73,17 @@ class Time extends React.Component {
 
 Time.propTypes = {
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   formatter: PropTypes.func,
   live: PropTypes.bool,
   timestamp: PropTypes.string,
+}
+
+Time.defaultProps = {
+  'data-cy': 'Time',
+  formatter: timestamp => timestamp,
+  live: false,
 }
 
 export default Time

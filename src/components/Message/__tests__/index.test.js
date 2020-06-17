@@ -1,9 +1,9 @@
-import { default as Message, Provider } from '../index'
+import { default as Message, MessageProvider } from '../index'
 
 test('Message is exported', () => {
   expect(Message).toBeTruthy()
 })
 
 test('Provider is exported', () => {
-  expect(Provider).toBeTruthy()
+  expect(MessageProvider).toBeTruthy()
 })

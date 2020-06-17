@@ -2,13 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import ActionFooter from './Modal.ActionFooter'
-import Body from './Modal.Body'
-import Content from './Modal.Content'
-import Footer from './Modal.Footer'
-import Header from './Modal.Header'
-import HeaderV2 from './Modal.HeaderV2'
-import Overlay from './Modal.Overlay'
+import ModalActionFooter from './Modal.ActionFooter'
+import ModalBody from './Modal.Body'
+import ModalContent from './Modal.Content'
+import ModalFooter from './Modal.Footer'
+import ModalHeader from './Modal.Header'
+import ModalHeaderV2 from './Modal.HeaderV2'
+import ModalOverlay from './Modal.Overlay'
 import CloseButton from '../CloseButton'
 import EventListener from '../EventListener'
 import KeypressListener from '../KeypressListener'
@@ -19,7 +19,6 @@ import { noop } from '../../utilities/other'
 import { findFocusableNodes } from '../../utilities/focus'
 import { getClosestDocument, isNodeElement } from '../../utilities/node'
 import { MODAL_KIND, getModalKindClassName } from './Modal.utils'
-
 import {
   ModalUI,
   InnerWrapperUI,
@@ -33,14 +32,12 @@ const portalOptions = {
   id: 'Modal',
   zIndex: modalBaseZIndex,
 }
-
 const modalV2Animation = {
   delay: 0,
   duration: 250,
   easing: 'boop',
   sequence: 'fade scale',
 }
-
 const overlayV2Animation = {
   delay: 0,
   duration: 250,
@@ -49,114 +46,21 @@ const overlayV2Animation = {
 }
 
 class Modal extends React.PureComponent {
-  static propTypes = {
-    cardClassName: PropTypes.string,
-    className: PropTypes.string,
-    closeIcon: PropTypes.bool,
-    closeIconOffset: PropTypes.number,
-    closeIconRepositionDelay: PropTypes.number,
-    closePortal: PropTypes.func,
-    containTabKeyPress: PropTypes.bool,
-    description: PropTypes.string,
-    exact: PropTypes.bool,
-    forceClosePortal: PropTypes.func,
-    id: PropTypes.string,
-    isHsApp: PropTypes.bool,
-    isOpen: PropTypes.bool,
-    icon: PropTypes.string,
-    iconSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    illo: PropTypes.any,
-    illoSize: PropTypes.number,
-    kind: PropTypes.string,
-    modalAnimationDelay: PropTypes.number,
-    modalAnimationDuration: PropTypes.number,
-    modalAnimationEasing: PropTypes.string,
-    modalAnimationSequence: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-    ]),
-    modalFocusTimeout: PropTypes.number,
-    numSteps: PropTypes.number,
-    onBeforeClose: PropTypes.func,
-    onBeforeOpen: PropTypes.func,
-    onClose: PropTypes.func,
-    onOpen: PropTypes.func,
-    overlayAnimationDelay: PropTypes.number,
-    overlayAnimationDuration: PropTypes.number,
-    overlayAnimationEasing: PropTypes.string,
-    overlayAnimationSequence: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-    ]),
-    overlayClassName: PropTypes.string,
-    path: PropTypes.string,
-    portalIsOpen: PropTypes.bool,
-    renderTo: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    seamless: PropTypes.bool,
-    state: PropTypes.string,
-    status: PropTypes.string,
-    step: PropTypes.number,
-    style: PropTypes.any,
-    timeout: PropTypes.number,
-    trigger: PropTypes.any,
-    version: PropTypes.number,
-    wrapperClassName: PropTypes.string,
-    zIndex: PropTypes.number,
-  }
-
-  static defaultProps = {
-    closeIcon: true,
-    closeIconOffset: 10,
-    closeIconRepositionDelay: 0,
-    closePortal: noop,
-    containTabKeyPress: true,
-    description: null,
-    icon: null,
-    iconSize: '24',
-    illo: null,
-    illoSize: 60,
-    isHsApp: false,
-    isOpen: false,
-    kind: MODAL_KIND.DEFAULT,
-    modalAnimationDelay: 0,
-    modalAnimationDuration: 200,
-    modalAnimationEasing: 'bounce',
-    modalAnimationSequence: 'fade down',
-    modalFocusTimeout: 90,
-    numSteps: 1,
-    onScroll: noop,
-    overlayAnimationDelay: 0,
-    overlayAnimationDuration: 200,
-    overlayAnimationEasing: 'ease',
-    overlayAnimationSequence: 'fade',
-    portalIsOpen: true,
-    seamless: false,
-    state: '',
-    status: '',
-    step: 1,
-    style: {},
-    timeout: 80,
-    version: 1,
-    wrapperClassName: 'c-ModalWrapper',
-    zIndex: 1,
-  }
-
   static childContextTypes = {
     positionCloseNode: noop,
   }
-
-  static ActionFooter = ActionFooter
-  static Body = Body
-  static Content = Content
-  static Footer = Footer
-  static Header = Header
-  static Overlay = Overlay
-  static HeaderV2 = HeaderV2
+  static ActionFooter = ModalActionFooter
+  static Body = ModalBody
+  static Content = ModalContent
+  static Footer = ModalFooter
+  static Header = ModalHeader
+  static Overlay = ModalOverlay
+  static HeaderV2 = ModalHeaderV2
 
   documentnode
   cardnode
   closenode
-  scrollablenode
+  scrollableNode
 
   UNSAFE_componentWillMount() {
     this.documentNode = getClosestDocument(ReactDOM.findDOMNode(this))
@@ -266,7 +170,7 @@ class Modal extends React.PureComponent {
 
       if (
         child &&
-        (displayName === 'Modal.Content' || displayName === 'Modal.Body')
+        (displayName === 'ModalContent' || displayName === 'ModalBody')
       ) {
         return React.cloneElement(child, {
           scrollableRef: this.setScrollableNode,
@@ -302,21 +206,17 @@ class Modal extends React.PureComponent {
     } = this.props
 
     const v2 = version === 2
-
     const modalKindClassName = getModalKindClassName(kind)
-
     const componentClassName = classNames(
       'c-Modal__Card',
       v2 && 'is-v2',
       v2 && modalKindClassName,
       cardClassName
     )
-
     const childrenMarkup = this.getChildrenMarkup()
     const closeMarkup = v2 ? null : this.getCloseMarkup()
-
     const headerMarkup = v2 ? (
-      <HeaderV2
+      <ModalHeaderV2
         icon={icon}
         iconSize={iconSize}
         illo={illo}
@@ -328,7 +228,6 @@ class Modal extends React.PureComponent {
         step={step}
       />
     ) : null
-
     const contentMarkup = !seamless ? (
       <CardUI
         {...getValidProps(rest)}
@@ -402,7 +301,7 @@ class Modal extends React.PureComponent {
       overlayAnimationSequence: sequence,
     }
 
-    return <Overlay {...props} />
+    return <ModalOverlay {...props} />
   }
 
   setCardNode = node => {
@@ -420,6 +319,7 @@ class Modal extends React.PureComponent {
   render() {
     const {
       className,
+      'data-cy': dataCy,
       isOpen,
       isHsApp,
       kind,
@@ -431,9 +331,7 @@ class Modal extends React.PureComponent {
       ...rest
     } = this.props
     const v2 = version === 2
-
     const modalKindClassName = getModalKindClassName(kind)
-
     const componentClassName = classNames(
       'c-Modal',
       v2 && 'v2',
@@ -442,19 +340,18 @@ class Modal extends React.PureComponent {
       v2 && modalKindClassName,
       className
     )
-
     const innerWrapperClassName = classNames(
       'c-Modal__innerWrapper',
       v2 && 'v2',
       v2 && modalKindClassName
     )
-
     const styles = { ...style, zIndex }
 
     return (
       <ModalUI
         {...getValidProps(rest)}
         className={componentClassName}
+        data-cy={dataCy}
         role="document"
         style={styles}
       >
@@ -481,6 +378,101 @@ class Modal extends React.PureComponent {
       </ModalUI>
     )
   }
+}
+
+Modal.propTypes = {
+  cardClassName: PropTypes.string,
+  className: PropTypes.string,
+  closeIcon: PropTypes.bool,
+  closeIconOffset: PropTypes.number,
+  closeIconRepositionDelay: PropTypes.number,
+  closePortal: PropTypes.func,
+  containTabKeyPress: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  description: PropTypes.string,
+  exact: PropTypes.bool,
+  forceClosePortal: PropTypes.func,
+  id: PropTypes.string,
+  isHsApp: PropTypes.bool,
+  isOpen: PropTypes.bool,
+  icon: PropTypes.string,
+  iconSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  illo: PropTypes.any,
+  illoSize: PropTypes.number,
+  kind: PropTypes.string,
+  modalAnimationDelay: PropTypes.number,
+  modalAnimationDuration: PropTypes.number,
+  modalAnimationEasing: PropTypes.string,
+  modalAnimationSequence: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
+  modalFocusTimeout: PropTypes.number,
+  numSteps: PropTypes.number,
+  onBeforeClose: PropTypes.func,
+  onBeforeOpen: PropTypes.func,
+  onClose: PropTypes.func,
+  onOpen: PropTypes.func,
+  overlayAnimationDelay: PropTypes.number,
+  overlayAnimationDuration: PropTypes.number,
+  overlayAnimationEasing: PropTypes.string,
+  overlayAnimationSequence: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
+  overlayClassName: PropTypes.string,
+  path: PropTypes.string,
+  portalIsOpen: PropTypes.bool,
+  renderTo: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  seamless: PropTypes.bool,
+  state: PropTypes.string,
+  status: PropTypes.string,
+  step: PropTypes.number,
+  style: PropTypes.any,
+  timeout: PropTypes.number,
+  trigger: PropTypes.any,
+  version: PropTypes.number,
+  wrapperClassName: PropTypes.string,
+  zIndex: PropTypes.number,
+}
+
+Modal.defaultProps = {
+  closeIcon: true,
+  closeIconOffset: 10,
+  closeIconRepositionDelay: 0,
+  closePortal: noop,
+  containTabKeyPress: true,
+  'data-cy': 'Modal',
+  description: null,
+  icon: null,
+  iconSize: '24',
+  illo: null,
+  illoSize: 60,
+  isHsApp: false,
+  isOpen: false,
+  kind: MODAL_KIND.DEFAULT,
+  modalAnimationDelay: 0,
+  modalAnimationDuration: 200,
+  modalAnimationEasing: 'bounce',
+  modalAnimationSequence: 'fade down',
+  modalFocusTimeout: 90,
+  numSteps: 1,
+  onScroll: noop,
+  overlayAnimationDelay: 0,
+  overlayAnimationDuration: 200,
+  overlayAnimationEasing: 'ease',
+  overlayAnimationSequence: 'fade',
+  portalIsOpen: true,
+  seamless: false,
+  state: '',
+  status: '',
+  step: 1,
+  style: {},
+  timeout: 80,
+  version: 1,
+  wrapperClassName: 'c-ModalWrapper',
+  zIndex: 1,
 }
 
 export const ModalComponent = Modal

@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Animate from '../Animate'
 import Badge from '../Badge'
 import StatusDot from '../StatusDot'
 import { classNames } from '../../utilities/classNames'
-
 import { StatusBadgeUI, StatusDotUI } from './StatusBadge.css'
 
 const StatusBadge = props => {
@@ -43,7 +43,7 @@ const StatusBadge = props => {
   )
 
   return (
-    <StatusBadgeUI className={componentClassName} {...rest}>
+    <StatusBadgeUI {...getValidProps(rest)} className={componentClassName}>
       {statusDotMarkup}
       <Badge isSquare className="c-StatusBadge__badge">
         {count}
@@ -52,10 +52,6 @@ const StatusBadge = props => {
   )
 }
 
-StatusBadge.displayName = 'StatusBadge'
-StatusBadge.defaultProps = {
-  count: 0,
-}
 StatusBadge.propTypes = {
   /** Color for the StatusDot border. */
   borderColor: PropTypes.string,
@@ -63,6 +59,8 @@ StatusBadge.propTypes = {
   className: PropTypes.string,
   /** Count to display within the Badge. */
   count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   /** Color for the StatusDot's outer border. */
   outerBorderColor: PropTypes.string,
   /** Status style to render to the StatusDot. */
@@ -77,6 +75,11 @@ StatusBadge.propTypes = {
   ]),
   /** Custom text for the HTML `title` attributes. */
   title: PropTypes.string,
+}
+
+StatusBadge.defaultProps = {
+  count: 0,
+  'data-cy': 'StatusBadge',
 }
 
 export default StatusBadge

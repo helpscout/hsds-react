@@ -56,12 +56,14 @@ export const NavLink = ({
     />
   )
 }
-NavLink.displayName = 'Nav.Link'
+
 NavLink.className = 'c-NavLink'
+
 NavLink.defaultProps = {
   'aria-current': 'page',
   activeClassName: 'active is-active',
   activeStyle: {},
+  'data-cy': 'NavLink',
   style: {},
 }
 

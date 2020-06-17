@@ -4,17 +4,9 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames, variantClassNames } from '../../utilities/classNames'
 import { ColUI } from './Grid.Col.css'
 
-class Col extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  }
-
-  static displayName = 'GridCol'
-
+class GridCol extends React.PureComponent {
   render() {
     const { className, children, size, ...rest } = this.props
-
     const sizeClassName = size ? variantClassNames('is', size) : null
     const componentClassName = classNames('c-Col', sizeClassName, className)
 
@@ -26,4 +18,15 @@ class Col extends React.PureComponent {
   }
 }
 
-export default Col
+GridCol.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+}
+
+GridCol.defaultProps = {
+  'data-cy': 'GridCol',
+}
+
+export default GridCol

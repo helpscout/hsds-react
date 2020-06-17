@@ -1,28 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { requestAnimationFrame, noop } from '../../utilities/other'
 import { CollapsibleUI } from './Collapsible.css'
 
 class Collapsible extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-    duration: PropTypes.number,
-    durationOpen: PropTypes.number,
-    durationClose: PropTypes.number,
-    isOpen: PropTypes.bool,
-    onOpen: PropTypes.func,
-    onClose: PropTypes.func,
-    style: PropTypes.any,
-  }
-
-  static defaultProps = {
-    duration: 300,
-    isOpen: false,
-    onOpen: noop,
-    onClose: noop,
-  }
-
   state = {
     height: 0,
     animationState: 'idle',
@@ -206,7 +189,7 @@ class Collapsible extends React.Component {
 
     return (
       <CollapsibleUI
-        {...rest}
+        {...getValidProps(rest)}
         aria-hidden={!isOpen}
         style={componentStyle}
         className={componentClassName}
@@ -216,6 +199,27 @@ class Collapsible extends React.Component {
       </CollapsibleUI>
     )
   }
+}
+
+Collapsible.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  duration: PropTypes.number,
+  durationOpen: PropTypes.number,
+  durationClose: PropTypes.number,
+  isOpen: PropTypes.bool,
+  onOpen: PropTypes.func,
+  onClose: PropTypes.func,
+  style: PropTypes.any,
+}
+
+Collapsible.defaultProps = {
+  'data-cy': 'Collapsible',
+  duration: 300,
+  isOpen: false,
+  onOpen: noop,
+  onClose: noop,
 }
 
 export default Collapsible

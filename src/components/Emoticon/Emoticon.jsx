@@ -7,39 +7,6 @@ import { EmoticonUI, IconUI } from './Emoticon.css'
 import { getName, getIcon } from './Emoticon.utils'
 
 export class Emoticon extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    center: PropTypes.bool,
-    clickable: PropTypes.bool,
-    isActive: PropTypes.bool,
-    isDisabled: PropTypes.bool,
-    innerRef: PropTypes.func,
-    inline: PropTypes.bool,
-    name: PropTypes.oneOf([
-      'happy',
-      'sad',
-      'meh',
-      'reaction-happy',
-      'reaction-sad',
-      'reaction-okay',
-    ]),
-    title: PropTypes.string,
-    size: PropTypes.oneOf(['lg', 'md', 'sm']),
-  }
-
-  static defaultProps = {
-    center: false,
-    clickable: true,
-    inline: false,
-    isActive: true,
-    isDisabled: false,
-    innerRef: noop,
-    name: 'happy',
-    role: 'presentation',
-    size: 'md',
-    title: '',
-  }
-
   static className = 'c-Emoticon'
 
   getClassNames() {
@@ -97,6 +64,42 @@ export class Emoticon extends React.PureComponent {
       </EmoticonUI>
     )
   }
+}
+
+Emoticon.propTypes = {
+  className: PropTypes.string,
+  center: PropTypes.bool,
+  clickable: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  isActive: PropTypes.bool,
+  isDisabled: PropTypes.bool,
+  innerRef: PropTypes.func,
+  inline: PropTypes.bool,
+  name: PropTypes.oneOf([
+    'happy',
+    'sad',
+    'meh',
+    'reaction-happy',
+    'reaction-sad',
+    'reaction-okay',
+  ]),
+  title: PropTypes.string,
+  size: PropTypes.oneOf(['lg', 'md', 'sm']),
+}
+
+Emoticon.defaultProps = {
+  center: false,
+  clickable: true,
+  'data-cy': 'Emoticon',
+  inline: false,
+  isActive: true,
+  isDisabled: false,
+  innerRef: noop,
+  name: 'happy',
+  role: 'presentation',
+  size: 'md',
+  title: '',
 }
 
 export default Emoticon

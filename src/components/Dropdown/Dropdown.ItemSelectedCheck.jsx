@@ -12,7 +12,7 @@ const defaultProps = {
   getState: noop,
 }
 
-const ItemSelectedCheck = (props = defaultProps) => {
+const DropdownItemSelectedCheck = (props = defaultProps) => {
   let isClearerActive = false
   const state = props.getState()
 
@@ -39,7 +39,7 @@ const ItemSelectedCheck = (props = defaultProps) => {
   )
 }
 
-ItemSelectedCheck.defaultProps = defaultProps
-ItemSelectedCheck.displayName = 'DropdownItemSelectedCheck'
+DropdownItemSelectedCheck.defaultProps = defaultProps
+DropdownItemSelectedCheck.displayName = 'DropdownItemSelectedCheck'
 
-export default ItemSelectedCheck
+export default DropdownItemSelectedCheck

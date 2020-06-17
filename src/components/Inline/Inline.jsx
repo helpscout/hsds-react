@@ -1,25 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Item from './Inline.Item'
+import InlineItem from './Inline.Item'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { InlineUI } from './Inline.css'
 
 export class Inline extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    innerRef: PropTypes.func,
-    size: PropTypes.oneOf(['lg', 'md', 'sm', 'xs']),
-  }
-
   static className = 'c-Inline'
-  static defaultProps = {
-    innerRef: noop,
-    size: 'sm',
-  }
-
-  static Item = Item
+  static Item = InlineItem
 
   getClassName() {
     const { className, size } = this.props
@@ -40,6 +29,20 @@ export class Inline extends React.PureComponent {
       </InlineUI>
     )
   }
+}
+
+Inline.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  innerRef: PropTypes.func,
+  size: PropTypes.oneOf(['lg', 'md', 'sm', 'xs']),
+}
+
+Inline.defaultProps = {
+  'data-cy': 'Inline',
+  innerRef: noop,
+  size: 'sm',
 }
 
 export default Inline

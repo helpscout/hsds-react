@@ -1,32 +1,33 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
-
 import { StatusBarButtonUI } from './StatusBar.css'
 
 const StatusBarButton = props => {
   const { children, className, icon, ...rest } = props
-
   const componentClassName = classNames('c-StatusBarButton', className)
-
   const iconMarkup = icon ? (
     <Icon className="c-StatusBarButton__icon" inline name={icon} size="12" />
   ) : null
 
   return (
-    <StatusBarButtonUI className={componentClassName} {...rest}>
+    <StatusBarButtonUI {...getValidProps(rest)} className={componentClassName}>
       {children}
       {iconMarkup}
     </StatusBarButtonUI>
   )
 }
 
-StatusBarButton.displayName = 'StatusBarButton'
 StatusBarButton.propTypes = {
   className: PropTypes.string,
   icon: PropTypes.string,
   children: PropTypes.any,
+}
+
+StatusBarButton.defaultProps = {
+  'data-cy': 'StatusBarButton',
 }
 
 export default StatusBarButton

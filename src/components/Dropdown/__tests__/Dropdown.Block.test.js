@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { Block } from '../Dropdown.Block'
+import { DropdownBlock as Block } from '../Dropdown.Block'
 import { hasClass } from '../../../tests/helpers/enzyme'
 
 describe('className', () => {

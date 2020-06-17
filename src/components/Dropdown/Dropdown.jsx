@@ -12,21 +12,7 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { renderRenderPropComponent } from '../../utilities/component'
 
-// TODO: migrate/create PropTypes for Dropdown
 export class Dropdown extends React.PureComponent {
-  static defaultProps = {
-    ...initialState,
-    allowMultipleSelection: false,
-    contentWindow: window,
-    'data-cy': 'Dropdown',
-    disabled: false,
-    innerRef: noop,
-    menuRef: noop,
-    setMenuNode: noop,
-    setTriggerNode: noop,
-    triggerRef: noop,
-  }
-
   node
   triggerNode
   menuNode
@@ -131,15 +117,15 @@ export class Dropdown extends React.PureComponent {
   }
 
   render() {
-    const { className, envNode, id } = this.props
+    const { className, envNode, id, 'data-cy': dataCy } = this.props
     const componentClassName = classNames(className, 'c-Dropdown')
 
     return (
       <DropdownUI
         className={componentClassName}
-        data-cy={this.props['data-cy']}
         ref={this.setNodeRef}
         id={id}
+        data-cy={dataCy}
       >
         {this.renderAriaLive()}
         <EventListener
@@ -239,6 +225,19 @@ Dropdown.propTypes = Object.assign({}, DropdownMenuDimensions, {
   triggerStyle: PropTypes.any,
   withScrollLock: PropTypes.bool,
 })
+
+Dropdown.defaultProps = {
+  ...initialState,
+  allowMultipleSelection: false,
+  contentWindow: window,
+  'data-cy': 'Dropdown',
+  disabled: false,
+  innerRef: noop,
+  menuRef: noop,
+  setMenuNode: noop,
+  setTriggerNode: noop,
+  triggerRef: noop,
+}
 
 ConnectedDropdown.propTypes = Dropdown.propTypes
 

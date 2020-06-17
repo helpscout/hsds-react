@@ -5,18 +5,6 @@ import { classNames } from '../../utilities/classNames'
 import { TextUI } from './Text.css'
 
 class Text extends React.PureComponent {
-  static defaultProps = {
-    center: false,
-    disableSelect: false,
-    isPlainLink: false,
-    linkStyle: false,
-    noUnderline: false,
-    selector: 'span',
-    size: '13',
-    state: 'default',
-    truncate: false,
-  }
-
   render() {
     const {
       allCaps,
@@ -87,6 +75,8 @@ Text.propTypes = {
   children: PropTypes.any,
   className: PropTypes.string,
   center: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   disableSelect: PropTypes.bool,
   faint: PropTypes.bool,
   isPlainLink: PropTypes.bool,
@@ -130,6 +120,19 @@ Text.propTypes = {
   truncate: PropTypes.bool,
   weight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   wordWrap: PropTypes.bool,
+}
+
+Text.defaultProps = {
+  center: false,
+  'data-cy': 'Text',
+  disableSelect: false,
+  isPlainLink: false,
+  linkStyle: false,
+  noUnderline: false,
+  selector: 'span',
+  size: '13',
+  state: 'default',
+  truncate: false,
 }
 
 export default Text

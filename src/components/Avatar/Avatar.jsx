@@ -26,28 +26,6 @@ import {
 } from './Avatar.css'
 
 export class Avatar extends React.PureComponent {
-  static defaultProps = {
-    actionable: false,
-    actionIcon: 'trash',
-    actionIconSize: '24',
-    active: false,
-    animation: true,
-    animationDuration: 160,
-    animationEasing: 'ease',
-    borderColor: 'transparent',
-    fallbackImage: null,
-    light: false,
-    name: '',
-    outerBorderColor: 'transparent',
-    showStatusBorderColor: false,
-    size: 'md',
-    shape: 'circle',
-    style: {},
-    withShadow: false,
-    onError: noop,
-    onLoad: noop,
-  }
-
   src
 
   state = {
@@ -386,8 +364,30 @@ const avatarPropTypes = {
   statusIcon: PropTypes.string,
   withShadow: PropTypes.bool,
 }
-
 Avatar.propTypes = avatarPropTypes
 AvatarConsumer.propTypes = avatarPropTypes
+
+Avatar.defaultProps = {
+  actionable: false,
+  actionIcon: 'trash',
+  actionIconSize: '24',
+  active: false,
+  animation: true,
+  animationDuration: 160,
+  animationEasing: 'ease',
+  borderColor: 'transparent',
+  'data-cy': 'Avatar',
+  fallbackImage: null,
+  light: false,
+  name: '',
+  outerBorderColor: 'transparent',
+  showStatusBorderColor: false,
+  size: 'md',
+  shape: 'circle',
+  style: {},
+  withShadow: false,
+  onError: noop,
+  onLoad: noop,
+}
 
 export default AvatarConsumer

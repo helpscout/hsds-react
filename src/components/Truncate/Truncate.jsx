@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import EventListener from '../EventListener'
 import Tooltip from '../Tooltip'
 import { classNames } from '../../utilities/classNames'
@@ -8,16 +9,6 @@ import { TruncateUI, TruncateWithSplitterUI } from './Truncate.css'
 import { TRUNCATED_CLASSNAMES } from './Truncate.utils'
 
 export class Truncate extends React.PureComponent {
-  static displayName = 'Truncate'
-  static defaultProps = {
-    ellipsis: '…',
-    limit: 0,
-    showTooltipOnTruncate: false,
-    tooltipModifiers: {},
-    tooltipPlacement: 'top-start',
-    tooltipProps: {},
-    type: 'auto',
-  }
   node = null
   contentNode = null
   _isMounted = false
@@ -167,9 +158,9 @@ export class Truncate extends React.PureComponent {
 
     return (
       <TruncateUI
+        {...getValidProps(rest)}
         className={componentClassName}
         ref={ref => (this.node = ref)}
-        {...rest}
       >
         <EventListener event="resize" handler={this.handleOnResize} />
         {content}
@@ -215,6 +206,8 @@ export function getTruncatedContent(props) {
 Truncate.propTypes = {
   children: PropTypes.any,
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   ellipsis: PropTypes.string,
   limit: PropTypes.number,
   end: PropTypes.number,
@@ -227,6 +220,17 @@ Truncate.propTypes = {
   tooltipPlacement: PropTypes.string,
   tooltipModifiers: PropTypes.object,
   type: PropTypes.oneOf(['auto', 'start', 'middle', 'end']),
+}
+
+Truncate.defaultProps = {
+  'data-cy': 'Truncate',
+  ellipsis: '…',
+  limit: 0,
+  showTooltipOnTruncate: false,
+  tooltipModifiers: {},
+  tooltipPlacement: 'top-start',
+  tooltipProps: {},
+  type: 'auto',
 }
 
 export default Truncate

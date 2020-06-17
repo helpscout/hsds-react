@@ -6,12 +6,10 @@
 
 import React from 'react'
 import { PropTypes } from 'prop-types'
-
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import VisuallyHidden from '../VisuallyHidden'
-
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-
 import { ImageWrapperUI, ImageUI, TitleUI } from './Avatar.css'
 import { getAnimationProps } from './Avatar.utils'
 
@@ -21,29 +19,6 @@ export const clearCache = () => {
 }
 
 export class AvatarImage extends React.PureComponent {
-  static propTypes = {
-    animation: PropTypes.bool,
-    animationDuration: PropTypes.number,
-    animationEasing: PropTypes.string,
-    src: PropTypes.any,
-    light: PropTypes.bool,
-    name: PropTypes.string,
-    onError: PropTypes.func,
-    onLoad: PropTypes.func,
-    title: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  }
-  static defaultProps = {
-    animation: true,
-    animationDuration: 160,
-    animationEasing: 'ease',
-    src: null,
-    onError: noop,
-    onLoad: noop,
-    name: null,
-    title: null,
-    light: false,
-  }
-
   sourceList = []
 
   image
@@ -224,7 +199,7 @@ export class AvatarImage extends React.PureComponent {
   }
 
   render() {
-    const { className, name } = this.props
+    const { className, name, ...rest } = this.props
 
     const componentClassName = classNames(
       'c-Avatar__imageWrapper',
@@ -237,7 +212,11 @@ export class AvatarImage extends React.PureComponent {
 
     const animationProps = getAnimationProps(this.props)
     const contentMarkup = (
-      <ImageWrapperUI className={componentClassName} {...animationProps}>
+      <ImageWrapperUI
+        className={componentClassName}
+        {...getValidProps(rest)}
+        {...animationProps}
+      >
         <ImageUI
           className="c-Avatar__image"
           src={
@@ -254,6 +233,33 @@ export class AvatarImage extends React.PureComponent {
     )
     return hasImage ? contentMarkup : this.getTitleMarkup()
   }
+}
+
+AvatarImage.propTypes = {
+  animation: PropTypes.bool,
+  animationDuration: PropTypes.number,
+  animationEasing: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  src: PropTypes.any,
+  light: PropTypes.bool,
+  name: PropTypes.string,
+  onError: PropTypes.func,
+  onLoad: PropTypes.func,
+  title: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+}
+
+AvatarImage.defaultProps = {
+  animation: true,
+  animationDuration: 160,
+  animationEasing: 'ease',
+  'data-cy': 'AvatarImage',
+  src: null,
+  onError: noop,
+  onLoad: noop,
+  name: null,
+  title: null,
+  light: false,
 }
 
 export default AvatarImage

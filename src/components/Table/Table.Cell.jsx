@@ -5,7 +5,7 @@ import { CellUI } from './Table.css'
 import { TABLE_CLASSNAME } from './Table'
 import { columnShape, dataShape } from './Table.utils'
 
-export default class Cell extends React.PureComponent {
+export default class TableCell extends React.PureComponent {
   getCompoundColumnCellData = () => {
     const { column, row } = this.props
     const cellData = {}
@@ -59,7 +59,7 @@ export default class Cell extends React.PureComponent {
   }
 }
 
-Cell.propTypes = {
+TableCell.propTypes = {
   column: PropTypes.shape(columnShape),
   row: PropTypes.shape(dataShape),
 }

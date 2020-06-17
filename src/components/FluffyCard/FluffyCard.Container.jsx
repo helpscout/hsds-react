@@ -4,16 +4,9 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { FluffyCardContainerUI } from './FluffyCard.css'
 
-class Container extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-  }
-
-  static displayName = 'FluffyCardContainer'
-
+class FluffyCardContainer extends React.PureComponent {
   render() {
     const { children, className, ...rest } = this.props
-
     const componentClassName = classNames('c-FluffyCardContainer', className)
 
     return (
@@ -27,4 +20,12 @@ class Container extends React.PureComponent {
   }
 }
 
-export default Container
+FluffyCardContainer.propTypes = {
+  className: PropTypes.string,
+}
+
+FluffyCardContainer.defaultProps = {
+  'data-cy': 'FluffyCardContainer',
+}
+
+export default FluffyCardContainer

@@ -7,7 +7,6 @@ import pluralize from '../../utilities/pluralize'
 import KeypressListener from '../KeypressListener'
 import Keys from '../../constants/Keys'
 import { formatNumber } from '../../utilities/number'
-
 import {
   PaginationUI,
   InformationUI,
@@ -19,18 +18,6 @@ import Text from '../Text'
 import Icon from '../Icon'
 
 export class Pagination extends React.PureComponent {
-  static defaultProps = {
-    activePage: 1,
-    innerRef: noop,
-    isLoading: false,
-    onChange: noop,
-    rangePerPage: 50,
-    separator: 'of',
-    showNavigation: true,
-    subject: '',
-    totalItems: 0,
-  }
-
   getNumberOfPages() {
     const { rangePerPage, totalItems } = this.props
     return Math.ceil(totalItems / rangePerPage)
@@ -220,8 +207,8 @@ export class Pagination extends React.PureComponent {
 
     return (
       <PaginationUI
-        aria-label="Pagination"
         {...getValidProps(rest)}
+        aria-label="Pagination"
         className={componentClassName}
         ref={innerRef}
       >
@@ -242,6 +229,8 @@ export class Pagination extends React.PureComponent {
 Pagination.propTypes = {
   activePage: PropTypes.number,
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   innerRef: PropTypes.func,
   isLoading: PropTypes.bool,
   onChange: PropTypes.func,
@@ -251,6 +240,19 @@ Pagination.propTypes = {
   showNavigation: PropTypes.bool,
   subject: PropTypes.string,
   totalItems: PropTypes.number,
+}
+
+Pagination.defaultProps = {
+  activePage: 1,
+  'data-cy': 'Pagination',
+  innerRef: noop,
+  isLoading: false,
+  onChange: noop,
+  rangePerPage: 50,
+  separator: 'of',
+  showNavigation: true,
+  subject: '',
+  totalItems: 0,
 }
 
 export default Pagination

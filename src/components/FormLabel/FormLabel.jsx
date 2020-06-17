@@ -5,22 +5,12 @@ import Context from './Context'
 import HelpText from '../HelpText'
 import Label from '../Label'
 import { classNames } from '../../utilities/classNames'
-
 import { createUniqueIDFactory } from '../../utilities/id'
 import { FormLabelUI, FormLabelHelpTextUI } from './FormLabel.css'
 
 const uniqueID = createUniqueIDFactory('FormControl')
 
 class FormLabel extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-    for: PropTypes.string,
-    id: PropTypes.string,
-    label: PropTypes.any,
-    helpText: PropTypes.any,
-    isInline: PropTypes.bool,
-  }
-
   constructor(props) {
     super(props)
 
@@ -100,6 +90,21 @@ class FormLabel extends React.Component {
       </Context.Provider>
     )
   }
+}
+
+FormLabel.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  for: PropTypes.string,
+  id: PropTypes.string,
+  label: PropTypes.any,
+  helpText: PropTypes.any,
+  isInline: PropTypes.bool,
+}
+
+FormLabel.defaultProps = {
+  'data-cy': 'FormLabel',
 }
 
 export default FormLabel

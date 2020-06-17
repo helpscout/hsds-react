@@ -18,33 +18,6 @@ export const NOTIFICATION_TYPE = {
 }
 
 export class Notification extends React.PureComponent {
-  static propTypes = {
-    align: PropTypes.oneOf(['left', 'right']),
-    animationSequence: PropTypes.string,
-    body: PropTypes.string,
-    className: PropTypes.string,
-    from: PropTypes.string,
-    isActive: PropTypes.bool,
-    isDismissable: PropTypes.bool,
-    id: PropTypes.string,
-    onClick: PropTypes.func,
-    onDismiss: PropTypes.func,
-    timeout: PropTypes.number,
-    type: PropTypes.oneOf(['image', 'link', 'text']),
-    truncateLimit: PropTypes.number,
-  }
-  static defaultProps = {
-    animationSequence: 'fade upUp',
-    align: 'right',
-    isActive: true,
-    isDismissable: false,
-    onClick: noop,
-    onDismiss: noop,
-    timeout: 2000,
-    type: 'text',
-    truncateLimit: 60,
-  }
-
   static Timer = Timer
 
   _isMounted = false
@@ -71,16 +44,17 @@ export class Notification extends React.PureComponent {
     this._isMounted = false
   }
 
-  safeSetState(state) {
-    if (this._isMounted) {
-      this.setState(state)
-    }
-  }
-
   forceDismiss() {
-    this.safeSetState({
-      isActive: false,
-    })
+    if (this._isMounted) {
+      this.setState(
+        {
+          isActive: false,
+        },
+        () => {
+          this.props.onDismiss(this.props)
+        }
+      )
+    }
   }
 
   handleOnExited = () => {
@@ -88,7 +62,11 @@ export class Notification extends React.PureComponent {
   }
 
   handleOnTimeout = () => {
-    this.forceDismiss()
+    const { isDismissable } = this.props
+
+    if (isDismissable) {
+      this.forceDismiss()
+    }
   }
 
   handleOnClick = event => {
@@ -166,11 +144,10 @@ export class Notification extends React.PureComponent {
       isDismissable,
       timeout,
       type,
+      'data-cy': dataCy,
       ...rest
     } = this.props
-
     const { isActive } = this.state
-
     const componentClassName = classNames(
       'c-Notification',
       'c-MessageBubbleWrapper',
@@ -179,7 +156,6 @@ export class Notification extends React.PureComponent {
       type && `is-${type}`,
       className
     )
-
     const messageProps = {
       body: null,
       children: this.renderContent(),
@@ -190,6 +166,7 @@ export class Notification extends React.PureComponent {
     return (
       <NotificationUI
         {...getValidProps(rest)}
+        data-cy={dataCy}
         className={componentClassName}
         in={isActive}
         onExited={this.handleOnExited}
@@ -211,6 +188,37 @@ export class Notification extends React.PureComponent {
       </NotificationUI>
     )
   }
+}
+
+Notification.propTypes = {
+  align: PropTypes.oneOf(['left', 'right']),
+  animationSequence: PropTypes.string,
+  body: PropTypes.string,
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  from: PropTypes.string,
+  isActive: PropTypes.bool,
+  isDismissable: PropTypes.bool,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onClick: PropTypes.func,
+  onDismiss: PropTypes.func,
+  timeout: PropTypes.number,
+  type: PropTypes.oneOf(['image', 'link', 'text']),
+  truncateLimit: PropTypes.number,
+}
+
+Notification.defaultProps = {
+  animationSequence: 'fade upUp',
+  align: 'right',
+  'data-cy': 'Notification',
+  isActive: true,
+  isDismissable: false,
+  onClick: noop,
+  onDismiss: noop,
+  timeout: 2000,
+  type: 'text',
+  truncateLimit: 60,
 }
 
 export default Notification

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import { noteBoxShadow } from '../../styles/mixins/noteStyles.css'
-import Chat from './Message.Chat'
+import MessageChat from './Message.Chat'
 
 const config = {
   embedBorderRadius: '3px',
@@ -9,7 +9,7 @@ const config = {
   embedMaxWidth: '300px',
 }
 
-export const EmbedUI = styled(Chat)`
+export const EmbedUI = styled(MessageChat)`
   .c-MessageEmbed__html {
     border-radius: ${config.embedBorderRadius};
     max-width: 100%;

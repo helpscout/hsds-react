@@ -6,14 +6,6 @@ import { noop } from '../../utilities/other'
 import { CentralizeUI } from './Centralize.css'
 
 export class Centralize extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    innerRef: PropTypes.func,
-  }
-  static defaultProps = {
-    innerRef: noop,
-  }
-
   static className = 'c-Centralize'
 
   getClassName() {
@@ -35,6 +27,18 @@ export class Centralize extends React.PureComponent {
       </CentralizeUI>
     )
   }
+}
+
+Centralize.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  innerRef: PropTypes.func,
+}
+
+Centralize.defaultProps = {
+  'data-cy': 'Centralize',
+  innerRef: noop,
 }
 
 export default Centralize

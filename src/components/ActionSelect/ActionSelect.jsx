@@ -182,6 +182,7 @@ export class ActionSelect extends React.PureComponent {
       onAnimationEnd,
       onAnimationUpdate,
       onResize,
+      'data-cy': dataCy,
       ...rest
     } = this.props
 
@@ -190,7 +191,7 @@ export class ActionSelect extends React.PureComponent {
     return (
       <ActionSelectUI
         className={this.getClassName()}
-        data-cy={this.props['data-cy']}
+        data-cy={dataCy}
         ref={innerRef}
       >
         <div className="c-ActionSelectDropdownWrapper">

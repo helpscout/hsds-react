@@ -69,9 +69,3 @@ describe('Content', () => {
     expect(wrapper.find(LoadingDots)).toHaveLength(0)
   })
 })
-
-describe('Display name', () => {
-  test('Has a display name', () => {
-    expect(Embed.displayName).toEqual('Message.Embed')
-  })
-})

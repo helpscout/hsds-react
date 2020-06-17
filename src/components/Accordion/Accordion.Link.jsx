@@ -1,15 +1,14 @@
 import React from 'react'
-import Section from './Accordion.Section'
-import Title from './Accordion.Title'
+import AccordionSection from './Accordion.Section'
+import AccordionTitle from './Accordion.Title'
 import { renderChildrenSafely } from '../../utilities/component'
 
 // Higher-order wrapper to render an enhanced Accordion.Section and Accordion.Title
-export const Link = props => {
+export const AccordionLink = props => {
   const { badge, children, href, isCompact, status, title, to, ...rest } = props
 
   const isLink = !!(to || href)
   const isOpen = false
-
   const sectionProps = {
     ...rest,
     children,
@@ -18,7 +17,6 @@ export const Link = props => {
     status,
     title,
   }
-
   const titleProps = {
     badge,
     href,
@@ -30,12 +28,16 @@ export const Link = props => {
   }
 
   return (
-    <Section {...sectionProps}>
-      <Title {...titleProps}>{renderChildrenSafely(children)}</Title>
-    </Section>
+    <AccordionSection {...sectionProps}>
+      <AccordionTitle {...titleProps}>
+        {renderChildrenSafely(children)}
+      </AccordionTitle>
+    </AccordionSection>
   )
 }
 
-Link.displayName = 'AccordionLink'
+AccordionLink.defaultProps = {
+  'data-cy': 'AccordionLink',
+}
 
-export default Link
+export default AccordionLink

@@ -5,15 +5,8 @@ import { classNames } from '../../utilities/classNames'
 import { BlockUI } from './Skeleton.Block.css'
 
 class SkeletonBlock extends React.PureComponent {
-  static displayName = 'Skeleton.Block'
-
-  static defaultProps = {
-    withAnimations: true,
-  }
-
   render() {
     const { className, children, withAnimations, ...rest } = this.props
-
     const componentClassName = classNames(
       'c-SkeletonBlock',
       withAnimations && 'is-withAnimations',
@@ -33,8 +26,14 @@ class SkeletonBlock extends React.PureComponent {
 SkeletonBlock.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   /** Enables animations for the component. */
   withAnimations: PropTypes.bool,
 }
 
+SkeletonBlock.defaultProps = {
+  'data-cy': 'SkeletonBlock',
+  withAnimations: true,
+}
 export default SkeletonBlock

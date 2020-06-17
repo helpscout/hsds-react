@@ -6,7 +6,6 @@ import SearchableDropdown from '../SearchableDropdown'
 import Button from '../Button'
 import ControlGroup from '../ControlGroup'
 import Icon from '../Icon'
-
 import { OptionsTriggerButtonUI } from './SplitButton.css'
 
 const defaultDropdownProps = {
@@ -17,15 +16,6 @@ const defaultDropdownProps = {
 
 export class SplitButton extends React.PureComponent {
   static className = 'c-SplitButton'
-
-  static defaultProps = {
-    buttonRef: noop,
-    dropdownProps: {},
-    disabled: false,
-    kind: 'primary',
-    onClick: noop,
-    size: 'lg',
-  }
 
   renderButton() {
     const { dropdownProps, ...rest } = this.props
@@ -84,8 +74,10 @@ export class SplitButton extends React.PureComponent {
   }
 
   render() {
+    const { 'data-cy': dataCy } = this.props
+
     return (
-      <ControlGroup className={this.getClassName()}>
+      <ControlGroup data-cy={dataCy} className={this.getClassName()}>
         <ControlGroup.Item>{this.renderButton()}</ControlGroup.Item>
         <ControlGroup.Item>{this.renderDropdown()}</ControlGroup.Item>
       </ControlGroup>
@@ -97,12 +89,24 @@ SplitButton.propTypes = {
   buttonRef: PropTypes.func,
   children: PropTypes.any,
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   disabled: PropTypes.bool,
   dropdownProps: PropTypes.any,
   kind: PropTypes.string,
   onClick: PropTypes.func,
   size: PropTypes.string,
   state: PropTypes.string,
+}
+
+SplitButton.defaultProps = {
+  buttonRef: noop,
+  'data-cy': 'SplitButton',
+  dropdownProps: {},
+  disabled: false,
+  kind: 'primary',
+  onClick: noop,
+  size: 'lg',
 }
 
 export default SplitButton

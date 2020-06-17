@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Attachment from '../Attachment'
 import Icon from '../Icon'
 import Inline from '../Inline'
@@ -9,21 +10,6 @@ import { noop } from '../../utilities/other'
 import { AttachmentListUI } from './AttachmentList.css'
 
 export class AttachmentList extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-    downloadAllLabel: PropTypes.string,
-    onDownloadAllClick: PropTypes.func,
-    showDownloadAll: PropTypes.bool,
-    withOverflow: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    downloadAllLabel: 'Download All',
-    onDownloadAllClick: noop,
-    showDownloadAll: true,
-    withOverflow: true,
-  }
-
   static contextTypes = {
     theme: () => null,
   }
@@ -147,7 +133,7 @@ export class AttachmentList extends React.Component {
       )
 
     return (
-      <AttachmentListUI className={componentClassName} {...rest}>
+      <AttachmentListUI className={componentClassName} {...getValidProps(rest)}>
         {wrappedContentMarkup}
       </AttachmentListUI>
     )
@@ -157,6 +143,8 @@ export class AttachmentList extends React.Component {
 AttachmentList.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   /** Text label for the "Download All" attachment. */
   downloadAllLabel: PropTypes.string,
   /** The callback when the "Download All" attachment is clicked. */
@@ -165,6 +153,14 @@ AttachmentList.propTypes = {
   showDownloadAll: PropTypes.bool,
   /** Adds overflow styles on the list. */
   withOverflow: PropTypes.bool,
+}
+
+AttachmentList.defaultProps = {
+  'data-cy': 'AttachmentList',
+  downloadAllLabel: 'Download All',
+  onDownloadAllClick: noop,
+  showDownloadAll: true,
+  withOverflow: true,
 }
 
 export default AttachmentList

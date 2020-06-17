@@ -1,7 +1,7 @@
 import React from 'react'
 import { HeadingUI } from './Accordion.css'
 
-export default ({ children, ...rest }) => (
+const AccordionHeading = ({ children, ...rest }) => (
   <HeadingUI
     truncate
     weight={500}
@@ -12,3 +12,9 @@ export default ({ children, ...rest }) => (
     {children}
   </HeadingUI>
 )
+
+AccordionHeading.defaultProps = {
+  'data-cy': 'AccordionHeading',
+}
+
+export default AccordionHeading

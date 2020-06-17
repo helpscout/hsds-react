@@ -6,39 +6,6 @@ import { noop } from '../../utilities/other'
 import { CardUI } from './Card.css'
 
 class Card extends React.PureComponent {
-  static propTypes = {
-    autoWordWrap: PropTypes.bool,
-    borderless: PropTypes.bool,
-    className: PropTypes.string,
-    floating: PropTypes.bool,
-    flex: PropTypes.bool,
-    fullHeight: PropTypes.bool,
-    hover: PropTypes.bool,
-    href: PropTypes.string,
-    innerRef: PropTypes.func,
-    nodeRef: PropTypes.func,
-    onBlur: PropTypes.func,
-    onClick: PropTypes.func,
-    onFocus: PropTypes.func,
-    seamless: PropTypes.bool,
-    selector: PropTypes.string,
-    to: PropTypes.string,
-  }
-
-  static defaultProps = {
-    borderless: false,
-    flex: false,
-    floating: false,
-    fullHeight: false,
-    hover: false,
-    innerRef: noop,
-    nodeRef: noop,
-    onBlur: noop,
-    onClick: noop,
-    onFocus: noop,
-    seamless: false,
-    selector: 'div',
-  }
   static Block = Block
   node = null
 
@@ -89,7 +56,6 @@ class Card extends React.PureComponent {
     const extraStaticProps = {
       as: selector,
       href,
-
       ref: nodeRef,
     }
 
@@ -113,6 +79,43 @@ class Card extends React.PureComponent {
       </CardUI>
     )
   }
+}
+
+Card.propTypes = {
+  autoWordWrap: PropTypes.bool,
+  borderless: PropTypes.bool,
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  floating: PropTypes.bool,
+  flex: PropTypes.bool,
+  fullHeight: PropTypes.bool,
+  hover: PropTypes.bool,
+  href: PropTypes.string,
+  innerRef: PropTypes.func,
+  nodeRef: PropTypes.func,
+  onBlur: PropTypes.func,
+  onClick: PropTypes.func,
+  onFocus: PropTypes.func,
+  seamless: PropTypes.bool,
+  selector: PropTypes.string,
+  to: PropTypes.string,
+}
+
+Card.defaultProps = {
+  borderless: false,
+  'data-cy': 'Card',
+  flex: false,
+  floating: false,
+  fullHeight: false,
+  hover: false,
+  innerRef: noop,
+  nodeRef: noop,
+  onBlur: noop,
+  onClick: noop,
+  onFocus: noop,
+  seamless: false,
+  selector: 'div',
 }
 
 export default Card

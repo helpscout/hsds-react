@@ -1,10 +1,19 @@
-Object.defineProperty(exports, '__esModule', {
-  value: true,
-})
-exports.default = _default
+'use strict'
+const { readdirSync, statSync } = require('fs')
+const { join, resolve } = require('path')
 
-function _default(babel) {
+const dirs = p => readdirSync(p).filter(f => statSync(join(p, f)).isDirectory())
+let COMPONENT_NAMES = []
+
+try {
+  COMPONENT_NAMES = dirs(resolve(__dirname, '../../components'))
+} catch (e) {
+  throw new Error('Components dir not found')
+}
+
+module.exports = function(babel) {
   const { types: t } = babel
+
   return {
     name: 'hsds-component-import',
     visitor: {
@@ -14,7 +23,8 @@ function _default(babel) {
           : ['@helpscout/hsds-react']
         let packageName = path.node.source.value
 
-        if (shouldBail(packageName, packages)) return null
+        if (isWrongPackage(packageName, packages)) return null
+        if (!areAllValidComponents(path.node.specifiers)) return null
 
         if (packageName.endsWith('/')) {
           packageName = packageName.slice(0, packageName.length - 1)
@@ -49,10 +59,24 @@ function _default(babel) {
   }
 }
 
-function shouldBail(packageName, packages) {
+function areAllValidComponents(specifiers) {
+  if (!specifiers.length) return false
+  if (!COMPONENT_NAMES.length) return false
+  // If Button is not present something odd happened, bail
+  if (!COMPONENT_NAMES.includes('Button')) return false
+
+  for (let i = 0; i < specifiers.length; i++) {
+    if (!COMPONENT_NAMES.includes(specifiers[i].local.name)) {
+      return false
+    }
+  }
+
+  return true
+}
+
+function isWrongPackage(packageName, packages) {
   if (!packageName) return true
-  if (packageName.includes('utilities')) return true
-  if (packageName.includes('adapters')) return true
+
   let found = false
 
   for (let i = 0; i < packages.length; i++) {

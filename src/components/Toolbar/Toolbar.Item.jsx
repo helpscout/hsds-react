@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import { classNames } from '../../utilities/classNames'
 
 export class ToolbarItem extends React.PureComponent {
-  static displayName = 'Toolbar.Item'
   static className = 'c-ToolbarItem'
 
   getClassName() {
@@ -21,7 +21,7 @@ export class ToolbarItem extends React.PureComponent {
     }
 
     return (
-      <Flexy.Item {...rest} className={this.getClassName()}>
+      <Flexy.Item {...getValidProps(rest)} className={this.getClassName()}>
         {children}
       </Flexy.Item>
     )

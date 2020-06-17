@@ -4,8 +4,8 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { connect } from '@helpscout/wedux'
 import Icon from '../Icon'
 import Card from './Dropdown.Card'
-import Divider from './Dropdown.Divider'
-import Header from './Dropdown.Header'
+import DropdownDivider from './Dropdown.Divider'
+import DropdownHeader from './Dropdown.Header'
 import Menu from './Dropdown.Menu'
 import {
   ActionUI,
@@ -19,61 +19,9 @@ import { setMenuPositionStyles } from './Dropdown.renderUtils'
 import { classNames } from '../../utilities/classNames'
 import { getComponentKey } from '../../utilities/component'
 import { noop } from '../../utilities/other'
-import ItemSelectedCheck from './Dropdown.ItemSelectedCheck'
+import DropdownItemSelectedCheck from './Dropdown.ItemSelectedCheck'
 
-export class Item extends React.PureComponent {
-  static displayName = 'DropdownItem'
-
-  static propTypes = {
-    actionId: PropTypes.string,
-    className: PropTypes.string,
-    contentWindow: PropTypes.any,
-    disabled: PropTypes.bool,
-    dropRight: PropTypes.bool,
-    dropUp: PropTypes.bool,
-    getState: PropTypes.func,
-    href: PropTypes.string,
-    id: PropTypes.string,
-    index: PropTypes.string,
-    innerRef: PropTypes.func,
-    isHover: PropTypes.bool,
-    isSelectionClearer: PropTypes.bool,
-    items: PropTypes.arrayOf(PropTypes.any),
-    onMouseEnter: PropTypes.func,
-    onMouseMove: PropTypes.func,
-    onBlur: PropTypes.func,
-    onClick: PropTypes.func,
-    onFocus: PropTypes.func,
-    preventSelect: PropTypes.bool,
-    renderItem: PropTypes.func,
-    subMenuId: PropTypes.string,
-    label: PropTypes.string,
-    type: PropTypes.string,
-    value: PropTypes.string,
-  }
-
-  static defaultProps = {
-    contentWindow: window,
-    getState: noop,
-    disabled: false,
-    index: '0',
-    innerRef: noop,
-    isHover: false,
-    isSelectionClearer: false,
-    items: undefined,
-    dropRight: true,
-    dropUp: false,
-    onMouseEnter: noop,
-    onMouseMove: noop,
-    onBlur: noop,
-    onClick: noop,
-    onFocus: noop,
-    preventSelect: false,
-    label: '',
-    type: 'item',
-    value: '',
-  }
-
+export class DropdownItem extends React.PureComponent {
   node
   actionNode
   wrapperNode
@@ -159,7 +107,7 @@ export class Item extends React.PureComponent {
               id={subMenuId}
             >
               {items.map((item, index) => (
-                <Item
+                <DropdownItem
                   getState={getState}
                   renderItem={renderItem}
                   key={item.id || item.value || getComponentKey(item, index)}
@@ -198,7 +146,7 @@ export class Item extends React.PureComponent {
       internalState != null && internalState.allowMultipleSelection
 
     if (allowMultipleSelection && renderItem == null) {
-      return ItemSelectedCheck(getCustomItemProps(this.props))
+      return DropdownItemSelectedCheck(getCustomItemProps(this.props))
     }
 
     if (renderItem) {
@@ -254,8 +202,9 @@ export class Item extends React.PureComponent {
       className
     )
 
-    if (type === 'group' || type === 'header') return <Header {...this.props} />
-    if (type === 'divider') return <Divider />
+    if (type === 'group' || type === 'header')
+      return <DropdownHeader {...this.props} />
+    if (type === 'divider') return <DropdownDivider />
 
     const selector = href ? 'a' : 'div'
 
@@ -268,13 +217,65 @@ export class Item extends React.PureComponent {
         ref={this.setNodeRef}
         role={hasSubMenu ? 'group' : 'option'}
         as={selector}
-        data-cy="DropdownItem"
       >
         {this.renderContent()}
         {this.renderSubMenu()}
       </ItemUI>
     )
   }
+}
+
+DropdownItem.propTypes = {
+  actionId: PropTypes.string,
+  className: PropTypes.string,
+  contentWindow: PropTypes.any,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  disabled: PropTypes.bool,
+  dropRight: PropTypes.bool,
+  dropUp: PropTypes.bool,
+  getState: PropTypes.func,
+  href: PropTypes.string,
+  id: PropTypes.string,
+  index: PropTypes.string,
+  innerRef: PropTypes.func,
+  isHover: PropTypes.bool,
+  isSelectionClearer: PropTypes.bool,
+  items: PropTypes.arrayOf(PropTypes.any),
+  onMouseEnter: PropTypes.func,
+  onMouseMove: PropTypes.func,
+  onBlur: PropTypes.func,
+  onClick: PropTypes.func,
+  onFocus: PropTypes.func,
+  preventSelect: PropTypes.bool,
+  renderItem: PropTypes.func,
+  subMenuId: PropTypes.string,
+  label: PropTypes.string,
+  type: PropTypes.string,
+  value: PropTypes.string,
+}
+
+DropdownItem.defaultProps = {
+  contentWindow: window,
+  'data-cy': 'DropdownItem',
+  getState: noop,
+  disabled: false,
+  index: '0',
+  innerRef: noop,
+  isHover: false,
+  isSelectionClearer: false,
+  items: undefined,
+  dropRight: true,
+  dropUp: false,
+  onMouseEnter: noop,
+  onMouseMove: noop,
+  onBlur: noop,
+  onClick: noop,
+  onFocus: noop,
+  preventSelect: false,
+  label: '',
+  type: 'item',
+  value: '',
 }
 
 const ConnectedItem = connect(
@@ -289,6 +290,6 @@ const ConnectedItem = connect(
       selectedItem,
     }
   }
-)(Item)
+)(DropdownItem)
 
 export default ConnectedItem

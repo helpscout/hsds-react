@@ -6,24 +6,6 @@ import { noop } from '../../utilities/other'
 import { NotificationStackUI } from './NotificationStack.css'
 
 export class NotificationStack extends React.PureComponent {
-  static propTypes = {
-    autoDismiss: PropTypes.bool,
-    className: PropTypes.string,
-    onClick: PropTypes.func,
-    onMouseEnter: PropTypes.func,
-    onMouseLeave: PropTypes.func,
-    limit: PropTypes.number,
-  }
-
-  static defaultProps = {
-    autoDismiss: false,
-    limit: 5,
-    onClick: noop,
-    onMouseEnter: noop,
-    onMouseLeave: noop,
-    theme: 'chat',
-  }
-
   firstNotificationId = null
 
   constructor(props) {
@@ -72,8 +54,8 @@ export class NotificationStack extends React.PureComponent {
     return React.Children.map(children, (child, index) => {
       const count = React.Children.count(children) - index
       const isActive = count < limit + 1
-
       const { from: fromProp, id } = child.props
+
       this.setFirstNotificationId(id)
 
       const from = id === this.firstNotificationId ? fromProp : null
@@ -89,7 +71,6 @@ export class NotificationStack extends React.PureComponent {
 
   render() {
     const { className, theme, ...rest } = this.props
-
     const componentClassName = classNames(
       'c-NotificationStack',
       theme && `is-theme-${theme}`,
@@ -107,6 +88,27 @@ export class NotificationStack extends React.PureComponent {
       </NotificationStackUI>
     )
   }
+}
+
+NotificationStack.propTypes = {
+  autoDismiss: PropTypes.bool,
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  onClick: PropTypes.func,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
+  limit: PropTypes.number,
+}
+
+NotificationStack.defaultProps = {
+  autoDismiss: false,
+  'data-cy': 'NotificationStack',
+  limit: 5,
+  onClick: noop,
+  onMouseEnter: noop,
+  onMouseLeave: noop,
+  theme: 'chat',
 }
 
 export default NotificationStack

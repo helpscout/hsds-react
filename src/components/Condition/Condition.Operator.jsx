@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
 import { OperatorUI } from './Condition.css'
@@ -7,7 +8,6 @@ import { OperatorUI } from './Condition.css'
 export const Operator = props => {
   const { className, isBorderless, type, ...rest } = props
   const label = type.toLowerCase() === 'and' ? 'and' : 'or'
-
   const componentClassName = classNames(
     Operator.className,
     isBorderless && 'is-borderless',
@@ -16,7 +16,7 @@ export const Operator = props => {
   )
 
   return (
-    <OperatorUI {...rest} className={componentClassName}>
+    <OperatorUI {...getValidProps(rest)} className={componentClassName}>
       <Text block lineHeightReset size="11" weight={500}>
         {label}
       </Text>
@@ -24,19 +24,21 @@ export const Operator = props => {
   )
 }
 
+Operator.className = 'c-ConditionOperator'
+
 Operator.propTypes = {
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   innerRef: PropTypes.func,
   isBorderless: PropTypes.bool,
   type: PropTypes.oneOf(['and', 'or']),
 }
 
-Operator.className = 'c-ConditionOperator'
-
 Operator.defaultProps = {
+  'data-cy': 'ConditionOperator',
   isBorderless: true,
   type: 'or',
 }
-Operator.displayName = 'ConditionOperator'
 
 export default Operator

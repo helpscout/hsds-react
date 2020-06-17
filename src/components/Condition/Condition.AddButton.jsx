@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Icon from '../Icon'
 import { ButtonWrapperUI, ButtonUI } from './Condition.css'
 import { classNames } from '../../utilities/classNames'
@@ -8,26 +9,6 @@ import { noop } from '../../utilities/other'
 import { smoothScrollTo, linear } from '../../utilities/smoothScroll'
 
 class AddButton extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    innerRef: PropTypes.func,
-    onClick: PropTypes.func,
-    isBorderless: PropTypes.bool,
-    scrollDuration: PropTypes.number,
-    scrollOffset: PropTypes.number,
-    type: PropTypes.oneOf(['and', 'or']),
-  }
-
-  static defaultProps = {
-    isBorderless: false,
-    onClick: noop,
-    scrollDuration: 300,
-    scrollOffset: 200,
-    type: 'or',
-  }
-
-  static displayName = 'ConditionAddButton'
-
   static className = 'c-ConditionAddButton'
 
   node
@@ -76,9 +57,7 @@ class AddButton extends React.PureComponent {
 
   render() {
     const { className, isBorderless, type, ...rest } = this.props
-
     const isAnd = type.toLowerCase() === 'and'
-
     const align = isAnd ? 'center' : 'left'
     const iconSize = isAnd ? 24 : 20
     const label = isAnd ? 'and' : 'or'
@@ -87,7 +66,7 @@ class AddButton extends React.PureComponent {
     return (
       <ButtonWrapperUI align={align} ref={this.setNodeRef}>
         <ButtonUI
-          {...rest}
+          {...getValidProps(rest)}
           className={this.getClassName()}
           kind="secondaryAlt"
           onClick={this.handleOnClick}
@@ -99,6 +78,27 @@ class AddButton extends React.PureComponent {
       </ButtonWrapperUI>
     )
   }
+}
+
+AddButton.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  innerRef: PropTypes.func,
+  onClick: PropTypes.func,
+  isBorderless: PropTypes.bool,
+  scrollDuration: PropTypes.number,
+  scrollOffset: PropTypes.number,
+  type: PropTypes.oneOf(['and', 'or']),
+}
+
+AddButton.defaultProps = {
+  'data-cy': 'ConditionAddButton',
+  isBorderless: false,
+  onClick: noop,
+  scrollDuration: 300,
+  scrollOffset: 200,
+  type: 'or',
 }
 
 export default AddButton

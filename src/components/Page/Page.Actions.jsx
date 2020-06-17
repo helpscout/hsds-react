@@ -7,7 +7,7 @@ import {
   ActionsItemUI,
   StickyActionsWrapperUI,
 } from './Page.css'
-import StickyActions from './Page.StickyActions'
+import PageStickyActions from './Page.StickyActions'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
@@ -36,8 +36,8 @@ const ActionContent = props => {
 
   const content = (
     <ActionsUI
-      data-cy="PageActionsContent"
       {...getValidProps(rest)}
+      data-cy="PageActionsContent"
       className={componentClassNames}
       ref={withStickyWrapper ? innerRef : null}
       withStickyWrapper={withStickyWrapper}
@@ -78,7 +78,7 @@ const ActionContent = props => {
   )
 }
 
-const Actions = props => {
+const PageActions = props => {
   const { stickyOffset, isSticky, onStickyStart, onStickyEnd } = props
   const [isStickyActive, setStickyActive] = useState(isSticky)
 
@@ -97,7 +97,7 @@ const Actions = props => {
   const showStickyAction = isSticky && isStickyActive
   return (
     <div data-cy="PageActionsWrapper">
-      <StickyActions
+      <PageStickyActions
         onStickyStart={handleOnStickyStart}
         onStickyEnd={handleOnStickyStop}
         offset={stickyOffset}
@@ -107,7 +107,7 @@ const Actions = props => {
           withStickyWrapper={false}
           isResponsive={isResponsive}
         />
-      </StickyActions>
+      </PageStickyActions>
       {showStickyAction && (
         <ActionContent
           {...props}
@@ -119,9 +119,8 @@ const Actions = props => {
   )
 }
 
-Actions.displayName = 'Page.Actions'
-
-Actions.defaultProps = {
+PageActions.defaultProps = {
+  'data-cy': 'PageActions',
   direction: 'right',
   innerRef: noop,
   onStickyStart: noop,
@@ -132,4 +131,4 @@ Actions.defaultProps = {
   zIndex: 10,
 }
 
-export default Actions
+export default PageActions

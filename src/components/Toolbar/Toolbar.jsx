@@ -7,18 +7,9 @@ import { classNames } from '../../utilities/classNames'
 import { WrapperUI, ToolbarUI } from './Toolbar.css'
 
 export class Toolbar extends React.PureComponent {
-  static defaultProps = {
-    placement: 'top',
-    seamless: false,
-    shadow: false,
-    size: 'sm',
-    theme: 'default',
-  }
-
   static Block = Block
   static Item = Item
   static Shadow = Shadow
-
   static className = 'c-Toolbar'
 
   getClassName() {
@@ -72,6 +63,15 @@ Toolbar.propTypes = {
   seamless: PropTypes.bool,
   size: PropTypes.oneOf(['xl', 'lg', 'md', 'sm', 'xs']),
   theme: PropTypes.oneOf(['default', 'note']),
+}
+
+Toolbar.defaultProps = {
+  'data-cy': 'Toolbar',
+  placement: 'top',
+  seamless: false,
+  shadow: false,
+  size: 'sm',
+  theme: 'default',
 }
 
 export default Toolbar

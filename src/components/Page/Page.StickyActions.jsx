@@ -1,20 +1,13 @@
 import React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { noop } from '../../utilities/other'
 import { isIntersectionObserverSupported } from './Page.utils'
 
-class StickyActions extends React.PureComponent {
-  node = null
-  observer = null
-
+class PageStickyActions extends React.PureComponent {
   static className = 'c-PageStickyActions'
 
-  static defaultProps = {
-    innerRef: noop,
-    offset: 10,
-    onStickyStart: noop,
-    onStickyEnd: noop,
-  }
-
+  node = null
+  observer = null
   state = {
     isSticky: true,
   }
@@ -73,8 +66,20 @@ class StickyActions extends React.PureComponent {
   }
 
   render() {
-    return <div ref={this.setNodeRef}>{this.props.children}</div>
+    return (
+      <div {...getValidProps(this.props)} ref={this.setNodeRef}>
+        {this.props.children}
+      </div>
+    )
   }
 }
 
-export default StickyActions
+PageStickyActions.defaultProps = {
+  'data-cy': 'PageStickyActions',
+  innerRef: noop,
+  offset: 10,
+  onStickyStart: noop,
+  onStickyEnd: noop,
+}
+
+export default PageStickyActions

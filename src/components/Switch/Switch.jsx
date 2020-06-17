@@ -18,22 +18,6 @@ import {
 const uniqueID = createUniqueIDFactory('Switch')
 
 class Switch extends React.PureComponent {
-  static defaultProps = {
-    inputRef: noop,
-    innerRef: noop,
-    isLoading: false,
-    labelOn: 'On',
-    labelOff: 'Off',
-    onBlur: noop,
-    onChange: noop,
-    onClick: noop,
-    onFocus: noop,
-    onMouseDown: noop,
-    onMouseUp: noop,
-    size: 'md',
-    value: '',
-  }
-
   constructor(props) {
     super(props)
     this.state = {
@@ -221,6 +205,8 @@ class Switch extends React.PureComponent {
 Switch.propTypes = {
   className: PropTypes.string,
   checked: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   disabled: PropTypes.bool,
   id: PropTypes.string,
   isLoading: PropTypes.bool,
@@ -242,6 +228,23 @@ Switch.propTypes = {
     PropTypes.number,
     PropTypes.bool,
   ]),
+}
+
+Switch.defaultProps = {
+  'data-cy': 'Switch',
+  inputRef: noop,
+  innerRef: noop,
+  isLoading: false,
+  labelOn: 'On',
+  labelOff: 'Off',
+  onBlur: noop,
+  onChange: noop,
+  onClick: noop,
+  onFocus: noop,
+  onMouseDown: noop,
+  onMouseUp: noop,
+  size: 'md',
+  value: '',
 }
 
 export default Switch

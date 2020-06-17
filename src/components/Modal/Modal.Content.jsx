@@ -5,21 +5,19 @@ import { noop } from '../../utilities/other'
 import { ContentUI } from './Modal.css'
 import Body from './Modal.Body'
 
-class Content extends React.PureComponent {
+class ModalContent extends React.PureComponent {
+  static displayName = 'ModalContent'
   static propTypes = {
     className: PropTypes.string,
     scrollableRef: PropTypes.func,
   }
-  static displayName = 'Modal.Content'
   static defaultProps = {
     scrollableRef: noop,
   }
 
   render() {
     const { className, children, scrollableRef, ...rest } = this.props
-
     const componentClassName = classNames('c-ModalContent', className)
-
     const childrenMarkup = React.Children.map(children, child => {
       if (child && child.type === Body) {
         return React.cloneElement(child, {
@@ -38,4 +36,4 @@ class Content extends React.PureComponent {
   }
 }
 
-export default Content
+export default ModalContent

@@ -3,10 +3,8 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { isString, isObject } from '../../utilities/is'
-
 import Text from '../Text'
 import Tooltip from '../Tooltip'
-
 import {
   FilteredListUI,
   BadgeItemUI,
@@ -16,20 +14,6 @@ import {
 } from './FilteredList.css'
 
 export class FilteredList extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-    items: PropTypes.arrayOf(PropTypes.any),
-    itemKey: PropTypes.string,
-    limit: PropTypes.number,
-    inline: PropTypes.bool,
-    renderItem: PropTypes.func,
-  }
-
-  static defaultProps = {
-    items: [],
-    limit: 5,
-  }
-
   shouldComponentUpdate(nextProps) {
     const { items } = this.props
 
@@ -95,7 +79,6 @@ export class FilteredList extends React.Component {
 
   renderItems() {
     const { limit, inline, renderItem, items } = this.props
-
     const itemsList = limit ? items.slice(0, limit) : items
     const isListFiltered = limit && items.length > limit
 
@@ -118,7 +101,6 @@ export class FilteredList extends React.Component {
 
   render() {
     const { children, className, inline, ...rest } = this.props
-
     const componentClassName = classNames(
       'c-FilteredList',
       inline && 'is-inline',
@@ -127,7 +109,6 @@ export class FilteredList extends React.Component {
 
     return (
       <FilteredListUI
-        data-cy="FilteredList"
         aria-label="FilteredList"
         {...getValidProps(rest)}
         className={componentClassName}
@@ -136,6 +117,23 @@ export class FilteredList extends React.Component {
       </FilteredListUI>
     )
   }
+}
+
+FilteredList.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  items: PropTypes.arrayOf(PropTypes.any),
+  itemKey: PropTypes.string,
+  limit: PropTypes.number,
+  inline: PropTypes.bool,
+  renderItem: PropTypes.func,
+}
+
+FilteredList.defaultProps = {
+  'data-cy': 'FilteredList',
+  items: [],
+  limit: 5,
 }
 
 export default FilteredList

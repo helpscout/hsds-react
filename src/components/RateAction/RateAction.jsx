@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-
 import Emoticon from '../Emoticon'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -9,33 +8,6 @@ import { RateActionUI } from './RateAction.css'
 import { getName } from '../Emoticon/Emoticon.utils'
 
 export class RateAction extends React.PureComponent {
-  static defaultProps = {
-    disabled: false,
-    innerRef: noop,
-    isActive: false,
-    name: 'reaction-happy',
-    onClick: noop,
-    size: 'lg',
-    withCircle: false,
-  }
-
-  static propTypes = {
-    className: PropTypes.string,
-    isActive: PropTypes.bool,
-    disabled: PropTypes.bool,
-    innerRef: PropTypes.func,
-    onClick: PropTypes.func,
-    size: PropTypes.oneOf(['lg', 'md', 'sm']),
-    name: PropTypes.oneOf([
-      'happy',
-      'sad',
-      'meh',
-      'reaction-happy',
-      'reaction-sad',
-      'reaction-okay',
-    ]),
-  }
-
   static className = 'c-RateAction'
 
   state = {
@@ -97,7 +69,6 @@ export class RateAction extends React.PureComponent {
         withCircle={withCircle}
       >
         <Emoticon
-          {...rest}
           size={size}
           name={getName(name)}
           isActive={this.state.isActive}
@@ -106,6 +77,36 @@ export class RateAction extends React.PureComponent {
       </RateActionUI>
     )
   }
+}
+
+RateAction.defaultProps = {
+  'data-cy': 'RateAction',
+  disabled: false,
+  innerRef: noop,
+  isActive: false,
+  name: 'reaction-happy',
+  onClick: noop,
+  size: 'lg',
+  withCircle: false,
+}
+
+RateAction.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  isActive: PropTypes.bool,
+  disabled: PropTypes.bool,
+  innerRef: PropTypes.func,
+  onClick: PropTypes.func,
+  size: PropTypes.oneOf(['lg', 'md', 'sm']),
+  name: PropTypes.oneOf([
+    'happy',
+    'sad',
+    'meh',
+    'reaction-happy',
+    'reaction-sad',
+    'reaction-okay',
+  ]),
 }
 
 export default RateAction

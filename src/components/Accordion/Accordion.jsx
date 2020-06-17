@@ -1,11 +1,11 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Body from './Accordion.Body'
-import Heading from './Accordion.Heading'
-import Link from './Accordion.Link'
-import Section from './Accordion.Section'
-import Subheading from './Accordion.Subheading'
-import Title from './Accordion.Title'
+import AccordionBody from './Accordion.Body'
+import AccordionHeading from './Accordion.Heading'
+import AccordionLink from './Accordion.Link'
+import AccordionSection from './Accordion.Section'
+import AccordionSubheading from './Accordion.Subheading'
+import AccordionTitle from './Accordion.Title'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { AccordionUI } from './Accordion.css'
@@ -186,6 +186,7 @@ const Accordion = props => {
 }
 
 Accordion.defaultProps = {
+  'data-cy': 'Accordion',
   distance: 5,
   isPage: false,
   isSeamless: false,
@@ -199,11 +200,11 @@ Accordion.defaultProps = {
   useWindowAsScrollContainer: false,
 }
 
-Accordion.Body = Body
-Accordion.Heading = Heading
-Accordion.Link = Link
-Accordion.Section = Section
-Accordion.Subheading = Subheading
-Accordion.Title = Title
+Accordion.Body = AccordionBody
+Accordion.Heading = AccordionHeading
+Accordion.Link = AccordionLink
+Accordion.Section = AccordionSection
+Accordion.Subheading = AccordionSubheading
+Accordion.Title = AccordionTitle
 
 export default Accordion

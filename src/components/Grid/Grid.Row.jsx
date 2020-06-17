@@ -4,21 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { RowUI } from './Grid.Row.css'
 
-class Row extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    flex: PropTypes.bool, // deprecating
-    isFlex: PropTypes.bool,
-    size: PropTypes.oneOf(['md', 'sm', 'xs']),
-  }
-
-  static displayName = 'GridRow'
-
-  static defaultProps = {
-    flex: false,
-    isFlex: false,
-  }
-
+class GridRow extends React.PureComponent {
   render() {
     const { className, children, flex, isFlex, size, ...rest } = this.props
 
@@ -37,4 +23,19 @@ class Row extends React.PureComponent {
   }
 }
 
-export default Row
+GridRow.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  flex: PropTypes.bool, // deprecating
+  isFlex: PropTypes.bool,
+  size: PropTypes.oneOf(['md', 'sm', 'xs']),
+}
+
+GridRow.defaultProps = {
+  'data-cy': 'GridRow',
+  flex: false,
+  isFlex: false,
+}
+
+export default GridRow

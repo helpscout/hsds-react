@@ -1,16 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { ControlUI } from './Skeleton.Control.css'
 
 class SkeletonControl extends React.PureComponent {
-  static displayName = 'Skeleton.Control'
-
-  static defaultProps = {
-    size: 'md',
-    withAnimations: true,
-  }
-
   render() {
     const { className, size, ...rest } = this.props
 
@@ -20,17 +14,25 @@ class SkeletonControl extends React.PureComponent {
       className
     )
 
-    return <ControlUI {...rest} className={componentClassName} />
+    return <ControlUI {...getValidProps(rest)} className={componentClassName} />
   }
 }
 
 SkeletonControl.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   /** Size of the control/field. */
   size: PropTypes.oneOf(['lg', 'md', 'sm']),
   /** Enables animations for the component. */
   withAnimations: PropTypes.bool,
+}
+
+SkeletonControl.defaultProps = {
+  'data-cy': 'SkeletonControl',
+  size: 'md',
+  withAnimations: true,
 }
 
 export default SkeletonControl

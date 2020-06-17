@@ -4,21 +4,9 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { SuffixUI } from './Input.css'
 
-class Suffix extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    isAction: PropTypes.bool,
-    isSeamless: PropTypes.bool,
-  }
-  static displayName = 'InputSuffix'
-  static defaultProps = {
-    isAction: false,
-    isSeamless: false,
-  }
-
+class InputSuffix extends React.PureComponent {
   render() {
     const { className, isAction, isSeamless, ...rest } = this.props
-
     const componentClassName = classNames(
       'c-InputSuffix',
       'c-Input__item',
@@ -32,4 +20,18 @@ class Suffix extends React.PureComponent {
   }
 }
 
-export default Suffix
+InputSuffix.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  isAction: PropTypes.bool,
+  isSeamless: PropTypes.bool,
+}
+
+InputSuffix.defaultProps = {
+  'data-cy': 'InputSuffix',
+  isAction: false,
+  isSeamless: false,
+}
+
+export default InputSuffix

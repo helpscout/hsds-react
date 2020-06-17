@@ -1,18 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import Text from '../Text'
-import Action from './Message.Action'
-import Attachment from './Message.Attachment'
-import Bubble from './Message.Bubble'
-import Caption from './Message.Caption'
-import Chat from './Message.Chat'
-import Content from './Message.Content'
-import Embed from './Message.Embed'
-import Media from './Message.Media'
-import Provider from './Message.Provider'
+import MessageAction from './Message.Action'
+import MessageAttachment from './Message.Attachment'
+import MessageBubble from './Message.Bubble'
+import MessageCaption from './Message.Caption'
+import MessageChat from './Message.Chat'
+import MessageContent from './Message.Content'
+import MessageEmbed from './Message.Embed'
+import MessageMedia from './Message.Media'
+import MessageProvider from './Message.Provider'
 import { classNames } from '../../utilities/classNames'
 import { getComponentName } from '../../utilities/component'
 import { isString } from '../../utilities/is'
@@ -20,26 +19,18 @@ import { noop } from '../../utilities/other'
 import { MessageUI } from './Message.css'
 
 export class Message extends React.PureComponent {
-  static propTypes = {
-    avatar: PropTypes.any,
-    showAvatar: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    showAvatar: true,
-  }
   static contextTypes = {
     theme: noop,
   }
-  static Action = Action
-  static Attachment = Attachment
-  static Bubble = Bubble
-  static Caption = Caption
-  static Chat = Chat
-  static Content = Content
-  static Embed = Embed
-  static Media = Media
-  static Provider = Provider
+  static Action = MessageAction
+  static Attachment = MessageAttachment
+  static Bubble = MessageBubble
+  static Caption = MessageCaption
+  static Chat = MessageChat
+  static Content = MessageContent
+  static Embed = MessageEmbed
+  static Media = MessageMedia
+  static Provider = MessageProvider
 
   shouldShowAvatar = () => {
     const { from, showAvatar } = this.props
@@ -164,6 +155,18 @@ export class Message extends React.PureComponent {
       </MessageUI>
     )
   }
+}
+
+Message.propTypes = {
+  avatar: PropTypes.any,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  showAvatar: PropTypes.bool,
+}
+
+Message.defaultProps = {
+  'data-cy': 'Message',
+  showAvatar: true,
 }
 
 export default Message

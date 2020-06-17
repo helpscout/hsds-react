@@ -10,24 +10,6 @@ import { noop } from '../../utilities/other'
 import { HeaderUI, ContentUI } from './ChatInbox.css.js'
 
 class Header extends React.PureComponent {
-  static propTypes = {
-    avatars: PropTypes.any,
-    className: PropTypes.string,
-    count: PropTypes.number,
-    isCollapsed: PropTypes.bool,
-    isCollapsible: PropTypes.bool,
-    onClick: PropTypes.func,
-  }
-
-  static defaultProps = {
-    count: 0,
-    isCollapsible: false,
-    isCollapsed: false,
-    onClick: noop,
-  }
-
-  static displayName = 'ChatInboxHeader'
-
   render() {
     const {
       avatars,
@@ -86,6 +68,25 @@ class Header extends React.PureComponent {
       </HeaderUI>
     )
   }
+}
+
+Header.propTypes = {
+  avatars: PropTypes.any,
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  count: PropTypes.number,
+  isCollapsed: PropTypes.bool,
+  isCollapsible: PropTypes.bool,
+  onClick: PropTypes.func,
+}
+
+Header.defaultProps = {
+  count: 0,
+  'data-cy': 'ChatInboxHeader',
+  isCollapsible: false,
+  isCollapsed: false,
+  onClick: noop,
 }
 
 export default Header

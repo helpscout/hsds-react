@@ -4,36 +4,14 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import Dropdown from '../Dropdown'
 import { MenuUI, TriggerUI } from './EmojiPicker.css'
-import Item from './EmojiPicker.Item'
+import EmojiPickerItem from './EmojiPicker.Item'
 import Emoji from './EmojiPicker.Emoji'
 import { emojiSet } from './emojiSet'
 
 export class EmojiPicker extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    emojiSet: PropTypes.arrayOf(PropTypes.any),
-    renderMenu: PropTypes.any,
-    size: PropTypes.string,
-  }
   static className = 'c-EmojiPicker'
-
-  static defaultProps = {
-    className: '',
-    direction: 'left',
-    dropUp: true,
-    enableLeftRightArrowNavigation: true,
-    minHeight: 'auto',
-    onBlur: noop,
-    onClose: noop,
-    onFocus: noop,
-    onOpen: noop,
-    onSelect: noop,
-    emojiSet,
-    size: 'default',
-  }
-
   static Emoji = Emoji
-  static Item = Item
+  static Item = EmojiPickerItem
 
   getClassName() {
     const { className } = this.props
@@ -55,13 +33,21 @@ export class EmojiPicker extends React.PureComponent {
   }
 
   renderMenu = menu => {
-    return <MenuUI {...menu} data-cy="EmojiPickerMenu" />
+    return (
+      <MenuUI
+        {...menu}
+        data-cy="EmojiPickerMenu"
+        className="c-EmojiPickerMenu"
+      />
+    )
   }
 
   renderItem = item => {
     const { size } = this.props
 
-    return <Item {...item} size={size} />
+    return (
+      <EmojiPickerItem {...item} size={size} className="c-EmojiPickerItem" />
+    )
   }
 
   render() {
@@ -78,6 +64,31 @@ export class EmojiPicker extends React.PureComponent {
       />
     )
   }
+}
+
+EmojiPicker.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  emojiSet: PropTypes.arrayOf(PropTypes.any),
+  renderMenu: PropTypes.any,
+  size: PropTypes.string,
+}
+
+EmojiPicker.defaultProps = {
+  className: '',
+  'data-cy': 'EmojiPicker',
+  direction: 'left',
+  dropUp: true,
+  enableLeftRightArrowNavigation: true,
+  minHeight: 'auto',
+  onBlur: noop,
+  onClose: noop,
+  onFocus: noop,
+  onOpen: noop,
+  onSelect: noop,
+  emojiSet,
+  size: 'default',
 }
 
 export default EmojiPicker

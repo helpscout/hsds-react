@@ -27,22 +27,6 @@ const defaultInputProps = {
 
 // TODO: Create propTypes
 export class SearchableDropdown extends React.Component {
-  static defaultProps = {
-    ...initialState,
-    autoInput: false,
-    closeOnInputTab: true,
-    innerRef: noop,
-    inputProps: {},
-    itemFilterKey: 'value',
-    limit: 15,
-    maxHeight: 330,
-    maxWidth: 222,
-    minWidth: 222,
-    noResultsLabel: 'No results',
-    onInputChange: noop,
-    showInput: true,
-  }
-
   state = {
     isOpen: this.props.isOpen,
     inputValue: '',
@@ -174,7 +158,6 @@ export class SearchableDropdown extends React.Component {
 
   renderItems = dropdownProps => {
     const { items, renderItems, renderItemsAsGroups, hasGroups } = dropdownProps
-
     const { customFilter } = this.props
     const { inputValue } = this.state
 
@@ -248,11 +231,8 @@ export class SearchableDropdown extends React.Component {
       ...rest
     } = this.props
     const { inputValue, isOpen } = this.state
-
     const isInputActive = this.isInputActive()
-
     const componentClassName = classNames('c-SearchableDropdown', className)
-
     const shouldEnableTabNavigation =
       enableTabNavigation || (enableTabNavigation && !isInputActive)
 
@@ -339,7 +319,6 @@ export class SearchableDropdown extends React.Component {
 
   render() {
     const { inputProps } = this.props
-
     const isInputActive = this.isInputActive()
 
     return (
@@ -371,6 +350,23 @@ export class SearchableDropdown extends React.Component {
       </Dropdown>
     )
   }
+}
+
+SearchableDropdown.defaultProps = {
+  ...initialState,
+  autoInput: false,
+  closeOnInputTab: true,
+  'data-cy': 'SearchableDropdown',
+  innerRef: noop,
+  inputProps: {},
+  itemFilterKey: 'value',
+  limit: 15,
+  maxHeight: 330,
+  maxWidth: 222,
+  minWidth: 222,
+  noResultsLabel: 'No results',
+  onInputChange: noop,
+  showInput: true,
 }
 
 export default SearchableDropdown

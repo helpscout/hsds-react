@@ -5,17 +5,6 @@ import { classNames } from '../../utilities/classNames'
 import { HrUI } from './Hr.css'
 
 class Hr extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    role: PropTypes.string,
-    size: PropTypes.oneOf(['md', 'sm', 'xs', 'none']),
-  }
-
-  static defaultProps = {
-    role: 'separator',
-    size: 'md',
-  }
-
   render() {
     const { className, children, role, size, ...rest } = this.props
     const componentClassName = classNames(
@@ -34,4 +23,17 @@ class Hr extends React.PureComponent {
   }
 }
 
+Hr.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  role: PropTypes.string,
+  size: PropTypes.oneOf(['md', 'sm', 'xs', 'none']),
+}
+
+Hr.defaultProps = {
+  'data-cy': 'Hr',
+  role: 'separator',
+  size: 'md',
+}
 export default Hr

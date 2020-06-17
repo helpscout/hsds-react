@@ -5,44 +5,6 @@ import { classNames } from '../../utilities/classNames'
 import { HeadingUI } from './Heading.css'
 
 class Heading extends React.PureComponent {
-  static propTypes = {
-    center: PropTypes.bool,
-    className: PropTypes.string,
-    disableSelect: PropTypes.bool,
-    light: PropTypes.bool,
-    lineHeightInherit: PropTypes.bool,
-    lineHeightReset: PropTypes.bool,
-    linkStyle: PropTypes.bool,
-    noWrap: PropTypes.bool,
-    selector: PropTypes.string,
-    size: PropTypes.oneOf([
-      'h1',
-      'h2',
-      'h3',
-      'h4',
-      'h5',
-      'h6',
-      'big',
-      'md',
-      'small',
-      '',
-    ]),
-    truncate: PropTypes.bool,
-    weight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    wordWrap: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    center: false,
-    disableSelect: false,
-    lineHeightInherit: false,
-    lineHeightReset: false,
-    linkStyle: false,
-    truncate: false,
-    noWrap: false,
-    wordWrap: false,
-  }
-
   render() {
     const {
       center,
@@ -90,6 +52,47 @@ class Heading extends React.PureComponent {
       </HeadingUI>
     )
   }
+}
+
+Heading.propTypes = {
+  center: PropTypes.bool,
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  disableSelect: PropTypes.bool,
+  light: PropTypes.bool,
+  lineHeightInherit: PropTypes.bool,
+  lineHeightReset: PropTypes.bool,
+  linkStyle: PropTypes.bool,
+  noWrap: PropTypes.bool,
+  selector: PropTypes.string,
+  size: PropTypes.oneOf([
+    'h1',
+    'h2',
+    'h3',
+    'h4',
+    'h5',
+    'h6',
+    'big',
+    'md',
+    'small',
+    '',
+  ]),
+  truncate: PropTypes.bool,
+  weight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  wordWrap: PropTypes.bool,
+}
+
+Heading.defaultProps = {
+  center: false,
+  'data-cy': 'Heading',
+  disableSelect: false,
+  lineHeightInherit: false,
+  lineHeightReset: false,
+  linkStyle: false,
+  truncate: false,
+  noWrap: false,
+  wordWrap: false,
 }
 
 export default Heading

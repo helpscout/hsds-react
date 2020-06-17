@@ -5,15 +5,8 @@ import Text from './Skeleton.Text'
 import { classNames } from '../../utilities/classNames'
 
 class SkeletonParagraph extends React.PureComponent {
-  static displayName = 'Skeleton.Paragraph'
-
-  static defaultProps = {
-    withAnimations: true,
-  }
-
   render() {
     const { className, withAnimations, ...rest } = this.props
-
     const componentClassName = classNames('c-SkeletonParagraph', className)
 
     return (
@@ -30,8 +23,15 @@ class SkeletonParagraph extends React.PureComponent {
 SkeletonParagraph.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   /** Enables animations for the component. */
   withAnimations: PropTypes.bool,
+}
+
+SkeletonParagraph.defaultProps = {
+  'data-cy': 'SkeletonParagraph',
+  withAnimations: true,
 }
 
 export default SkeletonParagraph

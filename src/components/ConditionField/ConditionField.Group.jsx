@@ -1,22 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import AddButton from './ConditionField.AddButton'
 import { noop } from '../../utilities/other'
 
-export class Group extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    innerRef: PropTypes.func,
-    isAddEnabled: PropTypes.bool,
-    onAdd: PropTypes.func,
-  }
-  static defaultProps = {
-    isAddEnabled: true,
-    onAdd: noop,
-  }
-
-  static displayName = 'ConditionGroup'
-
+export class ConditionFieldGroup extends React.PureComponent {
   renderFields() {
     const { children } = this.props
 
@@ -39,7 +27,7 @@ export class Group extends React.PureComponent {
     const { children, isAddEnabled, onAdd, ...rest } = this.props
 
     return (
-      <div {...rest} data-cy="ConditionFieldGroup">
+      <div {...getValidProps(rest)}>
         {this.renderFields()}
         {this.renderAddAction()}
       </div>
@@ -47,4 +35,19 @@ export class Group extends React.PureComponent {
   }
 }
 
-export default Group
+ConditionFieldGroup.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  innerRef: PropTypes.func,
+  isAddEnabled: PropTypes.bool,
+  onAdd: PropTypes.func,
+}
+
+ConditionFieldGroup.defaultProps = {
+  'data-cy': 'ConditionFieldGroup',
+  isAddEnabled: true,
+  onAdd: noop,
+}
+
+export default ConditionFieldGroup

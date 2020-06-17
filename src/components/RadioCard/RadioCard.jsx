@@ -4,7 +4,6 @@ import Icon from '../Icon'
 import ChoiceGroupContext from '../ChoiceGroup/ChoiceGroup.Context'
 import { classNames } from '../../utilities/classNames'
 import { includes } from '../../utilities/arrays'
-
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isFunction, isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
@@ -20,21 +19,6 @@ import {
 const uniqueID = createUniqueIDFactory('RadioCard')
 
 class RadioCard extends React.PureComponent {
-  static defaultProps = {
-    checked: false,
-    content: null,
-    heading: null,
-    icon: 'fab-chat',
-    iconSize: 52,
-    innerRef: noop,
-    inputRef: noop,
-    isFocused: false,
-    maxWidth: null,
-    onBlur: noop,
-    onChange: noop,
-    onFocus: noop,
-  }
-
   defaultIcon = 'fab-chat'
 
   constructor(props) {
@@ -200,20 +184,51 @@ class RadioCard extends React.PureComponent {
 RadioCard.propTypes = {
   checked: PropTypes.bool,
   className: PropTypes.string,
-  content: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  heading: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  icon: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  content: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+    PropTypes.func,
+  ]),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  heading: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+    PropTypes.func,
+  ]),
+  icon: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+    PropTypes.func,
+  ]),
   iconSize: PropTypes.number,
   id: PropTypes.string,
   innerRef: PropTypes.func,
   inputRef: PropTypes.func,
   isFocused: PropTypes.bool,
-  maxWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  maxWidth: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.func,
+  ]),
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
   title: PropTypes.string,
   value: PropTypes.string,
+}
+
+RadioCard.defaultProps = {
+  checked: false,
+  'data-cy': 'RadioCard',
+  icon: 'fab-chat',
+  iconSize: 52,
+  innerRef: noop,
+  inputRef: noop,
+  isFocused: false,
+  onBlur: noop,
+  onChange: noop,
+  onFocus: noop,
 }
 
 export default RadioCard

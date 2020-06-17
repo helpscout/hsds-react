@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import Backdrop from '../Input/Input.BackdropV2'
+import InputBackdropV2 from '../Input/Input.BackdropV2'
 
 import { getColor } from '../../styles/utilities/color'
 
@@ -14,7 +14,7 @@ export const config = {
 export const ActionSelectUI = styled('div')`
   &.is-withContent {
     .c-ActionSelectDropdownWrapper {
-      .${Backdrop.className} {
+      .${InputBackdropV2.className} {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
       }

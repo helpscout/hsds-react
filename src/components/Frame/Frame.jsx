@@ -1,6 +1,7 @@
 // from https://github.com/hydrateio/react-styled-frame/blob/master/src/index.js
 // and https://github.com/styled-components/styled-components/issues/659#issuecomment-456894873
 import React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Frame, { FrameContextConsumer } from 'react-frame-component'
 import { StyleSheetManager, withTheme, ThemeProvider } from 'styled-components'
 
@@ -17,11 +18,10 @@ export class FrameComponent extends React.Component {
             border: 0,
             ...style,
           }}
-          {...rest}
+          {...getValidProps(rest)}
         >
           <FrameContextConsumer>
             {frameContext => {
-              // TODO remove ignore when test fixed
               return (
                 <StyleSheetManager target={frameContext.document.head}>
                   {theme ? (
@@ -39,6 +39,10 @@ export class FrameComponent extends React.Component {
       </div>
     )
   }
+}
+
+FrameComponent.defaultProps = {
+  'data-cy': 'FrameComponent',
 }
 
 export const ThemableFrame = withTheme(FrameComponent)

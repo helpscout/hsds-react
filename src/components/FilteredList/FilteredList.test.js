@@ -140,9 +140,9 @@ describe('Tooltip', () => {
     const items = [
       'test@test.com',
       'test2@test.com',
-      'test2@test.com',
       'test3@test.com',
       'test4@test.com',
+      'test5@test.com',
     ]
     const limit = 1
     const component = <FilteredList items={items} limit={limit} />

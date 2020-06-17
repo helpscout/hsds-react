@@ -4,20 +4,9 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { PrefixUI } from './Input.css'
 
-class Prefix extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    isSeamless: PropTypes.bool,
-  }
-  static displayName = 'InputPrefix'
-
-  static defaultProps = {
-    isSeamless: false,
-  }
-
+class InputPrefix extends React.PureComponent {
   render() {
     const { className, isSeamless, ...rest } = this.props
-
     const componentClassName = classNames(
       'c-InputPrefix',
       'c-Input__item',
@@ -30,4 +19,16 @@ class Prefix extends React.PureComponent {
   }
 }
 
-export default Prefix
+InputPrefix.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  isSeamless: PropTypes.bool,
+}
+
+InputPrefix.defaultProps = {
+  'data-cy': 'InputPrefix',
+  isSeamless: false,
+}
+
+export default InputPrefix

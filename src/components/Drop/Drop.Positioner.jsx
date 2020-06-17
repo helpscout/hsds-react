@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import ReactDOM from 'react-dom'
 import EventListener from '../EventListener'
 import { classNames } from '../../utilities/classNames'
@@ -12,26 +13,7 @@ import { noop } from '../../utilities/other'
 
 import { DropContentUI, DropUI } from './Drop.css'
 
-class Positioner extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    autoPosition: PropTypes.bool,
-    direction: PropTypes.string,
-    offset: PropTypes.number,
-    onUpdatePosition: PropTypes.func,
-    position: PropTypes.shape({
-      direction: PropTypes.shape({
-        x: PropTypes.oneOf(['left', 'right', '']),
-        y: PropTypes.oneOf(['up', 'down']),
-      }),
-      left: PropTypes.number,
-      offsetTop: PropTypes.number,
-      top: PropTypes.number,
-    }),
-    trigger: PropTypes.any,
-    zIndex: PropTypes.number,
-  }
-
+class DropPositioner extends React.PureComponent {
   constructor(props) {
     super(props)
 
@@ -45,14 +27,6 @@ class Positioner extends React.PureComponent {
     this.node = null
     this.contentNode = null
     this.updatePosition = this.updatePosition.bind(this)
-  }
-
-  static defaultProps = {
-    autoPosition: true,
-    direction: 'down',
-    offset: 8,
-    onUpdatePosition: noop,
-    zIndex: 1000,
   }
 
   position
@@ -156,7 +130,7 @@ class Positioner extends React.PureComponent {
         ref={node => {
           this.node = node
         }}
-        {...rest}
+        {...getValidProps(rest)}
       >
         <EventListener
           event="resize"
@@ -177,6 +151,34 @@ class Positioner extends React.PureComponent {
   }
 }
 
-Positioner.displayName = 'DropPositioner'
+DropPositioner.propTypes = {
+  className: PropTypes.string,
+  autoPosition: PropTypes.bool,
+  direction: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  offset: PropTypes.number,
+  onUpdatePosition: PropTypes.func,
+  position: PropTypes.shape({
+    direction: PropTypes.shape({
+      x: PropTypes.oneOf(['left', 'right', '']),
+      y: PropTypes.oneOf(['up', 'down']),
+    }),
+    left: PropTypes.number,
+    offsetTop: PropTypes.number,
+    top: PropTypes.number,
+  }),
+  trigger: PropTypes.any,
+  zIndex: PropTypes.number,
+}
 
-export default Positioner
+DropPositioner.defaultProps = {
+  autoPosition: true,
+  'data-cy': 'DropPositioner',
+  direction: 'down',
+  offset: 8,
+  onUpdatePosition: noop,
+  zIndex: 1000,
+}
+
+export default DropPositioner

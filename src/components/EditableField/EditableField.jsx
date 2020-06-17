@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import {
   EditableFieldUI,
   FieldUI,
@@ -19,7 +18,6 @@ import { EditableFieldInput as Input } from './EditableField.Input'
 import { EditableFieldMask as Mask } from './EditableField.Mask'
 import { EditableFieldActions as Actions } from './EditableField.Actions'
 import Icon from '../Icon'
-
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import {
@@ -33,74 +31,10 @@ import { key } from '../../constants/Keys'
 import { noop } from '../../utilities/other'
 import { isArray, isFunction } from '../../utilities/is'
 import { find } from '../../utilities/arrays'
-
 import equal from 'fast-deep-equal'
 
 export class EditableField extends React.Component {
-  static propTypes = {
-    actions: PropTypes.any,
-    className: PropTypes.string,
-    defaultOption: PropTypes.any,
-    disabled: PropTypes.bool,
-    emphasizeTopValue: PropTypes.bool,
-    floatingLabels: PropTypes.bool,
-    inline: PropTypes.bool,
-    label: PropTypes.string,
-    multipleValues: PropTypes.bool,
-    name: PropTypes.string,
-    placeholder: PropTypes.string,
-    size: PropTypes.any,
-    type: PropTypes.string,
-    value: PropTypes.any,
-    valueOptions: PropTypes.any,
-    innerRef: PropTypes.func,
-    onInputFocus: PropTypes.func,
-    onInputBlur: PropTypes.func,
-    onOptionFocus: PropTypes.func,
-    onOptionBlur: PropTypes.func,
-    onOptionChange: PropTypes.func,
-    onInputKeyDown: PropTypes.func,
-    onInputKeyPress: PropTypes.func,
-    onInputKeyUp: PropTypes.func,
-    onChange: PropTypes.func,
-    onEnter: PropTypes.func,
-    onEscape: PropTypes.func,
-    onAdd: PropTypes.func,
-    onCommit: PropTypes.func,
-    onDelete: PropTypes.func,
-    onDiscard: PropTypes.func,
-    validate: PropTypes.func,
-  }
-
   static className = EDITABLEFIELD_CLASSNAMES.component
-  static defaultProps = {
-    type: FIELDTYPES.text,
-    defaultOption: null,
-    disabled: false,
-    emphasizeTopValue: false,
-    floatingLabels: false,
-    inline: false,
-    multipleValues: false,
-    size: FIELDSIZES.md,
-    value: EMPTY_VALUE,
-    innerRef: noop,
-    onAdd: noop,
-    onChange: noop,
-    onCommit: noop,
-    onDelete: noop,
-    onDiscard: noop,
-    onEnter: noop,
-    onEscape: noop,
-    onInputBlur: noop,
-    onInputFocus: noop,
-    onInputKeyDown: noop,
-    onInputKeyPress: noop,
-    onInputKeyUp: noop,
-    onOptionBlur: noop,
-    onOptionChange: noop,
-    onOptionFocus: noop,
-    validate: () => Promise.resolve({ isValid: true }),
-  }
 
   constructor(props) {
     super(props)
@@ -1150,6 +1084,73 @@ export class EditableField extends React.Component {
       </EditableFieldUI>
     )
   }
+}
+
+EditableField.propTypes = {
+  actions: PropTypes.any,
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  defaultOption: PropTypes.any,
+  disabled: PropTypes.bool,
+  emphasizeTopValue: PropTypes.bool,
+  floatingLabels: PropTypes.bool,
+  inline: PropTypes.bool,
+  label: PropTypes.string,
+  multipleValues: PropTypes.bool,
+  name: PropTypes.string,
+  placeholder: PropTypes.string,
+  size: PropTypes.any,
+  type: PropTypes.string,
+  value: PropTypes.any,
+  valueOptions: PropTypes.any,
+  innerRef: PropTypes.func,
+  onInputFocus: PropTypes.func,
+  onInputBlur: PropTypes.func,
+  onOptionFocus: PropTypes.func,
+  onOptionBlur: PropTypes.func,
+  onOptionChange: PropTypes.func,
+  onInputKeyDown: PropTypes.func,
+  onInputKeyPress: PropTypes.func,
+  onInputKeyUp: PropTypes.func,
+  onChange: PropTypes.func,
+  onEnter: PropTypes.func,
+  onEscape: PropTypes.func,
+  onAdd: PropTypes.func,
+  onCommit: PropTypes.func,
+  onDelete: PropTypes.func,
+  onDiscard: PropTypes.func,
+  validate: PropTypes.func,
+}
+
+EditableField.defaultProps = {
+  type: FIELDTYPES.text,
+  'data-cy': 'EditableField',
+  defaultOption: null,
+  disabled: false,
+  emphasizeTopValue: false,
+  floatingLabels: false,
+  inline: false,
+  multipleValues: false,
+  size: FIELDSIZES.md,
+  value: EMPTY_VALUE,
+  innerRef: noop,
+  onAdd: noop,
+  onChange: noop,
+  onCommit: noop,
+  onDelete: noop,
+  onDiscard: noop,
+  onEnter: noop,
+  onEscape: noop,
+  onInputBlur: noop,
+  onInputFocus: noop,
+  onInputKeyDown: noop,
+  onInputKeyPress: noop,
+  onInputKeyUp: noop,
+  onOptionBlur: noop,
+  onOptionChange: noop,
+  onOptionFocus: noop,
+  validate: () => Promise.resolve({ isValid: true }),
 }
 
 export default EditableField

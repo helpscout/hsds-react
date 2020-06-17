@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { Card } from '../Dropdown.Card'
+import { DropdownCard as Card } from '../Dropdown.Card'
 import { hasClass } from '../../../tests/helpers/enzyme'
 
 describe('className', () => {

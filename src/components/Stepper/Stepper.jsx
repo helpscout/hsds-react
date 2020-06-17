@@ -10,16 +10,6 @@ import { StepperUI, StepWrapperUI } from './Stepper.css'
 
 export class Stepper extends React.PureComponent {
   static className = 'c-Stepper'
-  static defaultProps = {
-    currentIndex: 0,
-    innerRef: noop,
-    isClickable: false,
-    onChange: noop,
-    onComplete: noop,
-    onStepClick: noop,
-    steps: [],
-  }
-
   static Step = Step
 
   componentDidUpdate(prevProps) {
@@ -121,6 +111,8 @@ export class Stepper extends React.PureComponent {
 Stepper.propTypes = {
   className: PropTypes.string,
   currentIndex: PropTypes.any,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   innerRef: PropTypes.func,
   isClickable: PropTypes.bool,
   onChange: PropTypes.func,
@@ -129,6 +121,17 @@ Stepper.propTypes = {
   steps: PropTypes.arrayOf(
     PropTypes.shape({ title: PropTypes.string, id: PropTypes.string })
   ),
+}
+
+Stepper.defaultProps = {
+  currentIndex: 0,
+  'data-cy': 'Stepper',
+  innerRef: noop,
+  isClickable: false,
+  onChange: noop,
+  onComplete: noop,
+  onStepClick: noop,
+  steps: [],
 }
 
 export default Stepper

@@ -5,12 +5,12 @@ import Animate from '../Animate'
 import Badge from '../Badge'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FormLabelContext from '../FormLabel/Context'
-import AddOn from './Input.AddOn'
-import Backdrop from './Input.BackdropV2'
-import Prefix from './Input.Prefix'
-import Resizer from './Input.Resizer'
-import Static from './Input.Static'
-import Suffix from './Input.Suffix'
+import InputAddOn from './Input.AddOn'
+import InputBackdropV2 from './Input.BackdropV2'
+import InputPrefix from './Input.Prefix'
+import InputResizer from './Input.Resizer'
+import InputStatic from './Input.Static'
+import InputSuffix from './Input.Suffix'
 import HelpText from '../HelpText'
 import Icon from '../Icon'
 import Label from '../Label'
@@ -21,7 +21,6 @@ import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isModifierKeyPressed } from '../../utilities/keys'
-import { isDefined } from '../../utilities/is'
 import { noop, requestAnimationFrame } from '../../utilities/other'
 import { moveCursorToEnd, isTextArea } from './Input.utils'
 import {
@@ -37,127 +36,12 @@ import {
 const uniqueID = createUniqueIDFactory('Input')
 
 export class Input extends React.PureComponent {
-  static propTypes = {
-    action: PropTypes.any,
-    autoFocus: PropTypes.bool,
-    autoFocusTimeoutId: PropTypes.any,
-    charValidatorLimit: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-    ]),
-    className: PropTypes.string,
-    disabled: PropTypes.bool,
-    errorIcon: PropTypes.string,
-    errorMessage: PropTypes.string,
-    forceAutoFocusTimeout: PropTypes.number,
-    hasInsertCarriageReturns: PropTypes.bool,
-    helpText: PropTypes.any,
-    hintText: PropTypes.any,
-    id: PropTypes.string,
-    inlinePrefix: PropTypes.any,
-    inlineSuffix: PropTypes.any,
-    innerRef: PropTypes.func,
-    inputRef: PropTypes.func,
-    inputType: PropTypes.string,
-    isFirst: PropTypes.bool,
-    isFocused: PropTypes.bool,
-    isLast: PropTypes.bool,
-    isNotOnly: PropTypes.bool,
-    isSubtleReadOnly: PropTypes.bool,
-    label: PropTypes.any,
-    maxLength: PropTypes.number,
-    maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    modalhelpText: PropTypes.string,
-    moveCursorToEnd: PropTypes.bool,
-    multiline: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-    name: PropTypes.string,
-    offsetAmount: PropTypes.number,
-    onBlur: PropTypes.func,
-    onChange: PropTypes.func,
-    onEnterDown: PropTypes.func,
-    onEnterUp: PropTypes.func,
-    onFocus: PropTypes.func,
-    onKeyDown: PropTypes.func,
-    onKeyUp: PropTypes.func,
-    onScroll: PropTypes.func,
-    onResize: PropTypes.func,
-    onStartTyping: PropTypes.func,
-    onStopTyping: PropTypes.func,
-    onWheel: PropTypes.func,
-    placeholder: PropTypes.string,
-    prefix: PropTypes.any,
-    readOnly: PropTypes.bool,
-    refApplyCallStopTyping: PropTypes.func,
-    removeStateStylesOnFocus: PropTypes.bool,
-    resizable: PropTypes.bool,
-    scrollLock: PropTypes.bool,
-    seamless: PropTypes.bool,
-    size: PropTypes.string,
-    state: PropTypes.string,
-    style: PropTypes.any,
-    suffix: PropTypes.any,
-    tabIndex: PropTypes.number,
-    type: PropTypes.string,
-    typingThrottleInterval: PropTypes.number,
-    typingTimeoutDelay: PropTypes.number,
-    value: PropTypes.any,
-    width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    withCharValidator: PropTypes.bool,
-    withTypingEvent: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    autoFocus: false,
-    charValidatorLimit: 500,
-    disabled: false,
-    errorIcon: 'alert',
-    forceAutoFocusTimeout: 0,
-    hasInsertCarriageReturns: false,
-    innerRef: noop,
-    inputRef: noop,
-    isFirst: false,
-    isFocused: false,
-    isLast: false,
-    isNotOnly: false,
-    isSubtleReadOnly: false,
-    maxHeight: 320,
-    maxLength: 524288,
-    moveCursorToEnd: false,
-    multiline: null,
-    offsetAmount: 0,
-    onBlur: noop,
-    onChange: noop,
-    onEnterDown: noop,
-    onEnterUp: noop,
-    onFocus: noop,
-    onKeyDown: noop,
-    onKeyUp: noop,
-    onResize: noop,
-    onStartTyping: noop,
-    onStopTyping: noop,
-    onWheel: noop,
-    readOnly: false,
-    refApplyCallStopTyping: noop,
-    removeStateStylesOnFocus: false,
-    resizable: false,
-    scrollLock: false,
-    seamless: false,
-    state: '',
-    style: {},
-    type: 'text',
-    typingThrottleInterval: 500,
-    typingTimeoutDelay: 5000,
-    value: '',
-    withCharValidator: false,
-    withTypingEvent: false,
-  }
-
-  static AddOn = AddOn
-  static Backdrop = Backdrop
-  static Prefix = Prefix
-  static Resizer = Resizer
-  static Static = Static
-  static Suffix = Suffix
+  static AddOn = InputAddOn
+  static Backdrop = InputBackdropV2
+  static Prefix = InputPrefix
+  static Resizer = InputResizer
+  static Static = InputStatic
+  static Suffix = InputSuffix
 
   computedStyles
   inputNode
@@ -504,7 +388,7 @@ export class Input extends React.PureComponent {
   getPrefixMarkup() {
     const { prefix, seamless } = this.props
 
-    return prefix && <Prefix isSeamless={seamless}>{prefix}</Prefix>
+    return prefix && <InputPrefix isSeamless={seamless}>{prefix}</InputPrefix>
   }
 
   getInlineSuffixMarkup() {
@@ -524,13 +408,13 @@ export class Input extends React.PureComponent {
   getSuffixMarkup() {
     const { suffix, seamless } = this.props
 
-    return suffix && <Suffix isSeamless={seamless}>{suffix}</Suffix>
+    return suffix && <InputSuffix isSeamless={seamless}>{suffix}</InputSuffix>
   }
 
   getActionMarkup() {
     const { action } = this.props
 
-    return action && <Suffix isAction>{action}</Suffix>
+    return action && <InputSuffix isAction>{action}</InputSuffix>
   }
 
   getErrorMarkup() {
@@ -626,7 +510,7 @@ export class Input extends React.PureComponent {
 
     const resizer =
       multiline != null ? (
-        <Resizer
+        <InputResizer
           contents={value}
           currentHeight={height}
           minimumLines={this.getMultilineValue()}
@@ -764,11 +648,8 @@ export class Input extends React.PureComponent {
       style: styleProp,
       width,
     } = this.props
-
     const { isFocused, value, state } = this.state
-
     const isReadOnly = !isSubtleReadOnly && readOnly
-
     const componentClassName = classNames(
       'c-Input',
       disabled && 'is-disabled',
@@ -782,7 +663,6 @@ export class Input extends React.PureComponent {
       value && 'has-value',
       className
     )
-
     const componentStyle = {
       ...styleProp,
       maxWidth: width,
@@ -802,7 +682,7 @@ export class Input extends React.PureComponent {
               {this.getErrorMarkup()}
               {this.getSuffixMarkup()}
               {this.getActionMarkup()}
-              <Backdrop
+              <InputBackdropV2
                 className="c-Input__backdrop"
                 disabled={disabled}
                 isFirst={isFirst}
@@ -822,6 +702,121 @@ export class Input extends React.PureComponent {
       </FormLabelContext.Consumer>
     )
   }
+}
+
+Input.propTypes = {
+  action: PropTypes.any,
+  autoFocus: PropTypes.bool,
+  autoFocusTimeoutId: PropTypes.any,
+  charValidatorLimit: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  disabled: PropTypes.bool,
+  errorIcon: PropTypes.string,
+  errorMessage: PropTypes.string,
+  forceAutoFocusTimeout: PropTypes.number,
+  hasInsertCarriageReturns: PropTypes.bool,
+  helpText: PropTypes.any,
+  hintText: PropTypes.any,
+  id: PropTypes.string,
+  inlinePrefix: PropTypes.any,
+  inlineSuffix: PropTypes.any,
+  innerRef: PropTypes.func,
+  inputRef: PropTypes.func,
+  inputType: PropTypes.string,
+  isFirst: PropTypes.bool,
+  isFocused: PropTypes.bool,
+  isLast: PropTypes.bool,
+  isNotOnly: PropTypes.bool,
+  isSubtleReadOnly: PropTypes.bool,
+  label: PropTypes.any,
+  maxLength: PropTypes.number,
+  maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  modalhelpText: PropTypes.string,
+  moveCursorToEnd: PropTypes.bool,
+  multiline: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+  name: PropTypes.string,
+  offsetAmount: PropTypes.number,
+  onBlur: PropTypes.func,
+  onChange: PropTypes.func,
+  onEnterDown: PropTypes.func,
+  onEnterUp: PropTypes.func,
+  onFocus: PropTypes.func,
+  onKeyDown: PropTypes.func,
+  onKeyUp: PropTypes.func,
+  onScroll: PropTypes.func,
+  onResize: PropTypes.func,
+  onStartTyping: PropTypes.func,
+  onStopTyping: PropTypes.func,
+  onWheel: PropTypes.func,
+  placeholder: PropTypes.string,
+  prefix: PropTypes.any,
+  readOnly: PropTypes.bool,
+  refApplyCallStopTyping: PropTypes.func,
+  removeStateStylesOnFocus: PropTypes.bool,
+  resizable: PropTypes.bool,
+  scrollLock: PropTypes.bool,
+  seamless: PropTypes.bool,
+  size: PropTypes.string,
+  state: PropTypes.string,
+  style: PropTypes.any,
+  suffix: PropTypes.any,
+  tabIndex: PropTypes.number,
+  type: PropTypes.string,
+  typingThrottleInterval: PropTypes.number,
+  typingTimeoutDelay: PropTypes.number,
+  value: PropTypes.any,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  withCharValidator: PropTypes.bool,
+  withTypingEvent: PropTypes.bool,
+}
+
+Input.defaultProps = {
+  autoFocus: false,
+  charValidatorLimit: 500,
+  'data-cy': 'Input',
+  disabled: false,
+  errorIcon: 'alert',
+  forceAutoFocusTimeout: 0,
+  hasInsertCarriageReturns: false,
+  innerRef: noop,
+  inputRef: noop,
+  isFirst: false,
+  isFocused: false,
+  isLast: false,
+  isNotOnly: false,
+  isSubtleReadOnly: false,
+  maxHeight: 320,
+  maxLength: 524288,
+  moveCursorToEnd: false,
+  multiline: null,
+  offsetAmount: 0,
+  onBlur: noop,
+  onChange: noop,
+  onEnterDown: noop,
+  onEnterUp: noop,
+  onFocus: noop,
+  onKeyDown: noop,
+  onKeyUp: noop,
+  onResize: noop,
+  onStartTyping: noop,
+  onStopTyping: noop,
+  onWheel: noop,
+  readOnly: false,
+  refApplyCallStopTyping: noop,
+  removeStateStylesOnFocus: false,
+  resizable: false,
+  scrollLock: false,
+  seamless: false,
+  state: '',
+  style: {},
+  type: 'text',
+  typingThrottleInterval: 500,
+  typingTimeoutDelay: 5000,
+  value: '',
+  withCharValidator: false,
+  withTypingEvent: false,
 }
 
 export default Input

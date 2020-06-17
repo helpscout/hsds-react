@@ -60,11 +60,11 @@ export default class TableBody extends React.Component {
   }
 
   render() {
-    const { columns, onRowClick } = this.props
+    const { columns, onRowClick, 'data-cy': dataCy } = this.props
     const { rows } = this.state
 
     return (
-      <tbody>
+      <tbody data-cy={dataCy}>
         {rows.map(row => (
           <Row
             row={row}
@@ -84,4 +84,8 @@ TableBody.propTypes = {
   maxRowsToDisplay: PropTypes.number,
   rows: PropTypes.arrayOf(PropTypes.shape(dataShape)),
   onRowClick: PropTypes.func,
+}
+
+TableBody.defaultProps = {
+  'data-cy': 'TableBody',
 }

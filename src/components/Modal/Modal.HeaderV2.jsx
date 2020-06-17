@@ -1,4 +1,5 @@
 import React from 'react'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { MODAL_KIND } from './Modal.utils'
 import {
@@ -13,30 +14,20 @@ import {
   HeaderUI,
   HeaderTitleUI,
 } from './Modal.HeaderV2.css'
-
 import DotStepper from '../DotStepper'
 import Icon from '../Icon'
 
-class HeaderV2 extends React.PureComponent {
-  static defaultProps = {
-    description: null,
-    icon: null,
-    iconSize: '24',
-    illo: null,
-    illoSize: 60,
-    kind: MODAL_KIND.DEFAULT,
-    numSteps: 1,
-    step: 1,
-    title: 'Title',
-  }
-
+class ModalHeaderV2 extends React.PureComponent {
   renderAlertStyle() {
     const { className, children, description, title, ...rest } = this.props
-
     const componentClassName = classNames('c-ModalHeaderV2', className)
 
     return (
-      <AlertHeaderUI {...rest} className={componentClassName} placement={'top'}>
+      <AlertHeaderUI
+        {...getValidProps(rest)}
+        className={componentClassName}
+        placement={'top'}
+      >
         {<AlertHeaderTitleUI>{title}</AlertHeaderTitleUI>}
         {description ? (
           <AlertHeaderDescriptionUI>{description}</AlertHeaderDescriptionUI>
@@ -61,7 +52,7 @@ class HeaderV2 extends React.PureComponent {
 
     return (
       <BrandedHeaderUI
-        {...rest}
+        {...getValidProps(rest)}
         className={componentClassName}
         placement={'top'}
       >
@@ -93,7 +84,7 @@ class HeaderV2 extends React.PureComponent {
 
     return (
       <BrandedHeaderUI
-        {...rest}
+        {...getValidProps(rest)}
         className={componentClassName}
         placement={'top'}
       >
@@ -132,7 +123,11 @@ class HeaderV2 extends React.PureComponent {
     }
 
     return (
-      <HeaderUI {...rest} className={componentClassName} placement={'top'}>
+      <HeaderUI
+        {...getValidProps(rest)}
+        className={componentClassName}
+        placement={'top'}
+      >
         {icon ? <Icon name={icon} key={icon} size={iconSize} /> : null}
         {<HeaderTitleUI>{title}</HeaderTitleUI>}
         {children}
@@ -141,6 +136,17 @@ class HeaderV2 extends React.PureComponent {
   }
 }
 
-HeaderV2.displayName = 'ModalHeaderV2'
+ModalHeaderV2.defaultProps = {
+  'data-cy': 'ModalHeaderV2',
+  description: null,
+  icon: null,
+  iconSize: '24',
+  illo: null,
+  illoSize: 60,
+  kind: MODAL_KIND.DEFAULT,
+  numSteps: 1,
+  step: 1,
+  title: 'Title',
+}
 
-export default HeaderV2
+export default ModalHeaderV2

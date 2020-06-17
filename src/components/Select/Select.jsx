@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FormLabelContext from '../FormLabel/Context'
-import Backdrop from '../Input/Input.BackdropV2'
+import InputBackdropV2 from '../Input/Input.BackdropV2'
 import HelpText from '../HelpText'
 import Label from '../Label'
 import Icon from '../Icon'
@@ -20,21 +20,6 @@ const PLACEHOLDER_VALUE = '__placeholder__'
 const uniqueID = createUniqueIDFactory('Select')
 
 export class Select extends React.PureComponent {
-  static defaultProps = {
-    autoFocus: false,
-    disabled: false,
-    errorIcon: 'alert',
-    innerRef: noop,
-    forceAutoFocusTimeout: 120,
-    onBlur: noop,
-    onChange: noop,
-    onFocus: noop,
-    options: [],
-    removeStateStylesOnFocus: false,
-    seamless: false,
-    value: '',
-  }
-
   static Arrows = Arrows
 
   optionClassName = 'c-Select__option'
@@ -387,7 +372,7 @@ export class Select extends React.PureComponent {
               {this.getSelectMarkup(props)}
               <Arrows className="c-SelectIcon" state={state} />
               {errorMarkup}
-              <Backdrop
+              <InputBackdropV2
                 className="c-Select__backdrop"
                 disabled={disabled}
                 isFirst={isFirst}
@@ -421,6 +406,8 @@ Select.propTypes = {
   autoFocus: PropTypes.bool,
   children: PropTypes.any,
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   disabled: PropTypes.bool,
   errorIcon: PropTypes.string,
   errorMessage: PropTypes.string,
@@ -458,6 +445,22 @@ Select.propTypes = {
   tabIndex: PropTypes.number,
   value: PropTypes.string,
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+}
+
+Select.defaultProps = {
+  autoFocus: false,
+  'data-cy': 'Select',
+  disabled: false,
+  errorIcon: 'alert',
+  innerRef: noop,
+  forceAutoFocusTimeout: 120,
+  onBlur: noop,
+  onChange: noop,
+  onFocus: noop,
+  options: [],
+  removeStateStylesOnFocus: false,
+  seamless: false,
+  value: '',
 }
 
 export default Select

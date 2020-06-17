@@ -1,34 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import AddButton from './ConditionList.AddButton'
+import ConditionListAddButton from './ConditionList.AddButton'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { ConditionListUI } from './ConditionList.css'
 import { PageContext } from '../Page/Page'
 
 export class ConditionList extends React.Component {
-  static propTypes = {
-    className: PropTypes.string,
-    innerRef: PropTypes.func,
-    isAddEnabled: PropTypes.bool,
-    isWithOffset: PropTypes.bool,
-    onAdd: PropTypes.func,
-    scrollDuration: PropTypes.number,
-    scrollOffset: PropTypes.number,
-  }
-
   static className = 'c-ConditionList'
-  static defaultProps = {
-    innerRef: noop,
-    onAdd: noop,
-    isAddEnabled: true,
-    isWithOffset: false,
-    scrollDuration: 300,
-    scrollOffset: 200,
-  }
-
-  static AddButton = AddButton
+  static AddButton = ConditionListAddButton
 
   getClassName() {
     const { className, isWithOffset } = this.props
@@ -55,7 +36,7 @@ export class ConditionList extends React.Component {
     if (!isAddEnabled) return null
 
     return (
-      <AddButton
+      <ConditionListAddButton
         onClick={onAdd}
         scrollDuration={scrollDuration}
         scrollOffset={scrollOffset}
@@ -71,13 +52,34 @@ export class ConditionList extends React.Component {
         {...getValidProps(rest)}
         className={this.getClassName()}
         ref={innerRef}
-        data-cy="ConditionList"
       >
         {this.renderConditions()}
         {this.renderAddAction()}
       </ConditionListUI>
     )
   }
+}
+
+ConditionList.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  innerRef: PropTypes.func,
+  isAddEnabled: PropTypes.bool,
+  isWithOffset: PropTypes.bool,
+  onAdd: PropTypes.func,
+  scrollDuration: PropTypes.number,
+  scrollOffset: PropTypes.number,
+}
+
+ConditionList.defaultProps = {
+  'data-cy': 'ConditionList',
+  innerRef: noop,
+  onAdd: noop,
+  isAddEnabled: true,
+  isWithOffset: false,
+  scrollDuration: 300,
+  scrollOffset: 200,
 }
 
 const ConditionListConsumer = props => {

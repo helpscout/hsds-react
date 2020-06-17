@@ -5,7 +5,7 @@ import HeaderCell from './Table.HeaderCell'
 import { TABLE_CLASSNAME } from './Table'
 import { generateCellKey, columnShape } from './Table.utils'
 
-class Head extends React.Component {
+class TableHead extends React.Component {
   shouldComponentUpdate(nextProps) {
     const { columns, sortedInfo } = this.props
 
@@ -21,9 +21,10 @@ class Head extends React.Component {
   }
 
   render() {
-    const { isLoading, columns, sortedInfo } = this.props
+    const { isLoading, columns, sortedInfo, 'data-cy': dataCy } = this.props
+
     return (
-      <thead>
+      <thead data-cy={dataCy}>
         <tr className={`${TABLE_CLASSNAME}__HeaderRow`}>
           {columns.map(column => (
             <HeaderCell
@@ -39,7 +40,7 @@ class Head extends React.Component {
   }
 }
 
-Head.propTypes = {
+TableHead.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
   isLoading: PropTypes.bool,
   sortedInfo: PropTypes.shape({
@@ -48,4 +49,8 @@ Head.propTypes = {
   }),
 }
 
-export default Head
+TableHead.defaultProps = {
+  'data-cy': 'TableHead',
+}
+
+export default TableHead

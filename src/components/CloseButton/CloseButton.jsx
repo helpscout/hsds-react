@@ -6,26 +6,6 @@ import { noop } from '../../utilities/other'
 import { CloseButtonUI, IconUI } from './CloseButton.css'
 
 export class CloseButton extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    children: PropTypes.any,
-    innerRef: PropTypes.func,
-    onBlur: PropTypes.func,
-    onClick: PropTypes.func,
-    onFocus: PropTypes.func,
-    seamless: PropTypes.bool,
-    size: PropTypes.string,
-    title: PropTypes.string,
-  }
-  static defaultProps = {
-    innerRef: noop,
-    onBlur: noop,
-    onClick: noop,
-    onFocus: noop,
-    seamless: false,
-    title: 'Close',
-  }
-
   renderIcon() {
     const { size } = this.props
     const isTiny = size === 'tiny'
@@ -65,12 +45,35 @@ export class CloseButton extends React.PureComponent {
         {...getValidProps(rest)}
         className={componentClassName}
         ref={innerRef}
-        data-cy="CloseButton"
       >
         {this.renderIcon()}
       </CloseButtonUI>
     )
   }
+}
+
+CloseButton.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.any,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  innerRef: PropTypes.func,
+  onBlur: PropTypes.func,
+  onClick: PropTypes.func,
+  onFocus: PropTypes.func,
+  seamless: PropTypes.bool,
+  size: PropTypes.string,
+  title: PropTypes.string,
+}
+
+CloseButton.defaultProps = {
+  'data-cy': 'CloseButton',
+  innerRef: noop,
+  onBlur: noop,
+  onClick: noop,
+  onFocus: noop,
+  seamless: false,
+  title: 'Close',
 }
 
 export default CloseButton

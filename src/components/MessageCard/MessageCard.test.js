@@ -3,7 +3,7 @@ import { mount, render } from 'enzyme'
 import { MessageCard } from './MessageCard'
 import { TitleUI, SubtitleUI, BodyUI, ActionUI } from './MessageCard.css'
 import { Animate } from '../index'
-import { Button } from './MessageCard.Button'
+import { MessageCardButton as Button } from './MessageCard.Button'
 
 describe('className', () => {
   test('Has default className', () => {

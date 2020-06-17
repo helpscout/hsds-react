@@ -83,7 +83,7 @@ const getDragHandleClassName = isPage => {
   return classNames('drag-handle', isPage && isPageClassName)
 }
 
-const Title = props => {
+const AccordionTitle = props => {
   const {
     badge,
     children,
@@ -182,11 +182,10 @@ const Title = props => {
   )
 }
 
-Title.defaultProps = {
+AccordionTitle.defaultProps = {
+  'data-cy': 'AccordionTitle',
   isCompact: false,
   onClick: noop,
 }
 
-Title.displayName = 'AccordionSectionTitle'
-
-export default Title
+export default AccordionTitle

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { classNames } from '../../utilities/classNames'
 import { generateCellKey, columnShape, dataShape } from './Table.utils'
 import { TABLE_CLASSNAME } from './Table'
-import Cell from './Table.Cell'
+import TableCell from './Table.Cell'
 
 export default class TableRow extends React.PureComponent {
   handleRowClick = e => {
@@ -20,7 +20,7 @@ export default class TableRow extends React.PureComponent {
         onClick={this.handleRowClick}
       >
         {columns.map(column => (
-          <Cell
+          <TableCell
             column={column}
             row={row}
             key={generateCellKey('cell', column)}

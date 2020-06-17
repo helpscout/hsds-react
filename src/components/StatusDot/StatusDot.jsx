@@ -4,19 +4,9 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Centralize from '../Centralize'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
-
 import { StatusDotUI } from './StatusDot.css'
 
 class StatusDot extends React.PureComponent {
-  static defaultProps = {
-    inline: false,
-    isUnread: false,
-    outerBorderWidth: 3,
-    size: 'sm',
-    status: 'online',
-    style: {},
-  }
-
   getStyles = () => {
     const {
       borderColor,
@@ -72,7 +62,6 @@ class StatusDot extends React.PureComponent {
       title,
       ...rest
     } = this.props
-
     const componentClassName = classNames(
       'c-StatusDot',
       icon && 'is-icon',
@@ -82,7 +71,6 @@ class StatusDot extends React.PureComponent {
       status && `is-${status}`,
       className
     )
-
     const componentStyle = this.getStyles()
     const tooltipTitle = title || `Is ${status}`
 
@@ -103,6 +91,8 @@ StatusDot.propTypes = {
   borderColor: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.any,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   icon: PropTypes.string,
   inline: PropTypes.bool,
   isUnread: PropTypes.bool,
@@ -119,6 +109,16 @@ StatusDot.propTypes = {
   ]),
   style: PropTypes.any,
   title: PropTypes.string,
+}
+
+StatusDot.defaultProps = {
+  'data-cy': 'StatusDot',
+  inline: false,
+  isUnread: false,
+  outerBorderWidth: 3,
+  size: 'sm',
+  status: 'online',
+  style: {},
 }
 
 export default StatusDot

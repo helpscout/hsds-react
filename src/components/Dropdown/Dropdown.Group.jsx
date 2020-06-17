@@ -5,18 +5,7 @@ import { GroupUI } from './Dropdown.css'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
-export class Group extends React.PureComponent {
-  static displayName = 'DropdownGroup'
-
-  static propTypes = {
-    className: PropTypes.string,
-    innerRef: PropTypes.func,
-  }
-
-  static defaultProps = {
-    innerRef: noop,
-  }
-
+export class DropdownGroup extends React.PureComponent {
   render() {
     const { className, children, innerRef, ...rest } = this.props
     const componentClassName = classNames('c-DropdownGroup', className)
@@ -35,4 +24,16 @@ export class Group extends React.PureComponent {
   }
 }
 
-export default Group
+DropdownGroup.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  innerRef: PropTypes.func,
+}
+
+DropdownGroup.defaultProps = {
+  'data-cy': 'DropdownGroup',
+  innerRef: noop,
+}
+
+export default DropdownGroup

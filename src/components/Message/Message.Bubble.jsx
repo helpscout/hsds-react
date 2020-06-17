@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { noop } from '../../utilities/other'
 import { isNativeSpanType } from '@helpscout/react-utils/dist/isType'
 import compose from '@helpscout/react-utils/dist/compose'
@@ -13,7 +14,6 @@ import {
   newlineToHTML,
   textIncludesOnlyEmoji,
 } from '../../utilities/strings'
-
 import {
   MessageBubbleUI,
   MessageBubbleBodyUI,
@@ -26,7 +26,7 @@ import {
 // convertLinksToHTML will escape for output as HTML
 const enhanceBody = compose(newlineToHTML, convertLinksToHTML)
 
-export const Bubble = (props, context) => {
+export const MessageBubble = (props, context) => {
   const {
     body,
     children,
@@ -44,13 +44,10 @@ export const Bubble = (props, context) => {
     ...rest
   } = props
   const { theme } = context
-
   const isThemeNotifications = theme === 'notifications'
   const isThemeEmbed = theme === 'embed'
   const fromName = from && typeof from === 'string' ? from : null
-
   let showEmojiOnlyStyles = false
-
   const fromMarkup =
     isThemeNotifications && fromName ? (
       <MessageBubbleFromUI
@@ -62,7 +59,6 @@ export const Bubble = (props, context) => {
         </Text>
       </MessageBubbleFromUI>
     ) : null
-
   const iconMarkup = icon ? (
     <MessageBubbleIconWrapperUI className="c-MessageBubble__iconWrapper">
       <Icon
@@ -73,15 +69,12 @@ export const Bubble = (props, context) => {
       />
     </MessageBubbleIconWrapperUI>
   ) : null
-
   const titleMarkup = title ? (
     <MessageBubbleTitleUI className="c-MessageBubble__title" size="small">
       {title}
     </MessageBubbleTitleUI>
   ) : null
-
   const hasOnlyOneChild = React.Children.count(children) === 1
-
   const childrenMarkup = React.Children.map(children, child => {
     showEmojiOnlyStyles =
       !isThemeEmbed && hasOnlyOneChild && textIncludesOnlyEmoji(child)
@@ -164,7 +157,7 @@ export const Bubble = (props, context) => {
 
   return (
     <MessageBubbleUI
-      {...rest}
+      {...getValidProps(rest)}
       className={componentClassName}
       isEmbed={isThemeEmbed}
       showEmojiOnlyStyles={showEmojiOnlyStyles}
@@ -176,9 +169,11 @@ export const Bubble = (props, context) => {
   )
 }
 
-Bubble.propTypes = {
+MessageBubble.propTypes = {
   body: PropTypes.string,
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   from: PropTypes.any,
   icon: PropTypes.string,
   isNote: PropTypes.bool,
@@ -194,10 +189,12 @@ Bubble.propTypes = {
   typing: PropTypes.bool,
 }
 
-Bubble.contextTypes = {
+MessageBubble.defaultProps = {
+  'data-cy': 'MessageBubble',
+}
+
+MessageBubble.contextTypes = {
   theme: noop,
 }
 
-Bubble.displayName = 'MessageBubble'
-
-export default Bubble
+export default MessageBubble

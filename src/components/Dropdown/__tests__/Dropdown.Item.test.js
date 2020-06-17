@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { Item } from '../Dropdown.Item'
-import ItemSelectedCheck from '../Dropdown.ItemSelectedCheck'
+import { DropdownItem as Item } from '../Dropdown.Item'
+import DropdownItemSelectedCheck from '../Dropdown.ItemSelectedCheck'
 import {
   findDOMNode,
   hasClass,
@@ -161,7 +161,7 @@ describe('Items', () => {
 
 describe('ItemSelectedCheck', () => {
   test('Renders with value', () => {
-    const wrapper = mount(<ItemSelectedCheck value="Jon" />)
+    const wrapper = mount(<DropdownItemSelectedCheck value="Jon" />)
     const valueSpan = wrapper.find('span.c-ItemSelectedCheck__value').first()
     const icon = wrapper.find('.c-Icon').first()
 
@@ -170,13 +170,15 @@ describe('ItemSelectedCheck', () => {
   })
 
   test('Does not Renders without value', () => {
-    const wrapper = mount(<ItemSelectedCheck />)
+    const wrapper = mount(<DropdownItemSelectedCheck />)
 
     expect(wrapper.instance()).toBe(null)
   })
 
   test('Renders checkmark if active', () => {
-    const wrapper = mount(<ItemSelectedCheck value="Jon" isActive={true} />)
+    const wrapper = mount(
+      <DropdownItemSelectedCheck value="Jon" isActive={true} />
+    )
 
     const valueSpan = wrapper.find('span.c-ItemSelectedCheck__value').first()
     const icon = wrapper.find('.c-Icon').first()
@@ -187,7 +189,7 @@ describe('ItemSelectedCheck', () => {
 
   test('isSelectionClearer state', () => {
     const wrapper = mount(
-      <ItemSelectedCheck
+      <DropdownItemSelectedCheck
         value="All Items"
         isSelectionClearer={true}
         getState={() => ({
@@ -340,7 +342,7 @@ describe('renderItem', () => {
       }),
     })
 
-    const itemSelectedCheck = wrapper.find(ItemSelectedCheck)
+    const itemSelectedCheck = wrapper.find(DropdownItemSelectedCheck)
 
     expect(itemSelectedCheck).toBeTruthy()
   })

@@ -17,24 +17,7 @@ import {
 } from './Condition.css'
 
 export class Condition extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    innerRef: PropTypes.func,
-    isWithAnd: PropTypes.bool,
-    options: PropTypes.arrayOf(PropTypes.any),
-    onChange: PropTypes.func,
-    value: PropTypes.string,
-  }
-
-  static defaultProps = {
-    innerRef: noop,
-    isWithAnd: false,
-    onChange: noop,
-    options: [],
-  }
-
   static className = 'c-Condition'
-
   static AddButton = AddButton
   static And = And
   static Operator = Operator
@@ -65,7 +48,6 @@ export class Condition extends React.PureComponent {
         {...getValidProps(rest)}
         className={this.getClassName()}
         ref={innerRef}
-        data-cy="Condition"
       >
         {this.renderOperator()}
         <FlexyContext.Provider value={this.getProviderProps()}>
@@ -85,6 +67,25 @@ export class Condition extends React.PureComponent {
       </ConditionUI>
     )
   }
+}
+
+Condition.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  innerRef: PropTypes.func,
+  isWithAnd: PropTypes.bool,
+  options: PropTypes.arrayOf(PropTypes.any),
+  onChange: PropTypes.func,
+  value: PropTypes.string,
+}
+
+Condition.defaultProps = {
+  'data-cy': 'Condition',
+  innerRef: noop,
+  isWithAnd: false,
+  onChange: noop,
+  options: [],
 }
 
 export default Condition

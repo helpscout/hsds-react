@@ -8,7 +8,6 @@ import { HelpTextUI } from './HelpText.css'
 
 const HelpText = props => {
   const { children, className, isCompact, shade, size, state, ...rest } = props
-
   const componentClassName = classNames(
     'c-HelpText',
     isCompact && `is-compact`,
@@ -16,7 +15,6 @@ const HelpText = props => {
     state && `is-${state}`,
     className
   )
-
   const contentMarkup = isString(children) ? (
     <Text className="c-HelpText__text" shade={shade} size={size} state={state}>
       {children}
@@ -34,6 +32,8 @@ const HelpText = props => {
 
 HelpText.propTypes = {
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   isCompact: PropTypes.bool,
   shade: PropTypes.string,
   size: PropTypes.string,
@@ -41,6 +41,7 @@ HelpText.propTypes = {
 }
 
 HelpText.defaultProps = {
+  'data-cy': 'HelpText',
   isCompact: false,
   shade: 'faint',
   size: '13',

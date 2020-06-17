@@ -50,14 +50,11 @@ const getComponentClassName = ({
   )
 }
 
-export const Body = props => {
+export const AccordionBody = props => {
   const { className } = props
-
   const { isPage, isSeamless, duration, onOpen, onClose, size } =
     useContext(AccordionContext) || {}
-
   const { isOpen, uuid } = useContext(SectionContext) || {}
-
   const componentClassName = getComponentClassName({
     className,
     isOpen,
@@ -65,8 +62,8 @@ export const Body = props => {
     isSeamless,
     size,
   })
-
   const id = `accordion__section__body--${uuid}`
+
   return (
     <Collapsible
       duration={duration}
@@ -84,6 +81,8 @@ export const Body = props => {
   )
 }
 
-Body.displayName = 'AccordionBody'
+AccordionBody.defaultProps = {
+  'data-cy': 'AccordionBody',
+}
 
-export default Body
+export default AccordionBody

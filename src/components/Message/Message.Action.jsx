@@ -6,7 +6,7 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { ActionUI, TimestampUI } from './Message.Action.css'
 
-export const Action = (props, context) => {
+export const MessageAction = (props, context) => {
   const {
     children,
     className,
@@ -65,17 +65,21 @@ export const Action = (props, context) => {
   )
 }
 
-Action.propTypes = {
+MessageAction.propTypes = {
   read: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   timestamp: PropTypes.string,
   className: PropTypes.string,
   icon: PropTypes.string,
 }
 
-Action.contextTypes = {
+MessageAction.contextTypes = {
   theme: noop,
 }
 
-Action.displayName = 'MessageAction'
+MessageAction.defaultProps = {
+  'data-cy': 'MessageAction',
+}
 
-export default Action
+export default MessageAction

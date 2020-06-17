@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { copyToClipboard } from '../../utilities/clipboard'
 import { noop } from '../../utilities/other'
@@ -22,29 +23,7 @@ import {
 } from './VerificationCode.css'
 import Tooltip from '../Tooltip'
 
-export default class VerificationCode extends React.Component {
-  static propTypes = {
-    autoFocus: PropTypes.bool,
-    autoSubmitPaste: PropTypes.bool,
-    autoSubmitKeyUp: PropTypes.bool,
-    code: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    isValid: PropTypes.bool,
-    numberOfChars: PropTypes.number,
-    onEnter: PropTypes.func,
-    onChange: PropTypes.func,
-  }
-
-  static defaultProps = {
-    autoFocus: false,
-    autoSubmitPaste: false,
-    autoSubmitKeyUp: false,
-    code: '',
-    isValid: true,
-    numberOfChars: 6,
-    onEnter: noop,
-    onChange: noop,
-  }
-
+class VerificationCode extends React.Component {
   componentDidMount() {
     this.digitInputNodes = Array.from(
       this.verificationCodeFieldRef.querySelectorAll('.DigitInput')
@@ -260,10 +239,11 @@ export default class VerificationCode extends React.Component {
   }
 
   render() {
-    const { numberOfChars, isValid } = this.props
+    const { numberOfChars, isValid, ...rest } = this.props
 
     return (
       <VerificationCodeFieldUI
+        {...getValidProps(rest)}
         className={this.getClassName()}
         ref={this.setVerificationCodeFieldNode}
         onPaste={this.handlePaste}
@@ -312,3 +292,30 @@ export default class VerificationCode extends React.Component {
     )
   }
 }
+
+VerificationCode.propTypes = {
+  autoFocus: PropTypes.bool,
+  autoSubmitPaste: PropTypes.bool,
+  autoSubmitKeyUp: PropTypes.bool,
+  code: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  isValid: PropTypes.bool,
+  numberOfChars: PropTypes.number,
+  onEnter: PropTypes.func,
+  onChange: PropTypes.func,
+}
+
+VerificationCode.defaultProps = {
+  autoFocus: false,
+  autoSubmitPaste: false,
+  autoSubmitKeyUp: false,
+  code: '',
+  'data-cy': 'VerificationCode',
+  isValid: true,
+  numberOfChars: 6,
+  onEnter: noop,
+  onChange: noop,
+}
+
+export default VerificationCode

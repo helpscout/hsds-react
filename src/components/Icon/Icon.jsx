@@ -65,7 +65,6 @@ const Icon = props => {
       className={componentClassName}
       onClick={onClick}
       data-icon-name={name}
-      data-cy="Icon"
     >
       <span className="c-Icon__icon" title={iconTitle}>
         {IconComponent && <IconComponent />}
@@ -79,6 +78,7 @@ const Icon = props => {
 Icon.defaultProps = {
   center: false,
   clickable: false,
+  'data-cy': 'Icon',
   ignoreClick: true,
   isWithHiddenTitle: true,
   muted: false,

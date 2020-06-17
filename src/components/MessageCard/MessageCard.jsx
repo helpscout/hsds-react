@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Button from './MessageCard.Button'
+import MessageCardButton from './MessageCard.Button'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import Animate from '../Animate'
@@ -13,37 +12,11 @@ import {
   BodyUI,
   ActionUI,
 } from './MessageCard.css'
-
 import Truncate from '../Truncate'
 
 export class MessageCard extends React.PureComponent {
-  static propTypes = {
-    action: PropTypes.func,
-    align: PropTypes.oneOf(['left', 'right']),
-    animationDuration: PropTypes.number,
-    animationEasing: PropTypes.string,
-    animationSequence: PropTypes.string,
-    body: PropTypes.string,
-    className: PropTypes.string,
-    innerRef: PropTypes.func,
-    in: PropTypes.bool,
-    isMobile: PropTypes.bool,
-    isWithBoxShadow: PropTypes.bool,
-    subtitle: PropTypes.string,
-    title: PropTypes.string,
-  }
-
   static className = 'c-MessageCard'
-  static defaultProps = {
-    align: 'right',
-    animationSequence: '',
-    innerRef: noop,
-    in: true,
-    isMobile: false,
-    isWithBoxShadow: true,
-  }
-
-  static Button = Button
+  static Button = MessageCardButton
 
   getClassName() {
     const { align, className, isMobile, isWithBoxShadow } = this.props
@@ -140,6 +113,34 @@ export class MessageCard extends React.PureComponent {
       </Animate>
     )
   }
+}
+
+MessageCard.propTypes = {
+  action: PropTypes.func,
+  align: PropTypes.oneOf(['left', 'right']),
+  animationDuration: PropTypes.number,
+  animationEasing: PropTypes.string,
+  animationSequence: PropTypes.string,
+  body: PropTypes.string,
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  innerRef: PropTypes.func,
+  in: PropTypes.bool,
+  isMobile: PropTypes.bool,
+  isWithBoxShadow: PropTypes.bool,
+  subtitle: PropTypes.string,
+  title: PropTypes.string,
+}
+
+MessageCard.defaultProps = {
+  align: 'right',
+  animationSequence: '',
+  'data-cy': 'MessageCard',
+  innerRef: noop,
+  in: true,
+  isMobile: false,
+  isWithBoxShadow: true,
 }
 
 export default MessageCard

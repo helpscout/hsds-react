@@ -1,13 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import Textarea from 'react-textarea-autosize'
-
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import debounce from '../../utilities/debounce'
-
 import { ComponentUI, EditableTextareaUI, MaskUI } from './EditableTextarea.css'
 import {
   LabelTextUI,
@@ -15,54 +12,13 @@ import {
 } from '../EditableField/EditableField.css'
 import Icon from '../Icon'
 import Tooltip from '../Tooltip'
-
 import { scrollToTop } from './EditableTextarea.utils'
 import { key } from '../../constants/Keys'
 import { CAUSE, OPERATION } from '../EditableField/EditableField.constants'
 import { getValidationColor } from '../EditableField/EditableField.utils'
 
 export class EditableTextarea extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    floatingLabels: PropTypes.bool,
-    id: PropTypes.string,
-    label: PropTypes.string,
-    maxRows: PropTypes.number,
-    innerRef: PropTypes.func,
-    overflowCueColor: PropTypes.string,
-    placeholder: PropTypes.string,
-    value: PropTypes.string,
-    onCommit: PropTypes.func,
-    onChange: PropTypes.func,
-    onInputBlur: PropTypes.func,
-    onInputFocus: PropTypes.func,
-    onInputKeyDown: PropTypes.func,
-    onInputKeyUp: PropTypes.func,
-    onEnter: PropTypes.func,
-    onEscape: PropTypes.func,
-    validate: PropTypes.func,
-  }
-
   static className = 'c-EditableTextarea'
-  static defaultProps = {
-    floatingLabels: false,
-    id: 'editabletextarea',
-    innerRef: noop,
-    label: 'Notes',
-    maxRows: 5,
-    overflowCueColor: 'white',
-    placeholder: 'Add notes',
-    value: '',
-    onCommit: noop,
-    onChange: noop,
-    onInputBlur: noop,
-    onInputFocus: noop,
-    onInputKeyDown: noop,
-    onInputKeyUp: noop,
-    onEnter: noop,
-    onEscape: noop,
-    validate: () => Promise.resolve({ isValid: true }),
-  }
 
   constructor(props) {
     super(props)
@@ -346,8 +302,6 @@ export class EditableTextarea extends React.PureComponent {
     })
   }
 
-  // Tested here and in EditableField
-
   renderValidationInfo = () => {
     const { id } = this.props
     const { validationInfo } = this.state
@@ -451,6 +405,50 @@ export class EditableTextarea extends React.PureComponent {
       </ComponentUI>
     )
   }
+}
+
+EditableTextarea.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  floatingLabels: PropTypes.bool,
+  id: PropTypes.string,
+  label: PropTypes.string,
+  maxRows: PropTypes.number,
+  innerRef: PropTypes.func,
+  overflowCueColor: PropTypes.string,
+  placeholder: PropTypes.string,
+  value: PropTypes.string,
+  onCommit: PropTypes.func,
+  onChange: PropTypes.func,
+  onInputBlur: PropTypes.func,
+  onInputFocus: PropTypes.func,
+  onInputKeyDown: PropTypes.func,
+  onInputKeyUp: PropTypes.func,
+  onEnter: PropTypes.func,
+  onEscape: PropTypes.func,
+  validate: PropTypes.func,
+}
+
+EditableTextarea.defaultProps = {
+  'data-cy': 'EditableTextarea',
+  floatingLabels: false,
+  id: 'editabletextarea',
+  innerRef: noop,
+  label: 'Notes',
+  maxRows: 5,
+  overflowCueColor: 'white',
+  placeholder: 'Add notes',
+  value: '',
+  onCommit: noop,
+  onChange: noop,
+  onInputBlur: noop,
+  onInputFocus: noop,
+  onInputKeyDown: noop,
+  onInputKeyUp: noop,
+  onEnter: noop,
+  onEscape: noop,
+  validate: () => Promise.resolve({ isValid: true }),
 }
 
 export default EditableTextarea

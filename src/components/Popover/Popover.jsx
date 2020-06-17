@@ -1,14 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { isPlainContent } from './Popover.utils'
-
 import { ArrowPopoverUI, HeaderUI, HeadingUI, PopoverUI } from './Popover.css'
-
 import Text from '../Text'
-
 import Tooltip from '../Tooltip'
 import { TooltipAnimationUI } from '../Tooltip/Tooltip.css'
 
@@ -79,9 +76,8 @@ export const Popover = props => {
 
   return (
     <Tooltip
-      {...rest}
+      {...getValidProps(rest)}
       className={getClassName(className)}
-      data-cy="Popover"
       innerRef={innerRef}
       render={render}
       trigger={triggerOn}
@@ -89,19 +85,22 @@ export const Popover = props => {
   )
 }
 
-Popover.defaultProps = Object.assign({}, Tooltip.defaultProps, {
-  innerRef: noop,
-  triggerOn: 'click',
-})
-
 Popover.propTypes = Object.assign({}, Tooltip.propTypes, {
   className: PropTypes.string,
   content: PropTypes.any,
   children: PropTypes.any,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   innerRef: PropTypes.func,
   header: PropTypes.any,
   renderHeader: PropTypes.any,
   renderContent: PropTypes.any,
+})
+
+Popover.defaultProps = Object.assign({}, Tooltip.defaultProps, {
+  'data-cy': 'Popover',
+  innerRef: noop,
+  triggerOn: 'click',
 })
 
 export default Popover

@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import Timer from './Notification.Timer'
 
 describe('ClassName', () => {
@@ -48,7 +48,7 @@ describe('isRunning', () => {
 describe('onAnimationEnd', () => {
   test('Fires onTimerEnd callback, when animation is done playing', () => {
     const spy = jest.fn()
-    const wrapper = shallow(<Timer onTimerEnd={spy} />)
+    const wrapper = mount(<Timer onTimerEnd={spy} />)
     wrapper.simulate('animationEnd')
 
     expect(spy).toHaveBeenCalled()

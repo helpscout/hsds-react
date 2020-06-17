@@ -31,6 +31,7 @@ export const cx = {
 
 export class Alert extends React.PureComponent {
   static defaultProps = {
+    'data-cy': 'Alert',
     dismissible: false,
     icon: false,
     noMargin: false,
@@ -144,6 +145,8 @@ Alert.propTypes = {
   badge: PropTypes.string,
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   /** Allows this component to be dismissed by clicking a CloseButton. */
   dismissible: PropTypes.bool,
   /** Renders an alert [Icon](../Icon). */

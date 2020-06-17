@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Container from './OptionTile.Container'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import FluffyCardContainer from './OptionTile.Container'
 import Centralize from '../Centralize'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
@@ -8,15 +9,7 @@ import { OptionTileUI, HeaderUI, ContentUI, TitleUI } from './OptionTile.css'
 import OptionIcon from './OptionIcon'
 
 class OptionTile extends React.PureComponent {
-  static defaultProps = {
-    icon: 'chat',
-    title: 'Title',
-    style: {},
-    subtitle: 'Description',
-    textAlign: 'center',
-  }
-
-  static Container = Container
+  static Container = FluffyCardContainer
 
   render() {
     const {
@@ -40,7 +33,7 @@ class OptionTile extends React.PureComponent {
 
     return (
       <OptionTileUI
-        {...rest}
+        {...getValidProps(rest)}
         className={componentClassName}
         style={styles}
         title={title}
@@ -76,6 +69,8 @@ class OptionTile extends React.PureComponent {
 OptionTile.propTypes = {
   children: PropTypes.any,
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   href: PropTypes.string,
   icon: PropTypes.string,
   iconTitle: PropTypes.string,
@@ -85,6 +80,15 @@ OptionTile.propTypes = {
   style: PropTypes.object,
   subtitle: PropTypes.string,
   textAlign: PropTypes.string,
+}
+
+OptionTile.defaultProps = {
+  'data-cy': 'OptionTile',
+  icon: 'chat',
+  title: 'Title',
+  style: {},
+  subtitle: 'Description',
+  textAlign: 'center',
 }
 
 export default OptionTile

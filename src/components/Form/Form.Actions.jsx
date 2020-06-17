@@ -1,20 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { ActionsUI, ActionsBlockUI, ActionsItemUI } from './Form.Actions.css'
 import { classNames } from '../../utilities/classNames'
 
-export class Actions extends React.PureComponent {
+export class FormActions extends React.PureComponent {
   static className = 'c-FormActions'
-
-  static defaultProps = {
-    direction: 'right',
-  }
 
   getClassName() {
     const { cancel, className, destroy, direction, save } = this.props
 
     return classNames(
-      Actions.className,
+      FormActions.className,
       cancel && 'withCancel',
       className,
       destroy && 'withDestroy',
@@ -24,11 +21,11 @@ export class Actions extends React.PureComponent {
   }
 
   render() {
-    const { cancel, destroy, save } = this.props
+    const { cancel, destroy, save, ...rest } = this.props
 
     return (
       <ActionsUI
-        data-cy="FormActionsContent"
+        {...getValidProps(rest)}
         className={this.getClassName()}
         role="toolbar"
       >
@@ -60,4 +57,13 @@ export class Actions extends React.PureComponent {
   }
 }
 
-export default Actions
+FormActions.propTypes = {
+  direction: PropTypes.string,
+}
+
+FormActions.defaultProps = {
+  direction: 'right',
+  'data-cy': 'FormActionsContent',
+}
+
+export default FormActions

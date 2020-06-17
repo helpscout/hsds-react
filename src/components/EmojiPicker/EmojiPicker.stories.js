@@ -18,7 +18,16 @@ export const Default = () => {
       { default: 'default', sm: 'sm', lg: 'lg' },
       'default'
     ),
+    direction: select(
+      'Menu direction',
+      { left: 'left', right: 'right' },
+      'left'
+    ),
   }
 
-  return <EmojiPicker {...props} />
+  return (
+    <div style={{ width: '500px', height: '500px', margin: '100px 0 0 100px' }}>
+      <EmojiPicker {...props} />
+    </div>
+  )
 }

@@ -6,10 +6,6 @@ import { classNames } from '../../utilities/classNames'
 import { OptionIconUI } from './OptionIcon.css'
 
 class OptionIcon extends React.PureComponent {
-  static defaultProps = {
-    icon: 'chat',
-  }
-
   render() {
     const { className, children, icon, title, ...rest } = this.props
     const componentClassName = classNames('c-OptionIcon', className)
@@ -32,6 +28,11 @@ OptionIcon.propTypes = {
   className: PropTypes.string,
   icon: PropTypes.string,
   title: PropTypes.string,
+}
+
+OptionIcon.defaultProps = {
+  'data-cy': 'OptionIcon',
+  icon: 'chat',
 }
 
 export default OptionIcon

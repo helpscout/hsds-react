@@ -9,28 +9,6 @@ import { IconButtonUI } from './IconButton.css'
 export class IconButton extends React.PureComponent {
   static className = 'c-IconButton'
 
-  static propTypes = {
-    icon: PropTypes.string,
-    iconSize: PropTypes.number,
-    isBorderless: PropTypes.bool,
-    isWithHiddenTitle: PropTypes.bool,
-    innerRef: PropTypes.func,
-    withCaret: PropTypes.bool,
-  }
-
-  static defaultProps = {
-    ...Button.defaultProps,
-    icon: 'search',
-    iconSize: 24,
-    innerRef: noop,
-    isBorderless: true,
-    isWithHiddenTitle: false,
-    kind: 'default',
-    size: 'md',
-    shape: 'circle',
-    withCaret: false,
-  }
-
   getClassName() {
     const { className, kind, icon, isBorderless } = this.props
 
@@ -46,14 +24,16 @@ export class IconButton extends React.PureComponent {
   getIconSize() {
     const { iconSize, size } = this.props
 
-    if (size === 'xs') {
-      return 16
-    }
-    if (size === 'sm') {
-      return 18
-    }
+    switch (size) {
+      case 'xs':
+        return 16
 
-    return iconSize
+      case 'sm':
+        return 18
+
+      default:
+        return iconSize
+    }
   }
 
   render() {
@@ -67,15 +47,8 @@ export class IconButton extends React.PureComponent {
       ...rest
     } = this.props
 
-    const dataCy = this.props['data-cy'] || 'IconButton'
-
     return (
-      <IconButtonUI
-        {...rest}
-        className={this.getClassName()}
-        ref={innerRef}
-        data-cy={dataCy}
-      >
+      <IconButtonUI {...rest} className={this.getClassName()} ref={innerRef}>
         <Icon
           name={icon}
           size={this.getIconSize()}
@@ -85,6 +58,31 @@ export class IconButton extends React.PureComponent {
       </IconButtonUI>
     )
   }
+}
+
+IconButton.propTypes = {
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  icon: PropTypes.string,
+  iconSize: PropTypes.number,
+  isBorderless: PropTypes.bool,
+  isWithHiddenTitle: PropTypes.bool,
+  innerRef: PropTypes.func,
+  withCaret: PropTypes.bool,
+}
+
+IconButton.defaultProps = {
+  ...Button.defaultProps,
+  'data-cy': 'IconButton',
+  icon: 'search',
+  iconSize: 24,
+  innerRef: noop,
+  isBorderless: true,
+  isWithHiddenTitle: false,
+  kind: 'default',
+  size: 'md',
+  shape: 'circle',
+  withCaret: false,
 }
 
 export default IconButton

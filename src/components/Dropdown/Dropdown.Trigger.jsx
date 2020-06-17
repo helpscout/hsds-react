@@ -1,49 +1,15 @@
 import React from 'react'
-import { PropTypes } from 'prop-types'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { connect } from '@helpscout/wedux'
-
 import { toggleOpen, openDropdown, closeDropdown } from './Dropdown.actions'
 import { TriggerUI } from './Dropdown.css.js'
-
 import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { renderRenderPropComponent } from '../../utilities/component'
 
-export class Trigger extends React.PureComponent {
-  static displayName = 'DropdownTrigger'
-
-  static propTypes = {
-    className: PropTypes.string,
-    closeDropdown: PropTypes.func,
-    disabled: PropTypes.bool,
-    triggerRef: PropTypes.func,
-    id: PropTypes.string,
-    isOpen: PropTypes.bool,
-    onBlur: PropTypes.func,
-    onFocus: PropTypes.func,
-    onKeyDown: PropTypes.func,
-    onClick: PropTypes.func,
-    openDropdown: PropTypes.func,
-    style: PropTypes.object,
-    toggleOpen: PropTypes.func,
-  }
-
-  static defaultProps = {
-    disabled: false,
-    triggerRef: noop,
-    isOpen: false,
-    onBlur: noop,
-    onFocus: noop,
-    onKeyDown: noop,
-    onClick: noop,
-    openDropdown: noop,
-    closeDropdown: noop,
-    style: {},
-    toggleOpen: noop,
-  }
-
+export class DropdownTrigger extends React.PureComponent {
   state = { isHovered: false }
 
   handleOnClick = event => {
@@ -132,12 +98,44 @@ export class Trigger extends React.PureComponent {
         onKeyDown={this.handleOnKeyDown}
         onMouseOver={() => this.setState({ isHovered: true })}
         onMouseLeave={() => this.setState({ isHovered: false })}
-        data-cy="DropdownTrigger"
       >
         {this.renderChildren()}
       </TriggerUI>
     )
   }
+}
+
+DropdownTrigger.propTypes = {
+  className: PropTypes.string,
+  closeDropdown: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  disabled: PropTypes.bool,
+  triggerRef: PropTypes.func,
+  id: PropTypes.string,
+  isOpen: PropTypes.bool,
+  onBlur: PropTypes.func,
+  onFocus: PropTypes.func,
+  onKeyDown: PropTypes.func,
+  onClick: PropTypes.func,
+  openDropdown: PropTypes.func,
+  style: PropTypes.object,
+  toggleOpen: PropTypes.func,
+}
+
+DropdownTrigger.defaultProps = {
+  'data-cy': 'DropdownTrigger',
+  disabled: false,
+  triggerRef: noop,
+  isOpen: false,
+  onBlur: noop,
+  onFocus: noop,
+  onKeyDown: noop,
+  onClick: noop,
+  openDropdown: noop,
+  closeDropdown: noop,
+  style: {},
+  toggleOpen: noop,
 }
 
 export const mapStateToProps = state => {
@@ -154,6 +152,6 @@ const ConnectedTrigger = connect(
     openDropdown,
     closeDropdown,
   }
-)(Trigger)
+)(DropdownTrigger)
 
 export default ConnectedTrigger

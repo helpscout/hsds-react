@@ -10,7 +10,6 @@ import ChoiceGroupContext from '../ChoiceGroup/ChoiceGroup.Context'
 import { includes } from '../../utilities/arrays'
 import { classNames } from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
-
 import { noop } from '../../utilities/other'
 import {
   ChoiceLabelUI,
@@ -21,53 +20,6 @@ import {
 const uniqueID = createUniqueIDFactory('Choice')
 
 class Choice extends React.PureComponent {
-  static propTypes = {
-    align: PropTypes.oneOf(['top', '']),
-    autoFocus: PropTypes.bool,
-    checked: PropTypes.bool,
-    className: PropTypes.string,
-    componentID: PropTypes.string,
-    disabled: PropTypes.bool,
-    helpText: PropTypes.string,
-    hideLabel: PropTypes.bool,
-    id: PropTypes.string,
-    isBlock: PropTypes.bool,
-    inputRef: PropTypes.func,
-    innerRef: PropTypes.func,
-    kind: PropTypes.string,
-    label: PropTypes.string,
-    onBlur: PropTypes.func,
-    onChange: PropTypes.func,
-    onFocus: PropTypes.func,
-    name: PropTypes.string,
-    readOnly: PropTypes.bool,
-    stacked: PropTypes.bool,
-    state: PropTypes.string,
-    type: PropTypes.oneOf(['checkbox', 'radio']),
-    value: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-      PropTypes.bool,
-    ]),
-  }
-
-  static defaultProps = {
-    autoFocus: false,
-    checked: false,
-    componentID: 'Choice',
-    disabled: false,
-    hideLabel: false,
-    onBlur: noop,
-    onChange: noop,
-    onFocus: noop,
-    inputRef: noop,
-    innerRef: noop,
-    isBlock: false,
-    readOnly: false,
-    type: 'checkbox',
-    value: '',
-  }
-
   state = {
     checked: this.props.checked,
     id: this.props.id || uniqueID(this.props.componentID),
@@ -310,6 +262,56 @@ class Choice extends React.PureComponent {
       </ChoiceGroupContext.Consumer>
     )
   }
+}
+
+Choice.propTypes = {
+  align: PropTypes.oneOf(['top', '']),
+  autoFocus: PropTypes.bool,
+  checked: PropTypes.bool,
+  className: PropTypes.string,
+  componentID: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  disabled: PropTypes.bool,
+  helpText: PropTypes.string,
+  hideLabel: PropTypes.bool,
+  id: PropTypes.string,
+  isBlock: PropTypes.bool,
+  inputRef: PropTypes.func,
+  innerRef: PropTypes.func,
+  kind: PropTypes.string,
+  label: PropTypes.string,
+  onBlur: PropTypes.func,
+  onChange: PropTypes.func,
+  onFocus: PropTypes.func,
+  name: PropTypes.string,
+  readOnly: PropTypes.bool,
+  stacked: PropTypes.bool,
+  state: PropTypes.string,
+  type: PropTypes.oneOf(['checkbox', 'radio']),
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.bool,
+  ]),
+}
+
+Choice.defaultProps = {
+  autoFocus: false,
+  checked: false,
+  componentID: 'Choice',
+  'data-cy': 'Choice',
+  disabled: false,
+  hideLabel: false,
+  onBlur: noop,
+  onChange: noop,
+  onFocus: noop,
+  inputRef: noop,
+  innerRef: noop,
+  isBlock: false,
+  readOnly: false,
+  type: 'checkbox',
+  value: '',
 }
 
 export default Choice

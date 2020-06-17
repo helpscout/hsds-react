@@ -5,7 +5,7 @@ import { noteBoxShadow } from '../../styles/mixins/noteStyles.css'
 import { getColor } from '../../styles/utilities/color'
 
 import { BEM } from '../../utilities/classNames'
-import Chat from './Message.Chat'
+import MessageChat from './Message.Chat'
 
 const bem = BEM('.c-MessageMedia')
 
@@ -19,7 +19,7 @@ export const ImageUI = styled(Image)`
   ${mediaImageStyles};
 `
 
-export const MediaUI = styled(Chat)`
+export const MediaUI = styled(MessageChat)`
   ${bem.element('caption')} {
     padding: 8px;
   }

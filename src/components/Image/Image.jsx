@@ -6,25 +6,6 @@ import { ImageUI } from './Image.css'
 import { getImageSize } from './Image.utils'
 
 class Image extends React.PureComponent {
-  static propTypes = {
-    alt: PropTypes.string,
-    block: PropTypes.bool,
-    className: PropTypes.string,
-    height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    maxWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    src: PropTypes.string,
-    shape: PropTypes.oneOf(['rounded', 'square', '']),
-    style: PropTypes.any,
-    title: PropTypes.string,
-    width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  }
-
-  static defaultProps = {
-    shape: '',
-    style: {},
-  }
-
   render() {
     const {
       className,
@@ -51,6 +32,28 @@ class Image extends React.PureComponent {
       />
     )
   }
+}
+
+Image.propTypes = {
+  alt: PropTypes.string,
+  block: PropTypes.bool,
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  maxWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  src: PropTypes.string,
+  shape: PropTypes.oneOf(['rounded', 'square', '']),
+  style: PropTypes.any,
+  title: PropTypes.string,
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+}
+
+Image.defaultProps = {
+  'data-cy': 'Image',
+  shape: '',
+  style: {},
 }
 
 export default Image

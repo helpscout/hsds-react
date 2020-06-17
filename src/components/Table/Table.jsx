@@ -1,23 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import { ThemeProvider } from 'styled-components'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-
 import equal from 'fast-deep-equal'
-
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Button from '../Button'
 import Scrollable from '../Scrollable'
-
 import { TableWrapperUI, TableUI, LoadingUI } from './Table.css'
 import { defaultSkin, chooseSkin } from './Table.skins'
-
 import { columnShape, dataShape } from './Table.utils'
-
-import Body from './Table.Body'
-import Head from './Table.Head'
+import TableBody from './Table.Body'
+import TableHead from './Table.Head'
 
 export const TABLE_CLASSNAME = 'c-Table'
 
@@ -31,25 +25,6 @@ export class Table extends React.Component {
       isTableCollapsed:
         maxRowsToDisplay != null && maxRowsToDisplay < data.length,
     }
-  }
-
-  static defaultProps = {
-    columns: [],
-    data: [],
-    skin: defaultSkin,
-    tableWidth: { min: '700px' },
-    containerWidth: '100%',
-    sortedInfo: {
-      columnKey: null,
-      order: null,
-    },
-    isLoading: false,
-    isScrollLocked: true,
-    onRowClick: null,
-    wrapperRef: noop,
-    tableRef: noop,
-    onExpand: noop,
-    withTallRows: false,
   }
 
   setWrapperNode = node => {
@@ -144,10 +119,10 @@ export class Table extends React.Component {
     return (
       <ThemeProvider theme={chooseSkin(skin)}>
         <TableWrapperUI
+          {...getValidProps(rest)}
           className={tableWrapperClassNames}
           ref={this.setWrapperNode}
           containerWidth={containerWidth}
-          {...getValidProps(rest)}
         >
           <Scrollable
             fadeLeft
@@ -161,13 +136,13 @@ export class Table extends React.Component {
               className={tableClassNames}
               ref={this.setTableNode}
             >
-              <Head
+              <TableHead
                 columns={columns}
                 isLoading={isLoading}
                 sortedInfo={sortedInfo}
               />
 
-              <Body
+              <TableBody
                 rows={data}
                 columns={columns}
                 isTableCollapsed={isTableCollapsed}
@@ -181,7 +156,6 @@ export class Table extends React.Component {
 
           {maxRowsToDisplay && isTableCollapsed ? (
             <Button
-              version={2}
               style={{ marginLeft: '14px' }}
               kind="link"
               className={`${TABLE_CLASSNAME}__Expander`}
@@ -212,6 +186,8 @@ Table.propTypes = {
   tableClassName: PropTypes.string,
   columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
   data: PropTypes.arrayOf(PropTypes.shape(dataShape)),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   expanderText: PropTypes.any,
   maxRowsToDisplay: PropTypes.number,
   containerWidth: PropTypes.string,
@@ -243,6 +219,26 @@ Table.propTypes = {
   onExpand: PropTypes.func,
   tableRef: PropTypes.func,
   wrapperRef: PropTypes.func,
+}
+
+Table.defaultProps = {
+  columns: [],
+  data: [],
+  'data-cy': 'Table',
+  skin: defaultSkin,
+  tableWidth: { min: '700px' },
+  containerWidth: '100%',
+  sortedInfo: {
+    columnKey: null,
+    order: null,
+  },
+  isLoading: false,
+  isScrollLocked: true,
+  onRowClick: null,
+  wrapperRef: noop,
+  tableRef: noop,
+  onExpand: noop,
+  withTallRows: false,
 }
 
 export default Table

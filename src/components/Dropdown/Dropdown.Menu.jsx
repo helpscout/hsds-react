@@ -7,34 +7,7 @@ import ScrollLock from '../ScrollLock'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
-export class Menu extends React.PureComponent {
-  static displayName = 'DropdownMenu'
-
-  static propTypes = {
-    className: PropTypes.string,
-    children: PropTypes.any,
-    id: PropTypes.string,
-    menuRef: PropTypes.func,
-    innerRef: PropTypes.func,
-    isSubMenu: PropTypes.bool,
-    renderMenu: PropTypes.func,
-    style: PropTypes.object,
-    withScrollLock: PropTypes.bool,
-    wrapperStyles: PropTypes.object,
-    zIndex: PropTypes.number,
-  }
-
-  static defaultProps = {
-    menuRef: noop,
-    innerRef: noop,
-    isSubMenu: false,
-    role: 'listbox',
-    style: {},
-    withScrollLock: true,
-    wrapperStyles: {},
-    zIndex: 1015,
-  }
-
+export class DropdownMenu extends React.PureComponent {
   getStyles() {
     const { style, zIndex } = this.props
 
@@ -70,7 +43,6 @@ export class Menu extends React.PureComponent {
       className: componentClassName,
       ref: renderMenu ? undefined : menuRef,
       style: this.getStyles(),
-      'data-cy': 'DropdownMenu',
     }
 
     const menuMarkup = renderMenu ? (
@@ -101,6 +73,34 @@ export class Menu extends React.PureComponent {
   }
 }
 
+DropdownMenu.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.any,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  id: PropTypes.string,
+  menuRef: PropTypes.func,
+  innerRef: PropTypes.func,
+  isSubMenu: PropTypes.bool,
+  renderMenu: PropTypes.func,
+  style: PropTypes.object,
+  withScrollLock: PropTypes.bool,
+  wrapperStyles: PropTypes.object,
+  zIndex: PropTypes.number,
+}
+
+DropdownMenu.defaultProps = {
+  'data-cy': 'DropdownMenu',
+  menuRef: noop,
+  innerRef: noop,
+  isSubMenu: false,
+  role: 'listbox',
+  style: {},
+  withScrollLock: true,
+  wrapperStyles: {},
+  zIndex: 1015,
+}
+
 const ConnectedMenu = connect(
   // mapStateToProps
   state => {
@@ -111,6 +111,6 @@ const ConnectedMenu = connect(
       withScrollLock,
     }
   }
-)(Menu)
+)(DropdownMenu)
 
 export default ConnectedMenu
