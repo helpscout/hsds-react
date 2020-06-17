@@ -7,6 +7,7 @@ import {
   onOpen,
   onClose,
   onSortEnd,
+  AccordionWithCustomIds,
 } from './Accordion.storiesHelpers'
 import Accordion from './'
 import { Page, Text } from '../index'
@@ -219,3 +220,14 @@ This component is to be used within an `Accordion`.
   </Story>
 </Preview>
 
+#### With custom ids
+
+<Preview>
+  <Story name="Custom-Ids">
+    <Page>
+      <Page.Card>
+        <AccordionWithCustomIds />
+      </Page.Card>
+    </Page>
+  </Story>
+</Preview>
