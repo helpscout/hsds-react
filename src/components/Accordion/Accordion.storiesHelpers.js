@@ -75,7 +75,7 @@ export class AccordionWithCustomIds extends React.Component {
         </form>
         <Accordion
           distance={number('distance', 5)}
-          isSortable={boolean('isSortable', false)}
+          isSortable={boolean('isSortable', true)}
           pressDelay={number('pressDelay', 300)}
           onOpen={this.updateSectionId}
           onSortEnd={onSortEnd}

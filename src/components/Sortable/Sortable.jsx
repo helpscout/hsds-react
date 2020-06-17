@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { classNames } from '../../utilities/classNames'
-import { includes } from '../../utilities/arrays'
-import arrayMove from '../../utilities/arrayMove.lib'
-import { noop } from '../../utilities/other'
 import SortableDragHandle from './Sortable.DragHandle'
 import SortableItem from './Sortable.Item'
 import SortableList from './Sortable.List'
+import { includes } from '../../utilities/arrays'
+import arrayMove from '../../utilities/arrayMove.lib'
+import { noop } from '../../utilities/other'
 
 class Sortable extends React.PureComponent {
   constructor(props) {
@@ -82,19 +82,22 @@ class Sortable extends React.PureComponent {
       onSortEnd,
       ...rest
     } = this.props
+
     const { items } = this.state
+
     const componentClassName = classNames('c-Sortable', className)
     const helperClassName = classNames('is-sorting', helperClass)
 
     return (
       <div className={componentClassName}>
         <SortableList
-          {...rest}
+          data-cy="SortableList"
           dragHandle={useDragHandle}
           helperClass={helperClassName}
           items={items}
           onSortEnd={this.onSortEnd}
           useDragHandle={useDragHandle}
+          {...rest}
         />
       </div>
     )
@@ -104,8 +107,6 @@ class Sortable extends React.PureComponent {
 Sortable.propTypes = {
   axis: PropTypes.oneOf(['x', 'y', 'xy']),
   className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
   distance: PropTypes.number,
   lockAxis: PropTypes.string,
   helperClass: PropTypes.string,

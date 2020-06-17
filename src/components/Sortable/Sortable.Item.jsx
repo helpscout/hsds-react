@@ -16,6 +16,7 @@ const SortableItem = SortableElement(props => {
   } = props
 
   const componentClassName = classNames('c-SortableItem', className)
+
   const dragHandleMarkup =
     useDragHandle && !hideDragHandles ? <DragHandle /> : null
 
@@ -34,6 +35,8 @@ SortableItem.propTypes = {
   useDragHandle: PropTypes.bool,
   /** Whether to hide the drag handles or not */
   hideDragHandles: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 SortableItem.defaultProps = {
