@@ -1,5 +1,6 @@
 import React from 'react'
 import { Accordion, Button, Input, Text } from '../index'
+import { boolean, number } from '@storybook/addon-knobs'
 import { faker } from '@helpscout/helix'
 
 const body = faker.lorem.paragraph()()
@@ -37,3 +38,52 @@ export const createSections = data =>
 export const onOpen = id => console.log('Open', id)
 export const onClose = id => console.log('Close', id)
 export const onSortEnd = (...args) => console.log('Sorted', ...args)
+
+export class AccordionWithCustomIds extends React.Component {
+  state = {
+    value: 3,
+  }
+
+  handleChange = e => {
+    this.updateSectionId(e.target.value)
+  }
+
+  updateSectionId = value => {
+    this.setState({
+      value: parseInt(value, 10),
+    })
+  }
+
+  render() {
+    const { value } = this.state
+
+    return (
+      <div>
+        <form
+          onSubmit={e => e.preventDefault()}
+          style={{ marginBottom: '10px' }}
+        >
+          <input
+            interval="1"
+            min="1"
+            max="4"
+            onChange={this.handleChange}
+            type="number"
+            value={value}
+            style={{ width: '100px' }}
+          />
+        </form>
+        <Accordion
+          distance={number('distance', 5)}
+          isSortable={boolean('isSortable', false)}
+          pressDelay={number('pressDelay', 300)}
+          onOpen={this.updateSectionId}
+          onSortEnd={onSortEnd}
+          openSectionIds={[value]}
+        >
+          {createSections(dataWithIds)}
+        </Accordion>
+      </div>
+    )
+  }
+}
