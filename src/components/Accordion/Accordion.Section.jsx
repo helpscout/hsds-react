@@ -11,6 +11,7 @@ export const SectionContext = createContext()
 
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion__Section',
+  isLinkClassName: 'is-link',
   isOpenClassName: 'is-open',
   isSeamlessClassName: 'is-seamless',
   isStatusInfoClassName: 'is-info',
@@ -24,6 +25,7 @@ const getComponentClassName = ({ className, isOpen, isLink, status }) => {
 
   const {
     baseComponentClassName,
+    isLinkClassName,
     isOpenClassName,
     isSeamlessClassName,
     isStatusInfoClassName,
@@ -32,6 +34,7 @@ const getComponentClassName = ({ className, isOpen, isLink, status }) => {
 
   return classNames(
     baseComponentClassName,
+    isLink && isLinkClassName,
     isOpen && isOpenClassName,
     isSeamless && isSeamlessClassName,
     status && status === 'info' && isStatusInfoClassName,

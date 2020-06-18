@@ -84,6 +84,7 @@ const Accordion = props => {
     size,
     isSortable,
     onSortEnd,
+    useWindowAsScrollContainer,
     ...rest
   } = props
 
@@ -99,7 +100,22 @@ const Accordion = props => {
   const isSeamless = accordion.isSeamless || isSeamlessProps
 
   useEffect(() => {
-    setOpenSections(buildOpenSections(openSectionIds))
+    let sectionIds = {}
+
+    if (openSectionIds.length === 0) {
+      setOpenSections(sectionIds)
+      return
+    }
+
+    const { allowMultiple } = props
+
+    if (!allowMultiple) {
+      sectionIds[openSectionIds[0]] = true
+    } else {
+      sectionIds = buildOpenSections(openSectionIds)
+    }
+
+    setOpenSections(sectionIds)
   }, [stringifyArray(openSectionIds)])
 
   const onClose = uuid => {
@@ -157,6 +173,7 @@ const Accordion = props => {
           setIsSorting(false)
           onSortEnd(...args)
         }}
+        useWindowAsScrollContainer={useWindowAsScrollContainer}
         {...getSortableProps(rest)}
       >
         {children}
@@ -195,6 +212,7 @@ Accordion.defaultProps = {
   openSectionIds: [],
   pressDelay: 0,
   size: 'md',
+  useWindowAsScrollContainer: false,
 }
 
 Accordion.Body = AccordionBody
