@@ -98,6 +98,25 @@ describe('setOpen', () => {
     expect(spy).toBeCalledWith(uuid, true)
   })
 
+  test('Dont call the setOpen method if the onClick event is prevented when clicked', () => {
+    const spy = jest.fn()
+    const uuid = 'test'
+    const wrapper = mount(
+      <AccordionContext.Provider value={{ setOpen: spy }}>
+        <Section>
+          <SectionContext.Provider value={{ uuid, isOpen: false }}>
+            <Title onClick={e => e.stopPropagation()} />
+          </SectionContext.Provider>
+        </Section>
+      </AccordionContext.Provider>
+    )
+    const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
+
+    o.simulate('click')
+
+    expect(spy).not.toBeCalled()
+  })
+
   test('Attempts to close the open section by uuid when clicked', () => {
     // here
     const spy = jest.fn()

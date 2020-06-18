@@ -114,6 +114,7 @@ const Accordion = props => {
     } else {
       sectionIds = buildOpenSections(openSectionIds)
     }
+
     setOpenSections(sectionIds)
   }, [stringifyArray(openSectionIds)])
 

@@ -77,11 +77,24 @@ export class AccordionWithCustomIds extends React.Component {
           distance={number('distance', 5)}
           isSortable={boolean('isSortable', true)}
           pressDelay={number('pressDelay', 300)}
-          onOpen={this.updateSectionId}
           onSortEnd={onSortEnd}
           openSectionIds={[value]}
         >
-          {createSections(dataWithIds)}
+          {dataWithIds.map((datum, index) => (
+            <Accordion.Section key={index} id={datum.id}>
+              <Accordion.Title
+                onClick={e => {
+                  e.stopPropagation()
+                  this.updateSectionId(datum.id)
+                }}
+              >
+                <Text truncate weight={500}>
+                  {datum.title}
+                </Text>
+              </Accordion.Title>
+              <Accordion.Body>{datum.body}</Accordion.Body>
+            </Accordion.Section>
+          ))}
         </Accordion>
       </div>
     )

@@ -116,6 +116,7 @@ const AccordionTitle = props => {
 
   const handleClick = event => {
     onClick(event)
+    if (event.isDefaultPrevented() || event.isPropagationStopped()) return
     if (isLink) return
     event && event.preventDefault()
     setOpen(uuid, !isOpen)
