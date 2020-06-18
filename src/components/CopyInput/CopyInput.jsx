@@ -59,6 +59,8 @@ class CopyInput extends React.PureComponent {
             style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
             tabIndex={'-1'}
             innerRef={node => (this.copyButtonNode = node)}
+            icon="copy-small"
+            label={false}
           />
         }
       />

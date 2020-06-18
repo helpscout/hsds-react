@@ -18,3 +18,13 @@ export const Medium = () => (
 export const Small = () => (
   <CopyButton onClick={action('Click')} onReset={action('Reset')} size="sm" />
 )
+
+export const Icon = () => (
+  <CopyButton
+    onClick={action('Click')}
+    onReset={action('Reset')}
+    size="lg"
+    icon="copy-small"
+    label={false}
+  />
+)

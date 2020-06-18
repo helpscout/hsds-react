@@ -52,8 +52,10 @@ class Button extends React.PureComponent {
     const { children } = this.props
 
     return React.Children.map(children, (child, index) => {
-      if (child && !child.hasOwnProperty('type')) return child
+      if (!child) return
+      if (!child.hasOwnProperty('type')) return child
       if (child.type !== Icon) return child
+
       const len = React.Children.count(children)
       const isFirst = index === 0
       const isLast = index === len - 1
