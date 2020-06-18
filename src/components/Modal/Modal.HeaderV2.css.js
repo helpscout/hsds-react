@@ -66,7 +66,7 @@ export const BrandedHeaderImageUI = styled('div')`
 
 export const AlertHeaderUI = styled('div')`
   border: none;
-  padding: 50px 50px 20px;
+  padding: 50px 50px 4px;
   text-align: center;
   width: 100%;
   flex-grow: 1;

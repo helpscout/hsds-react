@@ -365,7 +365,7 @@ export const V2AlertWithDangerState = () => (
     description="You're about to do a thing that could impact a lot of other things. Continue?"
     state="danger"
     trigger={<Link>Clicky</Link>}
-    title="Are you sure?"
+    title="Delete the thing?"
   >
     <Modal.ActionFooter
       showDefaultCancel={false}
