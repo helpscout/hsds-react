@@ -30,17 +30,18 @@ inner `Body` expanded simultaneously.
 
 ## Props
 
-| Prop           | Type                  | Description                                                                                             |
-| -------------- | --------------------- | ------------------------------------------------------------------------------------------------------- |
-| allowMultiple  | `boolean`             | Allows multiple sections to have their body revealed simultaneously.                                    |
-| children       | `Accordion.Section[]` | Sections to be stacked and controlled.                                                                  |
-| className      | `string`              | Custom class names to be added to the component.                                                        |
-| distance       | `number`              | When isSortable is true, the distance determines how far a user must drag in order to sort.             |
-| isSeamless     | `boolean`             | Exclude borders and horizontal padding.                                                                 |
-| isSortable     | `boolean`             | Enable sections to be re-ordered by drag and drop.                                                      |
-| onOpen         | `function`            | Callback to be invoked when the body of a section is revealed.                                          |
-| onClose        | `function`            | Callback to be invoked when the body of a section is concealed.                                         |
-| onSortEnd      | `function`            | When is sortable is true, callback to be invoked when sorting ends.                                     |
-| openSectionIds | `array`               | An array of ids corresponding to sections that should be open.                                          |
-| pressDelay     | `number`              | When isSortable is true and distance is 0, the time in ms that must elapse on a press in order to sort. |
-| size           | `string`              | The amount of padding. Valid sizes are `xs`, `sm`, `md`, and `lg`.                                      |
+| Prop            | Type                  | Description                                                                                             |
+| --------------- | --------------------- | ------------------------------------------------------------------------------------------------------- |
+| allowMultiple   | `boolean`             | Allows multiple sections to have their body revealed simultaneously.                                    |
+| children        | `Accordion.Section[]` | Sections to be stacked and controlled.                                                                  |
+| className       | `string`              | Custom class names to be added to the component.                                                        |
+| distance        | `number`              | When isSortable is true, the distance determines how far a user must drag in order to sort.             |
+| isSeamless      | `boolean`             | Exclude borders and horizontal padding.                                                                 |
+| isSortable      | `boolean`             | Enable sections to be re-ordered by drag and drop.                                                      |
+| onOpen          | `function`            | Callback to be invoked when the body of a section is revealed.                                          |
+| onClose         | `function`            | Callback to be invoked when the body of a section is concealed.                                         |
+| onSortEnd       | `function`            | When is sortable is true, callback to be invoked when sorting ends.                                     |
+| openSectionIds  | `array`               | An array of ids corresponding to sections that should be open.                                          |
+| setSectionState | `function`            | Handle the state outside the accordion component                                                        |
+| pressDelay      | `number`              | When isSortable is true and distance is 0, the time in ms that must elapse on a press in order to sort. |
+| size            | `string`              | The amount of padding. Valid sizes are `xs`, `sm`, `md`, and `lg`.                                      |
