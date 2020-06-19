@@ -82,22 +82,23 @@ describe('Content', () => {
 
   test('Can render sub-components', () => {
     const wrapper = mount(
-      <Accordion duration={0}>
-        <Section isOpen>
+      <Accordion duration={0} openSectionIds={[1]}>
+        <Section id={1}>
           <Title />
           <Body />
         </Section>
       </Accordion>
     )
+
     expect(
       wrapper.find(`div.${sectionClassNames.baseComponentClassName}`)
-    ).toHaveLength(1)
+    ).toBeTruthy()
     expect(
       wrapper.find(`div.${titleClassNames.baseComponentClassName}`)
-    ).toHaveLength(1)
+    ).toBeTruthy()
     expect(
       wrapper.find(`div.${bodyClassNames.baseComponentClassName}`)
-    ).toHaveLength(1)
+    ).toBeTruthy()
   })
 })
 
@@ -225,6 +226,28 @@ describe('State', () => {
         .getDOMNode()
         .classList.contains('is-open')
     ).toBeTruthy()
+  })
+
+  test('It should use an external state manager when setSectionState is used', () => {
+    const wrapper = mount(
+      <Accordion openSectionIds={[1]} setSectionState={() => {}}>
+        <Accordion.Section id={1}>
+          <Accordion.Title>Title 1</Accordion.Title>
+        </Accordion.Section>
+        <Accordion.Section id={2}>
+          <Accordion.Title>Title 2</Accordion.Title>
+        </Accordion.Section>
+      </Accordion>
+    )
+
+    expect(
+      wrapper
+        .find('.c-Accordion__Section')
+        .first()
+        .getDOMNode()
+        .classList.contains('is-open')
+    ).toBeTruthy()
+
     wrapper.setProps({ openSectionIds: [4, 5, 6] })
     expect(
       wrapper

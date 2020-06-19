@@ -94,8 +94,14 @@ const AccordionTitle = props => {
     ...rest
   } = props
   const { uuid, isOpen } = useContext(SectionContext) || {}
-  const { isPage, isSeamless, setOpen = noop, size, isSorting, isSortable } =
-    useContext(AccordionContext) || {}
+  const {
+    isPage,
+    isSeamless,
+    setSectionState = noop,
+    size,
+    isSorting,
+    isSortable,
+  } = useContext(AccordionContext) || {}
 
   const isLink = props.href || props.to || isSorting
   const isIconOpen = isLink ? false : isOpen
@@ -119,7 +125,7 @@ const AccordionTitle = props => {
     if (event.isDefaultPrevented() || event.isPropagationStopped()) return
     if (isLink) return
     event && event.preventDefault()
-    setOpen(uuid, !isOpen)
+    setSectionState(uuid, !isOpen)
   }
 
   const handleKeyPress = event => {
