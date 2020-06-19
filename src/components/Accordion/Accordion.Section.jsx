@@ -43,20 +43,18 @@ const getComponentClassName = ({ className, isOpen, isLink, status }) => {
   )
 }
 
-const getIsOpen = ({ isLink, isOpen, uuid }) => {
+const isSectionOpen = ({ isLink, uuid }, openSections) => {
   if (isLink) return false
-
-  const { sections = {} } = useContext(AccordionContext) || {}
-
-  return !!(Object.keys(sections).length ? sections[uuid] : isOpen)
+  return openSections.includes(uuid)
 }
 
 export const AccordionSection = props => {
   const { children, ...rest } = props
 
   const [uuid] = useState(props.id || nextUuid())
+  const { openSections = [] } = useContext(AccordionContext) || {}
 
-  const isOpen = getIsOpen({ ...props, uuid })
+  const isOpen = isSectionOpen({ ...props, uuid }, openSections)
 
   const componentClassName = getComponentClassName({ ...props, isOpen })
 

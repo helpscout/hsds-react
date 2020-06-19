@@ -79,15 +79,13 @@ export class AccordionWithCustomIds extends React.Component {
           pressDelay={number('pressDelay', 300)}
           onSortEnd={onSortEnd}
           openSectionIds={[value]}
+          setSectionState={uuid => {
+            this.updateSectionId(uuid)
+          }}
         >
           {dataWithIds.map((datum, index) => (
             <Accordion.Section key={index} id={datum.id}>
-              <Accordion.Title
-                onClick={e => {
-                  e.stopPropagation()
-                  this.updateSectionId(datum.id)
-                }}
-              >
+              <Accordion.Title>
                 <Text truncate weight={500}>
                   {datum.title}
                 </Text>
