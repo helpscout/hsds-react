@@ -8,8 +8,8 @@ import Body, { classNameStrings as classNames } from '../Accordion.Body'
 describe('ClassNames', () => {
   test('Has default className', () => {
     const wrapper = mount(
-      <Accordion duration={0}>
-        <Section isOpen>
+      <Accordion duration={0} openSectionIds={[1]}>
+        <Section id={1}>
           <Body />
         </Section>
       </Accordion>
@@ -28,8 +28,8 @@ describe('ClassNames', () => {
   test('Applies custom className if specified', () => {
     const className = 'kustom'
     const wrapper = mount(
-      <Accordion isSeamless duration={0}>
-        <Section isOpen>
+      <Accordion isSeamless duration={0} openSectionIds={[1]}>
+        <Section id={1}>
           <Body className={className} />
         </Section>
       </Accordion>
@@ -40,8 +40,8 @@ describe('ClassNames', () => {
 
   test('Applies a className to indicate that the Body is in a seamless accordion', () => {
     const wrapper = mount(
-      <Accordion isSeamless duration={0}>
-        <Section isOpen>
+      <Accordion isSeamless duration={0} openSectionIds={[1]}>
+        <Section id={1}>
           <Body />
         </Section>
       </Accordion>
@@ -53,8 +53,8 @@ describe('ClassNames', () => {
   test('Applies a className to indicate that the Body is in the specified size accordion', () => {
     ;['xs', 'sm', 'md', 'lg', 'xl'].forEach(size => {
       const wrapper = mount(
-        <Accordion size={size}>
-          <Section isOpen>
+        <Accordion size={size} openSectionIds={[1]}>
+          <Section id={1}>
             <Body />
           </Section>
         </Accordion>
@@ -66,8 +66,8 @@ describe('ClassNames', () => {
 
   test('Applies a className to indicate that the Body is in an Accordion embedded in a page', () => {
     const wrapper = mount(
-      <Accordion isPage>
-        <Section isOpen>
+      <Accordion isPage openSectionIds={[1]}>
+        <Section id={1}>
           <Body />
         </Section>
       </Accordion>

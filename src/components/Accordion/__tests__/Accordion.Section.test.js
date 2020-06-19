@@ -25,7 +25,12 @@ describe('ClassNames', () => {
   })
 
   test('Applies a className to indicate that the Section is open', () => {
-    const wrapper = mount(<Section isOpen />)
+    const openSections = [1]
+    const wrapper = mount(
+      <AccordionContext.Provider value={{ openSections }}>
+        <Section id={1} />
+      </AccordionContext.Provider>
+    )
     const el = wrapper.find(`div.${classNames.baseComponentClassName}`)
 
     expect(el.hasClass(classNames.isOpenClassName)).toBe(true)
@@ -61,9 +66,9 @@ describe('Uuid', () => {
 describe('isOpen', () => {
   test('Renders open styles, if defined', () => {
     const uuid = 'myuuid'
-    const sections = { [uuid]: true }
+    const openSections = [uuid]
     const wrapper = mount(
-      <AccordionContext.Provider value={{ sections }}>
+      <AccordionContext.Provider value={{ openSections }}>
         <Section id={uuid} />
       </AccordionContext.Provider>
     )
