@@ -1,5 +1,5 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
+import styled, { storiesOf } from '@storybook/react'
 import MessageCard from '../src/components/MessageCard'
 import { ThemeProvider } from '../src/components/styled'
 import {
@@ -20,6 +20,14 @@ stories.addDecorator(
     escapeHTML: false,
   })
 )
+
+const LimitUI = styled('div')`
+  ${({ height }) => (height ? `height: ${height};` : '')};
+  .c-Animate,
+  .c-MessageCard {
+    height: 100%;
+  }
+`
 
 class Story extends React.Component {
   render() {
@@ -64,11 +72,15 @@ class Story extends React.Component {
       title: text('Title', 'Need help?'),
     }
 
+    const limitProps = {
+      height: text('limit screen height', '100vh'),
+    }
+
     return (
       <ThemeProvider theme={theme}>
-        <div>
+        <LimitUI {...limitProps}>
           <MessageCard {...props} />
-        </div>
+        </LimitUI>
       </ThemeProvider>
     )
   }
