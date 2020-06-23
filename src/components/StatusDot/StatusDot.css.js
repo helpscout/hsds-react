@@ -11,6 +11,7 @@ export const config = {
     inactive: getColor('grey.600'),
     offline: getColor('red.500'),
     busy: getColor('yellow.500'),
+    custom: getColor('purple.400'),
   },
   dotSize: 6,
   defaultSize: 2 * 2 + 6,
@@ -33,6 +34,7 @@ export const StatusDotUI = styled('div')`
     display: inline-block;
   }
 
+  &.is-available,
   &.is-active,
   &.is-online,
   &.is-new {
@@ -40,11 +42,13 @@ export const StatusDotUI = styled('div')`
     color: ${config.color.active};
   }
 
+  &.is-unavailable,
   &.is-offline {
     border-color: ${config.color.offline};
     color: ${config.backgroundColor};
   }
 
+  &.is-assign,
   &.is-busy {
     border-color: ${config.color.busy};
     color: ${config.backgroundColor};
@@ -53,6 +57,11 @@ export const StatusDotUI = styled('div')`
   &.is-inactive {
     border: none;
     color: ${config.color.inactive};
+  }
+
+  &.is-custom {
+    border-color: ${config.color.custom};
+    color: ${config.backgroundColor};
   }
 
   ${makeSizeStyles()} &.is-icon {
