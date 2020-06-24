@@ -9,7 +9,12 @@ module.exports = {
     jest: true,
     node: true,
   },
-  globals: ['cy', 'Cypress', 'expect', 'assert'],
+  globals: {
+    cy: 'readonly',
+    Cypress: 'readonly',
+    expect: 'readonly',
+    assert: 'readonly',
+  },
   plugins: ['babel', 'jsx-a11y', 'react', 'import'],
   extends: [
     'plugin:prettier/recommended', // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
@@ -23,27 +28,14 @@ module.exports = {
     },
   },
   rules: {
-    'default-case': 'off',
-    'no-dupe-class-members': 'off',
-    'no-array-constructor': 'warn',
     'no-use-before-define': [
       'warn',
       {
         functions: false,
         classes: false,
         variables: false,
-        typedefs: false,
       },
     ],
-    'no-unused-vars': [
-      'warn',
-      {
-        args: 'none',
-        ignoreRestSiblings: true,
-      },
-    ],
-    'no-useless-constructor': 'warn',
-
     // http://eslint.org/docs/rules/
     'array-callback-return': 'warn',
     'default-case': ['warn', { commentPattern: '^no default$' }],
@@ -128,14 +120,6 @@ module.exports = {
       {
         args: 'none',
         ignoreRestSiblings: true,
-      },
-    ],
-    'no-use-before-define': [
-      'warn',
-      {
-        functions: false,
-        classes: false,
-        variables: false,
       },
     ],
     'no-useless-computed-key': 'warn',
