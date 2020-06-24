@@ -12,8 +12,5 @@
   "workbench.colorCustomizations": {},
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
-  },
-  "search.exclude": {
-    "config": false
   }
 }
