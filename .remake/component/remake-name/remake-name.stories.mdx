@@ -1,6 +1,5 @@
 import React from 'react'
 import <%= name %> from '../src/components/<%= name %>'
-
 import {
   boolean,
   number,
@@ -12,6 +11,7 @@ import {
 <Meta
   title="Components/<%= name %>"
   component={<%= name %>}
+  decorators={[withDesign]}
   parameters={{
       design: {
         type: 'figma',

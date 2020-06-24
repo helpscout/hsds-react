@@ -21,10 +21,7 @@ module.exports = {
       statements: 95,
     },
   },
-  setupFiles: [
-    '<rootDir>/config/polyfills.js',
-    '<rootDir>/config/jsdomPolyfills.js',
-  ],
+  setupFiles: ['<rootDir>/config/jsdomPolyfills.js'],
   setupFilesAfterEnv: ['<rootDir>/config/jest/setupTests.js'],
   testMatch: [
     '<rootDir>/src/**/__tests__/**/*.test.(js|jsx)',
