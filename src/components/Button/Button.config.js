@@ -63,8 +63,8 @@ const config = {
   },
   secondary: {
     backgroundColor: 'white',
-    backgroundColorHover: 'white',
-    backgroundColorActive: getColor('grey.200'),
+    backgroundColorHover: getColor('grey.200'),
+    backgroundColorActive: getColor('grey.300'),
     borderColor: getColor('grey.700'),
     borderColorHover: getColor('charcoal.200'),
     borderColorActive: getColor('charcoal.200'),
@@ -75,8 +75,8 @@ const config = {
   },
   tertiary: {
     backgroundColor: 'white',
-    backgroundColorHover: 'white',
-    backgroundColorActive: getColor('green.100'),
+    backgroundColorHover: getColor('green.100'),
+    backgroundColorActive: getColor('green.200'),
     borderColor: getColor('green.500'),
     borderColorHover: getColor('green.600'),
     borderColorActive: getColor('green.700'),

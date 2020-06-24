@@ -18,7 +18,7 @@ describe('ClassName', () => {
   })
 
   test('Applies v2 className if specified', () => {
-    const customClass = 'is-v2'
+    const customClass = 'v2'
     const wrapper = mount(<Body version={2} />)
 
     expect(wrapper.getDOMNode().classList.contains(customClass)).toBe(true)

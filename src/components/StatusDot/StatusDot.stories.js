@@ -53,6 +53,18 @@ export const States = () => (
     <div>
       <StatusDot status="inactive" inline />: Inactive
     </div>
+    <div>
+      <StatusDot status="available" inline />: Available
+    </div>
+    <div>
+      <StatusDot status="assign" inline />: Assign only
+    </div>
+    <div>
+      <StatusDot status="unavailable" inline />: Unavailable
+    </div>
+    <div>
+      <StatusDot status="custom" inline />: Custom
+    </div>
   </div>
 )
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { SortableContainer } from 'react-sortable-hoc'
 import { classNames } from '../../utilities/classNames'
@@ -12,7 +13,9 @@ const SortableList = SortableContainer(props => {
     sortable,
     ...rest
   } = props
+
   const componentClassName = classNames('c-SortableList', className)
+
   const itemsMarkup = items
     ? items.map((item, index) => {
         const { index: itemIndex, ...itemRest } = item.props
@@ -32,9 +35,5 @@ const SortableList = SortableContainer(props => {
     </div>
   )
 })
-
-SortableList.defaultProps = {
-  'data-cy': 'SortableList',
-}
 
 export default SortableList

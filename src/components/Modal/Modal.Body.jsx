@@ -57,7 +57,7 @@ class ModalBody extends React.PureComponent {
 
     const componentClassName = classNames(
       'c-ModalBody',
-      v2 && 'is-v2',
+      v2 && 'v2',
       seamless && 'is-seamless',
       scrollable ? 'is-scrollable' : 'is-not-scrollable',
       className

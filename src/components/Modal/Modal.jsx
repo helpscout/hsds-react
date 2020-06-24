@@ -209,7 +209,7 @@ class Modal extends React.PureComponent {
     const modalKindClassName = getModalKindClassName(kind)
     const componentClassName = classNames(
       'c-Modal__Card',
-      v2 && 'is-v2',
+      v2 && 'v2',
       v2 && modalKindClassName,
       cardClassName
     )

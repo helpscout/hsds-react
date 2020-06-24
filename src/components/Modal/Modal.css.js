@@ -86,8 +86,10 @@ export const InnerWrapperUI = styled('div')`
     }
 
     &.is-alert {
-      min-height: 179px;
+      min-height: 180px;
       width: 440px;
+      max-width: 440px;
+      top: auto;
     }
   }
 `
@@ -114,7 +116,8 @@ export const CardUI = styled(Card)`
 
   &.v2.is-alert {
     min-width: 440px;
-    padding-bottom: 60px;
+    padding-bottom: 40px;
+    top: auto;
   }
 `
 
@@ -167,7 +170,7 @@ export const BodyUI = styled('div')`
     }
   }
 
-  &.is-v2 {
+  &.v2 {
     padding: 0px;
 
     ${modalBodyBEM.element('scrollableContent')} {

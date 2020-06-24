@@ -50,45 +50,53 @@ const getComponentClassName = ({
   )
 }
 
-const buildOpenSections = sectionIds =>
-  sectionIds.reduce(
-    (accumulator, id) => ({
-      ...accumulator,
-      [id]: true,
-    }),
-    {}
-  )
-
-const getOpenSectionIds = sections => {
-  return Object.keys(sections).reduce((accumulator, key) => {
-    if (sections[key] && sections[key] === true) {
-      return [...accumulator, key]
-    }
-    return accumulator
-  }, [])
-}
-
 export const getSortableProps = ({ distance, pressDelay }) => {
   return distance > 0 ? { distance } : { pressDelay }
+}
+
+const useSectionState = (originalState, allowMultiple) => {
+  const [openSections, setOpenSections] = useState(originalState)
+
+  const setSectionState = (uuid, isOpen) => {
+    setOpenSections(isOpen ? [uuid] : [])
+  }
+
+  const setMultipleState = (uuid, isOpen) => {
+    if (isOpen) {
+      const newSections = [...openSections, uuid]
+      setOpenSections(
+        newSections.filter((item, pos) => newSections.indexOf(item) == pos)
+      )
+    } else {
+      setOpenSections(openSections.filter(id => id !== uuid))
+    }
+  }
+
+  return [openSections, allowMultiple ? setMultipleState : setSectionState]
 }
 
 export const AccordionContext = createContext(null)
 
 const Accordion = props => {
   const {
+    allowMultiple,
     children,
-    openSectionIds,
     duration,
     isPage: isPageProps,
     isSeamless: isSeamlessProps,
-    size,
     isSortable,
     onSortEnd,
+    openSectionIds,
+    size,
+    useWindowAsScrollContainer,
     ...rest
   } = props
 
-  const [sections, setOpenSections] = useState({})
   const [isSorting, setIsSorting] = useState(false)
+  const [openSections, setSectionState] = useSectionState(
+    openSectionIds,
+    allowMultiple
+  )
 
   const { accordion = {} } = useContext(PageContext)
   const { getCurrentScope } = React.useContext(GlobalContext) || {}
@@ -98,30 +106,12 @@ const Accordion = props => {
   const isPage = accordion.isPage || isPageProps
   const isSeamless = accordion.isSeamless || isSeamlessProps
 
-  useEffect(() => {
-    setOpenSections(buildOpenSections(openSectionIds))
-  }, [stringifyArray(openSectionIds)])
-
   const onClose = uuid => {
-    props.onClose(uuid, getOpenSectionIds(sections))
+    props.onClose(uuid, openSections)
   }
 
   const onOpen = uuid => {
-    props.onOpen(uuid, getOpenSectionIds(sections))
-  }
-
-  const setOpen = (uuid, isOpen) => {
-    const { allowMultiple } = props
-
-    if (allowMultiple) {
-      return setOpenSections({
-        ...sections,
-        [uuid]: isOpen,
-      })
-    }
-    return setOpenSections({
-      [uuid]: isOpen,
-    })
+    props.onOpen(uuid, openSections)
   }
 
   const getContainer = () => {
@@ -140,8 +130,9 @@ const Accordion = props => {
     isSorting,
     onClose,
     onOpen,
-    sections,
-    setOpen,
+    // WARN: we use the internal state only if there is no outside method to update the list of open sections
+    openSections: props.setSectionState ? openSectionIds : openSections,
+    setSectionState: props.setSectionState || setSectionState,
     size,
   }
 
@@ -157,6 +148,7 @@ const Accordion = props => {
           setIsSorting(false)
           onSortEnd(...args)
         }}
+        useWindowAsScrollContainer={useWindowAsScrollContainer}
         {...getSortableProps(rest)}
       >
         {children}
@@ -195,6 +187,7 @@ Accordion.defaultProps = {
   openSectionIds: [],
   pressDelay: 0,
   size: 'md',
+  useWindowAsScrollContainer: false,
 }
 
 Accordion.Body = AccordionBody

@@ -45,12 +45,7 @@ export const AccordionUI = styled('div')`
     }
     .c-Accordion__Section__Title {
       user-select: none;
-      &.is-seamless .drag-handle {
-        left: -15px;
-      }
-      &.is-page .drag-handle {
-        left: 39px;
-      }
+
       &:hover .drag-handle {
         display: inline-block;
       }
@@ -128,6 +123,11 @@ export const SectionUI = styled('div')`
   background: white;
   position: relative;
 
+  &.is-link:hover,
+  &.is-link:focus {
+    background-color: ${getColor('grey.200')};
+  }
+
   &.is-info,
   &.is-info:hover,
   &.is-info:focus {
@@ -150,8 +150,6 @@ export const SectionUI = styled('div')`
 
   &:hover,
   &:focus {
-    background-color: ${getColor('grey.200')};
-
     .${titleClassNames.iconCaretClassName} {
       color: ${getColor('text.slightlyMuted')};
     }
@@ -226,6 +224,15 @@ export const TitleUI = styled('div')`
     padding: 6px 20px;
   }
 
+  &.is-compact {
+    padding-bottom: 17px;
+    padding-top: 17px;
+
+    .c-Accordion__Heading {
+      margin-bottom: 0;
+    }
+  }
+
   &.is-seamless {
     padding-left: 0;
     padding-right: 0;
@@ -252,8 +259,11 @@ export const TitleUI = styled('div')`
     &.is-seamless .drag-handle {
       left: -15px;
     }
+
     &.is-page .drag-handle {
-      left: 39px;
+      left: 14px;
+
+      ${breakpoint(pageBreakpointsConfig.breakpoint.widescreen, `left: 39px;`)};
     }
 
     .drag-handle {

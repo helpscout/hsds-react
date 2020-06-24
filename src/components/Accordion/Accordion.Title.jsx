@@ -14,6 +14,7 @@ import SortableDragHandle from '../Sortable/Sortable.DragHandle'
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion__Section__Title',
   iconCaretClassName: 'c-AccordionTitleCaretIcon',
+  isCompactClassName: 'is-compact',
   isLinkClassName: 'is-link',
   isOpenClassName: 'is-open',
   isPageClassName: 'is-page',
@@ -28,6 +29,7 @@ export const classNameStrings = {
 
 const getComponentClassName = ({
   className,
+  isCompact,
   isOpen,
   isPage,
   isSeamless,
@@ -37,6 +39,7 @@ const getComponentClassName = ({
 }) => {
   const {
     baseComponentClassName,
+    isCompactClassName,
     isLinkClassName,
     isOpenClassName,
     isPageClassName,
@@ -51,6 +54,7 @@ const getComponentClassName = ({
 
   return classNames(
     baseComponentClassName,
+    isCompact && isCompactClassName,
     isLink && isLinkClassName,
     !isLink && isOpen && isOpenClassName,
     isPage && isPageClassName,
@@ -80,16 +84,31 @@ const getDragHandleClassName = isPage => {
 }
 
 const AccordionTitle = props => {
-  const { badge, children, className, onClick, status, ...rest } = props
+  const {
+    badge,
+    children,
+    className,
+    isCompact,
+    onClick,
+    status,
+    ...rest
+  } = props
   const { uuid, isOpen } = useContext(SectionContext) || {}
-  const { isPage, isSeamless, setOpen = noop, size, isSorting, isSortable } =
-    useContext(AccordionContext) || {}
+  const {
+    isPage,
+    isSeamless,
+    setSectionState = noop,
+    size,
+    isSorting,
+    isSortable,
+  } = useContext(AccordionContext) || {}
 
   const isLink = props.href || props.to || isSorting
   const isIconOpen = isLink ? false : isOpen
 
   const componentClassName = getComponentClassName({
     className,
+    isCompact,
     isOpen,
     isPage,
     isSeamless,
@@ -103,9 +122,10 @@ const AccordionTitle = props => {
 
   const handleClick = event => {
     onClick(event)
+    if (event.isDefaultPrevented() || event.isPropagationStopped()) return
     if (isLink) return
     event && event.preventDefault()
-    setOpen(uuid, !isOpen)
+    setSectionState(uuid, !isOpen)
   }
 
   const handleKeyPress = event => {
@@ -171,6 +191,7 @@ const AccordionTitle = props => {
 
 AccordionTitle.defaultProps = {
   'data-cy': 'AccordionTitle',
+  isCompact: false,
   onClick: noop,
 }
 

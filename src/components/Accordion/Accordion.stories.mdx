@@ -1,5 +1,5 @@
 import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
-import { select, text, boolean, number } from '@storybook/addon-knobs'
+import { select, text, boolean, number, array } from '@storybook/addon-knobs'
 import {
   data,
   dataWithIds,
@@ -7,6 +7,7 @@ import {
   onOpen,
   onClose,
   onSortEnd,
+  AccordionWithCustomIds,
 } from './Accordion.storiesHelpers'
 import Accordion from './'
 import { Page, Text } from '../index'
@@ -33,8 +34,9 @@ vertically stacked section which can be expanded or collapsed.
     onClose={onClose}
     onSortEnd={onSortEnd}
     size={select('Sizes', {extraSmall: 'xs', small: 'sm', medium: 'md', large: 'lg'}, 'md')}
+    openSectionIds={array('openSectionIds', [])}
   >
-      {createSections(data)}
+      {createSections(dataWithIds)}
     </Accordion>
   </Story>
 </Preview>
@@ -173,10 +175,10 @@ This component is to be used within an `Accordion`.
   </Story>
 </Preview>
 
-#### Multi-Line
+#### All link styles
 
 <Preview>
-  <Story name="Multi-Line">
+  <Story name="All link styles">
     <Page>
       <Page.Card>
         <Accordion
@@ -187,6 +189,12 @@ This component is to be used within an `Accordion`.
           onSortEnd={onSortEnd}
           size={select('Sizes', {extraSmall: 'xs', small: 'sm', medium: 'md', large: 'lg', extraLarge: 'xl'}, 'xl')}
         >
+          <Accordion.Link to="/" isCompact>
+            <Accordion.Heading muted>Paused Message Row</Accordion.Heading>
+          </Accordion.Link>
+          <Accordion.Link to="/" isCompact>
+            <Accordion.Heading>Compact Row</Accordion.Heading>
+          </Accordion.Link>
           <Accordion.Link to="/">
             <Accordion.Heading>March 40% Offer</Accordion.Heading>
             <Accordion.Subheading>Viewed 104 times. Last seen yesterday</Accordion.Subheading>
@@ -218,3 +226,14 @@ This component is to be used within an `Accordion`.
   </Story>
 </Preview>
 
+#### With custom ids
+
+<Preview>
+  <Story name="Custom-Ids">
+    <Page>
+      <Page.Card>
+        <AccordionWithCustomIds />
+      </Page.Card>
+    </Page>
+  </Story>
+</Preview>

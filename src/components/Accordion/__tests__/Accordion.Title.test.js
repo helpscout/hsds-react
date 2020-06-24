@@ -31,9 +31,11 @@ describe('ClassNames', () => {
 
   test('Applies a className to indicate that the Title is in an open section', () => {
     const wrapper = mount(
-      <Section isOpen>
-        <Title />
-      </Section>
+      <AccordionContext.Provider value={{ openSections: [1] }}>
+        <Section id={1}>
+          <Title />
+        </Section>
+      </AccordionContext.Provider>
     )
     const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
     expect(o.hasClass(classNames.isOpenClassName)).toBe(true)
@@ -78,14 +80,14 @@ describe('ClassNames', () => {
   })
 })
 
-describe('setOpen', () => {
+describe('setSectionState', () => {
   test('Attempts to open the section by uuid when clicked', () => {
     const spy = jest.fn()
     const uuid = 'test'
     const wrapper = mount(
-      <AccordionContext.Provider value={{ setOpen: spy }}>
+      <AccordionContext.Provider value={{ setSectionState: spy }}>
         <Section>
-          <SectionContext.Provider value={{ uuid, isOpen: false }}>
+          <SectionContext.Provider value={{ uuid }}>
             <Title />
           </SectionContext.Provider>
         </Section>
@@ -98,16 +100,35 @@ describe('setOpen', () => {
     expect(spy).toBeCalledWith(uuid, true)
   })
 
+  test('Dont call the setSectionState method if the onClick event is prevented when clicked', () => {
+    const spy = jest.fn()
+    const uuid = 'test'
+    const wrapper = mount(
+      <AccordionContext.Provider value={{ setSectionState: spy }}>
+        <Section>
+          <SectionContext.Provider value={{ uuid }}>
+            <Title onClick={e => e.stopPropagation()} />
+          </SectionContext.Provider>
+        </Section>
+      </AccordionContext.Provider>
+    )
+    const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
+
+    o.simulate('click')
+
+    expect(spy).not.toBeCalled()
+  })
+
   test('Attempts to close the open section by uuid when clicked', () => {
     // here
     const spy = jest.fn()
     const uuid = 'test'
     const wrapper = mount(
-      <AccordionContext.Provider value={{ setOpen: spy }}>
-        <Section>
-          <SectionContext.Provider value={{ uuid, isOpen: true }}>
-            <Title />
-          </SectionContext.Provider>
+      <AccordionContext.Provider
+        value={{ setSectionState: spy, openSections: [uuid] }}
+      >
+        <Section id={uuid}>
+          <Title />
         </Section>
       </AccordionContext.Provider>
     )
@@ -123,9 +144,9 @@ describe('setOpen', () => {
       const spy = jest.fn()
       const uuid = 'test'
       const wrapper = mount(
-        <AccordionContext.Provider value={{ setOpen: spy }}>
+        <AccordionContext.Provider value={{ setSectionState: spy }}>
           <Section>
-            <SectionContext.Provider value={{ uuid, isOpen: false }}>
+            <SectionContext.Provider value={{ uuid }}>
               <Title />
             </SectionContext.Provider>
           </Section>
@@ -143,11 +164,11 @@ describe('setOpen', () => {
       const spy = jest.fn()
       const uuid = 'test'
       const wrapper = mount(
-        <AccordionContext.Provider value={{ setOpen: spy }}>
-          <Section>
-            <SectionContext.Provider value={{ uuid, isOpen: true }}>
-              <Title />
-            </SectionContext.Provider>
+        <AccordionContext.Provider
+          value={{ setSectionState: spy, openSections: [uuid] }}
+        >
+          <Section id={uuid}>
+            <Title />
           </Section>
         </AccordionContext.Provider>
       )

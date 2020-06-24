@@ -11,6 +11,7 @@ export const SectionContext = createContext()
 
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion__Section',
+  isLinkClassName: 'is-link',
   isOpenClassName: 'is-open',
   isSeamlessClassName: 'is-seamless',
   isStatusInfoClassName: 'is-info',
@@ -24,6 +25,7 @@ const getComponentClassName = ({ className, isOpen, isLink, status }) => {
 
   const {
     baseComponentClassName,
+    isLinkClassName,
     isOpenClassName,
     isSeamlessClassName,
     isStatusInfoClassName,
@@ -32,6 +34,7 @@ const getComponentClassName = ({ className, isOpen, isLink, status }) => {
 
   return classNames(
     baseComponentClassName,
+    isLink && isLinkClassName,
     isOpen && isOpenClassName,
     isSeamless && isSeamlessClassName,
     status && status === 'info' && isStatusInfoClassName,
@@ -40,20 +43,18 @@ const getComponentClassName = ({ className, isOpen, isLink, status }) => {
   )
 }
 
-const getIsOpen = ({ isLink, isOpen, uuid }) => {
+const isSectionOpen = ({ isLink, uuid }, openSections) => {
   if (isLink) return false
-
-  const { sections = {} } = useContext(AccordionContext) || {}
-
-  return !!(Object.keys(sections).length ? sections[uuid] : isOpen)
+  return openSections.includes(uuid)
 }
 
 export const AccordionSection = props => {
   const { children, ...rest } = props
 
   const [uuid] = useState(props.id || nextUuid())
+  const { openSections = [] } = useContext(AccordionContext) || {}
 
-  const isOpen = getIsOpen({ ...props, uuid })
+  const isOpen = isSectionOpen({ ...props, uuid }, openSections)
 
   const componentClassName = getComponentClassName({ ...props, isOpen })
 

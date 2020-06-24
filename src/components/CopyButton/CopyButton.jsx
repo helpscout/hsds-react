@@ -8,6 +8,7 @@ import {
   CopyButtonUI,
   ConfirmationIconWrapperUI,
   TextUI,
+  IconUI,
 } from './CopyButton.css'
 
 class CopyButton extends React.PureComponent {
@@ -59,11 +60,13 @@ class CopyButton extends React.PureComponent {
   }
 
   render() {
-    const { className, kind, size, ...rest } = this.props
+    const { className, kind, size, icon, label, ...rest } = this.props
     const { shouldRenderConfirmation } = this.state
+
     const componentClassName = classNames(
       'c-CopyButton',
       shouldRenderConfirmation && 'is-copyConfirmed',
+      icon && 'is-with-icon',
       className
     )
     const iconSize = size === 'sm' ? '20' : '24'
@@ -83,7 +86,8 @@ class CopyButton extends React.PureComponent {
             size={iconSize}
           />
         </ConfirmationIconWrapperUI>
-        <TextUI>Copy</TextUI>
+        {icon && <IconUI size={iconSize} name={icon} />}
+        {label && <TextUI>{label}</TextUI>}
       </CopyButtonUI>
     )
   }
@@ -96,6 +100,7 @@ CopyButton.propTypes = {
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
   kind: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onClick: PropTypes.func,
   onReset: PropTypes.func,
   resetTimeout: PropTypes.number,
@@ -104,11 +109,12 @@ CopyButton.propTypes = {
 }
 
 CopyButton.defaultProps = {
-  'data-cy': 'CopyButton',
   canRenderFocus: false,
+  'data-cy': 'CopyButton',
+  kind: 'secondary',
+  label: 'Copy',
   onClick: noop,
   onReset: noop,
-  kind: 'secondary',
   resetTimeout: 2000,
 }
 
