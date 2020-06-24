@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { noop } from '../../utilities/other'
 
-class ThemeProvider extends React.PureComponent {
+class SimpleThemeProvider extends React.PureComponent {
   static defaultProps = {
     theme: 'default',
   }
@@ -37,9 +37,9 @@ class ThemeProvider extends React.PureComponent {
   }
 }
 
-ThemeProvider.propTypes = {
+SimpleThemeProvider.propTypes = {
   children: PropTypes.any,
   theme: PropTypes.oneOfType([PropTypes.string, PropTypes.oneOf(['default'])]),
 }
 
-export default ThemeProvider
+export default SimpleThemeProvider

@@ -1,4 +1,4 @@
-import ThemeProvider from '../ThemeProvider/index'
+import SimpleThemeProvider from '../SimpleThemeProvider/index'
 
 const propTypes = {
   theme: () => null,
@@ -10,7 +10,7 @@ const defaultProps = {
 
 const childContextTypes = propTypes
 
-const Provider = ThemeProvider
+const Provider = SimpleThemeProvider
 
 Provider.propTypes = propTypes
 Provider.defaultProps = defaultProps
