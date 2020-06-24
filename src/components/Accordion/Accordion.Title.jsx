@@ -103,7 +103,7 @@ const AccordionTitle = props => {
     isSortable,
   } = useContext(AccordionContext) || {}
 
-  const isLink = props.href || props.to || isSorting
+  const isLink = props.href || props.to
   const isIconOpen = isLink ? false : isOpen
 
   const componentClassName = getComponentClassName({
