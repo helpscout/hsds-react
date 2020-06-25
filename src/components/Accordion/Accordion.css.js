@@ -170,6 +170,7 @@ export const TitleUI = styled('div')`
   cursor: pointer;
   display: block;
   padding: 18px 20px;
+  position: relative;
   text-decoration: none;
   font-weight: 500;
 
