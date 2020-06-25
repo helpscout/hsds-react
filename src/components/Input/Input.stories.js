@@ -230,6 +230,76 @@ StateError.story = {
   name: 'state: error',
 }
 
+export const StateCustomError = () => (
+  <div>
+    <div style={{ width: 100 }}>
+      <Input
+        state="error"
+        errorMessage={
+          <div>
+            Something is <strong>very</strong> incorrect!
+          </div>
+        }
+      />
+    </div>
+    <br />
+    <Input
+      state="error"
+      errorMessage={
+        <div>
+          Something is <strong>very</strong> incorrect!
+        </div>
+      }
+    />
+    <br />
+    <Input
+      state="error"
+      inlineSuffix=".00"
+      errorMessage={
+        <div>
+          Something is <strong>very</strong> incorrect!
+        </div>
+      }
+    />
+    <br />
+    <Input
+      state="error"
+      size="sm"
+      errorMessage={
+        <div>
+          Something is <strong>very</strong> incorrect!
+        </div>
+      }
+    />
+    <br />
+    <Input
+      state="error"
+      errorMessage={
+        <div>
+          Something is <strong>very</strong> incorrect!
+        </div>
+      }
+      multiline={3}
+      maxHeight={180}
+    />
+    <br />
+    <Input
+      seamless
+      state="error"
+      size="sm"
+      errorMessage={
+        <div>
+          Something is <strong>very</strong> incorrect!
+        </div>
+      }
+    />
+  </div>
+)
+
+StateCustomError.story = {
+  name: 'state: custom error',
+}
+
 export const Scrollock = () => (
   <Input
     multiline={3}
