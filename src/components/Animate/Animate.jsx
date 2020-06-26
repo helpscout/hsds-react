@@ -102,7 +102,7 @@ export class Animate extends React.PureComponent {
 
     return (
       <Transition
-        {...getValidProps(rest)}
+        {...rest}
         mountOnEnter={mountOnEnter}
         unmountOnExit={unmountOnExit}
         appear={animateOnMount}
