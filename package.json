@@ -80,8 +80,8 @@
     "make:version": "node ./scripts/make-version.js"
   },
   "peerDependencies": {
-    "react": "^16.8",
-    "react-dom": "^16.8",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "styled-components": "^5"
   },
   "dependencies": {
@@ -170,9 +170,9 @@
     "prettier": "1.19.1",
     "pretty-quick": "^1.8.0",
     "prop-types": "^15.7.2",
-    "react": "^16.8.6",
+    "react": "^16.13.1",
     "react-dev-utils": "^3.0.2",
-    "react-dom": "^16.8.6",
+    "react-dom": "^16.13.1",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "remake-cli": "0.0.7",
