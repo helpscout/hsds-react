@@ -36,3 +36,15 @@ export const Disabled = () => (
 Disabled.story = {
   name: 'disabled',
 }
+
+export const Stacked = () => (
+  <ChoiceGroup>
+    <Radio stacked={true} label="Derek" value="derek" />
+    <Radio stacked={true} label="Hansel" value="hansel" />
+    <Radio stacked={true} label="Mugatu" value="mugatu" />
+  </ChoiceGroup>
+)
+
+Stacked.story = {
+  name: 'stacked',
+}

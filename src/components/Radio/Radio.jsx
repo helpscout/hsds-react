@@ -5,9 +5,16 @@ import { classNames } from '../../utilities/classNames'
 
 export const RadioContext = React.createContext({})
 
-export const Radio = ({ kind: kindProp, className, ...rest }) => {
+export const Radio = ({
+  kind: kindProp,
+  stacked: stackedProp,
+  className,
+  ...rest
+}) => {
   const componentClassName = classNames('c-Radio', className)
-  const { kind = kindProp, stacked } = React.useContext(RadioContext)
+  const { kind = kindProp, stacked = stackedProp } = React.useContext(
+    RadioContext
+  )
 
   return (
     <Choice
