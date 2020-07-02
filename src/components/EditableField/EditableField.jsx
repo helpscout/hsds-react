@@ -232,13 +232,25 @@ export class EditableField extends React.Component {
       removedEmptyFields.length < this.state.fieldValue.length
 
     if (shouldDiscardEmpty) {
+      let deletedField
+
+      // if the last visible field has been removed, remove its _id property before
+      // updating the internal state for 'fieldValue' so it accurately represents an
+      // empty field. If _id exists on an otherwise empty field property, it will
+      // force a PUT api call instead of a POST if the user tries to create a new item.
+      if (removedEmptyFields.length === 0) {
+        deletedField = { ...changedField }
+        delete deletedField._id
+      }
+
       this.setState(
         {
           activeField: EMPTY_VALUE,
           disabledItem: this.state.disabledItem.filter(
             item => item !== changedField.id
           ),
-          fieldValue: removedEmptyFields,
+          fieldValue:
+            removedEmptyFields.length > 0 ? removedEmptyFields : [deletedField],
           initialFieldValue: this.state.fieldValue,
         },
         () => {
