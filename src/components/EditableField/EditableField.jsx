@@ -260,9 +260,7 @@ export class EditableField extends React.Component {
             data: {
               cause: CAUSE.BLUR,
               operation: OPERATION.DELETE,
-              item: this.state.fieldValue.filter(
-                field => !Boolean(field.value)
-              )[0],
+              item: changedField,
             },
           })
           onDiscard({ value: this.state.fieldValue })
