@@ -229,8 +229,7 @@ export class EditableField extends React.Component {
     )
     const shouldDiscardEmpty =
       multipleValuesEnabled &&
-      removedEmptyFields.length < this.state.fieldValue.length &&
-      removedEmptyFields.length > 0
+      removedEmptyFields.length < this.state.fieldValue.length
 
     if (shouldDiscardEmpty) {
       this.setState(
