@@ -48,7 +48,7 @@ export const TooltipUI = styled.div`
   transition-duration: ${({ animationDuration }) => animationDuration}ms;
   transition-timing-function: ease-in-out;
   opacity: 0;
-  word-break: break-all;
+  word-break: break-word;
   white-space: pre-wrap;
   overflow-wrap: break-word;
   word-wrap: break-word;
