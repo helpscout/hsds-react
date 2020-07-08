@@ -34,6 +34,7 @@ class ModalActionFooter extends React.PureComponent {
     const { primaryButtonText, state, primaryButtonDisabled } = this.props
     return (
       <PrimaryButtonUI
+        data-cy="PrimaryButton"
         state={state}
         kind="primary"
         size="lg"
@@ -58,6 +59,7 @@ class ModalActionFooter extends React.PureComponent {
 
     return (
       <ButtonComponent
+        data-cy="SecondaryButton"
         kind="secondary"
         size="lg"
         version={2}
@@ -79,6 +81,7 @@ class ModalActionFooter extends React.PureComponent {
     return (
       <CancelButtonUI
         className="is-cancel"
+        data-cy="CancelButton"
         kind="default"
         version={2}
         onClick={this.handleCancel}
