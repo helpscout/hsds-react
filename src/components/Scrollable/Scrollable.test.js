@@ -74,7 +74,7 @@ describe('Fade', () => {
 
     o.handleOnScroll({ currentTarget })
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(o.faderNodeBottom.style.transform).toBe('scaleY(1)')
   })
@@ -94,7 +94,7 @@ describe('Fade', () => {
 
     o.handleOnScroll({ currentTarget })
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(o.faderNodeRight.style.transform).toBe('scaleX(1)')
   })
@@ -111,7 +111,7 @@ describe('Fade', () => {
 
     o.handleOnScroll({ currentTarget })
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(o.faderNodeTop.style.transform).toContain('scaleY')
   })
@@ -128,7 +128,7 @@ describe('Fade', () => {
 
     o.handleOnScroll({ currentTarget })
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(o.faderNodeBottom.style.transform).toContain('scaleY')
   })
@@ -146,7 +146,7 @@ test('Applies left fade styles when scrolled', () => {
 
   o.handleOnScroll({ currentTarget })
 
-  jest.runOnlyPendingTimers()
+  jest.runAllTimers()
 
   expect(o.faderNodeLeft.style.transform).toContain('scaleX')
 })
@@ -163,7 +163,7 @@ test('Applies right fade styles when scrolled', () => {
 
   o.handleOnScroll({ currentTarget })
 
-  jest.runOnlyPendingTimers()
+  jest.runAllTimers()
 
   expect(o.faderNodeRight.style.transform).toContain('scaleX')
 })

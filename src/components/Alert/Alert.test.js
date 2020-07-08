@@ -85,7 +85,7 @@ describe('Dismissing', () => {
 
     b.simulate('click')
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     const o = wrapper.find(Collapsible)
 

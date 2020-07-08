@@ -38,7 +38,7 @@ describe('Portal', () => {
       )
 
       wrapper.unmount()
-      jest.runOnlyPendingTimers()
+      jest.runAllTimers()
 
       expect(document.getElementsByClassName('brick').length).toBe(0)
     })
@@ -219,7 +219,7 @@ describe('Portal', () => {
       )
 
       wrapper.unmount()
-      jest.runOnlyPendingTimers()
+      jest.runAllTimers()
 
       expect(mockCallback.mock.calls.length).toBe(1)
     })
@@ -238,7 +238,7 @@ describe('Portal', () => {
 
       wrapper.unmount()
 
-      jest.runOnlyPendingTimers()
+      jest.runAllTimers()
       expect(mockCallback.mock.calls.length).toBe(1)
     })
 
@@ -260,7 +260,7 @@ describe('Portal', () => {
       )
 
       wrapper.unmount()
-      jest.runOnlyPendingTimers()
+      jest.runAllTimers()
 
       expect(mockCallback.mock.calls.length).toBe(2)
       wrapper.detach()

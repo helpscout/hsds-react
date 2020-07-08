@@ -13,6 +13,21 @@ import {
 window.getSelection = () => ({
   toString: () => '',
 })
+let container
+
+beforeEach(() => {
+  container = document.createElement('div')
+  container.id = 'enzymeContainer'
+  document.body.appendChild(container)
+})
+
+afterEach(() => {
+  if (container && container.parentNode) {
+    container.parentNode.removeChild(container)
+  }
+
+  container = null
+})
 
 describe('className', () => {
   test('Has default className', () => {
@@ -65,10 +80,7 @@ describe('Render', () => {
     const wrapper = mount(<VerificationCode />)
 
     expect(
-      wrapper
-        .find(DigitInputWrapperUI)
-        .first()
-        .find(DigitMaskUI).length
+      wrapper.find(DigitInputWrapperUI).first().find(DigitMaskUI).length
     ).toBe(1)
   })
 
@@ -76,10 +88,7 @@ describe('Render', () => {
     const wrapper = mount(<VerificationCode />)
 
     expect(
-      wrapper
-        .find(DigitInputWrapperUI)
-        .first()
-        .find(DigitInputUI).length
+      wrapper.find(DigitInputWrapperUI).first().find(DigitInputUI).length
     ).toBe(1)
   })
 
@@ -150,10 +159,7 @@ describe('Input KeyUp', () => {
 
     const wrapper = mount(<VerificationCode onChange={onChangeSpy} />)
 
-    wrapper
-      .find(DigitInputUI)
-      .first()
-      .prop('onKeyUp')(eventMock)
+    wrapper.find(DigitInputUI).first().prop('onKeyUp')(eventMock)
 
     expect(onChangeSpy).not.toHaveBeenCalled()
   })
@@ -171,15 +177,9 @@ describe('Input KeyUp', () => {
     const onChangeSpy = jest.fn()
     const wrapper = mount(<VerificationCode onChange={onChangeSpy} />)
 
-    wrapper
-      .find(DigitInputUI)
-      .at(3)
-      .simulate('focus')
+    wrapper.find(DigitInputUI).at(3).simulate('focus')
 
-    wrapper
-      .find(DigitInputUI)
-      .at(3)
-      .prop('onKeyUp')(eventMock)
+    wrapper.find(DigitInputUI).at(3).prop('onKeyUp')(eventMock)
 
     expect(onChangeSpy).toHaveBeenCalled()
     expect(wrapper.instance().digitMaskNodes[3].innerText).toBe('')
@@ -200,15 +200,9 @@ describe('Input KeyUp', () => {
       <VerificationCode onChange={onChangeSpy} code="123456" />
     )
 
-    wrapper
-      .find(DigitInputUI)
-      .at(3)
-      .simulate('focus')
+    wrapper.find(DigitInputUI).at(3).simulate('focus')
 
-    wrapper
-      .find(DigitInputUI)
-      .at(3)
-      .prop('onKeyUp')(eventMock)
+    wrapper.find(DigitInputUI).at(3).prop('onKeyUp')(eventMock)
 
     expect(onChangeSpy).toHaveBeenCalled()
     expect(wrapper.instance().digitMaskNodes[3].innerText).toBe('')
@@ -222,12 +216,12 @@ describe('Input KeyUp', () => {
       },
     }
     const onChangeSpy = jest.fn()
-    const wrapper = mount(<VerificationCode onChange={onChangeSpy} />)
 
-    wrapper
-      .find(DigitInputUI)
-      .at(0)
-      .prop('onKeyUp')(eventMock)
+    const wrapper = mount(<VerificationCode onChange={onChangeSpy} />, {
+      attachTo: container,
+    })
+
+    wrapper.find(DigitInputUI).at(0).prop('onKeyUp')(eventMock)
 
     expect(onChangeSpy).toHaveBeenCalled()
     expect(wrapper.instance().digitMaskNodes[0].innerText).toBe('')
@@ -252,12 +246,11 @@ describe('Input KeyUp', () => {
       },
     }
 
-    const wrapper = mount(<VerificationCode onChange={onChangeSpy} />)
+    const wrapper = mount(<VerificationCode onChange={onChangeSpy} />, {
+      attachTo: container,
+    })
 
-    wrapper
-      .find(DigitInputUI)
-      .first()
-      .prop('onKeyUp')(eventMock)
+    wrapper.find(DigitInputUI).first().prop('onKeyUp')(eventMock)
 
     wrapper.instance().digitInputNodes.forEach((node, index) => {
       expect(node.value).toBe('')
@@ -287,9 +280,13 @@ describe('Enter key down', () => {
 
 describe('Field click', () => {
   test('should handle focus first input if no other input is focused', () => {
-    const wrapper = mount(<VerificationCode />)
+    jest.useFakeTimers()
+    const wrapper = mount(<VerificationCode />, {
+      attachTo: container,
+    })
 
-    wrapper.simulate('click')
+    wrapper.simulate('mousedown')
+    jest.runAllTimers()
 
     expect(document.activeElement).toStrictEqual(
       wrapper.instance().digitInputNodes[0]
@@ -297,24 +294,27 @@ describe('Field click', () => {
   })
 
   test('should keep input focus if one is focused', () => {
-    const wrapper = mount(<VerificationCode />)
+    jest.useFakeTimers()
 
-    wrapper
-      .find(DigitInputUI)
-      .at(2)
-      .simulate('click')
+    const wrapper = mount(<VerificationCode />, {
+      attachTo: container,
+    })
+
+    wrapper.simulate('mousedown')
+    jest.runAllTimers()
+    const input = wrapper.find('.DigitInput').at(2).getDOMNode()
+
+    expect(document.activeElement).toStrictEqual(input)
+
+    wrapper.simulate('mousedown')
+    jest.runAllTimers()
 
     expect(document.activeElement).toStrictEqual(
       wrapper.instance().digitInputNodes[2]
     )
 
-    wrapper.simulate('click')
-
-    expect(document.activeElement).toStrictEqual(
-      wrapper.instance().digitInputNodes[2]
-    )
-
-    wrapper.simulate('click')
+    wrapper.simulate('mousedown')
+    jest.runAllTimers()
 
     expect(document.activeElement).toStrictEqual(
       wrapper.instance().digitInputNodes[2]
@@ -326,10 +326,7 @@ describe('Input click', () => {
   test('should assign correct visual classes ', () => {
     const wrapper = mount(<VerificationCode />)
 
-    wrapper
-      .find(DigitInputUI)
-      .first()
-      .simulate('click')
+    wrapper.find(DigitInputUI).first().simulate('click')
     wrapper.instance().digitInputNodes.forEach((node, index) => {
       expect(node.classList.contains('hidden')).toBeFalsy()
       expect(
@@ -351,7 +348,9 @@ describe('Autofocus', () => {
 
   test('Autofocuses if specified', () => {
     jest.useFakeTimers()
-    const wrapper = mount(<VerificationCode autoFocus />)
+    const wrapper = mount(<VerificationCode autoFocus />, {
+      attachTo: container,
+    })
     const input = wrapper.instance().digitInputNodes[0]
     jest.runAllTimers()
     const focusedElement = document.activeElement
@@ -361,7 +360,9 @@ describe('Autofocus', () => {
   test('Autofocuses based on code length, if specified', () => {
     const code = '002'
     jest.useFakeTimers()
-    const wrapper = mount(<VerificationCode autoFocus code={code} />)
+    const wrapper = mount(<VerificationCode autoFocus code={code} />, {
+      attachTo: container,
+    })
     const input = wrapper.instance().digitInputNodes[code.length - 1]
     jest.runAllTimers()
     const focusedElement = document.activeElement

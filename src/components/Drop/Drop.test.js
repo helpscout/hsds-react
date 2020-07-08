@@ -32,7 +32,7 @@ describe('Composed', () => {
     const TestComponent = Drop()(ContentComponent)
     const wrapper = mount(<TestComponent isOpen />)
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     const o = document.querySelector('.content')
 
@@ -45,7 +45,7 @@ describe('Composed', () => {
     const TestComponent = Drop()(ContentComponent)
     const wrapper = mount(<TestComponent className="ron" isOpen />)
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     const o = document.querySelector('.content')
 
@@ -57,7 +57,7 @@ describe('Composed', () => {
     const TestComponent = Drop()(ContentComponent)
     const wrapper = mount(<TestComponent className="ron" isOpen />)
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     const o = document.querySelector('.c-Drop')
     const content = document.querySelector('.content')
@@ -73,7 +73,7 @@ describe('Composed', () => {
       <TestComponent style={{ background: 'red' }} isOpen />
     )
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     const o = document.querySelector('.content')
 
@@ -85,7 +85,7 @@ describe('Composed', () => {
     const TestComponent = Drop()(ContentComponent)
     const wrapper = mount(<TestComponent isOpen />)
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     const o = wrapper.find('Portal').first()
 
@@ -100,7 +100,7 @@ describe('Composed', () => {
     const TestComponent = Drop(options)(ContentComponent)
     const wrapper = mount(<TestComponent isOpen />)
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     const o = wrapper.find('Portal').first()
 
@@ -133,7 +133,7 @@ describe('wrapperClassName', () => {
     const TestComponent = Drop()(ContentComponent)
     const wrapper = mount(<TestComponent isOpen />)
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     const o = wrapper.find('Portal').first()
 
@@ -144,7 +144,7 @@ describe('wrapperClassName', () => {
     const TestComponent = Drop()(ContentComponent)
     const wrapper = mount(<TestComponent isOpen wrapperClassName="ron" />)
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     const o = wrapper.find('Portal').first()
 
@@ -158,14 +158,14 @@ describe('isOpen', () => {
     const wrapper = mount(<TestComponent />)
     let o
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     o = document.body.childNodes[0]
     expect(o).not.toBeTruthy()
 
     wrapper.setProps({ isOpen: true })
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     o = document.body.childNodes[0]
     expect(o).toBeTruthy()
@@ -175,7 +175,7 @@ describe('isOpen', () => {
     const TestComponent = Drop()(ContentComponent)
     const wrapper = mount(<TestComponent isOpen timeout={0} />)
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
     wrapper.setProps({ isOpen: false })
 
     jest.runAllTimers()

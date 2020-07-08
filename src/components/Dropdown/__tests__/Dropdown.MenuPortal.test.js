@@ -11,7 +11,7 @@ test('Renders a Portal if isOpen', () => {
     </DropdownMenuPortal>
   )
 
-  jest.runOnlyPendingTimers()
+  jest.runAllTimers()
 
   const el = wrapper.find('Portal')
 
@@ -25,7 +25,7 @@ test('Does not render a Portal if isOpen is false', () => {
     </DropdownMenuPortal>
   )
 
-  jest.runOnlyPendingTimers()
+  jest.runAllTimers()
 
   const el = wrapper.find('Portal')
 

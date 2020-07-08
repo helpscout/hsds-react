@@ -209,10 +209,7 @@ describe('Label', () => {
   test('Sets ID on the select element', () => {
     const id = 'channel'
     const wrapper = mount(<Select label="Channel" id={id} />)
-    const label = wrapper
-      .find(ui.label)
-      .first()
-      .find('label')
+    const label = wrapper.find(ui.label).first().find('label')
     const select = wrapper.find('select')
 
     expect(label.text()).toBe('Channel')
@@ -359,22 +356,12 @@ describe('States', () => {
     wrapper.setProps({ state: 'success' })
 
     expect(wrapper.state().state).toBe('success')
-    expect(
-      wrapper
-        .find('.c-Select')
-        .first()
-        .hasClass('is-success')
-    ).toBe(true)
+    expect(wrapper.find('.c-Select').first().hasClass('is-success')).toBe(true)
 
     wrapper.setProps({ state: null })
 
     expect(wrapper.state().state).toBe(null)
-    expect(
-      wrapper
-        .find('.c-Select')
-        .first()
-        .hasClass('is-success')
-    ).toBe(false)
+    expect(wrapper.find('.c-Select').first().hasClass('is-success')).toBe(false)
   })
 })
 
@@ -419,12 +406,7 @@ describe('removeStateStylesOnFocus', () => {
     o.simulate('focus')
 
     expect(wrapper.state().state).toBeFalsy()
-    expect(
-      wrapper
-        .find('.c-Select')
-        .first()
-        .hasClass('is-error')
-    ).toBe(false)
+    expect(wrapper.find('.c-Select').first().hasClass('is-error')).toBe(false)
   })
 })
 
@@ -451,7 +433,7 @@ describe('isFocused', () => {
     const o = wrapper.instance().selectNode
     o.onfocus = spy
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(spy).toHaveBeenCalled()
   })
@@ -464,7 +446,7 @@ describe('isFocused', () => {
 
     expect(spy).not.toHaveBeenCalled()
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(spy).toHaveBeenCalled()
   })
@@ -479,7 +461,7 @@ describe('isFocused', () => {
 
     wrapper.setProps({ isFocused: true })
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(spy).toHaveBeenCalled()
   })
@@ -487,21 +469,11 @@ describe('isFocused', () => {
   test('Removes focus styles on blur', () => {
     const wrapper = mount(<Select isFocused={true} />)
 
-    expect(
-      wrapper
-        .find('.c-Select')
-        .first()
-        .hasClass('is-focused')
-    ).toBe(true)
+    expect(wrapper.find('.c-Select').first().hasClass('is-focused')).toBe(true)
 
     wrapper.find('select').simulate('blur')
 
-    expect(
-      wrapper
-        .find('.c-Select')
-        .first()
-        .hasClass('is-focused')
-    ).toBe(false)
+    expect(wrapper.find('.c-Select').first().hasClass('is-focused')).toBe(false)
   })
 })
 

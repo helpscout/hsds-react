@@ -67,7 +67,7 @@ describe('Fade', () => {
 
     o.handleOnScroll({ currentTarget })
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(o.faderNodeLeft.style.transform).toContain('scaleX')
   })

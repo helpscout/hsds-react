@@ -252,7 +252,7 @@ DropdownItem.propTypes = {
   subMenuId: PropTypes.string,
   label: PropTypes.string,
   type: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }
 
 DropdownItem.defaultProps = {

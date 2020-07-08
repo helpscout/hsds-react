@@ -178,7 +178,7 @@ Dropdown.propTypes = Object.assign({}, DropdownMenuDimensions, {
   closeDropdown: PropTypes.func,
   closeOnSelect: PropTypes.bool,
   contentWindow: PropTypes.any,
-  direction: PropTypes.oneOf(['left', 'right']),
+  direction: PropTypes.oneOf(['left', 'right', 'up', 'down']),
   disabled: PropTypes.bool,
   dropUp: PropTypes.bool,
   enableLeftRightArrowNavigation: PropTypes.bool,

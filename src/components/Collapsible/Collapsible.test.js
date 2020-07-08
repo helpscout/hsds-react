@@ -137,7 +137,7 @@ describe('Collapsible', () => {
 
       expect(wrapper.state().animationState).toBe('opening')
 
-      jest.runOnlyPendingTimers()
+      jest.runAllTimers()
 
       expect(wrapper.state().animationState).toBe('opened')
     })
@@ -151,7 +151,7 @@ describe('Collapsible', () => {
 
       expect(wrapper.state().animationState).toBe('closing')
 
-      jest.runOnlyPendingTimers()
+      jest.runAllTimers()
 
       expect(wrapper.state().animationState).toBe('closed')
     })

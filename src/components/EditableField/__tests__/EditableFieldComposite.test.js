@@ -200,12 +200,13 @@ describe('Composite Mask', () => {
         <EditableField name="country" />
       </EditableFieldComposite>
     )
-    const input = wrapper.find('input').first()
+    const input = wrapper.find('input').first().instance()
     const mask = wrapper.find(`.${COMPOSITE_CLASSNAMES.maskItem}`).first()
+    const spy = jest.spyOn(input, 'focus')
 
     mask.simulate('click')
 
-    expect(document.activeElement).toBe(input.getDOMNode())
+    expect(spy).toHaveBeenCalled()
   })
 
   test('mask click: maskItem', () => {
@@ -215,16 +216,18 @@ describe('Composite Mask', () => {
         <EditableField name="country" value="Spain" />
       </EditableFieldComposite>
     )
-    const input = wrapper.find('input').first()
-    const input2 = wrapper.find('input').at(1)
+    const input1 = wrapper.find('input').first().instance()
+    const spy1 = jest.spyOn(input1, 'focus')
+    const input2 = wrapper.find('input').at(1).instance()
+    const spy2 = jest.spyOn(input2, 'focus')
     const maskItem1 = wrapper.find(`.${COMPOSITE_CLASSNAMES.maskItem}`).first()
     const maskItem2 = wrapper.find(`.${COMPOSITE_CLASSNAMES.maskItem}`).at(1)
 
     maskItem1.simulate('click')
-    expect(document.activeElement).toBe(input.getDOMNode())
+    expect(spy1).toHaveBeenCalled()
 
     maskItem2.simulate('click')
-    expect(document.activeElement).toBe(input2.getDOMNode())
+    expect(spy2).toHaveBeenCalled()
   })
 
   test('mask onEnter', () => {
@@ -235,12 +238,14 @@ describe('Composite Mask', () => {
       </EditableFieldComposite>
     )
     const input = wrapper.find('input').first()
+    const inputNode = input.instance()
+    const spy = jest.spyOn(inputNode, 'focus')
     const mask = wrapper.find(`.${COMPOSITE_CLASSNAMES.mask}`).first()
 
     input.simulate('keydown', { key: 'Enter' })
     mask.simulate('keydown', { key: 'Enter' })
 
-    expect(document.activeElement).toBe(input.getDOMNode())
+    expect(spy).toHaveBeenCalled()
     expect(
       wrapper
         .find(`.${COMPOSITE_CLASSNAMES.mask}`)
@@ -344,7 +349,7 @@ describe('Active Fields', () => {
     expect(wrapper.state('inputState')).toBe('blurred')
 
     // Run the setTimeout in component did update
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(wrapper.state('hasActiveFields')).toBeFalsy()
     expect(wrapper.state('inputState')).toBe(null)
@@ -352,7 +357,7 @@ describe('Active Fields', () => {
     // Focus on 2nd input directly from first input should maintain active state
     input.simulate('focus')
     input2.simulate('focus')
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(wrapper.state('hasActiveFields')).toBeTruthy()
     expect(wrapper.state('inputState')).toBe('focused')
@@ -388,9 +393,8 @@ describe('Enter and Escape keypress', () => {
     expect(wrapper.state('hasActiveFields')).toBeFalsy()
   })
 
-  test('onEnter sets mask tabindex and focus it', () => {
+  test('onEnter sets mask tabindex', () => {
     const spy = jest.fn()
-
     const wrapper = mount(
       <EditableFieldComposite>
         <EditableField name="city" onEnter={spy} />
@@ -399,6 +403,7 @@ describe('Enter and Escape keypress', () => {
     )
 
     const input = wrapper.find('input').first()
+
     input.simulate('keydown', { key: 'Enter' })
 
     expect(
@@ -409,16 +414,10 @@ describe('Enter and Escape keypress', () => {
         .getAttribute('tabindex')
     ).toBe('0')
 
-    expect(document.activeElement).toBe(
-      wrapper
-        .find(`.${COMPOSITE_CLASSNAMES.mask}`)
-        .first()
-        .getDOMNode()
-    )
     expect(spy).toHaveBeenCalled()
   })
 
-  test('onEscape sets mask tabindex and focus it', () => {
+  test('onEscape sets mask tabindex', () => {
     const spy = jest.fn()
 
     const wrapper = mount(
@@ -439,12 +438,6 @@ describe('Enter and Escape keypress', () => {
         .getAttribute('tabindex')
     ).toBe('0')
 
-    expect(document.activeElement).toBe(
-      wrapper
-        .find(`.${COMPOSITE_CLASSNAMES.mask}`)
-        .first()
-        .getDOMNode()
-    )
     expect(spy).toHaveBeenCalled()
   })
 })

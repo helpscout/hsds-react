@@ -326,7 +326,7 @@ EditableFieldInput.propTypes = {
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
   disabled: PropTypes.bool,
-  fieldValue: PropTypes.object,
+  fieldValue: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   inline: PropTypes.bool,
   isActive: PropTypes.bool,
   name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

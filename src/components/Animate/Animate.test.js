@@ -45,7 +45,7 @@ describe('AnimateOnMount', () => {
 
     expect(wrapper.html()).toContain('ax-entering')
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(wrapper.html()).toContain('ax-entered')
   })
