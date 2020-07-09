@@ -19,7 +19,6 @@ Below is a list of documentation for our Components:
 - [Centralize](./Centralize)
 - [ChatList](./ChatList)
 - [ChatScroller](./ChatScroller)
-- [ChatTranscript](./ChatTranscript)
 - [Checkbox](./Checkbox)
 - [Choice](./Choice)
 - [ChoiceGroup](./ChoiceGroup)
