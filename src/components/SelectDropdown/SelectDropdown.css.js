@@ -1,6 +1,8 @@
 import InputBackdropV2 from '../Input/Input.BackdropV2'
 import styled from 'styled-components'
 
+import { getColor } from '../../styles/utilities/color'
+
 export const SelectDropdownUI = styled('div')`
   .c-DropdownTrigger {
     display: block;
@@ -41,12 +43,16 @@ export const InputUI = styled('div')`
 export const LabelUI = styled('div')`
   --HSDSGlobalFontSize: 14px;
   font-size: 14px;
-  color: #2a3b47;
   max-width: 100%;
   padding-right: 20px;
   position: relative;
   text-decoration: none !important;
   z-index: 2;
+
+  ${({ disabled }) => {
+    const color = disabled ? 'charcoal.200' : 'charcoal.600'
+    return `color: ${getColor(color)} !important;`
+  }}
 
   * {
     text-decoration: none !important;
