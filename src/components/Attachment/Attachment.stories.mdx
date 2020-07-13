@@ -42,7 +42,7 @@ An Attachment component provides UI for file attachments, typically found in Cha
 
 - **Designer**: Buzz
 - **Engineering**: Juan Pablo
-- **Usage**: HSDS (ChatList), HsApp (Chat app, ChatTranscript)
+- **Usage**: HSDS (ChatList, ChatTranscript), HsApp (Chat app)
 
 <br />
 <br />
@@ -85,6 +85,14 @@ A Provider component provides child components with props accessible as `context
         url={text(
           'url',
           'https://github.com/helpscout/hsds-react/raw/master/images/Blue.png'
+        )}
+        imageUrl={select(
+          'imageUrl',
+          {
+            none: null,
+            'some image': 'https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto'
+          },
+          null
         )}
       />
     </Attachment.Provider>
