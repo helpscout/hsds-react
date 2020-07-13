@@ -30,15 +30,6 @@ export const cx = {
 }
 
 export class Alert extends React.PureComponent {
-  static defaultProps = {
-    'data-cy': 'Alert',
-    dismissible: false,
-    icon: false,
-    noMargin: false,
-    onDismiss: noop,
-    status: 'warning',
-  }
-
   state = {
     dismissed: false,
   }
@@ -136,6 +127,15 @@ export class Alert extends React.PureComponent {
       componentMarkup
     )
   }
+}
+
+Alert.defaultProps = {
+  'data-cy': 'Alert',
+  dismissible: false,
+  icon: false,
+  noMargin: false,
+  onDismiss: noop,
+  status: 'warning',
 }
 
 Alert.propTypes = {
