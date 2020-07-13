@@ -21,15 +21,9 @@ export class FilteredList extends React.Component {
       return true
     }
 
-    const itemKey = items
-      .map(this.getItemValue)
-      .sort()
-      .join(':')
+    const itemKey = items.map(this.getItemValue).sort().join(':')
 
-    const nextItemKey = nextProps.items
-      .map(this.getItemValue)
-      .sort()
-      .join(':')
+    const nextItemKey = nextProps.items.map(this.getItemValue).sort().join(':')
 
     if (nextItemKey !== itemKey) {
       return true
@@ -119,21 +113,27 @@ export class FilteredList extends React.Component {
   }
 }
 
-FilteredList.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  items: PropTypes.arrayOf(PropTypes.any),
-  itemKey: PropTypes.string,
-  limit: PropTypes.number,
-  inline: PropTypes.bool,
-  renderItem: PropTypes.func,
-}
-
 FilteredList.defaultProps = {
   'data-cy': 'FilteredList',
   items: [],
   limit: 5,
+}
+
+FilteredList.propTypes = {
+  itemKey: PropTypes.string,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** List of items that need to be filtered */
+  items: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+  ),
+  /** Number of items visible */
+  limit: PropTypes.number,
+  /** Display the item inline */
+  inline: PropTypes.bool,
+  renderItem: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default FilteredList

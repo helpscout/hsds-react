@@ -141,18 +141,6 @@ export class InputResizer extends React.PureComponent {
   }
 }
 
-InputResizer.propTypes = {
-  className: PropTypes.string,
-  contents: PropTypes.string,
-  currentHeight: PropTypes.number,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  minimumLines: PropTypes.number,
-  offsetAmount: PropTypes.number,
-  onResize: PropTypes.func,
-  seamless: PropTypes.bool,
-}
-
 InputResizer.defaultProps = {
   contents: '',
   currentHeight: null,
@@ -161,6 +149,22 @@ InputResizer.defaultProps = {
   offsetAmount: 0,
   onResize: noop,
   seamless: false,
+}
+
+InputResizer.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  contents: PropTypes.string,
+  currentHeight: PropTypes.number,
+  minimumLines: PropTypes.number,
+  /** Number of characters to offset (bottom-right) for multiline resizing. */
+  offsetAmount: PropTypes.number,
+  /** Callback when input is resized. */
+  onResize: PropTypes.func,
+  /** Removes the border around the input. */
+  seamless: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default InputResizer

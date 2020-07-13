@@ -28,17 +28,22 @@ class Emoji extends React.PureComponent {
   }
 }
 
-Emoji.propTypes = {
-  className: PropTypes.string,
-  name: PropTypes.string,
-  symbol: PropTypes.string,
-}
-
 Emoji.defaultProps = {
   'data-cy': 'EmojiPickerEmoji',
   className: '',
   name: 'Unicorn Face',
   symbol: '🦄',
+}
+
+Emoji.propTypes = {
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** The name of the emoji. */
+  name: PropTypes.string,
+  /** The emoji symbol. */
+  symbol: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Emoji

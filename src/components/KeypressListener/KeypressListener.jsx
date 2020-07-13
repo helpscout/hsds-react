@@ -9,22 +9,6 @@ import { noop } from '../../utilities/other'
 import { isDefined } from '../../utilities/is'
 
 class KeypressListener extends React.Component {
-  static propTypes = {
-    keyCode: PropTypes.number,
-    handler: PropTypes.func,
-    modifier: PropTypes.string,
-    noModifier: PropTypes.bool,
-    scope: PropTypes.any,
-    type: PropTypes.oneOf(['keyup', 'keypress', 'keydown']),
-  }
-
-  static defaultProps = {
-    handler: noop,
-    noModifier: true,
-    scope: document,
-    type: 'keyup',
-  }
-
   node
   scope
 
@@ -91,6 +75,28 @@ class KeypressListener extends React.Component {
   render() {
     return <div className="c-KeypressListenerRoot" ref={this.setNodeRef} />
   }
+}
+
+KeypressListener.defaultProps = {
+  handler: noop,
+  noModifier: true,
+  scope: document,
+  type: 'keyup',
+}
+
+KeypressListener.propTypes = {
+  /** Number corresponding to the keyCode. */
+  keyCode: PropTypes.number,
+  /** Callback when the keyCode is pressed. */
+  handler: PropTypes.func,
+  /** Keyboard modifier to listen to in addition to `keyCode`. */
+  modifier: PropTypes.string,
+  /** Listen for `keyCode` only. */
+  noModifier: PropTypes.bool,
+  /** Node element to capture the event */
+  scope: PropTypes.any,
+  /** Type of key event. */
+  type: PropTypes.oneOf(['keyup', 'keypress', 'keydown']),
 }
 
 export default KeypressListener

@@ -19,16 +19,18 @@ class InputPrefix extends React.PureComponent {
   }
 }
 
-InputPrefix.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  isSeamless: PropTypes.bool,
-}
-
 InputPrefix.defaultProps = {
   'data-cy': 'InputPrefix',
   isSeamless: false,
+}
+
+InputPrefix.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Removes the border around the input. */
+  isSeamless: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default InputPrefix

@@ -216,7 +216,7 @@ Accordion.propTypes = {
   /** When isSortable is true and distance is 0, the time in ms that must elapse on a press in order to sort. */
   pressDelay: PropTypes.number,
   /** The amount of padding. */
-  size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg']),
+  size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
 }
 
 Accordion.Body = AccordionBody

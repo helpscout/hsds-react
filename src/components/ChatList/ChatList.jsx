@@ -12,9 +12,7 @@ class ChatList extends React.Component {
 
   render() {
     const { children, className, ...rest } = this.props
-
     const componentClassName = classNames('c-ChatList', className)
-
     const contentMarkup = React.Children.count(children) ? (
       children
     ) : (

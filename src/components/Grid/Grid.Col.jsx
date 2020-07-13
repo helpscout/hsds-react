@@ -18,15 +18,21 @@ class GridCol extends React.PureComponent {
   }
 }
 
-GridCol.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-}
-
 GridCol.defaultProps = {
   'data-cy': 'GridCol',
+}
+
+GridCol.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Adds fluid styles to the component. */
+  isFluid: PropTypes.bool,
+  /** Adds responsive styles to the component. */
+  isResponsive: PropTypes.bool,
+  /** Column size */
+  size: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default GridCol

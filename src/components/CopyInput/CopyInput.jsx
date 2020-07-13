@@ -68,17 +68,6 @@ class CopyInput extends React.PureComponent {
   }
 }
 
-CopyInput.propTypes = {
-  copyToClipboard: PropTypes.bool,
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  innerRef: PropTypes.func,
-  onCopy: PropTypes.func,
-  readOnly: PropTypes.bool,
-  value: PropTypes.string,
-}
-
 CopyInput.defaultProps = {
   copyToClipboard: true,
   'data-cy': 'CopyInput',
@@ -86,6 +75,23 @@ CopyInput.defaultProps = {
   onCopy: noop,
   readOnly: true,
   value: '',
+}
+
+CopyInput.propTypes = {
+  /** Enables copying to clipboard. */
+  copyToClipboard: PropTypes.bool,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Retrieves the `input` DOM node. */
+  innerRef: PropTypes.func,
+  /** Callback function when the copy button is clicked. */
+  onCopy: PropTypes.func,
+  /** Whether the Input is read only. */
+  readOnly: PropTypes.bool,
+  /** The value to be displayed within the Input. */
+  value: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default CopyInput

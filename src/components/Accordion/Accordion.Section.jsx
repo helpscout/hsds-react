@@ -81,7 +81,7 @@ AccordionSection.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
   /** The id used to track the section's open state. */
-  id: PropTypes.string,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   /** Renders a Link based UI. */
   isLink: PropTypes.bool,
   /** Callback to be invoked when the section is opened. */

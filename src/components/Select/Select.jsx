@@ -391,17 +391,6 @@ export class Select extends React.PureComponent {
   }
 }
 
-const optionShape = {
-  disabled: PropTypes.bool,
-  label: PropTypes.string,
-  value: PropTypes.string,
-}
-
-const selectOptionShape = PropTypes.oneOfType([
-  PropTypes.shape(optionShape),
-  PropTypes.string,
-])
-
 Select.propTypes = {
   autoFocus: PropTypes.bool,
   children: PropTypes.any,
@@ -422,14 +411,10 @@ Select.propTypes = {
   isLast: PropTypes.bool,
   label: PropTypes.any,
   name: PropTypes.string,
+  /** Array of options with the shape: { disabled: PropTypes.bool, label: PropTypes.string,value: PropTypes.string } */
   options: PropTypes.oneOfType([
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.arrayOf(selectOptionShape),
-    ]),
-    PropTypes.oneOfType([PropTypes.shape(optionShape), PropTypes.string]),
-    PropTypes.arrayOf(selectOptionShape),
-    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.any),
+    PropTypes.object,
   ]),
   onBlur: PropTypes.func,
   onChange: PropTypes.func,

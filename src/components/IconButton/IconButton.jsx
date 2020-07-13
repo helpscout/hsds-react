@@ -60,17 +60,6 @@ export class IconButton extends React.PureComponent {
   }
 }
 
-IconButton.propTypes = {
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  icon: PropTypes.string,
-  iconSize: PropTypes.number,
-  isBorderless: PropTypes.bool,
-  isWithHiddenTitle: PropTypes.bool,
-  innerRef: PropTypes.func,
-  withCaret: PropTypes.bool,
-}
-
 IconButton.defaultProps = {
   ...Button.defaultProps,
   'data-cy': 'IconButton',
@@ -83,6 +72,37 @@ IconButton.defaultProps = {
   size: 'md',
   shape: 'circle',
   withCaret: false,
+}
+
+IconButton.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** The name of the icon to render. */
+  icon: PropTypes.string,
+  /** Renders a border around the [Button](../Button). */
+  isBorderless: PropTypes.bool,
+  /** Renders a caret for the icon */
+  withCaret: PropTypes.bool,
+  /** Adjusts the size of the icon. */
+  iconSize: PropTypes.oneOf([
+    8,
+    10,
+    12,
+    13,
+    14,
+    15,
+    16,
+    18,
+    20,
+    24,
+    32,
+    48,
+    52,
+  ]),
+  isWithHiddenTitle: PropTypes.bool,
+  innerRef: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default IconButton

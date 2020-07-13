@@ -31,6 +31,22 @@ class FluffyCard extends React.PureComponent {
   }
 }
 
+FluffyCard.defaultProps = {
+  'data-cy': 'FluffyCard',
+  flex: false,
+  floating: false,
+  fullHeight: false,
+  hover: false,
+  innerRef: noop,
+  nodeRef: noop,
+  onBlur: noop,
+  onClick: noop,
+  onFocus: noop,
+  seamless: false,
+  selector: 'div',
+  textAlign: 'center',
+}
+
 FluffyCard.propTypes = {
   autoWordWrap: PropTypes.bool,
   className: PropTypes.string,
@@ -47,24 +63,9 @@ FluffyCard.propTypes = {
   onFocus: PropTypes.func,
   seamless: PropTypes.bool,
   selector: PropTypes.string,
+  /** Adjusts the alignment of text within the component. `left`/`center`/`right` */
   textAlign: PropTypes.string,
   to: PropTypes.string,
-}
-
-FluffyCard.defaultProps = {
-  'data-cy': 'FluffyCard',
-  flex: false,
-  floating: false,
-  fullHeight: false,
-  hover: false,
-  innerRef: noop,
-  nodeRef: noop,
-  onBlur: noop,
-  onClick: noop,
-  onFocus: noop,
-  seamless: false,
-  selector: 'div',
-  textAlign: 'center',
 }
 
 export default FluffyCard

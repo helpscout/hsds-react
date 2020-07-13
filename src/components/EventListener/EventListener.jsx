@@ -6,19 +6,6 @@ import { noop } from '../../utilities/other'
 
 // see https://github.com/oliviertassinari/react-event-listener/
 class EventListener extends React.Component {
-  static propTypes = {
-    event: PropTypes.string,
-    capture: PropTypes.bool,
-    passive: PropTypes.bool,
-    handler: PropTypes.func,
-    scope: PropTypes.any,
-  }
-
-  static defaultProps = {
-    handler: noop,
-    scope: window,
-  }
-
   node
   scope
 
@@ -80,6 +67,24 @@ class EventListener extends React.Component {
   render() {
     return <div className="c-EventListenerRoot" ref={this.setNodeRef} />
   }
+}
+
+EventListener.defaultProps = {
+  handler: noop,
+  scope: window,
+}
+
+EventListener.propTypes = {
+  /** A Javascript event. */
+  event: PropTypes.string,
+  /** Callback when the event is triggered. */
+  handler: PropTypes.func,
+  /** Node element to capture the event. Default is `window`. */
+  scope: PropTypes.any,
+  /** indicating that events of this type will be dispatched to the registered listener before being dispatched to any EventTarget beneath it in the DOM tree */
+  capture: PropTypes.bool,
+  /** indicates that the function specified by listener will never call preventDefault() */
+  passive: PropTypes.bool,
 }
 
 export default EventListener

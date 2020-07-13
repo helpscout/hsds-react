@@ -38,19 +38,21 @@ class FormGroupChoice extends React.PureComponent {
   }
 }
 
-FormGroupChoice.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  isResponsive: PropTypes.bool,
-  maxWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  style: PropTypes.any,
-}
-
 FormGroupChoice.defaultProps = {
   'data-cy': 'FormGroupChoice',
   isResponsive: false,
   style: {},
+}
+
+FormGroupChoice.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Max-width for the component. */
+  maxWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  /** Enables responsive styling. */
+  isResponsive: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default FormGroupChoice

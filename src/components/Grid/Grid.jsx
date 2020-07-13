@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { classNames } from '../../utilities/classNames'
 import GridContainer from './Grid.Container'
 import GridRow from './Grid.Row'
@@ -23,6 +24,13 @@ class Grid extends React.PureComponent {
 
 Grid.defaultProps = {
   'data-cy': 'Grid',
+}
+
+Grid.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Grid

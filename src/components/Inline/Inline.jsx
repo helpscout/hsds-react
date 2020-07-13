@@ -31,18 +31,20 @@ export class Inline extends React.PureComponent {
   }
 }
 
-Inline.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  innerRef: PropTypes.func,
-  size: PropTypes.oneOf(['lg', 'md', 'sm', 'xs']),
-}
-
 Inline.defaultProps = {
   'data-cy': 'Inline',
   innerRef: noop,
   size: 'sm',
+}
+
+Inline.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  innerRef: PropTypes.func,
+  /** Determines the horizontal padding of the component. */
+  size: PropTypes.oneOf(['lg', 'md', 'sm', 'xs']),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Inline

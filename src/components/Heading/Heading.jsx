@@ -54,18 +54,38 @@ class Heading extends React.PureComponent {
   }
 }
 
+Heading.defaultProps = {
+  center: false,
+  'data-cy': 'Heading',
+  disableSelect: false,
+  lineHeightInherit: false,
+  lineHeightReset: false,
+  linkStyle: false,
+  truncate: false,
+  noWrap: false,
+  wordWrap: false,
+}
+
 Heading.propTypes = {
+  /** Center aligns text. */
   center: PropTypes.bool,
+  /** Custom class names to be added to the component. */
   className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
+  /** Disables text selection. */
   disableSelect: PropTypes.bool,
+  /** Lightens the heading color. */
   light: PropTypes.bool,
+  /** Inherit the line-height from a parent selector. */
   lineHeightInherit: PropTypes.bool,
+  /** Resets the line-height to `1`. */
   lineHeightReset: PropTypes.bool,
+  /** Applies `Link` styles. */
   linkStyle: PropTypes.bool,
+  /** Prevents text from wrapping. */
   noWrap: PropTypes.bool,
+  /** Sets HTML element. */
   selector: PropTypes.string,
+  /** Adjust heading size. */
   size: PropTypes.oneOf([
     'h1',
     'h2',
@@ -78,21 +98,14 @@ Heading.propTypes = {
     'small',
     '',
   ]),
+  /** Enables CSS truncation for text. */
   truncate: PropTypes.bool,
+  /** Adjust text weight. */
   weight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Enables CSS `word-break` for text. */
   wordWrap: PropTypes.bool,
-}
-
-Heading.defaultProps = {
-  center: false,
-  'data-cy': 'Heading',
-  disableSelect: false,
-  lineHeightInherit: false,
-  lineHeightReset: false,
-  linkStyle: false,
-  truncate: false,
-  noWrap: false,
-  wordWrap: false,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Heading

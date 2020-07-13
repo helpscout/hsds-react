@@ -88,24 +88,6 @@ export class Form extends React.PureComponent {
   }
 }
 
-Form.propTypes = {
-  actionDirection: PropTypes.string,
-  actionTabbable: PropTypes.bool,
-  cancelButtonProps: PropTypes.object,
-  cancelText: PropTypes.string,
-  children: PropTypes.any,
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  destroyButtonProps: PropTypes.object,
-  destroyText: PropTypes.string,
-  onCancel: PropTypes.func,
-  onDestroy: PropTypes.func,
-  onSave: PropTypes.func,
-  saveButtonProps: PropTypes.object,
-  saveText: PropTypes.string,
-}
-
 Form.defaultProps = {
   actionTabbable: true,
   cancelText: 'Cancel',
@@ -115,6 +97,37 @@ Form.defaultProps = {
     evt && evt.preventDefault()
   },
   saveText: 'Save',
+}
+
+Form.propTypes = {
+  /** Direction in which buttons render.*/
+  actionDirection: PropTypes.oneOf(['right', 'left']),
+  /** Can the user focus on actions by tabbing. */
+  actionTabbable: PropTypes.bool,
+  /** Allows the user to pass in any props that Button component accepts. */
+  cancelButtonProps: PropTypes.object,
+  /** Text for the cancel button. Button will not render without text. */
+  cancelText: PropTypes.string,
+  /** Content to render. */
+  children: PropTypes.any,
+  /** Custom class names to be added to the component */
+  className: PropTypes.string,
+  /** Allows the user to pass in any props that Button component accepts. */
+  destroyButtonProps: PropTypes.object,
+  /** Text for the delete button. Button will not render without text. */
+  destroyText: PropTypes.string,
+  /** Callback for the cancel button */
+  onCancel: PropTypes.func,
+  /** Callback for the delete button */
+  onDestroy: PropTypes.func,
+  /** Callback for when the form is submitted */
+  onSave: PropTypes.func,
+  /** Allows the user to pass in any props that Button component accepts. */
+  saveButtonProps: PropTypes.object,
+  /** Text for the save button. Button always renders. */
+  saveText: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Form

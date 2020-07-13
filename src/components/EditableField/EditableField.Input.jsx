@@ -320,6 +320,28 @@ export class EditableFieldInput extends React.Component {
   }
 }
 
+EditableFieldInput.defaultProps = {
+  'data-cy': 'EditableFieldInput',
+  disabled: false,
+  fieldValue: '',
+  isActive: false,
+  inline: false,
+  placeholder: '',
+  type: FIELDTYPES.text,
+  innerRef: noop,
+  onInputFocus: noop,
+  onInputBlur: noop,
+  onOptionFocus: noop,
+  onOptionSelection: noop,
+  onOptionBlur: noop,
+  onChange: noop,
+  onKeyDown: noop,
+  onKeyPress: noop,
+  onKeyUp: noop,
+  deleteAction: noop,
+  customAction: noop,
+}
+
 EditableFieldInput.propTypes = {
   actions: PropTypes.arrayOf(PropTypes.object),
   className: PropTypes.string,
@@ -346,28 +368,6 @@ EditableFieldInput.propTypes = {
   onKeyUp: PropTypes.func,
   deleteAction: PropTypes.func,
   customAction: PropTypes.func,
-}
-
-EditableFieldInput.defaultProps = {
-  'data-cy': 'EditableFieldInput',
-  disabled: false,
-  fieldValue: '',
-  isActive: false,
-  inline: false,
-  placeholder: '',
-  type: FIELDTYPES.text,
-  innerRef: noop,
-  onInputFocus: noop,
-  onInputBlur: noop,
-  onOptionFocus: noop,
-  onOptionSelection: noop,
-  onOptionBlur: noop,
-  onChange: noop,
-  onKeyDown: noop,
-  onKeyPress: noop,
-  onKeyUp: noop,
-  deleteAction: noop,
-  customAction: noop,
 }
 
 export default EditableFieldInput

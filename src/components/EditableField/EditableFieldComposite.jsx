@@ -337,19 +337,23 @@ export class EditableFieldComposite extends React.PureComponent {
   }
 }
 
-EditableFieldComposite.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  size: PropTypes.string,
-  separator: PropTypes.string,
-  placeholder: PropTypes.string,
-}
-
 EditableFieldComposite.defaultProps = {
   'data-cy': 'EditableFieldComposite',
   size: 'md',
   separator: '',
+}
+
+EditableFieldComposite.propTypes = {
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** This is the text you see when all fields are empty. */
+  placeholder: PropTypes.string,
+  /** Default is "md", pass "lg" for the large option. */
+  size: PropTypes.oneOf(['md', 'lg']),
+  /** By default, each value will be separated with a non-breaking space, but you can pass any string here, like ",". */
+  separator: PropTypes.string,
 }
 
 export default EditableFieldComposite

@@ -29,13 +29,13 @@ describe('ClassNames', () => {
     expect(el.hasClass(className)).toBe(true)
   })
 
-  test('Applies a className to indicate that the Title is in an open section', () => {
+  test.only('Applies a className to indicate that the Title is in an open section', () => {
     const wrapper = mount(
-      <AccordionContext.Provider value={{ openSections: [1] }}>
-        <Section id={1}>
+      <Accordion openSectionIds={['1']}>
+        <Section id={'1'}>
           <Title />
         </Section>
-      </AccordionContext.Provider>
+      </Accordion>
     )
     const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
     expect(o.hasClass(classNames.isOpenClassName)).toBe(true)
@@ -54,7 +54,7 @@ describe('ClassNames', () => {
   })
 
   test('Applies a className to indicate that the Title is in the specified size accordion', () => {
-    ;['xs', 'sm', 'md', 'lg', 'xl'].forEach(size => {
+    ;['xs', 'sm', 'md'].forEach(size => {
       const wrapper = mount(
         <Accordion size={size}>
           <Section>

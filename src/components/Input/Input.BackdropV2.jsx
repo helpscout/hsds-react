@@ -85,6 +85,17 @@ export class InputBackdropV2 extends React.PureComponent {
   }
 }
 
+InputBackdropV2.defaultProps = {
+  'data-cy': 'InputBackdropV2',
+  disabled: false,
+  isFilled: false,
+  isFocused: false,
+  readOnly: false,
+  seamless: false,
+  showFocus: true,
+  state: 'default',
+}
+
 InputBackdropV2.propTypes = {
   className: PropTypes.string,
   choiceKind: PropTypes.string,
@@ -101,17 +112,6 @@ InputBackdropV2.propTypes = {
   readOnly: PropTypes.bool,
   showFocus: PropTypes.bool,
   state: PropTypes.string,
-}
-
-InputBackdropV2.defaultProps = {
-  'data-cy': 'InputBackdropV2',
-  disabled: false,
-  isFilled: false,
-  isFocused: false,
-  readOnly: false,
-  seamless: false,
-  showFocus: true,
-  state: 'default',
 }
 
 export default InputBackdropV2

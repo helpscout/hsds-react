@@ -7,7 +7,7 @@ import { AndWrapperUI } from './Condition.css'
 
 export const And = props => {
   const { className, 'data-cy': dataCy, ...rest } = props
-  const componentClassName = classNames(And.className, className)
+  const componentClassName = classNames('c-ConditionAnd', className)
 
   return (
     <AndWrapperUI
@@ -20,15 +20,15 @@ export const And = props => {
   )
 }
 
+And.defaultProps = {
+  'data-cy': 'ConditionAnd',
+}
+
 And.propTypes = {
+  /** The className of the component. */
   className: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
 }
-
-And.defaultProps = {
-  'data-cy': 'ConditionAnd',
-}
-And.className = 'c-ConditionAnd'
 
 export default And

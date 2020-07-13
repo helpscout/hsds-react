@@ -33,14 +33,14 @@ const EditableFieldTruncated = ({ string, splitter, ...rest }) => {
   )
 }
 
+EditableFieldTruncated.defaultProps = {
+  'data-cy': 'EditableFieldTruncated',
+}
+
 EditableFieldTruncated.propTypes = {
   className: PropTypes.string,
   string: PropTypes.string,
   splitter: PropTypes.string,
-}
-
-EditableFieldTruncated.defaultProps = {
-  'data-cy': 'EditableFieldTruncated',
 }
 
 export default EditableFieldTruncated

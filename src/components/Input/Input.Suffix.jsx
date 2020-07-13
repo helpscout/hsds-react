@@ -20,18 +20,21 @@ class InputSuffix extends React.PureComponent {
   }
 }
 
-InputSuffix.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  isAction: PropTypes.bool,
-  isSeamless: PropTypes.bool,
-}
-
 InputSuffix.defaultProps = {
   'data-cy': 'InputSuffix',
   isAction: false,
   isSeamless: false,
+}
+
+InputSuffix.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  /** Gives some spacing in case is action with a margin */
+  isAction: PropTypes.bool,
+  /** Removes the border around the input. */
+  isSeamless: PropTypes.bool,
 }
 
 export default InputSuffix

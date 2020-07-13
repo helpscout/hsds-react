@@ -59,26 +59,6 @@ export class Link extends React.PureComponent {
   }
 }
 
-Link.propTypes = {
-  autoWordWrap: PropTypes.bool,
-  block: PropTypes.bool,
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  external: PropTypes.bool,
-  href: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  nodeRef: PropTypes.func,
-  onBlur: PropTypes.func,
-  onClick: PropTypes.func,
-  onFocus: PropTypes.func,
-  rel: PropTypes.string,
-  noUnderline: PropTypes.bool,
-  target: PropTypes.string,
-  to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  voidOnClick: PropTypes.bool,
-  wordWrap: PropTypes.bool,
-}
-
 Link.defaultProps = {
   autoWordWrap: true,
   block: false,
@@ -90,6 +70,35 @@ Link.defaultProps = {
   onClick: noop,
   onFocus: noop,
   voidOnClick: false,
+}
+
+Link.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Opens link in a new tab. */
+  external: PropTypes.bool,
+  /** Address for the link. Default is `#`. */
+  href: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  /** Callback function to retrieve the component's DOM node. */
+  nodeRef: PropTypes.func,
+  /** Callback function when the component is blurred. */
+  onBlur: PropTypes.func,
+  /** Callback function when the component is clicked. */
+  onClick: PropTypes.func,
+  /** Callback function when the component is focused. */
+  onFocus: PropTypes.func,
+  /** React Router path to navigate on click. */
+  to: PropTypes.string,
+  /** Disables click event. */
+  voidOnClick: PropTypes.bool,
+  autoWordWrap: PropTypes.bool,
+  block: PropTypes.bool,
+  rel: PropTypes.string,
+  noUnderline: PropTypes.bool,
+  target: PropTypes.string,
+  wordWrap: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default RouteWrapper(Link)

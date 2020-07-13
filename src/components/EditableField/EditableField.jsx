@@ -1095,43 +1095,6 @@ export class EditableField extends React.Component {
   }
 }
 
-EditableField.propTypes = {
-  actions: PropTypes.any,
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  defaultOption: PropTypes.any,
-  disabled: PropTypes.bool,
-  emphasizeTopValue: PropTypes.bool,
-  floatingLabels: PropTypes.bool,
-  inline: PropTypes.bool,
-  label: PropTypes.string,
-  multipleValues: PropTypes.bool,
-  name: PropTypes.string,
-  placeholder: PropTypes.string,
-  size: PropTypes.any,
-  type: PropTypes.string,
-  value: PropTypes.any,
-  valueOptions: PropTypes.any,
-  innerRef: PropTypes.func,
-  onInputFocus: PropTypes.func,
-  onInputBlur: PropTypes.func,
-  onOptionFocus: PropTypes.func,
-  onOptionBlur: PropTypes.func,
-  onOptionChange: PropTypes.func,
-  onInputKeyDown: PropTypes.func,
-  onInputKeyPress: PropTypes.func,
-  onInputKeyUp: PropTypes.func,
-  onChange: PropTypes.func,
-  onEnter: PropTypes.func,
-  onEscape: PropTypes.func,
-  onAdd: PropTypes.func,
-  onCommit: PropTypes.func,
-  onDelete: PropTypes.func,
-  onDiscard: PropTypes.func,
-  validate: PropTypes.func,
-}
-
 EditableField.defaultProps = {
   type: FIELDTYPES.text,
   'data-cy': 'EditableField',
@@ -1160,6 +1123,75 @@ EditableField.defaultProps = {
   onOptionChange: noop,
   onOptionFocus: noop,
   validate: () => Promise.resolve({ isValid: true }),
+}
+
+EditableField.propTypes = {
+  /** Actions to attach to an EditableField (default includes 'delete') */
+  actions: PropTypes.any,
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** If the EditableField is “option-enabled” by using the valueOptions array, the user can provide which of the options should be the default, if non provided, EditableField will choose the first option in the valueOptions array. */
+  defaultOption: PropTypes.any,
+  /** Disable the field */
+  disabled: PropTypes.bool,
+  /** In multi-value fields, bold the first value (to visually denote the default value, on a list of emails for example) */
+  emphasizeTopValue: PropTypes.bool,
+  /** Uses the "floating label" pattern with animation */
+  floatingLabels: PropTypes.bool,
+  /** Renders fields inline */
+  inline: PropTypes.bool,
+  /** The text for the EditableField label */
+  label: PropTypes.string,
+  /** If you want to force a multi-value field, set this to `true` */
+  multipleValues: PropTypes.bool,
+  /** The **unique** identifier for the EditableField - Ties label with input - Used to generate React `keys` - Used to manage correct handling (adding, deleting, editing) of multiple-value fields */
+  name: PropTypes.string,
+  /** Text for the placholder */
+  placeholder: PropTypes.string,
+  /** Field size */
+  size: PropTypes.oneOf(['md', 'lg']),
+  /** The type of field, one of 'text', 'email', 'url', 'tel' , 'number’, 'password' */
+  type: PropTypes.oneOf(['text', 'email', 'url', 'tel', 'number', 'password']),
+  /** Initial value for the EditableField, user will normally provide a string or array of strings (in case multi-value enabled fields) which internally get converted to `FieldValues` */
+  value: PropTypes.any,
+  /** When the user wants a field with “options” (like “home”, “work” options for phone numbers) she passes an array of strings with the available options. EditableField will make sure to show the appropriate dropdown. The array of strings internally gets converted to an array of `Option`. `Option` type is the same as what Dropdown V2 accepts as items. */
+  valueOptions: PropTypes.any,
+  /** Function that validates the value, should always return a Promise that resolves to a Validation type */
+  validate: PropTypes.func,
+  /** Retrieve the inner DOM node. */
+  innerRef: PropTypes.func,
+  /** Fired when the input is focused */
+  onInputFocus: PropTypes.func,
+  /** Fired when the input is blurred */
+  onInputBlur: PropTypes.func,
+  /** Fired on the appropriate keyboard event */
+  onInputKeyDown: PropTypes.func,
+  /** Fired on the appropriate keyboard event */
+  onInputKeyPress: PropTypes.func,
+  /** Fired on the appropriate keyboard event */
+  onInputKeyUp: PropTypes.func,
+  /** Fired when the option trigger is focused */
+  onOptionFocus: PropTypes.func,
+  /** Fired when the option trigger is blurred */
+  onOptionBlur: PropTypes.func,
+  /** Fires when an option is changed/selected */
+  onOptionChange: PropTypes.func,
+  /** Fires when either the input or an option is changed */
+  onChange: PropTypes.func,
+  /** Fires when Enter is pressed on the input */
+  onEnter: PropTypes.func,
+  /** Fires when Escape is pressed on the input */
+  onEscape: PropTypes.func,
+  /** Fires when a value is added on multi-value fields */
+  onAdd: PropTypes.func,
+  /** Fires when a change is "saved" */
+  onCommit: PropTypes.func,
+  /** Fires on clearing or deleting a value */
+  onDelete: PropTypes.func,
+  /** Fires on discarding a value */
+  onDiscard: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default EditableField

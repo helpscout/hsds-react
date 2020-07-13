@@ -46,16 +46,18 @@ class DotStepper extends React.Component {
   }
 }
 
-DotStepper.propTypes = {
-  'data-cy': PropTypes.string,
-  numSteps: PropTypes.number,
-  step: PropTypes.number,
-}
-
 DotStepper.defaultProps = {
   'data-cy': 'DotStepper',
   numSteps: 1,
   step: 1,
+}
+
+DotStepper.propTypes = {
+  'data-cy': PropTypes.string,
+  /** The total number of steps. */
+  numSteps: PropTypes.number,
+  /** The current step. */
+  step: PropTypes.number,
 }
 
 export default DotStepper

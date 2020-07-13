@@ -9,6 +9,7 @@ import { AnimateUI } from './Animate.css'
 import { AnimateGroupContext } from '../AnimateGroup/AnimateGroup'
 
 export class Animate extends React.PureComponent {
+  static contextType = AnimateGroupContext
   node
 
   render() {
@@ -88,8 +89,15 @@ const AnimateConsumer = props => {
   const contextValue = React.useContext(AnimateGroupContext)
 
   if (contextValue) {
-    const newProps = { ...contextValue, ...props }
+    let newProps
+    if (props.delay && props.delay !== 0) {
+      newProps = { ...contextValue, ...props }
+    } else {
+      newProps = { ...props, ...contextValue }
+    }
+
     newProps.className = classNames(props.className, contextValue.className)
+
     return <Animate {...newProps} />
   }
 
@@ -115,7 +123,7 @@ Animate.defaultProps = {
   unmountOnExit: true,
 }
 
-AnimateConsumer.propTypes = {
+Animate.propTypes = {
   /** Automatically animates when component is rendered. */
   animateOnMount: PropTypes.bool,
   /** Applies `display: block` to the component. */

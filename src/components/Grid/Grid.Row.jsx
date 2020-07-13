@@ -23,19 +23,21 @@ class GridRow extends React.PureComponent {
   }
 }
 
-GridRow.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  flex: PropTypes.bool, // deprecating
-  isFlex: PropTypes.bool,
-  size: PropTypes.oneOf(['md', 'sm', 'xs']),
-}
-
 GridRow.defaultProps = {
   'data-cy': 'GridRow',
   flex: false,
   isFlex: false,
+}
+
+GridRow.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Adds flex styles to the component. */
+  isFlex: PropTypes.bool,
+  /** Adds sizing styles to the component. */
+  size: PropTypes.oneOf(['md', 'sm', 'xs']),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default GridRow
