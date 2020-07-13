@@ -142,7 +142,7 @@ export class SelectDropdown extends React.PureComponent {
         <LabelUI className="c-SelectDropdownTriggerLabel" disabled={disabled}>
           <Text truncate>{this.getLabel()}</Text>
         </LabelUI>
-        <SelectArrows state={state} />
+        <SelectArrows state={state} disabled={disabled} />
         {this.renderError()}
         <BackdropUI isFocused={isFocused} state={state} />
       </InputUI>
