@@ -50,7 +50,7 @@ function makeButtonHoverStyles() {
   return `
     &.is-kind-default,
     &.is-kind-secondary,
-    &.is-kind-secondaryAlt,
+    &.is-kind-tertiary,
     &.is-kind-link {
       &:hover {
         background: rgba(0, 0, 0, 0.03);
