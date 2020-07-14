@@ -61,8 +61,14 @@ export class MessageCard extends React.PureComponent {
   }
 
   renderBody() {
-    const { body, title, subtitle } = this.props
+    const { title, subtitle } = this.props
+    let { body } = this.props
     const withMargin = title || subtitle
+
+    // if there is no html in the string, transform new line to paragraph
+    if (body && !/<\/?[a-z][\s\S]*>/i.test(body)) {
+      body = body.split('\n').join('<br>')
+    }
 
     return body ? (
       <BodyUI withMargin={withMargin} data-cy="beacon-message-body-content">

@@ -85,6 +85,11 @@ export const SelectArrowsUI = styled('div')`
   &.is-error {
     right: 40px;
   }
+
+  ${({ disabled }) => {
+    const color = disabled ? 'charcoal.200' : 'charcoal.600'
+    return `color: ${getColor(color)} !important;`
+  }}
 `
 
 function getFirefoxStyles() {

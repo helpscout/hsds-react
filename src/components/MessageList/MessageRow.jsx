@@ -15,9 +15,7 @@ const DraggableHandle = SortableHandle(({ isVisible }) => (
   <HandleUI>
     {isVisible ? (
       <IconUI alt="" name="drag-handle" shade="faint" size="24" />
-    ) : (
-      <IconUI alt="" name="drag-handle" shade="faint" size="24" />
-    )}
+    ) : null}
   </HandleUI>
 ))
 
