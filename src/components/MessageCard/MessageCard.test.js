@@ -97,7 +97,15 @@ describe('Body', () => {
     const wrapper = mount(<MessageCard body="<span>Santa!</span>" />)
     const o = wrapper.find(BodyUI)
 
-    expect(o.html()).toContain('<span>Santa!</span>')
+    expect(o.render().find('span').length).toBe(1)
+  })
+
+  test('Renders new line without html in body', () => {
+    const body = 'this is a new line\nwith another line'
+    const wrapper = mount(<MessageCard body={body} />)
+    const o = wrapper.find(BodyUI)
+
+    expect(o.render().find('br').length).toBe(1)
   })
 })
 
