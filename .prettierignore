@@ -2,7 +2,6 @@ package.json
 package-lock.json
 dist/
 coverage/
-src/**/*/*.mdx
 src/styles/configs/_colorway.scss
 src/styles/configs/colorway.js
 .remake

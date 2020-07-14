@@ -65,21 +65,34 @@ export const MessageAction = (props, context) => {
   )
 }
 
-MessageAction.propTypes = {
-  read: PropTypes.bool,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  timestamp: PropTypes.string,
-  className: PropTypes.string,
-  icon: PropTypes.string,
-}
-
 MessageAction.contextTypes = {
   theme: noop,
 }
 
 MessageAction.defaultProps = {
   'data-cy': 'MessageAction',
+}
+
+MessageAction.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Provides author information and applies "From" styles. */
+  from: PropTypes.bool,
+  /** Applies left-to-right text styles. */
+  ltr: PropTypes.bool,
+  /** Determines if the Message is read. */
+  read: PropTypes.bool,
+  /** Applies right-to-left text styles. */
+  rtl: PropTypes.bool,
+  /** Renders a space for the Avatar to appear. Default is `true`. */
+  showAvatar: PropTypes.bool,
+  /** Timestamp for the Message. */
+  timestamp: PropTypes.string,
+  /** Provides author information and applies "To" styles. */
+  to: PropTypes.bool,
+  icon: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default MessageAction

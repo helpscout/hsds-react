@@ -248,6 +248,8 @@ Item.propTypes = {
   timestamp: PropTypes.string,
   /** A function to format the timestamp, which defaults to returning the timestamp string. */
   timestampFormatter: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Item

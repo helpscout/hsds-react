@@ -409,6 +409,8 @@ const avatarPropTypes = {
   animationEasing: PropTypes.string,
   fallbackImage: PropTypes.string,
   withShadow: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 Avatar.propTypes = avatarPropTypes

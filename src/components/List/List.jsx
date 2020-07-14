@@ -70,6 +70,8 @@ List.propTypes = {
   size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg']),
   /** List style style for the items. */
   type: PropTypes.oneOf(['bullet', 'inline', 'number']),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default List

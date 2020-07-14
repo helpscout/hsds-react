@@ -167,6 +167,8 @@ Animate.propTypes = {
   transitionProperty: PropTypes.string,
   /** Unmounts child component as soon as `Animate` unmounts.` */
   unmountOnExit: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 AnimateConsumer.defaultProps = Animate.defaultProps

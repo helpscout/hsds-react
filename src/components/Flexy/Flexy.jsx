@@ -63,6 +63,8 @@ Flexy.propTypes = {
   gap: PropTypes.oneOf(['xl', 'lg', 'md', 'sm', 'xs', 'none', '']),
   /** Determines the horizontal alignment of Flexy child elements. */
   just: PropTypes.oneOf(['default', 'left', 'center', 'right', '']),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Flexy

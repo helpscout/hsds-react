@@ -65,6 +65,8 @@ FormActions.defaultProps = {
 FormActions.propTypes = {
   /** The position to render the actions*/
   direction: PropTypes.oneOf(['right', 'left']),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default FormActions

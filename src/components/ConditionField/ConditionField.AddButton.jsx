@@ -50,6 +50,8 @@ ConditionFieldAddButton.propTypes = {
   scrollOffset: PropTypes.number,
   /** The operator. (`and`/`or`) */
   type: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 // @helpscout/motion prevents these animations from running within a

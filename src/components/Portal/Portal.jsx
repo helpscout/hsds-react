@@ -184,15 +184,23 @@ export class Portal extends React.Component {
 }
 
 Portal.propTypes = {
+  /** Custom class names to be added to the component. */
   className: PropTypes.string,
   exact: PropTypes.bool,
+  /** The ID for the component. */
   id: PropTypes.string,
+  /** A CSS selector to render content, instead of the `<body>`. */
   renderTo: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  /** Fires when the component is mounted, but not rendered. */
   onBeforeOpen: PropTypes.func,
+  /** Fires as soon as the component has rendered. */
   onOpen: PropTypes.func,
+  /** Fires when the component is about to unmount. */
   onBeforeClose: PropTypes.func,
+  /** Fires after the component is unmounted. */
   onClose: PropTypes.func,
   path: PropTypes.string,
+  /** Delay before the Portal'ed component is unmounted from the DOM. Default is `0`. */
   timeout: PropTypes.number,
 }
 

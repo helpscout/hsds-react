@@ -156,20 +156,6 @@ class ChoiceGroup extends React.PureComponent {
   }
 }
 
-ChoiceGroup.propTypes = {
-  align: PropTypes.oneOf(['horizontal', 'vertical']),
-  className: PropTypes.string,
-  choiceMaxWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  isResponsive: PropTypes.bool,
-  onBlur: PropTypes.func,
-  onChange: PropTypes.func,
-  onFocus: PropTypes.func,
-  multiSelect: PropTypes.bool,
-  name: PropTypes.string,
-  value: PropTypes.any,
-}
 ChoiceGroup.defaultProps = {
   align: 'vertical',
   'data-cy': 'ChoiceGroup',
@@ -177,6 +163,32 @@ ChoiceGroup.defaultProps = {
   onBlur: noop,
   onChange: noop,
   onFocus: noop,
+}
+
+ChoiceGroup.propTypes = {
+  align: PropTypes.oneOf(['horizontal', 'vertical']),
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Set the max-width for the child `Choice` components. */
+  choiceMaxWidth: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  /** Disable the input. */
+  disabled: PropTypes.bool,
+  /** Enables responsive styling. */
+  isResponsive: PropTypes.bool,
+  /** Name for the inputs. */
+  name: PropTypes.string,
+  /** Callback when an input is blurred. */
+  onBlur: PropTypes.func,
+  /** Callback when an input value is changed. */
+  onChange: PropTypes.func,
+  /** Callback when an input is focused. */
+  onFocus: PropTypes.func,
+  /** The default value of input group. */
+  value: PropTypes.any,
+  /** Allow multiple choice selection */
+  multiSelect: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default ChoiceGroup

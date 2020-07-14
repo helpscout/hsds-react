@@ -178,6 +178,8 @@ ChatScroller.propTypes = {
   /** DOM selector for the scrollable message container. */
   scrollableSelector: PropTypes.string,
   scrollCondition: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default ChatScroller

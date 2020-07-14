@@ -78,6 +78,8 @@ CloseButton.propTypes = {
   size: PropTypes.string,
   /** Custom title for the button. */
   title: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default CloseButton

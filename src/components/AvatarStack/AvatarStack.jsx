@@ -191,6 +191,8 @@ AvatarStack.propTypes = {
   showStatusBorderColor: PropTypes.bool,
   /** Size of the avatars. */
   size: PropTypes.oneOf(['lg', 'md', 'smmd', 'sm', 'xs', 'xxs', '']),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default AvatarStack

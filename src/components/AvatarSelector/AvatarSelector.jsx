@@ -85,6 +85,8 @@ AvatarSelector.propTypes = {
   isOpen: PropTypes.bool,
   /** Size of the avatar. */
   size: PropTypes.oneOf(['xl', 'lg', 'md', 'smmd', 'sm', 'xxs']),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default AvatarSelector

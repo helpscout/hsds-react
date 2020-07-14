@@ -158,6 +158,8 @@ AvatarList.propTypes = {
   size: PropTypes.string,
   /** Display as stack (previously AvatarStack) */
   stack: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default AvatarList

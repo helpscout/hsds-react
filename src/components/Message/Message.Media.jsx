@@ -226,50 +226,6 @@ export class MessageMedia extends React.Component {
   }
 }
 
-MessageMedia.propTypes = {
-  body: PropTypes.string,
-  caption: PropTypes.string,
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  errorMessage: PropTypes.string,
-  from: PropTypes.any,
-  height: PropTypes.number,
-  icon: PropTypes.string,
-  imageAlt: PropTypes.string,
-  imageUrl: PropTypes.string,
-  isNote: PropTypes.bool,
-  isUploading: PropTypes.bool,
-  ltr: PropTypes.bool,
-  maxHeight: PropTypes.number,
-  maxWidth: PropTypes.number,
-  modalAnimationDuration: PropTypes.number,
-  modalAnimationEasing: PropTypes.string,
-  modalAnimationSequence: PropTypes.string,
-  modalCardClassName: PropTypes.string,
-  modalClassName: PropTypes.string,
-  modalWrapperClassName: PropTypes.string,
-  onClick: PropTypes.func,
-  onErrorTryAgainClick: PropTypes.func,
-  onMediaClick: PropTypes.func,
-  onMediaLoad: PropTypes.func,
-  openMediaInModal: PropTypes.bool,
-  overlayAnimationDuration: PropTypes.number,
-  primary: PropTypes.bool,
-  read: PropTypes.bool,
-  rtl: PropTypes.bool,
-  showErrorTryAgainLink: PropTypes.bool,
-  size: PropTypes.oneOf(['md', 'sm', '']),
-  thumbnailImageUrl: PropTypes.string,
-  timestamp: PropTypes.string,
-  title: PropTypes.string,
-  to: PropTypes.any,
-  tryAgainLabel: PropTypes.string,
-  typing: PropTypes.bool,
-  width: PropTypes.number,
-}
-
 MessageMedia.defaultProps = {
   className: '',
   'data-cy': 'MessageMedia',
@@ -291,6 +247,87 @@ MessageMedia.defaultProps = {
 
 MessageMedia.contextTypes = {
   theme: noop,
+}
+
+MessageMedia.propTypes = {
+  /** Description of the media. */
+  caption: PropTypes.string,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Renders the error caption. Default `false`. */
+  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  /** Customizes the error caption. */
+  errorMessage: PropTypes.string,
+  /** Provides author information and applies "From" styles. */
+  from: PropTypes.any,
+  /** Height of the image. */
+  height: PropTypes.number,
+  /** Alt/title of the media image. */
+  imageAlt: PropTypes.string,
+  /** URL of the media image. */
+  imageUrl: PropTypes.string,
+  /** Renders the uploading spinner UI. Default `false`. */
+  isUploading: PropTypes.bool,
+  /** Applies left-to-right text styles. */
+  ltr: PropTypes.bool,
+  /** Max-height of the media content. */
+  maxHeight: PropTypes.number,
+  /** Max-width of the media content. */
+  maxWidth: PropTypes.number,
+  /** Custom [animation](../Animate) duration for the child [Card](../Card) component. */
+  modalAnimationDuration: PropTypes.number,
+  /** Custom [animation](../Animate) easing for the child [Card](../Card) component. */
+  modalAnimationEasing: PropTypes.string,
+  /** Custom [animation](../Animate) sequence for the child [Card](../Card) component. */
+  modalAnimationSequence: PropTypes.string,
+  /** Custom class names for the [Modal](../Modal) card. */
+  modalCardClassName: PropTypes.string,
+  /** Custom class names for the [Modal](../Modal). */
+  modalClassName: PropTypes.string,
+  /** Custom class names for the [Modal](../Modal) wrapper. */
+  modalWrapperClassName: PropTypes.string,
+  /** Callback when "Try again" action is clicked. */
+  onErrorTryAgainClick: PropTypes.func,
+  /** Callback when the media image is clicked. */
+  onMediaClick: PropTypes.func,
+  /** Callback when the media image is loaded. */
+  onMediaLoad: PropTypes.func,
+  /** Opens the media image in a Modal when clicked. Default `true`. */
+  openMediaInModal: PropTypes.bool,
+  /** Custom [animation](../Animate) duration for the child [Overlay](../Overlay) component. */
+  overlayAnimationDuration: PropTypes.number,
+  /** Determines if the Message is read. */
+  read: PropTypes.bool,
+  /** Applies right-to-left text styles. */
+  rtl: PropTypes.bool,
+  /** Shows the "Try again" action, if error. Default `true`. */
+  showErrorTryAgainLink: PropTypes.bool,
+  /** URL of the media image (thumbnail). */
+  thumbnailImageUrl: PropTypes.string,
+  /** Timestamp for the Message. */
+  timestamp: PropTypes.string,
+  /** Provides author information and applies "To" styles. */
+  to: PropTypes.any,
+  /** Label for the "Try Again" action, on error. */
+  tryAgainLabel: PropTypes.string,
+  /** Width of the image. */
+  width: PropTypes.number,
+  /** Applies "primary" styles. */
+  primary: PropTypes.bool,
+  icon: PropTypes.string,
+  /** Applies "note" styles. */
+  isNote: PropTypes.bool,
+  /** Callback when clicked. */
+  onClick: PropTypes.func,
+  /** Determines the size of the component. */
+  size: PropTypes.oneOf(['md', 'sm', '']),
+  /** Renders a Heading title in the component. */
+  title: PropTypes.string,
+  /** Renders TypingDots within the component. */
+  typing: PropTypes.bool,
+  body: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default MessageMedia

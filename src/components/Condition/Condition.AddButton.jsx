@@ -104,6 +104,8 @@ AddButton.propTypes = {
   scrollOffset: PropTypes.number,
   /** The operator. */
   type: PropTypes.oneOf(['and', 'or']),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default AddButton

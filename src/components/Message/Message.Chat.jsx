@@ -110,35 +110,6 @@ export class MessageChat extends React.PureComponent {
   }
 }
 
-MessageChat.propTypes = {
-  body: PropTypes.string,
-  bubbleClassName: PropTypes.string,
-  caption: PropTypes.string,
-  captionSize: PropTypes.string,
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  errorMessage: PropTypes.string,
-  from: PropTypes.any,
-  icon: PropTypes.string,
-  isLoading: PropTypes.bool,
-  isNote: PropTypes.bool,
-  ltr: PropTypes.bool,
-  metaPosition: PropTypes.oneOf(['top', 'bottom']),
-  onBubbleClick: PropTypes.func,
-  onClick: PropTypes.func,
-  primary: PropTypes.bool,
-  read: PropTypes.bool,
-  rtl: PropTypes.bool,
-  size: PropTypes.oneOf(['md', 'sm', '']),
-  timestamp: PropTypes.string,
-  title: PropTypes.string,
-  to: PropTypes.any,
-  type: PropTypes.oneOf(['action', 'message', '']),
-  typing: PropTypes.bool,
-}
-
 MessageChat.contextTypes = {
   theme: noop,
 }
@@ -149,6 +120,54 @@ MessageChat.defaultProps = {
   errorMessage: "Couldn't send.",
   isLoading: false,
   metaPosition: 'bottom',
+}
+
+MessageChat.propTypes = {
+  body: PropTypes.string,
+  /** Custom class names for the child Bubble component. */
+  bubbleClassName: PropTypes.string,
+  /** Renders a Caption. */
+  caption: PropTypes.string,
+  /** Adjusts the size of the Caption text. */
+  captionSize: PropTypes.string,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Provides author information and applies "From" styles. */
+  from: PropTypes.any,
+  /** Applies "note" styles. */
+  isNote: PropTypes.bool,
+  /** Applies left-to-right text styles. */
+  ltr: PropTypes.bool,
+  /** Determines if the Message is read. */
+  read: PropTypes.bool,
+  /** Applies right-to-left text styles. */
+  rtl: PropTypes.bool,
+  /** Determines the size of the component. */
+  size: PropTypes.oneOf(['md', 'sm', '']),
+  /** Timestamp for the Message. */
+  timestamp: PropTypes.string,
+  /** Renders a Heading title in the component. */
+  title: PropTypes.string,
+  /** Provides author information and applies "To" styles. */
+  to: PropTypes.any,
+  /** Renders TypingDots within the component. */
+  typing: PropTypes.bool,
+  /** Renders the error caption. Default `false`. */
+  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  /** Customizes the error caption. */
+  errorMessage: PropTypes.string,
+  icon: PropTypes.string,
+  isLoading: PropTypes.bool,
+  metaPosition: PropTypes.oneOf(['top', 'bottom']),
+  /** Callback when Bubble clicked. */
+  onBubbleClick: PropTypes.func,
+  /** Callback when clicked. */
+  onClick: PropTypes.func,
+  /** Applies "primary" styles. */
+  primary: PropTypes.bool,
+  type: PropTypes.oneOf(['action', 'message', '']),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default MessageChat

@@ -223,6 +223,8 @@ InfiniteScroller.propTypes = {
   onScroll: PropTypes.func,
   /** What to render while loading */
   loading: PropTypes.any,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default InfiniteScroller

@@ -24,16 +24,16 @@ export class DropdownGroup extends React.PureComponent {
   }
 }
 
+DropdownGroup.defaultProps = {
+  'data-cy': 'DropdownGroup',
+  innerRef: noop,
+}
+
 DropdownGroup.propTypes = {
   className: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
   innerRef: PropTypes.func,
-}
-
-DropdownGroup.defaultProps = {
-  'data-cy': 'DropdownGroup',
-  innerRef: noop,
 }
 
 export default DropdownGroup

@@ -190,24 +190,6 @@ export class Notification extends React.PureComponent {
   }
 }
 
-Notification.propTypes = {
-  align: PropTypes.oneOf(['left', 'right']),
-  animationSequence: PropTypes.string,
-  body: PropTypes.string,
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  from: PropTypes.string,
-  isActive: PropTypes.bool,
-  isDismissable: PropTypes.bool,
-  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  onClick: PropTypes.func,
-  onDismiss: PropTypes.func,
-  timeout: PropTypes.number,
-  type: PropTypes.oneOf(['image', 'link', 'text']),
-  truncateLimit: PropTypes.number,
-}
-
 Notification.defaultProps = {
   animationSequence: 'fade upUp',
   align: 'right',
@@ -219,6 +201,36 @@ Notification.defaultProps = {
   timeout: 2000,
   type: 'text',
   truncateLimit: 60,
+}
+
+Notification.propTypes = {
+  className: PropTypes.string,
+  /** Alignment of notification content. */
+  align: PropTypes.oneOf(['left', 'right']),
+  /** Animation style for this component. */
+  animationSequence: PropTypes.string,
+  /** Content for the component. */
+  body: PropTypes.string,
+  /** The name/label for the component's `body` content. */
+  from: PropTypes.string,
+  /** Determines the dismissal state of the component. */
+  isActive: PropTypes.bool,
+  /** Determines if the component can be dismissed. */
+  isDismissable: PropTypes.bool,
+  /** The ID of the component. Highly recommended. */
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  /** Callback when the MessageBubble UI is clicked. */
+  onClick: PropTypes.func,
+  /** Callback when component is dismissed and removed from the DOM. */
+  onDismiss: PropTypes.func,
+  /** Amount of time before the component auto-dismisses. Only applicable if `isDismissable`. */
+  timeout: PropTypes.number,
+  /** Determine the type of content for the component. `image`: (Renders as an image link), `link`: (Renders as a link), `text`: (Renders as text) */
+  type: PropTypes.oneOf(['image', 'link', 'text']),
+  /** Determines the character count to truncate text. */
+  truncateLimit: PropTypes.number,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Notification

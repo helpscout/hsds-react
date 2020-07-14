@@ -43,22 +43,6 @@ class Badge extends React.Component {
   }
 }
 
-Badge.propTypes = {
-  className: PropTypes.string,
-  color: PropTypes.string,
-  count: PropTypes.bool,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  display: PropTypes.oneOf(['block', 'inlineBlock']),
-  inverted: PropTypes.bool,
-  isSquare: PropTypes.bool,
-  size: PropTypes.string,
-  status: PropTypes.string,
-  style: PropTypes.any,
-  textColor: PropTypes.string,
-  white: PropTypes.bool,
-}
-
 Badge.defaultProps = {
   'data-cy': 'Badge',
   display: 'inlineBlock',
@@ -87,6 +71,8 @@ Badge.propTypes = {
   textColor: PropTypes.string,
   /** Applies a white style to the component. */
   white: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Badge

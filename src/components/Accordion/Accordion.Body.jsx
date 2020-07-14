@@ -91,6 +91,8 @@ AccordionBody.propTypes = {
   children: PropTypes.any,
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default AccordionBody

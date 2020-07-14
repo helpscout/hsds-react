@@ -58,22 +58,31 @@ const MessageContent = props => {
   )
 }
 
-MessageContent.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  from: PropTypes.any,
-  isNote: PropTypes.bool,
-  ltr: PropTypes.bool,
-  onClick: PropTypes.func,
-  read: PropTypes.bool,
-  rtl: PropTypes.bool,
-  timestamp: PropTypes.string,
-  to: PropTypes.any,
-}
-
 MessageContent.defaultProps = {
   'data-cy': 'MessageContent',
+}
+
+MessageContent.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Provides author information and applies "From" styles. */
+  from: PropTypes.any,
+  /** Applies the "Note" theme styles. */
+  isNote: PropTypes.bool,
+  /** Applies left-to-right text styles. */
+  ltr: PropTypes.bool,
+  /** Determines if the Message is read. */
+  read: PropTypes.bool,
+  /** Applies right-to-left text styles. */
+  rtl: PropTypes.bool,
+  /** Timestamp for the Message. */
+  timestamp: PropTypes.string,
+  /** Provides author information and applies "To" styles. */
+  to: PropTypes.any,
+  /** Callback when clicked. */
+  onClick: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default MessageContent

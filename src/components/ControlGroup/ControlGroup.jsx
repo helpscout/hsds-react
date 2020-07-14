@@ -47,6 +47,8 @@ ControlGroup.defaultProps = {
 ControlGroup.propTypes = {
   /** The className of the component. */
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default ControlGroup

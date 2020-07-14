@@ -264,38 +264,6 @@ class Choice extends React.PureComponent {
   }
 }
 
-Choice.propTypes = {
-  align: PropTypes.oneOf(['top', '']),
-  autoFocus: PropTypes.bool,
-  checked: PropTypes.bool,
-  className: PropTypes.string,
-  componentID: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  disabled: PropTypes.bool,
-  helpText: PropTypes.string,
-  hideLabel: PropTypes.bool,
-  id: PropTypes.string,
-  isBlock: PropTypes.bool,
-  inputRef: PropTypes.func,
-  innerRef: PropTypes.func,
-  kind: PropTypes.string,
-  label: PropTypes.string,
-  onBlur: PropTypes.func,
-  onChange: PropTypes.func,
-  onFocus: PropTypes.func,
-  name: PropTypes.string,
-  readOnly: PropTypes.bool,
-  stacked: PropTypes.bool,
-  state: PropTypes.string,
-  type: PropTypes.oneOf(['checkbox', 'radio']),
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.bool,
-  ]),
-}
-
 Choice.defaultProps = {
   autoFocus: false,
   checked: false,
@@ -312,6 +280,56 @@ Choice.defaultProps = {
   readOnly: false,
   type: 'checkbox',
   value: '',
+}
+
+Choice.propTypes = {
+  align: PropTypes.oneOf(['top', '']),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  checked: PropTypes.bool,
+  isBlock: PropTypes.bool,
+  innerRef: PropTypes.func,
+  /** Automatically focuses the input. */
+  autoFocus: PropTypes.bool,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Namespace for the input ID. Default is `Choice`. */
+  componentID: PropTypes.string,
+  /** Disable the input. */
+  disabled: PropTypes.bool,
+  /** Displays text underneath input. */
+  helpText: PropTypes.string,
+  /** Hides the label with [VisuallyHidden](../VisuallyHidden). */
+  hideLabel: PropTypes.bool,
+  /** ID for the input. */
+  id: PropTypes.string,
+  /** Retrieves the `input` DOM node. */
+  inputRef: PropTypes.func,
+  /** Label for the input. */
+  label: PropTypes.string,
+  /** Name for the input. */
+  name: PropTypes.string,
+  /** Callback when the input is blurred. */
+  onBlur: PropTypes.func,
+  /** Callback when the input value is changed. */
+  onChange: PropTypes.func,
+  /** Callback when the input is focused. */
+  onFocus: PropTypes.func,
+  /** Disable editing of the input. */
+  readOnly: PropTypes.bool,
+  /** Stacks the input above the label. */
+  stacked: PropTypes.bool,
+  /** Change input to state color. */
+  state: PropTypes.oneOf(['error', 'success', 'warning']),
+  /** Determines the input type. `checkbox` or `radio`. */
+  type: PropTypes.oneOf(['checkbox', 'radio']),
+  /** The value of the input. */
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.bool,
+  ]),
+  kind: PropTypes.string,
 }
 
 export default Choice

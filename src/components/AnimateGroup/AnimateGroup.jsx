@@ -120,6 +120,8 @@ AnimateGroup.propTypes = {
   exit: PropTypes.any,
   enter: PropTypes.any,
   staggerMax: PropTypes.number,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default AnimateGroup

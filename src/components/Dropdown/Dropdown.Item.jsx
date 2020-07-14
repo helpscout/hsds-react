@@ -225,6 +225,29 @@ export class DropdownItem extends React.PureComponent {
   }
 }
 
+DropdownItem.defaultProps = {
+  contentWindow: window,
+  'data-cy': 'DropdownItem',
+  getState: noop,
+  disabled: false,
+  index: '0',
+  innerRef: noop,
+  isHover: false,
+  isSelectionClearer: false,
+  items: undefined,
+  dropRight: true,
+  dropUp: false,
+  onMouseEnter: noop,
+  onMouseMove: noop,
+  onBlur: noop,
+  onClick: noop,
+  onFocus: noop,
+  preventSelect: false,
+  label: '',
+  type: 'item',
+  value: '',
+}
+
 DropdownItem.propTypes = {
   actionId: PropTypes.string,
   className: PropTypes.string,
@@ -253,29 +276,6 @@ DropdownItem.propTypes = {
   label: PropTypes.string,
   type: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-}
-
-DropdownItem.defaultProps = {
-  contentWindow: window,
-  'data-cy': 'DropdownItem',
-  getState: noop,
-  disabled: false,
-  index: '0',
-  innerRef: noop,
-  isHover: false,
-  isSelectionClearer: false,
-  items: undefined,
-  dropRight: true,
-  dropUp: false,
-  onMouseEnter: noop,
-  onMouseMove: noop,
-  onBlur: noop,
-  onClick: noop,
-  onFocus: noop,
-  preventSelect: false,
-  label: '',
-  type: 'item',
-  value: '',
 }
 
 const ConnectedItem = connect(

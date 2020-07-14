@@ -187,6 +187,8 @@ Attachment.propTypes = {
   type: PropTypes.oneOf(['action', 'link']),
   /** The URL of the attachment. */
   url: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Attachment

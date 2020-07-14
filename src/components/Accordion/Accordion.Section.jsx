@@ -88,6 +88,8 @@ AccordionSection.propTypes = {
   onOpen: PropTypes.func,
   /** Callback to be invoked when the section is closed. */
   onClose: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default AccordionSection

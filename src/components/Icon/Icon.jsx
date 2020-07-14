@@ -150,6 +150,8 @@ Icon.propTypes = {
   offsetLeft: PropTypes.bool,
   offsetRight: PropTypes.bool,
   subtle: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Icon

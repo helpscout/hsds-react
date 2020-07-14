@@ -90,6 +90,8 @@ Condition.propTypes = {
   onChange: PropTypes.func,
   /** The value of the condition ([Select](../Select)). */
   value: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Condition

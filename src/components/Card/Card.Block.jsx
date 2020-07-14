@@ -80,6 +80,8 @@ Block.propTypes = {
   scrollableRef: PropTypes.func,
   /** Adjusts the size of the component. */
   size: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Block

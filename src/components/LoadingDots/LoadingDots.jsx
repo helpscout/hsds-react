@@ -21,13 +21,17 @@ const LoadingDots = props => {
   )
 }
 
-LoadingDots.propTypes = {
-  align: PropTypes.oneOf(['left', 'center', 'right', '']),
-  className: PropTypes.string,
-}
-
 LoadingDots.defaultProps = {
   'data-cy': 'LoadingDots',
+}
+
+LoadingDots.propTypes = {
+  /** Determines the horizontal alignment of this component. Accepts `left`, `center`, `right`. */
+  align: PropTypes.oneOf(['left', 'center', 'right']),
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default LoadingDots

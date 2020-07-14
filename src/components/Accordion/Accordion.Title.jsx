@@ -203,6 +203,8 @@ AccordionTitle.propTypes = {
   className: PropTypes.string,
   /** Callback to be invoked when clicked. */
   onClick: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default AccordionTitle

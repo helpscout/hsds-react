@@ -226,22 +226,6 @@ export class Pagination extends React.PureComponent {
   }
 }
 
-Pagination.propTypes = {
-  activePage: PropTypes.number,
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  innerRef: PropTypes.func,
-  isLoading: PropTypes.bool,
-  onChange: PropTypes.func,
-  pluralizedSubject: PropTypes.string,
-  rangePerPage: PropTypes.number,
-  separator: PropTypes.string,
-  showNavigation: PropTypes.bool,
-  subject: PropTypes.string,
-  totalItems: PropTypes.number,
-}
-
 Pagination.defaultProps = {
   activePage: 1,
   'data-cy': 'Pagination',
@@ -253,6 +237,31 @@ Pagination.defaultProps = {
   showNavigation: true,
   subject: '',
   totalItems: 0,
+}
+
+Pagination.propTypes = {
+  innerRef: PropTypes.func,
+  /** Current selected page */
+  activePage: PropTypes.number,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Disables the navigation while `true` */
+  isLoading: PropTypes.bool,
+  /** Callback when current page is changed. */
+  onChange: PropTypes.func,
+  /** Number of items per page */
+  rangePerPage: PropTypes.number,
+  /** Add a navigation to the component */
+  showNavigation: PropTypes.bool,
+  /** Pagination label after the range */
+  subject: PropTypes.string,
+  /** Pluralize subject. If empty subject will be automaticaly pluralize */
+  pluralizedSubject: PropTypes.string,
+  /** Total of items */
+  totalItems: PropTypes.number,
+  separator: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Pagination

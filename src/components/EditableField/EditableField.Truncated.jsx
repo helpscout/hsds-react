@@ -41,6 +41,8 @@ EditableFieldTruncated.propTypes = {
   className: PropTypes.string,
   string: PropTypes.string,
   splitter: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default EditableFieldTruncated

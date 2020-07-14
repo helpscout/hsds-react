@@ -9,16 +9,16 @@ class MessageProvider extends SimpleThemeProvider {
   }
 }
 
-MessageProvider.propTypes = {
-  theme: PropTypes.any,
-}
-
 MessageProvider.defaultProps = {
   theme: 'admin',
 }
 
 MessageProvider.childContextTypes = {
   theme: noop,
+}
+
+MessageProvider.propTypes = {
+  theme: PropTypes.any,
 }
 
 export default MessageProvider

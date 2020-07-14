@@ -169,32 +169,45 @@ export const MessageBubble = (props, context) => {
   )
 }
 
-MessageBubble.propTypes = {
-  body: PropTypes.string,
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  from: PropTypes.any,
-  icon: PropTypes.string,
-  isNote: PropTypes.bool,
-  ltr: PropTypes.bool,
-  onClick: PropTypes.func,
-  primary: PropTypes.bool,
-  read: PropTypes.bool,
-  rtl: PropTypes.bool,
-  size: PropTypes.oneOf(['md', 'sm', '']),
-  timestamp: PropTypes.string,
-  title: PropTypes.string,
-  to: PropTypes.any,
-  typing: PropTypes.bool,
-}
-
 MessageBubble.defaultProps = {
   'data-cy': 'MessageBubble',
 }
 
 MessageBubble.contextTypes = {
   theme: noop,
+}
+
+MessageBubble.propTypes = {
+  body: PropTypes.string,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Provides author information and applies "From" styles. */
+  from: PropTypes.any,
+  /** Applies "note" styles. */
+  isNote: PropTypes.bool,
+  /** Applies left-to-right text styles. */
+  ltr: PropTypes.bool,
+  /** Applies "primary" styles. */
+  primary: PropTypes.bool,
+  /** Determines if the Message is read. */
+  read: PropTypes.bool,
+  /** Applies right-to-left text styles. */
+  rtl: PropTypes.bool,
+  /** Determines the size of the component. */
+  size: PropTypes.oneOf(['md', 'sm', '']),
+  /** Timestamp for the Message. */
+  timestamp: PropTypes.string,
+  /** Renders a `Heading` title in the component. */
+  title: PropTypes.string,
+  /** Provides author information and applies "To" styles. */
+  to: PropTypes.any,
+  /** Renders `TypingDots` within the component. */
+  typing: PropTypes.bool,
+  /** Callback when clicked. */
+  onClick: PropTypes.func,
+  icon: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default MessageBubble

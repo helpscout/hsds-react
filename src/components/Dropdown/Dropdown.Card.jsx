@@ -74,6 +74,12 @@ export class DropdownCard extends React.PureComponent {
   }
 }
 
+DropdownCard.defaultProps = {
+  cardRef: noop,
+  'data-cy': 'DropdownCard',
+  style: {},
+}
+
 DropdownCard.propTypes = {
   borderColor: PropTypes.string,
   className: PropTypes.string,
@@ -87,12 +93,6 @@ DropdownCard.propTypes = {
   width: PropTypes.any,
   triggerNode: PropTypes.any,
   style: PropTypes.any,
-}
-
-DropdownCard.defaultProps = {
-  cardRef: noop,
-  'data-cy': 'DropdownCard',
-  style: {},
 }
 
 const ConnectedCard = connect(

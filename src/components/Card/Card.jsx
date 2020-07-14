@@ -147,6 +147,8 @@ Card.propTypes = {
   /** Determines the HTML tag for the component. */
   selector: PropTypes.string,
   to: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Card

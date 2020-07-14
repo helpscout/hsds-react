@@ -217,6 +217,8 @@ Accordion.propTypes = {
   pressDelay: PropTypes.number,
   /** The amount of padding. */
   size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 Accordion.Body = AccordionBody

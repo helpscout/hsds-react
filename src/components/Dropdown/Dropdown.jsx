@@ -266,6 +266,8 @@ Dropdown.propTypes = {
   selectionClearer: PropTypes.string,
   setMenuNode: PropTypes.func,
   setTriggerNode: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 const ConnectedDropdown = connect(

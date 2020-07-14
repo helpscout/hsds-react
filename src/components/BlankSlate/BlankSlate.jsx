@@ -73,6 +73,8 @@ BlankSlate.propTypes = {
   message: PropTypes.any,
   /** Title displayed in the content area */
   title: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default BlankSlate

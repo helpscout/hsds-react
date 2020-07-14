@@ -17,6 +17,14 @@ export class MessageCardButton extends React.PureComponent {
   }
 }
 
+MessageCardButton.defaultProps = {
+  'data-cy': 'beacon-message-cta',
+  kind: 'primary',
+  onClick: noop,
+  isBlock: true,
+  size: 'xl',
+}
+
 MessageCardButton.propTypes = {
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
@@ -24,14 +32,6 @@ MessageCardButton.propTypes = {
   isBlock: PropTypes.bool,
   onClick: PropTypes.func,
   size: PropTypes.string,
-}
-
-MessageCardButton.defaultProps = {
-  'data-cy': 'beacon-message-cta',
-  kind: 'primary',
-  onClick: noop,
-  isBlock: true,
-  size: 'xl',
 }
 
 export default MessageCardButton

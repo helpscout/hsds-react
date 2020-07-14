@@ -50,6 +50,8 @@ AccordionLink.propTypes = {
   href: PropTypes.string,
   /** Renders a routable `Link` with an href. */
   to: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default AccordionLink

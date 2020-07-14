@@ -135,6 +135,8 @@ EditableFieldMask.propTypes = {
   validationInfo: PropTypes.object,
   valueOptions: PropTypes.arrayOf(PropTypes.any),
   onValueKeyDown: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default EditableFieldMask

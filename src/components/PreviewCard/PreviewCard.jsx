@@ -39,15 +39,18 @@ const PreviewCard = props => {
   )
 }
 
-PreviewCard.propTypes = {
-  children: PropTypes.any,
-  className: PropTypes.string,
-  isNote: PropTypes.bool,
-  title: PropTypes.string,
-}
-
 PreviewCard.defaultProps = {
   'data-cy': 'PreviewCard',
+}
+
+PreviewCard.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  isNote: PropTypes.bool,
+  /** Text on the Title (Heading) of the card */
+  title: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default PreviewCard

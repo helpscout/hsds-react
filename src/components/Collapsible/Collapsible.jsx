@@ -226,6 +226,8 @@ Collapsible.propTypes = {
   onOpen: PropTypes.func,
   /** Custom styles to be added to the component. */
   style: PropTypes.any,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Collapsible

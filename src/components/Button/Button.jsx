@@ -232,6 +232,8 @@ Button.propTypes = {
   isNotOnly: PropTypes.bool,
   isLast: PropTypes.bool,
   shape: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default RouteWrapper(Button)

@@ -26,6 +26,8 @@ FluffyCardContainer.defaultProps = {
 
 FluffyCardContainer.propTypes = {
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default FluffyCardContainer

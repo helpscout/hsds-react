@@ -70,35 +70,6 @@ export const MessageAttachment = (props, context) => {
   )
 }
 
-MessageAttachment.propTypes = {
-  body: PropTypes.string,
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  download: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  errorMessage: PropTypes.string,
-  filename: PropTypes.string,
-  from: PropTypes.any,
-  icon: PropTypes.string,
-  isNote: PropTypes.bool,
-  isUploading: PropTypes.bool,
-  ltr: PropTypes.bool,
-  onClick: PropTypes.func,
-  openDownloadInNewTab: PropTypes.bool,
-  primary: PropTypes.bool,
-  read: PropTypes.bool,
-  rtl: PropTypes.bool,
-  size: PropTypes.oneOf(['md', 'sm', '']),
-  timestamp: PropTypes.string,
-  title: PropTypes.string,
-  to: PropTypes.any,
-  type: PropTypes.oneOf(['action', 'message', '']),
-  typing: PropTypes.bool,
-  uploadingMessage: PropTypes.string,
-  url: PropTypes.string,
-}
-
 MessageAttachment.defaultProps = {
   'data-cy': 'MessageAttachment',
   download: true,
@@ -111,6 +82,56 @@ MessageAttachment.defaultProps = {
 
 MessageAttachment.contextTypes = {
   theme: noop,
+}
+
+MessageAttachment.propTypes = {
+  body: PropTypes.string,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Determines if the file can be downloaded on click. Default `true`. */
+  download: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  /** Renders the error caption. Default `false`. */
+  error: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  /** Customizes the error caption. */
+  errorMessage: PropTypes.string,
+  /** The name of the file. */
+  filename: PropTypes.string,
+  /** Provides author information and applies "From" styles. */
+  from: PropTypes.any,
+  /** Renders the uploading spinner UI. Default `false`. */
+  isUploading: PropTypes.bool,
+  /** Applies left-to-right text styles. */
+  ltr: PropTypes.bool,
+  /** Callback when the file is clicked. */
+  onClick: PropTypes.func,
+  /** Opens downloadable links in new tab. Default `true`. */
+  openDownloadInNewTab: PropTypes.bool,
+  /** Determines if the Message is read. */
+  read: PropTypes.bool,
+  /** Applies right-to-left text styles. */
+  rtl: PropTypes.bool,
+  /** Timestamp for the Message. */
+  timestamp: PropTypes.string,
+  /** Provides author information and applies "To" styles. */
+  to: PropTypes.any,
+  /** Customizes the uploading message text. */
+  uploadingMessage: PropTypes.string,
+  /** The URL of the file. */
+  url: PropTypes.string,
+  /** Applies "note" styles. */
+  isNote: PropTypes.bool,
+  /** Applies "primary" styles. */
+  primary: PropTypes.bool,
+  /** Determines the size of the component. */
+  size: PropTypes.oneOf(['md', 'sm', '']),
+  /** Renders a `Heading` title in the component. */
+  title: PropTypes.string,
+  /** Renders `TypingDots` within the component. */
+  typing: PropTypes.bool,
+  type: PropTypes.oneOf(['action', 'message', '']),
+  icon: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default MessageAttachment

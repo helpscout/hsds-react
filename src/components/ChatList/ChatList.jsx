@@ -27,14 +27,14 @@ class ChatList extends React.Component {
   }
 }
 
+ChatList.defaultProps = {
+  'data-cy': 'ChatList',
+}
+
 ChatList.propTypes = {
   className: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
-}
-
-ChatList.defaultProps = {
-  'data-cy': 'ChatList',
 }
 
 export default ChatList

@@ -66,6 +66,20 @@ export class Emoticon extends React.PureComponent {
   }
 }
 
+Emoticon.defaultProps = {
+  center: false,
+  clickable: true,
+  'data-cy': 'Emoticon',
+  inline: false,
+  isActive: true,
+  isDisabled: false,
+  innerRef: noop,
+  name: 'happy',
+  role: 'presentation',
+  size: 'md',
+  title: '',
+}
+
 Emoticon.propTypes = {
   /** The className of the component. */
   className: PropTypes.string,
@@ -96,20 +110,6 @@ Emoticon.propTypes = {
   title: PropTypes.string,
   /** size of the emoticon: lg: '24px', md: '20px', sm: '16px' */
   size: PropTypes.oneOf(['lg', 'md', 'sm']),
-}
-
-Emoticon.defaultProps = {
-  center: false,
-  clickable: true,
-  'data-cy': 'Emoticon',
-  inline: false,
-  isActive: true,
-  isDisabled: false,
-  innerRef: noop,
-  name: 'happy',
-  role: 'presentation',
-  size: 'md',
-  title: '',
 }
 
 export default Emoticon
