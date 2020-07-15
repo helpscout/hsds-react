@@ -176,6 +176,9 @@ class VerificationCode extends React.Component {
 
   handleInputKeyUp = (index, e) => {
     const { key } = e
+    console.log('handle input keyup')
+    e.stopPropagation()
+    e.preventDefault()
 
     if (key !== 'Meta') {
       const { value } = e.target
