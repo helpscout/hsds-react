@@ -7,6 +7,28 @@ import Heading from '../Heading'
 import Button from '../Button'
 import Frame from './'
 import HSDS from '../HSDS'
+import Modal from '../Modal'
+import { GlobalContext } from '../HSDS/Provider'
+
+class ModalComponent extends React.PureComponent {
+  static defaultProps = {
+    hsdsScope: '',
+  }
+
+  render() {
+    const { hsdsScope, children, ...rest } = this.props
+    return (
+      <Modal wrapperClassName={hsdsScope} {...rest}>
+        {this.props.children}
+      </Modal>
+    )
+  }
+}
+export const ModalWrapper = props => {
+  const contextValue = React.useContext(GlobalContext)
+  const hsdsScope = contextValue ? contextValue.getCurrentScope() : null
+  return <ModalComponent {...props} hsdsScope={hsdsScope} />
+}
 
 const stories = storiesOf('Frame', module)
 
@@ -32,10 +54,9 @@ stories.add('default', () => {
     render() {
       return (
         <div>
-          <button onClick={this.toggle}>Toggle Frame</button>
           <br />
           {this.state.showFrame && (
-            <Frame>
+            <Frame style={{ height: '500px' }}>
               <HSDS.Provider>
                 <Card>
                   <Heading>Card title</Heading>
@@ -43,8 +64,21 @@ stories.add('default', () => {
                     <Text>Card content</Text>
                   </p>
                   <FooterUI>
-                    <Button>Cancel</Button>
-                    <ButtonUI kind="primary">Submit</ButtonUI>
+                    <ModalWrapper
+                      trigger={
+                        <ButtonUI
+                          kind="primary"
+                          onClick={e => e.preventDefault()}
+                        >
+                          Open Modal
+                        </ButtonUI>
+                      }
+                    >
+                      <Modal.Body>
+                        <Heading>Title</Heading>
+                        <p>Lorem ipsum</p>
+                      </Modal.Body>
+                    </ModalWrapper>
                   </FooterUI>
                 </Card>
               </HSDS.Provider>
