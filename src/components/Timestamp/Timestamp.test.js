@@ -5,8 +5,6 @@ import { Icon, Text } from '..'
 
 const cx = 'c-Timestamp'
 
-jest.useFakeTimers()
-
 describe('ClassNames', () => {
   test('Has default className', () => {
     const wrapper = mount(<Timestamp />)
@@ -41,20 +39,10 @@ describe('Content', () => {
   })
 
   describe('Live update', () => {
-    //   let originalTimeout
-    beforeEach(function() {
-      // originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL
-      // jasmine.DEFAULT_TIMEOUT_INTERVAL = 4000
-      jest.clearAllTimers()
-    })
-
-    //   afterEach(function() {
-    //     jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout
-    //   })
-
     test('Timestamp is updated after a period of time', () => {
-      const timestamp = new Date().toISOString()
+      jest.useFakeTimers()
 
+      const timestamp = new Date().toISOString()
       const formatter = jest.fn()
       const formattedTimestamp = 'some time ago'
       formatter.mockReturnValue(formattedTimestamp)
@@ -63,7 +51,7 @@ describe('Content', () => {
         <Timestamp timestamp={timestamp} formatter={formatter} live />
       )
 
-      jest.runOnlyPendingTimers()
+      jest.runTimersToTime(1000)
 
       expect(wrapper.html()).toContain(formattedTimestamp)
       expect(formatter).toHaveBeenCalledTimes(2)

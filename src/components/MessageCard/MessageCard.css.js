@@ -11,9 +11,11 @@ export const MessageCardUI = styled(Card)`
   border-color: transparent !important;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  padding: 20px 20px 25px;
+  padding: 20px 0 25px;
   width: 300px;
   word-break: break-word;
+  display: flex;
+  flex-direction: column;
 
   &.is-align-right {
     border-bottom-right-radius: 4px;
@@ -55,12 +57,16 @@ export const TitleUI = styled(Heading)`
   ${fontFamily};
   line-height: 22px !important;
   margin-top: 5px;
+  padding: 0 20px;
+  flex: 0 0 auto;
 `
 
 export const SubtitleUI = styled(Heading)`
   ${setFontSize(12)};
   line-height: 18px !important;
   margin-top: 6px;
+  padding: 0 20px;
+  flex: 0 0 auto;
 `
 
 const editorHtmlFontSize = 14
@@ -70,6 +76,9 @@ export const BodyUI = styled.div`
   color: ${getColor('charcoal.700')};
   font-size: ${editorHtmlFontSize}px;
   line-height: 26px;
+  padding: 0 20px;
+  flex: 1 1 100%;
+  overflow: auto;
 
   p {
     font-size: ${editorHtmlFontSize}px;
@@ -243,6 +252,8 @@ export const BodyUI = styled.div`
 export const ActionUI = styled('div')`
   margin-bottom: -5px;
   margin-top: 20px;
+  padding: 0 20px;
+  flex: 0 0 auto;
 `
 
 export const ActionButtonUI = styled(Button)`

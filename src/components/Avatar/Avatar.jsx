@@ -347,7 +347,7 @@ const avatarPropTypes = {
   className: PropTypes.string,
   count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   fallbackImage: PropTypes.string,
-  image: PropTypes.string,
+  image: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   initials: PropTypes.string,
   light: PropTypes.bool,
   name: PropTypes.string,

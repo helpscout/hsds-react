@@ -39,7 +39,7 @@ describe('Staggering', () => {
     const first = o.first()
     const second = o.last()
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(first.prop('style').transitionDelay).toBe('200ms')
     expect(second.prop('style').transitionDelay).toBe('400ms')
@@ -62,7 +62,7 @@ describe('Staggering', () => {
     const first = o.first()
     const second = o.last()
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(first.prop('style').transitionDelay).toBe('700ms')
     expect(second.prop('style').transitionDelay).toBe('1400ms')

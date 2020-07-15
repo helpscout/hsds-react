@@ -125,7 +125,7 @@ describe('isDismissable', () => {
     const wrapper = mount(<Notification isDismissable onDismiss={spy} />)
     wrapper.instance().handleOnClick()
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(spy).toHaveBeenCalled()
   })
@@ -139,7 +139,7 @@ describe('isDismissable', () => {
     expect(spy).not.toHaveBeenCalled()
     // Faking the timer ending
     wrapper.instance().handleOnTimeout()
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(spy).toHaveBeenCalled()
   })

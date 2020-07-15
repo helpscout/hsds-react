@@ -263,7 +263,7 @@ describe('Value', () => {
     })
 
     const f = flushPromises()
-    jest.runAllImmediates()
+    jest.runAllTimers()
 
     f.then(() => {
       wrapper.update()
@@ -301,7 +301,7 @@ describe('Value', () => {
     })
 
     const f = flushPromises()
-    jest.runAllImmediates()
+    jest.runAllTimers()
 
     f.then(() => {
       wrapper.update()
@@ -340,7 +340,7 @@ describe('Value', () => {
     })
 
     const f = flushPromises()
-    jest.runAllImmediates()
+    jest.runAllTimers()
 
     f.then(() => {
       wrapper.update()
@@ -410,12 +410,7 @@ describe('Value', () => {
     expect(cy.get('input').length).toBe(1)
     button.click()
     expect(cy.get('input').length).toBe(2)
-    expect(
-      cy
-        .get('input')
-        .eq(1)
-        .value()
-    ).toBe('')
+    expect(cy.get('input').eq(1).value()).toBe('')
   })
 
   test('should not add input field after button was already clicked', () => {
@@ -599,9 +594,7 @@ describe('Options', () => {
     expect(cy.getByCy('DropdownTrigger').exists()).toBeTruthy()
 
     cy.getByCy('DropdownTrigger').click()
-    cy.getByCy('DropdownItem')
-      .first()
-      .click()
+    cy.getByCy('DropdownItem').first().click()
 
     expect(cy.get(`.${INPUT_CLASSNAMES.selectedOption}`).getText()).toBe('Home')
   })
@@ -710,9 +703,7 @@ describe('Static Value', () => {
     expect(cy.get(`.${MASK_CLASSNAMES.option}`).getText()).toBe('Work')
 
     cy.getByCy('DropdownTrigger').click()
-    cy.getByCy('DropdownItem')
-      .first()
-      .click()
+    cy.getByCy('DropdownItem').first().click()
 
     expect(cy.get(`.${MASK_CLASSNAMES.option}`).getText()).toBe('Home')
   })
@@ -959,10 +950,7 @@ describe('Events', () => {
       />
     )
 
-    wrapper
-      .find('input')
-      .first()
-      .simulate('keydown', { key: 'Escape' })
+    wrapper.find('input').first().simulate('keydown', { key: 'Escape' })
 
     expect(onEscapeSpy).toHaveBeenCalled()
     expect(onDiscardSpy).toHaveBeenCalled()
@@ -1040,9 +1028,7 @@ describe('Events', () => {
       />
     )
     cy.getByCy('DropdownTrigger').click()
-    cy.getByCy('DropdownItem')
-      .first()
-      .click()
+    cy.getByCy('DropdownItem').first().click()
 
     expect(onOptionChangeSpy).toHaveBeenCalled()
     expect(onChangeSpy).toHaveBeenCalled()
@@ -1101,7 +1087,7 @@ describe('enter press', () => {
     input.simulate('keydown', { key: 'Enter' })
 
     const f = flushPromises()
-    jest.runAllImmediates()
+    jest.runAllTimers()
 
     f.then(() => {
       expect(onEnterSpy).toHaveBeenCalled()
@@ -1179,7 +1165,7 @@ describe('enter press', () => {
     input.simulate('keydown', { key: 'Enter' })
 
     const f = flushPromises()
-    jest.runAllImmediates()
+    jest.runAllTimers()
 
     f.then(() => {
       expect(wrapper.state('fieldValue')).toEqual([
@@ -1216,7 +1202,7 @@ describe('enter press', () => {
     input.simulate('keydown', { key: 'Enter' })
 
     const f = flushPromises()
-    jest.runAllImmediates()
+    jest.runAllTimers()
 
     f.then(() => {
       expect(wrapper.state('value')).toEqual('123')
@@ -1440,7 +1426,7 @@ describe('Input Blur', () => {
     cy.get('input').blur()
 
     const f = flushPromises()
-    jest.runAllImmediates()
+    jest.runAllTimers()
 
     f.then(() => {
       expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
@@ -1465,22 +1451,16 @@ describe('Input Blur', () => {
       />
     )
 
-    cy.get('input')
-      .first()
-      .focus()
+    cy.get('input').first().focus()
 
     expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeTruthy()
     expect(cy.get('input').length).toBe(2)
 
-    cy.get('input')
-      .first()
-      .type('')
-    cy.get('input')
-      .first()
-      .blur()
+    cy.get('input').first().type('')
+    cy.get('input').first().blur()
 
     const f = flushPromises()
-    jest.runAllImmediates()
+    jest.runAllTimers()
 
     f.then(() => {
       expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
@@ -1507,22 +1487,16 @@ describe('Input Blur', () => {
       />
     )
 
-    cy.get('input')
-      .first()
-      .focus()
+    cy.get('input').first().focus()
 
     expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeTruthy()
     expect(cy.get('input').length).toBe(1)
 
-    cy.get('input')
-      .first()
-      .type('')
-    cy.get('input')
-      .first()
-      .blur()
+    cy.get('input').first().type('')
+    cy.get('input').first().blur()
 
     const f = flushPromises()
-    jest.runAllImmediates()
+    jest.runAllTimers()
 
     f.then(() => {
       expect(cy.get(`.${STATES_CLASSNAMES.isActive}`).exists()).toBeFalsy()
@@ -1554,7 +1528,7 @@ describe('Input Blur', () => {
     cy.get('input').blur()
 
     const f = flushPromises()
-    jest.runAllImmediates()
+    jest.runAllTimers()
 
     f.then(() => {
       expect(cy.get('input').getValue()).toBe('hola')
@@ -1595,7 +1569,7 @@ describe('Input Blur', () => {
     cy.get('input').blur()
 
     const f = flushPromises()
-    jest.runAllImmediates()
+    jest.runAllTimers()
 
     f.then(() => {
       expect(cy.get('input').getValue()).toBe('hola')
@@ -1628,7 +1602,7 @@ describe('Input Blur', () => {
 
     input.simulate('blur')
     const f = flushPromises()
-    jest.runAllImmediates()
+    jest.runAllTimers()
     f.then(() => {
       expect(wrapper.state('fieldValue')).toEqual([
         {

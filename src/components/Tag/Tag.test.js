@@ -115,7 +115,7 @@ describe('Remove', () => {
     const icon = wrapper.find(Icon)
     icon.simulate('click')
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(spy).toHaveBeenCalled()
     expect(spy.mock.calls[0][0].id).toBe(1)
@@ -140,7 +140,7 @@ describe('Remove', () => {
     const icon = wrapper.find(Icon)
     icon.simulate('click')
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(spy).toHaveBeenCalled()
     expect(spy.mock.calls[0][0].id).toBe(1)

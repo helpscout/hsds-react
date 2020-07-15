@@ -1,5 +1,5 @@
 import React from 'react'
-import { ThemeProvider } from '../styled'
+import styled, { ThemeProvider } from '../styled'
 import { boolean, number, text, select } from '@storybook/addon-knobs'
 import { getColor } from '../../styles/utilities/color'
 import { action } from '@storybook/addon-actions'
@@ -10,6 +10,15 @@ export default {
   component: MessageCard,
   title: 'Components/Conversation/MessageCard',
 }
+
+const LimitUI = styled.div`
+  ${({ height }) => (height ? `height: ${height};` : '')};
+
+  .c-Animate,
+  .c-MessageCard {
+    height: 100%;
+  }
+`
 
 class Story extends React.Component {
   render() {
@@ -54,11 +63,15 @@ class Story extends React.Component {
       title: text('Title', 'Need help?'),
     }
 
+    const limitProps = {
+      height: text('limit screen height', '100vh'),
+    }
+
     return (
       <ThemeProvider theme={theme}>
-        <div>
+        <LimitUI {...limitProps}>
           <MessageCard {...props} />
-        </div>
+        </LimitUI>
       </ThemeProvider>
     )
   }

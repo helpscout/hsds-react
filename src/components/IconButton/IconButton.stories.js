@@ -25,7 +25,7 @@ export const Default = () => {
         primary: 'primary',
         primaryAlt: 'primaryAlt',
         secondary: 'secondary',
-        secondaryAlt: 'secondaryAlt',
+        tertiary: 'tertiary',
         default: 'default',
         link: 'link',
       },

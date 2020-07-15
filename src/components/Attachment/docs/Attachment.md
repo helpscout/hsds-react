@@ -1,6 +1,6 @@
 # Attachment
 
-An Attachment component provides UI for file attachments, typically found in [Chat-based](../ChatTranscript) components.
+An Attachment component provides UI for file attachments, typically found in Chat-based components.
 
 ## Example
 

@@ -131,7 +131,7 @@ export class SelectDropdown extends React.PureComponent {
   }
 
   renderTrigger() {
-    const { state } = this.props
+    const { disabled, state } = this.props
     const { isFocused } = this.state
     const isError = state === 'error'
 
@@ -139,10 +139,10 @@ export class SelectDropdown extends React.PureComponent {
       <InputUI
         className={classNames('c-SelectDropdownTrigger', isError && 'is-error')}
       >
-        <LabelUI className="c-SelectDropdownTriggerLabel">
+        <LabelUI className="c-SelectDropdownTriggerLabel" disabled={disabled}>
           <Text truncate>{this.getLabel()}</Text>
         </LabelUI>
-        <SelectArrows state={state} />
+        <SelectArrows state={state} disabled={disabled} />
         {this.renderError()}
         <BackdropUI isFocused={isFocused} state={state} />
       </InputUI>

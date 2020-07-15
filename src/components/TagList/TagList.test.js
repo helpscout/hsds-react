@@ -92,7 +92,7 @@ describe('onRemove', () => {
 
     icon.simulate('click')
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(spy).toHaveBeenCalled()
   })
@@ -110,7 +110,7 @@ describe('onRemoveAll', () => {
     )
 
     wrapper.find(ClearAllUI).simulate('click')
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(spy).toHaveBeenCalled()
   })
@@ -157,12 +157,9 @@ describe('Overflow', () => {
         <Tag />
       </TagList>
     )
-    expect(
-      wrapper
-        .find(TagListUI)
-        .first()
-        .prop('className')
-    ).toContain('is-showingAll')
+    expect(wrapper.find(TagListUI).first().prop('className')).toContain(
+      'is-showingAll'
+    )
   })
 
   test('Wraps content in Overflow, if specified', () => {

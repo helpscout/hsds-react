@@ -12,6 +12,7 @@ export default {
 export const Default = () => {
   return (
     <SelectDropdown
+      disabled={boolean('disabled', false)}
       autoInput={false}
       items={createSpec({
         id: faker.random.uuid(),

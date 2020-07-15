@@ -56,10 +56,7 @@ describe('ref', () => {
   test('Can retrieve ref DOM node', () => {
     const spy = jest.fn()
     const wrapper = mount(<EditableTextarea id="company" innerRef={spy} />)
-    const o = wrapper
-      .find('.c-EditableTextarea')
-      .first()
-      .getDOMNode()
+    const o = wrapper.find('.c-EditableTextarea').first().getDOMNode()
 
     expect(spy).toHaveBeenCalledWith(o)
   })
@@ -165,10 +162,7 @@ describe('Keydown', () => {
       <EditableTextarea id="company" value="hello" onEnter={onEnterSpy} />
     )
 
-    wrapper
-      .find('textarea')
-      .first()
-      .simulate('keydown', { key: 'Enter' })
+    wrapper.find('textarea').first().simulate('keydown', { key: 'Enter' })
 
     expect(onEnterSpy).toHaveBeenCalled()
   })
@@ -179,10 +173,7 @@ describe('Keydown', () => {
       <EditableTextarea id="company" value="hello" onEscape={onEscapeSpy} />
     )
 
-    wrapper
-      .find('textarea')
-      .first()
-      .simulate('keydown', { key: 'Escape' })
+    wrapper.find('textarea').first().simulate('keydown', { key: 'Escape' })
 
     expect(onEscapeSpy).toHaveBeenCalled()
   })
@@ -208,10 +199,7 @@ describe('Keydown', () => {
         onInputKeyDown={onInputKeyDownSpy}
       />
     )
-    wrapper
-      .find('textarea')
-      .first()
-      .simulate('keydown', { key: 'Tab' })
+    wrapper.find('textarea').first().simulate('keydown', { key: 'Tab' })
     expect(onInputKeyDownSpy).toHaveBeenCalled()
     const arg = onInputKeyDownSpy.mock.calls[0][0]
     expect(arg.name).toEqual('company')
@@ -224,19 +212,24 @@ describe('Keydown', () => {
 describe('Keyup', () => {
   test('Escape', done => {
     const wrapper = mount(<EditableTextarea id="company" value="hello" />)
+
     expect(wrapper.state('readOnly')).toEqual(true)
 
     const ta = wrapper.find('textarea').first()
     ta.simulate('click')
+
     expect(wrapper.state('readOnly')).toEqual(false)
 
     ta.simulate('keyup', { key: 'a' })
-    jest.runAllImmediates()
+
+    jest.runAllTimers()
+
     let f = flushPromises()
+
     f.then(() => {
       expect(wrapper.state('readOnly')).toEqual(false)
       ta.simulate('keyup', { key: 'Escape' })
-      jest.runAllImmediates()
+      jest.runAllTimers()
       f = flushPromises()
       f.then(() => {
         expect(wrapper.state('readOnly')).toEqual(false)
@@ -254,10 +247,7 @@ describe('Keyup', () => {
         onInputKeyUp={onInputKeyUpSpy}
       />
     )
-    wrapper
-      .find('textarea')
-      .first()
-      .simulate('keyup', { key: 'Tab' })
+    wrapper.find('textarea').first().simulate('keyup', { key: 'Tab' })
     expect(onInputKeyUpSpy).toHaveBeenCalled()
     const arg = onInputKeyUpSpy.mock.calls[0][0]
     expect(arg.name).toEqual('company')
@@ -281,7 +271,7 @@ describe('Blur', () => {
     textarea.blur()
 
     const f = flushPromises()
-    jest.runAllImmediates()
+    jest.runAllTimers()
 
     f.then(() => {
       expect(onCommitSpy).toHaveBeenCalled()
@@ -301,7 +291,7 @@ describe('Blur', () => {
     textarea.blur()
 
     const f = flushPromises()
-    jest.runAllImmediates()
+    jest.runAllTimers()
 
     f.then(() => {
       expect(onCommitSpy).not.toHaveBeenCalled()
@@ -361,7 +351,7 @@ describe('Blur', () => {
     textarea.simulate('keydown', { key: 'Enter' })
 
     const f = flushPromises()
-    jest.runAllImmediates()
+    jest.runAllTimers()
 
     f.then(() => {
       expect(onEnterSpy).toHaveBeenCalled()
@@ -381,7 +371,7 @@ describe('Blur', () => {
     textarea.type('hello')
     textarea.blur()
     const f = flushPromises()
-    jest.runAllImmediates()
+    jest.runAllTimers()
 
     f.then(() => {
       expect(validateSpy).toHaveBeenCalled()
@@ -391,7 +381,7 @@ describe('Blur', () => {
     textarea.blur()
 
     const t = flushPromises()
-    jest.runAllImmediates()
+    jest.runAllTimers()
 
     t.then(() => {
       expect(validateSpy).not.toHaveBeenCalled()
@@ -447,7 +437,7 @@ describe('validation rendering', () => {
     textarea.blur()
 
     const f = flushPromises()
-    jest.runAllImmediates()
+    jest.runAllTimers()
 
     f.then(() => {
       expect(
@@ -482,7 +472,7 @@ describe('validation rendering', () => {
     textarea.blur()
 
     const f = flushPromises()
-    jest.runAllImmediates()
+    jest.runAllTimers()
 
     f.then(() => {
       expect(
@@ -517,7 +507,7 @@ describe('validation rendering', () => {
     textarea.blur()
 
     const f = flushPromises()
-    jest.runAllImmediates()
+    jest.runAllTimers()
 
     f.then(() => {
       expect(

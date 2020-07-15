@@ -7,8 +7,6 @@ import Badge from '../../Badge'
 import Animate from '../../Animate'
 import { CharValidatorUI } from '../Input.css'
 
-jest.useFakeTimers()
-
 const ui = {
   field: '.c-InputField',
   errorIcon: '.c-Input__errorIcon',
@@ -19,6 +17,8 @@ const ui = {
   suffix: 'div.c-Input__item.is-suffix',
   tooltip: '.c-Tooltip',
 }
+
+jest.useFakeTimers()
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -61,7 +61,7 @@ describe('Autofocus', () => {
   test('Autofocuses if specified', () => {
     jest.useFakeTimers()
     const wrapper = mount(<Input autoFocus />)
-    const input = wrapper.find('input')
+
     jest.runAllTimers()
     expect(wrapper.state('isFocused')).toBeTruthy()
   })
@@ -607,25 +607,27 @@ describe('inputNode', () => {
 
 describe('isFocused', () => {
   test('Can focus input using isFocused prop', () => {
-    const spy = jest.fn()
     const wrapper = mount(<Input isFocused />)
     const o = wrapper.instance().inputNode
-    o.onfocus = spy
+    const spy = jest.spyOn(o, 'focus')
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(spy).toHaveBeenCalled()
+    expect(wrapper.state('isFocused')).toBeTruthy()
+    expect(wrapper.find('is-focused')).toBeTruthy()
   })
 
   test('Can focus input using custom timeout', () => {
-    const spy = jest.fn()
     const wrapper = mount(<Input isFocused forceAutoFocusTimeout={20} />)
     const o = wrapper.instance().inputNode
-    o.onfocus = spy
+    const spy = jest.spyOn(o, 'focus')
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(spy).toHaveBeenCalled()
+    expect(wrapper.state('isFocused')).toBeTruthy()
+    expect(wrapper.find('is-focused')).toBeTruthy()
   })
 
   test('Can toggle isFocused', () => {
@@ -638,7 +640,7 @@ describe('isFocused', () => {
 
     wrapper.setProps({ isFocused: true })
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(spy).toHaveBeenCalled()
   })

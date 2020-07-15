@@ -88,7 +88,7 @@ describe('CloseIcon', () => {
       </ModalComponent>
     )
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     const o = wrapper.find('div.c-Modal__close').first()
 
@@ -105,7 +105,7 @@ describe('CloseIcon', () => {
 
     global.dispatchEvent(new Event('resize'))
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(spy).toHaveBeenCalled()
   })

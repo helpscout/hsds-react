@@ -53,7 +53,7 @@ describe('Timeout', () => {
 
     expect(wrapper.state().shouldRenderConfirmation).toBe(true)
 
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(wrapper.state().shouldRenderConfirmation).toBe(false)
   })
@@ -64,7 +64,7 @@ describe('Timeout', () => {
     const el = wrapper.find('button')
 
     el.simulate('click')
-    jest.runOnlyPendingTimers()
+    jest.runAllTimers()
 
     expect(spy).toHaveBeenCalled()
   })
