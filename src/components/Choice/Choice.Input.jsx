@@ -12,7 +12,7 @@ import {
   InputRadioUI,
 } from './Choice.css'
 
-class Input extends React.PureComponent {
+class ChoiceInput extends React.PureComponent {
   state = {
     isFocused: false,
   }
@@ -154,30 +154,7 @@ class Input extends React.PureComponent {
   }
 }
 
-Input.propTypes = {
-  autoFocus: PropTypes.bool,
-  align: PropTypes.string,
-  checked: PropTypes.bool,
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  disabled: PropTypes.bool,
-  helpText: PropTypes.string,
-  id: PropTypes.string,
-  inputRef: PropTypes.func,
-  innerRef: PropTypes.func,
-  kind: PropTypes.string,
-  onBlur: PropTypes.func,
-  onChange: PropTypes.func,
-  onFocus: PropTypes.func,
-  name: PropTypes.string,
-  readOnly: PropTypes.bool,
-  state: PropTypes.string,
-  type: PropTypes.string,
-  value: PropTypes.string,
-}
-
-Input.defaultProps = {
+ChoiceInput.defaultProps = {
   autoFocus: false,
   'data-cy': 'ChoiceInput',
   disabled: false,
@@ -191,4 +168,29 @@ Input.defaultProps = {
   value: '',
 }
 
-export default Input
+ChoiceInput.propTypes = {
+  autoFocus: PropTypes.bool,
+  align: PropTypes.string,
+  checked: PropTypes.bool,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  disabled: PropTypes.bool,
+  helpText: PropTypes.string,
+  id: PropTypes.string,
+  inputRef: PropTypes.func,
+  innerRef: PropTypes.func,
+  /** Render a customized radio or a default */
+  kind: PropTypes.oneOf(['default', 'custom']),
+  onBlur: PropTypes.func,
+  onChange: PropTypes.func,
+  onFocus: PropTypes.func,
+  name: PropTypes.string,
+  readOnly: PropTypes.bool,
+  state: PropTypes.string,
+  type: PropTypes.string,
+  value: PropTypes.string,
+}
+
+export default ChoiceInput

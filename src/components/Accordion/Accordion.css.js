@@ -4,7 +4,7 @@ import Flexy from '../Flexy'
 import Text from '../Text'
 import { breakpoint } from '../../styles/mixins/breakpoints.css'
 import { getColor } from '../../styles/utilities/color'
-import { pageBreakpointsConfig } from '../Page/Page.config.css'
+import { pageBreakpointsConfig } from '../Page/Page.config'
 import { classNameStrings as titleClassNames } from './Accordion.Title'
 import { setFontSize } from '../../styles/utilities/font'
 

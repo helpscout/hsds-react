@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Text from '../Text'
 import { classNames } from '../../utilities/classNames'
@@ -66,6 +67,25 @@ PageHeader.defaultProps = {
   title: 'Title',
   withBorder: true,
   withBottomMargin: true,
+}
+
+PageHeader.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Enables responsive styles. Default `false`. */
+  isResponsive: PropTypes.bool,
+  /** function with 2 arguments: `Title` and `Subtitle`, 2 React Components with styles ready */
+  render: PropTypes.func,
+  /** Renders a border under the header. Default `true`. */
+  withBorder: PropTypes.bool,
+  /** Renders bottom margin styles. Default `true`. */
+  withBottomMargin: PropTypes.bool,
+  /** The `Heading` title to render. */
+  title: PropTypes.string,
+  /** The `Text` subtitle to render. */
+  subtitle: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default PageHeader

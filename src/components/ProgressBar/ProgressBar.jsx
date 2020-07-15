@@ -60,20 +60,26 @@ class ProgressBar extends React.PureComponent {
   }
 }
 
-ProgressBar.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  description: PropTypes.string,
-  onChange: PropTypes.func,
-  size: PropTypes.oneOf(['xs', 'xssm', 'sm', 'md', 'lg', '', null]),
-  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-}
-
 ProgressBar.defaultProps = {
   'data-cy': 'ProgressBar',
   onChange: noop,
   value: 0,
+  size: 'md',
+}
+
+ProgressBar.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Description of the progress bar (for accessibility). */
+  description: PropTypes.string,
+  /** Callback when component value updates. Returns value as percent. */
+  onChange: PropTypes.func,
+  /** Determines the size of the component height (lg: 10px, md: 6px, sm: 2px) */
+  size: PropTypes.oneOf(['sm', 'md', 'lg']),
+  /** Progress value to visualize in component. */
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default ProgressBar

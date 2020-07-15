@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { MODAL_KIND } from './Modal.utils'
@@ -147,6 +148,27 @@ ModalHeaderV2.defaultProps = {
   numSteps: 1,
   step: 1,
   title: 'Title',
+}
+
+ModalHeaderV2.propTypes = {
+  /** Renders in version 2 Modals beneath the title. */
+  description: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  /** Renders as an `Icon` in the top left corner of a version 2 Modal header. */
+  icon: PropTypes.string,
+  /** The size to render the provided `Icon` in a version 2 Modal header. */
+  iconSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Expects an `Illo` to be displayed in a version 2 Modal header. */
+  illo: PropTypes.any,
+  /** The size to render the provided `Illo` in a version 2 Modal header. */
+  illoSize: PropTypes.number,
+  /** The kind of version 2 Modal style to apply. (DEFAULT, BRANDED, ALERT, SEQUENCE). Default `DEFAULT` */
+  kind: PropTypes.oneOf(['alert', 'default', 'branded', 'sequence']),
+  /** Total number of steps to be used in a version 2 Sequence Modal. */
+  numSteps: PropTypes.number,
+  /** Current step to be used in a version 2 Sequence Modal. */
+  step: PropTypes.number,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default ModalHeaderV2

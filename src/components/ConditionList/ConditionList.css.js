@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { breakpoint } from '../../styles/mixins/breakpoints.css'
-import { pageBreakpointsConfig } from '../Page/Page.config.css'
+import { pageBreakpointsConfig } from '../Page/Page.config'
 import { getColor } from '../../styles/utilities/color'
 
 export const config = {

@@ -1,0 +1,44 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import ProgressBar from './'
+
+<Meta
+  title="Components/Elements/ProgressBar"
+  component={ProgressBar}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A8580',
+    },
+  }}
+/>
+
+# ProgressBar
+
+A ProgressBar component visualizes the progression of a task. This component is typically used to illustrate loading progress.
+
+<Preview>
+  <Story name="default">
+    <div>
+      <ProgressBar value={50} size="lg" />
+      <br />
+      <ProgressBar value={50} size="md" />
+      <br />
+      <ProgressBar value={50} size="sm" />
+      <br />
+    </div>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: ChatApp, Beacon2
+
+<br />
+<br />
+
+### Props
+
+<Props of={ProgressBar} />

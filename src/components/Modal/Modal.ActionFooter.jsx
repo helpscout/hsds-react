@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
@@ -133,6 +134,33 @@ ModalActionFooter.defaultProps = {
   secondaryButtonDisabled: false,
   showDefaultCancel: true,
   state: '',
+}
+
+ModalActionFooter.propTypes = {
+  /** Text on cancel button */
+  cancelText: PropTypes.string,
+  /** The kind of version 2 Modal style to apply. */
+  kind: PropTypes.oneOf(['alert', 'default', 'branded', 'sequence']),
+  /** Callback on cancel button click */
+  onCancel: PropTypes.func,
+  /** Callback on primary button click */
+  onPrimaryClick: PropTypes.func,
+  /** Callback on secondary button click */
+  onSecondaryClick: PropTypes.func,
+  /** Text on primary button */
+  primaryButtonText: PropTypes.string,
+  /** Whether the button is disabled */
+  primaryButtonDisabled: PropTypes.bool,
+  /** Text on secondary button */
+  secondaryButtonText: PropTypes.string,
+  /** Whether the button is disabled */
+  secondaryButtonDisabled: PropTypes.bool,
+  /** Show cancel button */
+  showDefaultCancel: PropTypes.bool,
+  /** State to use when styling a version 2 Modal (currently only `danger` state is custom styled). */
+  state: PropTypes.oneOf(['', 'danger']),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default ModalActionFooter

@@ -22,20 +22,24 @@ class ModalFooter extends React.PureComponent {
   }
 }
 
-ModalFooter.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  seamless: PropTypes.bool,
-  shadow: PropTypes.bool,
-  size: PropTypes.oneOf(['xl', 'lg', 'md', 'sm', 'xs']),
-}
-
 ModalFooter.defaultProps = {
   'data-cy': 'ModalFooter',
   seamless: false,
   shadow: false,
   size: 'lg',
+}
+
+ModalFooter.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  /** Renders content with the standard `Card` UI. */
+  seamless: PropTypes.bool,
+  /** Adds shadow styles, see `Toolbar` */
+  shadow: PropTypes.bool,
+  /** Size (height) of the header, see `Toolbar` */
+  size: PropTypes.oneOf(['xl', 'lg', 'md', 'sm', 'xs']),
 }
 
 export default ModalFooter

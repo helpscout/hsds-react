@@ -8,7 +8,7 @@ import {
   actionsConfig,
   pageCardConfig,
   pageBreakpointsConfig,
-} from './Page.config.css'
+} from './Page.config'
 import Heading from '../Heading'
 
 /**

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Input from './Choice.Input'
+import ChoiceInput from './Choice.Input'
 import Flexy from '../Flexy'
 import HelpText from '../HelpText'
 import Text from '../Text'
@@ -179,7 +179,7 @@ class Choice extends React.PureComponent {
 
     const inputMarkup = (
       <span className="c-Choice__control">
-        <Input {...inputProps} />
+        <ChoiceInput {...inputProps} />
       </span>
     )
 
@@ -299,7 +299,7 @@ Choice.propTypes = {
   disabled: PropTypes.bool,
   /** Displays text underneath input. */
   helpText: PropTypes.string,
-  /** Hides the label with [VisuallyHidden](../VisuallyHidden). */
+  /** Hides the label with VisuallyHidden */
   hideLabel: PropTypes.bool,
   /** ID for the input. */
   id: PropTypes.string,
@@ -329,7 +329,8 @@ Choice.propTypes = {
     PropTypes.number,
     PropTypes.bool,
   ]),
-  kind: PropTypes.string,
+  /** Render a customized radio or a default */
+  kind: PropTypes.oneOf(['default', 'custom']),
 }
 
 export default Choice

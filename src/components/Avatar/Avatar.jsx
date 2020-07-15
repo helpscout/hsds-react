@@ -372,7 +372,7 @@ const avatarPropTypes = {
   /** Used to display an additional avatar count. */
   count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   /** URL of the image to display. */
-  image: PropTypes.string,
+  image: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   /** Custom initials to display. */
   initials: PropTypes.string,
   /** Applies a "light" style to the component. */
