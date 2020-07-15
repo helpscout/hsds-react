@@ -44,7 +44,11 @@ export class NavItem extends React.Component {
 
     return (
       <ErrorWrapperUI>
-        <Tooltip data-cy="NavItemErrorTooltip" title={error}>
+        <Tooltip
+          data-cy="NavItemErrorTooltip"
+          title={error}
+          appendTo={document.body}
+        >
           <Icon
             data-cy="NavItemErrorIcon"
             name="alert"
