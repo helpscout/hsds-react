@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFromComponent'
 import Container, { ID as portalContainerId } from './Portal.Container'
 import { isNodeElement } from '../../utilities/node'
 import { isObject, isString } from '../../utilities/is'
+import { StyleSheetContext } from 'styled-components'
+import { GlobalContext } from '../HSDS/Provider'
 
 export class Portal extends React.Component {
   static defaultProps = {
@@ -54,13 +56,19 @@ export class Portal extends React.Component {
   }
 
   getMountSelector() {
-    const { renderTo } = this.props
+    let { renderTo } = this.props
     let mountSelector
     // 1. Prioritize renderTo selector
     if (renderTo) {
       mountSelector = isString(renderTo)
         ? document.querySelector(renderTo)
         : false
+
+      if (renderTo.hasOwnProperty('current')) {
+        // it is a context, use that value has the renderTo element
+        renderTo = renderTo.current
+      }
+
       mountSelector =
         isObject(renderTo) && isNodeElement(renderTo) ? renderTo : mountSelector
     }
@@ -83,12 +91,24 @@ export class Portal extends React.Component {
   }
 
   renderPortalContent = props => {
-    const { children } = props
+    const { children, stylesheet, scope } = props
     if (!children || !React.isValidElement(children)) return
+
+    let child = <>{children}</>
+    if (stylesheet) {
+      child = (
+        <StyleSheetContext.Provider value={stylesheet}>
+          <>{children}</>
+        </StyleSheetContext.Provider>
+      )
+    }
+    if (scope) {
+      child = <div className={scope}>{child}</div>
+    }
 
     this.portal = ReactDOM.unstable_renderSubtreeIntoContainer(
       this,
-      <>{children}</>,
+      child,
       this.node
     )
   }
@@ -183,7 +203,15 @@ export class Portal extends React.Component {
   }
 }
 
-Portal.propTypes = {
+const PortalWithContext = props => {
+  const scContext = useContext(StyleSheetContext) || null
+  const { getCurrentScope } = useContext(GlobalContext) || {}
+  const scope = getCurrentScope ? getCurrentScope() : null
+
+  return <Portal {...props} stylesheet={scContext} scope={scope} />
+}
+
+PortalWithContext.propTypes = {
   className: PropTypes.string,
   exact: PropTypes.bool,
   id: PropTypes.string,
@@ -196,4 +224,4 @@ Portal.propTypes = {
   timeout: PropTypes.number,
 }
 
-export default Portal
+export default PortalWithContext

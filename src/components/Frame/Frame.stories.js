@@ -64,7 +64,7 @@ stories.add('default', () => {
                     <Text>Card content</Text>
                   </p>
                   <FooterUI>
-                    <ModalWrapper
+                    <Modal
                       trigger={
                         <ButtonUI
                           kind="primary"
@@ -78,7 +78,7 @@ stories.add('default', () => {
                         <Heading>Title</Heading>
                         <p>Lorem ipsum</p>
                       </Modal.Body>
-                    </ModalWrapper>
+                    </Modal>
                   </FooterUI>
                 </Card>
               </HSDS.Provider>
