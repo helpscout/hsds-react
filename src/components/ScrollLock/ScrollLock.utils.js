@@ -1,10 +1,4 @@
-import { isFirefox } from '../../utilities/browser'
-
 export function scrollLockX(event, stopPropagation) {
-  // Disabled for Firefox
-
-  // Can't test this function in JSDOM
-  if (isFirefox()) return
   const { deltaX } = event
   const scrollNode = event.currentTarget
   const { clientWidth, scrollWidth, scrollLeft } = scrollNode
@@ -23,10 +17,6 @@ export function scrollLockX(event, stopPropagation) {
 }
 
 export function scrollLockY(event, stopPropagation) {
-  // Disabled for Firefox
-
-  // Can't test this function in JSDOM
-  if (isFirefox()) return
   const scrollNode = event.currentTarget
   const { clientHeight, scrollHeight, scrollTop } = scrollNode
   const { deltaY } = event

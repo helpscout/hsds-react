@@ -3,7 +3,7 @@ import { Select } from '../index'
 
 export default {
   component: Select,
-  title: 'Phaseout/Select',
+  title: 'z Phasing Out/Select',
 }
 
 export const Default = () => <Select options={['one', 'two', 'three']} />

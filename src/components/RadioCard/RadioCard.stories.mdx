@@ -1,0 +1,81 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { ChoiceGroup } from '../index'
+import RadioCard from './'
+
+<Meta
+  title="Components/Forms/RadioCard"
+  component={RadioCard}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A9509',
+    },
+  }}
+/>
+
+# RadioCard
+
+This component provides richer context to the of the default HTML `<input>` `radio`.
+
+<Preview>
+  <Story name="default">
+    <ChoiceGroup align="horizontal" value="chat" isResponsive>
+      <RadioCard icon="fab-chat" value="chat" />
+      <RadioCard icon="fab-antenna" value="antenna" />
+      <RadioCard icon="fab-buoy" value="buoy" />
+      <RadioCard icon="fab-search" value="search" />
+      <RadioCard icon="fab-question" value="question" />
+    </ChoiceGroup>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: PL
+- **Usage**: Beacon embed
+
+<br />
+<br />
+
+### Props
+
+<Props of={RadioCard} />
+
+### Stories
+
+#### With headings
+
+<Preview>
+  <Story name="with headings">
+    <ChoiceGroup
+      align="horizontal"
+      value="chat"
+      choiceMaxWidth="214px"
+      isResponsive
+    >
+      <RadioCard
+        icon="fab-chat"
+        content="some content"
+        heading="Chat"
+        value="chat"
+        maxWidth="214px"
+      />
+      <RadioCard
+        icon="fab-antenna"
+        content="some content"
+        heading="Antenna"
+        value="antenna"
+        maxWidth="214px"
+      />
+      <RadioCard
+        icon="fab-buoy"
+        content="some content"
+        heading="Buoy"
+        value="buoy"
+        maxWidth="214px"
+      />
+    </ChoiceGroup>
+  </Story>
+</Preview>

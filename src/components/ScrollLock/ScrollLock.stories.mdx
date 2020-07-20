@@ -1,0 +1,62 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { select, boolean } from '@storybook/addon-knobs'
+import ScrollLock from './'
+
+<Meta title="Utilities/ScrollLock" component={ScrollLock} />
+
+# ScrollLock
+
+ScrollLock is component which prevents scrolling past the top or bottom of a container. Wrap your scrollable element in a ScrollLock to use it.
+
+## Browsers
+
+Under the hood it applies the css rule [`overscroll-behavior`](https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior) to add enable this behaviour, unfortunately it doesn't work on safari yet.
+
+### Safari
+
+For Safari we use an event handler on the `wheel` event, is less performant but it only applies on this browser.
+
+<Preview>
+  <Story name="default">
+    <ScrollLock isDisabled={boolean('isDisabled', false)} direction="y">
+      <div
+        style={{
+          height: '300px',
+          width: '250px',
+          padding: '20px',
+          overflowY: 'scroll',
+        }}
+      >
+        <div style={{ height: '350px', width: '450px' }}>
+          <p>
+            Nisi pariatur laboris laboris fugiat pariatur cupidatat mollit.
+            Deserunt exercitation id proident ad. Culpa labore nisi ullamco qui
+            laboris. Elit aliquip eiusmod esse enim dolor aute commodo eu qui
+            eiusmod eu tempor id consectetur.
+          </p>
+          <p>
+            Exercitation ea mollit minim mollit esse in ea mollit ad minim
+            excepteur. Duis amet sunt duis exercitation ea duis nostrud minim
+            sit sint excepteur exercitation nisi. Tempor sint ea proident
+            consequat officia id in minim. Pariatur velit veniam enim amet in
+            laboris dolore. Tempor nostrud tempor nisi veniam nisi incididunt
+            reprehenderit nulla anim et eiusmod. Laborum nulla laboris ut et qui
+            velit ullamco mollit enim aliquip.
+          </p>
+        </div>
+      </div>
+    </ScrollLock>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={ScrollLock} />

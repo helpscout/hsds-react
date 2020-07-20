@@ -9,4 +9,4 @@ export const isBrowser = browser => {
 export const isEdge = () => isBrowser('edge')
 export const isChrome = () => isBrowser('chrome')
 export const isFirefox = () => isBrowser('firefox')
-export const isSafari = () => isBrowser('safari')
+export const isSafari = () => isBrowser('safari') && !isBrowser('chrome')

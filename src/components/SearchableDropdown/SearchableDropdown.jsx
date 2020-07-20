@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Dropdown from '../Dropdown'
 import { isItemsEmpty, hasGroups } from '../Dropdown/Dropdown.utils'
 import { initialState } from '../Dropdown/Dropdown.store'
@@ -367,6 +368,36 @@ SearchableDropdown.defaultProps = {
   noResultsLabel: 'No results',
   onInputChange: noop,
   showInput: true,
+}
+
+SearchableDropdown.propTypes = {
+  ...Dropdown.propTypes,
+  ...{
+    /** Renders the search `Input` based on the limit and the number of items. */
+    autoInput: PropTypes.bool,
+    /** Closes `Dropdown` when `tab` is pressed within the `Input`. */
+    closeOnInputTab: PropTypes.bool,
+    /** Customize the item search filter results. */
+    customFilter: PropTypes.func,
+    /** Callback when the inputValue changes. */
+    onInputChange: PropTypes.func,
+    /** Custom props for the inner `Input` component. */
+    inputProps: PropTypes.object,
+    /** Key to filter the results against. */
+    itemFilterKey: PropTypes.string,
+    /** Text to display when there are no results. */
+    noResultsLabel: PropTypes.string,
+    /** Custom UI to render before the `Menu`. */
+    renderMenuStart: PropTypes.func,
+    /** Custom UI to render after the `Menu`. */
+    renderMenuEnd: PropTypes.func,
+    /** Custom UI to render in the `Dropdown` footer. */
+    renderFooter: PropTypes.func,
+    /** Renders the search `Input` component. */
+    showInput: PropTypes.bool,
+    /** Max number of items before the search input is displayed */
+    limit: PropTypes.number,
+  },
 }
 
 export default SearchableDropdown

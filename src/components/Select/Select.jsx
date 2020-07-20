@@ -391,47 +391,6 @@ export class Select extends React.PureComponent {
   }
 }
 
-Select.propTypes = {
-  autoFocus: PropTypes.bool,
-  children: PropTypes.any,
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  disabled: PropTypes.bool,
-  errorIcon: PropTypes.string,
-  errorMessage: PropTypes.string,
-  forceAutoFocusTimeout: PropTypes.number,
-  helpText: PropTypes.any,
-  hintText: PropTypes.any,
-  id: PropTypes.string,
-  innerRef: PropTypes.func,
-  isFocused: PropTypes.bool,
-  isFirst: PropTypes.bool,
-  isNotOnly: PropTypes.bool,
-  isLast: PropTypes.bool,
-  label: PropTypes.any,
-  name: PropTypes.string,
-  /** Array of options with the shape: { disabled: PropTypes.bool, label: PropTypes.string,value: PropTypes.string } */
-  options: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.any),
-    PropTypes.object,
-  ]),
-  onBlur: PropTypes.func,
-  onChange: PropTypes.func,
-  onFocus: PropTypes.func,
-  placeholder: PropTypes.string,
-  prefix: PropTypes.string,
-  removeStateStylesOnFocus: PropTypes.bool,
-  seamless: PropTypes.bool,
-  style: PropTypes.object,
-  size: PropTypes.oneOf(['xs', 'xssm', 'sm', 'md', 'lg', '', null]),
-  state: PropTypes.oneOf(['error', 'info', 'success', 'warning', '', null]),
-  success: PropTypes.bool,
-  tabIndex: PropTypes.number,
-  value: PropTypes.string,
-  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-}
-
 Select.defaultProps = {
   autoFocus: false,
   'data-cy': 'Select',
@@ -446,6 +405,72 @@ Select.defaultProps = {
   removeStateStylesOnFocus: false,
   seamless: false,
   value: '',
+}
+
+Select.propTypes = {
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  /** Automatically focuses the select. */
+  autoFocus: PropTypes.bool,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Disable the select. */
+  disabled: PropTypes.bool,
+  /** Icon that renders when the state is `error`. */
+  errorIcon: PropTypes.string,
+  /** Error message that renders into a Tooltip. */
+  errorMessage: PropTypes.string,
+  /** Determines the amount of time (`ms`) for the component to focus on mount. */
+  forceAutoFocusTimeout: PropTypes.number,
+  /** Displays text underneath select. */
+  helpText: PropTypes.any,
+  /** Displays text above select. */
+  hintText: PropTypes.any,
+  /** ID for the select. */
+  id: PropTypes.string,
+  /** Retrieves the `input` DOM node. */
+  innerRef: PropTypes.func,
+  /** Determines if the component is focused. */
+  isFocused: PropTypes.bool,
+  isNotOnly: PropTypes.bool,
+  isLast: PropTypes.bool,
+  isFirst: PropTypes.bool,
+  /** Label for the select. */
+  label: PropTypes.any,
+  /** Name for the select. */
+  name: PropTypes.string,
+  /** Callback when select is blurred. */
+  onBlur: PropTypes.func,
+  /** Callback when select value is changed. */
+  onChange: PropTypes.func,
+  /** Callback when select is focused. */
+  onFocus: PropTypes.func,
+  /** Array of options with the shape: { disabled: PropTypes.bool, label: PropTypes.string,value: PropTypes.string } */
+  options: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.any),
+    PropTypes.object,
+  ]),
+  /** Placeholder text for the select. */
+  placeholder: PropTypes.string,
+  /** Text to appear before the select. */
+  prefix: PropTypes.string,
+  /** Disable editing of the select. */
+  readOnly: PropTypes.bool,
+  /** Removes the `state` styles on input focus. Default `false`. */
+  removeStateStylesOnFocus: PropTypes.bool,
+  /** Removes the border around the select. */
+  seamless: PropTypes.bool,
+  /** Determines the size of the select. */
+  size: PropTypes.oneOf(['xs', 'xssm', 'sm', 'md', 'lg', '', null]),
+  /** Change select to state color. */
+  state: PropTypes.oneOf(['error', 'info', 'success', 'warning', '', null]),
+  /** Text to appear after the select. */
+  suffix: PropTypes.string,
+  /** Initial value of the select. */
+  value: PropTypes.string,
+  success: PropTypes.bool,
+  tabIndex: PropTypes.number,
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
 export default Select

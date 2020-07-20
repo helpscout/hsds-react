@@ -169,20 +169,6 @@ export class SelectDropdown extends React.PureComponent {
   }
 }
 
-SelectDropdown.propTypes = Object.assign({}, Dropdown.propTypes, {
-  autoInput: PropTypes.bool,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  errorIcon: PropTypes.string,
-  errorMessage: PropTypes.string,
-  isFocused: PropTypes.bool,
-  limit: PropTypes.number,
-  onChange: PropTypes.func,
-  placeholder: PropTypes.string,
-  state: PropTypes.oneOf(['default', 'error', 'success', 'warning', '', null]),
-  value: PropTypes.any,
-})
-
 SelectDropdown.defaultProps = {
   ...initialState,
   clearOnSelect: false,
@@ -203,6 +189,39 @@ SelectDropdown.defaultProps = {
   trigger: undefined,
   width: '100%',
   value: undefined,
+}
+
+SelectDropdown.propTypes = {
+  ...Dropdown.propTypes,
+  ...{
+    /** Renders the search `Input` based on the limit and the number of items. */
+    autoInput: PropTypes.bool,
+    /** Data attr for Cypress tests. */
+    'data-cy': PropTypes.string,
+    /** `Icon` to render for an `error` state. */
+    errorIcon: PropTypes.string,
+    /** Message to display (in a `Tooltip`) for an `error` state. */
+    errorMessage: PropTypes.string,
+    /** Renders the focus UI. */
+    isFocused: PropTypes.bool,
+    /** Max number of items before the search input is displayed */
+    limit: PropTypes.number,
+    /** Callback when an item is selected. */
+    onChange: PropTypes.func,
+    /** Placeholder text if there are no selected items. */
+    placeholder: PropTypes.string,
+    /** State to render for the component. */
+    state: PropTypes.oneOf([
+      'default',
+      'error',
+      'success',
+      'warning',
+      '',
+      null,
+    ]),
+    /** The selected value. */
+    value: PropTypes.any,
+  },
 }
 
 export default SelectDropdown

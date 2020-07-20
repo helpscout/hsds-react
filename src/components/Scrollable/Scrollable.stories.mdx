@@ -1,0 +1,65 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { text, boolean } from '@storybook/addon-knobs'
+import { Card, Image } from '../index'
+import Scrollable from './'
+
+<Meta title="Utilities/Scrollable" component={Scrollable} />
+
+# Scrollable
+
+<Preview>
+  <Story name="default">
+    <Card
+      style={{ height: 400, width: `${text('Container width', '400px')}` }}
+      seamless
+    >
+      <Scrollable
+        fade={boolean('fade', true)}
+        fadeLeft={boolean('fadeLeft', false)}
+        fadeRight={boolean('fadeRight', false)}
+        fadeBottom={boolean('fadeBottom', true)}
+        rounded={boolean('rounded', true)}
+      >
+        <Card.Block style={{ width: `${text('Content width', '400px')}` }}>
+          <Image
+            src="https://picsum.photos/700/300"
+            alt="Not now, Arctic Puffin!"
+          />
+          <p>
+            Eu elit sit esse fugiat ut amet nostrud proident sunt pariatur.
+            Culpa mollit mollit culpa laborum tempor nulla ut officia qui
+            occaecat eu pariatur. Reprehenderit Lorem nisi tempor laboris
+            consectetur. Aliqua incididunt proident amet elit labore
+            exercitation occaecat.
+          </p>
+          <p>
+            Voluptate irure proident reprehenderit et occaecat in ea ex ipsum
+            aute. Anim ut labore ex ea laborum culpa adipisicing elit labore.
+            Tempor Lorem nostrud consequat ut officia irure sit ipsum eu eiusmod
+            enim laborum duis velit.
+          </p>
+          <p>
+            Eu elit sit esse fugiat ut amet nostrud proident sunt pariatur.
+            Culpa mollit mollit culpa laborum tempor nulla ut officia qui
+            occaecat eu pariatur. Reprehenderit Lorem nisi tempor laboris
+            consectetur. Aliqua incididunt proident amet elit labore
+            exercitation occaecat.
+          </p>
+        </Card.Block>
+      </Scrollable>
+    </Card>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={Scrollable} />

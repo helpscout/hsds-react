@@ -1,0 +1,63 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { boolean, select } from '@storybook/addon-knobs'
+import RateAction from './'
+
+<Meta
+  title="Components/Badges/RateAction"
+  component={RateAction}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A7332',
+    },
+  }}
+/>
+
+# RateAction
+
+This component is a `button` used for ratings, visualized with an `Emoticon`.
+
+<Preview>
+  <Story name="default">
+    <div>
+      <RateAction
+        size={select('Size', { lg: 'lg', md: 'md', sm: 'sm' }, 'md')}
+        name="reaction-happy"
+        withCircle={boolean('withCircle', false)}
+        disabled={boolean('disabled', false)}
+      />
+      <br />
+      <br />
+      <RateAction
+        size={select('Size', { lg: 'lg', md: 'md', sm: 'sm' }, 'md')}
+        name="reaction-okay"
+        withCircle={boolean('withCircle', false)}
+        disabled={boolean('disabled', false)}
+      />
+      <br />
+      <br />
+      <RateAction
+        size={select('Size', { lg: 'lg', md: 'md', sm: 'sm' }, 'md')}
+        name="reaction-sad"
+        withCircle={boolean('withCircle', false)}
+        disabled={boolean('disabled', false)}
+      />
+      <br />
+      <br />
+    </div>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Jared
+- **Engineering**: Juan Pablo
+- **Usage**: Beacon2
+
+<br />
+<br />
+
+### Props
+
+<Props of={RateAction} />

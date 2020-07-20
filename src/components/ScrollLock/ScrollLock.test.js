@@ -218,7 +218,11 @@ describe('Events', () => {
     expect(stopPropagation).toBeCalled()
   })
 
-  test('onWheel callback can be triggered', () => {
+  test('onWheel callback can be triggered on safari', () => {
+    navigator.__defineGetter__('userAgent', function () {
+      return 'safari'
+    })
+
     const spy = jest.fn()
     cy.render(
       <ScrollLock onWheel={spy}>
