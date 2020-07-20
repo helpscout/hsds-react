@@ -19,6 +19,13 @@ class SkeletonAvatar extends React.PureComponent {
   }
 }
 
+SkeletonAvatar.defaultProps = {
+  'data-cy': 'SkeletonAvatar',
+  size: 'md',
+  shape: 'circle',
+  withAnimations: true,
+}
+
 SkeletonAvatar.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
@@ -30,13 +37,6 @@ SkeletonAvatar.propTypes = {
   size: PropTypes.oneOf(Object.keys(avatarConfig.size)),
   /** Enables animations for the component. */
   withAnimations: PropTypes.bool,
-}
-
-SkeletonAvatar.defaultProps = {
-  'data-cy': 'SkeletonAvatar',
-  size: 'md',
-  shape: 'circle',
-  withAnimations: true,
 }
 
 export default SkeletonAvatar

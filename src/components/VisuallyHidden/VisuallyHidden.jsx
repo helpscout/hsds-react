@@ -24,18 +24,21 @@ const VisuallyHidden = props => {
   )
 }
 
-VisuallyHidden.propTypes = {
-  children: PropTypes.any,
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  focusable: PropTypes.bool,
-  role: PropTypes.string,
-}
-
 VisuallyHidden.defaultProps = {
   focusable: false,
   'data-cy': 'VisuallyHidden',
+}
+
+VisuallyHidden.propTypes = {
+  children: PropTypes.any,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  /** Enables the ability to be tab focused. */
+  focusable: PropTypes.bool,
+  /** Aria role to assign to the element */
+  role: PropTypes.string,
 }
 
 export default VisuallyHidden

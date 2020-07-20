@@ -20,6 +20,11 @@ class SkeletonParagraph extends React.PureComponent {
   }
 }
 
+SkeletonParagraph.defaultProps = {
+  'data-cy': 'SkeletonParagraph',
+  withAnimations: true,
+}
+
 SkeletonParagraph.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
@@ -27,11 +32,6 @@ SkeletonParagraph.propTypes = {
   'data-cy': PropTypes.string,
   /** Enables animations for the component. */
   withAnimations: PropTypes.bool,
-}
-
-SkeletonParagraph.defaultProps = {
-  'data-cy': 'SkeletonParagraph',
-  withAnimations: true,
 }
 
 export default SkeletonParagraph

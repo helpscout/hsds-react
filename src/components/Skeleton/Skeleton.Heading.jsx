@@ -15,6 +15,13 @@ class SkeletonHeading extends React.PureComponent {
   }
 }
 
+SkeletonHeading.defaultProps = {
+  'data-cy': 'SkeletonHeading',
+  style: {},
+  width: '70%',
+  withAnimations: true,
+}
+
 SkeletonHeading.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
@@ -24,13 +31,6 @@ SkeletonHeading.propTypes = {
   width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   /** Enables animations for the component. */
   withAnimations: PropTypes.bool,
-}
-
-SkeletonHeading.defaultProps = {
-  'data-cy': 'SkeletonHeading',
-  style: {},
-  width: '70%',
-  withAnimations: true,
 }
 
 export default SkeletonHeading

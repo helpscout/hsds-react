@@ -1,0 +1,112 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { createSpec, faker } from '@helpscout/helix'
+import Truncate from './'
+
+<Meta title="Utilities/Truncate" component={Truncate} />
+
+# Truncate
+
+<Preview>
+  <Story name="default">
+    <div>
+      <div style={{ marginBottom: '20px' }}>
+        Auto:
+        <br />
+        <Truncate>{createSpec(faker.lorem.paragraph()).generate()}</Truncate>
+      </div>
+      <div style={{ marginBottom: '20px' }}>
+        Start:
+        <br />
+        <Truncate type="start" limit={10}>
+          {createSpec(faker.lorem.paragraph()).generate()}
+        </Truncate>
+      </div>
+      <div style={{ marginBottom: '20px' }}>
+        Middle:
+        <br />
+        <Truncate type="middle" limit={10}>
+          {createSpec(faker.lorem.paragraph()).generate()}
+        </Truncate>
+      </div>
+      <div style={{ marginBottom: '20px' }}>
+        End:
+        <br />
+        <Truncate type="end" limit={10}>
+          {createSpec(faker.lorem.paragraph()).generate()}
+        </Truncate>
+      </div>
+      <div style={{ marginBottom: '20px' }}>
+        Truncate by Splitter - resize display window:
+        <br />
+        <Truncate splitter="@">a@hello.com</Truncate>
+        <Truncate splitter="@">art_vandelay@vandelayindustries.com</Truncate>
+        <Truncate splitter="@">john_locke@dharma.org</Truncate>
+        <Truncate splitter="@">pennypacker@kramerica.com</Truncate>
+        <Truncate splitter="@">
+          this_is_kind_of_long@annoyingemails.com
+        </Truncate>
+        <Truncate splitter="@">this_is_kind_of_long@evenmoreannoyingemails.com</Truncate>
+      </div>
+      <br />
+    </div>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={Truncate} />
+
+### Stories
+
+#### With tooltip
+
+<Preview>
+  <Story name="with tooltip">
+    <div>
+      <div style={{ marginBottom: '20px' }}>
+        Auto:
+        <br />
+        <Truncate showTooltipOnTruncate>
+          {createSpec(faker.lorem.paragraph()).generate()}
+        </Truncate>
+      </div>
+      <div style={{ marginBottom: '20px' }}>
+        Start:
+        <br />
+        <Truncate showTooltipOnTruncate type="start" limit={10}>
+          {createSpec(faker.lorem.paragraph()).generate()}
+        </Truncate>
+      </div>
+      <div style={{ marginBottom: '20px' }}>
+        Middle:
+        <br />
+        <Truncate showTooltipOnTruncate type="middle" limit={10}>
+          {createSpec(faker.lorem.paragraph()).generate()}
+        </Truncate>
+      </div>
+      <div style={{ marginBottom: '20px' }}>
+        End:
+        <br />
+        <Truncate showTooltipOnTruncate type="end" limit={10}>
+          {createSpec(faker.lorem.paragraph()).generate()}
+        </Truncate>
+      </div>
+      <div style={{ marginBottom: '20px' }}>
+        Truncate by Splitter - resize display window:
+        <br />
+        <Truncate showTooltipOnTruncate splitter="@">
+          longemailaddress@gmail.com
+        </Truncate>
+      </div>
+      <br />
+    </div>
+  </Story>
+</Preview>

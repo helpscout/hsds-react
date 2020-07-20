@@ -23,6 +23,11 @@ class SkeletonBlock extends React.PureComponent {
   }
 }
 
+SkeletonBlock.defaultProps = {
+  'data-cy': 'SkeletonBlock',
+  withAnimations: true,
+}
+
 SkeletonBlock.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
@@ -30,10 +35,5 @@ SkeletonBlock.propTypes = {
   'data-cy': PropTypes.string,
   /** Enables animations for the component. */
   withAnimations: PropTypes.bool,
-}
-
-SkeletonBlock.defaultProps = {
-  'data-cy': 'SkeletonBlock',
-  withAnimations: true,
 }
 export default SkeletonBlock
