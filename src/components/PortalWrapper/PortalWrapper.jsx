@@ -200,7 +200,6 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
     handleOnClose = onClose => {
       const { onBeforeClose } = this.props
-
       if (isFunction(onClose)) {
         if (onBeforeClose) {
           onBeforeClose(() => this.sequenceClosePortal(onClose))
@@ -273,7 +272,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       return (
         <Animate
           animateOnMount={false}
-          timeout={timeout}
+          timeout={portalIsOpen ? timeout : undefined}
           in={portalIsOpen}
           unmountOnExit
         >
