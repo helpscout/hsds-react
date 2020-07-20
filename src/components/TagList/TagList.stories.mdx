@@ -1,0 +1,33 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { boolean } from '@storybook/addon-knobs'
+import TagList from './'
+import { TagListExample } from './TagList.storiesHelpers'
+
+<Meta title="Components/Badges/TagList" component={TagList} />
+
+# TagList
+
+A TagList component is a UI element that contains `Tag` components.
+
+<Preview>
+  <Story name="default">
+    <TagListExample
+      clearAll={boolean('clearAll', true)}
+      showAll={boolean('showAll', true)}
+      isRemovable={boolean('isRemovable', true)}
+    />
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: PL
+- **Usage**: ChatApp, Customers
+
+<br />
+<br />
+
+### Props
+
+<Props of={TagList} />

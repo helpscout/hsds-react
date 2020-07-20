@@ -128,35 +128,6 @@ export const Tag = props => {
   )
 }
 
-Tag.propTypes = {
-  animationDuration: PropTypes.number,
-  allCaps: PropTypes.bool,
-  className: PropTypes.string,
-  color: PropTypes.oneOf([
-    'blue',
-    'lightBlue',
-    'green',
-    'grey',
-    'gray',
-    'orange',
-    'purple',
-    'red',
-    'yellow',
-  ]),
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  display: PropTypes.oneOf(['block', 'inlineBlock']),
-  filled: PropTypes.bool,
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  isRemovable: PropTypes.bool,
-  isRemoving: PropTypes.bool,
-  onRemove: PropTypes.func,
-  pulsing: PropTypes.bool,
-  showTooltipOnTruncate: PropTypes.bool,
-  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  size: PropTypes.oneOf(['sm', 'md']),
-}
-
 Tag.defaultProps = {
   animationDuration: 100,
   color: 'grey',
@@ -169,6 +140,50 @@ Tag.defaultProps = {
   showTooltipOnTruncate: true,
   value: '',
   size: 'sm',
+}
+
+Tag.propTypes = {
+  animationDuration: PropTypes.number,
+  /** Renders text in Uppercase */
+  allCaps: PropTypes.bool,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Determines the color of the component. */
+  color: PropTypes.oneOf([
+    'blue',
+    'lightBlue',
+    'green',
+    'grey',
+    'gray',
+    'orange',
+    'purple',
+    'red',
+    'yellow',
+  ]),
+  /** Determines the CSS `display` of the component. Default `inlineBlock`. */
+  display: PropTypes.oneOf(['block', 'inlineBlock']),
+  /** Applies a filled in color style to the component. */
+  filled: PropTypes.bool,
+  /** ID of the component. */
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Renders an `x` `Icon`, which can remove this component from the DOM. */
+  isRemovable: PropTypes.bool,
+  /** Renders the `Spinner` and replaces the `x` `Icon` */
+  isRemoving: PropTypes.bool,
+  /** Apply a different size to the component */
+  size: PropTypes.oneOf(['sm', 'md']),
+  /** Applies a pulsing animation. */
+  pulsing: PropTypes.bool,
+  /** Function that returns a promise to resolve before removing. */
+  onBeforeRemove: PropTypes.func,
+  /** Callback function when component is removed and unmounted. */
+  onRemove: PropTypes.func,
+  /** Renders a `Tooltip` if content is truncated. */
+  showTooltipOnTruncate: PropTypes.bool,
+  /** Value of the tag. Renders in place of `children`, if specified. */
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Tag

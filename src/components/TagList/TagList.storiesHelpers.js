@@ -2,22 +2,16 @@ import React, { PureComponent as Component } from 'react'
 import TagSpec from '../../utilities/specs/tags.specs'
 import { TagList, Tag } from '../index'
 
-export default {
-  component: TagList,
-  title: 'Components/Badges/Tag',
-}
-
-class SampleComponent extends Component {
+export class TagListExample extends Component {
   constructor() {
     super()
     this.state = {
-      tags: TagSpec.generate(28),
+      tags: TagSpec.generate(5),
     }
   }
 
   onBeforeRemove({ id }) {
     return new Promise(resolve => {
-      console.log('REMOVING', id)
       setTimeout(() => {
         resolve()
       }, 500)
@@ -28,20 +22,16 @@ class SampleComponent extends Component {
     this.setState({
       tags: this.state.tags.filter(tag => tag.id !== id),
     })
-    console.log('removed:', id)
   }
 
   handleOnRemoveAll = () => {
     this.setState({
       tags: [],
     })
-    console.log('removed all tags')
   }
 
   render() {
     const { tags } = this.state
-
-    console.log('tag count:', tags.length)
 
     const tagMarkup = tags.map(tag => {
       const { color, filled, id, value } = tag
@@ -53,7 +43,6 @@ class SampleComponent extends Component {
     return (
       <TagList
         onBeforeRemove={this.onBeforeRemove}
-        isRemovable
         onRemove={this.handleOnRemove}
         onRemoveAll={this.handleOnRemoveAll}
         {...this.props}
@@ -62,16 +51,4 @@ class SampleComponent extends Component {
       </TagList>
     )
   }
-}
-
-export const _TagList = () => <SampleComponent />
-
-_TagList.story = {
-  name: 'TagList',
-}
-
-export const ClearAll = () => <SampleComponent clearAll showAll size="md" />
-
-ClearAll.story = {
-  name: 'Clear all',
 }

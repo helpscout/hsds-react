@@ -66,19 +66,6 @@ export const TagList = props => {
   )
 }
 
-TagList.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  onRemove: PropTypes.func,
-  onRemoveAll: PropTypes.func,
-  overflowFade: PropTypes.bool,
-  isRemovable: PropTypes.bool,
-  clearAll: PropTypes.bool,
-  showAll: PropTypes.bool,
-  size: PropTypes.oneOf(['lg', 'md', 'sm', 'xs']),
-}
-
 TagList.defaultProps = {
   'data-cy': 'TagList',
   onBeforeRemove: promiseNoop,
@@ -89,6 +76,29 @@ TagList.defaultProps = {
   clearAll: false,
   showAll: false,
   size: 'xs',
+}
+
+TagList.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Enables the ability to remove child `Tag` components. */
+  isRemovable: PropTypes.bool,
+  /** Function that returns a promise to resolve before removing. */
+  onBeforeRemove: PropTypes.func,
+  /** Callback function when a child `Tag` is removed and unmounted. */
+  onRemove: PropTypes.func,
+  /** Callback function when a the clear all button was clicked */
+  onRemoveAll: PropTypes.func,
+  /** Wraps component in an `Overflow` component. */
+  overflowFade: PropTypes.bool,
+  /** Display a Clear all button at the end of the list */
+  clearAll: PropTypes.bool,
+  /** Display all tag lines */
+  showAll: PropTypes.bool,
+  /** Size of the spacing between each tag */
+  size: PropTypes.oneOf(['lg', 'md', 'sm', 'xs']),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default TagList
