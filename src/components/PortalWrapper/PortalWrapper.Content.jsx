@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { setupManager } from '../../utilities/globalManager'
 
-const managerNamespace = 'BluePortalWrapperGlobalManager'
+const managerNamespace = 'HSDSPortalWrapperGlobalManager'
 
 class Content extends React.PureComponent {
   static defaultProps = {

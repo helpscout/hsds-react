@@ -41,7 +41,7 @@ const getMountSelector = (renderTo = null) => {
   return mountSelector || doc.body // fallback
 }
 
-const Portal = ({ children, renderTo, timeout }) => {
+const Portal = ({ children, renderTo, timeout, onClose, onOpen }) => {
   const { getCurrentScope } = useContext(GlobalContext) || {}
   const scope = getCurrentScope ? getCurrentScope() : null
 
@@ -61,8 +61,10 @@ const Portal = ({ children, renderTo, timeout }) => {
 
   useEffect(() => {
     mount.appendChild(el)
+    onOpen()
     return () => {
       setTimeout(() => {
+        onClose()
         mount.removeChild(el)
       }, timeout)
     }

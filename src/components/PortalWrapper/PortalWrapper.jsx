@@ -25,7 +25,7 @@ const defaultOptions = {
   alwaysCloseIfLast: true,
 }
 
-const managerNamespace = 'BluePortalWrapperGlobalManager'
+const managerNamespace = 'HSDSPortalWrapperGlobalManager'
 const uniqueIndex = createUniqueIndexFactory(1000)
 
 const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
@@ -284,7 +284,6 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
             onOpen={onOpen}
             id={id}
             renderTo={renderTo}
-            portalIsMounted={portalIsOpen}
             timeout={timeout}
             {...rest}
           >

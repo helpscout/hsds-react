@@ -1,7 +1,7 @@
 import React from 'react'
 import { classNames } from '../../utilities/classNames'
 
-export const ID = 'HSBluePortalContainer'
+export const ID = 'HSDSPortalContainer'
 
 const Container = props => {
   const { className, ...rest } = props
