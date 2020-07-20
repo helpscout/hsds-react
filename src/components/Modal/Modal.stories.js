@@ -23,7 +23,11 @@ const ContentSpec = createSpec({
 
 export const Default = () => (
   <Modal
-    trigger={<Link onClick={e => e.preventDefault()}>Open dis modal</Link>}
+    trigger={
+      <Button kind="link" onClick={e => e.preventDefault()}>
+        Open dis modal
+      </Button>
+    }
   >
     <Modal.Body>
       <Heading>Title</Heading>
@@ -39,7 +43,13 @@ Default.story = {
 }
 
 export const HeaderFooter = () => (
-  <Modal trigger={<Link onClick={e => e.preventDefault()}>Clicky</Link>}>
+  <Modal
+    trigger={
+      <Button kind="link" onClick={e => e.preventDefault()}>
+        Clicky
+      </Button>
+    }
+  >
     <Modal.Header>Header</Modal.Header>
     <Modal.Body>
       <Heading>Title</Heading>
@@ -56,14 +66,26 @@ HeaderFooter.story = {
 }
 
 export const Nested = () => (
-  <Modal trigger={<Link onClick={e => e.preventDefault()}>Clicky</Link>}>
+  <Modal
+    trigger={
+      <Button kind="link" onClick={e => e.preventDefault()}>
+        Clicky
+      </Button>
+    }
+  >
     <Modal.Body>
       <Heading>Title</Heading>
       {ContentSpec.generate(2).map(({ id, content }) => (
         <p key={id}>{content}</p>
       ))}
 
-      <Modal trigger={<Link onClick={e => e.preventDefault()}>Level 2</Link>}>
+      <Modal
+        trigger={
+          <Button kind="link" onClick={e => e.preventDefault()}>
+            Level 2
+          </Button>
+        }
+      >
         <Modal.Body>
           <Heading>Level 2</Heading>
 
@@ -75,7 +97,11 @@ export const Nested = () => (
           ))}
 
           <Modal
-            trigger={<Link onClick={e => e.preventDefault()}>Level 3</Link>}
+            trigger={
+              <Button kind="link" onClick={e => e.preventDefault()}>
+                Level 3
+              </Button>
+            }
           >
             <Modal.Body>
               <Heading>Level 3</Heading>
@@ -121,7 +147,7 @@ export const V2WithSecondaryButton = () => (
   <Modal
     version={2}
     isOpen={true}
-    trigger={<Link>Clicky</Link>}
+    trigger={<Button kind="link">Clicky</Button>}
     title="Modal Title"
   >
     <Modal.Body version={2}>
@@ -144,7 +170,7 @@ export const V2WithDisabledPrimary = () => (
   <Modal
     version={2}
     isOpen={true}
-    trigger={<Link>Clicky</Link>}
+    trigger={<Button kind="link">Clicky</Button>}
     title="Modal Title"
   >
     <Modal.Body version={2}>
@@ -170,7 +196,7 @@ export const V2WithDangerButton = () => (
     version={2}
     state="danger"
     isOpen={true}
-    trigger={<Link>Clicky</Link>}
+    trigger={<Button kind="link">Clicky</Button>}
     icon="alert"
     iconSize="24"
     title="Change Subdomain?"
@@ -192,7 +218,7 @@ export const V2WithVeryLongContent = () => (
   <Modal
     version={2}
     isOpen={true}
-    trigger={<Link>Clicky</Link>}
+    trigger={<Button kind="link">Clicky</Button>}
     title="Modal Title"
   >
     <Modal.Body version={2}>
@@ -220,7 +246,7 @@ export const V2BrandNoDescriptionSingleButton = () => (
     isOpen={true}
     kind="branded"
     illo={<SpeechBubble />}
-    trigger={<Link>Clicky</Link>}
+    trigger={<Button kind="link">Clicky</Button>}
     title="Modal Title"
   >
     <Modal.Body version={2}>
@@ -243,7 +269,7 @@ export const V2BrandedDescriptionDangerButton = () => (
     description="Before making it official we'd really appreciate your thoughts on what we can do to improve."
     kind="branded"
     illo={<SpeechBubble />}
-    trigger={<Link>Clicky</Link>}
+    trigger={<Button kind="link">Clicky</Button>}
     title="Cancel your account?"
   >
     <Modal.Body version={2}>
@@ -269,7 +295,7 @@ export const V2BrandedDescriptionSecondaryButton = () => (
     description="A really interesting description about lots of really interesting things goes here which should be no more than two lines."
     kind="branded"
     illo={<SpeechBubble />}
-    trigger={<Link>Clicky</Link>}
+    trigger={<Button kind="link">Clicky</Button>}
     title="Modal Title"
   >
     <Modal.Body version={2}>
@@ -295,7 +321,7 @@ export const V2ReallyLongContent = () => (
     description="A really interesting description about lots of really interesting things goes here which should be no more than two lines."
     kind="branded"
     illo={<SpeechBubble />}
-    trigger={<Link>Clicky</Link>}
+    trigger={<Button kind="link">Clicky</Button>}
     title="Modal Title"
   >
     <Modal.Body version={2}>
@@ -319,7 +345,7 @@ export const V2AlertNoDescription = () => (
     version={2}
     isOpen={true}
     kind="alert"
-    trigger={<Link>Clicky</Link>}
+    trigger={<Button kind="link">Clicky</Button>}
     title="Discard this draft?"
   >
     <Modal.ActionFooter
@@ -341,7 +367,7 @@ export const V2AlertWithDescription = () => (
     isOpen={true}
     description="Short title providing a little more detail."
     kind="alert"
-    trigger={<Link>Clicky</Link>}
+    trigger={<Button kind="link">Clicky</Button>}
     title="Alert Title"
   >
     <Modal.ActionFooter
@@ -364,7 +390,7 @@ export const V2AlertWithDangerState = () => (
     kind="alert"
     description="You're about to do a thing that could impact a lot of other things. Continue?"
     state="danger"
-    trigger={<Link>Clicky</Link>}
+    trigger={<Button kind="link">Clicky</Button>}
     title="Delete the thing?"
   >
     <Modal.ActionFooter
@@ -389,7 +415,7 @@ export const V2Sequence = () => (
     description="We'll send a six digit code to confirm ownership."
     numSteps={5}
     step={2}
-    trigger={<Link>Clicky</Link>}
+    trigger={<Button kind="link">Clicky</Button>}
     title="What email address would you like to connect?"
   >
     <Modal.Body version={2}>

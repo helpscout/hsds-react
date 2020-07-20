@@ -137,9 +137,9 @@ class Modal extends React.PureComponent {
       if (!this.closeNode || !isNodeElement(scrollNode)) return
 
       const defaultOffset = this.props.closeIconOffset + 1
-      const offset = `${
-        scrollNode.offsetWidth - scrollNode.clientWidth + defaultOffset
-      }px`
+      const offset = `${scrollNode.offsetWidth -
+        scrollNode.clientWidth +
+        defaultOffset}px`
 
       this.closeNode.style.right = offset
     }, this.props.closeIconRepositionDelay)
