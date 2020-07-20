@@ -19,13 +19,14 @@ class Timeline extends React.PureComponent {
   }
 }
 
-Timeline.propTypes = {
-  children: PropTypes.any,
-  className: PropTypes.string,
-}
-
 Timeline.defaultProps = {
   'data-cy': 'Timeline',
+}
+
+Timeline.propTypes = {
+  children: PropTypes.any,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
 }
 
 export default Timeline

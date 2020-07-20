@@ -31,14 +31,16 @@ class TimelineItem extends React.PureComponent {
   }
 }
 
-TimelineItem.propTypes = {
-  children: PropTypes.any,
-  className: PropTypes.string,
-  timestamp: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-}
-
 TimelineItem.defaultProps = {
   'data-cy': 'TimelineItem',
+}
+
+TimelineItem.propTypes = {
+  children: PropTypes.any,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Renders a `Timestamp` when component is hovered. */
+  timestamp: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 }
 
 export default TimelineItem

@@ -52,21 +52,26 @@ class Timestamp extends React.Component {
   }
 }
 
-Timestamp.propTypes = {
-  children: PropTypes.any,
-  className: PropTypes.string,
-  formatter: PropTypes.func,
-  live: PropTypes.bool,
-  muted: PropTypes.bool,
-  read: PropTypes.bool,
-  timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-}
-
 Timestamp.defaultProps = {
   'data-cy': 'Timestamp',
   live: false,
   read: false,
   timestamp: '9:41am',
+}
+
+Timestamp.propTypes = {
+  children: PropTypes.any,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** A function to format the timestamp, which defaults to returning the timestamp string. */
+  formatter: PropTypes.func,
+  /** Enables the internal ticking mechanism to live update the timestamp. Default `false`. */
+  live: PropTypes.bool,
+  /** Determines if the Message is read. */
+  read: PropTypes.bool,
+  /** Timestamp for the Message. */
+  timestamp: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  muted: PropTypes.bool,
 }
 
 export default Timestamp

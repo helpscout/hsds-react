@@ -1,0 +1,44 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import Timestamp from './'
+
+<Meta title="Components/Text/Timestamp" component={Timestamp} />
+
+# Timestamp
+
+A Timestamp component renders the UI for the time and read status, typicaly used within a `Message` component.
+
+<Preview>
+  <Story name="default">
+    <Timestamp timestamp="10:41am" />
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: HSDS
+
+<br />
+<br />
+
+### Props
+
+<Props of={Timestamp} />
+
+### Stories
+
+#### Formatter
+
+<Preview>
+  <Story name="Formatter">
+    <Timestamp
+      timestamp={new Date().toISOString()}
+      live
+      formatter={timestamp => {
+        const now = new Date().toLocaleString('en-GB', { timeZone: 'UTC' })
+        return `${timestamp} (updated at ${now})`
+      }}
+    />
+  </Story>
+</Preview>
