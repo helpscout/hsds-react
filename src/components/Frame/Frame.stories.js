@@ -7,6 +7,7 @@ import Heading from '../Heading'
 import Button from '../Button'
 import Frame from './'
 import HSDS from '../HSDS'
+import Modal from '../Modal'
 
 const stories = storiesOf('Frame', module)
 
@@ -32,10 +33,9 @@ stories.add('default', () => {
     render() {
       return (
         <div>
-          <button onClick={this.toggle}>Toggle Frame</button>
           <br />
           {this.state.showFrame && (
-            <Frame>
+            <Frame style={{ height: '500px' }}>
               <HSDS.Provider>
                 <Card>
                   <Heading>Card title</Heading>
@@ -43,8 +43,21 @@ stories.add('default', () => {
                     <Text>Card content</Text>
                   </p>
                   <FooterUI>
-                    <Button>Cancel</Button>
-                    <ButtonUI kind="primary">Submit</ButtonUI>
+                    <Modal
+                      trigger={
+                        <ButtonUI
+                          kind="primary"
+                          onClick={e => e.preventDefault()}
+                        >
+                          Open Modal
+                        </ButtonUI>
+                      }
+                    >
+                      <Modal.Body>
+                        <Heading>Title</Heading>
+                        <p>Lorem ipsum</p>
+                      </Modal.Body>
+                    </Modal>
                   </FooterUI>
                 </Card>
               </HSDS.Provider>
