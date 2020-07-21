@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useMemo } from 'react'
+import React, { useEffect, useContext, useMemo, useRef } from 'react'
 import ReactDOM, { createPortal } from 'react-dom'
 import PropTypes from 'prop-types'
 import { FrameContext } from 'react-frame-component'
@@ -10,7 +10,7 @@ import { isNodeElement } from '../../utilities/node'
 import { isObject, isString } from '../../utilities/is'
 import { GlobalContext } from '../HSDS/Provider'
 
-const getMountSelector = (renderTo = null) => {
+const getMountSelector = (renderTo, body) => {
   let mountSelector
   // 1. Prioritize renderTo selector
   if (renderTo) {
@@ -32,41 +32,58 @@ const getMountSelector = (renderTo = null) => {
   }
 
   // 3. Fallback to <Portal.Container />
-  mountSelector =
-    mountSelector || document.querySelector(`#${portalContainerId}`)
+  mountSelector = mountSelector || document.getElementById(portalContainerId)
 
   // 4. Fallback to document.body
-  const doc = getDocumentFromComponent(this) || window.document
+  const doc = body || window.document
 
   return mountSelector || doc.body // fallback
 }
 
-const Portal = ({ children, renderTo, timeout, onClose, onOpen }) => {
+const Portal = ({
+  children,
+  renderTo,
+  timeout,
+  onClose,
+  onOpen,
+  className,
+  id,
+}) => {
   const { getCurrentScope } = useContext(GlobalContext) || {}
   const scope = getCurrentScope ? getCurrentScope() : null
 
   const frameContext = useContext(FrameContext)
-  const body = frameContext ? frameContext.document.body : null
+  const body = frameContext ? frameContext.document : null
 
   const el = useMemo(() => {
     const div = document.createElement('div')
     if (scope) div.classList.add(scope)
-    return div
-  }, [scope])
+    if (className) div.classList.add(...className.split(' '))
+    if (id) div.id = id
 
-  const mount = useMemo(() => getMountSelector(renderTo || body), [
+    return div
+  }, [scope, id, className])
+
+  const mount = useMemo(() => getMountSelector(renderTo, body), [
     renderTo,
     body,
   ])
 
   useEffect(() => {
     mount.appendChild(el)
-    onOpen()
+    if (onOpen) onOpen()
+
     return () => {
-      setTimeout(() => {
-        onClose()
-        mount.removeChild(el)
-      }, timeout)
+      const unmount = () => {
+        if (onClose) onClose()
+        if (mount.contains(el)) mount.removeChild(el)
+      }
+
+      if (timeout === 0) {
+        unmount()
+      } else {
+        setTimeout(unmount, timeout)
+      }
     }
   }, [])
 
@@ -77,14 +94,9 @@ Portal.Container = Container
 
 Portal.propTypes = {
   className: PropTypes.string,
-  exact: PropTypes.bool,
-  id: PropTypes.string,
   renderTo: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  onBeforeOpen: PropTypes.func,
   onOpen: PropTypes.func,
-  onBeforeClose: PropTypes.func,
   onClose: PropTypes.func,
-  path: PropTypes.string,
   timeout: PropTypes.number,
 }
 

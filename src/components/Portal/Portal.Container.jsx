@@ -7,7 +7,6 @@ const Container = props => {
   const { className, ...rest } = props
 
   const componentClassName = classNames('c-PortalContainer', className)
-
   return <div id={ID} className={componentClassName} {...rest} />
 }
 

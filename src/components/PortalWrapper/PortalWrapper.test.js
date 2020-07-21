@@ -24,7 +24,7 @@ const TestButton = props => {
 }
 
 beforeEach(() => {
-  window.BluePortalWrapperGlobalManager = undefined
+  window.HSDSPortalWrapperGlobalManager = undefined
 })
 
 afterEach(() => {
@@ -144,7 +144,6 @@ describe('isOpen', () => {
     ).toBe(true)
 
     wrapper.setProps({ isOpen: false })
-    jest.runAllTimers()
 
     expect(
       wrapper
@@ -266,11 +265,11 @@ describe('Trigger', () => {
   test('Focuses triggerNode on isOpen prop change to false', () => {
     const spy = jest.fn()
     const TestComponent = PortalWrapper(options)(TestButton)
-    const trigger = <button>Trigger</button>
+    const trigger = <button className="trigger">Trigger</button>
     const wrapper = mount(
       <TestComponent timeout={0} trigger={trigger} isOpen />
     )
-    const o = wrapper.find('button')
+    const o = wrapper.find('.trigger')
     o.getDOMNode().onfocus = spy
     wrapper.setProps({ isOpen: false })
 

@@ -278,9 +278,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
         >
           <Portal
             className={wrapperClassName}
-            onBeforeClose={handleOnClose}
             onClose={onClose}
-            onBeforeOpen={onBeforeOpen}
             onOpen={onOpen}
             id={id}
             renderTo={renderTo}

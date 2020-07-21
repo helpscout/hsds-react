@@ -1,7 +1,7 @@
 import React from 'react'
 import Frame from 'react-frame-component'
 import { mount } from 'enzyme'
-import { Portal } from './Portal'
+import Portal from './Portal'
 
 const cleanUp = () => {
   global.document.body.innerHTML = ''
@@ -66,27 +66,6 @@ describe('Portal', () => {
   })
 
   describe('renderTo', () => {
-    test('Can render to custom selector, if specified', () => {
-      const testBody = global.document.createElement('div')
-      global.document.body.appendChild(testBody)
-
-      const wrapper = mount(
-        <div className="channel4">
-          <div className="custom" />
-          <Portal id="champ" renderTo=".custom">
-            <div className="brick">BRICK</div>
-          </Portal>
-        </div>,
-        { attachTo: testBody }
-      )
-
-      const custom = wrapper.find('.custom').html()
-
-      expect(custom).toContain('id')
-      expect(custom).toContain('champ')
-      expect(custom).toContain('BRICK')
-    })
-
     test('Can render to custom DOM element, if specified', () => {
       const testBody = global.document.createElement('div')
       global.document.body.appendChild(testBody)
@@ -106,30 +85,6 @@ describe('Portal', () => {
       expect(body).toContain('id')
       expect(body).toContain('champ')
       expect(body).toContain('BRICK')
-    })
-
-    test('Can render to Portal.Container, if exists', () => {
-      const testBody = global.document.createElement('div')
-      global.document.body.appendChild(testBody)
-
-      const wrapper = mount(
-        <div className="channel4">
-          <Portal id="champ">
-            <div className="brick">BRICK</div>
-          </Portal>
-          <p>Content</p>
-          <div className="channel4-inner">
-            <Portal.Container />
-          </div>
-        </div>,
-        { attachTo: testBody }
-      )
-
-      const custom = wrapper.find(Portal.Container).html()
-
-      expect(custom).toContain('id')
-      expect(custom).toContain('champ')
-      expect(custom).toContain('BRICK')
     })
 
     test("Fallsback to document.body if custom selector doesn't exist", () => {
@@ -160,21 +115,6 @@ describe('Portal', () => {
   })
 
   describe('Events', () => {
-    test('onBeforeOpen callback works', () => {
-      const mockCallback = jest.fn()
-      const onBeforeOpen = open => {
-        open()
-        mockCallback()
-      }
-      mount(
-        <Portal onBeforeOpen={onBeforeOpen} isOpen>
-          <div className="brick">BRICK</div>
-        </Portal>
-      )
-
-      expect(mockCallback.mock.calls.length).toBe(1)
-    })
-
     test('onOpen callback works', () => {
       const mockCallback = jest.fn()
       mount(
@@ -182,44 +122,6 @@ describe('Portal', () => {
           <div className="brick">BRICK</div>
         </Portal>
       )
-
-      expect(mockCallback.mock.calls.length).toBe(1)
-    })
-
-    test('onBeforeOpen + onOpen callback works', () => {
-      const mockCallback = jest.fn()
-      const onBeforeOpen = open => {
-        open()
-        mockCallback()
-      }
-      mount(
-        <Portal onBeforeOpen={onBeforeOpen} onOpen={mockCallback} isOpen>
-          <div className="brick">BRICK</div>
-        </Portal>
-      )
-
-      expect(mockCallback.mock.calls.length).toBe(2)
-    })
-
-    test('onBeforeClose callback works', () => {
-      const testBody = global.document.createElement('div')
-      global.document.body.appendChild(testBody)
-
-      const mockCallback = jest.fn()
-      const onBeforeClose = close => {
-        close()
-        mockCallback()
-      }
-
-      const wrapper = mount(
-        <Portal onBeforeClose={onBeforeClose} isOpen>
-          <div className="brick">BRICK</div>
-        </Portal>,
-        { attachTo: testBody }
-      )
-
-      wrapper.unmount()
-      jest.runAllTimers()
 
       expect(mockCallback.mock.calls.length).toBe(1)
     })
@@ -241,30 +143,6 @@ describe('Portal', () => {
       jest.runAllTimers()
       expect(mockCallback.mock.calls.length).toBe(1)
     })
-
-    test('onBeforeClose + onClose callback works', () => {
-      const testBody = global.document.createElement('div')
-      global.document.body.appendChild(testBody)
-
-      const mockCallback = jest.fn()
-      const onBeforeClose = close => {
-        close()
-        mockCallback()
-      }
-
-      const wrapper = mount(
-        <Portal onBeforeClose={onBeforeClose} onClose={mockCallback} isOpen>
-          <div className="brick">BRICK</div>
-        </Portal>,
-        { attachTo: testBody }
-      )
-
-      wrapper.unmount()
-      jest.runAllTimers()
-
-      expect(mockCallback.mock.calls.length).toBe(2)
-      wrapper.detach()
-    })
   })
 
   describe('iFrame', () => {
@@ -278,30 +156,6 @@ describe('Portal', () => {
       )
 
       expect(document.body.innerHTML).not.toContain('Derek')
-    })
-  })
-
-  describe('Updates', () => {
-    test('Attempts to (re)mountPortal if props change', () => {
-      const spy = jest.fn()
-      const wrapper = mount(<Portal />)
-      wrapper.instance().mountPortal = spy
-
-      wrapper.setProps({ in: true })
-
-      expect(spy).toHaveBeenCalled()
-    })
-
-    test('Does not (re)render content if mountSelector is falsy', () => {
-      const spy = jest.fn()
-      const wrapper = mount(<Portal />)
-      wrapper.setState({ mountSelector: undefined })
-
-      wrapper.instance().renderPortalContent = spy
-
-      wrapper.setProps({ in: true })
-
-      expect(spy).not.toHaveBeenCalled()
     })
   })
 })

@@ -15,7 +15,7 @@ test('Renders a Portal if isOpen', () => {
 
   const el = wrapper.find('Portal')
 
-  expect(el.length).toBe(1)
+  expect(el.length).toBeTruthy()
 })
 
 test('Does not render a Portal if isOpen is false', () => {
