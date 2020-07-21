@@ -1,0 +1,69 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="🏠Welcome/🤝 Contributing" />
+
+# Contributing
+
+Everyone can contribute to HSDS, and to make this easier we have established some guidelines to prevent:
+
+- Feature creep
+- Complexity
+- Inconsistency between design and engineering, and across our product.
+
+The hsds-react repository is composed of HSDS UI components, Utilities and Storybook.
+Design work is performed with Figma, as a designer you are welcome to contribute to the repository and most likely you will be assigned to review work in there, so it is useful to familiarize yourself particularly with how Storybook works.
+
+### HSDS UI components
+
+The library is a collection of components that we use to build UIs at Help Scout, these pieces of UI are always included in Storybook (and have a counterpart in Figma)
+
+### Utilities
+
+In this category we have a bunch of utilities, some are plain JavaScript helpers, other are React “components” that provide certain functionality that various UI components need.
+
+Sometimes it is useful to have these in Storybook as a way to interact with them, so they have a dedicated category, aptly named "Utilities".
+
+### Storybook
+
+Storybook is the source of truth for HSDS, designs are created in Figma, components are coded inside hsds-react and Storybook is the place where:
+
+- You can see a component in action and in different environments (browsers)
+- You learn its features and how to use it
+- You find out who is responsible on the design and on the engineering side, providing a clear point of contact if you need it.
+
+## How to contribute
+
+In the spirit of keeping things simple, we can identify 3 scenarios you might find yourself in:
+
+### Extending an existing component
+
+If a component needs extending or additional functionality then backwards compatibility is a core concern, since HSDS components are used in multiple places in Help Scout.
+
+One good strategy you can use, is to apply your changes as "feature flags" to the relevant component, a pattern widely used when doing feature work at Help Scout.
+
+### Planning/proposing/building a new component
+
+Anything that does not currently exist in HSDS needs approval from the HSDS team (both design and engineering).
+
+At current time, your main POCs are:
+
+- Design: Buzz
+- Engineering: Blocks team (PL, Juan Pablo)
+
+Build with the mindset that everything evolves and changes over time so create for the short or medium term. It is almost always easier to add to something simple when you actually need it, than try to anticipate every need that might arise.
+
+When creating a new component it is tempting to try and build something that is so flexible and so awesome that accommodates every single use case you can think of. This leads to overly complex components that not only take longer to build but come with many features that never get used.
+
+### Making single variations in-app
+
+These type of scenarios should be rare (and proactively avoided), because it signals a deviation from established patterns used in our product, but sometimes can be the best solution.
+
+When you find yourself in this situation, consider a way for upstream integration and leverage available tools like Styled Components or patterns like Higher Order Components.
+
+Consider this contrived example:
+
+As an engineer working on a new feature, you receive the design specification and you notice that a button on the sidebar looks almost but not quite exactly the Button in HSDS: it has more padding and sports a different shade of blue.
+
+The first step would be to contact the designer and inquire about the button, they should be able to justify the changes. At this point, the designer realizes that the different shade of blue was a mistake and corrects it, but then explains that Product and Marketing desire that particular button to be that way, but no other button should: they want it to stand out a little.
+
+You conclude that this is a change that is not worth to integrate into the Button component because it won’t be used multiple times and leverage Styled Components to add the extra padding. To make it clear for your peers, you add a section in the Pull Request description explaining the reason for the variant. Voilá.
