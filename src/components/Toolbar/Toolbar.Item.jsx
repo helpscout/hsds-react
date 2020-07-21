@@ -29,8 +29,8 @@ export class ToolbarItem extends React.PureComponent {
 }
 
 ToolbarItem.propTypes = {
+  /** Custom class names to be added to the component. */
   className: PropTypes.string,
-  children: PropTypes.any,
 }
 
 export default ToolbarItem

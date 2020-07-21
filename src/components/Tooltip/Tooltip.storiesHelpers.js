@@ -1,14 +1,8 @@
 import React from 'react'
 import { boolean, number, select, text } from '@storybook/addon-knobs'
-import { action } from '@storybook/addon-actions'
 import Tooltip, { TooltipContext } from '.'
 import Text from '../Text'
 import Button from '../Button'
-
-export default {
-  component: Tooltip,
-  title: 'Components/Overlay/TooltipV2',
-}
 
 export const Default = () => {
   const triggerOn = select(
@@ -44,24 +38,10 @@ export const Default = () => {
   const props = {
     animationDelay: number('animationDelay', 100),
     animationDuration: number('animationDuration', 100),
-    animationSequence: text('animationSequence', 'fade up'),
-    closeOnBodyClick: boolean('closeOnBodyClick', true),
     closeOnEscPress: boolean('closeOnEscPress', true),
-    onBeforeOpen: tooltipInstance => {
-      action('onBeforeOpen')(tooltipInstance)
-      return Promise.resolve()
-    },
-    onBeforeClose: tooltipInstance => {
-      action('onBeforeOpen')(tooltipInstance)
-      return Promise.resolve()
-    },
-    onContentClick: action('onContentClick'),
-    onOpen: action('onOpen'),
-    onClose: action('onClose'),
     isOpen: boolean('isOpen', true),
     triggerOn: triggerOn,
     placement: placement,
-    showArrow: boolean('showArrow', true),
     title: text('title', '"Hello"'),
     minWidth: number('minWidth', ''),
     maxWidth: number('maxWidth', ''),
@@ -119,24 +99,10 @@ export const CustomContent = () => {
   const props = {
     animationDelay: number('animationDelay', 100),
     animationDuration: number('animationDuration', 100),
-    animationSequence: text('animationSequence', 'fade up'),
-    closeOnBodyClick: boolean('closeOnBodyClick', true),
     closeOnEscPress: boolean('closeOnEscPress', true),
-    onBeforeOpen: tooltipInstance => {
-      action('onBeforeOpen')(tooltipInstance)
-      return Promise.resolve()
-    },
-    onBeforeClose: tooltipInstance => {
-      action('onBeforeOpen')(tooltipInstance)
-      return Promise.resolve()
-    },
-    onContentClick: action('onContentClick'),
-    onOpen: action('onOpen'),
-    onClose: action('onClose'),
     isOpen: boolean('isOpen', true),
     triggerOn: triggerOn,
     placement: placement,
-    showArrow: boolean('showArrow', true),
     title: tooltipContent,
     minWidth: number('minWidth', ''),
     maxWidth: number('maxWidth', ''),
@@ -145,7 +111,7 @@ export const CustomContent = () => {
   return (
     <TooltipContext.Provider value={{ zIndex: 256 }}>
       <div style={{ padding: '20%', textAlign: 'center' }}>
-        <Tooltip {...props}>Tooltip Trigger V2</Tooltip>
+        <Tooltip {...props}>Tooltip Trigger</Tooltip>
       </div>
     </TooltipContext.Provider>
   )

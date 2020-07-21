@@ -1,0 +1,37 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import TypingDots from './'
+
+<Meta
+  title="Components/Elements/TypingDots"
+  component={TypingDots}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A8614',
+    },
+  }}
+/>
+
+# TypingDots
+
+A TypingDots component is a bouncing ellipsis animation, typically used in chat/messaging based UI.
+
+<Preview>
+  <Story name="default">
+    <TypingDots />
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Terrence
+- **Usage**: Messages, ChatApp
+
+<br />
+<br />
+
+### Props
+
+<Props of={TypingDots} />

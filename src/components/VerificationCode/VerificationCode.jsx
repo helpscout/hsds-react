@@ -293,19 +293,6 @@ class VerificationCode extends React.Component {
   }
 }
 
-VerificationCode.propTypes = {
-  autoFocus: PropTypes.bool,
-  autoSubmitPaste: PropTypes.bool,
-  autoSubmitKeyUp: PropTypes.bool,
-  code: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  isValid: PropTypes.bool,
-  numberOfChars: PropTypes.number,
-  onEnter: PropTypes.func,
-  onChange: PropTypes.func,
-}
-
 VerificationCode.defaultProps = {
   autoFocus: false,
   autoSubmitPaste: false,
@@ -316,6 +303,24 @@ VerificationCode.defaultProps = {
   numberOfChars: 6,
   onEnter: noop,
   onChange: noop,
+}
+
+VerificationCode.propTypes = {
+  autoFocus: PropTypes.bool,
+  autoSubmitPaste: PropTypes.bool,
+  autoSubmitKeyUp: PropTypes.bool,
+  /** If you need to assign a value externally, use this prop. */
+  code: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Gives the field invalid stylings */
+  isValid: PropTypes.bool,
+  /** If you need more or less number of characters */
+  numberOfChars: PropTypes.number,
+  /** To get the current value on enter press */
+  onEnter: PropTypes.func,
+  /** To get the current value on change */
+  onChange: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default VerificationCode

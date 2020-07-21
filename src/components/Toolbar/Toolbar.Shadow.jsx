@@ -21,6 +21,7 @@ ToolbarShadow.defaultProps = {
 }
 
 ToolbarShadow.propTypes = {
+  /** Determines the shadow placement on the component. */
   placement: PropTypes.oneOf(['top', 'bottom']),
 }
 
