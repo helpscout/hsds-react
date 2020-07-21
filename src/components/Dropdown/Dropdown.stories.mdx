@@ -1,18 +1,23 @@
-import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
 import { boolean } from '@storybook/addon-knobs'
-import { ItemSpec, itemsWithDivider, groupedItems } from '../../utilities/specs/dropdown.specs'
+import {
+  ItemSpec,
+  itemsWithDivider,
+  groupedItems,
+} from '../../utilities/specs/dropdown.specs'
 import Dropdown from './'
 import { Dropdown as DropdownUnconnected } from './Dropdown'
 
 <Meta
-  title="Components/Dropdowns/Dropdown"
+  title="🧬 Components/Dropdowns/Dropdown"
   component={Dropdown}
   parameters={{
-      design: {
-        type: 'figma',
-        url: 'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A8006'
-      }
-    }}
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A8006',
+    },
+  }}
 />
 
 # Dropdown
@@ -51,7 +56,11 @@ A Dropdown component is provides the UI to contain a series of actions, presente
 <Preview>
   <Story name="Empty">
     <div style={{ height: '70px' }}>
-      <Dropdown items={[]} renderEmpty={() => <div>Nothing here!</div>} trigger="click to open" />
+      <Dropdown
+        items={[]}
+        renderEmpty={() => <div>Nothing here!</div>}
+        trigger="click to open"
+      />
     </div>
   </Story>
 </Preview>

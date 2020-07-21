@@ -1,15 +1,16 @@
-import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
 import Card from './'
 
 <Meta
-  title="Components/Structural/Card"
+  title="🧬 Components/Structural/Card"
   component={Card}
   parameters={{
-      design: {
-        type: 'figma',
-        url: 'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A10368'
-      }
-    }}
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A10368',
+    },
+  }}
 />
 
 # Card
@@ -44,8 +45,8 @@ If a `to` or `href` prop is passed into the Card component, it will render the `
 <Preview>
   <Story name="with link">
     <Card href="https://www.helpscout.net/">
-        Link to: https://www.helpscout.net/
-      </Card>
+      Link to: https://www.helpscout.net/
+    </Card>
   </Story>
 </Preview>
 
@@ -53,7 +54,9 @@ If a `to` or `href` prop is passed into the Card component, it will render the `
 
 <Preview>
   <Story name="Floating">
-    <Card floating hover>Hello, this is a floating hoverable card</Card>
+    <Card floating hover>
+      Hello, this is a floating hoverable card
+    </Card>
   </Story>
 </Preview>
 
@@ -66,12 +69,8 @@ Note: It is highly recommended the `seamless` prop is used for the container `<C
 <Preview>
   <Story name="Card Blocks">
     <Card seamless>
-      <Card.Block>
-        Frank "The Tank"
-      </Card.Block>
-      <Card.Block>
-        You're my boy, Blue!
-      </Card.Block>
+      <Card.Block>Frank "The Tank"</Card.Block>
+      <Card.Block>You're my boy, Blue!</Card.Block>
     </Card>
   </Story>
 </Preview>

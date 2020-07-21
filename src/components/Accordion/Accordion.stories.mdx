@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
 import { select, text, boolean, number, array } from '@storybook/addon-knobs'
 import {
   data,
@@ -13,14 +13,15 @@ import Accordion from './'
 import { Page, Text } from '../index'
 
 <Meta
-  title="Components/Structural/Accordion"
+  title="🧬 Components/Structural/Accordion"
   component={Accordion}
   parameters={{
-      design: {
-        type: 'figma',
-        url: 'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A9975'
-      }
-    }}
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A9975',
+    },
+  }}
 />
 
 # Accordion
@@ -31,17 +32,21 @@ vertically stacked section which can be expanded or collapsed.
 <Preview>
   <Story name="default">
     <Accordion
-    distance={number('distance', 5)}
-    isSortable={boolean('isSortable', false)}
-    isSeamless={boolean('isSeamless', false)}
-    allowMultiple={boolean('allowMultiple', false)}
-    pressDelay={number('pressDelay', 300)}
-    onOpen={onOpen}
-    onClose={onClose}
-    onSortEnd={onSortEnd}
-    size={select('Sizes', {extraSmall: 'xs', small: 'sm', medium: 'md', large: 'lg'}, 'md')}
-    openSectionIds={array('openSectionIds', [])}
-  >
+      distance={number('distance', 5)}
+      isSortable={boolean('isSortable', false)}
+      isSeamless={boolean('isSeamless', false)}
+      allowMultiple={boolean('allowMultiple', false)}
+      pressDelay={number('pressDelay', 300)}
+      onOpen={onOpen}
+      onClose={onClose}
+      onSortEnd={onSortEnd}
+      size={select(
+        'Sizes',
+        { extraSmall: 'xs', small: 'sm', medium: 'md', large: 'lg' },
+        'md'
+      )}
+      openSectionIds={array('openSectionIds', [])}
+    >
       {createSections(dataWithIds)}
     </Accordion>
   </Story>
@@ -143,21 +148,25 @@ They're to be used within a `Section` or `Link`.
 <Preview>
   <Story name="Inside a page">
     <Page>
-    <Page.Card>
-      <Page.Header subtitle="Inside a page" />
-      <Accordion
-        distance={number('distance', 5)}
-        isSortable={boolean('isSortable', false)}
-        isSeamless={boolean('isSeamless', false)}
-        allowMultiple={boolean('allowMultiple', false)}
-        pressDelay={number('pressDelay', 300)}
-        onSortEnd={onSortEnd}
-        size={select('Sizes', {extraSmall: 'xs', small: 'sm', medium: 'md', large: 'lg'}, 'md')}
-      >
-        {createSections(data)}
-      </Accordion>
-    </Page.Card>
-  </Page>
+      <Page.Card>
+        <Page.Header subtitle="Inside a page" />
+        <Accordion
+          distance={number('distance', 5)}
+          isSortable={boolean('isSortable', false)}
+          isSeamless={boolean('isSeamless', false)}
+          allowMultiple={boolean('allowMultiple', false)}
+          pressDelay={number('pressDelay', 300)}
+          onSortEnd={onSortEnd}
+          size={select(
+            'Sizes',
+            { extraSmall: 'xs', small: 'sm', medium: 'md', large: 'lg' },
+            'md'
+          )}
+        >
+          {createSections(data)}
+        </Accordion>
+      </Page.Card>
+    </Page>
   </Story>
 </Preview>
 
@@ -174,7 +183,11 @@ They're to be used within a `Section` or `Link`.
           allowMultiple={boolean('allowMultiple', false)}
           pressDelay={number('pressDelay', 300)}
           onSortEnd={onSortEnd}
-          size={select('Sizes', {extraSmall: 'xs', small: 'sm', medium: 'md', large: 'lg'}, 'md')}
+          size={select(
+            'Sizes',
+            { extraSmall: 'xs', small: 'sm', medium: 'md', large: 'lg' },
+            'md'
+          )}
         >
           <Accordion.Link to="/">
             <Text truncate weight={500}>
@@ -204,7 +217,17 @@ They're to be used within a `Section` or `Link`.
           allowMultiple={boolean('allowMultiple', false)}
           pressDelay={number('pressDelay', 300)}
           onSortEnd={onSortEnd}
-          size={select('Sizes', {extraSmall: 'xs', small: 'sm', medium: 'md', large: 'lg', extraLarge: 'xl'}, 'xl')}
+          size={select(
+            'Sizes',
+            {
+              extraSmall: 'xs',
+              small: 'sm',
+              medium: 'md',
+              large: 'lg',
+              extraLarge: 'xl',
+            },
+            'xl'
+          )}
         >
           <Accordion.Link to="/" isCompact>
             <Accordion.Heading muted>Paused Message Row</Accordion.Heading>
@@ -214,15 +237,21 @@ They're to be used within a `Section` or `Link`.
           </Accordion.Link>
           <Accordion.Link to="/">
             <Accordion.Heading>March 40% Offer</Accordion.Heading>
-            <Accordion.Subheading>Viewed 104 times. Last seen yesterday</Accordion.Subheading>
+            <Accordion.Subheading>
+              Viewed 104 times. Last seen yesterday
+            </Accordion.Subheading>
           </Accordion.Link>
           <Accordion.Link to="/">
             <Accordion.Heading>General NPS</Accordion.Heading>
-            <Accordion.Subheading>Viewed 20k times. Last seen 10 min ago</Accordion.Subheading>
+            <Accordion.Subheading>
+              Viewed 20k times. Last seen 10 min ago
+            </Accordion.Subheading>
           </Accordion.Link>
           <Accordion.Link to="/">
             <Accordion.Heading>Menswear Range Promo</Accordion.Heading>
-            <Accordion.Subheading>Viewed 1 time. Last seen 8:31am</Accordion.Subheading>
+            <Accordion.Subheading>
+              Viewed 1 time. Last seen 8:31am
+            </Accordion.Subheading>
           </Accordion.Link>
           <Accordion.Link to="/" status="info" badge="Incomplete">
             <Accordion.Heading>New Account Onboarding</Accordion.Heading>
@@ -234,7 +263,9 @@ They're to be used within a `Section` or `Link`.
           <Accordion.Link to="/" status="error" badge="Paused">
             <Accordion.Heading>Business Outreach (Sales)</Accordion.Heading>
             <Accordion.Subheading>
-              <span className="is-highlighted">Message paused because of an issue</span>
+              <span className="is-highlighted">
+                Message paused because of an issue
+              </span>
             </Accordion.Subheading>
           </Accordion.Link>
         </Accordion>

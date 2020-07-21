@@ -4,13 +4,14 @@ import { Button, Flexy } from '../index'
 import Input from './'
 
 <Meta
-  title="Components/Forms/Input"
+  title="🧬 Components/Forms/Input"
   component={Input}
   parameters={{
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A9401'
-    }
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A9401',
+    },
   }}
 />
 
@@ -20,11 +21,12 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 
 <Preview>
   <Story name="default">
-    <Input 
+    <Input
       value="Here here nice input"
-      placeholder="Something" 
-      seamless={boolean('seamless', false)} 
-      disabled={boolean('disabled', false)}/>
+      placeholder="Something"
+      seamless={boolean('seamless', false)}
+      disabled={boolean('disabled', false)}
+    />
   </Story>
 </Preview>
 
@@ -50,7 +52,8 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
     <Input
       label="Some label"
       helpText={text('helpText', 'Here you have some helpful text')}
-      hintText={text('hintText', '')} />
+      hintText={text('hintText', '')}
+    />
   </Story>
 </Preview>
 
@@ -58,7 +61,11 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 
 <Preview>
   <Story name="Prefix/Suffix">
-    <Input value="1230.00" inlinePrefix={text('inlinePrefix', '$')} inlineSuffix={text('inlineSuffix', '.00')} />
+    <Input
+      value="1230.00"
+      inlinePrefix={text('inlinePrefix', '$')}
+      inlineSuffix={text('inlineSuffix', '.00')}
+    />
   </Story>
 </Preview>
 
@@ -69,11 +76,7 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
     <div>
       <Input autoComplete="off" state="error" placeholder="Error" />
       <br />
-      <Input
-        autoComplete="off"
-        state="success"
-        placeholder="Success"
-      />
+      <Input autoComplete="off" state="success" placeholder="Success" />
       <br />
       <Input autoComplete="off" state="warning" placeholder="Warning" />
       <br />
@@ -127,7 +130,7 @@ The `Button` should be one step smaller compared to the `Input` (If the `Input` 
         resizable
         placeholder="This is a resizable textarea!"
       />
-      <br/>
+      <br />
       <Input
         multiline={3}
         value="This is just too long, check the validator"
@@ -170,7 +173,6 @@ This component renders a "prefix"/"suffix" UI when combined with an `Input` when
 ### Props
 
 <Props of={Input.Static} />
-
 
 ### Example
 

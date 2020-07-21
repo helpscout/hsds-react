@@ -1,16 +1,25 @@
-import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
 import { withAktiv } from '../../utilities/storybook'
-import { ContainerUI, PHONE_OPTIONS, PAINT_OPTIONS, ARSENAL, ATLAS, BARCELONA, ValidationApp } from './EditableField.storiesHelpers'
+import {
+  ContainerUI,
+  PHONE_OPTIONS,
+  PAINT_OPTIONS,
+  ARSENAL,
+  ATLAS,
+  BARCELONA,
+  ValidationApp,
+} from './EditableField.storiesHelpers'
 import EditableField from './'
 
 <Meta
-  title="Components/Forms/EditableField"
+  title="🧬 Components/Forms/EditableField"
   component={EditableField}
   parameters={{
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A9042'
-    }
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A9042',
+    },
   }}
   decorators={[withAktiv]}
 />
@@ -23,18 +32,18 @@ A special type of inputs that allow you to edit it inline
   <Story name="default">
     <div>
       <EditableField
-      label="Company"
-      name="company"
-      placeholder="Add a company name"
-      type="text"
-    />
-    <EditableField
-      label="Team"
-      name="team"
-      placeholder="Add a sports team name"
-      type="text"
-      value="Atlas"
-    />
+        label="Company"
+        name="company"
+        placeholder="Add a company name"
+        type="text"
+      />
+      <EditableField
+        label="Team"
+        name="team"
+        placeholder="Add a sports team name"
+        type="text"
+        value="Atlas"
+      />
     </div>
   </Story>
 </Preview>
@@ -137,7 +146,6 @@ const ATLAS = {
     </ContainerUI>
   </Story>
 </Preview>
-
 
 #### Floating Labels
 

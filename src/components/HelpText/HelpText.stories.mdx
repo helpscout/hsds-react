@@ -1,11 +1,8 @@
-import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
 import { boolean, select, text } from '@storybook/addon-knobs'
 import HelpText from './'
 
-<Meta
-  title="Components/Text/HelpText"
-  component={HelpText}
-/>
+<Meta title="🧬 Components/Text/HelpText" component={HelpText} />
 
 # HelpText
 
@@ -14,32 +11,46 @@ A HelpText component is a light-weight text wrapper enhanced with a collection o
 <Preview>
   <Story name="default">
     <HelpText
-      shade={select('Shade', {
-        default: 'default',
-        subtle: 'subtle',
-        slightlyMuted: 'slightlyMuted',
-        muted: 'muted',
-        faint: 'faint',
-        extraMuted: 'extraMuted',
-      }, 'default')}
-      size={select('Size', {
-        10: '10',
-        11: '11',
-        12: '12',
-        13: '13',
-        14: '14',
-        15: '15',
-        20: '20',
-        48: '48'
-      }, '13')}
-      state={select('State', {
-        default: '',
-        error: 'error',
-        success: 'success',
-        warning: 'warning'
-      }, '')}
+      shade={select(
+        'Shade',
+        {
+          default: 'default',
+          subtle: 'subtle',
+          slightlyMuted: 'slightlyMuted',
+          muted: 'muted',
+          faint: 'faint',
+          extraMuted: 'extraMuted',
+        },
+        'default'
+      )}
+      size={select(
+        'Size',
+        {
+          10: '10',
+          11: '11',
+          12: '12',
+          13: '13',
+          14: '14',
+          15: '15',
+          20: '20',
+          48: '48',
+        },
+        '13'
+      )}
+      state={select(
+        'State',
+        {
+          default: '',
+          error: 'error',
+          success: 'success',
+          warning: 'warning',
+        },
+        ''
+      )}
       isCompact={boolean('isCompact', false)}
-    >I am help text. Behold my text.</HelpText>
+    >
+      I am help text. Behold my text.
+    </HelpText>
   </Story>
 </Preview>
 

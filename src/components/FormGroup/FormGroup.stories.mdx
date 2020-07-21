@@ -1,12 +1,11 @@
-import { Meta, Props} from '@storybook/addon-docs/blocks'
+import { Meta, Props } from '@storybook/addon-docs/blocks'
 import FormGroup from './'
 
-<Meta title="Utilities/FormGroup" />
+<Meta title="🛠 Utilities/FormGroup" />
 
 # FormGroup
 
 A FormGroup component provides marginal spacing between form elements.
-
 
 ### Example
 
@@ -19,11 +18,9 @@ A FormGroup component provides marginal spacing between form elements.
 </FormGroup>
 ```
 
-
 ### Props
 
 <Props of={FormGroup} />
-
 
 # Choice
 
@@ -47,25 +44,22 @@ Note: The `ChoiceGroup` component automatically wraps child components with `<Fo
 
 <Props of={FormGroup.Choice} />
 
-
 ## Grid
 
 A FormGroup.Grid component extends the default `FormGroup` by wrapping the child component with `Grid`.
-
 
 ### Example
 
 ```jsx
 <FormGroup.Grid>
-  <Grid.Col size='4'>
+  <Grid.Col size="4">
     <Input.Static>First name</Input.Static>
   </Grid.Col>
-  <Grid.Col size='8'>
-    <Input label='First name' />
+  <Grid.Col size="8">
+    <Input label="First name" />
   </Grid.Col>
 </FormGroup.Grid>
 ```
-
 
 ### Props
 

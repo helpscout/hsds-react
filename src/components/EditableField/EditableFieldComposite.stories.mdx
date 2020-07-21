@@ -1,17 +1,18 @@
-import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
 import { withAktiv } from '../../utilities/storybook'
 import { ContainerUI } from './EditableField.storiesHelpers'
 import EditableField from '.'
 import { EditableFieldComposite } from './'
 
 <Meta
-  title="Components/Forms/EditableField"
+  title="🧬 Components/Forms/EditableField"
   component={EditableFieldComposite}
   parameters={{
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A9042'
-    }
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A9042',
+    },
   }}
   decorators={[withAktiv]}
 />
@@ -72,7 +73,12 @@ This component allows the grouping and in-lining of multiple single value Editab
           type="text"
           placeholder="Animal"
         />
-        <EditableField label="Name" name="name" type="text" placeholder="name" />
+        <EditableField
+          label="Name"
+          name="name"
+          type="text"
+          placeholder="name"
+        />
       </EditableFieldComposite>
     </ContainerUI>
   </Story>

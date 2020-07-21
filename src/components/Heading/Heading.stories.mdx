@@ -1,16 +1,17 @@
-import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
 import { boolean, select, text } from '@storybook/addon-knobs'
 import Heading from './'
 
 <Meta
-  title="Components/Text/Heading"
+  title="🧬 Components/Text/Heading"
   component={Heading}
   parameters={{
-      design: {
-        type: 'figma',
-        url: 'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=5558%3A0'
-      }
-    }}
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=5558%3A0',
+    },
+  }}
 />
 
 # Heading
@@ -20,31 +21,33 @@ A Heading component is a light-weight text heading wrapper enhanced with a colle
 <Preview>
   <Story name="default">
     <Heading
-    center={boolean('center', false)}
-    disableSelect={boolean('disableSelect', false)}
-    light={boolean('light', false)}
-    linkStyle={boolean('linkStyle', false)}
-    lineHeightInherit={boolean('lineHeightInherit', false)}
-    lineHeightReset={boolean('lineHeightReset', false)}
-    noWrap={boolean('noWrap', false)}
-    size={select(
-      'size',
-      {
-        h1: 'h1',
-        h2: 'h2',
-        h3: 'h3',
-        h4: 'h4',
-        h5: 'h5',
-        h6: 'h6',
-        small: 'small',
-        md: 'md',
-        big: 'big',
-      },
-      'h1'
-    )}
-    truncate={boolean('truncate', false)}
-    wordWrap={boolean('wordWrap', false)}
-    >Heading</Heading>
+      center={boolean('center', false)}
+      disableSelect={boolean('disableSelect', false)}
+      light={boolean('light', false)}
+      linkStyle={boolean('linkStyle', false)}
+      lineHeightInherit={boolean('lineHeightInherit', false)}
+      lineHeightReset={boolean('lineHeightReset', false)}
+      noWrap={boolean('noWrap', false)}
+      size={select(
+        'size',
+        {
+          h1: 'h1',
+          h2: 'h2',
+          h3: 'h3',
+          h4: 'h4',
+          h5: 'h5',
+          h6: 'h6',
+          small: 'small',
+          md: 'md',
+          big: 'big',
+        },
+        'h1'
+      )}
+      truncate={boolean('truncate', false)}
+      wordWrap={boolean('wordWrap', false)}
+    >
+      Heading
+    </Heading>
   </Story>
 </Preview>
 

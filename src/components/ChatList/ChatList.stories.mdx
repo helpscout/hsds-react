@@ -1,17 +1,17 @@
-import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
 import ChatList from './'
 import { List, _Item } from './ChatList.storiesHelpers'
 
-
 <Meta
-  title="Components/Wayfinding/ChatList"
+  title="🧬 Components/Wayfinding/ChatList"
   component={ChatList}
   parameters={{
-      design: {
-        type: 'figma',
-        url: 'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A11300'
-      }
-    }}
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A11300',
+    },
+  }}
 />
 
 # ChatList
@@ -71,14 +71,11 @@ A ChatList.BlankSlate component provides information when there is no content. T
 <Preview>
   <Story name="Chat BlankSlate/Empty">
     <div>
-      <ChatList.BlankSlate>
-          Nothing to see here.
-      </ChatList.BlankSlate>
-      <br/>
+      <ChatList.BlankSlate>Nothing to see here.</ChatList.BlankSlate>
+      <br />
       <ChatList />
     </div>
   </Story>
 </Preview>
 
 <Props of={ChatList.BlankSlate} />
-

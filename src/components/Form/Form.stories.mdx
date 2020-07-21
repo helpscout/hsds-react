@@ -4,13 +4,14 @@ import { FormGroup, FormLabel, Input } from '../'
 import Form from './'
 
 <Meta
-  title="Components/Forms/Form"
+  title="🧬 Components/Forms/Form"
   component={Form}
   parameters={{
     design: {
       type: 'figma',
-      url: 'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A9307'
-    }
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A9307',
+    },
   }}
 />
 
@@ -21,7 +22,11 @@ A Form component is a wrapper that will wrap around children like `<FormGroup>` 
 <Preview>
   <Story name="default">
     <Form
-      actionDirection={select('actionDirection', {left: 'left', right: 'right'}, 'right')}
+      actionDirection={select(
+        'actionDirection',
+        { left: 'left', right: 'right' },
+        'right'
+      )}
       cancelText="Cancel Changes"
       destroyText="Delete Item"
       saveText="Save Entry"
@@ -49,7 +54,6 @@ A Form component is a wrapper that will wrap around children like `<FormGroup>` 
 ### Props
 
 <Props of={Form} />
-
 
 ## Form.Actions
 

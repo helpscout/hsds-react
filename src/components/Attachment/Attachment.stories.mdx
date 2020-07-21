@@ -1,16 +1,17 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks';
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
 import { select, text } from '@storybook/addon-knobs'
 import Attachment from './'
 
 <Meta
-  title="Components/Badges/Attachment"
+  title="🧬 Components/Badges/Attachment"
   component={Attachment}
   parameters={{
-      design: {
-        type: 'figma',
-        url: 'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A7126'
-      }
-    }}
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A7126',
+    },
+  }}
 />
 
 # Attachment
@@ -68,9 +69,7 @@ A Provider component provides child components with props accessible as `context
 
 <Preview>
   <Story name="Preview theme">
-    <Attachment.Provider
-      theme="preview"
-    >
+    <Attachment.Provider theme="preview">
       <Attachment
         name={text('name', 'derek.png')}
         size={text('size', '5kb')}
@@ -90,7 +89,8 @@ A Provider component provides child components with props accessible as `context
           'imageUrl',
           {
             none: null,
-            'some image': 'https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto'
+            'some image':
+              'https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto',
           },
           null
         )}
