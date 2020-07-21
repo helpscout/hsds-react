@@ -40,20 +40,22 @@ export class TabBar extends React.Component {
   }
 }
 
-TabBar.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.any,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  innerRef: PropTypes.func,
-  secContent: PropTypes.any,
-  align: PropTypes.oneOf(['left', 'center', 'right']),
-}
-
 TabBar.defaultProps = {
   align: 'left',
   'data-cy': 'TabBar',
   innerRef: noop,
+}
+
+TabBar.propTypes = {
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  innerRef: PropTypes.func,
+  /** A right or left aligned placeholder that will be render inside the toolbar as the secondary content */
+  secContent: PropTypes.any,
+  /** Alignment of the toolbar contents using flexbox */
+  align: PropTypes.oneOf(['left', 'center', 'right']),
 }
 
 export default TabBar

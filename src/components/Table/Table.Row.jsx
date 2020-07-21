@@ -32,7 +32,10 @@ export default class TableRow extends React.PureComponent {
 }
 
 TableRow.propTypes = {
+  /** List of columns */
   columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
+  /** Object with data for this particular row */
   row: PropTypes.shape(dataShape),
+  /** Callback function when the row is clicked. Arguments are the event and the row clicked. */
   onRowClick: PropTypes.func,
 }

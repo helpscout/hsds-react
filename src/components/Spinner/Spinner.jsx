@@ -64,17 +64,6 @@ export class Spinner extends React.PureComponent {
   }
 }
 
-Spinner.propTypes = {
-  className: PropTypes.string,
-  color: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  shade: PropTypes.string,
-  isRounded: PropTypes.bool,
-  speed: PropTypes.number,
-  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-}
-
 Spinner.defaultProps = {
   color: 'currentColor',
   'data-cy': 'Spinner',
@@ -82,6 +71,23 @@ Spinner.defaultProps = {
   shade: 'default',
   size: 16,
   speed: 1400,
+}
+
+Spinner.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Color of the spinner. */
+  color: PropTypes.string,
+  /** Rounds the stroke ends of the spinner SVG. */
+  isRounded: PropTypes.bool,
+  /** Determines the opacity of the spinner. */
+  shade: PropTypes.string,
+  /** Determines the size of the spinner. */
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  /** Speed of the spinning animation (in `ms`). */
+  speed: PropTypes.number,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Spinner

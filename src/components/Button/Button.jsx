@@ -206,7 +206,7 @@ Button.propTypes = {
     'default',
     'link',
   ]),
-  /** Sets the size of the button. Can be one of `"sm"`, `"md"` or `"lg"`. */
+  /** Sets the size of the button. Can be one of "sm", "md" or "lg". */
   size: PropTypes.string,
   /** A special property that... spins the button if `isLoading`. */
   spinButtonOnLoading: PropTypes.bool,

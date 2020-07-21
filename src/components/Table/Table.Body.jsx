@@ -78,14 +78,19 @@ export default class TableBody extends React.Component {
   }
 }
 
-TableBody.propTypes = {
-  columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
-  isTableCollapsed: PropTypes.bool,
-  maxRowsToDisplay: PropTypes.number,
-  rows: PropTypes.arrayOf(PropTypes.shape(dataShape)),
-  onRowClick: PropTypes.func,
-}
-
 TableBody.defaultProps = {
   'data-cy': 'TableBody',
+}
+
+TableBody.propTypes = {
+  /** List of columns */
+  columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
+  /** Whether the table is currently expanded/collapsed */
+  isTableCollapsed: PropTypes.bool,
+  /** When provided the Table will only show this number of rows and and expander to see the rest */
+  maxRowsToDisplay: PropTypes.number,
+  /** List of Rows (data), which are objects */
+  rows: PropTypes.arrayOf(PropTypes.shape(dataShape)),
+  /** Callback function when a row is clicked. Arguments are the event and the row clicked. */
+  onRowClick: PropTypes.func,
 }

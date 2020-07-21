@@ -87,18 +87,34 @@ class StatusDot extends React.PureComponent {
   }
 }
 
+StatusDot.defaultProps = {
+  'data-cy': 'StatusDot',
+  inline: false,
+  isUnread: false,
+  outerBorderWidth: 3,
+  size: 'sm',
+  status: 'online',
+  style: {},
+}
+
 StatusDot.propTypes = {
+  /** Color for the component border. */
   borderColor: PropTypes.string,
+  /** Custom class names to be added to the component. */
   className: PropTypes.string,
-  children: PropTypes.any,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
+  /** Renders an `Icon` into the component. */
   icon: PropTypes.string,
+  /** Applies a display inline style to the component. */
   inline: PropTypes.bool,
+  /** Applies an unread style to the component. */
   isUnread: PropTypes.bool,
+  /** Color for the component's outer border. */
   outerBorderColor: PropTypes.string,
-  outerBorderWidth: PropTypes.number,
+  /** Width the component's outer border. */
+  outerBorderWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Adjusts the size of the component. */
   size: PropTypes.oneOf(['md', 'sm']),
+  /** Status style to render to the component. */
   status: PropTypes.oneOf([
     'online',
     'offline',
@@ -111,18 +127,10 @@ StatusDot.propTypes = {
     'unavailable',
     'custom',
   ]),
-  style: PropTypes.any,
+  /** Custom text for the HTML `title` attributes. */
   title: PropTypes.string,
-}
-
-StatusDot.defaultProps = {
-  'data-cy': 'StatusDot',
-  inline: false,
-  isUnread: false,
-  outerBorderWidth: 3,
-  size: 'sm',
-  status: 'online',
-  style: {},
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default StatusDot

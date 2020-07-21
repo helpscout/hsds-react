@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Collapsible from '../Collapsible'
-import Button from './StatusBar.Button'
+import StatusBarButton from './StatusBar.Button'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { StatusBarUI } from './StatusBar.css'
@@ -16,6 +16,8 @@ class StatusBar extends React.PureComponent {
     }
     this.handleOnClick = this.handleOnClick.bind(this)
   }
+
+  static Button = StatusBarButton
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const { isOpen } = nextProps
@@ -70,17 +72,6 @@ class StatusBar extends React.PureComponent {
   }
 }
 
-StatusBar.Button = Button
-
-StatusBar.propTypes = {
-  closeOnClick: PropTypes.bool,
-  status: PropTypes.oneOf(['error', 'info', 'success', 'warning', '', null]),
-  theme: PropTypes.oneOf(['light', 'bold']),
-  onClick: PropTypes.func,
-  onOpen: PropTypes.func,
-  onClose: PropTypes.func,
-}
-
 StatusBar.defaultProps = {
   'data-cy': 'StatusBar',
   isOpen: false,
@@ -90,6 +81,21 @@ StatusBar.defaultProps = {
   closeOnClick: true,
   status: 'info',
   theme: 'light',
+}
+
+StatusBar.propTypes = {
+  /** Close the bar upon clicking it */
+  closeOnClick: PropTypes.bool,
+  /** Status-based style for the component. */
+  status: PropTypes.oneOf(['error', 'info', 'success', 'warning', '', null]),
+  /** Style for the component. */
+  theme: PropTypes.oneOf(['light', 'bold']),
+  /** Callback function when clicking on the component. */
+  onClick: PropTypes.func,
+  /** Callback function when the component opens. */
+  onOpen: PropTypes.func,
+  /** Callback function when the component closes. */
+  onClose: PropTypes.func,
 }
 
 export default StatusBar

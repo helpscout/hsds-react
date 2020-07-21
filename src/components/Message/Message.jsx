@@ -168,7 +168,7 @@ Message.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
   /** Provides author information and applies "From" styles. */
-  from: PropTypes.bool,
+  from: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   /** Applies the "Note" theme styles. */
   isNote: PropTypes.bool,
   /** Applies left-to-right text styles. */

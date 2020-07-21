@@ -21,9 +21,10 @@ const StatusBarButton = props => {
 }
 
 StatusBarButton.propTypes = {
+  /** Custom class names to be added to the component. */
   className: PropTypes.string,
+  /** Add an 'Icon' name to render in the button */
   icon: PropTypes.string,
-  children: PropTypes.any,
 }
 
 StatusBarButton.defaultProps = {

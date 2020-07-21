@@ -10,6 +10,7 @@ export class StepperProgress extends React.PureComponent {
 
   getClassName() {
     const { className, isActive } = this.props
+
     return classNames(
       StepperProgress.className,
       isActive && 'is-active',
@@ -30,18 +31,20 @@ export class StepperProgress extends React.PureComponent {
   }
 }
 
-StepperProgress.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  innerRef: PropTypes.func,
-  isActive: PropTypes.bool,
-}
-
 StepperProgress.defaultProps = {
   'data-cy': 'StepperProgress',
   isActive: false,
   innerRef: noop,
+}
+
+StepperProgress.propTypes = {
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  innerRef: PropTypes.func,
+  /** Whether the current step is active */
+  isActive: PropTypes.bool,
 }
 
 export default StepperProgress

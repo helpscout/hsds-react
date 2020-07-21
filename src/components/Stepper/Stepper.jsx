@@ -108,21 +108,6 @@ export class Stepper extends React.PureComponent {
   }
 }
 
-Stepper.propTypes = {
-  className: PropTypes.string,
-  currentIndex: PropTypes.any,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  innerRef: PropTypes.func,
-  isClickable: PropTypes.bool,
-  onChange: PropTypes.func,
-  onComplete: PropTypes.func,
-  onStepClick: PropTypes.func,
-  steps: PropTypes.arrayOf(
-    PropTypes.shape({ title: PropTypes.string, id: PropTypes.string })
-  ),
-}
-
 Stepper.defaultProps = {
   currentIndex: 0,
   'data-cy': 'Stepper',
@@ -132,6 +117,28 @@ Stepper.defaultProps = {
   onComplete: noop,
   onStepClick: noop,
   steps: [],
+}
+
+Stepper.propTypes = {
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** The current step. */
+  currentIndex: PropTypes.any,
+  /** Enables clicking for the steps. */
+  isClickable: PropTypes.bool,
+  /** Callback when a step completes. */
+  onChange: PropTypes.func,
+  /** Callback when all steps are completed. */
+  onComplete: PropTypes.func,
+  /** Callback when a step is clicked. Enabled by `isClickable`. */
+  onStepClick: PropTypes.func,
+  /** Collection of steps. */
+  steps: PropTypes.arrayOf(
+    PropTypes.shape({ title: PropTypes.string, id: PropTypes.string })
+  ),
+  innerRef: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Stepper

@@ -180,47 +180,6 @@ export class Table extends React.Component {
     )
   }
 }
-
-Table.propTypes = {
-  className: PropTypes.string,
-  tableClassName: PropTypes.string,
-  columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
-  data: PropTypes.arrayOf(PropTypes.shape(dataShape)),
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  expanderText: PropTypes.any,
-  maxRowsToDisplay: PropTypes.number,
-  containerWidth: PropTypes.string,
-  tableWidth: PropTypes.shape({ min: PropTypes.string, max: PropTypes.string }),
-  skin: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.shape({
-      fontColorHeader: PropTypes.string,
-      fontColorBody: PropTypes.string,
-      fontColorAlternate: PropTypes.string,
-      bgColor: PropTypes.string,
-      bgAlternate: PropTypes.string,
-      bgHeader: PropTypes.string,
-      bgColorHover: PropTypes.string,
-      borderTableBody: PropTypes.string,
-      borderTableHeader: PropTypes.string,
-      borderRows: PropTypes.string,
-      borderColumns: PropTypes.string,
-    }),
-  ]),
-  isLoading: PropTypes.bool,
-  isScrollLocked: PropTypes.bool,
-  withTallRows: PropTypes.bool,
-  sortedInfo: PropTypes.shape({
-    columnKey: PropTypes.string,
-    order: PropTypes.string,
-  }),
-  onRowClick: PropTypes.func,
-  onExpand: PropTypes.func,
-  tableRef: PropTypes.func,
-  wrapperRef: PropTypes.func,
-}
-
 Table.defaultProps = {
   columns: [],
   data: [],
@@ -239,6 +198,63 @@ Table.defaultProps = {
   tableRef: noop,
   onExpand: noop,
   withTallRows: false,
+}
+
+Table.propTypes = {
+  /** Custom class names to be added to the component top level element. */
+  className: PropTypes.string,
+  /** Custom class names to be added to the `<table>` element. */
+  tableClassName: PropTypes.string,
+  /** List of columns */
+  columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
+  /** List of Rows, which are objects */
+  data: PropTypes.arrayOf(PropTypes.shape(dataShape)),
+  /** The text for the "expander" button when table is either collapsed or expanded */
+  expanderText: PropTypes.any,
+  /** When provided the Table will only show this number of rows and and expander to see the rest */
+  maxRowsToDisplay: PropTypes.number,
+  /** The table wrapper width (if `tableWidth` is larger, the component scrolls horizontally) */
+  containerWidth: PropTypes.string,
+  /** The `<table>` width */
+  tableWidth: PropTypes.shape({ min: PropTypes.string, max: PropTypes.string }),
+  /** An object to customize the visual appearance of the table. See [Skins.md](/src/components/Table/docs/Skins.md) */
+  skin: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.shape({
+      fontColorHeader: PropTypes.string,
+      fontColorBody: PropTypes.string,
+      fontColorAlternate: PropTypes.string,
+      bgColor: PropTypes.string,
+      bgAlternate: PropTypes.string,
+      bgHeader: PropTypes.string,
+      bgColorHover: PropTypes.string,
+      borderTableBody: PropTypes.string,
+      borderTableHeader: PropTypes.string,
+      borderRows: PropTypes.string,
+      borderColumns: PropTypes.string,
+    }),
+  ]),
+  /** Adds the 'is-loading' class to the component */
+  isLoading: PropTypes.bool,
+  /** Whether to use `ScrollLock` with `direction="x"` on the Table. */
+  isScrollLocked: PropTypes.bool,
+  /** When sortable, indicates which column tha table is sorted by, and in which order (ascending or descending) */
+  sortedInfo: PropTypes.shape({
+    columnKey: PropTypes.string,
+    order: PropTypes.string,
+  }),
+  /** Callback function when a row is clicked. Arguments are the event and the row clicked. */
+  onRowClick: PropTypes.func,
+  /** Retrieves the `<table>` node. */
+  tableRef: PropTypes.func,
+  /** Retrieves the table wrapper node. */
+  wrapperRef: PropTypes.func,
+  /** Callback when expending/collapsing the table */
+  onExpand: PropTypes.func,
+  /** Makes the rows 60px tall */
+  withTallRows: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Table
