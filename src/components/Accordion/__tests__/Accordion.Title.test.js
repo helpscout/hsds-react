@@ -29,7 +29,7 @@ describe('ClassNames', () => {
     expect(el.hasClass(className)).toBe(true)
   })
 
-  test.only('Applies a className to indicate that the Title is in an open section', () => {
+  test('Applies a className to indicate that the Title is in an open section', () => {
     const wrapper = mount(
       <Accordion openSectionIds={['1']}>
         <Section id={'1'}>
