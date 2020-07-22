@@ -56,6 +56,7 @@ export const Popover = props => {
     content,
     renderContent,
     className,
+    placement,
     triggerOn,
     ...rest
   } = props
@@ -81,6 +82,7 @@ export const Popover = props => {
       innerRef={innerRef}
       render={render}
       trigger={triggerOn}
+      placement={placement}
     />
   )
 }
