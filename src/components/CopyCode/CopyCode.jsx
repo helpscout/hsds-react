@@ -84,7 +84,7 @@ class CopyCode extends React.PureComponent {
   }
 
   render() {
-    const { className, code, maxWidth, ...rest } = this.props
+    const { buttonSize, className, code, maxWidth, ...rest } = this.props
     const componentClassName = classNames('c-CopyCode', className)
 
     return (
@@ -105,6 +105,7 @@ class CopyCode extends React.PureComponent {
           kind="secondary"
           onClick={this.handleCopyClick}
           canRenderFocus
+          size={buttonSize}
         >
           Copy
         </CopyButtonUI>
@@ -115,6 +116,7 @@ class CopyCode extends React.PureComponent {
 
 CopyCode.propTypes = {
   autoFocus: PropTypes.bool,
+  buttonSize: PropTypes.string,
   className: PropTypes.string,
   code: PropTypes.string,
   copyToClipboard: PropTypes.bool,
@@ -128,6 +130,7 @@ CopyCode.propTypes = {
 
 CopyCode.defaultProps = {
   autoFocus: false,
+  buttonSize: 'sm',
   code: '',
   copyToClipboard: true,
   'data-cy': 'CopyCode',
