@@ -1,0 +1,75 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import colorScheme from '../styles/configs/colors'
+import { getColor } from '../styles/utilities/color'
+import { Heading, Flexy } from '.'
+
+<Meta title="🕺🏻 Style/1. Colors" />
+
+- [Help Scout Color Guide](#help-scout-color-guide)
+  - [Colorway](#colorway)
+    - [Alfred colorway](#alfred-colorway)
+
+# Help Scout Color Guide
+
+<div style={{ marginTop: '40px' }}>
+  {Object.keys(colorScheme).map(hue => {
+    return (
+      <div key={`${hue}`} style={{ marginBottom: '20px' }}>
+        <Heading style={{ marginBottom: '5px' }}>{hue}</Heading>
+        <Flexy just="left">
+          {Object.keys(colorScheme[hue]).map(shade => {
+            const color = getColor(`${hue}.${shade}`)
+            return (
+              <Flexy.Item
+                key={`${hue}_${shade}`}
+                style={{
+                  height: '50px',
+                  background: color,
+                  padding: '5px',
+                }}
+              >
+                <Heading
+                  size="small"
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.3)',
+                    padding: '1px 3px',
+                    borderRadius: '5px',
+                    display: 'inline-block',
+                  }}
+                >
+                  {shade}
+                </Heading>
+              </Flexy.Item>
+            )
+          })}
+        </Flexy>
+      </div>
+    )
+  })}
+</div>
+
+## Colorway
+
+[Colorway](https://github.com/helpscout/colorway) is Help Scout's color management syncing system.
+
+You can install it following the instructions on the linked repository and with it you get a command line utility to get Help Scout colors and find close matches.
+
+Example:
+
+```bash
+$ colorway find blue.500
+
+blue.500: #1292EE
+
+$ colorway closest #005500
+
+green.900: #23633e
+```
+
+Try it out!
+
+### Alfred colorway
+
+If you happen to be a paying user of [Alfred](https://www.alfredapp.com/) (You need workflows) we have a handy workflow that leverages a more user friendly way to use Colorway. Grab it [here](https://github.com/helpscout/alfred-colorway).
+
+📹 [Check how it works](https://www.loom.com/share/626cafcaa0fe4d6d96a7dde1c35b2c3f)

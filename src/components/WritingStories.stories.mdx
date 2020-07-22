@@ -1,0 +1,190 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="🏠 Welcome/4. Writing Stories" />
+
+- [Guidelines for writing good stories](#guidelines-for-writing-good-stories)
+  - [Knobs](#knobs)
+  - [MDX](#mdx)
+  - [Structure of a Story](#structure-of-a-story)
+  - [Component generator](#component-generator)
+
+# Guidelines for writing good stories
+
+In the past we have used stories as sort of a development playground or lab, and have written stories that showcase every single scenario, from simple to _very_ complex for each component.
+
+The most important thing to remember when writing stories is that HSDS's Storybook is in fact the central documentation place for designers and developers to see how a component looks, interact with it and obtain information on how to use it.
+
+With this in mind, we should strive to write simple stories that cover the main use cases for each component.
+
+Storybook _is_ a great developer environment to work on while building components, feel free to use it as you see fit during this stage, but when it comes to commiting your work to HSDS, make sure to only include stories that document the component main use and common variations.
+
+## Knobs
+
+Using the storybook add-on "knobs", we can write simple yet very interactive stories that cover most use cases of a component in one single story.
+
+So when to write a separate story? Use your judgement for when using a knob suffices or if the feature is better showcased in a separate story. Have a look at what we currently have and make the call.
+
+## MDX
+
+All stories are written in `mdx`, a format that allows to write prose in Markdown and bring `react` components usign `jsx`.
+
+The mdx parser is sometimes a little funny, specially in the `jsx` blocks, for example, having a blank line trips it up, like:
+
+```jsx
+<Card>
+  <p>Something here</p>
+
+  <button>OK</button>
+</Card>
+```
+
+Something like the above might throw an error, and there might be other cases, so be aware of that. Fortunately we have Prettier in place that will format your `mdx` just like markdown or javascript.
+
+Also, mdx allows _some_ javascript to be run, but not everything can be.
+
+## Structure of a Story
+
+```
+  // YourComponent.stories.mdx
+
+  👇 Storybook's components to render stories
+  import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+
+  👇 The "knobs" you'd like to use
+  import { boolean, number } from '@storybook/addon-knobs'
+
+  👇 If you want to showcase "actions" (logs the outcome of an action in a separate tab, use sparingly, in my experience is VERY slow 🤷‍♀️)
+  import { action } from '@storybook/addon-actions'
+
+  👇 Your component
+  import YourComponent from './'
+
+  👇 You can bring other components and use them in your stories
+  import { Button, Heading, Link, Text } from '../index'
+
+  <Meta
+    title="🧬 Components/Text/YourComponent" 👈 Find the correct path to where your story should be located in the storybook
+    component={YourComponent}
+    parameters={{
+      design: {
+        type: 'figma',
+        url:
+          'https://www.figma.com/file/Wp9mDx', 👈 The link to the Figma design, provided by a designer.
+      },
+    }}
+  />
+
+  # YourComponent
+
+  Component's description and any notes worth mentioning
+
+  👇 Default story, a lot of the time this is all is needed
+  <Preview>
+    <Story name="default">
+      <YourComponent
+        shadow={boolean('shadow', false)}
+        seamless={boolean('seamless', false)}
+        theme={select(
+          'Theme',
+          {
+            default: 'default',
+            note: 'note',
+          },
+          'default'
+        )}
+      >Buddy!</YourComponent>
+    </Story>
+  </Preview>
+
+  #### Reference
+
+  - **Designer**: Buzz 👈 Main designer
+  - **Engineering**: Juan Pablo 👈 Developer
+  - **Usage**: Messages 👈 Where is it going to be used in Help Scout?
+
+  <br />
+  <br />
+
+  ### Props
+
+  <Props of={YourComponent} /> 👈 This generates the "prop types" table, be sure to document them directly in the component file.
+
+  ## Stories 👈 Write as many stories as you see fit, whenever you feel knobs are not enough or the right way to go.
+
+  #### Wild mode
+
+  <Preview>
+    <Story name="wild mode">
+      <YourComponent wildMode={true} />
+    </Story>
+  </Preview>
+
+  #### Disco mode
+
+  <Preview>
+    <Story name="disco mode">
+      <YourComponent discoMode={true} />
+    </Story>
+  </Preview>
+```
+
+## Component generator
+
+Using the provided component generator npm script creates a template that includes all of this for you (together with the component jsx, css and test files).
+
+```bash
+  npm run remake --name="YourComponent"
+```
+
+> Too late to use the generator? Grab the template (hint use the copy button at the bottom of the block):
+
+```
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { boolean, number } from '@storybook/addon-knobs'
+import { action } from '@storybook/addon-actions'
+import YourComponent from './'
+
+<Meta
+  title="🧬 Components/Text/YourComponent"
+  component={YourComponent}
+  parameters={{
+    design: {
+      type: 'figma',
+      url: ''
+    },
+  }}
+/>
+
+# YourComponent
+
+Component's description and any notes worth mentioning
+
+<Preview>
+  <Story name="default">
+    <YourComponent />
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**:
+- **Engineering**:
+- **Usage**:
+
+<br />
+<br />
+
+### Props
+
+<Props of={YourComponent} />
+
+## Stories
+
+#### Wild mode
+
+<Preview>
+  <Story name="wild mode">
+    <YourComponent wildMode={true} />
+  </Story>
+</Preview>
+```

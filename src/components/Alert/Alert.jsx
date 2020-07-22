@@ -141,7 +141,7 @@ Alert.defaultProps = {
 Alert.propTypes = {
   /** Renders an action-based element on the right side of the content. Typically Buttons. */
   actionRight: PropTypes.any,
-  /** Renders a [Badge](../Badge) component. */
+  /** Renders a Badge component. */
   badge: PropTypes.string,
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
@@ -149,7 +149,7 @@ Alert.propTypes = {
   'data-cy': PropTypes.string,
   /** Allows this component to be dismissed by clicking a CloseButton. */
   dismissible: PropTypes.bool,
-  /** Renders an alert [Icon](../Icon). */
+  /** Renders an alert Icon. */
   icon: PropTypes.bool,
   /** Removes margin from the bottom of the component. */
   noMargin: PropTypes.bool,

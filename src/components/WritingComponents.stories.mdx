@@ -1,0 +1,57 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="🏠 Welcome/3. Writing Components" />
+
+- [General guidelines](#general-guidelines)
+  - [Component generator](#component-generator)
+  - [Props](#props)
+    - [A case of _"Prop-itis"_](#a-case-of-prop-itis)
+    - [Data-Cy](#data-cy)
+  - [Hooks](#hooks)
+
+# General guidelines
+
+First get familiarized with the [contributing guidelines](/?path=/docs/🏠-welcome-2-contributing--page), go on I'll wait.
+
+Cool, now that that is out of the way, something that makes life easier for everyone is consistency, and with that in mind we'd like to follow some lightweight patterns.
+
+## Component generator
+
+Using the provided component generator npm script creates templates that includes all of this for you (component jsx, css, stories and test files) that follow our general patterns.
+
+```bash
+  npm run remake --name="YourComponent"
+```
+
+## Props
+
+We use `PropTypes` to document our components' interfaces, this documentation provides descriptions of each `prop` and whether it has a default, and ultimately all this information is brought into the mdx documentation as a table.
+
+Example:
+
+```jsx
+Alert.propTypes = {
+  /** Renders an action-based element on the right side of the content. Typically Buttons. */
+  actionRight: PropTypes.any,
+  /** Renders a Badge component. */
+  badge: PropTypes.string,
+}
+```
+
+We place `YourComponent.defaultProps` and `YourComponent.propTypes` at the bottom of the file (and in that order) to avoid cluttering the component's code and facilitate reading the source code.
+
+### A case of _"Prop-itis"_
+
+You'll notice that some components have a _huge_ list of props, and sometimes there is justification for that but in general this should be considered a bad practice.
+
+As a general rule, don't add a new prop to the component when a simple css override will do, we have the powerful package `styled components` to make this a breeze. We realize is a bit late for the existing components without incurring in complicated refactors, but moving forward we should try to avoid this.
+
+### Data-Cy
+
+Every component needs to have the `string` prop `data-cy` with a default to the name of the component (or a suitable name) to help our QA colleagues test using Cypress.
+
+## Hooks
+
+Our react components are mainly written using the "class" syntax, some "plain functional" and a couple having rewritten using "functional hooks".
+
+Use whatever you feel comfortable using, we have no plans in moving anything to Hooks unless there's a clear advantage to do so.
