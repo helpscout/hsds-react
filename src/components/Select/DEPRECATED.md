@@ -1,3 +1,9 @@
+**_DEPRECATED COMPONENT_**
+**_DEPRECATED COMPONENT_**
+**_DEPRECATED COMPONENT_**
+
+Use `SelectDropdown` instead
+
 # Select
 
 A Select component is an enhanced version of the default HTML `<select>`.

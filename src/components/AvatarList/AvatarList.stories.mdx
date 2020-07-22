@@ -32,7 +32,15 @@ An AvatarList component displays an array of `Avatars`. This component has a max
       >
         {AvatarSpec.generate(20).map(avatar => {
           const { name, image, status } = avatar
-          return <Avatar image={image} key={name} name={name} status={status} />
+          return (
+            <Avatar
+              image={image}
+              key={name}
+              name={name}
+              status={status}
+              withShadow={boolean('withShadow', false)}
+            />
+          )
         })}
       </AvatarList>
     </div>
@@ -51,3 +59,28 @@ An AvatarList component displays an array of `Avatars`. This component has a max
 ### Props
 
 <Props of={AvatarList} />
+
+### Stories
+
+#### use as AvatarStack replacement
+
+<Preview>
+  <Story name="use as AvatarStack replacement">
+    <div style={{ background: '#eee', padding: 10 }}>
+      <AvatarList max={number('max', 14)} center stack size="md">
+        {AvatarSpec.generate(20).map(avatar => {
+          const { name, image, status } = avatar
+          return (
+            <Avatar
+              image={image}
+              key={name}
+              name={name}
+              status={status}
+              withShadow={boolean('withShadow', true)}
+            />
+          )
+        })}
+      </AvatarList>
+    </div>
+  </Story>
+</Preview>

@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+// Deprecated component, use AvatarList instead
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
