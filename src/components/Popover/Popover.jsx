@@ -56,6 +56,7 @@ export const Popover = props => {
     content,
     renderContent,
     className,
+    placement,
     triggerOn,
     ...rest
   } = props
@@ -81,6 +82,7 @@ export const Popover = props => {
       innerRef={innerRef}
       render={render}
       trigger={triggerOn}
+      placement={placement}
     />
   )
 }
@@ -98,6 +100,8 @@ Popover.propTypes = {
   content: PropTypes.any,
   /** Title content to render within the component. */
   header: PropTypes.any,
+  /** Where to place the Tooltip. */
+  placement: PropTypes.string,
   /** Renders a component within the Popover. Is prioritized over `content` */
   renderContent: PropTypes.any,
   /** Renders a component within the Popover. Is prioritized over `header` */

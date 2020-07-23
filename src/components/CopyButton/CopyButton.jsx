@@ -101,6 +101,7 @@ CopyButton.defaultProps = {
   onClick: noop,
   onReset: noop,
   resetTimeout: 2000,
+  size: 'sm',
 }
 
 CopyButton.propTypes = {

@@ -280,6 +280,7 @@ class VerificationCode extends React.Component {
             <Tooltip
               animationDelay={0}
               animationDuration={0}
+              appendTo={document.body}
               display="block"
               placement="top-end"
               title="Invalid verification code"
