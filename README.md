@@ -98,7 +98,9 @@ npm run deploy
 
 ## Learning
 
-Check out our [videos](./VIDEOS.md) for learning resources.
+- HSDS documentation: [https://hsds.helpscout.com/](https://hsds.helpscout.com/)
+- Developer in-depth documentation: [dev docs](./docs/README.md)
+- Also, check out our [videos](./VIDEOS.md) for more learning resources
 
 ## Blue?
 
