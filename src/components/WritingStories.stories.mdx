@@ -38,9 +38,9 @@ The mdx parser is sometimes a little funny, specially in the `jsx` blocks, for e
 </Card>
 ```
 
-Something like the above might throw an error, and there might be other cases, so be aware of that. Fortunately we have Prettier in place that will format your `mdx` just like markdown or javascript.
+Something like the above will throw an error, and there might be other similar cases so just be aware of that. Fortunately we have `Prettier` in place that will format your `mdx` just like markdown or javascript and take care of some of the issues (not all though).
 
-Also, mdx allows _some_ javascript to be run, but not everything can be.
+Also, mdx allows _some_ javascript to be run, but not everything can be. If you need to have more js power, create a `YourComponent.storiesHelpers.js` and import from there 💪.
 
 ## Structure of a Story
 

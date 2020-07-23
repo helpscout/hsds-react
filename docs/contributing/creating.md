@@ -210,7 +210,7 @@ Below is a summary of things to pay attention to with examples of a slightly mor
 
 #### Folder Structure
 
-We try to follow a one-level folder structure for the most part, but sometimes a component is too complex and composed of multiple smaller components, to give structure add folders as needed, for example:
+We try to follow a one-level folder structure for the most part but sometimes a component is too complex and composed of multiple smaller components, to give structure add folders as needed, for example:
 
 ```
 hsds-react/
