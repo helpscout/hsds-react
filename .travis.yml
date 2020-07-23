@@ -18,7 +18,6 @@ install:
   - npm ci
 
 script:
-  - npm run build:css
   - npm run test
   # # Disabled for now. Until we have more E2E tests
   # - npm run test:cy
