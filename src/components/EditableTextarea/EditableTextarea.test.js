@@ -1,5 +1,4 @@
 import React from 'react'
-import { cy } from '@helpscout/cyan'
 import { mount } from 'enzyme'
 import { EditableTextarea } from './EditableTextarea'
 import {
@@ -13,39 +12,39 @@ jest.useFakeTimers()
 
 describe('className', () => {
   test('Has default className', () => {
-    const wrapper = cy.render(<EditableTextarea />)
+    const wrapper = mount(<EditableTextarea />)
 
-    expect(wrapper.hasClass('c-EditableTextarea')).toBeTruthy()
+    expect(wrapper.find('.c-EditableTextarea')).toBeTruthy()
   })
 
   test('Can render custom className', () => {
-    const customClassName = 'blue'
-    const wrapper = cy.render(<EditableTextarea className={customClassName} />)
+    const customClass = 'piano-key-neck-tie'
+    const wrapper = mount(<EditableTextarea className={customClass} />)
+    const el = wrapper.find(`.${customClass}`)
 
-    expect(wrapper.hasClass(customClassName)).toBeTruthy()
+    expect(el.length).toBeTruthy()
   })
 })
 
 describe('HTML props', () => {
   test('Can render default HTML props', () => {
-    cy.render(<EditableTextarea data-cy="BlueBlueBlue" />)
-    const el = cy.getByCy('BlueBlueBlue')
+    const wrapper = mount(<EditableTextarea data-cy="BlueBlueBlue" />)
+    const el = wrapper.find('[data-cy="BlueBlueBlue"]')
 
-    expect(el.exists()).toBeTruthy()
+    expect(el.length).toBeTruthy()
   })
 })
 
 describe('Label', () => {
   test('Renders label', () => {
-    cy.render(<EditableTextarea />)
-    const el = cy.get('.EditableTextarea__label')
+    const wrapper = mount(<EditableTextarea />)
 
-    expect(el.exists()).toBeTruthy()
+    expect(wrapper.find('.EditableTextarea__label').length).toBeTruthy()
   })
 
   test('The label has the correct "for" attribute based of name', () => {
-    cy.render(<EditableTextarea id="company" />)
-    const el = cy.get('.EditableTextarea__label')
+    const wrapper = mount(<EditableTextarea id="company" />)
+    const el = wrapper.find('.EditableTextarea__label').first().getDOMNode()
     const forAttr = el.getAttribute('for')
 
     expect(forAttr).toContain('company')
@@ -64,53 +63,53 @@ describe('ref', () => {
 
 describe('Value', () => {
   test('Value should be empty string if no value passed', () => {
-    cy.render(<EditableTextarea id="company" />)
+    const wrapper = mount(<EditableTextarea id="company" />)
+    const textarea = wrapper.find('textarea')
 
-    const textarea = cy.get('textarea')
-
-    expect(textarea.getValue()).toBe('')
+    expect(textarea.getDOMNode().value).toBe('')
   })
 
   test('Value should be empty string if no value passed, placeholder should be present if passed', () => {
-    cy.render(<EditableTextarea id="company" placeholder="Add something" />)
-
-    const textarea = cy.get('textarea')
+    const wrapper = mount(
+      <EditableTextarea id="company" placeholder="Add something" />
+    )
+    const textarea = wrapper.find('textarea').first().getDOMNode()
 
     expect(textarea.getAttribute('placeholder')).toBe('Add something')
   })
 
   test('Should assign a given value if passed on props', () => {
-    cy.render(
+    const wrapper = mount(
       <EditableTextarea
         id="company"
         placeholder="Add something"
         value="Some Notes"
       />
     )
+    const textarea = wrapper.find('textarea').first().getDOMNode()
 
-    const textarea = cy.get('textarea')
-
-    expect(textarea.getValue()).toBe('Some Notes')
+    expect(textarea.value).toBe('Some Notes')
   })
 
   test('Should change a given value if passed on props', () => {
-    const wrapper = cy.render(
+    const wrapper = mount(
       <EditableTextarea
         id="company"
         placeholder="Add something"
         value="hello"
       />
     )
+    const textarea = wrapper.find('textarea').first().getDOMNode()
 
-    expect(cy.get('textarea').getValue()).toBe('hello')
+    expect(textarea.value).toBe('hello')
 
     wrapper.setProps({ value: 'hola' })
 
-    expect(cy.get('textarea').getValue()).toBe('hola')
+    expect(textarea.value).toBe('hola')
   })
 
-  test('Should not value if value passed on props is the same as initial prop', () => {
-    const wrapper = cy.render(
+  test('Should not change value if value passed on props is the same as initial prop', () => {
+    const wrapper = mount(
       <EditableTextarea
         id="company"
         placeholder="Add something"
@@ -118,11 +117,13 @@ describe('Value', () => {
       />
     )
 
-    expect(cy.get('textarea').getValue()).toBe('hello')
+    const textarea = wrapper.find('textarea').first().getDOMNode()
+
+    expect(textarea.value).toBe('hello')
 
     wrapper.setProps({ value: 'hello' })
 
-    expect(cy.get('textarea').getValue()).toBe('hello')
+    expect(textarea.value).toBe('hello')
   })
 
   test('Should not change value if value passed on props is the same as state', () => {
@@ -180,12 +181,10 @@ describe('Keydown', () => {
 
   test('onChange', () => {
     const spy = jest.fn()
+    const wrapper = mount(<EditableTextarea id="company" onChange={spy} />)
+    const textarea = wrapper.find('textarea').first()
 
-    cy.render(<EditableTextarea id="company" onChange={spy} />)
-
-    const textarea = cy.get('textarea')
-
-    textarea.type('a')
+    textarea.simulate('change', { target: { value: 'a' } })
 
     expect(spy).toHaveBeenCalled()
   })
@@ -234,7 +233,7 @@ describe('Keyup', () => {
       f.then(() => {
         expect(wrapper.state('readOnly')).toEqual(false)
         done()
-      })
+      }).catch(done)
     })
   })
 
@@ -258,47 +257,47 @@ describe('Keyup', () => {
 })
 
 describe('Blur', () => {
-  test('should commit if value changes', () => {
+  test('should commit if value changes', done => {
     const onCommitSpy = jest.fn()
 
-    cy.render(
+    const wrapper = mount(
       <EditableTextarea id="company" value="hello" onCommit={onCommitSpy} />
     )
 
-    const textarea = cy.get('textarea')
+    const textarea = wrapper.find('textarea').first()
 
-    textarea.type('a')
-    textarea.blur()
+    textarea.simulate('change', { target: { value: 'hola' } })
+    textarea.simulate('blur')
 
     const f = flushPromises()
     jest.runAllTimers()
 
     f.then(() => {
       expect(onCommitSpy).toHaveBeenCalled()
-    })
+      done()
+    }).catch(done)
   })
 
-  test('should not commit if value unchanged', () => {
+  test('should not commit if value unchanged', done => {
     const onCommitSpy = jest.fn()
-
-    cy.render(
+    const wrapper = mount(
       <EditableTextarea id="company" value="hello" onCommit={onCommitSpy} />
     )
+    const textarea = wrapper.find('textarea').first()
 
-    const textarea = cy.get('textarea')
-
-    textarea.type('hello')
-    textarea.blur()
+    textarea.simulate('change', { target: { value: 'hello' } })
+    textarea.simulate('blur')
 
     const f = flushPromises()
     jest.runAllTimers()
 
     f.then(() => {
       expect(onCommitSpy).not.toHaveBeenCalled()
-    })
+      done()
+    }).catch(done)
   })
 
-  test('Pressing Enter: should commit if value changes', () => {
+  test('Pressing Enter: should commit if value changes', done => {
     const onEnterSpy = jest.fn()
     const onCommitSpy = jest.fn()
     const wrapper = mount(
@@ -312,18 +311,21 @@ describe('Blur', () => {
 
     const textarea = wrapper.find('textarea').first()
 
-    textarea.getDOMNode().value = '123'
+    textarea.simulate('change', { target: { value: '123' } })
     textarea.simulate('keydown', { key: 'Enter' })
+
+    jest.runAllTimers()
 
     flushPromises().then(() => {
       wrapper.update()
 
       expect(onEnterSpy).toHaveBeenCalled()
       expect(onCommitSpy).toHaveBeenCalled()
+      done()
     })
   })
 
-  test('Pressing Enter: should not commit if value invalid', () => {
+  test('Pressing Enter: should not commit if value invalid', done => {
     const onEnterSpy = jest.fn()
     const onCommitSpy = jest.fn()
     const wrapper = mount(
@@ -347,7 +349,6 @@ describe('Blur', () => {
     const textarea = wrapper.find('textarea').first()
 
     textarea.getDOMNode().value = '8888'
-
     textarea.simulate('keydown', { key: 'Enter' })
 
     const f = flushPromises()
@@ -356,36 +357,25 @@ describe('Blur', () => {
     f.then(() => {
       expect(onEnterSpy).toHaveBeenCalled()
       expect(onCommitSpy).not.toHaveBeenCalled()
-    })
+      done()
+    }).catch(done)
   })
 
-  test('should not run validate fn if value already validated', () => {
-    const validateSpy = jest.fn()
-
-    cy.render(
+  test('should not run validate fn if value already validated', done => {
+    const validateSpy = jest.fn(() => Promise.resolve({ isValid: true }))
+    const wrapper = mount(
       <EditableTextarea id="company" value="hello" validate={validateSpy} />
     )
 
-    const textarea = cy.get('textarea')
+    wrapper.setState({ validated: true })
 
-    textarea.type('hello')
-    textarea.blur()
     const f = flushPromises()
     jest.runAllTimers()
 
     f.then(() => {
-      expect(validateSpy).toHaveBeenCalled()
-    })
-
-    textarea.focus()
-    textarea.blur()
-
-    const t = flushPromises()
-    jest.runAllTimers()
-
-    t.then(() => {
       expect(validateSpy).not.toHaveBeenCalled()
-    })
+      done()
+    }).catch(done)
   })
 })
 
@@ -409,13 +399,13 @@ describe('Readonly', () => {
 
 describe('validation rendering', () => {
   test('should not render validation on mount', () => {
-    cy.render(<EditableTextarea id="greeting" value="hello" />)
+    const wrapper = mount(<EditableTextarea id="greeting" value="hello" />)
 
-    expect(cy.get(`.${INPUT_CLASSNAMES.validation}`).exists()).toBeFalsy()
+    expect(wrapper.find(`.${INPUT_CLASSNAMES.validation}`).length).toBeFalsy()
   })
 
-  test('should render validation if invalid', () => {
-    cy.render(
+  test('should render validation if invalid', done => {
+    const wrapper = mount(
       <EditableTextarea
         id="greeting_0"
         value="hello"
@@ -431,26 +421,25 @@ describe('validation rendering', () => {
       />
     )
 
-    const textarea = cy.get('textarea')
+    const textarea = wrapper.find('textarea').first()
 
-    textarea.type('hello')
-    textarea.blur()
+    textarea.simulate('change', { target: { value: '123' } })
+    textarea.simulate('blur')
 
     const f = flushPromises()
     jest.runAllTimers()
 
     f.then(() => {
+      wrapper.update()
       expect(
-        cy.get(`.${EditableTextarea.className}__validation`).exists()
+        wrapper.find('.c-EditableTextarea__validation').length
       ).toBeTruthy()
-      expect(
-        cy.get(`.${STATES_CLASSNAMES.withValidation}`).exists()
-      ).toBeTruthy()
-    })
+      done()
+    }).catch(done)
   })
 
-  test('should not render validation if valid', () => {
-    cy.render(
+  test('should not render validation if valid', done => {
+    const wrapper = mount(
       <EditableTextarea
         id="greeting_0"
         value="hello"
@@ -466,26 +455,24 @@ describe('validation rendering', () => {
       />
     )
 
-    const textarea = cy.get('textarea')
+    const textarea = wrapper.find('textarea').first()
 
-    textarea.type('hello')
-    textarea.blur()
+    textarea.simulate('change', { target: { value: '123' } })
+    textarea.simulate('blur')
 
     const f = flushPromises()
+
     jest.runAllTimers()
 
     f.then(() => {
-      expect(
-        cy.get(`.${EditableTextarea.className}__validation`).exists()
-      ).toBeFalsy()
-      expect(
-        cy.get(`.${STATES_CLASSNAMES.withValidation}`).exists()
-      ).toBeFalsy()
-    })
+      wrapper.update()
+      expect(wrapper.find('.c-EditableTextarea__validation').length).toBeFalsy()
+      done()
+    }).catch(done)
   })
 
-  test('should not render validation if id mistmatches', () => {
-    cy.render(
+  test('should not render validation if id mistmatches', done => {
+    const wrapper = mount(
       <EditableTextarea
         id="greeting_0"
         value="hello"
@@ -501,37 +488,34 @@ describe('validation rendering', () => {
       />
     )
 
-    const textarea = cy.get('textarea')
+    const textarea = wrapper.find('textarea').first()
 
-    textarea.type('hello')
-    textarea.blur()
+    textarea.simulate('change', { target: { value: 'hello' } })
+    textarea.simulate('blur')
 
     const f = flushPromises()
     jest.runAllTimers()
 
     f.then(() => {
-      expect(
-        cy.get(`.${EditableTextarea.className}__validation`).exists()
-      ).toBeFalsy()
-      expect(
-        cy.get(`.${STATES_CLASSNAMES.withValidation}`).exists()
-      ).toBeFalsy()
-    })
+      wrapper.update()
+      expect(wrapper.find('.c-EditableTextarea__validation').length).toBeFalsy()
+      done()
+    }).catch(done)
   })
 })
 
 describe('floating labels', () => {
   test('Adds the floating labels className', () => {
-    const wrapper = cy.render(<EditableTextarea id="company" floatingLabels />)
+    const wrapper = mount(<EditableTextarea id="company" floatingLabels />)
 
-    expect(wrapper.hasClass(STATES_CLASSNAMES.withFloatingLabels)).toBeTruthy()
+    expect(
+      wrapper.find(`.${STATES_CLASSNAMES.withFloatingLabels}`).length
+    ).toBeTruthy()
   })
 
   test('Label is hidden when floating labels on', () => {
-    cy.render(<EditableTextarea id="company" floatingLabels />)
+    const wrapper = mount(<EditableTextarea id="company" floatingLabels />)
 
-    const el = cy.get(`.EditableTextarea__label`)
-
-    expect(el.exists()).toBeFalsy()
+    expect(wrapper.find('.EditableTextarea__label').length).toBeFalsy()
   })
 })

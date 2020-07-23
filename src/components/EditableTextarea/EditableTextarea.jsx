@@ -144,8 +144,6 @@ export class EditableTextarea extends React.PureComponent {
 
     const stop = () => e.preventDefault() && e.stopPropagation()
 
-    // Escape route tested
-
     if (!isShiftPressed && code === key.ENTER) {
       stop()
 
@@ -165,7 +163,8 @@ export class EditableTextarea extends React.PureComponent {
             value: [item],
             event: e,
           })
-          this.textArea.current.blur()
+          // trigger blur
+          this.handleOnBlur()
         }
       )
     } else if (code === key.ESCAPE) {
@@ -245,8 +244,6 @@ export class EditableTextarea extends React.PureComponent {
           value,
           values: [item],
         }).then(validation => {
-          // Both cases tested
-
           if (validation.isValid) {
             this.setState(
               {
