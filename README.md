@@ -13,9 +13,7 @@ React components for Help Scout's Design System
 
 ## Live Demo
 
-Check out HSDS's [Storybook](https://hsds-react.netlify.com/):
-
-https://hsds-react.netlify.com/
+Check out HSDS's Storybook: [https://hsds.helpscout.com/](https://hsds.helpscout.com/).
 
 ## Install
 
