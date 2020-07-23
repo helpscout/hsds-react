@@ -16,6 +16,7 @@ Make sure the pull request:
 
 - [ ] Follows the established folder/file structure
 - [ ] Adds unit tests
+- [ ] Did you verify some accessibility (a11y) basics?
 - [ ] Adds/updates stories. [Guidelines](https://hsds.helpscout.com/?path=/docs/%F0%9F%8F%A0-welcome-4-writing-stories--page)
 - [ ] Adds/updates documentation (ie `proptypes`) [Guidelines](https://hsds.helpscout.com/?path=/docs/%F0%9F%8F%A0-welcome-3-writing-components--page)
 - [ ] Has it been tested in [Help Scout's supported browsers](https://docs.helpscout.com/article/1292-supported-browsers-and-system-requirements)?
