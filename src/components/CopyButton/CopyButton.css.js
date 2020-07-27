@@ -43,7 +43,7 @@ export const CopyButtonUI = styled(Button)`
     min-width: 60px;
 
     &.is-with-icon {
-      min-width: 40px;
+      min-width: 40px !important;
       max-width: 40px;
       padding: 0;
       text-align: center;
