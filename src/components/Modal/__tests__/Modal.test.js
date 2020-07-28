@@ -11,7 +11,7 @@ const trigger = <a className="trigger">Trigger</a>
 jest.useFakeTimers()
 
 beforeEach(() => {
-  window.BluePortalWrapperGlobalManager = undefined
+  window.HSDSPortalWrapperGlobalManager = undefined
   document.body.innerHTML = ''
 })
 
@@ -243,29 +243,6 @@ describe('Style', () => {
 
     expect(html).toContain('z-index')
     expect(html).toContain('2000')
-  })
-})
-
-describe('PortalWrapper', () => {
-  test('onBeforeClose callback works', () => {
-    const testBody = global.document.createElement('div')
-    global.document.body.appendChild(testBody)
-
-    const mockCallback = jest.fn()
-    const onBeforeClose = close => {
-      close()
-      mockCallback()
-    }
-
-    const wrapper = mount(<Modal onBeforeClose={onBeforeClose} isOpen />, {
-      attachTo: testBody,
-    })
-
-    wrapper.unmount()
-    jest.runAllTimers()
-
-    expect(mockCallback.mock.calls.length).toBe(1)
-    wrapper.detach()
   })
 })
 

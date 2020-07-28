@@ -1,0 +1,48 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { select, text, boolean, number, array } from '@storybook/addon-knobs'
+import Frame from './'
+import Card from '../Card'
+import Heading from '../Heading'
+import Button from '../Button'
+import HSDS from '../HSDS'
+import Modal from '../Modal'
+
+<Meta title="🛠 Utilities/Frame" component={Frame} />
+
+# Frame
+
+A frame component will wrap the content inside an iFrame. It will leverage the Stylesheet Manager from `styled-components` to make sure to keep all styles injected within the iframe
+
+<Preview>
+  <Story name="default">
+    <Frame style={{ height: '500px' }}>
+      <HSDS.Provider>
+        <Card>
+          <Heading>Card title</Heading>
+          <p>
+            <Text>Card content</Text>
+          </p>
+          <div>
+            <Modal
+              trigger={
+                <Button kind="primary" onClick={e => e.preventDefault()}>
+                  Open Modal
+                </Button>
+              }
+            >
+              <Modal.Body>
+                <Heading>Title</Heading>
+                <p>Lorem ipsum</p>
+              </Modal.Body>
+            </Modal>
+          </div>
+        </Card>
+      </HSDS.Provider>
+    </Frame>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Engineering**: PL
+- **Usage**: Beacon

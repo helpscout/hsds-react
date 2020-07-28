@@ -25,7 +25,7 @@ const defaultOptions = {
   alwaysCloseIfLast: true,
 }
 
-const managerNamespace = 'BluePortalWrapperGlobalManager'
+const managerNamespace = 'HSDSPortalWrapperGlobalManager'
 const uniqueIndex = createUniqueIndexFactory(1000)
 
 const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
@@ -200,7 +200,6 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
     handleOnClose = onClose => {
       const { onBeforeClose } = this.props
-
       if (isFunction(onClose)) {
         if (onBeforeClose) {
           onBeforeClose(() => this.sequenceClosePortal(onClose))
@@ -273,19 +272,16 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       return (
         <Animate
           animateOnMount={false}
-          timeout={timeout}
+          timeout={portalIsOpen ? timeout : undefined}
           in={portalIsOpen}
           unmountOnExit
         >
           <Portal
             className={wrapperClassName}
-            onBeforeClose={handleOnClose}
             onClose={onClose}
-            onBeforeOpen={onBeforeOpen}
             onOpen={onOpen}
             id={id}
             renderTo={renderTo}
-            portalIsMounted={portalIsOpen}
             timeout={timeout}
             {...rest}
           >

@@ -132,7 +132,7 @@ There are two versions of the Modal component, version 2 is the new standard (ve
       description="We'll send a six digit code to confirm ownership."
       numSteps={5}
       step={2}
-      trigger={<Link>Clicky</Link>}
+      trigger={<button>Clicky</button>}
       title="What email address would you like to connect?"
     >
       <Modal.Body version={2}>
@@ -163,7 +163,9 @@ There are two versions of the Modal component, version 2 is the new standard (ve
 <Preview>
   <Story name="Version 1 (legacy)">
     <Modal
-      trigger={<Link onClick={e => e.preventDefault()}>Open dis modal</Link>}
+      trigger={
+        <button onClick={e => e.preventDefault()}>Open dis modal</button>
+      }
     >
       <Modal.Body>
         <Heading>Title</Heading>
