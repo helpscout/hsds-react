@@ -434,6 +434,7 @@ export class Input extends React.PureComponent {
           animationDelay={0}
           animationDuration={0}
           appendTo={document.body}
+          closeOnContentClick={true}
           display="block"
           placement="top-end"
           title={errorMessage}
