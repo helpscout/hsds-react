@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { TypingDotsUI, DotUI } from './TypingDots.css'
@@ -26,6 +27,12 @@ class TypingDots extends React.PureComponent {
 
 TypingDots.defaultProps = {
   'data-cy': 'TypingDots',
+}
+
+TypingDots.propTypes = {
+  /** The className of the component. */
+  className: PropTypes.string,
+  'data-cy': PropTypes.string,
 }
 
 export default TypingDots

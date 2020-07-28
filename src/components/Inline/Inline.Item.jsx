@@ -30,16 +30,17 @@ export class InlineItem extends React.PureComponent {
   }
 }
 
+InlineItem.defaultProps = {
+  'data-cy': 'InlineItem',
+  innerRef: noop,
+}
+
 InlineItem.propTypes = {
+  /** Custom class names to be added to the component. */
   className: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
   innerRef: PropTypes.func,
-}
-
-InlineItem.defaultProps = {
-  'data-cy': 'InlineItem',
-  innerRef: noop,
 }
 
 export default InlineItem

@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+// Deprecated component, use AvatarList instead
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
@@ -157,6 +159,17 @@ export class AvatarStack extends React.PureComponent {
   }
 }
 
+AvatarStack.defaultProps = {
+  animationDuration: 300,
+  animationEasing: 'ease',
+  animationSequence: 'fade',
+  borderColor: 'white',
+  'data-cy': 'AvatarStack',
+  max: 5,
+  shape: 'circle',
+  showStatusBorderColor: true,
+}
+
 AvatarStack.propTypes = {
   /** Duration of animation applied to the child Avatars. */
   animationDuration: PropTypes.number,
@@ -170,8 +183,6 @@ AvatarStack.propTypes = {
   borderColor: PropTypes.string,
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
   /** Number of avatars to display before truncating. */
   max: PropTypes.number,
   /** Color for the Avatar's outer border. */
@@ -182,17 +193,8 @@ AvatarStack.propTypes = {
   showStatusBorderColor: PropTypes.bool,
   /** Size of the avatars. */
   size: PropTypes.oneOf(['lg', 'md', 'smmd', 'sm', 'xs', 'xxs', '']),
-}
-
-AvatarStack.defaultProps = {
-  animationDuration: 300,
-  animationEasing: 'ease',
-  animationSequence: 'fade',
-  borderColor: 'white',
-  'data-cy': 'AvatarStack',
-  max: 5,
-  shape: 'circle',
-  showStatusBorderColor: true,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default AvatarStack

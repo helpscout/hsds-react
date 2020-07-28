@@ -1,0 +1,89 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { boolean, number } from '@storybook/addon-knobs'
+import { action } from '@storybook/addon-actions'
+import { items, InfiniteScroll } from './SearchableDropdown.storiesHelpers'
+import SearchableDropdown from './'
+
+<Meta
+  title="🧬 Components/Dropdowns/SearchableDropdown"
+  component={SearchableDropdown}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A8162',
+    },
+  }}
+/>
+
+# SearchableDropdown
+
+A SearchableDropdown component renders a filterable list of items, presented in a `Dropdown`.
+
+<Preview>
+  <Story name="default">
+    <div style={{ paddingTop: boolean('dropUp', false) ? '400px' : 0 }}>
+      <SearchableDropdown
+        itemFilterKey="label"
+        closeOnSelect={boolean('closeOnSelect', true)}
+        items={items}
+        limit={number('limit', 5)}
+        autoInput={boolean('autoInput', true)}
+        isOpen={boolean('isOpen', false)}
+        dropUp={boolean('dropUp', false)}
+      />
+    </div>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: PL
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={SearchableDropdown} />
+
+<p>For additional customization and props, check out `Dropdown`</p>
+
+<br />
+<br />
+
+### Customizing the filter
+
+#### `customFilter({ hasGroups, items, inputValue }, defaultFilter)`
+
+| Prop          | Type         | Description                                   |
+| ------------- | ------------ | --------------------------------------------- |
+| hasGroups     | `boolean`    | Determines if the provided items are grouped. |
+| items         | `Array<any>` | Collection of initial (unfiltered) items.     |
+| inputValue    | `string`     | The search query from the `Input`.            |
+| defaultFilter | `Function`   | The default filter algorithm.                 |
+
+In the example below, we'll return an empty collection (`Array`) if there are no `inputValue`. Otherwise, we'll just use the default filter algorithm.
+
+```jsx
+const customFilter = ({ hasGroups, items, inputValue }, defaultFilter) => {
+  if (!inputValue) return []
+
+  return defaultFilter({hasGroups, items, inputValue})
+}
+
+//...
+<SearchableDropdown items={[...]} customFilter={customFilter} />
+```
+
+### Stories
+
+#### With infinite scrolling
+
+<Preview>
+  <Story name="with infinite scrolling">
+    <InfiniteScroll />
+  </Story>
+</Preview>

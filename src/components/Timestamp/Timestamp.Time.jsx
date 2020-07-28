@@ -71,19 +71,23 @@ class Time extends React.Component {
   }
 }
 
-Time.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  formatter: PropTypes.func,
-  live: PropTypes.bool,
-  timestamp: PropTypes.string,
-}
-
 Time.defaultProps = {
   'data-cy': 'Time',
   formatter: timestamp => timestamp,
   live: false,
+}
+
+Time.propTypes = {
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** A function to format the timestamp, which defaults to returning the timestamp string. */
+  formatter: PropTypes.func,
+  /** Enables the internal ticking mechanism to live update the timestamp. Default `false`. */
+  live: PropTypes.bool,
+  /** Timestamp for the Message. */
+  timestamp: PropTypes.string,
 }
 
 export default Time

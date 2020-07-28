@@ -92,20 +92,6 @@ class ModalBody extends React.PureComponent {
   }
 }
 
-ModalBody.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  innerRef: PropTypes.func,
-  isScrollLocked: PropTypes.bool,
-  isSeamless: PropTypes.bool,
-  onScroll: PropTypes.func,
-  scrollable: PropTypes.bool,
-  scrollableRef: PropTypes.func,
-  scrollFade: PropTypes.bool,
-  version: PropTypes.number,
-}
-
 ModalBody.defaultProps = {
   'data-cy': 'ModalBody',
   innerRef: noop,
@@ -120,6 +106,28 @@ ModalBody.defaultProps = {
 
 ModalBody.contextTypes = {
   positionCloseNode: noop,
+}
+
+ModalBody.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Whether to use `ScrollLock` or not. Default `true` */
+  isScrollLocked: PropTypes.bool,
+  /** Applies seamless styles to the component. */
+  isSeamless: PropTypes.bool,
+  /** Callback function when inner Scrollable is scrolled. */
+  onScroll: PropTypes.func,
+  /** Whether the content should be scrollable */
+  scrollable: PropTypes.bool,
+  /** Enables the upper fade-to-white styles. Default `true`. */
+  scrollFade: PropTypes.bool,
+  /** Retrieves the scrollable node. */
+  scrollableRef: PropTypes.func,
+  innerRef: PropTypes.func,
+  /** Version of the Modal styles to apply (version 2 is the new standard, version 1 is legacy). */
+  version: PropTypes.number,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default ModalBody

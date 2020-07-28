@@ -73,6 +73,18 @@ export class DropdownMenu extends React.PureComponent {
   }
 }
 
+DropdownMenu.defaultProps = {
+  'data-cy': 'DropdownMenu',
+  menuRef: noop,
+  innerRef: noop,
+  isSubMenu: false,
+  role: 'listbox',
+  style: {},
+  withScrollLock: true,
+  wrapperStyles: {},
+  zIndex: 1015,
+}
+
 DropdownMenu.propTypes = {
   className: PropTypes.string,
   children: PropTypes.any,
@@ -87,18 +99,6 @@ DropdownMenu.propTypes = {
   withScrollLock: PropTypes.bool,
   wrapperStyles: PropTypes.object,
   zIndex: PropTypes.number,
-}
-
-DropdownMenu.defaultProps = {
-  'data-cy': 'DropdownMenu',
-  menuRef: noop,
-  innerRef: noop,
-  isSubMenu: false,
-  role: 'listbox',
-  style: {},
-  withScrollLock: true,
-  wrapperStyles: {},
-  zIndex: 1015,
 }
 
 const ConnectedMenu = connect(

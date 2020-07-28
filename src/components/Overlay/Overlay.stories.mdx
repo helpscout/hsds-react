@@ -1,0 +1,22 @@
+import { Meta, Props } from '@storybook/addon-docs/blocks'
+import Overlay from './'
+
+<Meta component={Overlay} title="🛠 Utilities/Overlay" />
+
+# Overlay
+
+An Overlay component provides the backdrop for UI like Popovers or Modals.
+
+### Child components
+
+Although the Overlay component accepts child components, it is recommended that Popover or Modal content float **on top** rather than within. This makes it much easier to delegant click events.
+
+## Example
+
+```jsx
+<Overlay onClick={closeMyModal} />
+```
+
+## Props
+
+<Props of={Overlay} />

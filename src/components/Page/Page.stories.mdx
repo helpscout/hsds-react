@@ -1,0 +1,235 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { select, boolean } from '@storybook/addon-knobs'
+import { Button } from '../index'
+import Page from './'
+
+<Meta
+  title="🧬 Components/Structural/Page"
+  component={Page}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A10426',
+    },
+  }}
+/>
+
+# Page
+
+This component is a presentational wrapper used to render a variety of content.
+This component is typically used to render form-based UIs.
+
+<Preview>
+  <Story name="default">
+    <Page isResponsive={boolean('isResponsive', true)}>
+      <Page.Card>
+        <Page.Section>
+          <Page.Header
+            render={({ Title, Subtitle }) => (
+              <div>
+                <Title headingLevel="h1">Headers!</Title>
+                <Subtitle>Oh so nice</Subtitle>
+              </div>
+            )}
+          />
+          <Page.Content>
+            <p>Each Card can have one or more Headers.</p>
+            <br />
+            <p>
+              The Header gives us one special prop:{' '}
+              <code style={{ color: 'dodgerblue' }}>render</code>
+            </p>
+            <br />
+            <p>
+              <code style={{ color: 'dodgerblue' }}>render</code> takes a
+              function with 2 arguments:{' '}
+              <code style={{ color: 'dodgerblue' }}>Title</code> and{' '}
+              <code style={{ color: 'dodgerblue' }}>Subtitle</code>
+            </p>
+            <br />
+            <p>
+              Those 2 are React Components with all the pretty styles ready, use
+              like this:
+            </p>
+          </Page.Content>
+        </Page.Section>
+        <Page.Section>
+          <Page.Header
+            withBorder={false}
+            render={({ Title, Subtitle }) => (
+              <div>
+                <Title headingLevel="h2" isSecondary>
+                  Second Header
+                </Title>
+                <Subtitle>This one has a subtitle too</Subtitle>
+              </div>
+            )}
+          />
+          <Page.Content>Something cool</Page.Content>
+        </Page.Section>
+        <Page.Section>
+          <Page.Header
+            withBorder={false}
+            render={({ Title, Subtitle }) => (
+              <div>
+                <Title headingLevel="h2" isSecondary>
+                  Third Header, no subtitle here
+                </Title>
+              </div>
+            )}
+          />
+          <Page.Content>Something cool</Page.Content>
+        </Page.Section>
+      </Page.Card>
+    </Page>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={Page} />
+
+### SubComponents
+
+#### Page.Header
+
+This component is a presentational wrapper used to display a title/subtitle.
+
+The `render` prop gives us access to a `Title` and a `Subtitle` component.
+
+Aside from those 2, you are free to add whatever markup you need: icons, links, tooltips, etc
+
+`Title` takes two props: `headingLevel`, with values of `"h1"` or `"h2"` and `isSecondary` (boolean)
+
+- `headingLevel`: The html tag to use "h1" or "h2", has no effect on looks, just semantics
+- `isSecondary`: This determines if it should look slightly smaller when true. Use when you need a secondary heading in the same Card.
+
+<Props of={Page.Header} />
+
+For backwards compatibility you can use the header using the "title" and "subtitle" props:
+
+```jsx
+<Page.Header
+  title="A good and thoughtful title"
+  subtitle="With an equally insightful subtitle"
+/>
+```
+
+#### Page.Card
+
+This component is a presentational wrapper used to render content.
+
+```jsx
+<Page>
+  <Page.Card>...</Page.Card>
+</Page>
+```
+
+#### Page.Content
+
+This component is used to contain content inside a `Page.Card`.
+
+```jsx
+<Page>
+  <Page.Card>
+    <Page.Header />
+    <Page.Content>...</Page.Content>
+  </Page.Card>
+</Page>
+```
+
+#### Page.Section
+
+Sections live inside `Card` components and their purpose is to divide content inside them.
+
+A clear indication of the need of more sections is when there are extra headings in the content.
+
+The use of sections, besides of being good for semantic purposes, allows the headings of each section to behave just like the headers in Responsive mode.
+
+`isResponsive` can be set on the `Page.Section`, but normally is better to set it on the parent `Page` component, so it doesn't have to be done individually on each section.
+
+```jsx
+<Page isResponsive>
+  <Page.Card>
+    <Page.Section>
+      <h1>Section 1</h1>
+      <p>Content under section 1</p>
+    </Page.Section>
+    <Page.Section>
+      <h2>Section 2</h2>
+      <p>Content under section 2</p>
+    </Page.Section>
+  </Page.Card>
+</Page>
+```
+
+#### Page.Actions
+
+This component is a presentational wrapper used to render form actions.
+
+<Props of={Page.Actions} />
+
+### Stories
+
+#### With actions
+
+<Preview>
+  <Story name="with actions">
+    <Page>
+      <Page.Card>
+        <Page.Header
+          render={({ Title, Subtitle }) => (
+            <div>
+              <Title headingLevel="h1">Headers!</Title>
+              <Subtitle>Oh so nice</Subtitle>
+            </div>
+          )}
+        />
+        <p>
+          Quis ipsum sit labore anim adipisicing. Lorem ipsum officia esse
+          pariatur duis velit cillum consectetur nostrud dolor. Ipsum eiusmod
+          laborum sit est in cupidatat mollit eu. Elit reprehenderit adipisicing
+          cupidatat Lorem esse occaecat pariatur ex eu aute ad et tempor.
+          Commodo labore voluptate Lorem sint enim ad dolore eu ad.
+        </p>
+        <br />
+        <p>
+          Quis ipsum sit labore anim adipisicing. Lorem ipsum officia esse
+          pariatur duis velit cillum consectetur nostrud dolor. Ipsum eiusmod
+          laborum sit est in cupidatat mollit eu. Elit reprehenderit adipisicing
+          cupidatat Lorem esse occaecat pariatur ex eu aute ad et tempor.
+          Commodo labore voluptate Lorem sint enim ad dolore eu ad.
+        </p>
+        <br />
+        <p>
+          Quis ipsum sit labore anim adipisicing. Lorem ipsum officia esse
+          pariatur duis velit cillum consectetur nostrud dolor. Ipsum eiusmod
+          laborum sit est in cupidatat mollit eu. Elit reprehenderit adipisicing
+          cupidatat Lorem esse occaecat pariatur ex eu aute ad et tempor.
+          Commodo labore voluptate Lorem sint enim ad dolore eu ad.
+        </p>
+      </Page.Card>
+      <Page.Actions
+        isSticky={boolean('isSticky', false)}
+        direction={select(
+          'Direction',
+          { left: 'left', right: 'right' },
+          'left'
+        )}
+        primary={<Button kind="primary">Thing</Button>}
+        secondary={<Button kind="secondary">Thing</Button>}
+        serious={<Button kind="link">Thing</Button>}
+      />
+    </Page>
+  </Story>
+</Preview>

@@ -66,22 +66,6 @@ class OptionTile extends React.PureComponent {
   }
 }
 
-OptionTile.propTypes = {
-  children: PropTypes.any,
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  href: PropTypes.string,
-  icon: PropTypes.string,
-  iconTitle: PropTypes.string,
-  minHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  to: PropTypes.string,
-  title: PropTypes.string,
-  style: PropTypes.object,
-  subtitle: PropTypes.string,
-  textAlign: PropTypes.string,
-}
-
 OptionTile.defaultProps = {
   'data-cy': 'OptionTile',
   icon: 'chat',
@@ -89,6 +73,27 @@ OptionTile.defaultProps = {
   style: {},
   subtitle: 'Description',
   textAlign: 'center',
+}
+
+OptionTile.propTypes = {
+  children: PropTypes.any,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  href: PropTypes.string,
+  /** Icon to render within the `OptionIcon` */
+  icon: PropTypes.string,
+  /** The title for the Icon. */
+  iconTitle: PropTypes.string,
+  minHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  to: PropTypes.string,
+  /** The title for the component. */
+  title: PropTypes.string,
+  style: PropTypes.object,
+  /** The subtitle for the component. */
+  subtitle: PropTypes.string,
+  textAlign: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default OptionTile

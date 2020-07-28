@@ -69,24 +69,47 @@ class Text extends React.PureComponent {
   }
 }
 
+Text.defaultProps = {
+  center: false,
+  'data-cy': 'Text',
+  disableSelect: false,
+  isPlainLink: false,
+  linkStyle: false,
+  noUnderline: false,
+  selector: 'span',
+  size: '13',
+  state: 'default',
+  truncate: false,
+}
+
 Text.propTypes = {
   allCaps: PropTypes.bool,
   block: PropTypes.bool,
   children: PropTypes.any,
-  className: PropTypes.string,
-  center: PropTypes.bool,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
-  disableSelect: PropTypes.bool,
-  faint: PropTypes.bool,
   isPlainLink: PropTypes.bool,
-  lineHeightReset: PropTypes.bool,
-  lineHeightInherit: PropTypes.bool,
-  linkStyle: PropTypes.bool,
-  muted: PropTypes.bool,
   noUnderline: PropTypes.bool,
-  noWrap: PropTypes.bool,
   selector: PropTypes.string,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Center aligns text. */
+  center: PropTypes.bool,
+  /** Disables text selection. */
+  disableSelect: PropTypes.bool,
+  /** Changes text color to a very light grey. */
+  faint: PropTypes.bool,
+  /** Applies [Link](../Link) styles. */
+  linkStyle: PropTypes.bool,
+  /** Inherit the line-height from a parent selector. */
+  lineHeightInherit: PropTypes.bool,
+  /** Resets the line-height to `1`. */
+  lineHeightReset: PropTypes.bool,
+  /** Changes text color to a light grey. */
+  muted: PropTypes.bool,
+  /** Prevents text from wrapping. */
+  noWrap: PropTypes.bool,
+  /** Changes text color shade. */
   shade: PropTypes.oneOf([
     'default',
     'subtle',
@@ -97,6 +120,7 @@ Text.propTypes = {
     '',
     null,
   ]),
+  /** Adjust text size. */
   size: PropTypes.oneOf([
     '10',
     10,
@@ -115,24 +139,16 @@ Text.propTypes = {
     '48',
     48,
   ]),
+  /** Changes the text color based on state. */
   state: PropTypes.oneOf(['default', 'error', 'success', 'warning', '', null]),
+  /** Changes text color to a lighter grey. */
   subtle: PropTypes.bool,
+  /** Enables CSS truncation for text. */
   truncate: PropTypes.bool,
+  /** Adjust text weight. */
   weight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Enables CSS `word-break` for text. */
   wordWrap: PropTypes.bool,
-}
-
-Text.defaultProps = {
-  center: false,
-  'data-cy': 'Text',
-  disableSelect: false,
-  isPlainLink: false,
-  linkStyle: false,
-  noUnderline: false,
-  selector: 'span',
-  size: '13',
-  state: 'default',
-  truncate: false,
 }
 
 export default Text

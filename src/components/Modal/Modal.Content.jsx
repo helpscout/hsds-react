@@ -7,14 +7,6 @@ import Body from './Modal.Body'
 
 class ModalContent extends React.PureComponent {
   static displayName = 'ModalContent'
-  static propTypes = {
-    className: PropTypes.string,
-    scrollableRef: PropTypes.func,
-  }
-  static defaultProps = {
-    scrollableRef: noop,
-  }
-
   render() {
     const { className, children, scrollableRef, ...rest } = this.props
     const componentClassName = classNames('c-ModalContent', className)
@@ -34,6 +26,16 @@ class ModalContent extends React.PureComponent {
       </ContentUI>
     )
   }
+}
+
+ModalContent.defaultProps = {
+  scrollableRef: noop,
+}
+
+ModalContent.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  scrollableRef: PropTypes.func,
 }
 
 export default ModalContent

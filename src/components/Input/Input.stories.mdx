@@ -1,0 +1,182 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { boolean, select, text } from '@storybook/addon-knobs'
+import { Button, Flexy } from '../index'
+import Input from './'
+
+<Meta
+  title="🧬 Components/Forms/Input"
+  component={Input}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A9401',
+    },
+  }}
+/>
+
+# Input
+
+An Input component is an enhanced version of the default HTML `<input>`. Input can be transformed into a `<textarea>` if the `multiline` prop is defined.
+
+<Preview>
+  <Story name="default">
+    <Input
+      value="Here here nice input"
+      placeholder="Something"
+      seamless={boolean('seamless', false)}
+      disabled={boolean('disabled', false)}
+    />
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={Input} />
+
+### Stories
+
+#### With label
+
+<Preview>
+  <Story name="With label">
+    <Input
+      label="Some label"
+      helpText={text('helpText', 'Here you have some helpful text')}
+      hintText={text('hintText', '')}
+    />
+  </Story>
+</Preview>
+
+#### Prefix/Suffix
+
+<Preview>
+  <Story name="Prefix/Suffix">
+    <Input
+      value="1230.00"
+      inlinePrefix={text('inlinePrefix', '$')}
+      inlineSuffix={text('inlineSuffix', '.00')}
+    />
+  </Story>
+</Preview>
+
+#### States
+
+<Preview>
+  <Story name="States">
+    <div>
+      <Input autoComplete="off" state="error" placeholder="Error" />
+      <br />
+      <Input autoComplete="off" state="success" placeholder="Success" />
+      <br />
+      <Input autoComplete="off" state="warning" placeholder="Warning" />
+      <br />
+      <Input
+        autoComplete="off"
+        state="warning"
+        placeholder="State styles will remove on focus"
+        removeStateStylesOnFocus
+      />
+    </div>
+  </Story>
+</Preview>
+
+#### Actions
+
+Actions (typically `Button` can be embedded within the `Input` using the `action` prop.
+The `Button` should be one step smaller compared to the `Input` (If the `Input` is `md` (default), then the `Button` should be `sm`).
+
+<Preview>
+  <Story name="Actions">
+    <Input
+      label="Zip Code"
+      name="zip"
+      placeholder="Zip Code"
+      type="text"
+      action={
+        <Flexy gap="xs">
+          <Flexy.Item>
+            <Button kind="primary" size="sm">
+              Apply
+            </Button>
+          </Flexy.Item>
+          <Flexy.Item>
+            <Button kind="secondary" size="sm">
+              Cancel
+            </Button>
+          </Flexy.Item>
+        </Flexy>
+      }
+    />
+  </Story>
+</Preview>
+
+#### Multiline
+
+<Preview>
+  <Story name="Multiline">
+    <div>
+      <Input
+        multiline={3}
+        resizable
+        placeholder="This is a resizable textarea!"
+      />
+      <br />
+      <Input
+        multiline={3}
+        value="This is just too long, check the validator"
+        placeholder="This is a resizable textarea!"
+        withCharValidator={true}
+        charValidatorLimit={10}
+      />
+    </div>
+  </Story>
+</Preview>
+
+## Input.AddOn
+
+This component renders a "prefix"/"suffix" UI when combined with an `Input` when used within a `ControlGroup`.
+
+### Props
+
+<Props of={Input.AddOn} />
+
+### Example
+
+```jsx
+<ControlGroup>
+  <ControlGroup.Item>
+    <Input.AddOn>Prefix</Input.AddOn>
+  </ControlGroup.Item>
+  <ControlGroup.Item>
+    <Input />
+  </ControlGroup.Item>
+  <ControlGroup.Item>
+    <Input.AddOn>Suffix</Input.AddOn>
+  </ControlGroup.Item>
+</ControlGroup>
+```
+
+## Input.Static
+
+`Input.Static` components are plain-text components with adjusted height properties to allow them to be aligned with Input components. `Input.Static` is typically used to contain horizontal-style form labels.
+
+### Props
+
+<Props of={Input.Static} />
+
+### Example
+
+```jsx
+<Input.Static>Catch-phrase</Input.Static>
+<Input multiline={3} placeholder="Please enter sign-off catch-phrase." autoFocus />
+```

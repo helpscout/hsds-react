@@ -359,8 +359,9 @@ export class MenuContainer extends React.PureComponent {
     if (this.shouldDropUp()) {
       this.node.classList.add('is-dropUp')
       if (triggerNode) {
-        this.placementNode.style.marginTop = `-${triggerNode.clientHeight +
-          menuOffsetTop}px`
+        this.placementNode.style.marginTop = `-${
+          triggerNode.clientHeight + menuOffsetTop
+        }px`
       }
     } else {
       this.node.classList.remove('is-dropUp')

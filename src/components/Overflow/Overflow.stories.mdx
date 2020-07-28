@@ -1,0 +1,24 @@
+import { Meta, Props } from '@storybook/addon-docs/blocks'
+import Overflow from './'
+
+<Meta component={Overflow} title="🛠 Utilities/Overflow" />
+
+# Overflow
+
+An Overflow component is a wrapper that handle horizontal overflow for UI (typically a collection of components). Overflow automatically renders a "fade" effect for overflowing content.
+
+## Example
+
+```jsx
+<Overflow isScrollable>
+  <List>
+    <List.Item>...</List.Item>
+    <List.Item>...</List.Item>
+    <List.Item>...</List.Item>
+  </List>
+</Overflow>
+```
+
+## Props
+
+<Props of={Overflow} />

@@ -23,17 +23,21 @@ class Hr extends React.PureComponent {
   }
 }
 
-Hr.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  role: PropTypes.string,
-  size: PropTypes.oneOf(['md', 'sm', 'xs', 'none']),
-}
-
 Hr.defaultProps = {
   'data-cy': 'Hr',
   role: 'separator',
   size: 'md',
 }
+
+Hr.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Aria-role for the component. */
+  role: PropTypes.string,
+  /** Adjusts the vertical margin of the component. */
+  size: PropTypes.oneOf(['md', 'sm', 'xs', 'none']),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+}
+
 export default Hr

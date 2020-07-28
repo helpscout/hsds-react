@@ -35,19 +35,22 @@ export class ConditionFieldGroup extends React.PureComponent {
   }
 }
 
-ConditionFieldGroup.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  innerRef: PropTypes.func,
-  isAddEnabled: PropTypes.bool,
-  onAdd: PropTypes.func,
-}
-
 ConditionFieldGroup.defaultProps = {
   'data-cy': 'ConditionFieldGroup',
   isAddEnabled: true,
   onAdd: noop,
 }
 
+ConditionFieldGroup.propTypes = {
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** Retrieve the inner DOM node. */
+  innerRef: PropTypes.func,
+  /** Renders an inner Condition.AddButton */
+  isAddEnabled: PropTypes.bool,
+  /** Callback when the inner Condition.AddButton is clicked. */
+  onAdd: PropTypes.func,
+}
 export default ConditionFieldGroup

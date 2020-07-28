@@ -1,0 +1,78 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import Card from './'
+
+<Meta
+  title="🧬 Components/Structural/Card"
+  component={Card}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A10368',
+    },
+  }}
+/>
+
+# Card
+
+A Card component is used to encapsulate pieces of UI that share a common concept or action.
+
+<Preview>
+  <Story name="default">
+    <Card>Hello, this is a card</Card>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={Card} />
+
+### Stories
+
+#### With link
+
+If a `to` or `href` prop is passed into the Card component, it will render the `Link` component, which provides additional link-based props.
+
+<Preview>
+  <Story name="with link">
+    <Card href="https://www.helpscout.net/">
+      Link to: https://www.helpscout.net/
+    </Card>
+  </Story>
+</Preview>
+
+#### Floating
+
+<Preview>
+  <Story name="Floating">
+    <Card floating hover>
+      Hello, this is a floating hoverable card
+    </Card>
+  </Story>
+</Preview>
+
+## Card.Block
+
+A Card.Block component is used to section content within a [`<Card>`](../Card).
+
+Note: It is highly recommended the `seamless` prop is used for the container `<Card>`. This allows for the `<Card.Block>` components to flow all the way to the inner-edges of `<Card>`.
+
+<Preview>
+  <Story name="Card Blocks">
+    <Card seamless>
+      <Card.Block>Frank "The Tank"</Card.Block>
+      <Card.Block>You're my boy, Blue!</Card.Block>
+    </Card>
+  </Story>
+</Preview>
+
+<Props of={Card.Block} />

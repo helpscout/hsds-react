@@ -1,29 +1,35 @@
-import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
 import { select, text, boolean, number } from '@storybook/addon-knobs'
 import AvatarSpec from '../../utilities/specs/avatarList.specs'
 import AvatarList from './'
-import { Avatar} from '../index'
+import { Avatar } from '../index'
 
 <Meta
-  title="Components/Structural/AvatarList"
+  title="🧬 Components/Structural/AvatarList"
   component={AvatarList}
   parameters={{
-      design: {
-        type: 'figma',
-        url: 'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A10275'
-      }
-    }}
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A10275',
+    },
+  }}
 />
 
 # AvatarList
 
 An AvatarList component displays an array of `Avatars`. This component has a max number of Avatars it will render. Any additional Avatars will be consolidated into a `+` counter that appears at the end.
 
-
 <Preview>
   <Story name="Default">
     <div style={{ background: '#eee', padding: 10 }}>
-      <AvatarList max={number('max', 14)} grid={boolean('grid', false)} center={boolean('centered', false)} stack={boolean('stack', false)} size={select('size', ['xs', 'sm', 'md', 'lg'])}>
+      <AvatarList
+        max={number('max', 14)}
+        grid={boolean('grid', false)}
+        center={boolean('centered', false)}
+        stack={boolean('stack', false)}
+        size={select('size', ['xs', 'sm', 'md', 'lg'])}
+      >
         {AvatarSpec.generate(20).map(avatar => {
           const { name, image, status } = avatar
           return (
@@ -32,6 +38,7 @@ An AvatarList component displays an array of `Avatars`. This component has a max
               key={name}
               name={name}
               status={status}
+              withShadow={boolean('withShadow', false)}
             />
           )
         })}
@@ -43,8 +50,8 @@ An AvatarList component displays an array of `Avatars`. This component has a max
 #### Reference
 
 - **Designer**: Buzz
-- **Engineering**: Juan Pablo / PL
-- **Usage**: Everywhere
+- **Engineering**: PL
+- **Usage**: Embed, HsApp (chat app)
 
 <br />
 <br />
@@ -52,3 +59,28 @@ An AvatarList component displays an array of `Avatars`. This component has a max
 ### Props
 
 <Props of={AvatarList} />
+
+### Stories
+
+#### use as AvatarStack replacement
+
+<Preview>
+  <Story name="use as AvatarStack replacement">
+    <div style={{ background: '#eee', padding: 10 }}>
+      <AvatarList max={number('max', 14)} center stack size="md">
+        {AvatarSpec.generate(20).map(avatar => {
+          const { name, image, status } = avatar
+          return (
+            <Avatar
+              image={image}
+              key={name}
+              name={name}
+              status={status}
+              withShadow={boolean('withShadow', true)}
+            />
+          )
+        })}
+      </AvatarList>
+    </div>
+  </Story>
+</Preview>

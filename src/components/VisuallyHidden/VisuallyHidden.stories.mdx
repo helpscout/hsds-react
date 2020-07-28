@@ -1,0 +1,40 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import VisuallyHidden from './'
+
+<Meta title="🛠 Utilities/VisuallyHidden" component={VisuallyHidden} />
+
+# VisuallyHidden
+
+A VisuallyHidden component is tiny helper that hides content from view, without hiding from accessibility devices like screen readers.
+
+Typically, you would add text inside of a VisuallyHidden component. However, you may add selectors and other React components as well.
+
+<Preview>
+  <Story name="default">
+    <VisuallyHidden>Peek-a-boo! You can't see me</VisuallyHidden>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={VisuallyHidden} />
+
+### Stories
+
+#### Focusable
+
+<Preview>
+  <Story name="with content">
+    <VisuallyHidden focusable>
+      <a href="#">Focusable!</a>
+    </VisuallyHidden>
+  </Story>
+</Preview>

@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Page, { PageContext } from './Page'
 import {
@@ -129,6 +130,29 @@ PageActions.defaultProps = {
   isSticky: false,
   stickyOffset: 10,
   zIndex: 10,
+}
+
+PageActions.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** The alignment of the actions. */
+  direction: PropTypes.string,
+  /** Stickies the Actions at the bottom of the browser. */
+  isSticky: PropTypes.bool,
+  /** Callback the moment the component sticks. */
+  onStickyStart: PropTypes.func,
+  /** Callback the moment the component stops sticking. */
+  onStickyEnd: PropTypes.func,
+  /** A render slot for the primary action. */
+  primary: PropTypes.any,
+  /** A render slot for the secondary action. */
+  secondary: PropTypes.any,
+  /** A render slot for the serious (probably destructive) action. */
+  serious: PropTypes.any,
+  /** The CSS `z-index` for when the component is sticky. */
+  zIndex: PropTypes.number,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default PageActions

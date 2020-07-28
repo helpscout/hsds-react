@@ -1,0 +1,18 @@
+import { Meta, Props } from '@storybook/addon-docs/blocks'
+import SleepDetector from './'
+
+<Meta component={SleepDetector} title="🛠 Utilities/SleepDetector" />
+
+# SleepDetector
+
+A SleepDetector component detects when the computer has gone to sleep or the tab has otherwise had its execution interrupted. This is useful in situations where we want to detect when the page has been inactive, which may mean it has drifted out of date in a real-time application and is need of a "refresh". It works along the same lines as this [clever trick](https://blog.alexmaccaw.com/javascript-wake-event).
+
+## Example
+
+```jsx
+<SleepDetector onWake={refreshPage} />
+```
+
+## Props
+
+<Props of={SleepDetector} />

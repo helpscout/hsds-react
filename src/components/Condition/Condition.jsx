@@ -69,23 +69,29 @@ export class Condition extends React.PureComponent {
   }
 }
 
-Condition.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  innerRef: PropTypes.func,
-  isWithAnd: PropTypes.bool,
-  options: PropTypes.arrayOf(PropTypes.any),
-  onChange: PropTypes.func,
-  value: PropTypes.string,
-}
-
 Condition.defaultProps = {
   'data-cy': 'Condition',
   innerRef: noop,
   isWithAnd: false,
   onChange: noop,
   options: [],
+}
+
+Condition.propTypes = {
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** Retrieve the inner DOM node. */
+  innerRef: PropTypes.func,
+  /** Renders the "And" operator (top). */
+  isWithAnd: PropTypes.bool,
+  /** Collection of condition values, rendered by a [Select](../Select). */
+  options: PropTypes.arrayOf(PropTypes.any),
+  /** Callback when the `option` [Select](../Select) has changed. */
+  onChange: PropTypes.func,
+  /** The value of the condition ([Select](../Select)). */
+  value: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Condition

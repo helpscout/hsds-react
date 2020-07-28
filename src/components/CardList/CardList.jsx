@@ -45,6 +45,15 @@ export class CardList extends React.PureComponent {
   }
 }
 
+CardList.defaultProps = {
+  animationDelay: 0,
+  animationEasing: 'ease',
+  animationSequence: 'fade up',
+  animationStagger: 60,
+  'data-cy': 'CardList',
+  stagger: true,
+}
+
 CardList.propTypes = {
   animationDelay: PropTypes.number,
   animationEasing: PropTypes.string,
@@ -54,15 +63,6 @@ CardList.propTypes = {
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
   stagger: PropTypes.bool,
-}
-
-CardList.defaultProps = {
-  animationDelay: 0,
-  animationEasing: 'ease',
-  animationSequence: 'fade up',
-  animationStagger: 60,
-  'data-cy': 'CardList',
-  stagger: true,
 }
 
 export default CardList

@@ -21,20 +21,24 @@ const InputAddOn = props => {
   )
 }
 
-InputAddOn.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  isFirst: PropTypes.bool,
-  isNotOnly: PropTypes.bool,
-  isLast: PropTypes.bool,
-}
-
 InputAddOn.defaultProps = {
   'data-cy': 'InputAddOn',
   isFirst: false,
   isNotOnly: false,
   isLast: false,
+}
+
+InputAddOn.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Helps render component without right borders. */
+  isFirst: PropTypes.bool,
+  /** Helps render component without left/right borders. */
+  isNotOnly: PropTypes.bool,
+  /** Helps render component without left borders. */
+  isLast: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default InputAddOn

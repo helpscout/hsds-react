@@ -1,0 +1,339 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { withAktiv } from '../../utilities/storybook'
+import {
+  ContainerUI,
+  PHONE_OPTIONS,
+  PAINT_OPTIONS,
+  ARSENAL,
+  ATLAS,
+  BARCELONA,
+  ValidationApp,
+} from './EditableField.storiesHelpers'
+import EditableField from './'
+
+<Meta
+  title="🧬 Components/Forms/EditableField"
+  component={EditableField}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A9042',
+    },
+  }}
+  decorators={[withAktiv]}
+/>
+
+# EditableField
+
+A special type of inputs that allow you to edit it inline
+
+<Preview>
+  <Story name="default">
+    <div>
+      <EditableField
+        label="Company"
+        name="company"
+        placeholder="Add a company name"
+        type="text"
+      />
+      <EditableField
+        label="Team"
+        name="team"
+        placeholder="Add a sports team name"
+        type="text"
+        value="Atlas"
+      />
+    </div>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Jared
+- **Engineering**: Juan Pablo
+- **Usage**: Customer properties/profile
+
+<br />
+<br />
+
+### Props
+
+<Props of={EditableField} />
+
+### actions
+
+- Predefined actions:
+  - `"delete"`: Clear a field
+  - `"link"`: For url types, adds a button to open a new tab/window with the url
+- By default `EditableField` incorporates one action: “delete”
+- To override either of the predefined actions, pass them in the array using the same action name
+- If the user doesn’t want any action, she needs to explicitly pass `null`
+- `icon` should be the name of an Icon that is present in HSDS
+
+### onCommit
+
+Fires:
+
+- On pressing Enter on the Input
+- On input blur
+- On selecting an option
+- On deleting/clearing the input value with “x”
+- On deleting a value from multi-value fields
+
+### onDelete
+
+Fires:
+
+- On deleting/clearing the input value with “x”
+- On deleting a value from multi-value fields
+
+### onDiscard
+
+Fires:
+
+- On pressing ESC on an input
+- On adding a value and clicking outside the field and the value is empty
+
+### disabled
+
+To disable the entire field, use the `disabled` prop, to disable a single input in a multi-value
+field, add the the `disabled` key to the value object, like:
+
+```jsx
+const BARCELONA = {
+  value: 'FC Barcelona',
+  id: 'TEAM_1',
+  someOtherProp: 'the best, Jerry, the best',
+}
+const ARSENAL = {
+  value: 'Arsenal',
+  disabled: true,
+  id: 'TEAM_2',
+  someOtherProp: 'the best, Jerry, the best',
+}
+const ATLAS = {
+  value: 'Atlas',
+  disabled: true,
+  id: 'TEAM_3',
+  someOtherProp: 'the best, Jerry, the best',
+}
+
+<EditableField
+  label="Teams (individual fields disabled)"
+  name="teams"
+  type="text"
+  placeholder="Add a team name"
+  value={[ARSENAL, ATLAS, BARCELONA]}
+/>
+```
+
+### Stories
+
+#### Large
+
+<Preview>
+  <Story name="Large">
+    <ContainerUI>
+      <EditableField
+        label="Team"
+        name="team"
+        placeholder="Add a sports team name"
+        size="lg"
+        type="text"
+        value="Barcelona FC"
+      />
+    </ContainerUI>
+  </Story>
+</Preview>
+
+#### Floating Labels
+
+<Preview>
+  <Story name="Floating Labels">
+    <ContainerUI>
+      <EditableField
+        label="Company"
+        name="company"
+        placeholder="Company"
+        type="text"
+        floatingLabels
+      />
+      <EditableField
+        label="Team"
+        name="team"
+        placeholder="Sports team"
+        type="text"
+        value="Atlas"
+        floatingLabels
+      />
+    </ContainerUI>
+  </Story>
+</Preview>
+
+#### Multiple value fields
+
+<Preview>
+  <Story name="Multiple value fields">
+    <ContainerUI>
+      <EditableField
+        label="Films"
+        name="films"
+        type="text"
+        multipleValues
+        placeholder="Add a film name"
+      />
+      <EditableField
+        label="Musicians"
+        name="musicians"
+        type="text"
+        placeholder="Add a musician name"
+        value={['George Harrison', 'Neil Young']}
+      />
+      <EditableField
+        emphasizeTopValue
+        label="Emails"
+        name="email"
+        placeholder="Add your email"
+        type="email"
+        value={[
+          'a@hello.com',
+          'art_vandelay@vandelayindustries.com',
+          'john_locke@dharma.org',
+          'pennypacker@kramerica.com',
+          'this_is_kind_of_long@annoyingemails.com',
+          'this_is_kind_of_long@evenmoreannoyingemails.com',
+        ]}
+      />
+    </ContainerUI>
+  </Story>
+</Preview>
+
+#### Url field
+
+<Preview>
+  <Story name="Url field">
+    <ContainerUI>
+      <EditableField
+        label="Website"
+        name="website"
+        placeholder="Add a website address"
+        type="url"
+        value="http://mysite.net"
+        actions={{
+          name: 'link',
+          callback(obj) {
+            console.log('HSDS: EditableFieldApp -> callback -> obj', obj)
+          },
+        }}
+      />
+      <EditableField
+        label="Website Without Protocol"
+        name="website2"
+        placeholder="Add a website address"
+        type="url"
+        value="mysite.net"
+        actions={{
+          name: 'link',
+          callback(obj) {
+            console.log('HSDS: EditableFieldApp -> callback -> obj', obj)
+          },
+        }}
+      />
+    </ContainerUI>
+  </Story>
+</Preview>
+
+#### With options
+
+<Preview>
+  <Story name="With options">
+    <ContainerUI>
+      <EditableField
+        label="Mobile Phone"
+        name="mobilephone"
+        placeholder="Add a mobile phone"
+        type="tel"
+        valueOptions={PHONE_OPTIONS}
+      />
+      <EditableField
+        label="Phone"
+        name="Phone"
+        placeholder="Add phone"
+        type="tel"
+        valueOptions={PHONE_OPTIONS}
+        defaultOption={PHONE_OPTIONS[2]}
+        value={{ option: 'Work', value: '123456789' }}
+      />
+      <EditableField
+        label="Favourite Paint Colour"
+        name="paint"
+        placeholder="Add a colour"
+        type="text"
+        valueOptions={PAINT_OPTIONS}
+        value={[
+          { option: PAINT_OPTIONS[0], value: 'Anthraquinone Blue PB60' },
+          { option: PAINT_OPTIONS[3], value: 'Ultramarine Violet' },
+          { option: PAINT_OPTIONS[1], value: 'Bismuth Yellow' },
+        ]}
+      />
+    </ContainerUI>
+  </Story>
+</Preview>
+
+#### disabled
+
+<Preview>
+  <Story name="disabled">
+    <ContainerUI>
+      <EditableField
+        label="Film"
+        name="film"
+        placeholder="Add a film name"
+        type="text"
+        disabled
+      />
+      <EditableField
+        label="Company"
+        name="company"
+        placeholder="Add a company name"
+        type="text"
+        value="Help Scout"
+        disabled
+      />
+      <EditableField
+        label="Musicians"
+        name="musicians"
+        type="text"
+        placeholder="Add a musician name"
+        value={['George Harrison', 'Neil Young']}
+        disabled
+      />
+      <EditableField
+        label="Teams (individual fields disabled)"
+        name="teams"
+        type="text"
+        placeholder="Add a team name"
+        value={[ARSENAL, ATLAS, BARCELONA]}
+      />
+      <EditableField
+        label="Phone"
+        name="Phone"
+        placeholder="Add phone"
+        type="tel"
+        valueOptions={PHONE_OPTIONS}
+        defaultOption={PHONE_OPTIONS[2]}
+        value={{ option: 'Work', value: '123456789' }}
+        disabled
+      />
+    </ContainerUI>
+  </Story>
+</Preview>
+
+#### Validation
+
+<Preview>
+  <Story name="Validation">
+    <ValidationApp />
+  </Story>
+</Preview>

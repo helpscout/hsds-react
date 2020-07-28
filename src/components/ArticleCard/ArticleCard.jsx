@@ -14,29 +14,6 @@ import {
 } from './ArticleCard.css'
 
 export class ArticleCard extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    content: PropTypes.any,
-    contentLimit: PropTypes.number,
-    contentSize: PropTypes.number,
-    'data-cy': PropTypes.string,
-    footer: PropTypes.any,
-    isHovered: PropTypes.bool,
-    metaHeader: PropTypes.any,
-    title: PropTypes.string,
-    titleLimit: PropTypes.number,
-    titleSize: PropTypes.number,
-  }
-
-  static defaultProps = {
-    contentLimit: 160,
-    contentSize: 13,
-    'data-cy': 'ArticleCard',
-    isHovered: false,
-    titleLimit: 120,
-    titleSize: 13,
-  }
-
   renderTitle = () => {
     const { title, titleLimit, titleSize } = this.props
 
@@ -138,6 +115,15 @@ export class ArticleCard extends React.PureComponent {
       </ArticleCardUI>
     )
   }
+}
+
+ArticleCard.defaultProps = {
+  contentLimit: 160,
+  contentSize: 13,
+  'data-cy': 'ArticleCard',
+  isHovered: false,
+  titleLimit: 120,
+  titleSize: 13,
 }
 
 ArticleCard.propTypes = {

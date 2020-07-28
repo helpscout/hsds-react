@@ -9,7 +9,7 @@ export const Operator = props => {
   const { className, isBorderless, type, ...rest } = props
   const label = type.toLowerCase() === 'and' ? 'and' : 'or'
   const componentClassName = classNames(
-    Operator.className,
+    'c-ConditionOperator',
     isBorderless && 'is-borderless',
     `is-${label}`,
     className
@@ -24,21 +24,23 @@ export const Operator = props => {
   )
 }
 
-Operator.className = 'c-ConditionOperator'
-
-Operator.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  innerRef: PropTypes.func,
-  isBorderless: PropTypes.bool,
-  type: PropTypes.oneOf(['and', 'or']),
-}
-
 Operator.defaultProps = {
   'data-cy': 'ConditionOperator',
   isBorderless: true,
   type: 'or',
+}
+
+Operator.propTypes = {
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** Retrieve the inner DOM node. */
+  innerRef: PropTypes.func,
+  /** Renders a white border. */
+  isBorderless: PropTypes.bool,
+  /** The operator. */
+  type: PropTypes.oneOf(['and', 'or']),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Operator

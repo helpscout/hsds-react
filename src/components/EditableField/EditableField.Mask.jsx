@@ -114,6 +114,15 @@ export class EditableFieldMask extends React.Component {
   }
 }
 
+EditableFieldMask.defaultProps = {
+  'data-cy': 'EditableFieldMask',
+  disabled: false,
+  emphasize: false,
+  maskTabIndex: null,
+  type: 'text',
+  onValueKeyDown: noop,
+}
+
 EditableFieldMask.propTypes = {
   actions: PropTypes.any,
   disabled: PropTypes.bool,
@@ -126,15 +135,8 @@ EditableFieldMask.propTypes = {
   validationInfo: PropTypes.object,
   valueOptions: PropTypes.arrayOf(PropTypes.any),
   onValueKeyDown: PropTypes.func,
-}
-
-EditableFieldMask.defaultProps = {
-  'data-cy': 'EditableFieldMask',
-  disabled: false,
-  emphasize: false,
-  maskTabIndex: null,
-  type: 'text',
-  onValueKeyDown: noop,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default EditableFieldMask

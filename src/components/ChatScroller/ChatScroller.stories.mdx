@@ -1,0 +1,27 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Default } from './ChatScroller.storiesHelpers'
+import ChatScroller from './'
+
+<Meta title="🛠 Utilities/ChatScroller" component={ChatScroller} />
+
+# ChatScroller
+
+A ChatScroller component is light-weight wrapper automatically scrolls a Chat body UI based on event chats (with consideration for range and scroll offsets). It is recommended that Scrollable is a child Component (not necessary direct child).
+
+<Preview>
+  <Story name="default">
+    <Default />
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Engineering**: Juan Pablo
+- **Usage**: Beacon2, ChatApp
+
+<br />
+<br />
+
+### Props
+
+<Props of={ChatScroller} />

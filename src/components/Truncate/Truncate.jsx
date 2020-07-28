@@ -203,25 +203,6 @@ export function getTruncatedContent(props) {
   return word
 }
 
-Truncate.propTypes = {
-  children: PropTypes.any,
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  ellipsis: PropTypes.string,
-  limit: PropTypes.number,
-  end: PropTypes.number,
-  start: PropTypes.number,
-  showTooltipOnTruncate: PropTypes.bool,
-  splitter: PropTypes.string,
-  text: PropTypes.string,
-  title: PropTypes.string,
-  tooltipProps: PropTypes.object,
-  tooltipPlacement: PropTypes.string,
-  tooltipModifiers: PropTypes.object,
-  type: PropTypes.oneOf(['auto', 'start', 'middle', 'end']),
-}
-
 Truncate.defaultProps = {
   'data-cy': 'Truncate',
   ellipsis: '…',
@@ -231,6 +212,35 @@ Truncate.defaultProps = {
   tooltipPlacement: 'top-start',
   tooltipProps: {},
   type: 'auto',
+}
+
+Truncate.propTypes = {
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Characters to show during truncation. */
+  ellipsis: PropTypes.string,
+  /** The amount of characters to keep before truncation. */
+  limit: PropTypes.number,
+  /** Renders a [Tooltip](../Tooltip) if content is truncated. Default `false`. */
+  showTooltipOnTruncate: PropTypes.bool,
+  /** Char to split string on for truncating mid-string, `longEma...@email.com`. */
+  splitter: PropTypes.string,
+  /** Location of truncation.
+   * `auto`    Uses CSS truncation. This is the default.
+   * `start`   Truncates beginning of string.
+   * `middle`  Truncates middle of string.
+   * `end`     Truncates end of string.
+   */
+  type: PropTypes.oneOf(['auto', 'start', 'middle', 'end']),
+  end: PropTypes.number,
+  start: PropTypes.number,
+  text: PropTypes.string,
+  title: PropTypes.string,
+  tooltipProps: PropTypes.object,
+  tooltipPlacement: PropTypes.string,
+  tooltipModifiers: PropTypes.object,
 }
 
 export default Truncate

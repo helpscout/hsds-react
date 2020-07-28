@@ -1,0 +1,44 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import Flexy from './'
+
+<Meta title="🛠 Utilities/Flexy" component={Flexy} />
+
+# Flexy
+
+A Flexy component is a layout-based component that uses Flexbox to intelligently align elements together. Flexy can be helpful to vertically align UI elements of varying heights.
+
+<Preview>
+  <Story name="default">
+    <Flexy>
+      <Flexy.Block>
+        <div style={{ background: 'dodgerblue' }}>Block</div>
+      </Flexy.Block>
+      <Flexy.Item>
+        <div style={{ background: 'salmon' }}>Item</div>
+      </Flexy.Item>
+      <Flexy.Item>
+        <div style={{ background: 'lightgreen' }}>Item</div>
+      </Flexy.Item>
+    </Flexy>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={Flexy} />
+
+## Flexy
+
+A Flexy.Item component is a layout-based component used within `Flexy`. This component takes up as much space as it's content requires.
+
+## Block
+
+A Flexy.Block component is a layout-based component used within `Flexy`. This component fills up space between or around `Flexy.Item` components.

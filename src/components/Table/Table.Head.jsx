@@ -40,17 +40,20 @@ class TableHead extends React.Component {
   }
 }
 
+TableHead.defaultProps = {
+  'data-cy': 'TableHead',
+}
+
 TableHead.propTypes = {
+  /** List of columns */
   columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
+  /** Whether tha table is in the loading state */
   isLoading: PropTypes.bool,
+  /** When sortable, indicates which column tha table is sorted by, and in which order (ascending or descending) */
   sortedInfo: PropTypes.shape({
     columnKey: PropTypes.string,
     order: PropTypes.string,
   }),
-}
-
-TableHead.defaultProps = {
-  'data-cy': 'TableHead',
 }
 
 export default TableHead

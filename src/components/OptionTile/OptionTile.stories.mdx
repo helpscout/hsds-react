@@ -1,0 +1,57 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import OptionTile from './'
+
+<Meta
+  title="🧬 Components/Wayfinding/OptionTile"
+  component={OptionTile}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A11870',
+    },
+  }}
+/>
+
+# OptionTile
+
+A OptionTile component is to render a link, displayed in a stylized `FluffyCard`.
+
+This component, specifically the inner `OptionIcon`, can be themed using `ThemeProvider`.
+
+<Preview>
+  <Story name="default">
+    <OptionTile
+      href="#"
+      icon="chat"
+      title="Talk to us"
+      subtitle="Talk with a friendly member of our support team"
+    />
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={OptionTile} />
+
+## OptionTile.Container
+
+This component is used to wrap `OptionTile` components, allowing them to have unified spacing and height.
+
+### Example
+
+```jsx
+<OptionTile.Container>
+  <OptionTile />
+  <OptionTile />
+</OptionTile.Container>
+```

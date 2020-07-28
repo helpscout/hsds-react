@@ -20,14 +20,14 @@ class Checkbox extends React.PureComponent {
   }
 }
 
+Checkbox.defaultProps = {
+  'data-cy': 'Checkbox',
+}
+
 Checkbox.propTypes = {
   className: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
-}
-
-Checkbox.defaultProps = {
-  'data-cy': 'Checkbox',
 }
 
 export default Checkbox

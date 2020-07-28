@@ -13,6 +13,11 @@ class SkeletonImage extends React.PureComponent {
   }
 }
 
+SkeletonImage.defaultProps = {
+  'data-cy': 'SkeletonImage',
+  withAnimations: true,
+}
+
 SkeletonImage.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
@@ -20,11 +25,6 @@ SkeletonImage.propTypes = {
   'data-cy': PropTypes.string,
   /** Enables animations for the component. */
   withAnimations: PropTypes.bool,
-}
-
-SkeletonImage.defaultProps = {
-  'data-cy': 'SkeletonImage',
-  withAnimations: true,
 }
 
 export default SkeletonImage

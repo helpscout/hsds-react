@@ -13,34 +13,6 @@ import { AttachmentUI, ErrorBorderUI } from './Attachment.css'
 export const Provider = AttachmentProvider
 
 export class Attachment extends React.PureComponent {
-  static propTypes = {
-    className: PropTypes.string,
-    'data-cy': PropTypes.string,
-    download: PropTypes.any,
-    id: PropTypes.string,
-    imageUrl: PropTypes.string,
-    mime: PropTypes.string,
-    name: PropTypes.string,
-    onClick: PropTypes.func,
-    onRemoveClick: PropTypes.func,
-    state: PropTypes.string,
-    size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    target: PropTypes.string,
-    truncateLimit: PropTypes.number,
-    type: PropTypes.oneOf(['action', 'link']),
-    url: PropTypes.string,
-  }
-
-  static defaultProps = {
-    'data-cy': 'Attachment',
-    mime: 'image/png',
-    name: 'image.png',
-    onClick: noop,
-    onRemoveClick: noop,
-    truncateLimit: 20,
-    state: 'default',
-    type: 'link',
-  }
   static contextTypes = {
     theme: noop,
   }
@@ -173,6 +145,50 @@ export class Attachment extends React.PureComponent {
       </AttachmentUI>
     )
   }
+}
+
+Attachment.defaultProps = {
+  'data-cy': 'Attachment',
+  mime: 'image/png',
+  name: 'image.png',
+  onClick: noop,
+  onRemoveClick: noop,
+  truncateLimit: 20,
+  state: 'default',
+  type: 'link',
+}
+
+Attachment.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Enables file downloaded. Allowed by default if `url` is provided. */
+  download: PropTypes.any,
+  /** The id of the attachment. */
+  id: PropTypes.string,
+  /** The URL of the an image attachment to render. */
+  imageUrl: PropTypes.string,
+  /** The file type of the attachment. */
+  mime: PropTypes.string,
+  /** The name of the attachment. */
+  name: PropTypes.string,
+  /** The callback when the component is clicked. */
+  onClick: PropTypes.func,
+  /** The callback when the component's `CloseButton` UI is clicked. */
+  onRemoveClick: PropTypes.func,
+  /** The size of the attachment. */
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  /** The state of the attachment. */
+  state: PropTypes.string,
+  /** Determines the link target. Set to `_blank` by default if `url` is provided. */
+  target: PropTypes.string,
+  /** The amount of characters to truncate the file name. */
+  truncateLimit: PropTypes.number,
+  /** The type of UI for the component. */
+  type: PropTypes.oneOf(['action', 'link']),
+  /** The URL of the attachment. */
+  url: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Attachment

@@ -1,0 +1,107 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import Text from './'
+
+<Meta title="🧬 Components/Text/Text" component={Text} />
+
+# Text
+
+A Text component is a light-weight text wrapper enhanced with a collection of aesthetic modifiers.
+
+<Preview>
+  <Story name="default">
+    <div>
+      <Text size="10">Font size: 10</Text>
+      <br />
+      <Text size="11">Font size: 11</Text>
+      <br />
+      <Text size="12">Font size: 12</Text>
+      <br />
+      <Text size="13">Font size: 13</Text>
+      <br />
+      <Text size="14">Font size: 14</Text>
+      <br />
+      <Text size="15">Font size: 15</Text>
+      <br />
+      <Text size="20">Font size: 20</Text>
+      <br />
+      <Text size="48">Font size: 48</Text>
+      <br />
+    </div>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={Text} />
+
+### Stories
+
+#### Shades
+
+<Preview>
+  <Story name="Shades">
+    <div>
+      <Text>Default</Text>
+      <br />
+      <Text subtle>Subtle</Text>
+      <br />
+      <Text muted>Muted</Text>
+      <br />
+      <Text faint>Faint</Text>
+      <br />
+    </div>
+  </Story>
+</Preview>
+
+#### States
+
+<Preview>
+  <Story name="States">
+    <div>
+      <Text>Default</Text>
+      <br />
+      <Text state="error">Error</Text>
+      <br />
+      <Text state="success">Success</Text>
+      <br />
+      <Text state="warning">Warning</Text>
+      <br />
+    </div>
+  </Story>
+</Preview>
+
+#### Weights
+
+<Preview>
+  <Story name="Weights">
+    <div>
+      <Text weight={900}>Font weight: 900</Text>
+      <br />
+      <Text weight={800}>Font weight: 800</Text>
+      <br />
+      <Text weight={700}>Font weight: 700</Text>
+      <br />
+      <Text weight={600}>Font weight: 600</Text>
+      <br />
+      <Text weight={500}>Font weight: 500</Text>
+      <br />
+      <Text weight={400}>Font weight: 400</Text>
+      <br />
+      <Text weight={300}>Font weight: 300</Text>
+      <br />
+      <Text weight={200}>Font weight: 200</Text>
+      <br />
+      <Text weight={100}>Font weight: 100</Text>
+      <br />
+    </div>
+  </Story>
+</Preview>

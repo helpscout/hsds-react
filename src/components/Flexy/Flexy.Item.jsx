@@ -17,15 +17,16 @@ export const FlexyItem = ({ children, className, inline, ...rest }) => (
   </FlexyItemUI>
 )
 
-FlexyItem.propTypes = {
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  inline: PropTypes.bool,
-}
-
 FlexyItem.defaultProps = {
   inline: false,
   'data-cy': 'FlexyItem',
+}
+
+FlexyItem.propTypes = {
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  /** Typically not necessary, but can remedy nested flexbox layout issues. */
+  inline: PropTypes.bool,
 }
 
 export default FlexyItem

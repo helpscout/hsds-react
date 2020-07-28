@@ -1,0 +1,35 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { ScopeProvider } from '../../styled'
+import { Avatar } from '../../index'
+import Message from '../'
+
+<Meta
+  title="🧬 Components/Conversation/Message"
+  component={Message}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A10071',
+    },
+  }}
+/>
+
+# Message.Action
+
+An Action component provides the UI for action-based content.
+
+<Preview>
+  <Story name="Message.Action">
+    <Message to>
+      <Message.Action read timestamp="9:41am">
+        Buddy became upset.{' '}
+        <a href="https://www.helpscout.net/">Find out what happened</a>
+      </Message.Action>
+    </Message>
+  </Story>
+</Preview>
+
+### Props
+
+<Props of={Message.Action} />

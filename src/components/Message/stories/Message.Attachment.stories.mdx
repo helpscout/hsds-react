@@ -1,0 +1,46 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { ScopeProvider } from '../../styled'
+import { Avatar } from '../../index'
+import Message from '../'
+
+<Meta
+  title="🧬 Components/Conversation/Message"
+  component={Message}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A10071',
+    },
+  }}
+/>
+
+# Message.Attachment
+
+An Attachment component provides the UI to render caption text within a [Message](./Message.md). This component is typically used within other Message sub-components.
+
+<Preview>
+  <Story name="Message.Attachment">
+    <Message.Provider theme="embed">
+      <Message from avatar={<Avatar name="Arctic Puffin" />}>
+        <Message.Chat>Error</Message.Chat>
+        <Message.Attachment
+          filename="file.png"
+          error
+          url="https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto"
+        />
+        <Message.Chat>Uploading</Message.Chat>
+        <Message.Attachment
+          filename="file.png"
+          isUploading
+          url="https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto"
+        />
+        <Message.Attachment filename="no-url.png" />
+      </Message>
+    </Message.Provider>
+  </Story>
+</Preview>
+
+### Props
+
+<Props of={Message.Attachment} />

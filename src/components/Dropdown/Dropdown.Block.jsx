@@ -35,6 +35,13 @@ export class DropdownBlock extends React.PureComponent {
   }
 }
 
+DropdownBlock.defaultProps = {
+  'data-cy': 'DropdownBlock',
+  innerRef: noop,
+  isSeamless: false,
+  isStretchy: false,
+}
+
 DropdownBlock.propTypes = {
   className: PropTypes.string,
   /** Data attr for Cypress tests. */
@@ -42,13 +49,6 @@ DropdownBlock.propTypes = {
   innerRef: PropTypes.func,
   isSeamless: PropTypes.bool,
   isStretchy: PropTypes.bool,
-}
-
-DropdownBlock.defaultProps = {
-  'data-cy': 'DropdownBlock',
-  innerRef: noop,
-  isSeamless: false,
-  isStretchy: false,
 }
 
 export default DropdownBlock

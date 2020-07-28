@@ -1,0 +1,65 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { select } from '@storybook/addon-knobs'
+import { Icons } from './Icon.storiesHelpers'
+import Icon from './'
+
+<Meta title="🧬 Components/Elements/Icon" component={Icon} />
+
+# Icon
+
+An Icon component renders SVG icons.
+
+<Preview>
+  <Story name="default">
+    <Icons />
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: PL
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={Icon} />
+
+## Adapter
+
+As of v2.18.0, the `svg` set is opt-in. This was done to reduce the compiled bundle size. To load the `svg` icons, add the appropriate adapter to your app.
+
+It is recommended that the adapter be loaded somewhere within your main entry point (e.g. `src/index.js`).
+
+```js
+// src/index.js
+// For a lighter-weight svg set for embeddables
+import '@helpscout/hsds-react/adapters/embed'
+// For the complete svg set
+import '@helpscout/hsds-react/adapters/app'
+```
+
+Note: This loads all the `svg` images, including [`Icon`](../../components/Icon) and [`Illo`](../../components/Illo).
+
+### Loading / Unloading SVG
+
+To manually load SVG sets without an adapter, you can use the `load` function from this component:
+
+```js
+import { load } from '@helpscout/hsds-react/components/Icon'
+
+const customSVGSet = { ... }
+
+load(customSVGSet)
+```
+
+To unload, or reset, the SVG set, you can use the `unload` function:
+
+```js
+import { unload } from '@helpscout/hsds-react/components/Icon'
+
+unload()
+```

@@ -335,38 +335,6 @@ const AvatarConsumer = props => {
   return <Avatar {...props} />
 }
 
-const avatarPropTypes = {
-  actionable: PropTypes.bool,
-  actionIcon: PropTypes.string,
-  actionIconSize: PropTypes.string,
-  active: PropTypes.bool,
-  animation: PropTypes.bool,
-  animationDuration: PropTypes.number,
-  animationEasing: PropTypes.string,
-  borderColor: PropTypes.string,
-  className: PropTypes.string,
-  count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  fallbackImage: PropTypes.string,
-  image: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  initials: PropTypes.string,
-  light: PropTypes.bool,
-  name: PropTypes.string,
-  onActionClick: PropTypes.func,
-  onError: PropTypes.func,
-  onLoad: PropTypes.func,
-  onRemoveAnimationEnd: PropTypes.func,
-  outerBorderColor: PropTypes.string,
-  removingAvatarAnimation: PropTypes.bool,
-  shape: PropTypes.oneOf(['circle', 'rounded', 'square']),
-  showStatusBorderColor: PropTypes.bool,
-  size: PropTypes.oneOf(Object.keys(config.size)),
-  status: PropTypes.string,
-  statusIcon: PropTypes.string,
-  withShadow: PropTypes.bool,
-}
-Avatar.propTypes = avatarPropTypes
-AvatarConsumer.propTypes = avatarPropTypes
-
 Avatar.defaultProps = {
   actionable: false,
   actionIcon: 'trash',
@@ -389,5 +357,64 @@ Avatar.defaultProps = {
   onError: noop,
   onLoad: noop,
 }
+
+const avatarPropTypes = {
+  /** Activate the action overlay that will appear on hover */
+  actionable: PropTypes.bool,
+  /** Name of the [Icon](../Icon) to render into the action overlay */
+  actionIcon: PropTypes.string,
+  /** Set the size of the action overlay icon */
+  actionIconSize: PropTypes.string,
+  /** Color for the Avatar border. */
+  borderColor: PropTypes.string,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Used to display an additional avatar count. */
+  count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** URL of the image to display. */
+  image: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  /** Custom initials to display. */
+  initials: PropTypes.string,
+  /** Applies a "light" style to the component. */
+  light: PropTypes.bool,
+  /** Name of the user. Required. */
+  name: PropTypes.string,
+  /** Callback when avatar overlay was clicked. */
+  onActionClick: PropTypes.func,
+  /** Callback when avatar image fails to load. */
+  onError: PropTypes.func,
+  /** Callback when avatar image loads. */
+  onLoad: PropTypes.func,
+  /** Callback when the remove avatar animation has ended. */
+  onRemoveAnimationEnd: PropTypes.func,
+  /** Color for the Avatar's outer border. */
+  outerBorderColor: PropTypes.string,
+  /** Activate an animation sequence that will remove the actual avatar and replace it will the fallback image. */
+  removingAvatarAnimation: PropTypes.bool,
+  /** Shape of the avatar. */
+  shape: PropTypes.oneOf(['circle', 'rounded', 'square']),
+  /** Renders the `StatusDot` border. */
+  showStatusBorderColor: PropTypes.bool,
+  /** Size of the avatar. */
+  size: PropTypes.oneOf(['xl', 'lg', 'md', 'smmd', 'sm', 'xs', 'xxs']),
+  /** Text for the image `alt` and `title` attributes. */
+  title: PropTypes.string,
+  /** Renders a `StatusDot` with the status type. */
+  status: PropTypes.string,
+  /** Name of the `Icon` to render into the `StatusDot`. */
+  statusIcon: PropTypes.string,
+  active: PropTypes.bool,
+  animation: PropTypes.bool,
+  animationDuration: PropTypes.number,
+  animationEasing: PropTypes.string,
+  fallbackImage: PropTypes.string,
+  withShadow: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+}
+
+Avatar.propTypes = avatarPropTypes
+AvatarConsumer.propTypes = avatarPropTypes
+AvatarConsumer.defaultProps = Avatar.defaultProps
 
 export default AvatarConsumer

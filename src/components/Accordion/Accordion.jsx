@@ -1,4 +1,5 @@
-import React, { createContext, useState, useEffect, useContext } from 'react'
+import React, { createContext, useState, useContext } from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import AccordionBody from './Accordion.Body'
 import AccordionHeading from './Accordion.Heading'
@@ -9,7 +10,6 @@ import AccordionTitle from './Accordion.Title'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { AccordionUI } from './Accordion.css'
-import { stringifyArray } from './Accordion.utils'
 import { PageContext } from '../Page/Page'
 import Sortable from '../Sortable'
 import { GlobalContext } from '../HSDS/Provider'
@@ -65,7 +65,7 @@ const useSectionState = (originalState, allowMultiple) => {
     if (isOpen) {
       const newSections = [...openSections, uuid]
       setOpenSections(
-        newSections.filter((item, pos) => newSections.indexOf(item) == pos)
+        newSections.filter((item, pos) => newSections.indexOf(item) === pos)
       )
     } else {
       setOpenSections(openSections.filter(id => id !== uuid))
@@ -188,6 +188,37 @@ Accordion.defaultProps = {
   pressDelay: 0,
   size: 'md',
   useWindowAsScrollContainer: false,
+}
+
+Accordion.propTypes = {
+  /** Allows multiple sections to have their body revealed simultaneously. */
+  allowMultiple: PropTypes.bool,
+  /** Sections to be stacked and controlled. */
+  children: PropTypes.any,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** When isSortable is true, the distance determines how far a user must drag in order to sort. */
+  distance: PropTypes.number,
+  /** Exclude borders and horizontal padding. */
+  isSeamless: PropTypes.bool,
+  /** Adds styling to fit inside a <Page> component */
+  isPage: PropTypes.bool,
+  /** Enable sections to be re-ordered by drag and drop. */
+  isSortable: PropTypes.bool,
+  /** Callback to be invoked when the body of a section is revealed. */
+  onOpen: PropTypes.func,
+  /** Callback to be invoked when the body of a section is concealed. */
+  onClose: PropTypes.func,
+  /** When is sortable is true, callback to be invoked when sorting ends. */
+  onSortEnd: PropTypes.func,
+  /** An array of ids corresponding to sections that should be open. */
+  openSectionIds: PropTypes.array,
+  /** When isSortable is true and distance is 0, the time in ms that must elapse on a press in order to sort. */
+  pressDelay: PropTypes.number,
+  /** The amount of padding. */
+  size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 Accordion.Body = AccordionBody

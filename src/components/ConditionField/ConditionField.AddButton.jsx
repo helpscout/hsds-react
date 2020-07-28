@@ -1,13 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { withMotion } from '../Motion'
 import Condition from '../Condition'
 import { classNames } from '../../utilities/classNames'
 import { AddButtonContentUI } from './ConditionField.css'
 
-export const AddButton = props => {
+export const ConditionFieldAddButton = props => {
   const { className, ...rest } = props
-  const componentClassName = classNames(AddButton.className, className)
+  const componentClassName = classNames('c-ConditionFieldAddButton', className)
 
   return (
     <div data-cy="ConditionFieldAddButtonWrapper">
@@ -21,15 +22,36 @@ export const AddButton = props => {
   )
 }
 
-AddButton.className = 'c-ConditionFieldAddButton'
-
-AddButton.defaultProps = {
+ConditionFieldAddButton.defaultProps = {
   animationDuration: 250,
   animationEasing: 'linear',
   'data-cy': 'ConditionFieldAddButton',
   isBorderless: true,
   isWithMotion: true,
   type: 'or',
+}
+
+ConditionFieldAddButton.propTypes = {
+  /** Time (ms) it takes to animate on mount/unmount. */
+  animationDuration: PropTypes.number,
+  /** Time (ms) it takes to animate on mount/unmount. */
+  animationEasing: PropTypes.string,
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** Retrieve the inner DOM node. */
+  ref: PropTypes.func,
+  /** Renders a white border. */
+  isBorderless: PropTypes.bool,
+  /** Callback when component is clicked. */
+  onClick: PropTypes.func,
+  /** Time (ms) it takes to scroll into view. */
+  scrollDuration: PropTypes.number,
+  /** Amount (px) used to calculate scrolling into view. */
+  scrollOffset: PropTypes.number,
+  /** The operator. (`and`/`or`) */
+  type: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 // @helpscout/motion prevents these animations from running within a
@@ -76,6 +98,6 @@ const AnimatedComponent = withMotion({
       easing: props.animationEasing,
     }).finished
   },
-})(AddButton)
+})(ConditionFieldAddButton)
 
 export default AnimatedComponent

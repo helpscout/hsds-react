@@ -201,25 +201,33 @@ class Collapsible extends React.Component {
   }
 }
 
-Collapsible.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  duration: PropTypes.number,
-  durationOpen: PropTypes.number,
-  durationClose: PropTypes.number,
-  isOpen: PropTypes.bool,
-  onOpen: PropTypes.func,
-  onClose: PropTypes.func,
-  style: PropTypes.any,
-}
-
 Collapsible.defaultProps = {
   'data-cy': 'Collapsible',
   duration: 300,
   isOpen: false,
   onOpen: noop,
   onClose: noop,
+}
+
+Collapsible.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Time (ms) for the expand/collapse animation. */
+  duration: PropTypes.number,
+  /** Time (ms) for the expand animation. */
+  durationOpen: PropTypes.number,
+  /** Time (ms) for the collapse animation. */
+  durationClose: PropTypes.number,
+  /** Opens/collapses the component. */
+  isOpen: PropTypes.bool,
+  /** Callback function when the component closes. */
+  onClose: PropTypes.func,
+  /** Callback function when the component opens. */
+  onOpen: PropTypes.func,
+  /** Custom styles to be added to the component. */
+  style: PropTypes.any,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Collapsible

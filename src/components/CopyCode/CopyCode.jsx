@@ -84,7 +84,7 @@ class CopyCode extends React.PureComponent {
   }
 
   render() {
-    const { className, code, maxWidth, ...rest } = this.props
+    const { buttonSize, className, code, maxWidth, ...rest } = this.props
     const componentClassName = classNames('c-CopyCode', className)
 
     return (
@@ -105,6 +105,7 @@ class CopyCode extends React.PureComponent {
           kind="secondary"
           onClick={this.handleCopyClick}
           canRenderFocus
+          size={buttonSize}
         >
           Copy
         </CopyButtonUI>
@@ -113,21 +114,9 @@ class CopyCode extends React.PureComponent {
   }
 }
 
-CopyCode.propTypes = {
-  autoFocus: PropTypes.bool,
-  className: PropTypes.string,
-  code: PropTypes.string,
-  copyToClipboard: PropTypes.bool,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  innerRef: PropTypes.func,
-  language: PropTypes.string,
-  maxWidth: PropTypes.number,
-  onCopy: PropTypes.func,
-}
-
 CopyCode.defaultProps = {
   autoFocus: false,
+  buttonSize: 'sm',
   code: '',
   copyToClipboard: true,
   'data-cy': 'CopyCode',
@@ -135,6 +124,28 @@ CopyCode.defaultProps = {
   language: 'javascript',
   maxWidth: 500,
   onCopy: noop,
+}
+
+CopyCode.propTypes = {
+  className: PropTypes.string,
+  /** Automatically select `code` when component mounts. */
+  autoFocus: PropTypes.bool,
+  /** Sets the size of the button. Can be one of `"sm"`, `"md"` or `"lg"`.  */
+  buttonSize: PropTypes.string,
+  /** The code to be displayed within the container. */
+  code: PropTypes.string,
+  /** Enables copying to clipboard. */
+  copyToClipboard: PropTypes.bool,
+  /** Retrieves the DOM node. */
+  innerRef: PropTypes.func,
+  /** Language syntax */
+  language: PropTypes.oneOf([`c`, `java`, `javascript`, `objectivec`, `swift`]),
+  /** Sets the max width of the container. */
+  maxWidth: PropTypes.number,
+  /** Callback function when the copy button is clicked. */
+  onCopy: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default CopyCode

@@ -4,29 +4,15 @@ In this guide, we'll walk through styling our newly created [custom `Strong` com
 
 ## CSS-in-JS
 
-HSDS uses CSS-in-JS techniques for styling, powered by [styled-component](https://styled-components.com/).
-
-Start by creating a dedicated `styles/` directory under `Strong/`:
+HSDS uses CSS-in-JS techniques for styling, powered by [styled-components](https://styled-components.com/).
 
 ```
 hsds-react/
   └── src/
       └── components/
-          ├── styles/
+          └── Strong.css.js
           ├── index.js
-          └── Strong.js
-```
-
-Within `styles/`, create a file named after our component. In our case, `Strong.css.js`:
-
-```
-hsds-react/
-  └── src/
-      └── components/
-          ├── styles/
-          │    └── Strong.css.js
-          ├── index.js
-          └── Strong.js
+          └── Strong.jsx
 ```
 
 The `.css.js` file extension is a convention HSDS uses to distinguish dedicated CSS-in-JS file types. They're still plain ol' `.js` files though 🤓.

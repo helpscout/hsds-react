@@ -1,0 +1,110 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { boolean, select, text } from '@storybook/addon-knobs'
+import { Button } from './Button'
+import { ControlGroup } from '../index'
+
+<Meta
+  title="🧬 Components/Buttons/Button"
+  component={Button}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=5142%3A8796',
+    },
+  }}
+/>
+
+# Button
+
+Actionable HTML buttons with different styles and support for React Router.
+
+<Preview>
+  <Story name="default">
+    <Button
+      children={text('children', 'Button')}
+      disabled={boolean('disabled', false)}
+      disableOnLoading={boolean('disableOnLoading', true)}
+      isActive={boolean('isActive', false)}
+      isHovered={boolean('isHovered', false)}
+      isBlock={boolean('isBlock', false)}
+      isLoading={boolean('isLoading', false)}
+      kind={select(
+        'kind',
+        {
+          primary: 'primary',
+          secondary: 'secondary',
+          tertiary: 'tertiary',
+          default: 'default',
+          link: 'link',
+        },
+        'secondary'
+      )}
+      size={select(
+        'size',
+        {
+          xl: 'xl',
+          lgxl: 'lgxl',
+          lg: 'lg',
+          md: 'md',
+          sm: 'sm',
+          xs: 'xs',
+        },
+        'lg'
+      )}
+      state={select(
+        'state',
+        {
+          default: null,
+          danger: 'danger',
+          success: 'success',
+          warning: 'warning',
+        },
+        ''
+      )}
+      shape={select(
+        'shape',
+        {
+          default: 'default',
+          circle: 'circle',
+          rounded: 'rounded',
+        },
+        'default'
+      )}
+      spinButtonOnLoading={boolean('spinButtonOnLoading', false)}
+    />
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={Button} />
+
+### Stories
+
+#### Button Group
+
+<Preview>
+  <Story name="Button Group">
+    <ControlGroup>
+      <ControlGroup.Item>
+        <Button kind="secondary">Button</Button>
+      </ControlGroup.Item>
+      <ControlGroup.Item>
+        <Button kind="secondary">Button</Button>
+      </ControlGroup.Item>
+      <ControlGroup.Item>
+        <Button kind="secondary">Button</Button>
+      </ControlGroup.Item>
+    </ControlGroup>
+  </Story>
+</Preview>

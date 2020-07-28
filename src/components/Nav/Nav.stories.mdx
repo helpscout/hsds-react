@@ -1,0 +1,56 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { MemoryRouter as Router } from 'react-router-dom'
+import Nav from './'
+
+<Meta
+  title="🧬 Components/Wayfinding/Nav"
+  component={Nav}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A11794',
+    },
+  }}
+/>
+
+# Nav
+
+<Preview>
+  <Story name="default">
+    <Router>
+      <Nav>
+        <Nav.Item to="/">Home</Nav.Item>
+        <Nav.Item to="/one">One</Nav.Item>
+        <Nav.Item to="/two">Two</Nav.Item>
+        <Nav.Item to="/three" error={'Something went wrong'}>
+          Three
+        </Nav.Item>
+        <Nav.Item to="/four" disabled>
+          Four
+        </Nav.Item>
+      </Nav>
+    </Router>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: Beacon embed
+
+<br />
+<br />
+
+### Props
+
+<Props of={Nav} />
+
+## Nav.Item
+
+This component is renders the linkable elements for a navigation interface, with support for [react-router](https://github.com/ReactTraining/react-router).
+
+### Props
+
+<Props of={Nav.Item} />

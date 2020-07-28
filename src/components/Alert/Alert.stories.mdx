@@ -1,16 +1,17 @@
-import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
 import Alert from './'
 import { Button, Heading, Link, Text } from '../index'
 
 <Meta
-  title="Components/Text/Alert"
+  title="🧬 Components/Text/Alert"
   component={Alert}
   parameters={{
-      design: {
-        type: 'figma',
-        url: 'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A11098'
-      }
-    }}
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A11098',
+    },
+  }}
 />
 
 # Alert
@@ -46,7 +47,7 @@ An Alert component provides contextual feedback messages for user actions with t
       <Heading size="h1">H1 Heading</Heading>
       <Heading size="h2">H2 Heading</Heading>
       <Heading size="h3">H3 Heading</Heading>
-      <br/>
+      <br />
       <ul>
         <li>List item</li>
         <li>List item</li>
@@ -105,7 +106,14 @@ An Alert component provides contextual feedback messages for user actions with t
 <Preview>
   <Story name="action on the right">
     <div>
-      <Alert actionRight={<Button size="sm" kind="secondary">Action!</Button>} icon>
+      <Alert
+        actionRight={
+          <Button size="sm" kind="secondary">
+            Action!
+          </Button>
+        }
+        icon
+      >
         Action Right Buddy with Icon!
       </Alert>
     </div>

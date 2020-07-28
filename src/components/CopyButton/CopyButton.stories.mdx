@@ -1,0 +1,38 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { action } from '@storybook/addon-actions'
+import CopyButton from './'
+
+<Meta
+  title="🧬 Components/Buttons/CopyButton"
+  component={CopyButton}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A7580',
+    },
+  }}
+/>
+
+# CopyButton
+
+A button for copy action
+
+<Preview>
+  <Story name="default">
+    <CopyButton onClick={action('Click')} onReset={action('Reset')} />
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={CopyButton} />

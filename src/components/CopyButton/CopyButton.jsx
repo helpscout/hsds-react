@@ -93,21 +93,6 @@ class CopyButton extends React.PureComponent {
   }
 }
 
-CopyButton.propTypes = {
-  canRenderFocus: PropTypes.bool,
-  children: PropTypes.any,
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  kind: PropTypes.string,
-  label: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  onClick: PropTypes.func,
-  onReset: PropTypes.func,
-  resetTimeout: PropTypes.number,
-  size: PropTypes.any,
-  title: PropTypes.string,
-}
-
 CopyButton.defaultProps = {
   canRenderFocus: false,
   'data-cy': 'CopyButton',
@@ -116,6 +101,38 @@ CopyButton.defaultProps = {
   onClick: noop,
   onReset: noop,
   resetTimeout: 2000,
+  size: 'sm',
+}
+
+CopyButton.propTypes = {
+  canRenderFocus: PropTypes.bool,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  /** Applies the specified style to the button.
+   * 'primary': Blue button. Used for primary actions.
+   * 'primaryAlt': Purple button. Used for primary actions.
+   * 'secondary': White button with a border. Used for secondary actions.
+   * 'secondaryAlt': White button with a green border. Used for secondary actions.
+   * 'default': Borderless button. Used for subtle/tertiary actions.
+   * 'link': Button that looks like a `Link`. Used for subtle/tertiary actions.
+   */
+  kind: PropTypes.oneOf([
+    'primary',
+    'primaryAlt',
+    'secondary',
+    'secondaryAlt',
+    'default',
+    'link',
+  ]),
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  onClick: PropTypes.func,
+  onReset: PropTypes.func,
+  resetTimeout: PropTypes.number,
+  /** Sets the size of the button. Can be one of `"sm"`, `"md"` or `"lg"`. */
+  size: PropTypes.any,
+  title: PropTypes.string,
 }
 
 export default CopyButton

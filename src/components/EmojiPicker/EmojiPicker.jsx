@@ -66,15 +66,6 @@ export class EmojiPicker extends React.PureComponent {
   }
 }
 
-EmojiPicker.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  emojiSet: PropTypes.arrayOf(PropTypes.any),
-  renderMenu: PropTypes.any,
-  size: PropTypes.string,
-}
-
 EmojiPicker.defaultProps = {
   className: '',
   'data-cy': 'EmojiPicker',
@@ -89,6 +80,31 @@ EmojiPicker.defaultProps = {
   onSelect: noop,
   emojiSet,
   size: 'default',
+}
+
+EmojiPicker.propTypes = {
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** An array of emoji objects. */
+  emojiSet: PropTypes.arrayOf(PropTypes.any),
+  /** Callback when item is selected. */
+  onSelect: PropTypes.func,
+  /** Callback when item is blurred. */
+  onBlur: PropTypes.func,
+  /** Callback when item is closed. */
+  onClose: PropTypes.func,
+  /** Callback when item is focused. */
+  onFocus: PropTypes.func,
+  /** Callback when item is opened. */
+  onOpen: PropTypes.func,
+  /** Callback to customize how a menu renders. */
+  renderMenu: PropTypes.any,
+  /** Callback to customize how a trigger renders. */
+  renderTrigger: PropTypes.any,
+  /** The size of the emoji. */
+  size: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default EmojiPicker

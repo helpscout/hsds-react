@@ -51,23 +51,29 @@ class ControlGroupItem extends React.PureComponent {
   }
 }
 
-ControlGroupItem.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.any,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  isBlock: PropTypes.bool,
-  isFirst: PropTypes.bool,
-  isNotOnly: PropTypes.bool,
-  isLast: PropTypes.bool,
-}
-
 ControlGroupItem.defaultProps = {
   'data-cy': 'ControlGroupItem',
   isBlock: false,
   isFirst: false,
   isNotOnly: false,
   isLast: false,
+}
+
+ControlGroupItem.propTypes = {
+  /** Content to render. */
+  children: PropTypes.any,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Renders with a wider responsive width. */
+  isBlock: PropTypes.bool,
+  /** Helps render component without right borders. */
+  isFirst: PropTypes.bool,
+  /** Helps render component without left/right borders. */
+  isNotOnly: PropTypes.bool,
+  /** Helps render component without left borders. */
+  isLast: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default ControlGroupItem

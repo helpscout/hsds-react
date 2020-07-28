@@ -1,0 +1,43 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { action } from '@storybook/addon-actions'
+import { boolean } from '@storybook/addon-knobs'
+import CopyInput from './'
+
+<Meta
+  title="🧬 Components/Forms/CopyInput"
+  component={CopyInput}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A8896',
+    },
+  }}
+/>
+
+# CopyInput
+
+This component renders a content with the ability to copy to clipboard, powered by `CopyButton`.
+
+<Preview>
+  <Story name="default">
+    <CopyInput
+      value="testing"
+      onCopy={action('Copy')}
+      readOnly={boolean('readOnly', false)}
+    />
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Nikki
+- **Engineering**: Juan Pablo
+- **Usage**: HSApp (Beacon)
+
+<br />
+<br />
+
+### Props
+
+<Props of={CopyInput} />

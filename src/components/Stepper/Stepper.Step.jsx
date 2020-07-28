@@ -51,18 +51,6 @@ export class Step extends React.PureComponent {
   }
 }
 
-Step.propTypes = {
-  title: PropTypes.string,
-  id: PropTypes.string,
-  className: PropTypes.string,
-  children: PropTypes.any,
-  innerRef: PropTypes.func,
-  index: PropTypes.number,
-  isActive: PropTypes.bool,
-  isClickable: PropTypes.bool,
-  onClick: PropTypes.func,
-}
-
 Step.defaultProps = {
   'data-cy': 'Step',
   isActive: false,
@@ -70,6 +58,23 @@ Step.defaultProps = {
   index: 0,
   innerRef: noop,
   onClick: noop,
+}
+
+Step.propTypes = {
+  /** The HTML title of the Step. */
+  title: PropTypes.string,
+  /** The unique ID of the Step. Used for mapping. */
+  id: PropTypes.string,
+  /** The className of the component. */
+  className: PropTypes.string,
+  index: PropTypes.number,
+  /** Whether the current step is active */
+  isActive: PropTypes.bool,
+  /** Enables clicking for the steps. */
+  isClickable: PropTypes.bool,
+  /** Callback when a step is clicked. Enabled by `isClickable`. */
+  onClick: PropTypes.func,
+  innerRef: PropTypes.func,
 }
 
 export default Step

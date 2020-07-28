@@ -52,20 +52,6 @@ export class CloseButton extends React.PureComponent {
   }
 }
 
-CloseButton.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.any,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  innerRef: PropTypes.func,
-  onBlur: PropTypes.func,
-  onClick: PropTypes.func,
-  onFocus: PropTypes.func,
-  seamless: PropTypes.bool,
-  size: PropTypes.string,
-  title: PropTypes.string,
-}
-
 CloseButton.defaultProps = {
   'data-cy': 'CloseButton',
   innerRef: noop,
@@ -74,6 +60,26 @@ CloseButton.defaultProps = {
   onFocus: noop,
   seamless: false,
   title: 'Close',
+}
+
+CloseButton.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  children: PropTypes.any,
+  innerRef: PropTypes.func,
+  /** Callback when button is blurred. */
+  onBlur: PropTypes.func,
+  /** Callback when button is clicked. */
+  onClick: PropTypes.func,
+  /** Callback when button is focused. */
+  onFocus: PropTypes.func,
+  /** Applies a seamless style to the component. */
+  seamless: PropTypes.bool,
+  size: PropTypes.string,
+  /** Custom title for the button. */
+  title: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default CloseButton

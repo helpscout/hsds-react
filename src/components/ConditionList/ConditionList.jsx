@@ -60,18 +60,6 @@ export class ConditionList extends React.Component {
   }
 }
 
-ConditionList.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  innerRef: PropTypes.func,
-  isAddEnabled: PropTypes.bool,
-  isWithOffset: PropTypes.bool,
-  onAdd: PropTypes.func,
-  scrollDuration: PropTypes.number,
-  scrollOffset: PropTypes.number,
-}
-
 ConditionList.defaultProps = {
   'data-cy': 'ConditionList',
   innerRef: noop,
@@ -80,6 +68,25 @@ ConditionList.defaultProps = {
   isWithOffset: false,
   scrollDuration: 300,
   scrollOffset: 200,
+}
+
+ConditionList.propTypes = {
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** Retrieve the inner DOM node. */
+  innerRef: PropTypes.func,
+  /** Renders an inner Condition.AddButton. */
+  isAddEnabled: PropTypes.bool,
+  /** Renders component with negative left/right margins. */
+  isWithOffset: PropTypes.bool,
+  /** Callback when the inner Condition.AddButton is clicked. */
+  onAdd: PropTypes.func,
+  /** Time (ms) it takes to scroll into view. */
+  scrollDuration: PropTypes.number,
+  /** Amount (px) used to calculate scrolling into view. */
+  scrollOffset: PropTypes.number,
 }
 
 const ConditionListConsumer = props => {
@@ -93,5 +100,7 @@ const ConditionListConsumer = props => {
 
   return <ConditionList {...props} />
 }
+
+ConditionListConsumer.propTypes = ConditionList.propTypes
 
 export default ConditionListConsumer

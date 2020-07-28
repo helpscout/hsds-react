@@ -40,12 +40,15 @@ class ControlGroup extends React.PureComponent {
   }
 }
 
-ControlGroup.propTypes = {
-  className: PropTypes.string,
-}
-
 ControlGroup.defaultProps = {
   'data-cy': 'ControlGroup',
+}
+
+ControlGroup.propTypes = {
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default ControlGroup

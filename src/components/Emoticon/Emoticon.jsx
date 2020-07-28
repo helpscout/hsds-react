@@ -66,28 +66,6 @@ export class Emoticon extends React.PureComponent {
   }
 }
 
-Emoticon.propTypes = {
-  className: PropTypes.string,
-  center: PropTypes.bool,
-  clickable: PropTypes.bool,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  isActive: PropTypes.bool,
-  isDisabled: PropTypes.bool,
-  innerRef: PropTypes.func,
-  inline: PropTypes.bool,
-  name: PropTypes.oneOf([
-    'happy',
-    'sad',
-    'meh',
-    'reaction-happy',
-    'reaction-sad',
-    'reaction-okay',
-  ]),
-  title: PropTypes.string,
-  size: PropTypes.oneOf(['lg', 'md', 'sm']),
-}
-
 Emoticon.defaultProps = {
   center: false,
   clickable: true,
@@ -100,6 +78,38 @@ Emoticon.defaultProps = {
   role: 'presentation',
   size: 'md',
   title: '',
+}
+
+Emoticon.propTypes = {
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** Center aligns component with margin right and left = auto */
+  center: PropTypes.bool,
+  /** No pointer events allowed if false */
+  clickable: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  /** Give the emoticon an inactive style (grey) */
+  isActive: PropTypes.bool,
+  /** Disabled (no pointer events allowed and reduced opacity) */
+  isDisabled: PropTypes.bool,
+  /** Get the dom ref */
+  innerRef: PropTypes.func,
+  /** Display as inline block */
+  inline: PropTypes.bool,
+  /** The name of the emoticon to render */
+  name: PropTypes.oneOf([
+    'happy',
+    'sad',
+    'meh',
+    'reaction-happy',
+    'reaction-sad',
+    'reaction-okay',
+  ]),
+  /** Render a html title attribute on the emoticon*/
+  title: PropTypes.string,
+  /** size of the emoticon: lg: '24px', md: '20px', sm: '16px' */
+  size: PropTypes.oneOf(['lg', 'md', 'sm']),
 }
 
 export default Emoticon

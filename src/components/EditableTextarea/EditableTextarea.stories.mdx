@@ -1,0 +1,111 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { ContainerUI } from '../EditableField/EditableField.storiesHelpers'
+import { ValidationApp } from './EditableTextarea.storiesHelpers'
+import { withAktiv } from '../../utilities/storybook'
+import EditableTextarea from './'
+
+<Meta
+  title="🧬 Components/Forms/EditableTextarea"
+  component={EditableTextarea}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A9270',
+    },
+  }}
+  decorators={[withAktiv]}
+/>
+
+# EditableTextarea
+
+A EditableTextarea it's a sibling of the EditableField, but a textarea...
+
+- It autoresizes it's height based on content to a maximum number of rows (maxRows)
+- Use Enter to save the note
+- Use Shift + Enter to add line breaks
+- Use Escape to discard changes
+- When the content is larger than the height of the teaxtarea, we add a visual cue (gradient)
+- The visual cue disappears when scrolling to the bottom of the textarea
+- Number of rows (max height of the textarea) is configurable (default 5)
+- Styles follow EditableFields as close as possible
+
+<Preview>
+  <Story name="default">
+    <ContainerUI>
+      <EditableTextarea />
+      <EditableTextarea
+        label="To do"
+        value={`Hello don't forget:
+    1. Use "Enter" to save the note
+    2. Use "Shift + Enter" to add line breaks
+    3. Use "Escape" to discard changes
+  `}
+        maxRows={4}
+      />
+      <EditableTextarea
+        label="Jefsum"
+        value={`
+  They're using our own satellites against us.
+  And the clock is ticking.
+  Did he just throw my cat out of the window? Yeah, but your scientists were so preoccupied with whether or not they could, they didn't stop to think if they should. Life finds a way.
+  I was part of something special. Checkmate...
+  My dad once told me, laugh and the world laughs with you, Cry, and I'll give you something to cry about you little bastard!
+  Hey, you know how I'm, like, always trying to save the planet? Here's my chance.
+  `}
+        maxRows={10}
+      />
+    </ContainerUI>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Jared
+- **Engineering**: Juan Pablo
+- **Usage**: Customer properties/profile
+
+<br />
+<br />
+
+### Props
+
+<Props of={EditableTextarea} />
+
+### Stories
+
+#### Floating labels
+
+<Preview>
+  <Story name="Floating labels">
+    <ContainerUI>
+      <EditableTextarea
+        label="Notes"
+        id="notes"
+        label="Some notes"
+        placeholder="Some notes"
+        floatingLabels
+      />
+      <EditableTextarea
+        floatingLabels
+        id="todo"
+        label="Some todos"
+        placeholder="Some todos"
+        value={`Hello don't forget:
+    1. To brush your teeth
+    2. Pick up some beer
+    3. Maybe pick up some wine too
+  `}
+        maxRows={5}
+      />
+    </ContainerUI>
+  </Story>
+</Preview>
+
+#### Validation
+
+<Preview>
+  <Story name="Validation">
+    <ValidationApp />
+  </Story>
+</Preview>

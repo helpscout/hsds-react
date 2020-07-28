@@ -1,0 +1,64 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import FluffyCard from './'
+
+<Meta
+  title="🧬 Components/Structural/FluffyCard"
+  component={FluffyCard}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A10413',
+    },
+  }}
+/>
+
+# FluffyCard
+
+A FluffyCard component is used to encapsulate pieces of UI that share a common concept or action. It is an enhanced version of `Card`.
+
+<Preview>
+  <Story name="default">
+    <FluffyCard href="#">
+      Elf is a 2003 American Christmas fantasy comedy film, directed by Jon
+      Favreau and written by David Berenbaum.{' '}
+    </FluffyCard>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: HSDS (OptionTile), Embed
+
+<br />
+<br />
+
+### Props
+
+<Props of={FluffyCard} />
+
+### Stories
+
+#### Container
+
+This component is used to wrap `FluffyCard` components, allowing them to have unified spacing and height.
+
+<Preview>
+  <Story name="Container">
+    <FluffyCard.Container>
+      <FluffyCard href="#">
+        Elf is a 2003 American Christmas fantasy comedy film, directed by Jon
+        Favreau and written by David Berenbaum.{' '}
+      </FluffyCard>
+      <FluffyCard href="#">
+        Elf is a 2003 American Christmas fantasy comedy film, directed by Jon
+        Favreau and written by David Berenbaum. The story is about one of
+        Santa's elves (Ferrell) who learns he is actually a human and goes to
+        New York City to meet his biological father (Caan), spreading Christmas
+        cheer in a world of cynics as he goes.
+      </FluffyCard>
+    </FluffyCard.Container>
+  </Story>
+</Preview>

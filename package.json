@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/hsds-react",
-  "version": "3.3.2",
+  "version": "3.4.3",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -143,7 +143,7 @@
     "confusing-browser-globals": "^1.0.7",
     "coveralls": "3.0.9",
     "cross-env": "5.1.0",
-    "cypress": "^4.5.0",
+    "cypress": "^4.11.0",
     "dotenv": "^8.2.0",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.0",

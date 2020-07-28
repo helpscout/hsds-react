@@ -1,0 +1,58 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import Condition from './'
+import { Builder } from './Condition.storiesHelpers'
+
+<Meta
+  title="🧬 Components/Forms/Condition"
+  component={Condition}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A8717',
+    },
+  }}
+/>
+
+# Condition
+
+A Condition is a single item that renders within a `ConditionList`.
+It's values are represented by a collection of `ConditionFields` and various Form elements such as Inputs and Selects.
+
+<Preview>
+  <Story name="default">
+    <Builder />
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: HsApp (Messages)
+
+<br />
+<br />
+
+### Props
+
+<Props of={Condition} />
+
+<br />
+<br />
+
+## Condition.Operator
+
+A Condition.Operator renders an "And" or "Or" interface, used to visually group Conditions or `ConditionFields` together. This component is used internally by Condition and `ConditionField`.
+
+### Props
+
+<Props of={Condition.Operator} />
+
+## Condition.AddButton
+
+A Condition.AddButton renders an "And" or "Or" interface. It is an action used to add Conditions or `ConditionFields`. This component is used internally by Condition and `ConditionField`.
+
+### Props
+
+<Props of={Condition.AddButton} />

@@ -28,13 +28,15 @@ export class ToolbarBlock extends React.PureComponent {
   }
 }
 
-ToolbarBlock.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.any,
-}
-
 ToolbarBlock.defaultProps = {
   'data-cy': 'ToolbarBlock',
+}
+
+ToolbarBlock.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default ToolbarBlock

@@ -1,0 +1,56 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { select } from '@storybook/addon-knobs'
+import Inline from './'
+
+<Meta title="🛠 Utilities/Inline" component={Inline} />
+
+# Inline
+
+A Inline component is a layout-based component that contains `Inline.Item` components. This component properly align adjacent elements together with consideration for overflow. These classes help ensure that UI elements have adequete spacing, even in situations where the layout forces the items to wrap.
+
+<Preview>
+  <Story name="default">
+    <Inline
+      size={select(
+        'size',
+        {
+          lg: 'lg',
+          md: 'md',
+          sm: 'sm',
+          xs: 'xs',
+        },
+        'sm'
+      )}
+    >
+      <Inline.Item>
+        <div style={{ background: 'lightgreen' }}>Derek</div>
+      </Inline.Item>
+      <Inline.Item>
+        <div style={{ background: 'lightblue' }}>Hansel</div>
+      </Inline.Item>
+      <Inline.Item>
+        <div style={{ background: 'silver' }}>Mugatu</div>
+      </Inline.Item>
+    </Inline>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={Inline} />
+
+## Item.Inline
+
+A Inline component is a layout-based component that contains [Inline.Item](./Item.md) components. This component properly align adjacent elements together with consideration for overflow. These classes help ensure that UI elements have adequete spacing, even in situations where the layout forces the items to wrap.
+
+### Props
+
+<Props of={Inline.Item} />

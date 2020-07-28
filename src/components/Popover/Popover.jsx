@@ -56,6 +56,7 @@ export const Popover = props => {
     content,
     renderContent,
     className,
+    placement,
     triggerOn,
     ...rest
   } = props
@@ -81,26 +82,35 @@ export const Popover = props => {
       innerRef={innerRef}
       render={render}
       trigger={triggerOn}
+      placement={placement}
     />
   )
 }
 
-Popover.propTypes = Object.assign({}, Tooltip.propTypes, {
-  className: PropTypes.string,
-  content: PropTypes.any,
-  children: PropTypes.any,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  innerRef: PropTypes.func,
-  header: PropTypes.any,
-  renderHeader: PropTypes.any,
-  renderContent: PropTypes.any,
-})
-
-Popover.defaultProps = Object.assign({}, Tooltip.defaultProps, {
+Popover.defaultProps = {
   'data-cy': 'Popover',
   innerRef: noop,
   triggerOn: 'click',
-})
+}
+
+Popover.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Body content to render within the component. */
+  content: PropTypes.any,
+  /** Title content to render within the component. */
+  header: PropTypes.any,
+  /** Where to place the Tooltip. */
+  placement: PropTypes.string,
+  /** Renders a component within the Popover. Is prioritized over `content` */
+  renderContent: PropTypes.any,
+  /** Renders a component within the Popover. Is prioritized over `header` */
+  renderHeader: PropTypes.any,
+  /** Determines how to engage the component. */
+  triggerOn: PropTypes.string,
+  innerRef: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+}
 
 export default Popover

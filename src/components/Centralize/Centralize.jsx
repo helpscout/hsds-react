@@ -29,16 +29,16 @@ export class Centralize extends React.PureComponent {
   }
 }
 
+Centralize.defaultProps = {
+  'data-cy': 'Centralize',
+  innerRef: noop,
+}
+
 Centralize.propTypes = {
   className: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
   innerRef: PropTypes.func,
-}
-
-Centralize.defaultProps = {
-  'data-cy': 'Centralize',
-  innerRef: noop,
 }
 
 export default Centralize

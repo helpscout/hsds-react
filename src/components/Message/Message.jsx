@@ -157,16 +157,30 @@ export class Message extends React.PureComponent {
   }
 }
 
-Message.propTypes = {
-  avatar: PropTypes.any,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  showAvatar: PropTypes.bool,
-}
-
 Message.defaultProps = {
   'data-cy': 'Message',
   showAvatar: true,
+}
+
+Message.propTypes = {
+  /** An `Avatar` component containing author details. */
+  avatar: PropTypes.any,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Provides author information and applies "From" styles. */
+  from: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  /** Applies the "Note" theme styles. */
+  isNote: PropTypes.bool,
+  /** Applies left-to-right text styles. */
+  ltr: PropTypes.bool,
+  /** Applies right-to-left text styles. */
+  rtl: PropTypes.bool,
+  /** Renders a space for the Avatar to appear. Default is `true`. */
+  showAvatar: PropTypes.bool,
+  /** Provides author information and applies "To" styles. */
+  to: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Message

@@ -7,9 +7,6 @@ import { <%= name %>UI } from './styles/<%= name %>.css'
 
 export class <%= name %> extends React.Component {
   static className = 'c-<%= name %>'
-  static defaultProps = {
-    innerRef: noop
-  }
 
   getClassName() {
     const { className } = this.props
@@ -34,8 +31,15 @@ export class <%= name %> extends React.Component {
   }
 }
 
+<%= name %>.defaultProps = {
+  'data-cy': '<%= name %>',
+}
+
 <%= name %>.propTypes = {
+  /** Custom class names to be added to the component. */
   className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default <%= name %>

@@ -206,25 +206,6 @@ class Item extends React.Component {
   }
 }
 
-Item.propTypes = {
-  avatar: PropTypes.any,
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  isAssigned: PropTypes.bool,
-  isFocused: PropTypes.bool,
-  isTyping: PropTypes.bool,
-  isViewing: PropTypes.bool,
-  isWaiting: PropTypes.bool,
-  message: PropTypes.string,
-  messageLimit: PropTypes.number,
-  name: PropTypes.string,
-  newMessageCount: PropTypes.number,
-  tags: PropTypes.any,
-  timestamp: PropTypes.string,
-  timestampFormatter: PropTypes.func,
-}
-
 Item.defaultProps = {
   'data-cy': 'ChatListItem',
   isAssigned: false,
@@ -236,6 +217,39 @@ Item.defaultProps = {
   newMessageCount: 0,
   tags: [],
   timestampFormatter: timestamp => timestamp,
+}
+
+Item.propTypes = {
+  /** AvatarList UI to render in. */
+  avatar: PropTypes.any,
+  /** Custom class names to be added. */
+  className: PropTypes.string,
+  /** Applies the assigned styles. */
+  isAssigned: PropTypes.bool,
+  /** Applies the focused styles. */
+  isFocused: PropTypes.bool,
+  /** Renders `TypingDots` in the content area. */
+  isTyping: PropTypes.bool,
+  /** Applies the viewing styles. */
+  isViewing: PropTypes.bool,
+  /** Applies the waiting styles. */
+  isWaiting: PropTypes.bool,
+  /** Text to render into the content area. */
+  message: PropTypes.string,
+  /** Amount of characters to truncate the `message`. */
+  messageLimit: PropTypes.number,
+  /** Name of the chat recipient. */
+  name: PropTypes.string,
+  /** Number of new/unread chat messages. */
+  newMessageCount: PropTypes.number,
+  /** A collection of `Tag`s. */
+  tags: PropTypes.any,
+  /** `Timestamp` to render. */
+  timestamp: PropTypes.string,
+  /** A function to format the timestamp, which defaults to returning the timestamp string. */
+  timestampFormatter: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Item

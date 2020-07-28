@@ -1,0 +1,49 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { boolean, text } from '@storybook/addon-knobs'
+import BlankSlate from './'
+
+<Meta
+  title="🧬 Components/Text/BlankSlate"
+  component={BlankSlate}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A11160',
+    },
+  }}
+/>
+
+# BlankSlate
+
+A BlankSlate component displays an illustration, heading and a message all together.
+
+This component can be used to display an error on a 404 page, or an empty state after a search result.
+
+<Preview>
+  <Story name="default">
+    <BlankSlate
+      lightBackground={boolean('lightBackground', false)}
+      alignTop={boolean('alignTop', false)}
+      message={text(
+        'message',
+        `No results found. Please try another search term.`
+      )}
+      title={text('title', 'No Customers yet')}
+      illoName={text('illoName', 'spot-misc-empty')}
+    />
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: PL
+- **Usage**: HsApp (Customer list, setup guide)
+
+<br />
+<br />
+
+### Props
+
+<Props of={BlankSlate} />

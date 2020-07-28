@@ -124,10 +124,7 @@ export class AvatarImage extends React.PureComponent {
     this.image.src = this.sourceList[this.state.currentIndex]
 
     if (this.image.decode) {
-      this.image
-        .decode()
-        .then(this.onLoad)
-        .catch(this.onError)
+      this.image.decode().then(this.onLoad).catch(this.onError)
     } else {
       this.image.onload = this.onLoad
       this.image.onerror = this.onError
@@ -235,6 +232,19 @@ export class AvatarImage extends React.PureComponent {
   }
 }
 
+AvatarImage.defaultProps = {
+  animation: true,
+  animationDuration: 160,
+  animationEasing: 'ease',
+  'data-cy': 'AvatarImage',
+  src: null,
+  onError: noop,
+  onLoad: noop,
+  name: null,
+  title: null,
+  light: false,
+}
+
 AvatarImage.propTypes = {
   animation: PropTypes.bool,
   animationDuration: PropTypes.number,
@@ -247,19 +257,6 @@ AvatarImage.propTypes = {
   onError: PropTypes.func,
   onLoad: PropTypes.func,
   title: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-}
-
-AvatarImage.defaultProps = {
-  animation: true,
-  animationDuration: 160,
-  animationEasing: 'ease',
-  'data-cy': 'AvatarImage',
-  src: null,
-  onError: noop,
-  onLoad: noop,
-  name: null,
-  title: null,
-  light: false,
 }
 
 export default AvatarImage

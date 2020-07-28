@@ -34,26 +34,34 @@ class Image extends React.PureComponent {
   }
 }
 
-Image.propTypes = {
-  alt: PropTypes.string,
-  block: PropTypes.bool,
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  maxWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  src: PropTypes.string,
-  shape: PropTypes.oneOf(['rounded', 'square', '']),
-  style: PropTypes.any,
-  title: PropTypes.string,
-  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-}
-
 Image.defaultProps = {
   'data-cy': 'Image',
   shape: '',
   style: {},
+}
+
+Image.propTypes = {
+  /** Alt description for the image. */
+  alt: PropTypes.string,
+  /** Enables `display: block` for the image. */
+  block: PropTypes.bool,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Width for the image. */
+  height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Max height for the image. */
+  maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Max width for the image. */
+  maxWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Source for the image. Requried. */
+  src: PropTypes.string,
+  shape: PropTypes.oneOf(['rounded', 'square', '']),
+  /** Title description for the image. */
+  title: PropTypes.string,
+  /** Width for the image. */
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Image

@@ -1,0 +1,55 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import Checkbox from './'
+import { ChoiceGroup } from '../'
+
+<Meta
+  title="🧬 Components/Forms/Checkbox"
+  component={Checkbox}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A8637',
+    },
+  }}
+/>
+
+# Checkbox
+
+A Checkbox component is an enhanced version of the default HTML `<input>` `checkbox`. Checkbox uses the `Choice` component as a smart wrapper.
+
+<Preview>
+  <Story name="default">
+    <ChoiceGroup>
+      <Checkbox label="Derek" value="derek" />
+      <Checkbox label="Hansel" value="hansel" />
+      <Checkbox label="Mugatu" value="mugatu" />
+    </ChoiceGroup>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: HSDS (ActionSelect), HsApp (Beacon)
+
+<br />
+<br />
+
+### Props
+
+<Props of={Checkbox} />
+
+### Stories
+
+#### Disabled
+
+<Preview>
+  <Story name="Disabled">
+    <ChoiceGroup>
+      <Checkbox label="Derek (Disable)" value="derek" disabled />
+      <Checkbox label="Hansel" value="hansel" disabled />
+    </ChoiceGroup>
+  </Story>
+</Preview>

@@ -6,8 +6,8 @@ import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFro
 import getShallowDiffs from '@helpscout/react-utils/dist/getShallowDiffs'
 import { smoothScrollTo } from '../../utilities/smoothScroll'
 import { last, includes } from '../../utilities/arrays'
-import { allDefined } from '../../utilities/check'
 import { noop } from '../../utilities/other'
+import { shouldAutoScroll, getScrollProps } from './ChatScroller.utils'
 
 export class ChatScroller extends React.PureComponent {
   childRef
@@ -139,25 +139,6 @@ export class ChatScroller extends React.PureComponent {
   }
 }
 
-ChatScroller.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  distanceForAutoScroll: PropTypes.number,
-  forceScrollToBottomProp: PropTypes.any,
-  isTyping: PropTypes.bool,
-  lastMessageId: PropTypes.string,
-  messages: PropTypes.arrayOf(PropTypes.any),
-  messageSelectors: PropTypes.string,
-  offsetThreshold: PropTypes.number,
-  propsToCheck: PropTypes.arrayOf(PropTypes.string),
-  onScroll: PropTypes.func,
-  scrollCondition: PropTypes.func,
-  scrollableSelector: PropTypes.string,
-  scrollableNode: PropTypes.any,
-  smoothScrollDuration: PropTypes.number,
-}
-
 ChatScroller.defaultProps = {
   'data-cy': 'ChatScroller',
   distanceForAutoScroll: 150,
@@ -170,50 +151,35 @@ ChatScroller.defaultProps = {
   smoothScrollDuration: 100,
 }
 
-/**
- * Transforms, calculates, and defines props for scrolling.
- *
- * @param   {Object} props
- * @returns {Object}
- */
-export function getScrollProps(props) {
-  if (!allDefined(props)) return {}
-
-  const {
-    distanceForAutoScroll,
-    messageNode,
-    offsetThreshold,
-    scrollableNode,
-  } = props
-
-  const scrollableHeight = scrollableNode.clientHeight
-  const scrollHeight = scrollableNode.scrollHeight
-  const scrollTop =
-    scrollableNode.scrollTop + scrollableHeight + messageNode.clientHeight
-
-  const topOffset = scrollableHeight * offsetThreshold * -1
-  const position = messageNode.offsetTop + topOffset
-
-  return {
-    distanceForAutoScroll,
-    position,
-    scrollHeight,
-    scrollTop,
-  }
-}
-
-/**
- * Determines if the ChatScroller is within range of scrolling.
- *
- * @param   {Object} props
- * @returns {boolean}
- */
-export function shouldAutoScroll(props) {
-  if (!allDefined(props)) return false
-
-  const { distanceForAutoScroll, scrollHeight, scrollTop } = props
-
-  return scrollTop + distanceForAutoScroll >= scrollHeight
+ChatScroller.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** A range to enable auto-scrolling. */
+  distanceForAutoScroll: PropTypes.number,
+  /** Update this prop to force scroll to bottom. */
+  forceScrollToBottomProp: PropTypes.any,
+  /** A chat-based event used to trigger auto-scrolling. */
+  isTyping: PropTypes.bool,
+  /** Chat data used to trigger auto-scrolling. */
+  lastMessageId: PropTypes.string,
+  /** Chat data used to trigger auto-scrolling. */
+  messages: PropTypes.arrayOf(PropTypes.any),
+  /** DOM selector(s) for chat message elements. */
+  messageSelectors: PropTypes.string,
+  offsetThreshold: PropTypes.number,
+  /** Callback function when component is scrolled. */
+  onScroll: PropTypes.func,
+  /** A collection of props to check to initiate the scroll. */
+  propsToCheck: PropTypes.arrayOf(PropTypes.string),
+  /** Duration (ms) for smooth scrolling. */
+  smoothScrollDuration: PropTypes.number,
+  /** DOM Element to check for scrolling. */
+  scrollableNode: PropTypes.any,
+  /** DOM selector for the scrollable message container. */
+  scrollableSelector: PropTypes.string,
+  scrollCondition: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default ChatScroller

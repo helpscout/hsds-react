@@ -1,9 +1,7 @@
-import React, { useEffect, useContext, useMemo, useRef } from 'react'
-import ReactDOM, { createPortal } from 'react-dom'
+import { useEffect, useContext, useMemo } from 'react'
+import { createPortal } from 'react-dom'
 import PropTypes from 'prop-types'
 import { FrameContext } from 'react-frame-component'
-
-import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFromComponent'
 
 import Container, { ID as portalContainerId } from './Portal.Container'
 import { isNodeElement } from '../../utilities/node'
@@ -93,10 +91,17 @@ const Portal = ({
 Portal.Container = Container
 
 Portal.propTypes = {
+  /** Custom class names to be added to the component. */
   className: PropTypes.string,
+  /** The ID for the component. */
+  id: PropTypes.string,
+  /** A CSS selector to render content, instead of the `<body>`. */
   renderTo: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  /** Fires as soon as the component has rendered. */
   onOpen: PropTypes.func,
+  /** Fires after the component is unmounted. */
   onClose: PropTypes.func,
+  /** Delay before the Portal'ed component is unmounted from the DOM. Default is `0`. */
   timeout: PropTypes.number,
 }
 

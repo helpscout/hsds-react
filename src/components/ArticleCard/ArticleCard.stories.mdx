@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from "@storybook/addon-docs/blocks";
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
 import { boolean, text } from '@storybook/addon-knobs'
 import { createSpec, faker } from '@helpscout/helix'
 import AvatarSpec from '../../utilities/specs/avatarList.specs'
@@ -6,8 +6,15 @@ import ArticleCard from './'
 import { Flexy, Text, Icon, StatusBadge, Avatar, AvatarList } from '../index'
 
 <Meta
-  title="Components/Structural/ArticleCard"
+  title="🧬 Components/Structural/ArticleCard"
   component={ArticleCard}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A10123',
+    },
+  }}
 />
 
 # ArticleCard
@@ -18,29 +25,36 @@ An ArticleCard component is used to encapsulate pieces of UI that share a common
   <Story name="default">
     <div style={{ position: 'relative' }}>
       <ArticleCard
-        content= {text('content', faker.lorem.paragraph())}
-        href= {text('href', '#')}
-        title= {text('title', faker.lorem.sentence())}
-        isHovered= {boolean('isHovered', false)}
-        metaHeader= {boolean('metaHeader', true) && (
-          <Flexy align="top">
-            <Flexy.Block>
-              <Text faint size="12">
-                Last updated 1 day ago
-              </Text>
-            </Flexy.Block>
-            <Flexy.Item>
-              <StatusBadge count={20} status={'new'} />
-            </Flexy.Item>
-          </Flexy>
-        )}
-        footer= {boolean('footer', true) && (
-          <AvatarList max={5} size="sm" version={2}>
-            {AvatarSpec.generate(5).map(avatar => {
-              const { name, image } = avatar
-              return <Avatar image={image} key={name} name={name} status={null} />
-        })}
-    </AvatarList>)}
+        content={text('content', faker.lorem.paragraph())}
+        href={text('href', '#')}
+        title={text('title', faker.lorem.sentence())}
+        isHovered={boolean('isHovered', false)}
+        metaHeader={
+          boolean('metaHeader', true) && (
+            <Flexy align="top">
+              <Flexy.Block>
+                <Text faint size="12">
+                  Last updated 1 day ago
+                </Text>
+              </Flexy.Block>
+              <Flexy.Item>
+                <StatusBadge count={20} status={'new'} />
+              </Flexy.Item>
+            </Flexy>
+          )
+        }
+        footer={
+          boolean('footer', true) && (
+            <AvatarList max={5} size="sm" version={2}>
+              {AvatarSpec.generate(5).map(avatar => {
+                const { name, image } = avatar
+                return (
+                  <Avatar image={image} key={name} name={name} status={null} />
+                )
+              })}
+            </AvatarList>
+          )
+        }
       />
     </div>
   </Story>
@@ -65,17 +79,19 @@ An ArticleCard component is used to encapsulate pieces of UI that share a common
 
 <Preview>
   <Story name="with custom content">
-    <ArticleCard content={(
-      <Flexy>
-        <Flexy.Block>
-          <Text size={13} weight="500">
-            Open me
-          </Text>
-        </Flexy.Block>
-        <Flexy.Item>
-          <Icon name="minimize" shade="extraMuted" />
-        </Flexy.Item>
-      </Flexy>
-    )} />
+    <ArticleCard
+      content={
+        <Flexy>
+          <Flexy.Block>
+            <Text size={13} weight="500">
+              Open me
+            </Text>
+          </Flexy.Block>
+          <Flexy.Item>
+            <Icon name="minimize" shade="extraMuted" />
+          </Flexy.Item>
+        </Flexy>
+      }
+    />
   </Story>
 </Preview>

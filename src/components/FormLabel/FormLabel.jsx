@@ -92,19 +92,27 @@ class FormLabel extends React.Component {
   }
 }
 
-FormLabel.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  for: PropTypes.string,
-  id: PropTypes.string,
-  label: PropTypes.any,
-  helpText: PropTypes.any,
-  isInline: PropTypes.bool,
-}
-
 FormLabel.defaultProps = {
   'data-cy': 'FormLabel',
+}
+
+FormLabel.propTypes = {
+  /** Content to render. */
+  children: PropTypes.any,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Determines what the `label` is associated with. */
+  for: PropTypes.string,
+  /** Content to render a `HelpText` */
+  helpText: PropTypes.any,
+  /** Custom ID to bind the `label` with the Control component. */
+  id: PropTypes.string,
+  /** Content to render a `Label` */
+  label: PropTypes.any,
+  /** Determines whether to render the label and form input inline (made specially for checkboxes or `Switch`) */
+  isInline: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default FormLabel

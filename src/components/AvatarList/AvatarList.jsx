@@ -115,22 +115,6 @@ export const AvatarList = props => {
   )
 }
 
-AvatarList.propTypes = {
-  animationDuration: PropTypes.number,
-  animationEasing: PropTypes.string,
-  animationSequence: PropTypes.string,
-  avatarsClassName: PropTypes.string,
-  borderColor: PropTypes.string,
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  max: PropTypes.number,
-  grid: PropTypes.bool,
-  size: PropTypes.string,
-  stack: PropTypes.bool,
-  center: PropTypes.bool,
-}
-
 AvatarList.defaultProps = {
   animationEasing: 'ease',
   animationSequence: 'fade',
@@ -141,6 +125,41 @@ AvatarList.defaultProps = {
   showStatusBorderColor: false,
   size: 'sm',
   stack: false,
+}
+
+AvatarList.propTypes = {
+  /** Duration of animation */
+  animationDuration: PropTypes.number,
+  /** Easing of animation applied to the child `Avatars`. */
+  animationEasing: PropTypes.string,
+  /** Style of animation applied to the child `Avatars`. */
+  animationStagger: PropTypes.number,
+  /** Amount (in `ms`) to stagger the animation of the `Avatars`. */
+  animationSequence: PropTypes.string,
+  /** Custom className to pass to `Avatars`. */
+  avatarsClassName: PropTypes.string,
+  /** Center Avatars */
+  center: PropTypes.bool,
+  /** Color for the Avatar border. */
+  borderColor: PropTypes.string,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Display as grid (previously AvatarGrid) */
+  grid: PropTypes.bool,
+  /** Number of avatars to display before truncating. */
+  max: PropTypes.number,
+  /** Color for the Avatar's outer border. */
+  outerBorderColor: PropTypes.string,
+  /** Shape of the avatars. */
+  shape: PropTypes.string,
+  /** Renders the `StatusDot` border. */
+  showStatusBorderColor: PropTypes.bool,
+  /** Size of the avatars. */
+  size: PropTypes.string,
+  /** Display as stack (previously AvatarStack) */
+  stack: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default AvatarList

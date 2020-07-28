@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import Link from '../Link'
@@ -193,6 +194,17 @@ AccordionTitle.defaultProps = {
   'data-cy': 'AccordionTitle',
   isCompact: false,
   onClick: noop,
+}
+
+AccordionTitle.propTypes = {
+  /** Content to render. */
+  children: PropTypes.any,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Callback to be invoked when clicked. */
+  onClick: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default AccordionTitle

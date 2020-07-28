@@ -43,16 +43,18 @@ class SleepDetector extends React.Component {
   }
 }
 
-SleepDetector.propTypes = {
-  buffer: PropTypes.number,
-  interval: PropTypes.number,
-  onWake: PropTypes.func,
-}
-
 SleepDetector.defaultProps = {
   buffer: 5000,
   interval: 10000,
   onWake: noop,
+}
+SleepDetector.propTypes = {
+  /** How often (ms) to check for inactive tab (default is 10000) */
+  buffer: PropTypes.number,
+  /** How long (ms) of a delay to treat as a "sleep" event */
+  interval: PropTypes.number,
+  /** Callback to execute when we detect that the page has woken from sleep */
+  onWake: PropTypes.func,
 }
 
 export default SleepDetector

@@ -1,4 +1,5 @@
 import React, { createContext } from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import ListItem from './List.Item'
@@ -48,11 +49,29 @@ export const List = props => {
 List.Item = ListItem
 
 List.defaultProps = {
-  border: '',
   'data-cy': 'List',
   display: 'block',
   inlineSize: 'md',
   role: 'list',
+}
+
+List.propTypes = {
+  /** Border style for the items. */
+  border: PropTypes.oneOf(['dot', 'line']),
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Changes the component's CSS `display`.*/
+  display: PropTypes.oneOf(['block', 'flex']),
+  /** Size style for spacing between the items. `xs`, `sm`, `md`. */
+  inlineSize: PropTypes.oneOf(['xs', 'sm', 'md']),
+  /** Aria-role for the component.*/
+  role: PropTypes.string,
+  /** Size style for the items.*/
+  size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg']),
+  /** List style style for the items. */
+  type: PropTypes.oneOf(['bullet', 'inline', 'number']),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default List

@@ -20,13 +20,14 @@ const uniqueID = createUniqueIDFactory('Switch')
 class Switch extends React.PureComponent {
   constructor(props) {
     super(props)
+
     this.state = {
       checked: props.checked || false,
       isActive: false,
       isFocused: false,
       id: props.id || uniqueID(),
     }
-    this.shouldAutoUpdateChecked = props.checked === undefined
+    this.shouldAutoUpdateChecked = !Boolean(props.checked)
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -202,34 +203,6 @@ class Switch extends React.PureComponent {
   }
 }
 
-Switch.propTypes = {
-  className: PropTypes.string,
-  checked: PropTypes.bool,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  disabled: PropTypes.bool,
-  id: PropTypes.string,
-  isLoading: PropTypes.bool,
-  inputRef: PropTypes.func,
-  innerRef: PropTypes.func,
-  name: PropTypes.string,
-  onBlur: PropTypes.func,
-  onChange: PropTypes.func,
-  onClick: PropTypes.func,
-  onFocus: PropTypes.func,
-  onMouseDown: PropTypes.func,
-  onMouseUp: PropTypes.func,
-  labelOn: PropTypes.string,
-  labelOff: PropTypes.string,
-  size: PropTypes.oneOf(['lg', 'md', 'sm', '']),
-  state: PropTypes.oneOf(['error', '']),
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.bool,
-  ]),
-}
-
 Switch.defaultProps = {
   'data-cy': 'Switch',
   inputRef: noop,
@@ -245,6 +218,51 @@ Switch.defaultProps = {
   onMouseUp: noop,
   size: 'md',
   value: '',
+}
+
+Switch.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Determines if the component is checked. */
+  checked: PropTypes.bool,
+  /** Disable the component */
+  disabled: PropTypes.bool,
+  /** Sets a custom ID for the component. */
+  id: PropTypes.string,
+  /** Activates the loading state. */
+  isLoading: PropTypes.bool,
+  /** Callback to retrieve the `input` node. */
+  inputRef: PropTypes.func,
+  /** Callback to retrieve the `input` node. */
+  innerRef: PropTypes.func,
+  /** Name attribute for the component's `input` node. */
+  name: PropTypes.string,
+  /** Callback function when component blurs. */
+  onBlur: PropTypes.func,
+  /** Callback function when component `checked` changes. Returns switched state. */
+  onChange: PropTypes.func,
+  /** Callback function when component is clicked. */
+  onClick: PropTypes.func,
+  /** Callback function when component focuses. */
+  onFocus: PropTypes.func,
+  /** Adjusts the size of the component. */
+  size: PropTypes.oneOf(['lg', 'md', 'sm', '']),
+  /** Applies state-based styling. */
+  state: PropTypes.oneOf(['error', '']),
+  /** Value for the component. */
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.bool,
+  ]),
+  /** Callback function on mouse down. */
+  onMouseDown: PropTypes.func,
+  /** Callback function on mouse up. */
+  onMouseUp: PropTypes.func,
+  labelOn: PropTypes.string,
+  labelOff: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Switch

@@ -59,22 +59,29 @@ class Block extends React.PureComponent {
   }
 }
 
-Block.propTypes = {
-  bgMuted: PropTypes.bool,
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  flex: PropTypes.bool,
-  scrollable: PropTypes.bool,
-  scrollableRef: PropTypes.func,
-  onScroll: PropTypes.func,
-  size: PropTypes.string,
-}
-
 Block.defaultProps = {
   'data-cy': 'Block',
   onScroll: noop,
   scrollableRef: noop,
+}
+
+Block.propTypes = {
+  /** Applies a muted background to the component. */
+  bgMuted: PropTypes.bool,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Adds flexbox styles to the component. */
+  flex: PropTypes.bool,
+  /** Callback function when inner Scrollable is scrolled. */
+  onScroll: PropTypes.func,
+  /** Integrates `Scrollable` into the component. */
+  scrollable: PropTypes.bool,
+  /** Retrieves the scrollable node. */
+  scrollableRef: PropTypes.func,
+  /** Adjusts the size of the component. */
+  size: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Block

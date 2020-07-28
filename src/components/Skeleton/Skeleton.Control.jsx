@@ -18,6 +18,12 @@ class SkeletonControl extends React.PureComponent {
   }
 }
 
+SkeletonControl.defaultProps = {
+  'data-cy': 'SkeletonControl',
+  size: 'md',
+  withAnimations: true,
+}
+
 SkeletonControl.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
@@ -27,12 +33,6 @@ SkeletonControl.propTypes = {
   size: PropTypes.oneOf(['lg', 'md', 'sm']),
   /** Enables animations for the component. */
   withAnimations: PropTypes.bool,
-}
-
-SkeletonControl.defaultProps = {
-  'data-cy': 'SkeletonControl',
-  size: 'md',
-  withAnimations: true,
 }
 
 export default SkeletonControl

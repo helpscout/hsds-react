@@ -23,12 +23,7 @@ describe('maxWidth', () => {
     const maxWidth = '124px'
     const wrapper = mount(<RadioCard maxWidth={maxWidth} />)
 
-    expect(
-      wrapper
-        .find('.c-RadioCard')
-        .first()
-        .props().maxWidth
-    ).toBe(maxWidth)
+    expect(wrapper.find('.c-RadioCard').first().props().maxWidth).toBe(maxWidth)
   })
 })
 
@@ -62,20 +57,14 @@ describe('Checked', () => {
 
     expect(wrapper.getDOMNode().classList.contains('is-checked')).toBe(true)
     expect(
-      wrapper
-        .find('.c-RadioCard__iconWrapper')
-        .first()
-        .hasClass('is-checked')
+      wrapper.find('.c-RadioCard__iconWrapper').first().hasClass('is-checked')
     ).toBe(true)
 
     wrapper.setProps({ checked: false })
 
     expect(wrapper.getDOMNode().classList.contains('is-checked')).toBe(false)
     expect(
-      wrapper
-        .find('.c-RadioCard__iconWrapper')
-        .first()
-        .hasClass('is-checked')
+      wrapper.find('.c-RadioCard__iconWrapper').first().hasClass('is-checked')
     ).toBe(false)
   })
 })
@@ -110,7 +99,7 @@ describe('Icon', () => {
   })
 
   test('Falls back to defaultIcon if icon is invalid', () => {
-    const wrapper = mount(<RadioCard checked={true} icon={[]} />)
+    const wrapper = mount(<RadioCard checked={true} icon={undefined} />)
     const o = wrapper.find('Icon').first()
 
     expect(o.length).toBeTruthy()
@@ -213,12 +202,7 @@ describe('Heading', () => {
     const heading = 'this is a heading'
     const wrapper = mount(<RadioCard checked={true} heading={heading} />)
 
-    expect(
-      wrapper
-        .find('.c-RadioCard__heading')
-        .first()
-        .text()
-    ).toBe(heading)
+    expect(wrapper.find('.c-RadioCard__heading').first().text()).toBe(heading)
   })
 })
 
@@ -242,12 +226,7 @@ describe('Content', () => {
     const content = 'this is a content'
     const wrapper = mount(<RadioCard checked={true} content={content} />)
 
-    expect(
-      wrapper
-        .find('.c-RadioCard__content')
-        .first()
-        .text()
-    ).toBe(content)
+    expect(wrapper.find('.c-RadioCard__content').first().text()).toBe(content)
   })
 })
 describe('ChoiceGroup.Context', () => {

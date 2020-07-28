@@ -1,0 +1,69 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import ControlGroup from './'
+import { Input } from '../'
+
+<Meta
+  title="🧬 Components/Forms/ControlGroup"
+  component={ControlGroup}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A8819',
+    },
+  }}
+/>
+
+# ControlGroup
+
+This component is used as a wrapper to create interfaces where Control-based components (like `Input`) can be combined.
+
+<Preview>
+  <Story name="default">
+    <ControlGroup>
+      <ControlGroup.Item>
+        <Input.AddOn>Prefix</Input.AddOn>
+      </ControlGroup.Item>
+      <ControlGroup.Block>
+        <Input value="HELLO" />
+      </ControlGroup.Block>
+      <ControlGroup.Item>
+        <Input.AddOn>Suffix</Input.AddOn>
+      </ControlGroup.Item>
+    </ControlGroup>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={ControlGroup} />
+
+<br />
+<br />
+
+## ControlGroup.Item
+
+This component renders a Control-based component within a `ControlGroup`. It is used to combine several Control-based components together.
+This component's width is determined by it's child content.
+
+### Props
+
+<Props of={ControlGroup.Item} />
+
+## ControlGroup.Block
+
+This component renders a Control-based component within a `ControlGroup`. It is used to combine several Control-based components together.
+This component's width is determined by it's child content.
+
+### Props
+
+<Props of={ControlGroup.Block} />

@@ -140,6 +140,14 @@ export class AttachmentList extends React.Component {
   }
 }
 
+AttachmentList.defaultProps = {
+  'data-cy': 'AttachmentList',
+  downloadAllLabel: 'Download All',
+  onDownloadAllClick: noop,
+  showDownloadAll: true,
+  withOverflow: true,
+}
+
 AttachmentList.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
@@ -153,14 +161,6 @@ AttachmentList.propTypes = {
   showDownloadAll: PropTypes.bool,
   /** Adds overflow styles on the list. */
   withOverflow: PropTypes.bool,
-}
-
-AttachmentList.defaultProps = {
-  'data-cy': 'AttachmentList',
-  downloadAllLabel: 'Download All',
-  onDownloadAllClick: noop,
-  showDownloadAll: true,
-  withOverflow: true,
 }
 
 export default AttachmentList

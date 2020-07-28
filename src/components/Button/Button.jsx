@@ -8,7 +8,7 @@ import RouteWrapper from '../RouteWrapper'
 import { ButtonUI, LoadingWrapperUI, FocusUI, SpinnerUI } from './Button.css'
 import Icon from '../Icon'
 
-class Button extends React.PureComponent {
+export class Button extends React.PureComponent {
   isLink() {
     // TODO: Resolve data-bypass
     // const { href, 'data-bypass': dataBypass } = this.props
@@ -146,35 +146,6 @@ class Button extends React.PureComponent {
   }
 }
 
-Button.propTypes = {
-  allowContentEventPropogation: PropTypes.bool,
-  buttonRef: PropTypes.func,
-  canRenderFocus: PropTypes.bool,
-  className: PropTypes.string,
-  'data-cy': PropTypes.string,
-  disabled: PropTypes.bool,
-  disableOnLoading: PropTypes.bool,
-  kind: PropTypes.string,
-  href: PropTypes.string,
-  innerRef: PropTypes.any,
-  isActive: PropTypes.bool,
-  isBlock: PropTypes.bool,
-  isFirst: PropTypes.bool,
-  isFocused: PropTypes.bool,
-  isHovered: PropTypes.bool,
-  isNotOnly: PropTypes.bool,
-  isLast: PropTypes.bool,
-  isLoading: PropTypes.bool,
-  isSuffix: PropTypes.bool,
-  shape: PropTypes.string,
-  size: PropTypes.string,
-  spinButtonOnLoading: PropTypes.bool,
-  state: PropTypes.string,
-  submit: PropTypes.bool,
-  theme: PropTypes.string,
-  to: PropTypes.string,
-}
-
 Button.defaultProps = {
   allowContentEventPropogation: true,
   buttonRef: noop,
@@ -196,6 +167,73 @@ Button.defaultProps = {
   size: 'md',
   spinButtonOnLoading: false,
   submit: false,
+}
+
+Button.propTypes = {
+  /** Enables child events to pass through to Button.*/
+  allowContentEventPropagation: PropTypes.bool,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Disable the button so it can't be clicked. */
+  disabled: PropTypes.bool,
+  /** Disables the button when `isLoading` is true.*/
+  disableOnLoading: PropTypes.bool,
+  /** function which returns a promise, will be invoked before routing the `to` route */
+  fetch: PropTypes.func,
+  /** Hyperlink for the button. This transforms the button to a `<a>` selector. */
+  href: PropTypes.string,
+  /** Retrieves the `button` DOM node. */
+  buttonRef: PropTypes.func,
+  /** Renders the focused style. */
+  isFocused: PropTypes.bool,
+  /** Renders a loading `Spinner`. */
+  isLoading: PropTypes.bool,
+  /** Renders suffix styles. */
+  isSuffix: PropTypes.bool,
+  /** Applies the specified style to the button.
+   * 'primary': Blue button. Used for primary actions.
+   * 'primaryAlt': Purple button. Used for primary actions.
+   * 'secondary': White button with a border. Used for secondary actions.
+   * 'secondaryAlt': White button with a green border. Used for secondary actions.
+   * 'default': Borderless button. Used for subtle/tertiary actions.
+   * 'link': Button that looks like a `Link`. Used for subtle/tertiary actions.
+   */
+  kind: PropTypes.oneOf([
+    'primary',
+    'primaryAlt',
+    'secondary',
+    'secondaryAlt',
+    'default',
+    'link',
+  ]),
+  /** Sets the size of the button. Can be one of "sm", "md" or "lg". */
+  size: PropTypes.string,
+  /** A special property that... spins the button if `isLoading`. */
+  spinButtonOnLoading: PropTypes.bool,
+  /** Applies state styles to the button.
+   * 'danger': red.
+   * 'success': green.
+   * 'gray': gray.
+   * 'warning': orange.
+   */
+  state: PropTypes.string,
+  /** Sets the `type` of the button to `"submit"`. */
+  submit: PropTypes.bool,
+  /** Applies a theme based style to the button. */
+  theme: PropTypes.string,
+  /** React Router path to navigate on click. */
+  to: PropTypes.string,
+  canRenderFocus: PropTypes.bool,
+  innerRef: PropTypes.any,
+  isActive: PropTypes.bool,
+  isBlock: PropTypes.bool,
+  isFirst: PropTypes.bool,
+  isHovered: PropTypes.bool,
+  isNotOnly: PropTypes.bool,
+  isLast: PropTypes.bool,
+  shape: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default RouteWrapper(Button)

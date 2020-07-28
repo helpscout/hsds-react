@@ -41,6 +41,16 @@ class EmojiPickerItem extends React.PureComponent {
   }
 }
 
+EmojiPickerItem.defaultProps = {
+  'data-cy': 'EmojiPickerItem',
+  className: '',
+  hoverBackgroundColor: 'purple',
+  name: defaultEmoji.name,
+  size: 'default',
+  symbol: defaultEmoji.symbol,
+  value: defaultEmoji.value,
+}
+
 EmojiPickerItem.propTypes = {
   className: PropTypes.any,
   /** Data attr for Cypress tests. */
@@ -50,16 +60,6 @@ EmojiPickerItem.propTypes = {
   renderItem: PropTypes.any,
   size: PropTypes.string,
   symbol: PropTypes.string,
-}
-
-EmojiPickerItem.defaultProps = {
-  'data-cy': 'EmojiPickerItem',
-  className: '',
-  hoverBackgroundColor: 'purple',
-  name: defaultEmoji.name,
-  size: 'default',
-  symbol: defaultEmoji.symbol,
-  value: defaultEmoji.value,
 }
 
 export default EmojiPickerItem

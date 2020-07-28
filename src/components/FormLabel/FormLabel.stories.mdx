@@ -1,0 +1,89 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import FormLabel from './'
+import { Page, FormGroup, Input, Switch } from '../'
+
+<Meta
+  title="🧬 Components/Text/FormLabel"
+  component={FormLabel}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A11177',
+    },
+  }}
+/>
+
+# FormLabel
+
+This component is a wrapper for Control components, such as `Input`. It can render `Label` and `HelpText` UI, and is automatically connected to the child Control component.
+
+<Preview>
+  <Story name="default">
+    <Page>
+      <Page.Card>
+        <FormGroup>
+          <FormLabel
+            label="This is the label for the Input down there"
+            helpText="Ignore this message, says nothing interesting."
+          >
+            <Input />
+          </FormLabel>
+        </FormGroup>
+      </Page.Card>
+    </Page>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={FormLabel} />
+
+### Stories
+
+#### Inline
+
+<Preview>
+  <Story name="Inline">
+    <Page>
+      <Page.Card>
+        <FormGroup>
+          <FormLabel label="Label for the Switch" isInline>
+            <Switch />
+          </FormLabel>
+        </FormGroup>
+      </Page.Card>
+      <Page.Card>
+        <FormGroup>
+          <FormLabel
+            label="Label for the Switch"
+            helpText="Enable this feature or you might regret it later."
+            isInline
+          >
+            <Switch />
+          </FormLabel>
+        </FormGroup>
+      </Page.Card>
+      <Page.Card>
+        <FormGroup>
+          <FormLabel
+            label="Label for the Switch"
+            helpText="Enable this feature or you might regret it later.Enable this feature or you might regret it later.Enable this feature or you might regret it later."
+            isInline
+          >
+            <Switch />
+          </FormLabel>
+        </FormGroup>
+      </Page.Card>
+    </Page>
+  </Story>
+</Preview>

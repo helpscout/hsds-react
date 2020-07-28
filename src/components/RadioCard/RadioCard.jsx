@@ -181,43 +181,6 @@ class RadioCard extends React.PureComponent {
   }
 }
 
-RadioCard.propTypes = {
-  checked: PropTypes.bool,
-  className: PropTypes.string,
-  content: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.element,
-    PropTypes.func,
-  ]),
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  heading: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.element,
-    PropTypes.func,
-  ]),
-  icon: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.element,
-    PropTypes.func,
-  ]),
-  iconSize: PropTypes.number,
-  id: PropTypes.string,
-  innerRef: PropTypes.func,
-  inputRef: PropTypes.func,
-  isFocused: PropTypes.bool,
-  maxWidth: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.func,
-  ]),
-  onBlur: PropTypes.func,
-  onChange: PropTypes.func,
-  onFocus: PropTypes.func,
-  title: PropTypes.string,
-  value: PropTypes.string,
-}
-
 RadioCard.defaultProps = {
   checked: false,
   'data-cy': 'RadioCard',
@@ -229,6 +192,57 @@ RadioCard.defaultProps = {
   onBlur: noop,
   onChange: noop,
   onFocus: noop,
+}
+
+RadioCard.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Determines of the `radio` is checked. */
+  checked: PropTypes.bool,
+  /** Optional content to render. */
+  content: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+    PropTypes.func,
+  ]),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  /** Optional heading to render. */
+  heading: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+    PropTypes.func,
+  ]),
+  /** Icon to render. Can be the name of an `Icon` or a component */
+  icon: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+    PropTypes.func,
+  ]),
+  /** Size to render the `Icon` */
+  iconSize: PropTypes.number,
+  /** ID for the input. */
+  id: PropTypes.string,
+  innerRef: PropTypes.func,
+  inputRef: PropTypes.func,
+  /** Whether the radiocard should be focused */
+  isFocused: PropTypes.bool,
+  /** Set the max width of the RadioCard. */
+  maxWidth: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.func,
+  ]),
+  /** Callback when the input is blurred. */
+  onBlur: PropTypes.func,
+  /** Callback when the input value is changed. */
+  onChange: PropTypes.func,
+  /** Callback when the input is focused. */
+  onFocus: PropTypes.func,
+  /** HTML title text for the component. */
+  title: PropTypes.string,
+  /** Value of the input */
+  value: PropTypes.string,
 }
 
 export default RadioCard

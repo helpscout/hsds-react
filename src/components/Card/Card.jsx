@@ -118,4 +118,37 @@ Card.defaultProps = {
   selector: 'div',
 }
 
+Card.propTypes = {
+  autoWordWrap: PropTypes.bool,
+  /** Removes the border from the component. */
+  borderless: PropTypes.bool,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Adds flexbox styles to the component. */
+  flex: PropTypes.bool,
+  floating: PropTypes.bool,
+  /** Adds full height styles. Often used with flex containers. */
+  fullHeight: PropTypes.bool,
+  /** Adds a hover style to the component. */
+  hover: PropTypes.bool,
+  innerRef: PropTypes.func,
+  /** Adds an `href` to the component. Transforms it into an `<a>` tag. */
+  href: PropTypes.string,
+  /** Callback function to retrieve the component's DOM node. */
+  nodeRef: PropTypes.func,
+  /** Callback when the component is blurred. */
+  onBlur: PropTypes.func,
+  /** Callback when the component is clicked. */
+  onClick: PropTypes.func,
+  /** Callback when the component is focused. */
+  onFocus: PropTypes.func,
+  /** Removes the padding within the component. */
+  seamless: PropTypes.bool,
+  /** Determines the HTML tag for the component. */
+  selector: PropTypes.string,
+  to: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+}
+
 export default Card

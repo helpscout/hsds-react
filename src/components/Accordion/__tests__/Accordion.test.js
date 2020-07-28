@@ -83,7 +83,7 @@ describe('Content', () => {
   test('Can render sub-components', () => {
     const wrapper = mount(
       <Accordion duration={0} openSectionIds={[1]}>
-        <Section id={1}>
+        <Section id={'1'}>
           <Title />
           <Body />
         </Section>
@@ -116,10 +116,7 @@ describe('State', () => {
     )
 
     expect(wrapper.find('.is-open').length).toEqual(0)
-    wrapper
-      .find(Accordion.Title)
-      .first()
-      .simulate('click')
+    wrapper.find(Accordion.Title).first().simulate('click')
     expect(
       wrapper
         .find('.c-Accordion__Section')
@@ -135,10 +132,7 @@ describe('State', () => {
         .classList.contains('is-open')
     ).toBeFalsy()
 
-    wrapper
-      .find(Accordion.Title)
-      .last()
-      .simulate('click')
+    wrapper.find(Accordion.Title).last().simulate('click')
     expect(
       wrapper
         .find('.c-Accordion__Section')
@@ -168,10 +162,7 @@ describe('State', () => {
     )
 
     expect(wrapper.find('.is-open').length).toEqual(0)
-    wrapper
-      .find(Accordion.Title)
-      .first()
-      .simulate('click')
+    wrapper.find(Accordion.Title).first().simulate('click')
     expect(
       wrapper
         .find('.c-Accordion__Section')
@@ -187,10 +178,7 @@ describe('State', () => {
         .classList.contains('is-open')
     ).toBeFalsy()
 
-    wrapper
-      .find(Accordion.Title)
-      .last()
-      .simulate('click')
+    wrapper.find(Accordion.Title).last().simulate('click')
     expect(
       wrapper
         .find('.c-Accordion__Section')
@@ -209,11 +197,11 @@ describe('State', () => {
 
   test('It should track the value of all programatically opened sections', () => {
     const wrapper = mount(
-      <Accordion openSectionIds={[1]}>
-        <Accordion.Section id={1}>
+      <Accordion openSectionIds={['1']}>
+        <Accordion.Section id={'1'}>
           <Accordion.Title>Title 1</Accordion.Title>
         </Accordion.Section>
-        <Accordion.Section id={2}>
+        <Accordion.Section id={'2'}>
           <Accordion.Title>Title 2</Accordion.Title>
         </Accordion.Section>
       </Accordion>
@@ -230,11 +218,11 @@ describe('State', () => {
 
   test('It should use an external state manager when setSectionState is used', () => {
     const wrapper = mount(
-      <Accordion openSectionIds={[1]} setSectionState={() => {}}>
-        <Accordion.Section id={1}>
+      <Accordion openSectionIds={['1']} setSectionState={() => {}}>
+        <Accordion.Section id={'1'}>
           <Accordion.Title>Title 1</Accordion.Title>
         </Accordion.Section>
-        <Accordion.Section id={2}>
+        <Accordion.Section id={'2'}>
           <Accordion.Title>Title 2</Accordion.Title>
         </Accordion.Section>
       </Accordion>

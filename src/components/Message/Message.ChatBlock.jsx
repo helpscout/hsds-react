@@ -9,30 +9,6 @@ import { noop } from '../../utilities/other'
 import { ChatBlockUI } from './Message.ChatBlock.css'
 
 export class ChatBlock extends React.PureComponent {
-  static propTypes = {
-    body: PropTypes.string,
-    children: PropTypes.any,
-    className: PropTypes.string,
-    icon: PropTypes.string,
-    meta: PropTypes.any,
-    metaPosition: PropTypes.string,
-    read: PropTypes.bool,
-    timestamp: PropTypes.string,
-    from: PropTypes.any,
-    isNote: PropTypes.bool,
-    ltr: PropTypes.bool,
-    onClick: PropTypes.func,
-    rtl: PropTypes.bool,
-    to: PropTypes.any,
-  }
-  static contextTypes = {
-    theme: noop,
-  }
-
-  static defaultProps = {
-    metaPosition: 'bottom',
-  }
-
   getChildrenMarkup = () => {
     const { children, icon, from, ltr, rtl, timestamp, to } = this.props
 
@@ -106,6 +82,39 @@ export class ChatBlock extends React.PureComponent {
       </ChatBlockUI>
     )
   }
+}
+
+ChatBlock.contextTypes = {
+  theme: noop,
+}
+
+ChatBlock.defaultProps = {
+  metaPosition: 'bottom',
+}
+
+ChatBlock.propTypes = {
+  body: PropTypes.string,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  icon: PropTypes.string,
+  meta: PropTypes.any,
+  metaPosition: PropTypes.string,
+  /** Determines if the Message is read. */
+  read: PropTypes.bool,
+  /** Timestamp for the Message. */
+  timestamp: PropTypes.string,
+  /** Provides author information and applies "From" styles. */
+  from: PropTypes.any,
+  /** Applies "note" styles. */
+  isNote: PropTypes.bool,
+  /** Applies left-to-right text styles. */
+  ltr: PropTypes.bool,
+  /** Callback when clicked. */
+  onClick: PropTypes.func,
+  /** Applies right-to-left text styles. */
+  rtl: PropTypes.bool,
+  /** Provides author information and applies "To" styles. */
+  to: PropTypes.any,
 }
 
 export default ChatBlock

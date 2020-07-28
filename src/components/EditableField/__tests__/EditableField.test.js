@@ -1202,11 +1202,12 @@ describe('enter press', () => {
     input.simulate('keydown', { key: 'Enter' })
 
     const f = flushPromises()
-    jest.runAllTimers()
 
-    f.then(() => {
+    f.then(d => {
       expect(wrapper.state('value')).toEqual('123')
       expect(wrapper.state('_id')).toEqual(7)
+    }).catch(e => {
+      // console.log('HS: e', e)
     })
   })
 })

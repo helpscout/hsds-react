@@ -49,24 +49,32 @@ class BlankSlate extends React.PureComponent {
   }
 }
 
-BlankSlate.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  message: PropTypes.any,
-  title: PropTypes.string,
-  illo: PropTypes.any,
-  illoName: PropTypes.string,
-  illoSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  lightBackground: PropTypes.bool,
-  alignTop: PropTypes.bool,
-}
-
 BlankSlate.defaultProps = {
   'data-cy': 'BlankSlate',
   lightBackground: false,
   alignTop: false,
   illoSize: 80,
+}
+
+BlankSlate.propTypes = {
+  /** Will aligned to the top the content of the component */
+  alignTop: PropTypes.bool,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** An instance of an Illo Component */
+  illo: PropTypes.any,
+  /** DEPRECATED. Name of the illustration, from the Illo component. */
+  illoName: PropTypes.string,
+  /** DEPRECATED. Size of the illustration, from the Illo component. */
+  illoSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Will add a light background to the component */
+  lightBackground: PropTypes.bool,
+  /** Message displayed in the content area. Can be HTML */
+  message: PropTypes.any,
+  /** Title displayed in the content area */
+  title: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default BlankSlate

@@ -5,17 +5,15 @@
 [![Build Status](https://travis-ci.org/helpscout/hsds-react.svg?branch=master)](https://travis-ci.org/helpscout/hsds-react)
 [![Coverage Status](https://coveralls.io/repos/github/helpscout/hsds-react/badge.svg?branch=master)](https://coveralls.io/github/helpscout/hsds-react?branch=master)
 [![npm version](https://badge.fury.io/js/%40helpscout%2Fhsds-react.svg)](https://badge.fury.io/js/%40helpscout%2Fhsds-react)
-![node](https://img.shields.io/badge/node-8.11.4-blue.svg)
-![npm](https://img.shields.io/badge/npm-6.9.0-blue.svg)
+![node](https://img.shields.io/badge/node-12.13.0-blue.svg)
+![npm](https://img.shields.io/badge/npm-6.12.0-blue.svg)
 [![style: styled-components](https://img.shields.io/badge/style-%F0%9F%92%85%20styled--components-orange.svg?colorB=daa357&colorA=db748e)](https://github.com/styled-components/styled-components)
 
 React components for Help Scout's Design System
 
 ## Live Demo
 
-Check out HSDS's [Storybook](https://hsds-react.netlify.com/):
-
-https://hsds-react.netlify.com/
+Check out HSDS's Storybook: [https://hsds.helpscout.com/](https://hsds.helpscout.com/).
 
 ## Install
 
@@ -100,7 +98,9 @@ npm run deploy
 
 ## Learning
 
-Check out our [videos](./VIDEOS.md) for learning resources.
+- HSDS documentation: [https://hsds.helpscout.com/](https://hsds.helpscout.com/)
+- Developer in-depth documentation: [dev docs](./docs/README.md)
+- Also, check out our [videos](./VIDEOS.md) for more learning resources
 
 ## Blue?
 

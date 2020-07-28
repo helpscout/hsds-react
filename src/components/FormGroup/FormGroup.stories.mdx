@@ -1,0 +1,66 @@
+import { Meta, Props } from '@storybook/addon-docs/blocks'
+import FormGroup from './'
+
+<Meta title="🛠 Utilities/FormGroup" />
+
+# FormGroup
+
+A FormGroup component provides marginal spacing between form elements.
+
+### Example
+
+```jsx
+<FormGroup>
+  <Input label='First name' />
+</FormGroup>
+<FormGroup>
+  <Input label='Last name' />
+</FormGroup>
+```
+
+### Props
+
+<Props of={FormGroup} />
+
+# Choice
+
+A FormGroup.Choice is used for `Choice` based components, such as `Checkbox` and `Radio`.
+
+### Example
+
+```jsx
+<Label>Choose:</Label>
+<FormGroup.Choice>
+  <Checkbox label='Derek' value='derek' />
+</FormGroup>
+<FormGroup.Choice>
+  <Checkbox label='Hansel' value='hansel' />
+</FormGroup>
+```
+
+Note: The `ChoiceGroup` component automatically wraps child components with `<FormGroup.Choice>`.
+
+### Props
+
+<Props of={FormGroup.Choice} />
+
+## Grid
+
+A FormGroup.Grid component extends the default `FormGroup` by wrapping the child component with `Grid`.
+
+### Example
+
+```jsx
+<FormGroup.Grid>
+  <Grid.Col size="4">
+    <Input.Static>First name</Input.Static>
+  </Grid.Col>
+  <Grid.Col size="8">
+    <Input label="First name" />
+  </Grid.Col>
+</FormGroup.Grid>
+```
+
+### Props
+
+<Props of={FormGroup.Grid} />

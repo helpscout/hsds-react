@@ -20,12 +20,14 @@ class FluffyCardContainer extends React.PureComponent {
   }
 }
 
-FluffyCardContainer.propTypes = {
-  className: PropTypes.string,
-}
-
 FluffyCardContainer.defaultProps = {
   'data-cy': 'FluffyCardContainer',
+}
+
+FluffyCardContainer.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default FluffyCardContainer

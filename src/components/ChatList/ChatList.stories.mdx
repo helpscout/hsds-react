@@ -1,0 +1,81 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import ChatList from './'
+import { List, _Item } from './ChatList.storiesHelpers'
+
+<Meta
+  title="🧬 Components/Wayfinding/ChatList"
+  component={ChatList}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A11300',
+    },
+  }}
+/>
+
+# ChatList
+
+A ChatList component is wrapper that renders a collection of `ChatList.Items`
+
+<Preview>
+  <Story name="default">
+    <List />
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={ChatList} />
+
+### Stories
+
+#### Loading
+
+<Preview>
+  <Story name="Loading">
+    <ChatList>
+      <ChatList.Item />
+      <ChatList.Item />
+    </ChatList>
+  </Story>
+</Preview>
+
+## ChatList.Item
+
+A ChatList.Item component renders the UI that represents the state of a Chat converstation.
+
+This component will automatically render `Skeleton` if the `name` or `message` prop is missing.
+
+<Preview>
+  <Story name="Chat Item">
+    <_Item />
+  </Story>
+</Preview>
+
+<Props of={ChatList.Item} />
+
+## ChatList.BlankSlate
+
+A ChatList.BlankSlate component provides information when there is no content. This component has been automatically integrated into `ChatList` when there are no ChatList.Items.
+
+<Preview>
+  <Story name="Chat BlankSlate/Empty">
+    <div>
+      <ChatList.BlankSlate>Nothing to see here.</ChatList.BlankSlate>
+      <br />
+      <ChatList />
+    </div>
+  </Story>
+</Preview>
+
+<Props of={ChatList.BlankSlate} />

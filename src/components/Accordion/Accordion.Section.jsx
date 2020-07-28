@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { SectionUI } from './Accordion.css'
@@ -72,6 +73,23 @@ export const AccordionSection = props => {
 AccordionSection.defaultProps = {
   'data-cy': 'AccordionSection',
   isLink: false,
+}
+
+AccordionSection.propTypes = {
+  /** Content to render. */
+  children: PropTypes.any,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** The id used to track the section's open state. */
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  /** Renders a Link based UI. */
+  isLink: PropTypes.bool,
+  /** Callback to be invoked when the section is opened. */
+  onOpen: PropTypes.func,
+  /** Callback to be invoked when the section is closed. */
+  onClose: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default AccordionSection

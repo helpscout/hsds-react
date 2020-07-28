@@ -69,8 +69,9 @@ export class Scrollable extends React.PureComponent {
   applyFadeStyleOffset(node) {
     // Guard, just in case the node element is removed.
     if (node) {
-      const offset = `${this.containerNode.offsetWidth -
-        this.containerNode.scrollWidth}px`
+      const offset = `${
+        this.containerNode.offsetWidth - this.containerNode.scrollWidth
+      }px`
       node.style.right = offset
     }
   }
@@ -262,25 +263,6 @@ export class Scrollable extends React.PureComponent {
   }
 }
 
-Scrollable.propTypes = {
-  backgroundColor: PropTypes.string,
-  className: PropTypes.string,
-  contentClassName: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  fade: PropTypes.bool,
-  fadeBottom: PropTypes.bool,
-  fadeLeft: PropTypes.bool,
-  fadeRight: PropTypes.bool,
-  faderSize: PropTypes.number,
-  innerRef: PropTypes.func,
-  onScroll: PropTypes.func,
-  rounded: PropTypes.bool,
-  scrollableRef: PropTypes.func,
-  isScrollLocked: PropTypes.bool,
-  scrollLockDirection: PropTypes.string,
-}
-
 Scrollable.defaultProps = {
   backgroundColor: 'white',
   'data-cy': 'Scrollable',
@@ -293,6 +275,39 @@ Scrollable.defaultProps = {
   onScroll: noop,
   scrollableRef: noop,
   isScrollLocked: true,
+}
+
+Scrollable.propTypes = {
+  /** Background color for the fade elements. */
+  backgroundColor: PropTypes.string,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Custom class names for the component's content DOM node. */
+  contentClassName: PropTypes.string,
+  /** Adds a "fade-to-white" visual experience while scrolling. Appears at the top. */
+  fade: PropTypes.bool,
+  /** Adds a "fade-to-white" visual experience while scrolling. Appears at the bottom. */
+  fadeBottom: PropTypes.bool,
+  /** Adds a "fade-to-white" visual experience while scrolling. Appears at the Left. */
+  fadeLeft: PropTypes.bool,
+  /** Adds a "fade-to-white" visual experience while scrolling. Appears at the Right. */
+  fadeRight: PropTypes.bool,
+  /** Size in pixels of the "shader"*/
+  faderSize: PropTypes.number,
+  /** Whether to use `ScrollLock` or not. Default `true` */
+  isScrollLocked: PropTypes.bool,
+  /** Enables rounded corners for the top fade element. */
+  rounded: PropTypes.bool,
+  /** Callback function when component is scrolled. */
+  onScroll: PropTypes.func,
+  /** `ScrollLock` direction */
+  scrollLockDirection: PropTypes.string,
+  /** Retrieves the scrollable node. */
+  scrollableRef: PropTypes.func,
+  /** Retrieve the DOM Node */
+  innerRef: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Scrollable

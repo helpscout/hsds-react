@@ -240,23 +240,6 @@ export class Overflow extends React.PureComponent {
   }
 }
 
-Overflow.propTypes = {
-  backgroundColor: PropTypes.string,
-  className: PropTypes.string,
-  children: PropTypes.any,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  refApplyFade: PropTypes.func,
-  refScrollToEnd: PropTypes.func,
-  initialHeightAdjustDelay: PropTypes.number,
-  isScrollable: PropTypes.bool,
-  onScroll: PropTypes.func,
-  onWheel: PropTypes.func,
-  remapScrollDirections: PropTypes.bool,
-  scrollableRef: PropTypes.func,
-  scrollOnClickFade: PropTypes.bool,
-}
-
 Overflow.defaultProps = {
   'data-cy': 'Overflow',
   initialHeightAdjustDelay: 30,
@@ -268,6 +251,28 @@ Overflow.defaultProps = {
   remapScrollDirections: false,
   scrollableRef: noop,
   scrollOnClickFade: true,
+}
+
+Overflow.propTypes = {
+  /** Background color for the fade elements. */
+  backgroundColor: PropTypes.string,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Amount of time (`ms`) to re-calculate the height on mount. Default `60`. */
+  initialHeightAdjustDelay: PropTypes.number,
+  /** Enables horizontal scrolling on overflow. Default is `true`. */
+  isScrollable: PropTypes.bool,
+  /** Callback function when component is scrolled. */
+  onScroll: PropTypes.func,
+  /** Retrieves the scrollable node. */
+  scrollableRef: PropTypes.func,
+  refApplyFade: PropTypes.func,
+  refScrollToEnd: PropTypes.func,
+  onWheel: PropTypes.func,
+  remapScrollDirections: PropTypes.bool,
+  scrollOnClickFade: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Overflow

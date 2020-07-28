@@ -21,12 +21,8 @@ HSDS has a couple of `peerDependencies`:
 
 Make sure you have these installed in your project.
 
-Blue currently runs on **React version 16**.
+HSDS currently runs on **React version ^16**.
 
-### Future of CSS-in-Blue
+### CSS-in-HSDS
 
-We're moving towards a CSS-in-JS future, powered by [Styled component](https://styled-components.com/).
-
-## Next
-
-Let's start using some [components](components.md)!
+HSDS is powered by [Styled components](https://styled-components.com/).

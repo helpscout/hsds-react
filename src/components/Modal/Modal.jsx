@@ -137,9 +137,9 @@ class Modal extends React.PureComponent {
       if (!this.closeNode || !isNodeElement(scrollNode)) return
 
       const defaultOffset = this.props.closeIconOffset + 1
-      const offset = `${scrollNode.offsetWidth -
-        scrollNode.clientWidth +
-        defaultOffset}px`
+      const offset = `${
+        scrollNode.offsetWidth - scrollNode.clientWidth + defaultOffset
+      }px`
 
       this.closeNode.style.right = offset
     }, this.props.closeIconRepositionDelay)
@@ -380,63 +380,6 @@ class Modal extends React.PureComponent {
   }
 }
 
-Modal.propTypes = {
-  cardClassName: PropTypes.string,
-  className: PropTypes.string,
-  closeIcon: PropTypes.bool,
-  closeIconOffset: PropTypes.number,
-  closeIconRepositionDelay: PropTypes.number,
-  closePortal: PropTypes.func,
-  containTabKeyPress: PropTypes.bool,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  description: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  exact: PropTypes.bool,
-  forceClosePortal: PropTypes.func,
-  id: PropTypes.string,
-  isHsApp: PropTypes.bool,
-  isOpen: PropTypes.bool,
-  icon: PropTypes.string,
-  iconSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  illo: PropTypes.any,
-  illoSize: PropTypes.number,
-  kind: PropTypes.string,
-  modalAnimationDelay: PropTypes.number,
-  modalAnimationDuration: PropTypes.number,
-  modalAnimationEasing: PropTypes.string,
-  modalAnimationSequence: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
-  ]),
-  modalFocusTimeout: PropTypes.number,
-  numSteps: PropTypes.number,
-  onBeforeClose: PropTypes.func,
-  onBeforeOpen: PropTypes.func,
-  onClose: PropTypes.func,
-  onOpen: PropTypes.func,
-  overlayAnimationDelay: PropTypes.number,
-  overlayAnimationDuration: PropTypes.number,
-  overlayAnimationEasing: PropTypes.string,
-  overlayAnimationSequence: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
-  ]),
-  overlayClassName: PropTypes.string,
-  path: PropTypes.string,
-  portalIsOpen: PropTypes.bool,
-  renderTo: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  seamless: PropTypes.bool,
-  state: PropTypes.string,
-  status: PropTypes.string,
-  step: PropTypes.number,
-  style: PropTypes.any,
-  timeout: PropTypes.number,
-  trigger: PropTypes.any,
-  version: PropTypes.number,
-  wrapperClassName: PropTypes.string,
-  zIndex: PropTypes.number,
-}
-
 Modal.defaultProps = {
   closeIcon: true,
   closeIconOffset: 10,
@@ -473,6 +416,101 @@ Modal.defaultProps = {
   version: 1,
   wrapperClassName: 'c-ModalWrapper',
   zIndex: 1,
+}
+
+Modal.propTypes = {
+  /** Custom class names to be added to the child `Card` component. */
+  cardClassName: PropTypes.string,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Shows/hides the component's close icon UI. */
+  closeIcon: PropTypes.bool,
+  /** Amount of time before the `CloseButton` gets repositioned. */
+  closeIconRepositionDelay: PropTypes.number,
+  closePortal: PropTypes.func,
+  closeIconOffset: PropTypes.number,
+  /** Prevents tab/shift+tab focus from leaving the Modal. */
+  containTabKeyPress: PropTypes.bool,
+  /** Renders in version 2 Modals beneath the title. */
+  description: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  /** Used with `path` and React Router. Renders if path matches _exactly_ */
+  exact: PropTypes.bool,
+  forceClosePortal: PropTypes.func,
+  /** Renders as an `Icon` in the top left corner of a version 2 Modal header. */
+  icon: PropTypes.string,
+  /** The size to render the provided `Icon` in a version 2 Modal header. */
+  iconSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  id: PropTypes.string,
+  /** Expects an `Illo` to be displayed in a version 2 Modal header. */
+  illo: PropTypes.any,
+  /** The size to render the provided `Illo` in a version 2 Modal header. */
+  illoSize: PropTypes.number,
+  /** Shows/hides the component. */
+  isOpen: PropTypes.bool,
+  isHsApp: PropTypes.bool,
+  /** The kind of version 2 Modal style to apply. */
+  kind: PropTypes.oneOf(['alert', 'default', 'branded', 'sequence']),
+  /** Custom animation delay for the child `Card` component. */
+  modalAnimationDelay: PropTypes.number,
+  /** Custom animation duration for the child `Card` component. */
+  modalAnimationDuration: PropTypes.number,
+  /** Custom animation easing for the child `Card` component. */
+  modalAnimationEasing: PropTypes.string,
+  /** Custom animation sequence for the child `Card` component. */
+  modalAnimationSequence: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
+  /** Amount of time (`ms`) before the Modal force focuses. */
+  modalFocusTimeout: PropTypes.number,
+  /** Total number of steps to be used in a version 2 Sequence Modal. */
+  numSteps: PropTypes.number,
+  /** Fires when the component is mounted, but not rendered. */
+  onBeforeClose: PropTypes.func,
+  /** Fires as soon as the component has rendered. */
+  onOpen: PropTypes.func,
+  /** Fires when the component is about to unmount. */
+  onBeforeOpen: PropTypes.func,
+  /** Fires after the component is unmounted. */
+  onClose: PropTypes.func,
+  /** Custom class names to be added to the child `Overlay` component. */
+  overlayClassName: PropTypes.string,
+  /** Custom animation delay for the child `Overlay` component. */
+  overlayAnimationDelay: PropTypes.number,
+  /** Custom animation duration for the child `Overlay` component. */
+  overlayAnimationDuration: PropTypes.number,
+  /** Custom animation easing for the child `Overlay` component. */
+  overlayAnimationEasing: PropTypes.string,
+  /** Custom animation sequence for the child `Overlay` component. */
+  overlayAnimationSequence: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
+  /** Renders component based on a [React Router path](https://reacttraining.com/react-router/web/api/Route/path-string). */
+  path: PropTypes.string,
+  portalIsOpen: PropTypes.bool,
+  /** A CSS selector to render content, instead of the `<body>`. (Portal prop)*/
+  renderTo: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  /** Renders content with the standard `Card` UI. */
+  seamless: PropTypes.bool,
+  /** State to use when styling a version 2 Modal (currently only `danger` state is custom styled). */
+  state: PropTypes.oneOf(['', 'danger']),
+  status: PropTypes.string,
+  /** Current step to be used in a version 2 Sequence Modal. */
+  step: PropTypes.number,
+  /** Custom styles */
+  style: PropTypes.any,
+  timeout: PropTypes.number,
+  /** The UI the user clicks to trigger the modal. */
+  trigger: PropTypes.any,
+  /** Version of the Modal styles to apply (version 2 is the new standard, version 1 is legacy). */
+  version: PropTypes.number,
+  /** Custom className to add to the PortalWrapper component. */
+  wrapperClassName: PropTypes.string,
+  /** Custom z-index rule directly on the modal */
+  zIndex: PropTypes.number,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export const ModalComponent = Modal

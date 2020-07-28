@@ -4,7 +4,6 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import Icon from '../Icon'
 import Avatar from '../Avatar'
-
 import {
   AvatarSelectorWrapperUI,
   IconAssignUI,
@@ -12,7 +11,7 @@ import {
   AvatarWrapperUI,
 } from './AvatarSelector.css.js'
 
-export default class AvatarSelector extends React.PureComponent {
+class AvatarSelector extends React.PureComponent {
   renderAvatar() {
     const { image, initials, name } = this.props
 
@@ -65,17 +64,6 @@ export default class AvatarSelector extends React.PureComponent {
   }
 }
 
-AvatarSelector.propTypes = {
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  image: PropTypes.string,
-  initials: PropTypes.string,
-  isHovered: PropTypes.bool,
-  isOpen: PropTypes.bool,
-  name: PropTypes.string,
-  size: PropTypes.string,
-}
-
 AvatarSelector.defaultProps = {
   'data-cy': 'AvatarSelector',
   image: '',
@@ -85,3 +73,20 @@ AvatarSelector.defaultProps = {
   name: '',
   size: 'lg',
 }
+
+AvatarSelector.propTypes = {
+  /** URL of the image. */
+  image: PropTypes.string,
+  /** Initials of image */
+  initials: PropTypes.string,
+  /** Fallback for the image. */
+  name: PropTypes.string,
+  /** Used to control the direction of the caret. */
+  isOpen: PropTypes.bool,
+  /** Size of the avatar. */
+  size: PropTypes.oneOf(['xl', 'lg', 'md', 'smmd', 'sm', 'xxs']),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+}
+
+export default AvatarSelector

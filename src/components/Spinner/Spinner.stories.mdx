@@ -1,0 +1,96 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { color } from '@storybook/addon-knobs'
+import Spinner from './'
+
+<Meta
+  title="🧬 Components/Elements/Spinner"
+  component={Spinner}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A8599',
+    },
+  }}
+/>
+
+# Spinner
+
+A Spinner component provides the UI to indicate a loading state.
+
+<Preview>
+  <Story name="default">
+    <div>
+      <Spinner />
+    </div>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={Spinner} />
+
+### Stories
+
+#### Sizes
+
+<Preview>
+  <Story name="Sizes">
+    <div>
+      <div
+        style={{
+          marginBottom: '20px',
+          color: color('Color', 'dodgerblue'),
+        }}
+      >
+        <div style={{ marginBottom: '10px' }}>xl</div>
+        <Spinner size="xl" />
+      </div>
+      <div
+        style={{
+          marginBottom: '20px',
+          color: color('Color', 'dodgerblue'),
+        }}
+      >
+        <div style={{ marginBottom: '10px' }}>lg</div>
+        <Spinner size="lg" />
+      </div>
+      <div
+        style={{
+          marginBottom: '20px',
+          color: color('Color', 'dodgerblue'),
+        }}
+      >
+        <div style={{ marginBottom: '10px' }}>md</div>
+        <Spinner size="md" />
+      </div>
+      <div
+        style={{
+          marginBottom: '20px',
+          color: color('Color', 'dodgerblue'),
+        }}
+      >
+        <div style={{ marginBottom: '10px' }}>sm</div>
+        <Spinner size="sm" />
+      </div>
+      <div
+        style={{
+          marginBottom: '20px',
+          color: color('Color', 'dodgerblue'),
+        }}
+      >
+        <div style={{ marginBottom: '10px' }}>xs</div>
+        <Spinner size="xs" />
+      </div>
+    </div>
+  </Story>
+</Preview>

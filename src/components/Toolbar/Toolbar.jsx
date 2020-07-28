@@ -55,16 +55,6 @@ export class Toolbar extends React.PureComponent {
   }
 }
 
-Toolbar.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.any,
-  placement: PropTypes.oneOf(['top', 'bottom']),
-  shadow: PropTypes.bool,
-  seamless: PropTypes.bool,
-  size: PropTypes.oneOf(['xl', 'lg', 'md', 'sm', 'xs']),
-  theme: PropTypes.oneOf(['default', 'note']),
-}
-
 Toolbar.defaultProps = {
   'data-cy': 'Toolbar',
   placement: 'top',
@@ -72,6 +62,22 @@ Toolbar.defaultProps = {
   shadow: false,
   size: 'sm',
   theme: 'default',
+}
+
+Toolbar.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Determines the border placement on the component. */
+  placement: PropTypes.oneOf(['top', 'bottom']),
+  /** Renders a drop-shadow. */
+  shadow: PropTypes.bool,
+  /** Removes the border from the component. */
+  seamless: PropTypes.bool,
+  /** Determines the thematic colors of the component. */
+  theme: PropTypes.oneOf(['default', 'note']),
+  size: PropTypes.oneOf(['xl', 'lg', 'md', 'sm', 'xs']),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Toolbar

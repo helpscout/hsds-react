@@ -1,0 +1,62 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { ScopeProvider } from '../../styled'
+import { Avatar } from '../../index'
+import Message from '../'
+
+<Meta
+  title="🧬 Components/Conversation/Message"
+  component={Message}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A10071',
+    },
+  }}
+/>
+
+# Message.Embed
+
+An embed component provides the UI to render rich-media embed content.
+
+<Preview>
+  <Story name="Message.Embed">
+    <Message.Provider theme="embed">
+      <Message from avatar={<Avatar name="Artic Puffin" />}>
+        <Message.Embed
+          html={`
+  <div style="left: 0;
+              width: 100%;
+              height: 0;
+              position: relative;
+              padding-bottom: 56.2493%;"
+  >
+    <iframe src="https://www.youtube.com/embed/evvzG0Xz69Q?rel=0&showinfo=0"
+            style="border: 0;
+                   top: 0;
+                   left: 0;
+                   width: 100%;
+                   height: 100%;
+                   position: absolute;"
+            allowfullscreen
+            scrolling="no"
+    ></iframe>
+  </div>
+`}
+        />
+      </Message>
+      <Message to avatar={<Avatar name="Dapper Duck" />}>
+        <Message.Chat read timestamp="9:41am">
+          Veniam ullamco nulla qui in consequat ut culpa qui dolor nostrud sint.
+          Ullamco est anim mollit adipisicing aliquip id ex voluptate. Lorem
+          deserunt deserunt consequat officia exercitation. Ex tempor ut cillum
+          ea.
+        </Message.Chat>
+      </Message>
+    </Message.Provider>
+  </Story>
+</Preview>
+
+### Props
+
+<Props of={Message.Embed} />

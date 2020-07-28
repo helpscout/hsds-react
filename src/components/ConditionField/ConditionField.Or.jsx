@@ -6,7 +6,7 @@ import { classNames } from '../../utilities/classNames'
 
 export const ConditionFieldOr = props => {
   const { className, 'data-cy': dataCy, ...rest } = props
-  const componentClassName = classNames(ConditionFieldOr.className, className)
+  const componentClassName = classNames('c-ConditionOr'.className, className)
 
   return (
     <div
@@ -19,13 +19,13 @@ export const ConditionFieldOr = props => {
   )
 }
 
-ConditionFieldOr.className = 'c-ConditionOr'
+ConditionFieldOr.defaultProps = {
+  'data-cy': 'ConditionFieldOr',
+}
+
 ConditionFieldOr.propTypes = {
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
-}
-ConditionFieldOr.defaultProps = {
-  'data-cy': 'ConditionFieldOr',
 }
 
 export default ConditionFieldOr

@@ -33,6 +33,14 @@ class GridContainer extends React.PureComponent {
   }
 }
 
+GridContainer.defaultProps = {
+  'data-cy': 'GridContainer',
+  fluid: false,
+  responsive: false,
+  isFluid: false,
+  isResponsive: false,
+}
+
 GridContainer.propTypes = {
   className: PropTypes.string,
   /** Data attr for Cypress tests. */
@@ -42,14 +50,6 @@ GridContainer.propTypes = {
   isFluid: PropTypes.bool,
   isResponsive: PropTypes.bool,
   size: PropTypes.oneOf(['md', 'sm', 'xs']),
-}
-
-GridContainer.defaultProps = {
-  'data-cy': 'GridContainer',
-  fluid: false,
-  responsive: false,
-  isFluid: false,
-  isResponsive: false,
 }
 
 export default GridContainer

@@ -31,22 +31,26 @@ export class ConditionListAddButton extends React.PureComponent {
   }
 }
 
-ConditionListAddButton.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  innerRef: PropTypes.func,
-  onClick: PropTypes.func,
-  scrollDuration: PropTypes.number,
-  scrollOffset: PropTypes.number,
-}
-
 ConditionListAddButton.defaultProps = {
   'data-cy': 'ConditionListAddButton',
   innerRef: noop,
   onClick: noop,
   scrollDuration: 300,
   scrollOffset: 200,
+}
+
+ConditionListAddButton.propTypes = {
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  /** Retrieve the inner DOM node. */
+  innerRef: PropTypes.func,
+  /** Callback when clicked */
+  onClick: PropTypes.func,
+  /** Time (ms) it takes to scroll into view. */
+  scrollDuration: PropTypes.number,
+  /** Amount (px) used to calculate scrolling into view. */
+  scrollOffset: PropTypes.number,
 }
 
 export default ConditionListAddButton

@@ -42,19 +42,22 @@ class Label extends React.PureComponent {
   }
 }
 
-Label.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  for: PropTypes.string,
-  isMarginless: PropTypes.bool,
-  state: PropTypes.string,
-}
-
 Label.defaultProps = {
   'data-cy': 'Label',
   isMarginless: false,
-  state: 'default',
+}
+
+Label.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Determines what the label is associated with. */
+  for: PropTypes.string,
+  /** Changes the text color based on state. */
+  state: PropTypes.oneOf(['error', 'success', 'warning']),
+  /** Remove bottom margin */
+  isMarginless: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Label

@@ -121,24 +121,6 @@ export class MessageCard extends React.PureComponent {
   }
 }
 
-MessageCard.propTypes = {
-  action: PropTypes.func,
-  align: PropTypes.oneOf(['left', 'right']),
-  animationDuration: PropTypes.number,
-  animationEasing: PropTypes.string,
-  animationSequence: PropTypes.string,
-  body: PropTypes.string,
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  innerRef: PropTypes.func,
-  in: PropTypes.bool,
-  isMobile: PropTypes.bool,
-  isWithBoxShadow: PropTypes.bool,
-  subtitle: PropTypes.string,
-  title: PropTypes.string,
-}
-
 MessageCard.defaultProps = {
   align: 'right',
   animationSequence: '',
@@ -147,6 +129,36 @@ MessageCard.defaultProps = {
   in: true,
   isMobile: false,
   isWithBoxShadow: true,
+}
+
+MessageCard.propTypes = {
+  /** Render-prop that is placed in the CTA section of the Message. */
+  action: PropTypes.func,
+  /** Apply styles for left or right-aligned Message. */
+  align: PropTypes.oneOf(['left', 'right']),
+  /** The duration (in `ms`) for the animation sequence. */
+  animationDuration: PropTypes.number,
+  /** Determines the CSS easing transition function. */
+  animationEasing: PropTypes.string,
+  /** Names of animation styles to apply. */
+  animationSequence: PropTypes.string,
+  /** Main text of the Message. */
+  body: PropTypes.string,
+  /** The className of the component. */
+  className: PropTypes.string,
+  innerRef: PropTypes.func,
+  /** Programatically triggering the animation. */
+  in: PropTypes.bool,
+  /** Adds mobile styles */
+  isMobile: PropTypes.bool,
+  /** Adds a box shadow. */
+  isWithBoxShadow: PropTypes.bool,
+  /** Title of the Message. */
+  subtitle: PropTypes.string,
+  /** Subtitle of the Message. */
+  title: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default MessageCard

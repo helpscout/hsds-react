@@ -2,39 +2,23 @@
 
 In this guide, we'll walk through adding documentation for our [fully test](testing.md) [custom `Strong` component](creating.md).
 
-## Directory
+We mainly document 2 things for each component, its purpose and its interface.
 
-All of HSDS's component documenations files are scoped in the same directory as the component, example:
+## Component purpose
 
-```
-hsds-react/
-  └── components/
-      └── Button/
-          └── README.md
-```
+A component's description and any notes worth mentioning (limitations, features, etc).
 
-## Initial file
+This is written in the stories mdx file.
 
-The first thing we'll need to do is create a `README.md` directory under `Strong/`:
+[See writing stories](https://hsds.helpscout.com/?path=/docs/%F0%9F%8F%A0-welcome-4-writing-stories--page)
 
-```
-hsds-react/
-  └── components/
-      └── Strong/
-          └── README.md
-```
+## Component interface
 
-## Content
+AKA props documentation, we use `defaultProps` and `propTypes` to document the component interface, this information is included directly in the component jsx file.
 
-Our `README.md` documentation should contain:
+This documentation is automatically turned into a table inside storybook.
 
-* Brief explanation of what the component is/doesn
-* An example of how it can be used
-* Descriptions of the available component `prop`
-
-Check out any `README.md` file from [any component](https://github.com/helpscout/hsds-react/tree/master/src/components) for some examples.
-
-Yay, you did it 🤗! Documentation is [super important](https://www.quora.com/Why-is-documentation-important-in-programming). Thank you for taking the time to write docs!
+[See writing components](<(https://hsds.helpscout.com/?path=/docs/%F0%9F%8F%A0-welcome-3-writing-components--page)>)
 
 ## Next
 

@@ -166,10 +166,6 @@ const Tooltip = props => {
   )
 }
 
-Tooltip.propTypes = {
-  closeOnEscPress: PropTypes.bool,
-}
-
 Tooltip.defaultProps = {
   animationDelay: 0,
   animationDuration: 200,
@@ -180,6 +176,35 @@ Tooltip.defaultProps = {
   isOpen: false,
   placement: 'top',
   triggerOn: 'mouseenter focus',
+}
+
+Tooltip.propTypes = {
+  animationDelay: PropTypes.number,
+  animationDuration: PropTypes.number,
+  /** Size of the Arrow in pixels */
+  arrowSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Whether to allow closing the tooltip on pressing ESC */
+  closeOnEscPress: PropTypes.bool,
+  /** Apply custom css rule `display` */
+  display: PropTypes.string,
+  /** Determine if the tooltip is open via a prop */
+  isOpen: PropTypes.bool,
+  /** Max width for the component. */
+  maxWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Min width for the component. */
+  minWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Renders a component within the Tooltip. Is prioritized over `title` */
+  renderContent: PropTypes.func,
+  /** Where to place the Tooltip. */
+  placement: PropTypes.string,
+  /** Text to display within the Tooltip. */
+  title: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  /** Determines how to engage the component. */
+  triggerOn: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Tooltip

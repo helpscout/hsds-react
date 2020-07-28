@@ -12,9 +12,7 @@ class ChatList extends React.Component {
 
   render() {
     const { children, className, ...rest } = this.props
-
     const componentClassName = classNames('c-ChatList', className)
-
     const contentMarkup = React.Children.count(children) ? (
       children
     ) : (
@@ -29,14 +27,14 @@ class ChatList extends React.Component {
   }
 }
 
+ChatList.defaultProps = {
+  'data-cy': 'ChatList',
+}
+
 ChatList.propTypes = {
   className: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
-}
-
-ChatList.defaultProps = {
-  'data-cy': 'ChatList',
 }
 
 export default ChatList

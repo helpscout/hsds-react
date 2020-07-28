@@ -1,0 +1,48 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { faker } from '@helpscout/helix'
+import AvatarSelector from './'
+
+<Meta
+  title="🧬 Components/Badges/AvatarSelector"
+  component={AvatarSelector}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A7170',
+    },
+  }}
+/>
+
+# AvatarSelector
+
+An AvatarSelector can be used as a custom renderTrigger for a Dropdown.
+
+<Preview>
+  <Story name="default">
+    <AvatarSelector />
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Tom O
+- **Usage**: HSApp, ChatApp
+
+<br />
+<br />
+
+### Props
+
+<Props of={AvatarSelector} />
+
+### Stories
+
+#### With Image
+
+<Preview>
+  <Story name="with image">
+    <AvatarSelector image={faker.image.avatar()()} name="Buzz Arooooooo" />
+  </Story>
+</Preview>

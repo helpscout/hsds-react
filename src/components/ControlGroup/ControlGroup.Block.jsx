@@ -19,12 +19,15 @@ class ControlGroupBlock extends React.PureComponent {
   }
 }
 
-ControlGroupBlock.propTypes = {
-  className: PropTypes.string,
-}
-
 ControlGroupBlock.defaultProps = {
   'data-cy': 'ControlGroupBlock',
+}
+
+ControlGroupBlock.propTypes = {
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default ControlGroupBlock

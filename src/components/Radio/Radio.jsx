@@ -28,16 +28,18 @@ export const Radio = ({
   )
 }
 
-Radio.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  kind: PropTypes.oneOf(['default', 'custom']),
-}
-
 Radio.defaultProps = {
   'data-cy': 'Radio',
   kind: 'default',
+}
+
+Radio.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  /** Render a customized radio or a default */
+  kind: PropTypes.oneOf(['default', 'custom']),
 }
 
 export default Radio

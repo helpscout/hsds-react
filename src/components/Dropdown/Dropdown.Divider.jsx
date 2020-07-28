@@ -22,15 +22,15 @@ export class DropdownDivider extends React.PureComponent {
   }
 }
 
+DropdownDivider.defaultProps = {
+  'data-cy': 'DropdownDivider',
+  innerRef: noop,
+}
+
 DropdownDivider.propTypes = {
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
   innerRef: PropTypes.func,
-}
-
-DropdownDivider.defaultProps = {
-  'data-cy': 'DropdownDivider',
-  innerRef: noop,
 }
 
 export default DropdownDivider

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import AccordionSection from './Accordion.Section'
 import AccordionTitle from './Accordion.Title'
 import { renderChildrenSafely } from '../../utilities/component'
@@ -38,6 +39,19 @@ export const AccordionLink = props => {
 
 AccordionLink.defaultProps = {
   'data-cy': 'AccordionLink',
+}
+
+AccordionLink.propTypes = {
+  /** Content to render. */
+  children: PropTypes.any,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Renders a `Link` with an href. */
+  href: PropTypes.string,
+  /** Renders a routable `Link` with an href. */
+  to: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default AccordionLink

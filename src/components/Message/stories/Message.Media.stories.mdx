@@ -1,0 +1,52 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { boolean, number, text } from '@storybook/addon-knobs'
+import { ScopeProvider } from '../../styled'
+import { Avatar } from '../../index'
+import Message from '../'
+
+<Meta
+  title="🧬 Components/Conversation/Message"
+  component={Message}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A10071',
+    },
+  }}
+/>
+
+# Message.Media
+
+A Media component provides the UI to render media-based content.
+
+<Preview>
+  <Story name="Message.Media">
+    <Message to avatar={<Avatar name="Arctic Puffin" />}>
+      <Message.Chat>Agent Chat</Message.Chat>
+      <Message.Media
+        width={800}
+        height={500}
+        className=""
+        openMediaInModal={true}
+        maxHeight={250}
+        maxWidth={350}
+        modalAnimationSequence="fade up"
+        showErrorTryAgainLink={true}
+        caption={text('caption', 'image.jpg')}
+        errorMessage={text('errorMessage', `Couldn't send.`)}
+        imageUrl="https://loremflickr.com/800/500"
+        modalAnimationDuration={number('modalAnimationDuration', 250)}
+        modalAnimationEasing={text('modalAnimationEasing', 'ease')}
+        modalAnimationSequence={text('modalAnimationSequence', 'fade up')}
+        overlayAnimationDuration={number('overlayAnimationDuration', 250)}
+        isUploading={boolean('isUploading', false)}
+        tryAgainLabel={text('tryAgainLabel', 'Try again')}
+      />
+    </Message>
+  </Story>
+</Preview>
+
+### Props
+
+<Props of={Message.Media} />

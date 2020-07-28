@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Collapsible from '../Collapsible'
 import { classNames } from '../../utilities/classNames'
@@ -83,6 +84,15 @@ export const AccordionBody = props => {
 
 AccordionBody.defaultProps = {
   'data-cy': 'AccordionBody',
+}
+
+AccordionBody.propTypes = {
+  /** Content to render. */
+  children: PropTypes.any,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default AccordionBody

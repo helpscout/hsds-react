@@ -194,18 +194,6 @@ class InfiniteScroller extends React.PureComponent {
   }
 }
 
-InfiniteScroller.propTypes = {
-  className: PropTypes.string,
-  offset: PropTypes.number,
-  isLoading: PropTypes.bool,
-  loading: PropTypes.any,
-  scrollParent: PropTypes.any,
-  getScrollParent: PropTypes.func,
-  onLoading: PropTypes.func,
-  onLoaded: PropTypes.func,
-  onScroll: PropTypes.func,
-}
-
 InfiniteScroller.defaultProps = {
   'data-cy': 'InfiniteScroller',
   getScrollParent: noop,
@@ -215,6 +203,28 @@ InfiniteScroller.defaultProps = {
   onLoading: noop,
   onLoaded: noop,
   onScroll: noop,
+}
+
+InfiniteScroller.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Callback to retrieve the parentNode to listen for scroll events. */
+  getScrollParent: PropTypes.func,
+  /** Sets the component into an `isLoading` state. */
+  isLoading: PropTypes.bool,
+  /** Top buffer (`px`) before infinite scroll is triggered. */
+  offset: PropTypes.number,
+  /** Callback when component completes `onLoading`. */
+  onLoaded: PropTypes.func,
+  /** Callback when component becomes visible in the DOM, after scrolling. */
+  onLoading: PropTypes.func,
+  /** DOM node to listen to scroll events on, instead of closest parentNode (default). */
+  scrollParent: PropTypes.any,
+  onScroll: PropTypes.func,
+  /** What to render while loading */
+  loading: PropTypes.any,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default InfiniteScroller

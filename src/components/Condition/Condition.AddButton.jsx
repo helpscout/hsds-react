@@ -80,18 +80,6 @@ class AddButton extends React.PureComponent {
   }
 }
 
-AddButton.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  innerRef: PropTypes.func,
-  onClick: PropTypes.func,
-  isBorderless: PropTypes.bool,
-  scrollDuration: PropTypes.number,
-  scrollOffset: PropTypes.number,
-  type: PropTypes.oneOf(['and', 'or']),
-}
-
 AddButton.defaultProps = {
   'data-cy': 'ConditionAddButton',
   isBorderless: false,
@@ -99,6 +87,25 @@ AddButton.defaultProps = {
   scrollDuration: 300,
   scrollOffset: 200,
   type: 'or',
+}
+
+AddButton.propTypes = {
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** Retrieve the inner DOM node. */
+  innerRef: PropTypes.func,
+  /** Renders a white border. */
+  isBorderless: PropTypes.bool,
+  /** Callback when component is clicked. */
+  onClick: PropTypes.func,
+  /** Time (ms) it takes to scroll into view. */
+  scrollDuration: PropTypes.number,
+  /** Amount (px) used to calculate scrolling into view. */
+  scrollOffset: PropTypes.number,
+  /** The operator. */
+  type: PropTypes.oneOf(['and', 'or']),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default AddButton

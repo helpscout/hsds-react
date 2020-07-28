@@ -57,13 +57,16 @@ export class FormActions extends React.PureComponent {
   }
 }
 
-FormActions.propTypes = {
-  direction: PropTypes.string,
-}
-
 FormActions.defaultProps = {
   direction: 'right',
   'data-cy': 'FormActionsContent',
+}
+
+FormActions.propTypes = {
+  /** The position to render the actions*/
+  direction: PropTypes.oneOf(['right', 'left']),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default FormActions

@@ -1,0 +1,61 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { select, boolean } from '@storybook/addon-knobs'
+import Notification from './'
+
+<Meta
+  title="🧬 Components/Conversation/Notification"
+  component={Notification}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A7810',
+    },
+  }}
+/>
+
+# Notification
+
+A Notification component displays content that requires attention from the user.
+
+An example where Notifications may be used would be within the context of new Chat messages.
+
+<Preview>
+  <Story name="default">
+    <Notification
+      isDismissable={boolean('isDismissable', false)}
+      body="Veniam occaecat ad adipisicing qui duis consequat minim nulla in commodo. Eu tempor irure deserunt velit duis elit incididunt ea anim non anim in voluptate laborum. Minim in sunt sunt veniam Lorem aliqua ea esse adipisicing minim deserunt enim. In id eu commodo non proident. Irure esse veniam laborum reprehenderit anim culpa sit velit. Tempor voluptate ex elit do consectetur voluptate et minim velit dolor elit in sit cupidatat. Consectetur et elit exercitation veniam sunt velit ea exercitation."
+      from="Boba Fet"
+      align={select(
+        'align',
+        {
+          Left: 'left',
+          Right: 'right',
+        },
+        'right'
+      )}
+      type={select(
+        'type',
+        {
+          Text: 'text',
+          Image: 'image',
+          Link: 'link',
+        },
+        'text'
+      )}
+    />
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={Notification} />

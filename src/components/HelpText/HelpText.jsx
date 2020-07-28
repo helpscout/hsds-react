@@ -30,22 +30,49 @@ const HelpText = props => {
   )
 }
 
-HelpText.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  isCompact: PropTypes.bool,
-  shade: PropTypes.string,
-  size: PropTypes.string,
-  state: PropTypes.string,
-}
-
 HelpText.defaultProps = {
   'data-cy': 'HelpText',
   isCompact: false,
   shade: 'faint',
   size: '13',
-  state: 'default',
+}
+
+HelpText.propTypes = {
+  isCompact: PropTypes.bool,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Shading styles */
+  shade: PropTypes.oneOf([
+    'default',
+    'subtle',
+    'slightlyMuted',
+    'muted',
+    'faint',
+    'extraMuted',
+  ]),
+  /**  Adjust text size. */
+  size: PropTypes.oneOf([
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '20',
+    '48',
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    20,
+    48,
+  ]),
+  /** Changes the text color based on state. `error`: red, `success`: green, `warning`: yellow  */
+  state: PropTypes.oneOf(['error', 'success', 'warning']),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default HelpText

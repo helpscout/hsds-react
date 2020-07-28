@@ -144,8 +144,6 @@ export class EditableTextarea extends React.PureComponent {
 
     const stop = () => e.preventDefault() && e.stopPropagation()
 
-    // Escape route tested
-
     if (!isShiftPressed && code === key.ENTER) {
       stop()
 
@@ -165,7 +163,8 @@ export class EditableTextarea extends React.PureComponent {
             value: [item],
             event: e,
           })
-          this.textArea.current.blur()
+          // trigger blur
+          this.handleOnBlur()
         }
       )
     } else if (code === key.ESCAPE) {
@@ -245,8 +244,6 @@ export class EditableTextarea extends React.PureComponent {
           value,
           values: [item],
         }).then(validation => {
-          // Both cases tested
-
           if (validation.isValid) {
             this.setState(
               {
@@ -407,29 +404,6 @@ export class EditableTextarea extends React.PureComponent {
   }
 }
 
-EditableTextarea.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  floatingLabels: PropTypes.bool,
-  id: PropTypes.string,
-  label: PropTypes.string,
-  maxRows: PropTypes.number,
-  innerRef: PropTypes.func,
-  overflowCueColor: PropTypes.string,
-  placeholder: PropTypes.string,
-  value: PropTypes.string,
-  onCommit: PropTypes.func,
-  onChange: PropTypes.func,
-  onInputBlur: PropTypes.func,
-  onInputFocus: PropTypes.func,
-  onInputKeyDown: PropTypes.func,
-  onInputKeyUp: PropTypes.func,
-  onEnter: PropTypes.func,
-  onEscape: PropTypes.func,
-  validate: PropTypes.func,
-}
-
 EditableTextarea.defaultProps = {
   'data-cy': 'EditableTextarea',
   floatingLabels: false,
@@ -449,6 +423,47 @@ EditableTextarea.defaultProps = {
   onEnter: noop,
   onEscape: noop,
   validate: () => Promise.resolve({ isValid: true }),
+}
+
+EditableTextarea.propTypes = {
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** The id to assign to the component. */
+  id: PropTypes.string,
+  /** Uses the "floating label" pattern with animation */
+  floatingLabels: PropTypes.bool,
+  /** The label for the field */
+  label: PropTypes.string,
+  /** The maximum number of lines the textarea will grow to (max height). */
+  maxRows: PropTypes.number,
+  /** The color of the visual cue when content is overflowing. */
+  overflowCueColor: PropTypes.string,
+  /** The placeholder of the textarea. */
+  placeholder: PropTypes.string,
+  /** The value of the textarea. */
+  value: PropTypes.string,
+  /** Function that validates the value, should always return a Promise that resolves to a Validation type */
+  validate: PropTypes.func,
+  /** Retrieve the inner DOM node. */
+  innerRef: PropTypes.func,
+  /** Fires when either the input or an option is changed */
+  onChange: PropTypes.func,
+  /** Fires when Enter is pressed on the input */
+  onEnter: PropTypes.func,
+  /** Fires when Escape is pressed on the input */
+  onEscape: PropTypes.func,
+  /** Fires when a change is “saved” (see below) */
+  onCommit: PropTypes.func,
+  /** Fired when the input is focused */
+  onInputFocus: PropTypes.func,
+  /** Fired when the input is blurred */
+  onInputBlur: PropTypes.func,
+  /** Fires on textarea keyup */
+  onInputKeyDown: PropTypes.func,
+  /** Fires on textarea keydown */
+  onInputKeyUp: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default EditableTextarea

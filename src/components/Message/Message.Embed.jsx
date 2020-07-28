@@ -65,22 +65,32 @@ class MessageEmbed extends React.Component {
   }
 }
 
-MessageEmbed.propTypes = {
-  className: PropTypes.string,
-  from: PropTypes.any,
-  isNote: PropTypes.bool,
-  ltr: PropTypes.bool,
-  onClick: PropTypes.func,
-  read: PropTypes.bool,
-  rtl: PropTypes.bool,
-  timestamp: PropTypes.string,
-  to: PropTypes.any,
-  type: PropTypes.oneOf(['action', 'message', '']),
-  html: PropTypes.string,
-}
-
 MessageEmbed.defaultProps = {
   'data-cy': 'MessageEmbed',
+}
+
+MessageEmbed.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Provides author information and applies "From" styles. */
+  from: PropTypes.any,
+  /** HTML markup to be dangerously set inside the component. */
+  html: PropTypes.string,
+  /** Applies the "Note" theme styles. */
+  isNote: PropTypes.bool,
+  /** Applies left-to-right text styles. */
+  ltr: PropTypes.bool,
+  /** Determines if the Message is read. */
+  read: PropTypes.bool,
+  /** Applies right-to-left text styles. */
+  rtl: PropTypes.bool,
+  /** Timestamp for the Message. */
+  timestamp: PropTypes.string,
+  /** Provides author information and applies "To" styles. */
+  to: PropTypes.any,
+  /** Callback when clicked. */
+  onClick: PropTypes.func,
+  type: PropTypes.oneOf(['action', 'message', '']),
 }
 
 export default MessageEmbed

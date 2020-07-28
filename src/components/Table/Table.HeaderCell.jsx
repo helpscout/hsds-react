@@ -82,8 +82,11 @@ class HeaderCell extends React.PureComponent {
 }
 
 HeaderCell.propTypes = {
+  /** List of columns */
   columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
+  /** Whether tha table is in the loading state */
   isLoading: PropTypes.bool,
+  /** When sortable, indicates which column tha table is sorted by, and in which order (ascending or descending) */
   sortedInfo: PropTypes.shape({
     columnKey: PropTypes.string,
     order: PropTypes.string,

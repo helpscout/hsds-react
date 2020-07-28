@@ -29,14 +29,14 @@ class BlankSlate extends React.PureComponent {
   }
 }
 
+BlankSlate.defaultProps = {
+  'data-cy': 'ChatListBlankSlate',
+}
+
 BlankSlate.propTypes = {
   className: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
-}
-
-BlankSlate.defaultProps = {
-  'data-cy': 'ChatListBlankSlate',
 }
 
 export default BlankSlate

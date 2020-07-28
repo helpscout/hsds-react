@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { noop } from '../../utilities/other'
 import { isIntersectionObserverSupported } from './Page.utils'
@@ -80,6 +81,19 @@ PageStickyActions.defaultProps = {
   offset: 10,
   onStickyStart: noop,
   onStickyEnd: noop,
+}
+
+PageStickyActions.propTypes = {
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  /** Node of the component */
+  innerRef: PropTypes.func,
+  /** The amount of pixels the stickyness should start */
+  offset: PropTypes.number,
+  /** Callback when the sticky behaviour starts */
+  onStickyStart: PropTypes.func,
+  /** Callback when the sticky behaviour ends */
+  onStickyEnd: PropTypes.func,
 }
 
 export default PageStickyActions

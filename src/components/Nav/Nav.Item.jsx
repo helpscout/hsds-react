@@ -115,18 +115,27 @@ export class NavItem extends React.Component {
 }
 
 NavItem.propTypes = {
+  /** The className of the component. */
   className: PropTypes.string,
+  /** Disables the link. */
+  disabled: PropTypes.bool,
+  /** Renders an error UI and message within a [Tooltip](../../Tooltip). */
+  error: PropTypes.string,
+  /** Used to determine the active state/className. */
+  exact: PropTypes.bool,
+  /** Hyperlink location. */
+  href: PropTypes.string,
+  /** Determines the active state. */
+  isActive: PropTypes.any,
+  /** Location object from [react-router](https://github.com/ReactTraining/react-router). */
+  location: PropTypes.any,
+  /** Route location for [react-router](https://github.com/ReactTraining/react-router). */
+  to: PropTypes.string,
+  /** Route strictness for [react-router](https://github.com/ReactTraining/react-router). */
+  strict: PropTypes.bool,
+  innerRef: PropTypes.func,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
-  disabled: PropTypes.bool,
-  error: PropTypes.string,
-  exact: PropTypes.bool,
-  href: PropTypes.string,
-  innerRef: PropTypes.func,
-  isActive: PropTypes.any,
-  location: PropTypes.any,
-  to: PropTypes.string,
-  strict: PropTypes.bool,
 }
 
 NavItem.defaultProps = {

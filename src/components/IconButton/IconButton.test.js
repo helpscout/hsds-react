@@ -100,7 +100,7 @@ describe('Button', () => {
 
     expect(wrapper.hasClass('is-lg')).toBeTruthy()
 
-    wrapper.setProps({ kind: 'xs' })
+    wrapper.setProps({ size: 'xs' })
 
     expect(wrapper.hasClass('is-xs')).toBeTruthy()
   })

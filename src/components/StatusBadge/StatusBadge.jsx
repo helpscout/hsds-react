@@ -32,7 +32,7 @@ const StatusBadge = props => {
 
   const componentClassName = classNames('c-StatusBadge', className)
 
-  const hasStatus = status !== null && status !== undefined
+  const hasStatus = Boolean(status)
 
   const statusDotMarkup = (
     <StatusDotUI className="c-StatusBadge__statusDot">
@@ -50,6 +50,11 @@ const StatusBadge = props => {
       </Badge>
     </StatusBadgeUI>
   )
+}
+
+StatusBadge.defaultProps = {
+  count: 0,
+  'data-cy': 'StatusBadge',
 }
 
 StatusBadge.propTypes = {
@@ -75,11 +80,6 @@ StatusBadge.propTypes = {
   ]),
   /** Custom text for the HTML `title` attributes. */
   title: PropTypes.string,
-}
-
-StatusBadge.defaultProps = {
-  count: 0,
-  'data-cy': 'StatusBadge',
 }
 
 export default StatusBadge

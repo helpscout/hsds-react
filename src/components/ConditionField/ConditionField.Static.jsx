@@ -16,13 +16,13 @@ export const ConditionFieldStatic = props => {
   )
 }
 
+ConditionFieldStatic.defaultProps = {
+  'data-cy': 'ConditionFieldStatic',
+}
+
 ConditionFieldStatic.propTypes = {
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
-}
-
-ConditionFieldStatic.defaultProps = {
-  'data-cy': 'ConditionFieldStatic',
 }
 
 export default ConditionFieldStatic

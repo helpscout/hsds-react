@@ -1,0 +1,42 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { select, number } from '@storybook/addon-knobs'
+import StatusBadge from './'
+
+<Meta title="🧬 Components/Badges/StatusBadge" component={StatusBadge} />
+
+# StatusBadge
+
+<Preview>
+  <Story name="default">
+    <div>
+      <StatusBadge
+        count={number('count', 5)}
+        status={select(
+          'Status',
+          {
+            online: 'online',
+            offline: 'offline',
+            busy: 'busy',
+            new: 'new',
+            active: 'active',
+            inactive: 'inactive',
+          },
+          'online'
+        )}
+      />
+    </div>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: Beacon2
+
+<br />
+<br />
+
+### Props
+
+<Props of={StatusBadge} />

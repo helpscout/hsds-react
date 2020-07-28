@@ -90,17 +90,6 @@ export class NotificationStack extends React.PureComponent {
   }
 }
 
-NotificationStack.propTypes = {
-  autoDismiss: PropTypes.bool,
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  onClick: PropTypes.func,
-  onMouseEnter: PropTypes.func,
-  onMouseLeave: PropTypes.func,
-  limit: PropTypes.number,
-}
-
 NotificationStack.defaultProps = {
   autoDismiss: false,
   'data-cy': 'NotificationStack',
@@ -109,6 +98,24 @@ NotificationStack.defaultProps = {
   onMouseEnter: noop,
   onMouseLeave: noop,
   theme: 'chat',
+}
+
+NotificationStack.propTypes = {
+  className: PropTypes.string,
+  /** Enables the auto-dismissal timers for [Notification](../Notification) components. Default `false`. */
+  autoDismiss: PropTypes.bool,
+  /** Callback when a child Notification is clicked. */
+  onClick: PropTypes.func,
+  /** Maximum number of Notifications to display. Default `5`. */
+  limit: PropTypes.number,
+  /** Theme of notifications. Default `chat`. */
+  theme: PropTypes.string,
+  /** Callback on mouse enter. */
+  onMouseEnter: PropTypes.func,
+  /** Callback on mouse leave. */
+  onMouseLeave: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default NotificationStack

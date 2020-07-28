@@ -1,0 +1,33 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import Emoticon from './'
+
+<Meta title="🧬 Components/Elements/Emoticon" component={Emoticon} />
+
+# Emoticon
+
+The Emoticon renders multicolor SVG icons.
+
+<Preview>
+  <Story name="default">
+    <div>
+      <Emoticon name="reaction-happy" />
+      <br />
+      <Emoticon name="reaction-sad" />
+      <br />
+      <Emoticon name="reaction-okay" />
+    </div>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Jared
+- **Engineering**: Juan Pablo
+- **Usage**: HSApp, Docs
+
+<br />
+<br />
+
+### Props
+
+<Props of={Emoticon} />

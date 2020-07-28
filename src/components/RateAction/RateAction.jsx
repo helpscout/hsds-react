@@ -91,14 +91,15 @@ RateAction.defaultProps = {
 }
 
 RateAction.propTypes = {
+  /** Custom class names to be added to the component. */
   className: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
+  /** Determines the emoticon color. Default `true`. */
   isActive: PropTypes.bool,
+  /** Disables the emoticon from interactions. Default `false`. */
   disabled: PropTypes.bool,
-  innerRef: PropTypes.func,
-  onClick: PropTypes.func,
-  size: PropTypes.oneOf(['lg', 'md', 'sm']),
+  /** Determines the Emoticon image. One of 'reaction-happy', 'reaction-sad', 'reaction-okay' */
   name: PropTypes.oneOf([
     'happy',
     'sad',
@@ -107,6 +108,14 @@ RateAction.propTypes = {
     'reaction-sad',
     'reaction-okay',
   ]),
+  /** Adjusts the size of the component. One of 'lg', 'md', 'sm' */
+  size: PropTypes.oneOf(['lg', 'md', 'sm']),
+  /** Obtain the DOM node of the button */
+  innerRef: PropTypes.func,
+  /** Callback on click */
+  onClick: PropTypes.func,
+  /** Shows a big border around the icon */
+  withCircle: PropTypes.bool,
 }
 
 export default RateAction

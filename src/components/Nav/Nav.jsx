@@ -31,16 +31,17 @@ export class Nav extends React.Component {
   }
 }
 
+Nav.defaultProps = {
+  'data-cy': 'Nav',
+  innerRef: noop,
+}
+
 Nav.propTypes = {
+  /** The className of the component. */
   className: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
   innerRef: PropTypes.func,
-}
-
-Nav.defaultProps = {
-  'data-cy': 'Nav',
-  innerRef: noop,
 }
 
 export default Nav

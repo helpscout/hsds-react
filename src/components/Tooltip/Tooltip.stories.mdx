@@ -1,0 +1,50 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import Tooltip from './'
+import { Default, CustomContent } from './Tooltip.storiesHelpers'
+
+<Meta
+  title="🧬 Components/Overlay/Tooltip"
+  component={Tooltip}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A9763',
+    },
+  }}
+/>
+
+# Tooltip
+
+A Tooltip component is UI component that provides the user with additional context when engaged.
+
+<Preview>
+  <Story name="default">
+    <Default />
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: PL
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+Tooltip is powered by [react-tippy](https://github.com/atomiks/tippyjs-react) and [react-popper](https://github.com/popperjs/react-popper). You can see all available props that can be passed to [Tippy here](https://atomiks.github.io/tippyjs/v6/all-props).
+
+<Props of={Tooltip} />
+
+### Stories
+
+#### With custom content
+
+<Preview>
+  <Story name="with custom content">
+    <CustomContent />
+  </Story>
+</Preview>

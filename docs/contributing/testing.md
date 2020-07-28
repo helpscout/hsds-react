@@ -11,35 +11,13 @@ All of HSDS's component test files are scoped in the same directory as the compo
 ```
 hsds-react/
   └── components/
-      └── Button/
-          └── __tests__/
-              └── Button.test.js
-```
-
-## Initial files
-
-The first thing we'll need to do is create a dedicated `__tests__` directory under `Strong/`:
-
-```
-hsds-react/
-  └── components/
       └── Strong/
-          └── __tests__/
-```
-
-Under `__tests__/`, we'll need to create the main `Strong.test.js` file:
-
-```
-hsds-react/
-  └── components/
-      └── Strong/
-          └── __tests__/
-              └── Strong.test.js
+          └── Strong.test.js
 ```
 
 ## Base test code
 
-In our `__tests__/Strong.test.js` file, we'll need to add:
+In our `Strong.test.js` file, we'll need to add:
 
 ```jsx
 import React from 'react'
@@ -91,15 +69,11 @@ hsds-react/
 
 You can open the `index.html` in your browser to view the full report.
 
-Since Aug 31, 2017, HSDS has maintained [**100% code coverage**](https://coveralls.io/github/helpscout/hsds-react?branch=master) for tests. Because HSDS is a component library (rather than an App), it's testing coverage is stricter. Everything must be tested. There are no exceptions... Except...
+## Coverage
 
-## Exceptions
+We strive to have as much coverage as posible, and for that purpose we set the threshold at 95% coverage.
 
-...the strange or untestable cases within the [JSDOM](https://github.com/jsdom/jsdom) environment (which Jest runs on). (lol). Many DOM APIs are **not supported** in JSDOM (e.g. height/width calculations, scrolling, positioning, etc...).
-
-For anything that Jest/JSDOM cannot catch, use [`istanbul ignore`](https://github.com/gotwarlost/istanbul/blob/master/ignoring-code-for-coverage.md) to skip coverage checking.
-
-Fabulous 🤩! `Strong` is now super reliable, thanks to tests!
+Why not 100%? 100% coverage is a false metric and it does not indicate whether your component is _properly_ tested, and while we maintained 100% coverage for a long period we noticed an excessive usage of `istanbul ignore` directives, this wasn't because of lazyness but because some things are close to impossible to test in the Jest/JSDOM environment or because `istanbul` couldn't reach the code for some reason.
 
 ## Next
 
@@ -107,7 +81,7 @@ Let's [write some documentation](documentation.md) to make sure other folks know
 
 ## See also
 
-* [Jest](https://jestjs.io/)
-* [Enzyme](https://github.com/airbnb/enzyme)
-* [Istanbul](https://istanbul.js.org/)
-* [Coveralls](https://coveralls.io/)
+- [Jest](https://jestjs.io/)
+- [Enzyme](https://github.com/airbnb/enzyme)
+- [Istanbul](https://istanbul.js.org/)
+- [Coveralls](https://coveralls.io/)

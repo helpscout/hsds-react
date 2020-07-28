@@ -1,0 +1,191 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { select, text, boolean, number, array } from '@storybook/addon-knobs'
+import SpeechBubble from '@helpscout/hsds-illos/speech-bubble'
+import Modal from './'
+
+<Meta
+  title="🧬 Components/Overlay/Modal"
+  component={Modal}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A10019',
+    },
+  }}
+/>
+
+# Modal
+
+A Modal component presents content within a container on top of the application's main UI. Modals can have multiple instances, in which case they will overlay on top of each other. This component supports [`react-router`](https://github.com/ReactTraining/react-router).
+
+There are two versions of the Modal component, version 2 is the new standard (version 1 Modals will soon be deprecated).
+
+<Preview>
+  <Story name="default">
+    <Modal
+      kind={select(
+        'Kind',
+        {
+          alert: 'alert',
+          default: 'default',
+          branded: 'branded',
+          sequence: 'sequence',
+        },
+        'default'
+      )}
+      illo={<SpeechBubble />}
+      isOpen={false}
+      trigger={<button>open modal</button>}
+      title="Modal Title"
+      version={2}
+    >
+      <Modal.Body version={2}>
+        <p>
+          Lorem Lorem sit esse sit minim irure minim voluptate voluptate nostrud
+          aliqua. Do tempor qui ad sit amet labore magna proident adipisicing
+          nostrud. Adipisicing laborum veniam velit culpa deserunt proident
+          ipsum occaecat. Ex duis nulla tempor cillum mollit anim. Est qui
+          consectetur qui fugiat. Commodo tempor aute adipisicing dolore est.
+          Laboris do sint et reprehenderit consectetur amet cillum quis tempor
+          nulla qui ea.
+        </p>
+        <p>
+          Duis tempor deserunt qui Lorem sint exercitation voluptate duis Lorem.
+          Sunt et elit nulla consectetur labore. Proident dolore ullamco
+          excepteur enim aliqua incididunt culpa magna cupidatat magna non sit.
+          Occaecat laborum dolor nisi Lorem ex id occaecat incididunt cupidatat
+          ipsum amet nostrud.
+        </p>
+      </Modal.Body>
+      <Modal.ActionFooter
+        primaryButtonText={text('primaryButtonText', 'Primary')}
+        secondaryButtonText={text('secondaryButtonText', 'Secondary')}
+        secondaryButtonDisabled={boolean('secondaryButtonDisabled', false)}
+        primaryButtonDisabled={boolean('primaryButtonDisabled', false)}
+        state={select(
+          'State',
+          {
+            default: '',
+            danger: 'danger',
+          },
+          ''
+        )}
+      />
+    </Modal>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Jared
+- **Engineering**: Brit
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={Modal} />
+
+### SubComponents
+
+#### Modal.HeaderV2
+
+<Props of={Modal.HeaderV2} />
+
+#### Modal.Body
+
+<Props of={Modal.Body} />
+
+#### Modal.Content
+
+<Props of={Modal.Content} />
+
+#### Modal.ActionFooter
+
+<Props of={Modal.ActionFooter} />
+
+#### Modal.Footer
+
+<Props of={Modal.Footer} />
+
+#### Modal.Header (v1)
+
+<Props of={Modal.Header} />
+
+#### Modal.Overlay
+
+<Props of={Modal.Overlay} />
+
+### Stories
+
+#### Sequence
+
+<Preview>
+  <Story name="sequence">
+    <Modal
+      version={2}
+      isOpen={false}
+      kind="sequence"
+      description="We'll send a six digit code to confirm ownership."
+      numSteps={5}
+      step={2}
+      trigger={<button>Clicky</button>}
+      title="What email address would you like to connect?"
+    >
+      <Modal.Body version={2}>
+        <p>
+          Lorem Lorem sit esse sit minim irure minim voluptate voluptate nostrud
+          aliqua. Do tempor qui ad sit amet labore magna proident adipisicing
+          nostrud. Adipisicing laborum veniam velit culpa deserunt proident
+          ipsum occaecat. Ex duis nulla tempor cillum mollit anim. Est qui
+          consectetur qui fugiat. Commodo tempor aute adipisicing dolore est.
+          Laboris do sint et reprehenderit consectetur amet cillum quis tempor
+          nulla qui ea.
+        </p>
+        <p>
+          Duis tempor deserunt qui Lorem sint exercitation voluptate duis Lorem.
+          Sunt et elit nulla consectetur labore. Proident dolore ullamco
+          excepteur enim aliqua incididunt culpa magna cupidatat magna non sit.
+          Occaecat laborum dolor nisi Lorem ex id occaecat incididunt cupidatat
+          ipsum amet nostrud.
+        </p>
+      </Modal.Body>
+      <Modal.ActionFooter kind="default" primaryButtonText="Send code" />
+    </Modal>
+  </Story>
+</Preview>
+
+#### Version 1 (legacy)
+
+<Preview>
+  <Story name="Version 1 (legacy)">
+    <Modal
+      trigger={
+        <button onClick={e => e.preventDefault()}>Open dis modal</button>
+      }
+    >
+      <Modal.Body>
+        <Heading>Title</Heading>
+        <p>
+          Lorem Lorem sit esse sit minim irure minim voluptate voluptate nostrud
+          aliqua. Do tempor qui ad sit amet labore magna proident adipisicing
+          nostrud. Adipisicing laborum veniam velit culpa deserunt proident
+          ipsum occaecat. Ex duis nulla tempor cillum mollit anim. Est qui
+          consectetur qui fugiat. Commodo tempor aute adipisicing dolore est.
+          Laboris do sint et reprehenderit consectetur amet cillum quis tempor
+          nulla qui ea.
+        </p>
+        <p>
+          Duis tempor deserunt qui Lorem sint exercitation voluptate duis Lorem.
+          Sunt et elit nulla consectetur labore. Proident dolore ullamco
+          excepteur enim aliqua incididunt culpa magna cupidatat magna non sit.
+          Occaecat laborum dolor nisi Lorem ex id occaecat incididunt cupidatat
+          ipsum amet nostrud.
+        </p>
+      </Modal.Body>
+    </Modal>
+  </Story>
+</Preview>

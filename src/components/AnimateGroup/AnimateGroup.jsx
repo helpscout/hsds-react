@@ -8,33 +8,6 @@ import { getComponentKey } from '../../utilities/component'
 export const AnimateGroupContext = React.createContext({})
 
 export class AnimateGroup extends React.PureComponent {
-  static propTypes = {
-    appear: PropTypes.any,
-    className: PropTypes.string,
-    childFactory: PropTypes.func,
-    'data-cy': PropTypes.string,
-    easing: PropTypes.string,
-    enter: PropTypes.any,
-    exit: PropTypes.any,
-    delay: PropTypes.number,
-    duration: PropTypes.number,
-    sequence: PropTypes.string,
-    stagger: PropTypes.bool,
-    staggerDelay: PropTypes.number,
-    staggerDuration: PropTypes.number,
-    staggerMax: PropTypes.number,
-  }
-
-  static defaultProps = {
-    childFactory: child => child,
-    'data-cy': 'AnimateGroup',
-    delay: 0,
-    easing: 'ease-in-out',
-    stagger: false,
-    staggerDelay: 200,
-    staggerMax: 20,
-  }
-
   getAnimatePropsFromIndex = index => {
     const {
       duration: durationProp,
@@ -112,6 +85,43 @@ export class AnimateGroup extends React.PureComponent {
       </TransitionGroup>
     )
   }
+}
+
+AnimateGroup.defaultProps = {
+  childFactory: child => child,
+  'data-cy': 'AnimateGroup',
+  delay: 0,
+  easing: 'ease-in-out',
+  stagger: false,
+  staggerDelay: 200,
+  staggerMax: 20,
+}
+
+AnimateGroup.propTypes = {
+  /** Determines the CSS easing transition function. */
+  easing: PropTypes.string,
+  /** Callback function to adjust the child component for `react-transition-group`. */
+  childFactory: PropTypes.func,
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** The duration (in `ms`) to delay the child animations. */
+  delay: PropTypes.number,
+  /** The duration (in `ms`) for the child animation sequence. */
+  duration: PropTypes.number,
+  /** Names of animation styles to apply to child `Animate`. */
+  sequence: PropTypes.string,
+  /** Adds an incremental delay between child `Animate` components. */
+  stagger: PropTypes.bool,
+  /** Amount of time (`ms`) to delay for `stagger`. */
+  staggerDelay: PropTypes.number,
+  /** Time (`ms`) to for staggering animation durations. */
+  staggerDuration: PropTypes.number,
+  appear: PropTypes.any,
+  exit: PropTypes.any,
+  enter: PropTypes.any,
+  staggerMax: PropTypes.number,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default AnimateGroup

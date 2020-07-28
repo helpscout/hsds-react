@@ -32,15 +32,6 @@ const MessageCaption = (props, context) => {
   )
 }
 
-MessageCaption.propTypes = {
-  className: PropTypes.string,
-  children: PropTypes.any,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  size: PropTypes.string,
-  wordWrap: PropTypes.bool,
-}
-
 MessageCaption.contextTypes = {
   theme: noop,
 }
@@ -48,6 +39,17 @@ MessageCaption.contextTypes = {
 MessageCaption.defaultProps = {
   'data-cy': 'MessageCaption',
   wordWrap: true,
+}
+
+MessageCaption.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  /** Adjusts the font size of the component, see `Text` for options. */
+  size: PropTypes.string,
+  /** Breaks longer text content. */
+  wordWrap: PropTypes.bool,
 }
 
 export default MessageCaption

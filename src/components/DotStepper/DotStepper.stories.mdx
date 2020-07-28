@@ -1,0 +1,38 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { number } from '@storybook/addon-knobs'
+import DotStepper from './'
+
+<Meta
+  title="🧬 Components/Wayfinding/DotStepper"
+  component={DotStepper}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A11514',
+    },
+  }}
+/>
+
+# DotStepper
+
+Minimal visual representation of current and total number of steps in a multi-step form.
+
+<Preview>
+  <Story name="default">
+    <DotStepper numSteps={number('numSteps', 4)} step={number('step', 2)} />
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Maxi
+- **Usage**: HsApp (beacon wizard)
+
+<br />
+<br />
+
+### Props
+
+<Props of={DotStepper} />

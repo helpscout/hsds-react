@@ -17,14 +17,15 @@ class FormGroupGrid extends React.PureComponent {
   }
 }
 
+FormGroupGrid.defaultProps = {
+  'data-cy': 'FormGroupGrid',
+}
+
 FormGroupGrid.propTypes = {
+  /** Custom class names to be added to the component. */
   className: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
-}
-
-FormGroupGrid.defaultProps = {
-  'data-cy': 'FormGroupGrid',
 }
 
 export default FormGroupGrid

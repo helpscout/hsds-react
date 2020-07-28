@@ -1,0 +1,68 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { boolean, select } from '@storybook/addon-knobs'
+import Toolbar from './'
+
+<Meta title="🧬 Components/Conversation/Toolbar" component={Toolbar} />
+
+# Toolbar
+
+<Preview>
+  <Story name="default">
+    <Toolbar
+      shadow={boolean('shadow', false)}
+      seamless={boolean('seamless', false)}
+      theme={select(
+        'Theme',
+        {
+          default: 'default',
+          note: 'note',
+        },
+        'default'
+      )}
+    >
+      <Toolbar.Item>Left Content</Toolbar.Item>
+      <Toolbar.Item>Right Content</Toolbar.Item>
+    </Toolbar>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: ChatApp, Messages
+
+<br />
+<br />
+
+### Props
+
+<Props of={Toolbar} />
+
+## Toolbar.Block
+
+A Toolbar.Block component is a layout-based component. This component fills up space between or around `Toolbar.Item`.
+
+## Toolbar.Item
+
+A Toolbar.Item component is a layout-based component. This component takes up as much space as it's content requires.
+
+### Stories
+
+#### Placement
+
+<Preview>
+  <Story name="Placement">
+    <div>
+      <Toolbar placement="top">
+        <Toolbar.Item>Left Content</Toolbar.Item>
+        <Toolbar.Item>Right Content</Toolbar.Item>
+      </Toolbar>
+      <br />
+      <Toolbar placement="bottom">
+        <Toolbar.Item>Left Content</Toolbar.Item>
+        <Toolbar.Item>Right Content</Toolbar.Item>
+      </Toolbar>
+    </div>
+  </Story>
+</Preview>

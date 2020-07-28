@@ -140,6 +140,136 @@ export class Dropdown extends React.PureComponent {
   }
 }
 
+Dropdown.defaultProps = {
+  ...initialState,
+  allowMultipleSelection: false,
+  contentWindow: window,
+  'data-cy': 'Dropdown',
+  disabled: false,
+  innerRef: noop,
+  menuRef: noop,
+  setMenuNode: noop,
+  setTriggerNode: noop,
+  triggerRef: noop,
+}
+
+Dropdown.propTypes = {
+  /** Maximum height for the menu. */
+  maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Maximum width for the menu. */
+  maxWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Minimum height for the menu. */
+  minHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Minimum width for the menu. */
+  minWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Width for the menu. */
+  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  className: PropTypes.string,
+  closeDropdown: PropTypes.func,
+  enableLeftRightArrowNavigation: PropTypes.bool,
+  getState: PropTypes.func,
+  /** ClassName for an active item. */
+  activeClassName: PropTypes.string,
+  /** Allows selection of multiple items from the dropdown (when stateful) */
+  allowMultipleSelection: PropTypes.bool,
+  /** Customize the Dropdown Card border color. */
+  cardBorderColor: PropTypes.string,
+  /** Render prop to customize the Dropdown contents. */
+  children: PropTypes.func,
+  /** Removes selected item on select. */
+  clearOnSelect: PropTypes.bool,
+  /** Closes Dropdown on select. */
+  closeOnSelect: PropTypes.bool,
+  /** Custom window object (e.g. iframe window object) */
+  contentWindow: PropTypes.any,
+  /** Preferred drop direction for the menu. */
+  direction: PropTypes.oneOf(['left', 'right', 'up', 'down']),
+  /** Disable the dropdown trigger so it can't be clicked. */
+  disabled: PropTypes.bool,
+  /** Changes the dropdown to drop upwards. */
+  dropUp: PropTypes.bool,
+  /** Enables Tab keypresses to navigate through items. */
+  enableTabNavigation: PropTypes.bool,
+  /** Node to bind global events. */
+  envNode: PropTypes.any,
+  /** ClassName for a focused item. */
+  focusClassName: PropTypes.string,
+  /** Forces the dropdown to always drop downwards. Overrides `dropUp`. */
+  forceDropDown: PropTypes.bool,
+  /** Current selected item index. */
+  index: PropTypes.string,
+  /** Used when constructing a filterable Dropdown. */
+  inputValue: PropTypes.string,
+  /** ID of the component. */
+  id: PropTypes.string,
+  /** Retrieves the Dropdown DOM node. */
+  innerRef: PropTypes.func,
+  /** Items to render. */
+  items: PropTypes.arrayOf(PropTypes.any),
+  /** Renders the loading UI. */
+  isLoading: PropTypes.bool,
+  /** Focuses the selected item when the dropdown opens. */
+  isFocusSelectedItemOnOpen: PropTypes.bool,
+  /** Selects the first item when the dropdown opens. */
+  isSelectFirstItemOnOpen: PropTypes.bool,
+  /** Callback when the Trigger blurs. */
+  onBlur: PropTypes.func,
+  /** Callback when the Trigger focuses. */
+  onFocus: PropTypes.func,
+  /** Callback when the dropdown opens. */
+  onOpen: PropTypes.func,
+  /** Callback when the dropdown closes. */
+  onClose: PropTypes.func,
+  /** Callback when an item is selected/deselected. */
+  onSelect: PropTypes.func,
+  /** Retrieves the Dropdown Menu DOM node. */
+  menuRef: PropTypes.func,
+  /** ClassName for an open item (with a sub menu). */
+  openClassName: PropTypes.string,
+  /** Renders menu as position `fixed`. Otherwise, it's `absolute`. */
+  positionFixed: PropTypes.bool,
+  /** Callback to render the empty UI. */
+  renderEmpty: PropTypes.any,
+  /** Callback to render the loading UI. */
+  renderLoading: PropTypes.any,
+  /** Callback to customize how an item renders. */
+  renderItem: PropTypes.any,
+  /** Callback to customize how an trigger renders. */
+  renderTrigger: PropTypes.any,
+  /** Controls the dropdown and sets the "active" item. */
+  selectedItem: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  /** Callback to determine if the dropdown should update it's `up`/`down` drop direction. Default returns `true`. */
+  shouldDropDirectionUpdate: PropTypes.func,
+  /** Callback to determine if the dropdown refocus the trigger on close. Default returns `true`. */
+  shouldRefocusOnClose: PropTypes.func,
+  /** Callback when the store state changes. Can be used to customize Dropdown state. */
+  stateReducer: PropTypes.func,
+  /** Subscribes to internal Dropdown state changes. */
+  subscribe: PropTypes.func,
+  /** The text to render into the trigger. */
+  trigger: PropTypes.any,
+  /** Retrieves the Dropdown Trigger DOM node. */
+  triggerRef: PropTypes.func,
+  /** Inline styles for the Trigger wrapper. */
+  triggerStyle: PropTypes.any,
+  /** Scroll locks the Dropdown menu. */
+  withScrollLock: PropTypes.bool,
+  /** CSS `z-index` for the menu. */
+  zIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  isOpen: PropTypes.bool,
+  label: PropTypes.string,
+  menuId: PropTypes.string,
+  menuOffsetTop: PropTypes.number,
+  onMenuMount: PropTypes.func,
+  onMenuUnmount: PropTypes.func,
+  previousIndex: PropTypes.any,
+  selectionClearer: PropTypes.string,
+  setMenuNode: PropTypes.func,
+  setTriggerNode: PropTypes.func,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+}
+
 const ConnectedDropdown = connect(
   // mapStateToProps
   state => {
@@ -159,85 +289,6 @@ const ConnectedDropdown = connect(
     setTriggerNode,
   }
 )(Dropdown)
-
-const DropdownMenuDimensions = {
-  maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  maxWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  minHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  minWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-}
-
-Dropdown.propTypes = Object.assign({}, DropdownMenuDimensions, {
-  activeClassName: PropTypes.string,
-  allowMultipleSelection: PropTypes.bool,
-  cardBorderColor: PropTypes.string,
-  children: PropTypes.func,
-  className: PropTypes.string,
-  clearOnSelect: PropTypes.bool,
-  closeDropdown: PropTypes.func,
-  closeOnSelect: PropTypes.bool,
-  contentWindow: PropTypes.any,
-  direction: PropTypes.oneOf(['left', 'right', 'up', 'down']),
-  disabled: PropTypes.bool,
-  dropUp: PropTypes.bool,
-  enableLeftRightArrowNavigation: PropTypes.bool,
-  enableTabNavigation: PropTypes.bool,
-  envNode: PropTypes.any,
-  focusClassName: PropTypes.string,
-  forceDropDown: PropTypes.bool,
-  getState: PropTypes.func,
-  id: PropTypes.string,
-  index: PropTypes.string,
-  innerRef: PropTypes.func,
-  inputValue: PropTypes.string,
-  isLoading: PropTypes.bool,
-  isOpen: PropTypes.bool,
-  isFocusSelectedItemOnOpen: PropTypes.bool,
-  isSelectFirstItemOnOpen: PropTypes.bool,
-  items: PropTypes.arrayOf(PropTypes.any),
-  label: PropTypes.string,
-  menuId: PropTypes.string,
-  menuOffsetTop: PropTypes.number,
-  menuRef: PropTypes.func,
-  onBlur: PropTypes.func,
-  onClose: PropTypes.func,
-  onFocus: PropTypes.func,
-  onMenuMount: PropTypes.func,
-  onMenuUnmount: PropTypes.func,
-  onOpen: PropTypes.func,
-  onSelect: PropTypes.func,
-  openClassName: PropTypes.string,
-  positionFixed: PropTypes.bool,
-  previousIndex: PropTypes.any,
-  renderEmpty: PropTypes.any,
-  renderItem: PropTypes.any,
-  renderLoading: PropTypes.any,
-  renderTrigger: PropTypes.any,
-  selectedItem: PropTypes.any,
-  selectionClearer: PropTypes.string,
-  setMenuNode: PropTypes.func,
-  setTriggerNode: PropTypes.func,
-  shouldDropDirectionUpdate: PropTypes.func,
-  stateReducer: PropTypes.func,
-  trigger: PropTypes.any,
-  triggerRef: PropTypes.func,
-  triggerStyle: PropTypes.any,
-  withScrollLock: PropTypes.bool,
-})
-
-Dropdown.defaultProps = {
-  ...initialState,
-  allowMultipleSelection: false,
-  contentWindow: window,
-  'data-cy': 'Dropdown',
-  disabled: false,
-  innerRef: noop,
-  menuRef: noop,
-  setMenuNode: noop,
-  setTriggerNode: noop,
-  triggerRef: noop,
-}
 
 ConnectedDropdown.propTypes = Dropdown.propTypes
 

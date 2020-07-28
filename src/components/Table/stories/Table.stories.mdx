@@ -1,0 +1,166 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import Table from '../'
+import {
+  createFakeCustomers,
+  defaultColumns,
+  compoundColumns,
+} from '../Table.testUtils'
+import TableWithPagination from './TableWithPagination'
+import TableWithSorting from './TableWithSorting'
+
+<Meta
+  title="🧬 Components/Structural/Table"
+  component={Table}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A10821',
+    },
+  }}
+/>
+
+# Table
+
+Renders a table, you know with columns and rows and such.
+
+It has some special powers though.
+
+At it simplest:
+
+```jsx
+<Table columns={columns} data={data} />
+```
+
+`columns` is a list (array) of objects that describe each column to render.
+
+`data` is a list of objects, one row per object will be rendered. Columns and Data should be related.
+
+<Preview>
+  <Story name="default">
+    <TableWithPagination />
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: CustomerList, member-plan, customers, reports (docs)
+
+<br />
+<br />
+
+### Props
+
+<Props of={Table} />
+
+## Columns
+
+Columns is a list of objects that configure each column, here you can customize how to render cells, sortability and more.
+
+Full list of acceptable fields 👇:
+
+- `columnKey`: This value ties to corresponding data field(s), can be a string for a single data field, or a list (array) to get multiple data fields
+- `title`: The string that renders by default in the header for this column
+- `width`: Column width, ideally the sum of all the columns should be 100%
+- `align`: Horizontal cell alignment for this column, one of "left" (default), "center" or "right"
+- `renderHeaderCell`: To customize how to render the column header. A function that takes the column object and returns a React Component/Element
+- `renderCell`: To customize how each cell renders it corresponding data on this column. A function that takes the corresponding data and returns a React Component/Element
+- `sorter`: A function that instructs how to sort the data based on this column
+- `sortKey`: If this column contains more than one columnKey, sorting will be based on this value which should exist in the list of Column Keys for this column.
+
+Note: only `columnKey` is required
+
+Example:
+
+```jsx
+const columns = [
+  {
+    title: 'Company',
+    columnKey: 'companyName',
+    width: '50%',
+    align: 'center',
+    renderCell: ({ companyName }) => <strong>companyName</strong>
+    renderHeaderCell: column => <h3>{column.title}</h3>
+  },
+  {
+    title: 'Customer',
+    columnKey: ['name', 'email'],
+    width: '50%',
+    align: 'left',
+    renderCell: ({ name, email }) => (
+        <div>
+          <strong>{name}</strong>
+          <br />
+          <span>{email}</span>
+        </div>
+      ),
+    sorter: function sortByName() {/*...*/},
+    sortKey: 'name'
+  },
+]
+
+const data = [{
+  id: 0,
+  name: 'Walter White',
+  companyName: 'Heisenberg Inc',
+  email: 'walt@babyblue.net',
+  className: 'criminal' // Note: classNames on row objects can be used to target row specific styling
+}, {}, {}]
+```
+
+## Themes
+
+Built in themes: "default" and "alternative"
+
+Example of custom theme:
+
+```js
+const purpleTheme = {
+  fontColorHeader: 'rebeccapurple',
+  fontColorBody: 'rebeccapurple',
+  fontColorAlternate: 'plum',
+  bgHeader: 'gold',
+  bgColor: 'plum',
+  bgColorHover: 'violet',
+  bgAlternate: 'rebeccapurple',
+  borderTableBody: '1px solid blueviolet',
+  borderTableHeader: '1px solid blueviolet',
+  borderRows: '1px solid blueviolet',
+  borderColumns: '1px solid blueviolet',
+}
+```
+
+### Stories
+
+#### With compound columns
+
+<Preview>
+  <Story name="with compound columns">
+    <Table
+      columns={compoundColumns}
+      data={createFakeCustomers({ amount: 10 })}
+    />
+  </Story>
+</Preview>
+
+#### With sorting
+
+<Preview>
+  <Story name="with sorting">
+    <TableWithSorting />
+  </Story>
+</Preview>
+
+#### Expandable
+
+<Preview>
+  <Story name="expandable">
+    <Table
+      columns={defaultColumns}
+      data={createFakeCustomers({ amount: 10 })}
+      maxRowsToDisplay={4}
+    />
+  </Story>
+</Preview>

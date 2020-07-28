@@ -45,19 +45,6 @@ class ModalOverlay extends React.PureComponent {
   }
 }
 
-ModalOverlay.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  onClick: PropTypes.func,
-  isHsApp: PropTypes.bool,
-  isOpen: PropTypes.bool,
-  overlayAnimationDelay: PropTypes.number,
-  overlayAnimationDuration: PropTypes.number,
-  overlayAnimationEasing: PropTypes.string,
-  overlayAnimationSequence: PropTypes.any,
-}
-
 ModalOverlay.defaultProps = {
   'data-cy': 'ModalOverlay',
   onClick: noop,
@@ -67,6 +54,26 @@ ModalOverlay.defaultProps = {
   overlayAnimationDuration: 200,
   overlayAnimationEasing: 'ease',
   overlayAnimationSequence: 'fade',
+}
+
+ModalOverlay.propTypes = {
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  /** Callback on click */
+  onClick: PropTypes.func,
+  isHsApp: PropTypes.bool,
+  /** Shows/hides the component. */
+  isOpen: PropTypes.bool,
+  /** Custom animation delay */
+  overlayAnimationDelay: PropTypes.number,
+  /** Custom animation duration */
+  overlayAnimationDuration: PropTypes.number,
+  /** Custom animation easing */
+  overlayAnimationEasing: PropTypes.string,
+  /** Custom animation sequence */
+  overlayAnimationSequence: PropTypes.any,
 }
 
 export default ModalOverlay

@@ -12,7 +12,6 @@ import { noop } from '../../utilities/other'
 import { FieldCloseWrapperUI } from './ConditionField.css'
 
 export class ConditionField extends React.PureComponent {
-  static className = 'c-ConditionField'
   static Static = ConditionFieldStatic
   static Group = ConditionFieldGroup
   static Block = Flexy.Block
@@ -20,7 +19,7 @@ export class ConditionField extends React.PureComponent {
 
   getClassName() {
     const { className } = this.props
-    return classNames(ConditionField.className, className)
+    return classNames('c-ConditionField', className)
   }
 
   renderOperator() {
@@ -77,20 +76,6 @@ export class ConditionField extends React.PureComponent {
   }
 }
 
-ConditionField.propTypes = {
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  innerRef: PropTypes.func,
-  closeIcon: PropTypes.string,
-  isWithOr: PropTypes.bool,
-  isWithRemove: PropTypes.bool,
-  onRemove: PropTypes.func,
-  removeTitle: PropTypes.string,
-  tooltipDelay: PropTypes.number,
-  tooltipDuration: PropTypes.number,
-}
-
 ConditionField.defaultProps = {
   closeIcon: 'collapse',
   'data-cy': 'ConditionField',
@@ -101,6 +86,28 @@ ConditionField.defaultProps = {
   removeTitle: 'Remove',
   tooltipDelay: 800,
   tooltipDuration: 60,
+}
+
+ConditionField.propTypes = {
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  /** The className of the component. */
+  className: PropTypes.string,
+  /** The [Icon](../Icon) to render. */
+  closeIcon: PropTypes.string,
+  /** Retrieve the inner DOM node. */
+  innerRef: PropTypes.func,
+  isWithOr: PropTypes.bool,
+  /** Whether to show the remove button or not. */
+  isWithRemove: PropTypes.bool,
+  /** Callback when the remove IconButton is clicked. */
+  onRemove: PropTypes.func,
+  /** Title to show in the Tooltip on the remove IconButton. */
+  removeTitle: PropTypes.string,
+  /** Delay before the Tooltip renders, on hover. */
+  tooltipDelay: PropTypes.number,
+  /** Animation duration when the Tooltip renders, on hover. */
+  tooltipDuration: PropTypes.number,
 }
 
 export default ConditionField

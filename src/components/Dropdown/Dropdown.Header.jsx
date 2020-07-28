@@ -26,17 +26,17 @@ export class DropdownHeader extends React.PureComponent {
   }
 }
 
+DropdownHeader.defaultProps = {
+  'data-cy': 'DropdownHeader',
+  innerRef: noop,
+}
+
 DropdownHeader.propTypes = {
   className: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
   innerRef: PropTypes.func,
   label: PropTypes.string,
-}
-
-DropdownHeader.defaultProps = {
-  'data-cy': 'DropdownHeader',
-  innerRef: noop,
 }
 
 export default DropdownHeader

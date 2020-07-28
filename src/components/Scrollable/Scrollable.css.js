@@ -22,9 +22,13 @@ export const ContentUI = styled('div')`
   overflow-x: ${props => (props.fadeSides ? 'auto' : 'hidden')};
   overflow-y: auto;
   overscroll-behavior-x: ${props =>
-    props.isScrollLocked && props.fadeSides ? 'contain' : 'auto'};
+    props.isScrollLocked && props.fadeSides
+      ? 'contain !important'
+      : 'auto !important'};
   overscroll-behavior-y: ${props =>
-    props.isScrollLocked && props.fade ? 'contain' : 'auto'};
+    props.isScrollLocked && props.fade
+      ? 'contain !important'
+      : 'auto !important'};
   position: relative;
   width: 100%;
   will-change: scroll-position;

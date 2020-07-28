@@ -1,0 +1,31 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import Image from './'
+
+<Meta title="🛠 Utilities/Image" component={Image} />
+
+# Image
+
+The Image component is a very light-weight wrapper for the default HTML `<img>` selector.
+
+<Preview>
+  <Story name="default">
+    <Image
+      src="https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto"
+      alt="Not now, Arctic Puffin!"
+      title="Not now, Arctic Puffin!"
+      width="300"
+    />
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<Props of={Image} />

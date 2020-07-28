@@ -36,6 +36,13 @@ class Overlay extends React.PureComponent {
   }
 }
 
+Overlay.defaultProps = {
+  'data-cy': 'Overlay',
+  fixed: false,
+  isHsApp: false,
+  transparent: false,
+}
+
 Overlay.propTypes = {
   children: PropTypes.any,
   className: PropTypes.string,
@@ -44,13 +51,6 @@ Overlay.propTypes = {
   isHsApp: PropTypes.bool,
   fixed: PropTypes.bool,
   transparent: PropTypes.bool,
-}
-
-Overlay.defaultProps = {
-  'data-cy': 'Overlay',
-  fixed: false,
-  isHsApp: false,
-  transparent: false,
 }
 
 export default Overlay

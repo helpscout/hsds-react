@@ -434,6 +434,7 @@ export class Input extends React.PureComponent {
           animationDelay={0}
           animationDuration={0}
           appendTo={document.body}
+          closeOnContentClick={true}
           display="block"
           placement="top-end"
           title={errorMessage}
@@ -705,74 +706,6 @@ export class Input extends React.PureComponent {
   }
 }
 
-Input.propTypes = {
-  action: PropTypes.any,
-  autoFocus: PropTypes.bool,
-  autoFocusTimeoutId: PropTypes.any,
-  charValidatorLimit: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  className: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
-  disabled: PropTypes.bool,
-  errorIcon: PropTypes.string,
-  errorMessage: PropTypes.string,
-  forceAutoFocusTimeout: PropTypes.number,
-  hasInsertCarriageReturns: PropTypes.bool,
-  helpText: PropTypes.any,
-  hintText: PropTypes.any,
-  id: PropTypes.string,
-  inlinePrefix: PropTypes.any,
-  inlineSuffix: PropTypes.any,
-  innerRef: PropTypes.func,
-  inputRef: PropTypes.func,
-  inputType: PropTypes.string,
-  isFirst: PropTypes.bool,
-  isFocused: PropTypes.bool,
-  isLast: PropTypes.bool,
-  isNotOnly: PropTypes.bool,
-  isSubtleReadOnly: PropTypes.bool,
-  label: PropTypes.any,
-  maxLength: PropTypes.number,
-  maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  modalhelpText: PropTypes.string,
-  moveCursorToEnd: PropTypes.bool,
-  multiline: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-  name: PropTypes.string,
-  offsetAmount: PropTypes.number,
-  onBlur: PropTypes.func,
-  onChange: PropTypes.func,
-  onEnterDown: PropTypes.func,
-  onEnterUp: PropTypes.func,
-  onFocus: PropTypes.func,
-  onKeyDown: PropTypes.func,
-  onKeyUp: PropTypes.func,
-  onScroll: PropTypes.func,
-  onResize: PropTypes.func,
-  onStartTyping: PropTypes.func,
-  onStopTyping: PropTypes.func,
-  onWheel: PropTypes.func,
-  placeholder: PropTypes.string,
-  prefix: PropTypes.any,
-  readOnly: PropTypes.bool,
-  refApplyCallStopTyping: PropTypes.func,
-  removeStateStylesOnFocus: PropTypes.bool,
-  resizable: PropTypes.bool,
-  scrollLock: PropTypes.bool,
-  seamless: PropTypes.bool,
-  size: PropTypes.string,
-  state: PropTypes.string,
-  style: PropTypes.any,
-  suffix: PropTypes.any,
-  tabIndex: PropTypes.number,
-  type: PropTypes.string,
-  typingThrottleInterval: PropTypes.number,
-  typingTimeoutDelay: PropTypes.number,
-  value: PropTypes.any,
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  withCharValidator: PropTypes.bool,
-  withTypingEvent: PropTypes.bool,
-}
-
 Input.defaultProps = {
   autoFocus: false,
   charValidatorLimit: 500,
@@ -810,7 +743,6 @@ Input.defaultProps = {
   resizable: false,
   scrollLock: false,
   seamless: false,
-  state: '',
   style: {},
   type: 'text',
   typingThrottleInterval: 500,
@@ -818,6 +750,123 @@ Input.defaultProps = {
   value: '',
   withCharValidator: false,
   withTypingEvent: false,
+}
+
+Input.propTypes = {
+  /** Embedded actions for the Input. */
+  action: PropTypes.any,
+  /** Automatically focuses the input. */
+  autoFocus: PropTypes.bool,
+  autoFocusTimeoutId: PropTypes.any,
+  /** How many chars are allowed to be input. */
+  charValidatorLimit: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Custom class names to be added to the component. */
+  className: PropTypes.string,
+  /** Disable the input. */
+  disabled: PropTypes.bool,
+  /** Icon that renders when the state is `error`. */
+  errorIcon: PropTypes.string,
+  /** Error message that renders into a Tooltip. */
+  errorMessage: PropTypes.string,
+  /** Determines the amount of time (`ms`) for the component to focus on mount. */
+  forceAutoFocusTimeout: PropTypes.number,
+  /** If `true` and `enter + special` key is pressed, a return will be inserted */
+  hasInsertCarriageReturns: PropTypes.bool,
+  /** Displays text underneath input. */
+  helpText: PropTypes.any,
+  /** Displays text above input. */
+  hintText: PropTypes.any,
+  /** ID for the input. */
+  id: PropTypes.string,
+  /** Text to appear before the input. */
+  inlinePrefix: PropTypes.string,
+  /** Text to after before the input. */
+  inlineSuffix: PropTypes.string,
+  /** Retrieves the `input` DOM node. */
+  inputRef: PropTypes.func,
+  /** Helps render component without right borders. */
+  isFirst: PropTypes.bool,
+  /** Determines if the component is focused. */
+  isFocused: PropTypes.bool,
+  /** Helps render component without left borders. */
+  isLast: PropTypes.bool,
+  /** Helps render component without left/right borders. */
+  isNotOnly: PropTypes.bool,
+  /** Label for the input. */
+  label: PropTypes.any,
+  /** Sets the `max-height` for the input. Used with `multiline`. */
+  maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Moves the selection cursor to the end, on focus. Default `false`. */
+  moveCursorToEnd: PropTypes.bool,
+  /** Transforms input into an auto-expanding textarea. */
+  multiline: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+  /** Name for the input. */
+  name: PropTypes.string,
+  /** Number of characters to offset (bottom-right) for multiline resizing. */
+  offsetAmount: PropTypes.number,
+  /** Callback when input is blurred. */
+  onBlur: PropTypes.func,
+  /** Callback when input value is changed. */
+  onChange: PropTypes.func,
+  /** Callback when `Enter` is pressed down. */
+  onEnterDown: PropTypes.func,
+  /** Callback when `Enter` is pressed up. */
+  onEnterUp: PropTypes.func,
+  /** Callback when input is focused. */
+  onFocus: PropTypes.func,
+  /** Callback when input is resized. */
+  onResize: PropTypes.func,
+  /** Callback when user starts typing, rate limited by `typingThrottleInterval` */
+  onStartTyping: PropTypes.func,
+  /** Callback when user stops typing after delay of `typingTimeoutDelay`. */
+  onStopTyping: PropTypes.func,
+  /** Placeholder text for the input. */
+  placeholder: PropTypes.string,
+  /** Component to render before the input. */
+  prefix: PropTypes.any,
+  /** Disable editing of the input. */
+  readOnly: PropTypes.bool,
+  /** Exposes `CallStopTyping`, so that it can be called outside itself. */
+  refApplyCallStopTyping: PropTypes.func,
+  /** Removes the `state` styles on input focus. Default `false`. */
+  removeStateStylesOnFocus: PropTypes.bool,
+  /** Enables resizing for the textarea (only enabled for `multiline`). */
+  resizable: PropTypes.bool,
+  /** Enables scrollLock for component. Default `false`. */
+  scrollLock: PropTypes.bool,
+  /** Removes the border around the input. */
+  seamless: PropTypes.bool,
+  /** Determines the size of the input. */
+  size: PropTypes.oneOf(['xs', 'xssm', 'sm', 'md', 'lg']),
+  /** Change input to state color. */
+  state: PropTypes.oneOf(['error', 'success', 'warning']),
+  /** Component to render after the input. */
+  suffix: PropTypes.any,
+  /** Determines the input type. */
+  inputType: PropTypes.string,
+  /** Determines the rate limiting interval for firing `onStartTyping`. */
+  typingThrottleInterval: PropTypes.number,
+  /** Determines the delay of when `onStopTyping` fires after typing stops. */
+  typingTimeoutDelay: PropTypes.number,
+  /** Initial value of the input. */
+  value: PropTypes.any,
+  /** Adds a char validator UI to the input. */
+  withCharValidator: PropTypes.bool,
+  /** Enables typing `onStartTyping` and `onStopTyping` event callbacks. */
+  withTypingEvent: PropTypes.bool,
+  innerRef: PropTypes.func,
+  isSubtleReadOnly: PropTypes.bool,
+  maxLength: PropTypes.number,
+  modalhelpText: PropTypes.string,
+  onKeyDown: PropTypes.func,
+  onKeyUp: PropTypes.func,
+  onScroll: PropTypes.func,
+  onWheel: PropTypes.func,
+  tabIndex: PropTypes.number,
+  type: PropTypes.string,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Input

@@ -31,8 +31,9 @@ Under our newly created `Strong/` directory, we'll need to create a few files:
 
 - `index.js`
 - `Strong.jsx`
-
-If your component will be styled (not all are!) add a `styles` folder and put a `Strong.css.js` file in it
+- `Strong.css.js`
+- `Strong.test.js`
+- `Strong.stories.mdx`
 
 ```
 hsds-react/
@@ -42,12 +43,22 @@ hsds-react/
               └── Strong.css.js
               ├── index.js
               ├── Strong.jsx
+              ├── Strong.test.js
+              ├── Strong.stories.mdx
               └── Strong.utils.js
 ```
 
 The **`index.js`** file is the main file allow the consuming App/component to use `Strong`.
 
-The **`String.jsx`** file our actual React component.
+The **`Strong.jsx`** file our actual React component.
+
+### Component generator
+
+Using the provided component generator npm script creates templates that includes all the files for you (component jsx, css, stories and test files) that follow our general patterns.
+
+```bash
+  npm run remake --name="Strong"
+```
 
 ## Base component code
 
@@ -55,15 +66,12 @@ Add the starting React component boilerplate for `Strong.jsx`:
 
 ```jsx
 import React from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
-import { StrongUI } from './styles/Strong.css.js'
+import { StrongUI } from './Strong.css.js'
 
 class Strong extends React.PureComponent {
-  static defaultProps = {
-    isSuperBold: false,
-  }
-
   render() {
     const { children, className, ...rest } = this.props
 
@@ -79,6 +87,18 @@ class Strong extends React.PureComponent {
       </StrongUI>
     )
   }
+}
+
+Strong.defaultProps = {
+  isSuperBold: false,
+  'data-cy': 'Strong',
+}
+
+Strong.propTypes = {
+  /** Awesome prop to make this component super bold */
+  isSuperBold: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
 }
 
 export default Strong
@@ -180,40 +200,6 @@ export { default as Strong } from './Strong'
 ...
 ```
 
-**Strong.jsx**
-
-```jsx
-import React from 'react'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames'
-import { namespaceComponent } from '../../utilities/component'
-import { StrongUI } from './styles/Strong.css.js'
-
-class Strong extends React.PureComponent {
-  static defaultProps = {
-    isSuperBold: false,
-  }
-
-  render() {
-    const { children, className, ...rest } = this.props
-
-    const componentClassName = classNames(
-      'c-Strong',
-      isSuperBold && 'is-superBold',
-      className
-    )
-
-    return (
-      <StrongUI {...getValidProps(rest)} className={componentClassName}>
-        {children}
-      </StrongUI>
-    )
-  }
-}
-
-export default Strong
-```
-
 And that's it 🙏! You've successfully created, hooked up, and exported our new `Strong` component 💪.
 
 ## About naming conventions
@@ -223,6 +209,8 @@ You'll quickly notice a pattern to everything we add inside a component. The rea
 Below is a summary of things to pay attention to with examples of a slightly more complex component:
 
 #### Folder Structure
+
+We try to follow a one-level folder structure for the most part but sometimes a component is too complex and composed of multiple smaller components, to give structure add folders as needed, for example:
 
 ```
 hsds-react/
@@ -235,6 +223,9 @@ hsds-react/
               └── styles/
                   ├── Table.Cell.css.js
                   └── Table.css.js
+              └── stories/
+                  ├── Table.stories.mdx
+                  └── TableBody.stories.mdx
               ├── index.js
               ├── Table.jsx
               ├── Table.Cell.jsx

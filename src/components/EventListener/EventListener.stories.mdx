@@ -1,0 +1,23 @@
+import { Meta, Props } from '@storybook/addon-docs/blocks'
+import EventListener from './'
+
+<Meta component={EventListener} title="🛠 Utilities/EventListener" />
+
+# EventListener
+
+A EventListener is a helper component that automatically handles the binding and unbinding of events.
+
+EventListener is used as a child component, as it's `window` on/off bindings happen automatically as the parent component mounts and unmounts.
+
+## Example
+
+```jsx
+<MyComponent>
+  <EventListener event="resize" handler={surprise} />
+  ...
+</MyComponent>
+```
+
+## Props
+
+<Props of={EventListener} />
