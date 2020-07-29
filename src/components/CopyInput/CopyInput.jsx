@@ -35,7 +35,7 @@ class CopyInput extends React.PureComponent {
   }
 
   render() {
-    const { className, ...rest } = this.props
+    const { className, buttonLabel, ...rest } = this.props
     const componentClassName = classNames('c-CopyInput', className)
 
     return (
@@ -59,8 +59,8 @@ class CopyInput extends React.PureComponent {
             style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
             tabIndex={'-1'}
             innerRef={node => (this.copyButtonNode = node)}
-            icon="copy-small"
-            label={false}
+            icon={buttonLabel ? null : 'copy-small'}
+            label={buttonLabel}
           />
         }
       />
@@ -69,6 +69,7 @@ class CopyInput extends React.PureComponent {
 }
 
 CopyInput.defaultProps = {
+  buttonLabel: null,
   copyToClipboard: true,
   'data-cy': 'CopyInput',
   innerRef: noop,
@@ -78,6 +79,8 @@ CopyInput.defaultProps = {
 }
 
 CopyInput.propTypes = {
+  /** Button label to use in place of copy icon (default is no label) */
+  buttonLabel: PropTypes.string,
   /** Enables copying to clipboard. */
   copyToClipboard: PropTypes.bool,
   /** Custom class names to be added to the component. */
