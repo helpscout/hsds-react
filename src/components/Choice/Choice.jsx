@@ -38,12 +38,28 @@ class Choice extends React.PureComponent {
     this.props.onChange(value, checked)
   }
 
+  handleOnEnter = (value, checked) => {
+    this.setState({ checked })
+
+    this.props.onEnter(value, checked)
+  }
+
   handleOnBlur = event => {
     this.props.onBlur(event)
   }
 
   handleOnFocus = event => {
     this.props.onFocus(event)
+  }
+
+  handleOnEnterWithContext = contextProps => {
+    return (...args) => {
+      this.handleOnEnter.apply(null, args)
+
+      if (contextProps.onEnter) {
+        contextProps.onEnter.apply(null, args)
+      }
+    }
   }
 
   handleOnBlurWithContext = contextProps => {
@@ -169,6 +185,7 @@ class Choice extends React.PureComponent {
       onBlur: this.handleOnBlurWithContext(contextProps),
       onFocus: this.handleOnFocusWithContext(contextProps),
       onChange: this.handleOnChangeWithContext(contextProps),
+      onEnter: this.handleOnEnterWithContext(contextProps),
       readOnly,
       state,
       type,
@@ -274,6 +291,7 @@ Choice.defaultProps = {
   onBlur: noop,
   onChange: noop,
   onFocus: noop,
+  onEnter: noop,
   inputRef: noop,
   innerRef: noop,
   isBlock: false,
@@ -315,6 +333,8 @@ Choice.propTypes = {
   onChange: PropTypes.func,
   /** Callback when the input is focused. */
   onFocus: PropTypes.func,
+  /** Callback when pressing enter whenthe input is focused. */
+  onEnter: PropTypes.func,
   /** Disable editing of the input. */
   readOnly: PropTypes.bool,
   /** Stacks the input above the label. */

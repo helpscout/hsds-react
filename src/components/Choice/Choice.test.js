@@ -203,6 +203,22 @@ describe('Events', () => {
     expect(spy).toHaveBeenCalledWith('Value', false)
     wrapper.unmount()
   })
+
+  test('onEnter changes value and triggers callback', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Choice onEnter={spy} value="Value" checked />)
+    const input = wrapper.find('input')
+
+    input.simulate('keydown', { key: 'Enter' })
+
+    expect(spy).toHaveBeenCalledWith('Value', false)
+
+    wrapper.setProps({ checked: false })
+    input.simulate('keydown', { key: 'Enter' })
+
+    expect(spy).toHaveBeenCalledWith('Value', true)
+    wrapper.unmount()
+  })
 })
 
 describe('States', () => {

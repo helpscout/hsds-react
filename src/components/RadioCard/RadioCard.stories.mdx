@@ -25,10 +25,14 @@ This component provides richer context to the of the default HTML `<input>` `rad
       align="horizontal"
       value="chat"
       isResponsive
-      multiSelect={boolean('multiSelect', false)}
+      multiSelect={false}
     >
       <RadioCard icon="fab-chat" value="chat" />
-      <RadioCard icon="fab-antenna" value="antenna" />
+      <RadioCard
+        icon="fab-antenna"
+        value="antenna"
+        isFocused={boolean('isFocused', true)}
+      />
       <RadioCard icon="fab-buoy" value="buoy" />
       <RadioCard icon="fab-search" value="search" />
       <RadioCard icon="fab-question" value="question" />
@@ -57,9 +61,10 @@ This component provides richer context to the of the default HTML `<input>` `rad
   <Story name="with headings">
     <ChoiceGroup
       align="horizontal"
-      value="chat"
       choiceMaxWidth="214px"
       isResponsive
+      multiSelect={boolean('multiSelect', false)}
+      value={['chat']}
     >
       <RadioCard
         icon="fab-chat"

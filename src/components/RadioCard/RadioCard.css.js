@@ -26,13 +26,15 @@ export const config = {
   maxWidth: '75px',
   width: '100%',
   transition: 'box-shadow 200ms linear',
-  willChange: 'box-shadow',
+  willChange: 'box-shadow, border',
 }
 
 export const RadioCardUI = styled('label')`
   align-items: center;
-  border-radius: ${config.borderRadius}px;
-  box-shadow: ${config.boxShadow};
+  border-radius: 4px;
+  /* box-shadow: ${config.boxShadow}; */
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0px 5px 8px rgba(99, 116, 134, 0.03), 0px 2px 8px rgba(0, 0, 0, 0.04);
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -42,15 +44,26 @@ export const RadioCardUI = styled('label')`
   padding: ${config.padding};
   position: relative;
   width: ${config.width};
-  transition: ${config.transition};
+  transition: all 0.15s;
   will-change: ${config.willChange};
 
   &:hover {
-    box-shadow: ${config.boxShadowHover};
+    border: 1px solid ${getColor('grey.500')};
+    box-shadow: 0px 5px 8px rgba(99, 116, 134, 0.03), 0px 2px 8px rgba(0, 0, 0, 0.04);
+    transform: translateY(-2px)
+  }
+
+  &.is-focused,
+  &.is-focused.is-checked,
+  &:focus-within,
+  &.is-checked:focus-within {
+    border: 2px solid ${getColor('blue.500')};
+    border-radius: 7px;
   }
 
   &.is-checked {
-    box-shadow: ${config.boxShadowHover};
+    border: 1px solid ${getColor('grey.500')};
+    box-shadow: 0px 5px 8px rgba(99, 116, 134, 0.03), 0px 2px 8px rgba(0, 0, 0, 0.04);
   }
 `
 

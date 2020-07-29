@@ -92,6 +92,22 @@ describe('ChoiceGroup', () => {
 
       expect(spy).toHaveBeenCalledWith(['1'])
     })
+
+    test('Can trigger onEnter callback', () => {
+      const spy = jest.fn()
+      const wrapper = mount(
+        <ChoiceGroup onEnter={spy}>
+          <Radio value="1" />
+          <Radio value="2" />
+          <Radio value="3" />
+        </ChoiceGroup>
+      )
+      const input = wrapper.find('.c-Radio').first().find('input')
+
+      input.simulate('keydown', { key: 'Enter' })
+
+      expect(spy).toHaveBeenCalledWith(['1'])
+    })
   })
 
   describe('MultiSelect', () => {

@@ -150,35 +150,24 @@ describe('Ref', () => {
 describe('Focus', () => {
   test('Does not render focus, by default', () => {
     const wrapper = mount(<RadioCard />)
-    const o = wrapper.find('.c-RadioCard__focus').first()
+    const o = wrapper.find('.is-focused').first()
 
     expect(o.length).toBe(0)
   })
 
   test('Can preset focus using props', () => {
     const wrapper = mount(<RadioCard isFocused />)
-    const o = wrapper.find('.c-RadioCard__focus').first()
+    const o = wrapper.find('.is-focused').first()
 
     expect(o.length).toBeTruthy()
   })
 
-  test('Renders FocusUI on blur/focus of input', () => {
+  test('Adds and removes focus className, if focused or blurred', () => {
     const wrapper = mount(<RadioCard />)
-    const input = wrapper.find('input')
-
-    input.simulate('focus')
-
-    expect(wrapper.find('.c-RadioCard__focus').first().length).toBeTruthy()
-
-    input.simulate('blur')
-
-    expect(wrapper.find('.c-RadioCard__focus').first().length).toBe(0)
-  })
-
-  test('Adds focus className, if focused', () => {
-    const wrapper = mount(<RadioCard isFocused />)
-
-    expect(wrapper.getDOMNode().classList.contains('is-focused')).toBe(true)
+    wrapper.find('input').first().simulate('focus')
+    expect(wrapper.getDOMNode().classList.contains('is-focused')).toBeTruthy()
+    wrapper.find('input').first().simulate('blur')
+    expect(wrapper.getDOMNode().classList.contains('is-focused')).toBeFalsy()
   })
 })
 

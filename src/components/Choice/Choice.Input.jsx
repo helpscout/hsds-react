@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { key } from '../../constants/Keys'
 import InputBackdropV2 from '../Input/Input.BackdropV2'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
@@ -30,6 +31,15 @@ class ChoiceInput extends React.PureComponent {
     onChange(value, event.target.checked, id)
     // Prevents duplicate firing of onChange event
     event.stopPropagation()
+  }
+
+  handleOnKeyDown = event => {
+    const isEnter = event.key === key.ENTER
+
+    if (isEnter) {
+      const { id, onEnter, value } = this.props
+      onEnter(value, !event.target.checked, id)
+    }
   }
 
   handleOnFocus = event => {
@@ -92,7 +102,6 @@ class ChoiceInput extends React.PureComponent {
       value,
       'data-cy': dataCy,
     } = this.props
-
     const { isFocused } = this.state
 
     const componentClassName = classNames(
@@ -129,6 +138,7 @@ class ChoiceInput extends React.PureComponent {
           onBlur={this.handleOnBlur}
           onChange={this.handleOnChange}
           onFocus={this.handleOnFocus}
+          onKeyDown={this.handleOnKeyDown}
           readOnly={readOnly}
           type={type}
           value={value}
@@ -161,6 +171,7 @@ ChoiceInput.defaultProps = {
   onBlur: noop,
   onChange: noop,
   onFocus: noop,
+  onEnter: noop,
   inputRef: noop,
   innerRef: noop,
   readOnly: false,
@@ -186,10 +197,12 @@ ChoiceInput.propTypes = {
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
   onFocus: PropTypes.func,
+  /** Callback when pressing enter whenthe input is focused. */
+  onEnter: PropTypes.func,
   name: PropTypes.string,
   readOnly: PropTypes.bool,
   state: PropTypes.string,
-  type: PropTypes.string,
+  type: PropTypes.oneOf(['checkbox', 'radio']),
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }
 

@@ -11,7 +11,6 @@ import Radio from '../Radio'
 import {
   RadioCardUI,
   IconWrapperUI,
-  FocusUI,
   ContentUI,
   HeadingUI,
 } from './RadioCard.css'
@@ -26,26 +25,26 @@ class RadioCard extends React.PureComponent {
 
     this.state = {
       id: props.id || uniqueID(),
-      isFocused: props.isFocused,
+    }
+
+    this.radioCardRef = React.createRef()
+  }
+
+  componentDidMount() {
+    if (this.props.isFocused && this.inputNode) {
+      this.inputNode.focus()
     }
   }
 
   handleOnBlur = event => {
-    this.setState({
-      isFocused: false,
-    })
+    this.radioCardRef.current.classList.remove('is-focused')
     this.props.onBlur(event)
   }
 
   handleOnFocus = event => {
-    this.showFocus()
+    this.radioCardRef.current.focus()
+    this.radioCardRef.current.classList.add('is-focused')
     this.props.onFocus(event)
-  }
-
-  showFocus = () => {
-    this.setState({
-      isFocused: true,
-    })
   }
 
   getContentMarkup = () => {
@@ -102,12 +101,6 @@ class RadioCard extends React.PureComponent {
     )
   }
 
-  getFocusMarkup = () => {
-    const { isFocused } = this.state
-
-    return isFocused && <FocusUI className="c-RadioCard__focus" />
-  }
-
   getCardMarkup = contextProps => {
     const {
       checked,
@@ -115,12 +108,13 @@ class RadioCard extends React.PureComponent {
       content,
       heading,
       icon,
+      isFocused,
       maxWidth,
       title,
       value,
       ...rest
     } = this.props
-    const { id, isFocused } = this.state
+    const { id } = this.state
 
     const isChecked =
       (contextProps.selectedValue &&
@@ -140,6 +134,7 @@ class RadioCard extends React.PureComponent {
         className={componentClassName}
         title={title}
         maxWidth={maxWidth}
+        ref={this.radioCardRef}
       >
         <IconWrapperUI
           className={classNames(
@@ -161,7 +156,6 @@ class RadioCard extends React.PureComponent {
           onFocus={this.handleOnFocus}
           value={value}
         />
-        {this.getFocusMarkup()}
       </RadioCardUI>
     )
   }

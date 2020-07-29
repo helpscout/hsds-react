@@ -63,6 +63,16 @@ class ChoiceGroup extends React.Component {
     onChange(selectedValue)
   }
 
+  handleOnEnter = (value, checked) => {
+    const { multiSelect, onEnter } = this.props
+    const selectedValue = multiSelect
+      ? this.getMultiSelectValue(value, checked)
+      : [value]
+
+    this.setState({ selectedValue })
+    onEnter(selectedValue)
+  }
+
   getContextProps = () => {
     const { onBlur, onFocus, name } = this.props
     const { selectedValue } = this.state
@@ -70,6 +80,7 @@ class ChoiceGroup extends React.Component {
     return {
       onBlur,
       onChange: this.handleOnChange,
+      onEnter: this.handleOnEnter,
       onFocus,
       name,
       selectedValue,
@@ -109,6 +120,7 @@ class ChoiceGroup extends React.Component {
       onBlur,
       onChange,
       onFocus,
+      onEnter,
       multiSelect,
       name,
       ...rest
@@ -147,6 +159,7 @@ ChoiceGroup.defaultProps = {
   onBlur: noop,
   onChange: noop,
   onFocus: noop,
+  onEnter: noop,
   multiSelect: true,
 }
 
@@ -168,6 +181,7 @@ ChoiceGroup.propTypes = {
   onChange: PropTypes.func,
   /** Callback when an input is focused. */
   onFocus: PropTypes.func,
+  onEnter: PropTypes.func,
   /** The default value of input group. */
   value: PropTypes.any,
   /** Allow multiple choice selection */
