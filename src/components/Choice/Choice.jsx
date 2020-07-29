@@ -7,7 +7,6 @@ import HelpText from '../HelpText'
 import Text from '../Text'
 import VisuallyHidden from '../VisuallyHidden'
 import ChoiceGroupContext from '../ChoiceGroup/ChoiceGroup.Context'
-import { includes } from '../../utilities/arrays'
 import { classNames } from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
@@ -165,7 +164,7 @@ class Choice extends React.PureComponent {
 
     const isChecked =
       (contextProps.selectedValue &&
-        includes(contextProps.selectedValue, value)) ||
+        contextProps.selectedValue.includes(value)) ||
       checked ||
       false
 
@@ -180,7 +179,6 @@ class Choice extends React.PureComponent {
       inputRef,
       innerRef,
       kind,
-
       name: contextProps.name || name,
       onBlur: this.handleOnBlurWithContext(contextProps),
       onFocus: this.handleOnFocusWithContext(contextProps),
@@ -243,7 +241,6 @@ class Choice extends React.PureComponent {
       ...rest
     } = this.props
     const { checked, id: choiceID } = this.state
-
     const componentClassName = classNames(
       'c-Choice',
       `is-${type}`,

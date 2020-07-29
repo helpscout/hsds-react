@@ -106,7 +106,23 @@ describe('ChoiceGroup', () => {
 
       input.simulate('keydown', { key: 'Enter' })
 
-      expect(spy).toHaveBeenCalledWith(['1'])
+      expect(spy).toHaveBeenCalled()
+    })
+
+    test('Can trigger onEnter callback with space', () => {
+      const spy = jest.fn()
+      const wrapper = mount(
+        <ChoiceGroup onEnter={spy}>
+          <Radio value="1" />
+          <Radio value="2" />
+          <Radio value="3" />
+        </ChoiceGroup>
+      )
+      const input = wrapper.find('.c-Radio').first().find('input')
+
+      input.simulate('keyup', { key: ' ' })
+
+      expect(spy).toHaveBeenCalled()
     })
   })
 

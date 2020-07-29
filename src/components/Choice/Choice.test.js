@@ -219,6 +219,22 @@ describe('Events', () => {
     expect(spy).toHaveBeenCalledWith('Value', true)
     wrapper.unmount()
   })
+
+  test('onEnter changes value and triggers callback using space', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Choice onEnter={spy} value="Value" checked />)
+    const input = wrapper.find('input')
+
+    input.simulate('keyup', { key: ' ' })
+
+    expect(spy).toHaveBeenCalledWith('Value', false)
+
+    wrapper.setProps({ checked: false })
+    input.simulate('keyup', { key: ' ' })
+
+    expect(spy).toHaveBeenCalledWith('Value', true)
+    wrapper.unmount()
+  })
 })
 
 describe('States', () => {

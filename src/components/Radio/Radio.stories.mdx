@@ -47,10 +47,11 @@ import Radio from './'
 
 <Preview>
   <Story name="In a group">
-    <ChoiceGroup>
+    <ChoiceGroup multiSelect={false}>
       <Radio
         label="Derek"
         value="derek"
+        name="derek"
         helpText="Help description"
         disabled={boolean('disabled', false)}
         stacked={boolean('stacked', false)}
@@ -63,6 +64,7 @@ import Radio from './'
       <Radio
         label="Hansel"
         value="hansel"
+        name="hansel"
         helpText="Help description"
         disabled={boolean('disabled', false)}
         stacked={boolean('stacked', false)}
@@ -75,6 +77,7 @@ import Radio from './'
       <Radio
         label="Mugatu"
         value="mugatu"
+        name="mugatu"
         helpText="Help description"
         disabled={boolean('disabled', false)}
         stacked={boolean('stacked', false)}

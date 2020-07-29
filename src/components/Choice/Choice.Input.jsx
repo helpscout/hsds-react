@@ -33,12 +33,24 @@ class ChoiceInput extends React.PureComponent {
     event.stopPropagation()
   }
 
-  handleOnKeyDown = event => {
-    const isEnter = event.key === key.ENTER
+  runKeyPress = event => {
+    event.stopPropagation()
+    event.preventDefault()
+    const { id, onEnter, value, type } = this.props
+    const checked =
+      type === 'checkbox' ? !event.target.checked : event.target.checked
+    onEnter(value, checked, id)
+  }
 
-    if (isEnter) {
-      const { id, onEnter, value } = this.props
-      onEnter(value, !event.target.checked, id)
+  handleOnKeyUp = event => {
+    if (event.key === ' ') {
+      this.runKeyPress(event)
+    }
+  }
+
+  handleOnKeyDown = event => {
+    if (event.key === key.ENTER) {
+      this.runKeyPress(event)
     }
   }
 
@@ -134,10 +146,11 @@ class ChoiceInput extends React.PureComponent {
           disabled={disabled}
           id={id}
           ref={this.setRef}
-          name={name}
+          name={name || id}
           onBlur={this.handleOnBlur}
           onChange={this.handleOnChange}
           onFocus={this.handleOnFocus}
+          onKeyUp={this.handleOnKeyUp}
           onKeyDown={this.handleOnKeyDown}
           readOnly={readOnly}
           type={type}

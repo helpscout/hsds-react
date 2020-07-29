@@ -82,6 +82,16 @@ describe('Events', () => {
 
     expect(spy).toHaveBeenCalled()
   })
+
+  test('Can trigger onEnter callback using space', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Input onEnter={spy} checked value="Value" />)
+    const input = wrapper.find('input')
+
+    input.simulate('keyup', { key: ' ' })
+
+    expect(spy).toHaveBeenCalled()
+  })
 })
 
 describe('States', () => {
