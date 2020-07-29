@@ -20,6 +20,19 @@ describe('ClassName', () => {
   })
 })
 
+describe('Button label', () => {
+  test('Can display with a text copy button', () => {
+    const buttonLabel = 'Copy Me'
+    const wrapper = render(<CopyInput buttonLabel={buttonLabel} />)
+    const el = wrapper.find('.c-CopyInput')
+
+    expect(el.length).toBeTruthy()
+
+    const buttonText = wrapper.find('.c-CopyButton').text()
+    expect(buttonText).toContain(buttonLabel)
+  })
+})
+
 describe('Copy button', () => {
   test('Clicking copy will call the onCopy handler', () => {
     const onCopySpy = jest.fn()
