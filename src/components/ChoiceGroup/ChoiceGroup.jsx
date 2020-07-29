@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Context from './ChoiceGroup.Context'
+import equal from 'fast-deep-equal'
+import ChoiceGroupContext from './ChoiceGroup.Context'
 import FormGroup from '../FormGroup'
 import FormLabelContext from '../FormLabel/Context'
 import get from '../../utilities/get'
@@ -9,22 +10,28 @@ import { classNames } from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
 import { ChoiceGroupUI } from './ChoiceGroup.css'
-import Radio from '../Radio'
-import RadioCard from '../RadioCard'
 
 const uniqueID = createUniqueIDFactory('ChoiceGroup')
 
-class ChoiceGroup extends React.PureComponent {
-  multiSelect = true
-
+class ChoiceGroup extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
       id: uniqueID(),
-      multiSelect: false,
       selectedValue: props.value ? [].concat(props.value) : [],
     }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      nextProps.value === this.props.value &&
+      equal(nextState.selectedValue, this.state.selectedValue)
+    ) {
+      return false
+    }
+
+    return true
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -33,25 +40,6 @@ class ChoiceGroup extends React.PureComponent {
         selectedValue: [].concat(nextProps.value),
       })
     }
-  }
-
-  UNSAFE_componentWillMount() {
-    const child = this.props.children ? this.props.children[0] : false
-    let multiSelect
-
-    if (child) {
-      multiSelect = child.type !== Radio && child.type !== RadioCard
-    }
-    // Override auto-setting based on children
-    multiSelect =
-      this.props.multiSelect !== undefined
-        ? this.props.multiSelect
-        : multiSelect
-
-    multiSelect = !!multiSelect
-
-    this.setState({ multiSelect })
-    this.multiSelect = multiSelect
   }
 
   getMultiSelectValue(value, checked) {
@@ -66,18 +54,17 @@ class ChoiceGroup extends React.PureComponent {
   }
 
   handleOnChange = (value, checked) => {
-    const { multiSelect } = this.state
+    const { multiSelect, onChange } = this.props
     const selectedValue = multiSelect
       ? this.getMultiSelectValue(value, checked)
-      : value
+      : [value]
 
     this.setState({ selectedValue })
-    this.props.onChange(selectedValue)
+    onChange(selectedValue)
   }
 
   getContextProps = () => {
     const { onBlur, onFocus, name } = this.props
-
     const { selectedValue } = this.state
 
     return {
@@ -91,7 +78,6 @@ class ChoiceGroup extends React.PureComponent {
 
   getChildrenMarkup = () => {
     const { isResponsive, choiceMaxWidth, children } = this.props
-
     const { id } = this.state
 
     return (
@@ -123,16 +109,14 @@ class ChoiceGroup extends React.PureComponent {
       onBlur,
       onChange,
       onFocus,
-      multiSelect: multiSelectSetting,
+      multiSelect,
       name,
       ...rest
     } = this.props
-    const { multiSelect } = this.state
-    const isMultiSelect = multiSelectSetting || multiSelect
     const componentClassName = classNames(
       'c-ChoiceGroup',
       align && `is-align-${align}`,
-      isMultiSelect && 'is-multi-select',
+      multiSelect && 'is-multi-select',
       isResponsive && 'is-responsive',
       className
     )
@@ -141,7 +125,7 @@ class ChoiceGroup extends React.PureComponent {
     return (
       <FormLabelContext.Consumer>
         {props => (
-          <Context.Provider value={this.getContextProps()}>
+          <ChoiceGroupContext.Provider value={this.getContextProps()}>
             <ChoiceGroupUI
               {...getValidProps(rest)}
               className={componentClassName}
@@ -149,7 +133,7 @@ class ChoiceGroup extends React.PureComponent {
             >
               {childrenMarkup}
             </ChoiceGroupUI>
-          </Context.Provider>
+          </ChoiceGroupContext.Provider>
         )}
       </FormLabelContext.Consumer>
     )
@@ -163,6 +147,7 @@ ChoiceGroup.defaultProps = {
   onBlur: noop,
   onChange: noop,
   onFocus: noop,
+  multiSelect: true,
 }
 
 ChoiceGroup.propTypes = {

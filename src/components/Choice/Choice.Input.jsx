@@ -190,7 +190,7 @@ ChoiceInput.propTypes = {
   readOnly: PropTypes.bool,
   state: PropTypes.string,
   type: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }
 
 export default ChoiceInput

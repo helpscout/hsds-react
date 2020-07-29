@@ -192,22 +192,20 @@ Button.propTypes = {
   isSuffix: PropTypes.bool,
   /** Applies the specified style to the button.
    * 'primary': Blue button. Used for primary actions.
-   * 'primaryAlt': Purple button. Used for primary actions.
    * 'secondary': White button with a border. Used for secondary actions.
-   * 'secondaryAlt': White button with a green border. Used for secondary actions.
+   * 'tertiary': White button with a green border. Used for secondary actions.
    * 'default': Borderless button. Used for subtle/tertiary actions.
    * 'link': Button that looks like a `Link`. Used for subtle/tertiary actions.
    */
   kind: PropTypes.oneOf([
     'primary',
-    'primaryAlt',
     'secondary',
-    'secondaryAlt',
+    'tertiary',
     'default',
     'link',
   ]),
-  /** Sets the size of the button. Can be one of "sm", "md" or "lg". */
-  size: PropTypes.string,
+  /** Sets the size of the button. */
+  size: PropTypes.oneOf(['sm', 'md', 'lg']),
   /** A special property that... spins the button if `isLoading`. */
   spinButtonOnLoading: PropTypes.bool,
   /** Applies state styles to the button.

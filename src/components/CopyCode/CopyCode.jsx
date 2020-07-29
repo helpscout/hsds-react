@@ -16,6 +16,7 @@ require('prismjs/components/prism-java')
 require('prismjs/components/prism-swift')
 require('prismjs/components/prism-c')
 require('prismjs/components/prism-objectivec')
+require('prismjs/components/prism-markup')
 
 class CopyCode extends React.PureComponent {
   node
@@ -69,7 +70,9 @@ class CopyCode extends React.PureComponent {
   }
 
   getCodeMarkup() {
-    const { code, language } = this.props
+    const { code } = this.props
+    const language =
+      this.props.language === 'html' ? 'markup' : this.props.language
 
     function createMarkup() {
       const html = Prism.highlight(code, Prism.languages[language], language)
@@ -139,7 +142,15 @@ CopyCode.propTypes = {
   /** Retrieves the DOM node. */
   innerRef: PropTypes.func,
   /** Language syntax */
-  language: PropTypes.oneOf([`c`, `java`, `javascript`, `objectivec`, `swift`]),
+  language: PropTypes.oneOf([
+    'c',
+    'java',
+    'javascript',
+    'objectivec',
+    'swift',
+    'html',
+    'markup',
+  ]),
   /** Sets the max width of the container. */
   maxWidth: PropTypes.number,
   /** Callback function when the copy button is clicked. */

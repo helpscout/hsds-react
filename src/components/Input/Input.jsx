@@ -778,10 +778,10 @@ Input.propTypes = {
   hintText: PropTypes.any,
   /** ID for the input. */
   id: PropTypes.string,
-  /** Text to appear before the input. */
-  inlinePrefix: PropTypes.string,
-  /** Text to after before the input. */
-  inlineSuffix: PropTypes.string,
+  /** Text or component (usually an Icon) to render before the input. */
+  inlinePrefix: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  /** Text or component (usually an Icon) to render after the input. */
+  inlineSuffix: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   /** Retrieves the `input` DOM node. */
   inputRef: PropTypes.func,
   /** Helps render component without right borders. */

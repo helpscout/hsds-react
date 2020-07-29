@@ -306,7 +306,7 @@ Choice.propTypes = {
   /** Retrieves the `input` DOM node. */
   inputRef: PropTypes.func,
   /** Label for the input. */
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   /** Name for the input. */
   name: PropTypes.string,
   /** Callback when the input is blurred. */
