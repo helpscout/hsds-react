@@ -767,7 +767,7 @@ Input.propTypes = {
   /** Icon that renders when the state is `error`. */
   errorIcon: PropTypes.string,
   /** Error message that renders into a Tooltip. */
-  errorMessage: PropTypes.string,
+  errorMessage: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   /** Determines the amount of time (`ms`) for the component to focus on mount. */
   forceAutoFocusTimeout: PropTypes.number,
   /** If `true` and `enter + special` key is pressed, a return will be inserted */
@@ -839,7 +839,7 @@ Input.propTypes = {
   /** Determines the size of the input. */
   size: PropTypes.oneOf(['xs', 'xssm', 'sm', 'md', 'lg']),
   /** Change input to state color. */
-  state: PropTypes.oneOf(['error', 'success', 'warning']),
+  state: PropTypes.oneOf(['error', 'success', 'warning', '']),
   /** Component to render after the input. */
   suffix: PropTypes.any,
   /** Determines the input type. */

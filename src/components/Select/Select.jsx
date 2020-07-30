@@ -456,6 +456,7 @@ Select.propTypes = {
     PropTypes.arrayOf(PropTypes.any),
     PropTypes.object,
     PropTypes.string,
+    PropTypes.number,
   ]),
   /** Placeholder text for the select. */
   placeholder: PropTypes.string,
