@@ -28,12 +28,8 @@ This component provides richer context to the of the default HTML `<input>` `rad
       multiSelect={false}
     >
       <RadioCard icon="fab-chat" value="chat" />
-      <RadioCard
-        icon="fab-antenna"
-        value="antenna"
-        isFocused={boolean('isFocused', true)}
-      />
-      <RadioCard icon="fab-buoy" value="buoy" />
+      <RadioCard icon="fab-antenna" value="antenna" />
+      <RadioCard icon="fab-buoy" value="buoy" isFocused />
       <RadioCard icon="fab-search" value="search" />
       <RadioCard icon="fab-question" value="question" />
     </ChoiceGroup>
@@ -64,7 +60,7 @@ This component provides richer context to the of the default HTML `<input>` `rad
       choiceMaxWidth="214px"
       isResponsive
       multiSelect={boolean('multiSelect', false)}
-      value={['chat']}
+      value={['chat', 'buoy']}
     >
       <RadioCard
         icon="fab-chat"

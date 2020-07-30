@@ -19,7 +19,7 @@ class ChoiceGroup extends React.Component {
 
     this.state = {
       id: uniqueID(),
-      selectedValue: props.value ? [].concat(props.value) : [],
+      selectedValue: this.getInitialSelectedValue(props),
     }
   }
 
@@ -37,9 +37,20 @@ class ChoiceGroup extends React.Component {
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.value !== this.props.value) {
       this.setState({
-        selectedValue: [].concat(nextProps.value),
+        selectedValue: this.getInitialSelectedValue(nextProps),
       })
     }
+  }
+
+  getInitialSelectedValue(props) {
+    const { value, multiSelect } = props
+    let selectedValue = value ? [].concat(value) : []
+
+    if (!multiSelect && selectedValue.length > 1) {
+      selectedValue = selectedValue[0]
+    }
+
+    return selectedValue
   }
 
   getMultiSelectValue(value, checked) {
@@ -89,12 +100,17 @@ class ChoiceGroup extends React.Component {
 
   getChildrenMarkup = () => {
     const { isResponsive, choiceMaxWidth, children } = this.props
-    const { id } = this.state
+    const { id, selectedValue } = this.state
 
     return (
       children &&
       React.Children.map(children, (child, index) => {
         const key = get(child, 'props.id') || `${id}-${index}`
+        const clone = React.isValidElement(child)
+          ? React.cloneElement(child, {
+              checked: selectedValue.includes(child.props.value),
+            })
+          : child
 
         return (
           <FormGroup.Choice
@@ -102,7 +118,7 @@ class ChoiceGroup extends React.Component {
             maxWidth={choiceMaxWidth}
             isResponsive={isResponsive}
           >
-            {child}
+            {clone}
           </FormGroup.Choice>
         )
       })

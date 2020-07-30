@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import Icon from '../Icon'
 import ChoiceGroupContext from '../ChoiceGroup/ChoiceGroup.Context'
 import { classNames } from '../../utilities/classNames'
-import { includes } from '../../utilities/arrays'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isFunction, isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
@@ -32,6 +31,7 @@ class RadioCard extends React.PureComponent {
 
   componentDidMount() {
     if (this.props.isFocused && this.inputNode) {
+      this.radioCardRef.current.classList.add('is-focused')
       this.inputNode.focus()
     }
   }
@@ -42,7 +42,6 @@ class RadioCard extends React.PureComponent {
   }
 
   handleOnFocus = event => {
-    this.radioCardRef.current.focus()
     this.radioCardRef.current.classList.add('is-focused')
     this.props.onFocus(event)
   }
@@ -116,15 +115,9 @@ class RadioCard extends React.PureComponent {
     } = this.props
     const { id } = this.state
 
-    const isChecked =
-      (contextProps.selectedValue &&
-        includes(contextProps.selectedValue, value)) ||
-      checked
-
     const componentClassName = classNames(
       'c-RadioCard',
-      isChecked && 'is-checked',
-      isFocused && 'is-focused',
+      checked && 'is-checked',
       className
     )
 
@@ -133,14 +126,18 @@ class RadioCard extends React.PureComponent {
         htmlFor={id}
         className={componentClassName}
         title={title}
+        withHeading={Boolean(heading)}
+        withContent={Boolean(content)}
         maxWidth={maxWidth}
         ref={this.radioCardRef}
       >
         <IconWrapperUI
           className={classNames(
             'c-RadioCard__iconWrapper',
-            isChecked && 'is-checked'
+            checked && 'is-checked'
           )}
+          withHeading={Boolean(heading)}
+          withContent={Boolean(content)}
         >
           {this.getIconMarkup()}
         </IconWrapperUI>
@@ -148,7 +145,7 @@ class RadioCard extends React.PureComponent {
         {this.getContentMarkup()}
         <Radio
           {...rest}
-          checked={isChecked}
+          checked={checked}
           kind="custom"
           id={id}
           inputRef={this.setInputNodeRef}

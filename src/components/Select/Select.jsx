@@ -451,10 +451,11 @@ Select.propTypes = {
   onChange: PropTypes.func,
   /** Callback when select is focused. */
   onFocus: PropTypes.func,
-  /** Array of options with the shape: { disabled: PropTypes.bool, label: PropTypes.string,value: PropTypes.string } */
+  /** Array of options with the shape: { disabled: PropTypes.bool, label: PropTypes.string, value: PropTypes.string } */
   options: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.any),
     PropTypes.object,
+    PropTypes.string,
   ]),
   /** Placeholder text for the select. */
   placeholder: PropTypes.string,

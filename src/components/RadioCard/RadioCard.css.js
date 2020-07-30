@@ -1,105 +1,64 @@
 import styled from 'styled-components'
-
 import { getColor } from '../../styles/utilities/color'
 import Heading from '../Heading'
 import Text from '../Text'
 
-export const config = {
-  boxShadow: `
-    0px 0px 0px 1px rgba(0, 0, 0, 0.05),
-    0px 5px 10px 0px ${getColor('grey.300')},
-    0px 3px 3px 0px rgba(0, 0, 0, 0.05)
-  `,
-  boxShadowHover: `
-    0px 0px 0px 1px ${getColor('grey.500')},
-    0px 5px 10px 1px ${getColor('grey.300')},
-    0px 3px 3px 0px rgba(0, 0, 0, 0.05)
-  `,
-  borderRadius: 4,
-  focusOutlineWidth: '2px',
-  focusOutlineColor: getColor('blue.500'),
-  iconColor: getColor('grey.600'),
-  iconColorChecked: getColor('charcoal.500'),
-  iconWrapperSize: 52,
-  iconWrapperMargin: 5,
-  padding: '5px 12px 15px',
-  maxWidth: '75px',
-  width: '100%',
-  transition: 'box-shadow 200ms linear',
-  willChange: 'box-shadow, border',
-}
-
 export const RadioCardUI = styled('label')`
-  align-items: center;
-  border-radius: 4px;
-  /* box-shadow: ${config.boxShadow}; */
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  box-shadow: 0px 5px 8px rgba(99, 116, 134, 0.03), 0px 2px 8px rgba(0, 0, 0, 0.04);
-  cursor: pointer;
+  box-sizing: border-box;
+  position: relative;
   display: flex;
+  align-items: center;
   flex-direction: column;
   justify-content: center;
-  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : config.maxWidth)};
+  width: 100%;
+  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '80px')};
   min-width: 0;
-  padding: ${config.padding};
-  position: relative;
-  width: ${config.width};
+  min-height: ${({ withContent, withHeading }) =>
+    withHeading || withContent ? 'auto' : '100px'};
+  padding: 5px 12px 15px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0px 5px 8px rgba(99, 116, 134, 0.03),
+    0px 2px 8px rgba(0, 0, 0, 0.04);
   transition: all 0.15s;
-  will-change: ${config.willChange};
+  will-change: box-shadow, border;
+  cursor: pointer;
 
   &:hover {
     border: 1px solid ${getColor('grey.500')};
-    box-shadow: 0px 5px 8px rgba(99, 116, 134, 0.03), 0px 2px 8px rgba(0, 0, 0, 0.04);
-    transform: translateY(-2px)
+    box-shadow: 0px 5px 8px rgba(99, 116, 134, 0.03),
+      0px 2px 8px rgba(0, 0, 0, 0.04);
+    transform: translateY(-2px);
   }
 
   &.is-focused,
   &.is-focused.is-checked,
   &:focus-within,
   &.is-checked:focus-within {
-    border: 2px solid ${getColor('blue.500')};
+    border-color: transparent;
     border-radius: 7px;
+    box-shadow: 0px 0px 0 2px ${getColor('blue.500')};
   }
 
   &.is-checked {
     border: 1px solid ${getColor('grey.500')};
-    box-shadow: 0px 5px 8px rgba(99, 116, 134, 0.03), 0px 2px 8px rgba(0, 0, 0, 0.04);
+    box-shadow: 0px 5px 8px rgba(99, 116, 134, 0.03),
+      0px 2px 8px rgba(0, 0, 0, 0.04);
   }
 `
 
 export const IconWrapperUI = styled('div')`
   align-items: center;
-  color: ${config.iconColor};
-  display: flex;
-  height: ${config.iconWrapperSize}px;
   justify-content: center;
-  margin-bottom: ${config.iconWrapperMargin}px;
-  width: ${config.iconWrapperSize}px;
+  display: flex;
+  width: 52px;
+  height: 52px;
+  margin-bottom: ${({ withContent, withHeading }) =>
+    withHeading || withContent ? '0' : '5px'};
+  color: ${getColor('charcoal.200')};
 
   &.is-checked {
-    color: ${config.iconColorChecked};
-  }
-`
-
-export const FocusUI = styled('div')`
-  animation: BackdropFocusFadeIn 200ms;
-  border-radius: ${config.borderRadius + 2}px;
-  bottom: -3px;
-  box-shadow: 0 0 0 ${config.focusOutlineWidth} ${config.focusOutlineColor};
-  left: -3px;
-  pointer-events: none;
-  position: absolute;
-  right: -3px;
-  top: -3px;
-  z-index: 1;
-
-  @keyframes BackdropFocusFadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+    color: ${getColor('charcoal.500')};
   }
 `
 
@@ -112,7 +71,7 @@ export const HeadingUI = styled(Heading)`
 
 export const ContentUI = styled(Text)`
   font-size: 13px;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
   color: ${getColor('charcoal.200')};
   text-align: center;
 `

@@ -157,15 +157,16 @@ describe('Focus', () => {
 
   test('Can preset focus using props', () => {
     const wrapper = mount(<RadioCard isFocused />)
-    const o = wrapper.find('.is-focused').first()
 
-    expect(o.length).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-focused')).toBeTruthy()
   })
 
   test('Adds and removes focus className, if focused or blurred', () => {
     const wrapper = mount(<RadioCard />)
+
     wrapper.find('input').first().simulate('focus')
     expect(wrapper.getDOMNode().classList.contains('is-focused')).toBeTruthy()
+
     wrapper.find('input').first().simulate('blur')
     expect(wrapper.getDOMNode().classList.contains('is-focused')).toBeFalsy()
   })

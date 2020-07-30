@@ -205,7 +205,7 @@ Button.propTypes = {
     'link',
   ]),
   /** Sets the size of the button. */
-  size: PropTypes.oneOf(['sm', 'md', 'lg', 'xl', 'xs', 'xss']),
+  size: PropTypes.oneOf(['sm', 'md', 'lg', 'xl', 'lgxl', 'xs', 'xxs']),
   /** A special property that... spins the button if `isLoading`. */
   spinButtonOnLoading: PropTypes.bool,
   /** Applies state styles to the button.
