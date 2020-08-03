@@ -126,7 +126,7 @@ class ChoiceGroup extends React.Component {
   }
 
   getChildrenMarkup = () => {
-    const { isResponsive, choiceMaxWidth, children } = this.props
+    const { isResponsive, choiceMaxWidth, choiceHeight, children } = this.props
     const { id, selectedValue, limitReached } = this.state
 
     return (
@@ -138,15 +138,13 @@ class ChoiceGroup extends React.Component {
           ? React.cloneElement(child, {
               checked: isSelected,
               disabled: limitReached && !isSelected,
+              maxWidth: choiceMaxWidth,
+              height: choiceHeight,
             })
           : child
 
         return (
-          <FormGroup.Choice
-            key={key}
-            maxWidth={choiceMaxWidth}
-            isResponsive={isResponsive}
-          >
+          <FormGroup.Choice key={key} isResponsive={isResponsive}>
             {clone}
           </FormGroup.Choice>
         )
