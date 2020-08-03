@@ -56,7 +56,7 @@
     "new:pr": "open https://github.com/helpscout/hsds-react/compare",
     "pretty": "npm run prettier",
     "remake:component": "remake component --output=src/components",
-    "remake": "npm run remake:component",
+    "remake": "remake component --output=src/components",
     "release": "np --no-yarn --contents=dist",
     "release:patch": "npm run release -- patch",
     "release:beta": "npm run release -- --yolo --any-branch",

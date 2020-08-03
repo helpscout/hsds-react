@@ -6,7 +6,7 @@ describe('className', () => {
   test('Has default className', () => {
     const wrapper = mount(<<%= name %> />)
 
-    expect(wrapper.hasClass('c-<%= name %>')).toBeTruthy()
+    expect(wrapper.find('.c-<%= name %>').length).toBeTruthy()
   })
 
   test('Can render custom className', () => {
