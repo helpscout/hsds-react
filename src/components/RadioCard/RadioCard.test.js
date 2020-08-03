@@ -18,12 +18,19 @@ describe('ClassName', () => {
   })
 })
 
-describe('maxWidth', () => {
-  test('Applies maxWidth to card', () => {
+describe('dimensions', () => {
+  test('should apply maxWidth to card if passed', () => {
     const maxWidth = '124px'
     const wrapper = mount(<RadioCard maxWidth={maxWidth} />)
 
     expect(wrapper.find('.c-RadioCard').first().props().maxWidth).toBe(maxWidth)
+  })
+
+  test('should apply height to card if passed', () => {
+    const height = '124px'
+    const wrapper = mount(<RadioCard height={height} />)
+
+    expect(wrapper.find('.c-RadioCard').first().props().height).toBe(height)
   })
 })
 
@@ -103,11 +110,21 @@ describe('Icon', () => {
     const o = wrapper.find('Icon').first()
 
     expect(o.length).toBeTruthy()
-    expect(o.prop('name')).toBe(wrapper.instance().defaultIcon)
+    expect(o.prop('name')).toBe('fab-chat')
   })
 })
 
 describe('Events', () => {
+  test('Can fire onChange callback prop', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<RadioCard onChange={spy} />)
+    const input = wrapper.find('input')
+
+    input.simulate('change', { target: { checked: true } })
+
+    expect(spy).toHaveBeenCalled()
+  })
+
   test('Can fire onBlur callback prop', () => {
     const spy = jest.fn()
     const wrapper = mount(<RadioCard onBlur={spy} />)
@@ -217,23 +234,5 @@ describe('Content', () => {
     const wrapper = mount(<RadioCard checked={true} content={content} />)
 
     expect(wrapper.find('.c-RadioCard__content').first().text()).toBe(content)
-  })
-})
-describe('ChoiceGroup.Context', () => {
-  test('Can propogate checked value', () => {
-    const wrapper = mount(
-      <ChoiceGroup>
-        <RadioCard value="buddy" />
-        <RadioCard value="elf" />
-      </ChoiceGroup>
-    )
-    let el = wrapper.find('input').first()
-
-    expect(el.prop('checked')).toBe(false)
-
-    el.simulate('change', { target: { checked: true } })
-
-    el = wrapper.find('input').first()
-    expect(el.prop('checked')).toBe(true)
   })
 })

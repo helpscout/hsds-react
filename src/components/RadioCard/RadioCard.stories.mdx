@@ -17,22 +17,17 @@ import RadioCard from './'
 
 # RadioCard
 
-This component provides richer context to the of the default HTML `<input>` `radio`.
+This component provides richer context to the of the default HTML `<input>` of type `radio`.
 
 <Preview>
   <Story name="default">
-    <ChoiceGroup
-      align="horizontal"
+    <RadioCard
+      icon="fab-chat"
+      content="some content"
+      heading="Chat"
       value="chat"
-      isResponsive
-      multiSelect={false}
-    >
-      <RadioCard icon="fab-chat" value="chat" />
-      <RadioCard icon="fab-antenna" value="antenna" />
-      <RadioCard icon="fab-buoy" value="buoy" isFocused />
-      <RadioCard icon="fab-search" value="search" />
-      <RadioCard icon="fab-question" value="question" />
-    </ChoiceGroup>
+      maxWidth="214px"
+    />
   </Story>
 </Preview>
 
@@ -51,6 +46,34 @@ This component provides richer context to the of the default HTML `<input>` `rad
 
 ### Stories
 
+#### Inside a group
+
+<Preview>
+  <Story name="Inside a group">
+    <ChoiceGroup
+      align="horizontal"
+      value={['buoy']}
+      isResponsive
+      multiSelect={false}
+      onChange={() => {
+        console.log('onCHANGE on group')
+      }}
+    >
+      <RadioCard
+        icon="fab-chat"
+        value="chat"
+        onChange={() => {
+          console.log('onCHANGE on card')
+        }}
+      />
+      <RadioCard icon="fab-antenna" value="antenna" />
+      <RadioCard icon="fab-buoy" value="buoy" />
+      <RadioCard icon="fab-search" value="search" />
+      <RadioCard icon="fab-question" value="question" />
+    </ChoiceGroup>
+  </Story>
+</Preview>
+
 #### With headings
 
 <Preview>
@@ -67,21 +90,18 @@ This component provides richer context to the of the default HTML `<input>` `rad
         content="some content"
         heading="Chat"
         value="chat"
-        maxWidth="214px"
       />
       <RadioCard
         icon="fab-antenna"
         content="some content"
         heading="Antenna"
         value="antenna"
-        maxWidth="214px"
       />
       <RadioCard
         icon="fab-buoy"
         content="some content"
         heading="Buoy"
         value="buoy"
-        maxWidth="214px"
       />
     </ChoiceGroup>
   </Story>
