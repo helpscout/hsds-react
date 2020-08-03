@@ -29,6 +29,17 @@ This component renders a content with the ability to copy to clipboard, powered 
   </Story>
 </Preview>
 
+<Preview>
+  <Story name="text button">
+    <CopyInput
+      value="testing"
+      onCopy={action('Copy')}
+      readOnly={boolean('readOnly', false)}
+      buttonLabel={'Copy'}
+    />
+  </Story>
+</Preview>
+
 #### Reference
 
 - **Designer**: Nikki
