@@ -28,16 +28,12 @@ export const CheckMarkCardUI = styled('label')`
     transform: translateY(-2px);
   }
 
+  &.is-checked,
   &.is-focused,
   &.is-focused.is-checked,
   &:focus-within,
   &.is-checked:focus-within {
     border-color: transparent;
-    /* border-radius: 7px; */
-    box-shadow: 0px 0px 0 2px ${getColor('blue.500')};
-  }
-
-  &.is-checked {
     box-shadow: 0px 0px 0 2px ${getColor('blue.500')};
   }
 
