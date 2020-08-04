@@ -1,7 +1,3 @@
-import { Meta } from '@storybook/addon-docs/blocks'
-
-<Meta title="🛠 Utilities/Drop" />
-
 # Drop
 
 A Drop component is a High-Order Component that connects a component with `PortalWrapper`. It abstracts logic related to mounting and auto-positioning the child component to the DOM, relative to it's original target element.
