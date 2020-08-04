@@ -1,10 +1,10 @@
-# Drop
-
-A Drop component is a High-Order Component that connects a component with `PortalWrapper`. It abstracts logic related to mounting and auto-positioning the child component to the DOM, relative to it's original target element.
-
 ## Deprecation
 
 This component will be deprecated. Please use `Pop` instead.
+
+# Drop
+
+A Drop component is a High-Order Component that connects a component with `PortalWrapper`. It abstracts logic related to mounting and auto-positioning the child component to the DOM, relative to it's original target element.
 
 ## Example
 
