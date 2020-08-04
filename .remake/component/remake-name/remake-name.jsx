@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { <%= name %>UI } from './<%= name %>.css'
@@ -26,7 +25,7 @@ export class <%= name %> extends React.Component {
 
     return (
       <<%= name %>UI
-        {...getValidProps(rest)}
+        {...rest}
         className={this.getClassName()}
         ref={this.<%= name %>Ref}
       >
