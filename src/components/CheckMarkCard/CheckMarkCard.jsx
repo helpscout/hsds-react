@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
@@ -43,7 +42,6 @@ export class CheckMarkCard extends React.Component {
   setInputNodeRef = node => {
     this.inputNode = node
     this.props.inputRef(node)
-    this.props.innerRef(node)
   }
 
   handleOnChange = (value, checked) => {
@@ -81,7 +79,7 @@ export class CheckMarkCard extends React.Component {
 
     return (
       <CheckMarkCardUI
-        {...getValidProps(rest)}
+        {...rest}
         className={this.getClassName()}
         htmlFor={id}
         maxWidth={maxWidth}
@@ -113,7 +111,6 @@ export class CheckMarkCard extends React.Component {
 CheckMarkCard.defaultProps = {
   checked: false,
   'data-cy': 'CheckMarkCard',
-  innerRef: noop,
   inputRef: noop,
   isFocused: false,
   onBlur: noop,
@@ -132,6 +129,8 @@ CheckMarkCard.propTypes = {
   disabled: PropTypes.bool,
   /** ID for the input. */
   id: PropTypes.string,
+  /** Callback to obtain the <input> node. */
+  inputRef: PropTypes.func,
   /** Whether the card should be focused */
   isFocused: PropTypes.bool,
   /** Set the height of the Card. */

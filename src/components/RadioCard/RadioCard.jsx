@@ -117,7 +117,6 @@ class RadioCard extends React.PureComponent {
   setInputNodeRef = node => {
     this.inputNode = node
     this.props.inputRef(node)
-    this.props.innerRef(node)
   }
 
   render() {
@@ -180,7 +179,6 @@ RadioCard.defaultProps = {
   'data-cy': 'RadioCard',
   icon: 'fab-chat',
   iconSize: 52,
-  innerRef: noop,
   inputRef: noop,
   isFocused: false,
   onBlur: noop,
@@ -217,7 +215,7 @@ RadioCard.propTypes = {
   iconSize: PropTypes.number,
   /** ID for the input. */
   id: PropTypes.string,
-  innerRef: PropTypes.func,
+  /** Callback to obtain the <input> node. */
   inputRef: PropTypes.func,
   /** Whether the radiocard should be focused */
   isFocused: PropTypes.bool,

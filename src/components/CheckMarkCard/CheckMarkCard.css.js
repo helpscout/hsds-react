@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
+import { rgba } from '../../utilities/color'
 
 export const CheckMarkCardUI = styled('label')`
   box-sizing: border-box;
@@ -12,19 +13,16 @@ export const CheckMarkCardUI = styled('label')`
   max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '100px')};
   height: ${({ height }) => (height ? height : 'auto')};
   min-height: 100px;
-  border: 1px solid rgba(0, 0, 0, 0.04);
+  border: 1px solid ${rgba(getColor('grey.700'), 0.7)};
   border-radius: 4px;
   background: white;
-  box-shadow: 0px 5px 8px rgba(99, 116, 134, 0.03),
-    0px 2px 8px rgba(0, 0, 0, 0.04);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
   transition: all 0.15s;
   will-change: box-shadow, border;
   cursor: pointer;
 
   &:hover {
-    border: 1px solid ${getColor('grey.500')};
-    box-shadow: 0px 5px 8px rgba(99, 116, 134, 0.03),
-      0px 2px 8px rgba(0, 0, 0, 0.04);
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
     transform: translateY(-2px);
   }
 
@@ -40,11 +38,10 @@ export const CheckMarkCardUI = styled('label')`
   &.is-disabled {
     cursor: not-allowed;
     opacity: 0.4;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
 
     &:hover {
-      border: 1px solid rgba(0, 0, 0, 0.04);
-      box-shadow: 0px 5px 8px rgba(99, 116, 134, 0.03),
-        0px 2px 8px rgba(0, 0, 0, 0.04);
+      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
       transform: translateY(0);
     }
   }
