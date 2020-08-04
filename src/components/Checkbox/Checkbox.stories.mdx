@@ -22,8 +22,6 @@ A Checkbox component is an enhanced version of the default HTML `<input>` `check
 <Preview>
   <Story name="default">
     <ChoiceGroup
-      multiSelect={boolean('multiSelect', true)}
-      multiSelectLimit={2}
       value={select(
         'Value from props',
         {
@@ -38,8 +36,7 @@ A Checkbox component is an enhanced version of the default HTML `<input>` `check
       <Checkbox label="Derek" value="derek" />
       <Checkbox label="Hansel" value="hansel" />
       <Checkbox label="Mugatu" value="mugatu" />
-      <Checkbox label="John" value="john" />
-      <Checkbox label="Paul" value="paul" />
+      <Checkbox label="Matilda" value="matilda" />
     </ChoiceGroup>
   </Story>
 </Preview>
@@ -70,16 +67,15 @@ A Checkbox component is an enhanced version of the default HTML `<input>` `check
   </Story>
 </Preview>
 
-#### With multipleSelection limits applied
+#### With selection limits
 
 <Preview>
-  <Story name="With multipleSelection limits applied">
+  <Story name="with selection limits">
     <ChoiceGroup multiSelectLimit={number('multiSelectLimit', 2)}>
       <Checkbox label="Derek" value="derek" />
       <Checkbox label="Hansel" value="hansel" />
       <Checkbox label="Mugatu" value="mugatu" />
-      <Checkbox label="John" value="john" />
-      <Checkbox label="Paul" value="paul" />
+      <Checkbox label="Matilda" value="matilda" />
     </ChoiceGroup>
   </Story>
 </Preview>
