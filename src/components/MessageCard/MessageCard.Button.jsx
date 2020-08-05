@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { ActionButtonUI } from './MessageCard.css'
 import { noop } from '../../utilities/other'
 import Truncate from '../Truncate'
@@ -10,7 +9,7 @@ export class MessageCardButton extends React.PureComponent {
     const { children, ...rest } = this.props
 
     return (
-      <ActionButtonUI {...getValidProps(rest)}>
+      <ActionButtonUI {...rest}>
         <Truncate>{children}</Truncate>
       </ActionButtonUI>
     )
