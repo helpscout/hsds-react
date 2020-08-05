@@ -418,7 +418,13 @@ export class Input extends React.PureComponent {
   }
 
   getErrorMarkup() {
-    const { errorIcon, errorMessage, state, tabIndex = 0 } = this.props
+    const {
+      errorIcon,
+      errorMessage,
+      state,
+      tabIndex = 0,
+      tooltipAppendTo,
+    } = this.props
     const shouldRenderError = state === STATES.error
 
     if (!shouldRenderError) return null
@@ -433,7 +439,7 @@ export class Input extends React.PureComponent {
         <Tooltip
           animationDelay={0}
           animationDuration={0}
-          appendTo={document.body}
+          appendTo={tooltipAppendTo}
           closeOnContentClick={true}
           display="block"
           placement="top-end"
@@ -744,6 +750,7 @@ Input.defaultProps = {
   scrollLock: false,
   seamless: false,
   style: {},
+  tooltipAppendTo: document.body,
   type: 'text',
   typingThrottleInterval: 500,
   typingTimeoutDelay: 5000,
@@ -844,6 +851,8 @@ Input.propTypes = {
   suffix: PropTypes.any,
   /** Determines the input type. */
   inputType: PropTypes.string,
+  /** The parent node where to mount the error message Tooltip component. */
+  tooltipAppendTo: PropTypes.object,
   /** Determines the rate limiting interval for firing `onStartTyping`. */
   typingThrottleInterval: PropTypes.number,
   /** Determines the delay of when `onStopTyping` fires after typing stops. */
