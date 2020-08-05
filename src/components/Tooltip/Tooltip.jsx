@@ -91,16 +91,22 @@ const Tooltip = props => {
 
   const renderTooltip = ({ scope, ...props }) => {
     let titleContent = null
+
     if (typeof title === 'string') {
       titleContent = <span dangerouslySetInnerHTML={{ __html: title }} />
     } else {
       titleContent = title
     }
+
     const toolTipComponent = (
       <TooltipAnimationUI>
         <TooltipUI {...props}>
           {renderContent ? renderContent() : titleContent}
-          <ArrowUI size={arrowSize} data-popper-arrow />
+          <ArrowUI
+            className="c-Tooltip_ArrowUI"
+            arrowSize={arrowSize}
+            data-popper-arrow
+          />
         </TooltipUI>
       </TooltipAnimationUI>
     )
