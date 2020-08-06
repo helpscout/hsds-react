@@ -15,6 +15,7 @@ export const RadioCardUI = styled('label')`
   min-width: 0;
   min-height: ${({ withContent, withHeading }) =>
     withHeading || withContent ? 'auto' : '100px'};
+  height: ${({ height }) => (height ? height : 'auto')};
   padding: 5px 12px 15px;
   border-radius: 4px;
   border: 1px solid rgba(0, 0, 0, 0.04);

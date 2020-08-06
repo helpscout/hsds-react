@@ -1,0 +1,154 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { boolean, number, text, select } from '@storybook/addon-knobs'
+import CheckMarkCard from './CheckMarkCard'
+import { Avatar, ChoiceGroup } from '../index'
+import AvatarSpec from '../../utilities/specs/avatar.specs'
+
+<Meta
+  title="🧬 Components/Forms/CheckMarkCard"
+  component={CheckMarkCard}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=5015%3A49',
+    },
+  }}
+/>
+
+# CheckMarkCard
+
+This component provides richer context to the of the default HTML `<input>` of type `checkbox`.
+
+<Preview>
+  <Story name="default">
+    <div>
+      <CheckMarkCard label="Derek" value="derek">
+        derek
+      </CheckMarkCard>
+      <br />
+      <CheckMarkCard label="Hansel" value="hansel">
+        hansel
+      </CheckMarkCard>
+      <br />
+      <CheckMarkCard label="Matilda" value="matilda" checked>
+        matilda
+      </CheckMarkCard>
+      <br />
+      <CheckMarkCard label="Mugatu" value="mugatu" disabled>
+        mugatu
+      </CheckMarkCard>
+    </div>
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: Beacon, Mailbox Permissions
+
+<br />
+<br />
+
+### Props
+
+<Props of={CheckMarkCard} />
+
+## Stories
+
+#### Inside a group with selection limits
+
+<Preview>
+  <Story name="inside group">
+    <ChoiceGroup
+      align="horizontal"
+      isResponsive
+      value={['matilda']}
+      choiceMaxWidth="170px"
+      choiceHeight="160px"
+      multiSelectLimit={number('multiSelectLimit', 2)}
+    >
+      <CheckMarkCard label="Derek" value="derek">
+        <Avatar size="xl" image={AvatarSpec.generate().image} name="Derek" />
+        <div
+          style={{
+            fontSize: '14px',
+            color: '#314351',
+            margin: '14px 0 5px',
+          }}
+        >
+          Derek
+        </div>
+        <div
+          style={{
+            color: '#93A1B0',
+            fontSize: '13px',
+          }}
+        >
+          NYC
+        </div>
+      </CheckMarkCard>
+      <CheckMarkCard label="Hansel" value="hansel">
+        <Avatar size="xl" image={AvatarSpec.generate().image} name="Hansel" />
+        <div
+          style={{
+            fontSize: '14px',
+            color: '#314351',
+            margin: '14px 0 5px',
+          }}
+        >
+          Hansel
+        </div>
+        <div
+          style={{
+            color: '#93A1B0',
+            fontSize: '13px',
+          }}
+        >
+          Los Angeles
+        </div>
+      </CheckMarkCard>
+      <CheckMarkCard label="Matilda" value="matilda">
+        <Avatar size="xl" image={AvatarSpec.generate().image} name="Matilda" />
+        <div
+          style={{
+            fontSize: '14px',
+            color: '#314351',
+            margin: '14px 0 5px',
+          }}
+        >
+          Matilda
+        </div>
+        <div
+          style={{
+            color: '#93A1B0',
+            fontSize: '13px',
+          }}
+        >
+          Charlotte
+        </div>
+      </CheckMarkCard>
+      <CheckMarkCard label="Mugatu" value="mugatu" disabled>
+        <Avatar size="xl" image={AvatarSpec.generate().image} name="Mugatu" />
+        <div
+          style={{
+            fontSize: '14px',
+            color: '#314351',
+            margin: '14px 0 5px',
+          }}
+        >
+          Mugatu
+        </div>
+        <div
+          style={{
+            color: '#93A1B0',
+            fontSize: '13px',
+          }}
+        >
+          Tokyo
+        </div>
+      </CheckMarkCard>
+    </ChoiceGroup>
+  </Story>
+</Preview>

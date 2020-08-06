@@ -17,9 +17,12 @@ class ChoiceGroup extends React.Component {
   constructor(props) {
     super(props)
 
+    const selectedValue = this.getInitialSelectedValue(props)
+
     this.state = {
       id: uniqueID(),
-      selectedValue: this.getInitialSelectedValue(props),
+      selectedValue,
+      limitReached: this.getSelectLimitState(props, selectedValue),
     }
   }
 
@@ -43,17 +46,28 @@ class ChoiceGroup extends React.Component {
   }
 
   getInitialSelectedValue(props) {
-    const { value, multiSelect } = props
+    const { value, multiSelect, multiSelectLimit } = props
     let selectedValue = value ? [].concat(value) : []
 
+    /** When multiSelect is not enabled and we get a value prop with more
+     * than one item, take the first and ignore the rest
+     */
     if (!multiSelect && selectedValue.length > 1) {
       selectedValue = selectedValue[0]
+    }
+
+    /** When multiselec is enabled and we have a limit, make sure
+     * we return a selectedValue array with no more items than said limit
+     */
+
+    if (multiSelectLimit !== null && multiSelectLimit > 0) {
+      selectedValue = selectedValue.slice(0, multiSelectLimit)
     }
 
     return selectedValue
   }
 
-  getMultiSelectValue(value, checked) {
+  getMultiSelectValue = (value, checked) => {
     const { selectedValue } = this.state
     const valueIndex = selectedValue.indexOf(value)
 
@@ -64,13 +78,25 @@ class ChoiceGroup extends React.Component {
     return selectedValue.filter(v => v !== value)
   }
 
+  getSelectLimitState = (props, selectedValue) => {
+    const { multiSelect, multiSelectLimit } = props
+
+    return (
+      multiSelect &&
+      multiSelectLimit !== null &&
+      multiSelectLimit > 0 &&
+      selectedValue.length === multiSelectLimit
+    )
+  }
+
   handleOnChange = (value, checked) => {
     const { multiSelect, onChange } = this.props
     const selectedValue = multiSelect
       ? this.getMultiSelectValue(value, checked)
       : [value]
+    const limitReached = this.getSelectLimitState(this.props, selectedValue)
 
-    this.setState({ selectedValue })
+    this.setState({ selectedValue, limitReached })
     onChange(selectedValue)
   }
 
@@ -79,8 +105,9 @@ class ChoiceGroup extends React.Component {
     const selectedValue = multiSelect
       ? this.getMultiSelectValue(value, checked)
       : [value]
+    const limitReached = this.getSelectLimitState(this.props, selectedValue)
 
-    this.setState({ selectedValue })
+    this.setState({ selectedValue, limitReached })
     onEnter(selectedValue)
   }
 
@@ -99,25 +126,25 @@ class ChoiceGroup extends React.Component {
   }
 
   getChildrenMarkup = () => {
-    const { isResponsive, choiceMaxWidth, children } = this.props
-    const { id, selectedValue } = this.state
+    const { isResponsive, choiceMaxWidth, choiceHeight, children } = this.props
+    const { id, selectedValue, limitReached } = this.state
 
     return (
       children &&
       React.Children.map(children, (child, index) => {
         const key = get(child, 'props.id') || `${id}-${index}`
+        const isSelected = selectedValue.includes(child.props.value)
         const clone = React.isValidElement(child)
           ? React.cloneElement(child, {
-              checked: selectedValue.includes(child.props.value),
+              checked: isSelected,
+              disabled: limitReached && !isSelected,
+              maxWidth: choiceMaxWidth,
+              height: choiceHeight,
             })
           : child
 
         return (
-          <FormGroup.Choice
-            key={key}
-            maxWidth={choiceMaxWidth}
-            isResponsive={isResponsive}
-          >
+          <FormGroup.Choice key={key} isResponsive={isResponsive}>
             {clone}
           </FormGroup.Choice>
         )
@@ -141,11 +168,13 @@ class ChoiceGroup extends React.Component {
       name,
       ...rest
     } = this.props
+    const { limitReached } = this.state
     const componentClassName = classNames(
       'c-ChoiceGroup',
       align && `is-align-${align}`,
       multiSelect && 'is-multi-select',
       isResponsive && 'is-responsive',
+      limitReached && 'limit-reached',
       className
     )
     const childrenMarkup = this.getChildrenMarkup()
@@ -189,6 +218,10 @@ ChoiceGroup.propTypes = {
   disabled: PropTypes.bool,
   /** Enables responsive styling. */
   isResponsive: PropTypes.bool,
+  /** Allow multiple choice selection */
+  multiSelect: PropTypes.bool,
+  /** Limit of selections allowed when multiSelect enabled */
+  multiSelectLimit: PropTypes.number,
   /** Name for the inputs. */
   name: PropTypes.string,
   /** Callback when an input is blurred. */
@@ -197,11 +230,10 @@ ChoiceGroup.propTypes = {
   onChange: PropTypes.func,
   /** Callback when an input is focused. */
   onFocus: PropTypes.func,
+  /** Callback when an enter or espace is pressed. */
   onEnter: PropTypes.func,
   /** The default value of input group. */
   value: PropTypes.any,
-  /** Allow multiple choice selection */
-  multiSelect: PropTypes.bool,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
 }
