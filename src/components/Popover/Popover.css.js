@@ -13,10 +13,14 @@ export const config = {
   background: 'white',
 }
 
+/** Make the border color slightly darker than the popover's
+ * border to account for aliasing that makes the arrow color appear
+ * lighter
+ */
 export const ArrowPopoverUI = styled(ArrowUI)`
   &:before {
     background: ${config.background};
-    border: 1px solid ${config.borderColor};
+    border: 1px solid #acb7c0;
   }
 
   /* ghost */
@@ -25,8 +29,8 @@ export const ArrowPopoverUI = styled(ArrowUI)`
     background: ${config.background};
     position: absolute;
     transform: rotate(45deg);
-    height: calc(${({ size }) => size}px - 4px);
-    width: calc(${({ size }) => size}px - 4px);
+    height: calc(${({ arrowSize }) => arrowSize}px - 4px);
+    width: calc(${({ arrowSize }) => arrowSize}px - 4px);
     margin: 2px;
     border-color: transparent;
     box-shadow: none;
@@ -43,26 +47,38 @@ export const PopoverUI = styled(TooltipUI)`
   padding: ${config.padding};
 
   &[data-placement^='top'] ${ArrowPopoverUI} {
+    &:before {
+      bottom: -2px;
+    }
     &:after {
-      bottom: 1px;
+      bottom: -1px;
     }
   }
 
   &[data-placement^='bottom'] ${ArrowPopoverUI} {
+    &:before {
+      top: -2px;
+    }
     &:after {
-      top: 1px;
+      top: -1px;
     }
   }
 
   &[data-placement^='left'] ${ArrowPopoverUI} {
+    &:before {
+      left: 2px;
+    }
     &:after {
-      left: -1px;
+      left: 1px;
     }
   }
 
   &[data-placement^='right'] ${ArrowPopoverUI} {
+    &:before {
+      left: -2px;
+    }
     &:after {
-      left: 1px;
+      left: -1px;
     }
   }
 `
