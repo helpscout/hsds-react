@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Choice from '../Choice'
 import { classNames } from '../../utilities/classNames'
 
@@ -11,7 +10,7 @@ class Checkbox extends React.PureComponent {
 
     return (
       <Choice
-        {...getValidProps(rest)}
+        {...rest}
         className={componentClassName}
         componentID="Checkbox"
         type="checkbox"

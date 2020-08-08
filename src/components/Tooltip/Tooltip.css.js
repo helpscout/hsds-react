@@ -11,18 +11,18 @@ export const TooltipTriggerUI = styled.span`
 `
 
 export const ArrowUI = styled.span`
-  height: ${({ size }) => size}px;
-  pointer-events: none;
   position: absolute;
-  width: ${({ size }) => size}px;
+  height: ${({ arrowSize }) => arrowSize}px;
+  width: ${({ arrowSize }) => arrowSize}px;
+  pointer-events: none;
 
   &:before {
     content: '';
     background: ${config.background};
     position: absolute;
     transform: rotate(45deg);
-    height: calc(${({ size }) => size}px - 4px);
-    width: calc(${({ size }) => size}px - 4px);
+    height: calc(${({ arrowSize }) => arrowSize}px - 4px);
+    width: calc(${({ arrowSize }) => arrowSize}px - 4px);
     margin: 2px;
     left: 0;
   }

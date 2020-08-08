@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Icon from '../Icon'
-import ChoiceGroupContext from '../ChoiceGroup/ChoiceGroup.Context'
 import { classNames } from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isFunction, isString } from '../../utilities/is'
 import { noop } from '../../utilities/other'
+import Icon from '../Icon'
 import Radio from '../Radio'
 import {
   RadioCardUI,
@@ -15,10 +14,9 @@ import {
 } from './RadioCard.css'
 
 const uniqueID = createUniqueIDFactory('RadioCard')
+const DEFAULT_ICON = 'fab-chat'
 
 class RadioCard extends React.PureComponent {
-  defaultIcon = 'fab-chat'
-
   constructor(props) {
     super(props)
 
@@ -34,6 +32,22 @@ class RadioCard extends React.PureComponent {
       this.radioCardRef.current.classList.add('is-focused')
       this.inputNode.focus()
     }
+  }
+
+  getClassName() {
+    const { className, checked } = this.props
+
+    return classNames('c-RadioCard', checked && 'is-checked', className)
+  }
+
+  handleOnChange = (value, checked) => {
+    if (checked) {
+      this.radioCardRef.current.classList.add('is-checked')
+    } else {
+      this.radioCardRef.current.classList.remove('is-checked')
+    }
+
+    this.props.onChange(value, checked)
   }
 
   handleOnBlur = event => {
@@ -93,14 +107,19 @@ class RadioCard extends React.PureComponent {
       return React.createElement(icon)
     }
 
-    const iconName = isString(icon) ? icon : this.defaultIcon
+    const iconName = isString(icon) ? icon : DEFAULT_ICON
 
     return (
       <Icon className="c-RadioCard__icon" name={iconName} size={iconSize} />
     )
   }
 
-  getCardMarkup = contextProps => {
+  setInputNodeRef = node => {
+    this.inputNode = node
+    this.props.inputRef(node)
+  }
+
+  render() {
     const {
       checked,
       className,
@@ -108,6 +127,7 @@ class RadioCard extends React.PureComponent {
       heading,
       icon,
       isFocused,
+      height,
       maxWidth,
       title,
       value,
@@ -115,20 +135,15 @@ class RadioCard extends React.PureComponent {
     } = this.props
     const { id } = this.state
 
-    const componentClassName = classNames(
-      'c-RadioCard',
-      checked && 'is-checked',
-      className
-    )
-
     return (
       <RadioCardUI
         htmlFor={id}
-        className={componentClassName}
+        className={this.getClassName()}
         title={title}
         withHeading={Boolean(heading)}
         withContent={Boolean(content)}
         maxWidth={maxWidth}
+        height={height}
         ref={this.radioCardRef}
       >
         <IconWrapperUI
@@ -149,25 +164,12 @@ class RadioCard extends React.PureComponent {
           kind="custom"
           id={id}
           inputRef={this.setInputNodeRef}
+          onChange={this.handleOnChange}
           onBlur={this.handleOnBlur}
           onFocus={this.handleOnFocus}
           value={value}
         />
       </RadioCardUI>
-    )
-  }
-
-  setInputNodeRef = node => {
-    this.inputNode = node
-    this.props.inputRef(node)
-    this.props.innerRef(node)
-  }
-
-  render() {
-    return (
-      <ChoiceGroupContext.Consumer>
-        {this.getCardMarkup}
-      </ChoiceGroupContext.Consumer>
     )
   }
 }
@@ -177,7 +179,6 @@ RadioCard.defaultProps = {
   'data-cy': 'RadioCard',
   icon: 'fab-chat',
   iconSize: 52,
-  innerRef: noop,
   inputRef: noop,
   isFocused: false,
   onBlur: noop,
@@ -188,7 +189,7 @@ RadioCard.defaultProps = {
 RadioCard.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
-  /** Determines of the `radio` is checked. */
+  /** Determines if the `radio` is checked. */
   checked: PropTypes.bool,
   /** Optional content to render. */
   content: PropTypes.oneOfType([
@@ -214,10 +215,16 @@ RadioCard.propTypes = {
   iconSize: PropTypes.number,
   /** ID for the input. */
   id: PropTypes.string,
-  innerRef: PropTypes.func,
+  /** Callback to obtain the <input> node. */
   inputRef: PropTypes.func,
   /** Whether the radiocard should be focused */
   isFocused: PropTypes.bool,
+  /** Set the height of the RadioCard. */
+  height: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.func,
+  ]),
   /** Set the max width of the RadioCard. */
   maxWidth: PropTypes.oneOfType([
     PropTypes.string,

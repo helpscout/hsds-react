@@ -1,3 +1,11 @@
+/* istanbul ignore file */
+/**
+ ***DEPRECATED COMPONENT***
+ ***DEPRECATED COMPONENT***
+ ***DEPRECATED COMPONENT***
+
+  Use Pop instead
+ */
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'

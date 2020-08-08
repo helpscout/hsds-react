@@ -1,5 +1,5 @@
 import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
-import { boolean, select } from '@storybook/addon-knobs'
+import { boolean, number, select } from '@storybook/addon-knobs'
 import Checkbox from './'
 import { ChoiceGroup } from '../'
 
@@ -22,7 +22,6 @@ A Checkbox component is an enhanced version of the default HTML `<input>` `check
 <Preview>
   <Story name="default">
     <ChoiceGroup
-      multiSelect={boolean('multiSelect', true)}
       value={select(
         'Value from props',
         {
@@ -31,12 +30,13 @@ A Checkbox component is an enhanced version of the default HTML `<input>` `check
           two: ['hansel', 'mugatu'],
           three: ['hansel', 'mugatu', 'derek'],
         },
-        []
+        ['hansel', 'mugatu']
       )}
     >
       <Checkbox label="Derek" value="derek" />
       <Checkbox label="Hansel" value="hansel" />
       <Checkbox label="Mugatu" value="mugatu" />
+      <Checkbox label="Matilda" value="matilda" />
     </ChoiceGroup>
   </Story>
 </Preview>
@@ -63,6 +63,19 @@ A Checkbox component is an enhanced version of the default HTML `<input>` `check
     <ChoiceGroup>
       <Checkbox label="Derek (Disable)" value="derek" disabled />
       <Checkbox label="Hansel" value="hansel" disabled />
+    </ChoiceGroup>
+  </Story>
+</Preview>
+
+#### With selection limits
+
+<Preview>
+  <Story name="with selection limits">
+    <ChoiceGroup multiSelectLimit={number('multiSelectLimit', 2)}>
+      <Checkbox label="Derek" value="derek" />
+      <Checkbox label="Hansel" value="hansel" />
+      <Checkbox label="Mugatu" value="mugatu" />
+      <Checkbox label="Matilda" value="matilda" />
     </ChoiceGroup>
   </Story>
 </Preview>

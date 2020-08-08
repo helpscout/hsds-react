@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { isPlainContent } from './Popover.utils'
@@ -60,14 +59,17 @@ export const Popover = props => {
     triggerOn,
     ...rest
   } = props
-
   const render = ({ scope, ...tooltipProps }) => {
     const toolTipComponent = (
       <TooltipAnimationUI>
         <PopoverUI {...tooltipProps} data-cy="PopoverContent">
           <PopoverHeader header={header} renderHeader={renderHeader} />
           <PopoverContent content={content} renderContent={renderContent} />
-          <ArrowPopoverUI size={arrowSize} data-popper-arrow />
+          <ArrowPopoverUI
+            className="ArrowPopoverUI"
+            arrowSize={arrowSize}
+            data-popper-arrow
+          />
         </PopoverUI>
       </TooltipAnimationUI>
     )
@@ -77,7 +79,7 @@ export const Popover = props => {
 
   return (
     <Tooltip
-      {...getValidProps(rest)}
+      {...rest}
       className={getClassName(className)}
       innerRef={innerRef}
       render={render}
@@ -88,12 +90,15 @@ export const Popover = props => {
 }
 
 Popover.defaultProps = {
+  arrowSize: 14,
   'data-cy': 'Popover',
   innerRef: noop,
   triggerOn: 'click',
 }
 
 Popover.propTypes = {
+  /** Size of the "arrow" or "tip" for the popover */
+  arrowSize: PropTypes.number,
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
   /** Body content to render within the component. */

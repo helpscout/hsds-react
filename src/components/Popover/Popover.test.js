@@ -1,6 +1,8 @@
 import React from 'react'
+import { act } from 'react-dom/test-utils'
 import { mount } from 'enzyme'
 import Popover from './Popover'
+import { ArrowPopoverUI } from './Popover.css'
 
 describe('className', () => {
   test('Can render custom className', () => {
@@ -21,16 +23,24 @@ describe('Tooltip', () => {
 
     expect(el).toBeTruthy()
   })
+
+  test('Renders arrow', () => {
+    const wrapper = mount(<Popover content="Hello" />)
+
+    expect(wrapper.find(ArrowPopoverUI).length).toBeTruthy()
+  })
 })
 
 describe('renderContent', () => {
   test('Can render content', () => {
-    let wrapper = mount(<Popover isOpen content="Hello" />)
+    let wrapper = mount(<Popover content="Hello" />)
+
     expect(wrapper.find('PopoverContent').text()).toContain('Hello')
   })
 
   test('Can render header', () => {
-    let wrapper = mount(<Popover isOpen header="Hello" />)
+    let wrapper = mount(<Popover header="Hello" />)
+
     expect(wrapper.find('PopoverHeader').text()).toContain('Hello')
   })
 

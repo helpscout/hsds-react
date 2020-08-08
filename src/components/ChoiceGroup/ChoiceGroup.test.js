@@ -200,6 +200,115 @@ describe('ChoiceGroup', () => {
     })
   })
 
+  describe('multiSelectLimit', () => {
+    test('limitReached is false when multiSelect is disabled', () => {
+      const wrapper = mount(
+        <ChoiceGroup multiSelect={false}>
+          <Checkbox value="derek" />
+          <Checkbox value="hansel" />
+          <Checkbox value="mugatu" />
+        </ChoiceGroup>
+      )
+
+      expect(wrapper.state('limitReached')).toBeFalsy()
+    })
+
+    test('limitReached is false when multiSelect is enabled and value length is less than the multiSelectLimit', () => {
+      const wrapper = mount(
+        <ChoiceGroup multiSelectLimit={2} value={['derek']}>
+          <Checkbox value="derek" />
+          <Checkbox value="hansel" />
+          <Checkbox value="mugatu" />
+        </ChoiceGroup>
+      )
+      const el = wrapper.find('div.c-ChoiceGroup')
+
+      expect(wrapper.state('limitReached')).toBeFalsy()
+      expect(el.hasClass('limit-reached')).toBeFalsy()
+    })
+
+    test('limitReached is true when multiSelect is enabled and value length is equal than the multiSelectLimit', () => {
+      const wrapper = mount(
+        <ChoiceGroup multiSelectLimit={2} value={['derek', 'hansel']}>
+          <Checkbox value="derek" />
+          <Checkbox value="hansel" />
+          <Checkbox value="mugatu" />
+        </ChoiceGroup>
+      )
+      const el = wrapper.find('div.c-ChoiceGroup')
+
+      expect(wrapper.state('limitReached')).toBeTruthy()
+      expect(el.hasClass('limit-reached')).toBeTruthy()
+    })
+
+    test('limitReached updates base on selectedValue length', () => {
+      const wrapper = mount(
+        <ChoiceGroup multiSelectLimit={3}>
+          <Checkbox value="derek" />
+          <Checkbox value="hansel" />
+          <Checkbox value="mugatu" />
+          <Checkbox value="john" />
+          <Checkbox value="paul" />
+        </ChoiceGroup>
+      )
+      const input = wrapper.find(Checkbox).at(0).find('input')
+      const input2 = wrapper.find(Checkbox).at(1).find('input')
+      const input3 = wrapper.find(Checkbox).at(2).find('input')
+
+      input.simulate('change', { target: { checked: true } })
+      expect(wrapper.state('limitReached')).toBeFalsy()
+      expect(
+        wrapper.find('.c-ChoiceGroup').first().hasClass('limit-reached')
+      ).toBeFalsy()
+
+      input2.simulate('change', { target: { checked: true } })
+      expect(wrapper.state('limitReached')).toBeFalsy()
+      expect(
+        wrapper.find('.c-ChoiceGroup').first().hasClass('limit-reached')
+      ).toBeFalsy()
+
+      input3.simulate('change', { target: { checked: true } })
+      expect(wrapper.state('limitReached')).toBeTruthy()
+      expect(
+        wrapper.find('.c-ChoiceGroup').first().hasClass('limit-reached')
+      ).toBeTruthy()
+
+      input2.simulate('change', { target: { checked: false } })
+      expect(wrapper.state('limitReached')).toBeFalsy()
+      expect(
+        wrapper.find('.c-ChoiceGroup').first().hasClass('limit-reached')
+      ).toBeFalsy()
+    })
+
+    test('limitReached updates base on selectedValue length (using keyboard)', () => {
+      const wrapper = mount(
+        <ChoiceGroup multiSelectLimit={3}>
+          <Checkbox value="derek" />
+          <Checkbox value="hansel" />
+          <Checkbox value="mugatu" />
+          <Checkbox value="john" />
+          <Checkbox value="paul" />
+        </ChoiceGroup>
+      )
+
+      const input = wrapper.find(Checkbox).at(0).find('input')
+      const input2 = wrapper.find(Checkbox).at(1).find('input')
+      const input3 = wrapper.find(Checkbox).at(2).find('input')
+
+      input.simulate('keyup', { key: ' ' })
+      expect(wrapper.state('limitReached')).toBeFalsy()
+
+      input2.simulate('keyup', { key: ' ' })
+      expect(wrapper.state('limitReached')).toBeFalsy()
+
+      input3.simulate('keyup', { key: ' ' })
+      expect(wrapper.state('limitReached')).toBeTruthy()
+
+      input2.simulate('keyup', { key: ' ' })
+      expect(wrapper.state('limitReached')).toBeFalsy()
+    })
+  })
+
   describe('Name', () => {
     test('Applies name to child Choice components', () => {
       const wrapper = mount(
