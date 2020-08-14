@@ -237,7 +237,13 @@ Dropdown.propTypes = {
   /** Callback to customize how an trigger renders. */
   renderTrigger: PropTypes.any,
   /** Controls the dropdown and sets the "active" item. */
-  selectedItem: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  selectedItem: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+    ),
+  ]),
   /** Callback to determine if the dropdown should update it's `up`/`down` drop direction. Default returns `true`. */
   shouldDropDirectionUpdate: PropTypes.func,
   /** Callback to determine if the dropdown refocus the trigger on close. Default returns `true`. */
