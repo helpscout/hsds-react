@@ -60,6 +60,13 @@ export const inputConfig = {
   customSize: 20,
 }
 
+export const InputIconUI = styled('div')`
+  color: ${inputConfig.iconColor};
+  padding: 3px;
+  position: relative;
+  z-index: 1;
+`
+
 export const InputUI = styled('div')`
   align-items: center;
   display: flex;
@@ -87,17 +94,16 @@ export const InputUI = styled('div')`
       border-radius: 4px;
     }
   }
+
+  &.is-disabled {
+    ${InputIconUI} {
+      color: ${getColor('grey.600')} !important;
+    }
+  }
 `
 
 export const InputInputUI = styled('input')`
   ${visuallyHidden()};
-`
-
-export const InputIconUI = styled('div')`
-  color: ${inputConfig.iconColor};
-  padding: 3px;
-  position: relative;
-  z-index: 1;
 `
 
 export const InputPlaceholderUI = styled('div')`

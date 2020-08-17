@@ -60,9 +60,9 @@ A Checkbox component is an enhanced version of the default HTML `<input>` `check
 
 <Preview>
   <Story name="Disabled">
-    <ChoiceGroup>
-      <Checkbox label="Derek (Disable)" value="derek" disabled />
-      <Checkbox label="Hansel" value="hansel" disabled />
+    <ChoiceGroup value={['derek', 'hansel']}>
+      <Checkbox label="Derek (Disable)" value="derek" disabled checked />
+      <Checkbox label="Hansel" value="hansel" />
     </ChoiceGroup>
   </Story>
 </Preview>

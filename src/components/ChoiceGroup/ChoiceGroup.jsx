@@ -134,10 +134,12 @@ class ChoiceGroup extends React.Component {
       React.Children.map(children, (child, index) => {
         const key = get(child, 'props.id') || `${id}-${index}`
         const isSelected = selectedValue.includes(child.props.value)
+        const disabled =
+          get(child, 'props.disabled') || (limitReached && !isSelected)
         const clone = React.isValidElement(child)
           ? React.cloneElement(child, {
               checked: isSelected,
-              disabled: limitReached && !isSelected,
+              disabled,
               maxWidth: choiceMaxWidth,
               height: choiceHeight,
             })

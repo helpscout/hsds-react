@@ -161,7 +161,7 @@ class ChoiceInput extends React.PureComponent {
           choiceKind={type}
           disabled={disabled}
           kind={kind}
-          isFilled={checked}
+          isFilled={!disabled && checked}
           isFirst={false}
           isFocused={isFocused}
           isNotOnly={false}
