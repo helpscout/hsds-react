@@ -84,3 +84,16 @@ A Dropdown component is provides the UI to contain a series of actions, presente
     </div>
   </Story>
 </Preview>
+
+#### Multiple Selected Items
+
+<Preview>
+  <Story name="Multiple selected items">
+    <div style={{ height: '250px' }}>
+      <Dropdown
+        items={itemsWithDivider}
+        selectedItem={[...itemsWithDivider].splice(2, 3)}
+      />
+    </div>
+  </Story>
+</Preview>
