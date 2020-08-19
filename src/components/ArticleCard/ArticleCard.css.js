@@ -24,7 +24,7 @@ export const ContentUI = styled('div')`
 
 export const TitleUI = styled('div')`
   color: ${getColor('link.base')};
-  line-height: 1.5;
+  line-height: 1.3;
   margin-bottom: 7px;
   transition: all 200ms linear;
 `

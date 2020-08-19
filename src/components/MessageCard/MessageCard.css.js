@@ -4,6 +4,7 @@ import Button from '../Button'
 import Heading from '../Heading'
 import { makeFontFamily, setFontSize } from '../../styles/utilities/font'
 import { getColor } from '../../styles/utilities/color'
+import { FONT_FAMILY } from '../../styles/configs/constants'
 const fontFamily = makeFontFamily('Barlow')
 
 export const MessageCardUI = styled(Card)`
@@ -258,5 +259,7 @@ export const ActionUI = styled('div')`
 
 export const ActionButtonUI = styled(Button)`
   ${setFontSize(14)};
+  font-family: ${FONT_FAMILY};
+  height: 54px !important;
   line-height: normal !important;
 `

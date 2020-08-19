@@ -22,6 +22,7 @@ const getMountSelector = (renderTo, body) => {
   // 2- is inside an iframe, but not the one created by storybook/cypress
   if (
     !mountSelector &&
+    !body &&
     window.parent &&
     !window.STORYBOOK_ENV &&
     !window.Cypress

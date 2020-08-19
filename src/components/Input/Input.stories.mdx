@@ -74,7 +74,12 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 <Preview>
   <Story name="States">
     <div>
-      <Input autoComplete="off" state="error" placeholder="Error" />
+      <Input
+        autoComplete="off"
+        state="error"
+        placeholder="Error"
+        errorMessage="Something went wrong"
+      />
       <br />
       <Input autoComplete="off" state="success" placeholder="Success" />
       <br />
