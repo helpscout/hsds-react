@@ -1,6 +1,6 @@
 // from https://github.com/hydrateio/react-styled-frame/blob/master/src/index.js
 // and https://github.com/styled-components/styled-components/issues/659#issuecomment-456894873
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Frame, { FrameContext } from 'react-frame-component'
 
@@ -24,17 +24,20 @@ const FrameContent = ({ children, theme }) => {
   // https://github.com/styled-components/styled-components/blob/master/CHANGELOG.md#unreleased
   // it's just not released yet. Once it's is released and we upgraded styled-components everywhere, we can go back to use target="frameContext.document.head"
   const shContext = useContext(StyleSheetContext)
-  const ssmProps = {}
-  if (shContext) {
-    const sheet = shContext.reconstructWithOptions({
-      target: frameContext.document.head,
-    })
-    sheet.names = new Map()
-    sheet.tag = null
-    ssmProps.sheet = sheet
-  } else {
-    ssmProps.target = frameContext.document.head
-  }
+  const ssmProps = useMemo(() => {
+    const ssmProps = {}
+    if (shContext) {
+      const sheet = shContext.reconstructWithOptions({
+        target: frameContext.document.head,
+      })
+      sheet.names = new Map()
+      sheet.tag = null
+      ssmProps.sheet = sheet
+    } else {
+      ssmProps.target = frameContext.document.head
+    }
+    return ssmProps
+  }, [shContext])
 
   return (
     <StyleSheetManager {...ssmProps}>
