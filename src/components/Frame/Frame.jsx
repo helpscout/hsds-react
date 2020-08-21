@@ -53,7 +53,6 @@ const FrameContent = ({ children, theme }) => {
 }
 
 export const FrameComponent = ({
-  style = {},
   theme,
   children,
   initialContent,
@@ -61,21 +60,13 @@ export const FrameComponent = ({
   ...rest
 }) => {
   return (
-    <div className="HSDS-FrameProvider">
-      <Frame
-        style={{
-          display: 'block',
-          overflow: 'scroll',
-          border: 0,
-          ...style,
-        }}
-        initialContent={initialContent}
-        contentDidMount={contentDidMount}
-        {...getValidProps(rest)}
-      >
-        <FrameContent theme={theme}>{children}</FrameContent>
-      </Frame>
-    </div>
+    <Frame
+      initialContent={initialContent}
+      contentDidMount={contentDidMount}
+      {...getValidProps(rest)}
+    >
+      <FrameContent theme={theme}>{children}</FrameContent>
+    </Frame>
   )
 }
 
