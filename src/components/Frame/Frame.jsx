@@ -1,6 +1,7 @@
 // from https://github.com/hydrateio/react-styled-frame/blob/master/src/index.js
 // and https://github.com/styled-components/styled-components/issues/659#issuecomment-456894873
 import React, { useContext, useMemo } from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Frame, { FrameContext } from 'react-frame-component'
 
@@ -71,6 +72,13 @@ export const FrameComponent = ({
       <FrameContent theme={theme}>{children}</FrameContent>
     </Frame>
   )
+}
+
+FrameComponent.propTypes = {
+  /* The initialContent props is the initial html injected into frame. It is only injected once, but allows you to insert any html into the frame (e.g. a head tag, script tags, etc). */
+  initialContent: PropTypes.string,
+  /* Callback that works exactly like componentDidMount. */
+  contentDidMount: PropTypes.func,
 }
 
 FrameComponent.defaultProps = {
