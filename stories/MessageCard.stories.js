@@ -1,7 +1,7 @@
 import React from 'react'
-import styled, { storiesOf } from '@storybook/react'
+import { storiesOf } from '@storybook/react'
 import MessageCard from '../src/components/MessageCard'
-import { ThemeProvider } from '../src/components/styled'
+import styled, { ThemeProvider } from '../src/components/styled'
 import {
   withKnobs,
   boolean,
