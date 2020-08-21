@@ -84,3 +84,4 @@ FrameComponent.defaultProps = {
 }
 
 export const ThemableFrame = withTheme(FrameComponent)
+export { FrameContext }
