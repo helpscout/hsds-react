@@ -23,6 +23,9 @@ const FrameContent = ({ children, theme }) => {
   // https://github.com/styled-components/styled-components/pull/3159
   // https://github.com/styled-components/styled-components/blob/master/CHANGELOG.md#unreleased
   // it's just not released yet. Once it's is released and we upgraded styled-components everywhere, we can go back to use target="frameContext.document.head"
+  //
+  // !Update: some performance issue occured, we might keep this way of creating a new sheet around even after
+  // !the styled-component update, to keep the useMemo implementation
   const shContext = useContext(StyleSheetContext)
   const ssmProps = useMemo(() => {
     const ssmProps = {}
