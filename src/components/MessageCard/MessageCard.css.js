@@ -175,8 +175,7 @@ export const BodyUI = styled.div`
   }
 
   code.inline-code {
-    display: inline-flex;
-    align-items: center;
+    display: inline-block;
     color: ${getColor('red.500')};
     caret-color: ${getColor('red.500')};
     padding: 0 7px;
@@ -186,9 +185,13 @@ export const BodyUI = styled.div`
     background: ${getColor('grey.300')};
     border-radius: 4px;
     font-family: var(--HSDSGlobalFontFamilyMono);
-    height: 24px;
+    min-height: 24px;
     line-height: 24px;
-    vertical-align: baseline;
+
+    b,
+    strong {
+      color: ${getColor('red.500')};
+    }
   }
 
   pre {
