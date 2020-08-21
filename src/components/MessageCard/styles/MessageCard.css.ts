@@ -157,9 +157,9 @@ export const BodyUI = styled('div')`
       font-size: ${editorHtmlFontSize}px;
     }
   }
+
   code.inline-code {
-    display: inline-flex;
-    align-items: center;
+    display: inline-block;
     color: ${getColor('red.500')};
     caret-color: ${getColor('red.500')};
     padding: 0 7px;
@@ -168,13 +168,18 @@ export const BodyUI = styled('div')`
     margin: 0 1px;
     background: ${getColor('grey.300')};
     border-radius: 4px;
-    font-family: var(--HSDSGlobalFontFamilyMono);
-    height: 24px;
+    font-family: var(--BlueConfigGlobalFontFamilyMono);
+    min-height: 24px;
     line-height: 24px;
-    vertical-align: baseline;
+
+    b,
+    strong {
+      color: ${getColor('red.500')};
+    }
   }
+
   pre {
-    font-family: var(--HSDSGlobalFontFamilyMono);
+    font-family: var(--BlueConfigGlobalFontFamilyMono);
     margin: 15px 0;
     padding: 15px 25px;
     border: 1px solid ${getColor('grey.500')};
