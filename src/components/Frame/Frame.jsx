@@ -1,6 +1,7 @@
 // from https://github.com/hydrateio/react-styled-frame/blob/master/src/index.js
 // and https://github.com/styled-components/styled-components/issues/659#issuecomment-456894873
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
+import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Frame, { FrameContext } from 'react-frame-component'
 
@@ -23,18 +24,24 @@ const FrameContent = ({ children, theme }) => {
   // https://github.com/styled-components/styled-components/pull/3159
   // https://github.com/styled-components/styled-components/blob/master/CHANGELOG.md#unreleased
   // it's just not released yet. Once it's is released and we upgraded styled-components everywhere, we can go back to use target="frameContext.document.head"
+  //
+  // !Update: some performance issue occured, we might keep this way of creating a new sheet around even after
+  // !the styled-component update, to keep the useMemo implementation
   const shContext = useContext(StyleSheetContext)
-  const ssmProps = {}
-  if (shContext) {
-    const sheet = shContext.reconstructWithOptions({
-      target: frameContext.document.head,
-    })
-    sheet.names = new Map()
-    sheet.tag = null
-    ssmProps.sheet = sheet
-  } else {
-    ssmProps.target = frameContext.document.head
-  }
+  const ssmProps = useMemo(() => {
+    const ssmProps = {}
+    if (shContext) {
+      const sheet = shContext.reconstructWithOptions({
+        target: frameContext.document.head,
+      })
+      sheet.names = new Map()
+      sheet.tag = null
+      ssmProps.sheet = sheet
+    } else {
+      ssmProps.target = frameContext.document.head
+    }
+    return ssmProps
+  }, [shContext])
 
   return (
     <StyleSheetManager {...ssmProps}>
@@ -50,7 +57,6 @@ const FrameContent = ({ children, theme }) => {
 }
 
 export const FrameComponent = ({
-  style = {},
   theme,
   children,
   initialContent,
@@ -58,22 +64,21 @@ export const FrameComponent = ({
   ...rest
 }) => {
   return (
-    <div className="HSDS-FrameProvider">
-      <Frame
-        style={{
-          display: 'block',
-          overflow: 'scroll',
-          border: 0,
-          ...style,
-        }}
-        initialContent={initialContent}
-        contentDidMount={contentDidMount}
-        {...getValidProps(rest)}
-      >
-        <FrameContent theme={theme}>{children}</FrameContent>
-      </Frame>
-    </div>
+    <Frame
+      initialContent={initialContent}
+      contentDidMount={contentDidMount}
+      {...getValidProps(rest)}
+    >
+      <FrameContent theme={theme}>{children}</FrameContent>
+    </Frame>
   )
+}
+
+FrameComponent.propTypes = {
+  /* The initialContent props is the initial html injected into frame. It is only injected once, but allows you to insert any html into the frame (e.g. a head tag, script tags, etc). */
+  initialContent: PropTypes.string,
+  /* Callback that works exactly like componentDidMount. */
+  contentDidMount: PropTypes.func,
 }
 
 FrameComponent.defaultProps = {
@@ -81,3 +86,4 @@ FrameComponent.defaultProps = {
 }
 
 export const ThemableFrame = withTheme(FrameComponent)
+export { FrameContext }
