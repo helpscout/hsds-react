@@ -195,7 +195,13 @@ CheckMarkCard.propTypes = {
   inputRef: PropTypes.func,
   /** Whether the card should be focused */
   isFocused: PropTypes.bool,
-  /** Give the card special status styles, it also disables the input */
+  /** Give the card special status styles, it also disables the input
+   * status: Not needed, but if provided it will add a class name of "is-YOUR_STATUS" to the component
+   * iconName: Icon to render
+   * iconSize: Size of the icon, default 20
+   * color: color of the Card (border and background of the mark)
+   * tooltipText: If a tooltip is desired, provide the message here
+   */
   withStatus: PropTypes.shape({
     status: PropTypes.string,
     iconName: PropTypes.string,
