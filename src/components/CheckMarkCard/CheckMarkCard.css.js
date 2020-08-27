@@ -45,28 +45,48 @@ export const CheckMarkCardUI = styled('label')`
       transform: translateY(0);
     }
   }
+
+  &.is-locked {
+    cursor: default;
+    border-color: transparent;
+    box-shadow: 0px 0px 0 2px ${getColor('lavender.600')};
+
+    &:hover {
+      transform: translateY(0);
+    }
+  }
 `
 
-export const CheckMarkUI = styled('div')`
+export const MarkUI = styled('div')`
   position: absolute;
   top: -2px;
   left: -2px;
   height: 28px;
   width: 28px;
   border-radius: 4px 0px 5px;
-  background: ${getColor('blue.500')};
-  opacity: 0;
+  opacity: ${({ kind }) => (kind ? '1' : '0')};
   transition: opacity 0.15s;
   will-change: opacity;
+  background: ${({ kind }) => getMarkColor(kind)};
 
-  .is-checked & {
-    opacity: 1;
-  }
-
-  .checkmark-icon {
+  .mark-icon {
     color: white;
     position: absolute;
-    top: calc(50% - 13px);
-    left: calc(50% - 13px);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 `
+
+function getMarkColor(kind) {
+  switch (kind) {
+    case 'checkmark':
+      return getColor('blue.500')
+
+    case 'lock-closed':
+      return getColor('lavender.600')
+
+    default:
+      return getColor('blue.500')
+  }
+}

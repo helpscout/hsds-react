@@ -2,6 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import CheckMarkCard from '../CheckMarkCard'
 import Checkbox from '../Checkbox'
+import Icon from '../Icon'
 import VisuallyHidden from '../VisuallyHidden'
 
 describe('className', () => {
@@ -69,11 +70,39 @@ describe('Checked', () => {
   test('Applies checked styles, if provided', () => {
     const wrapper = mount(<CheckMarkCard checked />)
 
-    expect(wrapper.getDOMNode().classList.contains('is-checked')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-checked')).toBeTruthy()
+    expect(wrapper.find(Icon).first().props().name).toBe('checkmark')
 
     wrapper.setProps({ checked: false })
 
-    expect(wrapper.getDOMNode().classList.contains('is-checked')).toBe(false)
+    expect(wrapper.getDOMNode().classList.contains('is-checked')).toBeFalsy()
+  })
+})
+
+describe('Locked', () => {
+  test('Applies locked styles, if provided', () => {
+    const wrapper = mount(<CheckMarkCard isLocked />)
+
+    expect(wrapper.getDOMNode().classList.contains('is-locked')).toBeTruthy()
+    expect(wrapper.find(Icon).first().props().name).toBe('lock-closed')
+
+    wrapper.setProps({ isLocked: false })
+
+    expect(wrapper.getDOMNode().classList.contains('is-locked')).toBeFalsy()
+  })
+
+  test('When locked, the input should be disabled', () => {
+    const wrapper = mount(<CheckMarkCard isLocked />)
+
+    expect(wrapper.find(Checkbox).first().props().disabled).toBeTruthy()
+  })
+
+  test('locked styles take precedent over checked', () => {
+    const wrapper = mount(<CheckMarkCard isLocked checked />)
+
+    expect(wrapper.getDOMNode().classList.contains('is-locked')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('is-checked')).toBeFalsy()
+    expect(wrapper.find(Icon).first().props().name).toBe('lock-closed')
   })
 })
 
@@ -81,11 +110,11 @@ describe('Disabled', () => {
   test('Applies disabled styles, if provided', () => {
     const wrapper = mount(<CheckMarkCard disabled />)
 
-    expect(wrapper.getDOMNode().classList.contains('is-disabled')).toBe(true)
+    expect(wrapper.getDOMNode().classList.contains('is-disabled')).toBeTruthy()
 
     wrapper.setProps({ disabled: false })
 
-    expect(wrapper.getDOMNode().classList.contains('is-disabled')).toBe(false)
+    expect(wrapper.getDOMNode().classList.contains('is-disabled')).toBeFalsy()
   })
 })
 
@@ -122,14 +151,6 @@ describe('Events', () => {
 })
 
 describe('Ref', () => {
-  test('Can retrieve the input node from inputRef', () => {
-    const spy = jest.fn()
-    const wrapper = mount(<CheckMarkCard inputRef={spy} />)
-    const o = wrapper.find('input').getDOMNode()
-
-    expect(spy).toHaveBeenCalledWith(o)
-  })
-
   test('Can retrieve the input node from inputRef', () => {
     const spy = jest.fn()
     const wrapper = mount(<CheckMarkCard inputRef={spy} />)

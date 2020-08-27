@@ -54,10 +54,7 @@ describe('ChoiceGroup', () => {
           <Radio />
         </ChoiceGroup>
       )
-      const input = wrapper
-        .find('.c-Radio')
-        .first()
-        .find('input')
+      const input = wrapper.find('.c-Radio').first().find('input')
 
       input.simulate('blur')
 
@@ -73,10 +70,7 @@ describe('ChoiceGroup', () => {
           <Radio />
         </ChoiceGroup>
       )
-      const input = wrapper
-        .find('.c-Radio')
-        .first()
-        .find('input')
+      const input = wrapper.find('.c-Radio').first().find('input')
 
       input.simulate('focus')
 
@@ -92,10 +86,7 @@ describe('ChoiceGroup', () => {
           <Radio value="3" />
         </ChoiceGroup>
       )
-      const input = wrapper
-        .find('.c-Radio')
-        .first()
-        .find('input')
+      const input = wrapper.find('.c-Radio').first().find('input')
 
       input.simulate('change', { target: { checked: true } })
 
@@ -103,41 +94,39 @@ describe('ChoiceGroup', () => {
     })
 
     test('Can trigger onEnter callback', () => {
-      const spy = jest.fn()
+      const enterSpy = jest.fn()
+      const changeSpy = jest.fn()
       const wrapper = mount(
-        <ChoiceGroup onEnter={spy}>
+        <ChoiceGroup onEnter={enterSpy} onChange={changeSpy}>
           <Radio value="1" />
           <Radio value="2" />
           <Radio value="3" />
         </ChoiceGroup>
       )
-      const input = wrapper
-        .find('.c-Radio')
-        .first()
-        .find('input')
+      const input = wrapper.find('.c-Radio').first().find('input')
 
       input.simulate('keydown', { key: 'Enter' })
 
-      expect(spy).toHaveBeenCalled()
+      expect(enterSpy).toHaveBeenCalled()
+      expect(changeSpy).toHaveBeenCalled()
     })
 
     test('Can trigger onEnter callback with space', () => {
-      const spy = jest.fn()
+      const enterSpy = jest.fn()
+      const changeSpy = jest.fn()
       const wrapper = mount(
-        <ChoiceGroup onEnter={spy}>
+        <ChoiceGroup onEnter={enterSpy} onChange={changeSpy}>
           <Radio value="1" />
           <Radio value="2" />
           <Radio value="3" />
         </ChoiceGroup>
       )
-      const input = wrapper
-        .find('.c-Radio')
-        .first()
-        .find('input')
+      const input = wrapper.find('.c-Radio').first().find('input')
 
       input.simulate('keyup', { key: ' ' })
 
-      expect(spy).toHaveBeenCalled()
+      expect(enterSpy).toHaveBeenCalled()
+      expect(changeSpy).toHaveBeenCalled()
     })
   })
 
@@ -177,18 +166,9 @@ describe('ChoiceGroup', () => {
           <Checkbox value="mugatu" />
         </ChoiceGroup>
       )
-      const input = wrapper
-        .find(Checkbox)
-        .at(0)
-        .find('input')
-      const input2 = wrapper
-        .find(Checkbox)
-        .at(1)
-        .find('input')
-      const input3 = wrapper
-        .find(Checkbox)
-        .at(2)
-        .find('input')
+      const input = wrapper.find(Checkbox).at(0).find('input')
+      const input2 = wrapper.find(Checkbox).at(1).find('input')
+      const input3 = wrapper.find(Checkbox).at(2).find('input')
 
       input.simulate('change', { target: { checked: true } })
       expect(spy).toHaveBeenCalledWith(['derek'])
@@ -209,18 +189,9 @@ describe('ChoiceGroup', () => {
           <Checkbox value="mugatu" />
         </ChoiceGroup>
       )
-      const input = wrapper
-        .find(Checkbox)
-        .at(0)
-        .find('input')
-      const input2 = wrapper
-        .find(Checkbox)
-        .at(1)
-        .find('input')
-      const input3 = wrapper
-        .find(Checkbox)
-        .at(2)
-        .find('input')
+      const input = wrapper.find(Checkbox).at(0).find('input')
+      const input2 = wrapper.find(Checkbox).at(1).find('input')
+      const input3 = wrapper.find(Checkbox).at(2).find('input')
 
       input.simulate('change', { target: { checked: true } })
       expect(spy).toHaveBeenCalledWith('derek')
@@ -284,53 +255,32 @@ describe('ChoiceGroup', () => {
           <Checkbox value="paul" />
         </ChoiceGroup>
       )
-      const input = wrapper
-        .find(Checkbox)
-        .at(0)
-        .find('input')
-      const input2 = wrapper
-        .find(Checkbox)
-        .at(1)
-        .find('input')
-      const input3 = wrapper
-        .find(Checkbox)
-        .at(2)
-        .find('input')
+      const input = wrapper.find(Checkbox).at(0).find('input')
+      const input2 = wrapper.find(Checkbox).at(1).find('input')
+      const input3 = wrapper.find(Checkbox).at(2).find('input')
 
       input.simulate('change', { target: { checked: true } })
       expect(wrapper.state('limitReached')).toBeFalsy()
       expect(
-        wrapper
-          .find('.c-ChoiceGroup')
-          .first()
-          .hasClass('limit-reached')
+        wrapper.find('.c-ChoiceGroup').first().hasClass('limit-reached')
       ).toBeFalsy()
 
       input2.simulate('change', { target: { checked: true } })
       expect(wrapper.state('limitReached')).toBeFalsy()
       expect(
-        wrapper
-          .find('.c-ChoiceGroup')
-          .first()
-          .hasClass('limit-reached')
+        wrapper.find('.c-ChoiceGroup').first().hasClass('limit-reached')
       ).toBeFalsy()
 
       input3.simulate('change', { target: { checked: true } })
       expect(wrapper.state('limitReached')).toBeTruthy()
       expect(
-        wrapper
-          .find('.c-ChoiceGroup')
-          .first()
-          .hasClass('limit-reached')
+        wrapper.find('.c-ChoiceGroup').first().hasClass('limit-reached')
       ).toBeTruthy()
 
       input2.simulate('change', { target: { checked: false } })
       expect(wrapper.state('limitReached')).toBeFalsy()
       expect(
-        wrapper
-          .find('.c-ChoiceGroup')
-          .first()
-          .hasClass('limit-reached')
+        wrapper.find('.c-ChoiceGroup').first().hasClass('limit-reached')
       ).toBeFalsy()
     })
 
@@ -345,18 +295,9 @@ describe('ChoiceGroup', () => {
         </ChoiceGroup>
       )
 
-      const input = wrapper
-        .find(Checkbox)
-        .at(0)
-        .find('input')
-      const input2 = wrapper
-        .find(Checkbox)
-        .at(1)
-        .find('input')
-      const input3 = wrapper
-        .find(Checkbox)
-        .at(2)
-        .find('input')
+      const input = wrapper.find(Checkbox).at(0).find('input')
+      const input2 = wrapper.find(Checkbox).at(1).find('input')
+      const input3 = wrapper.find(Checkbox).at(2).find('input')
 
       input.simulate('keyup', { key: ' ' })
       expect(wrapper.state('limitReached')).toBeFalsy()
@@ -382,12 +323,7 @@ describe('ChoiceGroup', () => {
         </ChoiceGroup>
       )
 
-      expect(
-        wrapper
-          .find('input')
-          .first()
-          .props().name
-      ).toBe('MUGATU')
+      expect(wrapper.find('input').first().props().name).toBe('MUGATU')
     })
   })
 

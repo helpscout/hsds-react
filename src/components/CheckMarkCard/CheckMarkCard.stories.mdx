@@ -27,15 +27,27 @@ This component provides richer context to the of the default HTML `<input>` of t
         derek
       </CheckMarkCard>
       <br />
-      <CheckMarkCard label="Hansel" value="hansel">
+      <CheckMarkCard
+        label="Hansel"
+        value="hansel"
+        disabled={boolean('disabled', true)}
+      >
         hansel
       </CheckMarkCard>
       <br />
-      <CheckMarkCard label="Matilda" value="matilda" checked>
+      <CheckMarkCard
+        label="Matilda"
+        value="matilda"
+        checked={boolean('checked', true)}
+      >
         matilda
       </CheckMarkCard>
       <br />
-      <CheckMarkCard label="Mugatu" value="mugatu" disabled>
+      <CheckMarkCard
+        label="Mugatu"
+        value="mugatu"
+        isLocked={boolean('isLocked', true)}
+      >
         mugatu
       </CheckMarkCard>
     </div>
@@ -68,6 +80,9 @@ This component provides richer context to the of the default HTML `<input>` of t
       choiceMaxWidth="170px"
       choiceHeight="160px"
       multiSelectLimit={number('multiSelectLimit', 2)}
+      onChange={value => {
+        console.log(`onChange(selectedValue: ${value.toString()})`)
+      }}
     >
       <CheckMarkCard label="Derek" value="derek">
         <Avatar size="xl" image={AvatarSpec.generate().image} name="Derek" />
@@ -147,6 +162,26 @@ This component provides richer context to the of the default HTML `<input>` of t
           }}
         >
           Tokyo
+        </div>
+      </CheckMarkCard>
+      <CheckMarkCard label="Elaine" value="elaine" isLocked>
+        <Avatar size="xl" image={AvatarSpec.generate().image} name="Elaine" />
+        <div
+          style={{
+            fontSize: '14px',
+            color: '#314351',
+            margin: '14px 0 5px',
+          }}
+        >
+          Elaine
+        </div>
+        <div
+          style={{
+            color: '#93A1B0',
+            fontSize: '13px',
+          }}
+        >
+          Queens
         </div>
       </CheckMarkCard>
     </ChoiceGroup>

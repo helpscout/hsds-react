@@ -36,7 +36,7 @@ export const TooltipUI = styled.div`
   /* in case scoping is not working */
   box-sizing: border-box;
   font-family: var(--HSDSGlobalFontFamily);
-
+  width: fit-content;
   background-color: ${config.background};
   border-radius: 3px;
   color: ${config.text};

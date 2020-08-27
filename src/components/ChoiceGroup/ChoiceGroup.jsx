@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import equal from 'fast-deep-equal'
 import ChoiceGroupContext from './ChoiceGroup.Context'
 import FormGroup from '../FormGroup'
 import FormLabelContext from '../FormLabel/Context'
@@ -24,17 +23,6 @@ class ChoiceGroup extends React.Component {
       selectedValue,
       limitReached: this.getSelectLimitState(props, selectedValue),
     }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (
-      nextProps.value === this.props.value &&
-      equal(nextState.selectedValue, this.state.selectedValue)
-    ) {
-      return false
-    }
-
-    return true
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -101,7 +89,7 @@ class ChoiceGroup extends React.Component {
   }
 
   handleOnEnter = (value, checked) => {
-    const { multiSelect, onEnter } = this.props
+    const { multiSelect, onEnter, onChange } = this.props
     const selectedValue = multiSelect
       ? this.getMultiSelectValue(value, checked)
       : value
@@ -109,6 +97,7 @@ class ChoiceGroup extends React.Component {
 
     this.setState({ selectedValue, limitReached })
     onEnter(selectedValue)
+    onChange(selectedValue)
   }
 
   getContextProps = () => {

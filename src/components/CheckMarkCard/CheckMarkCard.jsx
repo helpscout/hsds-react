@@ -6,7 +6,7 @@ import { noop } from '../../utilities/other'
 import Icon from '../Icon'
 import Checkbox from '../Checkbox'
 import VisuallyHidden from '../VisuallyHidden'
-import { CheckMarkCardUI, CheckMarkUI } from './CheckMarkCard.css'
+import { CheckMarkCardUI, MarkUI } from './CheckMarkCard.css'
 
 const uniqueID = createUniqueIDFactory('CheckMarkCard')
 
@@ -16,6 +16,7 @@ export class CheckMarkCard extends React.Component {
 
     this.state = {
       id: props.id || uniqueID(),
+      cardChecked: props.checked,
     }
 
     this.checkMarkCardRef = React.createRef()
@@ -28,14 +29,24 @@ export class CheckMarkCard extends React.Component {
     }
   }
 
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.checked !== this.props.checked) {
+      this.setState({
+        cardChecked: nextProps.checked,
+      })
+    }
+  }
+
   getClassName() {
-    const { className, checked, disabled } = this.props
+    const { className, disabled, isLocked } = this.props
+    const { cardChecked } = this.state
 
     return classNames(
       'c-CheckMarkCard',
       className,
-      checked && 'is-checked',
-      disabled && 'is-disabled'
+      cardChecked && !isLocked && 'is-checked',
+      disabled && 'is-disabled',
+      isLocked && 'is-locked'
     )
   }
 
@@ -45,11 +56,9 @@ export class CheckMarkCard extends React.Component {
   }
 
   handleOnChange = (value, checked) => {
-    if (checked) {
-      this.checkMarkCardRef.current.classList.add('is-checked')
-    } else {
-      this.checkMarkCardRef.current.classList.remove('is-checked')
-    }
+    this.setState({
+      cardChecked: checked,
+    })
 
     this.props.onChange(value, checked)
   }
@@ -64,18 +73,50 @@ export class CheckMarkCard extends React.Component {
     this.props.onFocus(event)
   }
 
+  renderMark = () => {
+    const { isLocked } = this.props
+    const { cardChecked } = this.state
+    let iconName
+    let iconSize
+
+    if (cardChecked) {
+      iconName = 'checkmark'
+      iconSize = '24'
+    }
+    // If the card is locked, it should take precedence even if the card
+    // is checked from external props for some reason
+    if (isLocked) {
+      iconName = 'lock-closed'
+      iconSize = '20'
+    }
+
+    // "Render" MarkUI below even if neither locked or checked with opacity 0
+    // so we can animate the transition
+    return (
+      <MarkUI className="c-CheckMarkCard__mark" kind={iconName}>
+        {iconName ? (
+          <Icon
+            className={`${iconName}-icon mark-icon`}
+            name={iconName}
+            size={iconSize}
+          />
+        ) : null}
+      </MarkUI>
+    )
+  }
+
   render() {
     const {
-      checked,
       children,
       disabled,
+      isLocked,
       label,
       maxWidth,
       height,
       value,
       ...rest
     } = this.props
-    const { id } = this.state
+    const { id, cardChecked } = this.state
 
     return (
       <CheckMarkCardUI
@@ -86,13 +127,11 @@ export class CheckMarkCard extends React.Component {
         height={height}
         ref={this.checkMarkCardRef}
       >
-        <CheckMarkUI>
-          <Icon className="checkmark-icon" name="checkmark" size="24" />
-        </CheckMarkUI>
+        {this.renderMark()}
         <VisuallyHidden>
           <Checkbox
-            checked={checked}
-            disabled={disabled}
+            checked={cardChecked}
+            disabled={disabled || isLocked}
             id={id}
             inputRef={this.setInputNodeRef}
             label={label || value}
@@ -113,6 +152,7 @@ CheckMarkCard.defaultProps = {
   'data-cy': 'CheckMarkCard',
   inputRef: noop,
   isFocused: false,
+  isLocked: false,
   onBlur: noop,
   onChange: noop,
   onFocus: noop,
@@ -133,6 +173,8 @@ CheckMarkCard.propTypes = {
   inputRef: PropTypes.func,
   /** Whether the card should be focused */
   isFocused: PropTypes.bool,
+  /** Give the card "locked" styles, it also disables it */
+  isLocked: PropTypes.bool,
   /** Set the height of the Card. */
   height: PropTypes.oneOfType([
     PropTypes.string,
