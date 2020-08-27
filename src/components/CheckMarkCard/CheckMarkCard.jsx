@@ -109,7 +109,7 @@ export class CheckMarkCard extends React.Component {
         markShown={Boolean(iconName)}
       >
         {Boolean(tooltip) ? (
-          <Tooltip title={tooltip}>
+          <Tooltip title={tooltip} triggerOn="mouseenter">
             <Icon
               className={`${iconName}-icon mark-icon`}
               name={iconName}
