@@ -171,7 +171,17 @@ This component provides richer context to the of the default HTML `<input>` of t
           Tokyo
         </div>
       </CheckMarkCard>
-      <CheckMarkCard label="Elaine" value="elaine" isLocked>
+      <CheckMarkCard
+        label="Elaine"
+        value="elaine"
+        withStatus={{
+          status: 'locked',
+          iconName: 'lock-closed',
+          iconSize: '20',
+          color: getColor('lavender.600'),
+          tooltipText: 'This is locked, leave it alone',
+        }}
+      >
         <Avatar size="xl" image={AvatarSpec.generate().image} name="Elaine" />
         <div
           style={{

@@ -70,6 +70,7 @@ export const MarkUI = styled('div')`
   transition: opacity 0.15s;
   will-change: opacity;
   background: ${({ color }) => color};
+  z-index: 100;
 
   .mark-icon {
     color: white;
