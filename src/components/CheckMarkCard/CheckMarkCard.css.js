@@ -46,10 +46,12 @@ export const CheckMarkCardUI = styled('label')`
     }
   }
 
-  &.is-locked {
+  &.with-status {
     cursor: default;
     border-color: transparent;
-    box-shadow: 0px 0px 0 2px ${getColor('lavender.600')};
+    box-shadow: 0px 0px 0 2px
+      ${({ withStatus }) =>
+        Boolean(withStatus) ? withStatus.color : 'rgba(0, 0, 0, 0.1)'};
 
     &:hover {
       transform: translateY(0);
@@ -64,10 +66,10 @@ export const MarkUI = styled('div')`
   height: 28px;
   width: 28px;
   border-radius: 4px 0px 5px;
-  opacity: ${({ kind }) => (kind ? '1' : '0')};
+  opacity: ${({ markShown }) => (markShown ? '1' : '0')};
   transition: opacity 0.15s;
   will-change: opacity;
-  background: ${({ kind }) => getMarkColor(kind)};
+  background: ${({ color }) => color};
 
   .mark-icon {
     color: white;
@@ -76,17 +78,10 @@ export const MarkUI = styled('div')`
     left: 50%;
     transform: translate(-50%, -50%);
   }
-`
 
-function getMarkColor(kind) {
-  switch (kind) {
-    case 'checkmark':
-      return getColor('blue.500')
-
-    case 'lock-closed':
-      return getColor('lavender.600')
-
-    default:
-      return getColor('blue.500')
+  .TooltipTrigger {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
-}
+`

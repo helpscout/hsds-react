@@ -3,8 +3,10 @@ import PropTypes from 'prop-types'
 import { classNames } from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
+import { getColor } from '../../styles/utilities/color'
 import Icon from '../Icon'
 import Checkbox from '../Checkbox'
+import Tooltip from '../Tooltip'
 import VisuallyHidden from '../VisuallyHidden'
 import { CheckMarkCardUI, MarkUI } from './CheckMarkCard.css'
 
@@ -38,15 +40,18 @@ export class CheckMarkCard extends React.Component {
   }
 
   getClassName() {
-    const { className, disabled, isLocked } = this.props
+    const { className, disabled, withStatus } = this.props
     const { cardChecked } = this.state
 
     return classNames(
       'c-CheckMarkCard',
       className,
-      cardChecked && !isLocked && 'is-checked',
+      cardChecked && !Boolean(withStatus) && 'is-checked',
       disabled && 'is-disabled',
-      isLocked && 'is-locked'
+      Boolean(withStatus) && 'with-status',
+      Boolean(withStatus) &&
+        Boolean(withStatus.status) &&
+        `is-${withStatus.status}`
     )
   }
 
@@ -74,33 +79,50 @@ export class CheckMarkCard extends React.Component {
   }
 
   renderMark = () => {
-    const { isLocked } = this.props
+    const { withStatus } = this.props
     const { cardChecked } = this.state
     let iconName
     let iconSize
+    let color
+    let tooltip
 
     if (cardChecked) {
       iconName = 'checkmark'
       iconSize = '24'
+      color = getColor('blue.500')
     }
-    // If the card is locked, it should take precedence even if the card
+    // If the card has a status provided, it should take precedence even if the card
     // is checked from external props for some reason
-    if (isLocked) {
-      iconName = 'lock-closed'
-      iconSize = '20'
+    if (withStatus) {
+      iconName = withStatus.iconName
+      iconSize = withStatus.iconSize || '20'
+      color = withStatus.color
+      tooltip = withStatus.tooltipText
     }
 
-    // "Render" MarkUI below even if neither locked or checked with opacity 0
+    // "Render" MarkUI below even if neither withStatus or checked with opacity 0
     // so we can animate the transition
     return (
-      <MarkUI className="c-CheckMarkCard__mark" kind={iconName}>
-        {iconName ? (
+      <MarkUI
+        className="c-CheckMarkCard__mark"
+        color={color}
+        markShown={Boolean(iconName)}
+      >
+        {Boolean(tooltip) ? (
+          <Tooltip title={tooltip}>
+            <Icon
+              className={`${iconName}-icon mark-icon`}
+              name={iconName}
+              size={iconSize}
+            />
+          </Tooltip>
+        ) : (
           <Icon
             className={`${iconName}-icon mark-icon`}
             name={iconName}
             size={iconSize}
           />
-        ) : null}
+        )}
       </MarkUI>
     )
   }
@@ -114,6 +136,7 @@ export class CheckMarkCard extends React.Component {
       maxWidth,
       height,
       value,
+      withStatus,
       ...rest
     } = this.props
     const { id, cardChecked } = this.state
@@ -125,13 +148,14 @@ export class CheckMarkCard extends React.Component {
         htmlFor={id}
         maxWidth={maxWidth}
         height={height}
+        withStatus={withStatus}
         ref={this.checkMarkCardRef}
       >
         {this.renderMark()}
         <VisuallyHidden>
           <Checkbox
             checked={cardChecked}
-            disabled={disabled || isLocked}
+            disabled={disabled || Boolean(withStatus)}
             id={id}
             inputRef={this.setInputNodeRef}
             label={label || value}
@@ -152,7 +176,6 @@ CheckMarkCard.defaultProps = {
   'data-cy': 'CheckMarkCard',
   inputRef: noop,
   isFocused: false,
-  isLocked: false,
   onBlur: noop,
   onChange: noop,
   onFocus: noop,
@@ -173,8 +196,14 @@ CheckMarkCard.propTypes = {
   inputRef: PropTypes.func,
   /** Whether the card should be focused */
   isFocused: PropTypes.bool,
-  /** Give the card "locked" styles, it also disables it */
-  isLocked: PropTypes.bool,
+  /** Give the card special status styles, it also disables the input */
+  withStatus: PropTypes.shape({
+    status: PropTypes.string,
+    iconName: PropTypes.string,
+    iconSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    color: PropTypes.string,
+    tooltipText: PropTypes.string,
+  }),
   /** Set the height of the Card. */
   height: PropTypes.oneOfType([
     PropTypes.string,

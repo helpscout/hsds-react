@@ -1,8 +1,10 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import { getColor } from '../../styles/utilities/color'
 import CheckMarkCard from '../CheckMarkCard'
 import Checkbox from '../Checkbox'
 import Icon from '../Icon'
+import Tooltip from '../Tooltip'
 import VisuallyHidden from '../VisuallyHidden'
 
 describe('className', () => {
@@ -79,28 +81,48 @@ describe('Checked', () => {
   })
 })
 
-describe('Locked', () => {
-  test('Applies locked styles, if provided', () => {
-    const wrapper = mount(<CheckMarkCard isLocked />)
+describe('with status', () => {
+  const withStatus = {
+    status: 'locked',
+    iconName: 'lock-closed',
+    iconSize: '20',
+    color: getColor('lavender.600'),
+  }
+  test('Applies withStatus styles', () => {
+    const wrapper = mount(<CheckMarkCard withStatus={withStatus} />)
 
-    expect(wrapper.getDOMNode().classList.contains('is-locked')).toBeTruthy()
+    expect(wrapper.getDOMNode().classList.contains('with-status')).toBeTruthy()
+    expect(
+      wrapper.getDOMNode().classList.contains(`is-${withStatus.status}`)
+    ).toBeTruthy()
     expect(wrapper.find(Icon).first().props().name).toBe('lock-closed')
+    expect(wrapper.find(Tooltip).length).toBeFalsy()
 
-    wrapper.setProps({ isLocked: false })
+    wrapper.setProps({ withStatus: undefined })
 
-    expect(wrapper.getDOMNode().classList.contains('is-locked')).toBeFalsy()
+    expect(wrapper.getDOMNode().classList.contains('with-status')).toBeFalsy()
   })
 
-  test('When locked, the input should be disabled', () => {
-    const wrapper = mount(<CheckMarkCard isLocked />)
+  test('the input should be disabled', () => {
+    const wrapper = mount(<CheckMarkCard withStatus={withStatus} />)
 
     expect(wrapper.find(Checkbox).first().props().disabled).toBeTruthy()
   })
 
-  test('locked styles take precedent over checked', () => {
-    const wrapper = mount(<CheckMarkCard isLocked checked />)
+  test('adds tooltip to mark if provided', () => {
+    withStatus.tooltipText = 'hello'
+    const wrapper = mount(<CheckMarkCard withStatus={withStatus} />)
 
-    expect(wrapper.getDOMNode().classList.contains('is-locked')).toBeTruthy()
+    expect(wrapper.find(Tooltip).length).toBeTruthy()
+    expect(wrapper.find(Tooltip).first().props().title).toBe('hello')
+  })
+
+  test('with status styles take precedent over checked', () => {
+    const wrapper = mount(<CheckMarkCard withStatus={withStatus} checked />)
+
+    expect(
+      wrapper.getDOMNode().classList.contains(`is-${withStatus.status}`)
+    ).toBeTruthy()
     expect(wrapper.getDOMNode().classList.contains('is-checked')).toBeFalsy()
     expect(wrapper.find(Icon).first().props().name).toBe('lock-closed')
   })

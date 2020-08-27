@@ -165,7 +165,12 @@ const Tooltip = props => {
 
   return (
     <Tippy {...tippyProps}>
-      <TooltipTriggerUI tabIndex="0" display={display} data-cy={dataCy}>
+      <TooltipTriggerUI
+        tabIndex="0"
+        display={display}
+        data-cy={dataCy}
+        className="TooltipTrigger"
+      >
         {children}
       </TooltipTriggerUI>
     </Tippy>
