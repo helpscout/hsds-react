@@ -114,6 +114,7 @@ export class CheckMarkCard extends React.Component {
               className={`${iconName}-icon mark-icon`}
               name={iconName}
               size={iconSize}
+              appendTo={document.body}
             />
           </Tooltip>
         ) : (
