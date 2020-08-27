@@ -131,7 +131,6 @@ export class CheckMarkCard extends React.Component {
     const {
       children,
       disabled,
-      isLocked,
       label,
       maxWidth,
       height,
