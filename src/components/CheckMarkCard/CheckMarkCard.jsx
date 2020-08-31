@@ -111,7 +111,7 @@ export class CheckMarkCard extends React.Component {
         {Boolean(tooltip) ? (
           <Tooltip
             title={tooltip}
-            triggerOn="mouseenter"
+            triggerOn="mouseenter focus"
             appendTo={document.body}
           >
             <Icon
