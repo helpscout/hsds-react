@@ -38,7 +38,8 @@ export function getLeadingDays(date, startDay = 1) {
 export function getTrailingDays(date, leadingDays, allMonthDays) {
   const trailingDays = []
   const monthDays = allMonthDays.filter(day => typeof day === 'object')
-  const totalDaySlots = getTotalDaysSlots(monthDays.length + leadingDays.length)
+  // const totalDaySlots = getTotalDaysSlots(monthDays.length + leadingDays.length)
+  const totalDaySlots = 42
   const days = totalDaySlots - (leadingDays.length + monthDays.length)
   const nextMonth = new Date(date.setMonth(date.getMonth() + 1, 1))
   const year = date.getFullYear()
