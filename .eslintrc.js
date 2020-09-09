@@ -17,6 +17,7 @@ module.exports = {
   },
   plugins: ['babel', 'jsx-a11y', 'react', 'import'],
   extends: [
+    'plugin:react-hooks/recommended',
     'plugin:prettier/recommended', // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
   ],
   parser: 'babel-eslint',

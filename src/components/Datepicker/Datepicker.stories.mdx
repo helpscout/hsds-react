@@ -1,0 +1,42 @@
+import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { number } from '@storybook/addon-knobs'
+import Datepicker from './'
+
+<Meta
+  title="🧬 Components/Datepicker"
+  component={Datepicker}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=2582%3A11514',
+    },
+  }}
+/>
+
+# Datepicker
+
+Minimal visual representation of current and total number of steps in a multi-step form.
+
+<Preview>
+  <Story name="default">
+    <Datepicker
+      onDateChange={data => {
+        console.log(data)
+      }}
+    />
+  </Story>
+</Preview>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: HsApp
+
+<br />
+<br />
+
+### Props
+
+<Props of={Datepicker} />
