@@ -1,13 +1,15 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
+import { FONT_FAMILY } from '../../styles/configs/constants'
 
 export const CalendarContainerUI = styled('div')`
   width: ${({ numberOfMonths }) => `${numberOfMonths * 300}px`};
   padding: 7px 10px 20px;
-  background: white;
+  background: #fff;
   border: 1px solid ${getColor('grey.600')};
   border-radius: 4px;
   box-shadow: 0px 1px 7px rgba(0, 0, 0, 0.08);
+  font-family: ${FONT_FAMILY};
 `
 
 export const DailyCalendarUI = styled('div')`
@@ -37,13 +39,14 @@ export const DeepNavigatorButtonUI = styled('button')`
   height: 36px;
   line-height: 32px;
   border: 0;
-  background: white;
-  color: white;
+  background: #fff;
+  color: #fff;
   font-size: 14px;
   font-weight: 500;
   color: ${getColor('charcoal.600')};
   border: 2px solid transparent;
   border-radius: 4px;
+  cursor: pointer;
 
   &:focus {
     outline: 0;
@@ -61,9 +64,11 @@ export const SequentialNavButtonUI = styled('button')`
   width: 32px;
   background: transparent;
   padding: 0;
-  font-size: 12px;
   border: 2px solid transparent;
   border-radius: 4px;
+  font-size: 12px;
+  color: ${getColor('charcoal.500')};
+  cursor: pointer;
 
   &:focus {
     outline: 0;
@@ -81,6 +86,7 @@ export const WeekdaysRowUI = styled('div')`
   justify-content: center;
   margin-bottom: 10px;
   font-size: 14px;
+  color: ${getColor('charcoal.500')};
 `
 
 export const DaysGridUI = styled('div')`
@@ -102,15 +108,19 @@ export const DayUI = styled('button')`
     isSelected || isDateToday ? '500' : 'normal'};
   color: ${({ labelColor }) => labelColor};
   background: ${({ bgColor }) => bgColor};
+  -moz-osx-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+  cursor: pointer;
 
-  &:not([disabled]):hover {
+  &:not([disabled]):not(.is-from-another-month):not(.is-selected):hover {
     color: ${getColor('blue.600')};
     background: ${getColor('blue.200')};
+    border-color: ${getColor('blue.200')};
   }
 
   &:focus {
     outline: 0;
-    border: 2px solid ${getColor('blue.500')};
+    border-color: ${getColor('blue.500')};
   }
 `
 
@@ -131,17 +141,25 @@ export const PeriodButtonUI = styled('button')`
   text-align: center;
   font-size: 14px;
   color: ${getColor('charcoal.600')};
+  -moz-osx-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+  cursor: pointer;
 
   &.is-this-period {
     color: ${getColor('charcoal.700')};
     background: ${getColor('grey.300')};
   }
 
+  &.is-selected {
+    color: #fff;
+    background: ${getColor('blue.500')};
+  }
+
   &[disabled] {
     color: ${getColor('charcoal.200')};
   }
 
-  &:not([disabled]):hover {
+  &:not([disabled]):not(.is-selected):hover {
     color: ${getColor('blue.600')};
     background: ${getColor('blue.200')};
   }

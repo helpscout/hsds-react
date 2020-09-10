@@ -13,11 +13,14 @@ function PeriodCalendar({
   goToDate,
   goToPreviousYear,
   goToNextYear,
+  startDate,
 }) {
   const todaysDate = new Date()
   const todaysMonth = todaysDate.getMonth()
   const todaysYear = todaysDate.getFullYear()
+  const activeMonth = activeMonths[0].month
   const activeYear = activeMonths[0].year
+  const selectedYear = startDate ? startDate.getFullYear() : ''
   const [mode, setMode] = useState(ONE_YEAR)
   const [yearRange, setYearRange] = useState(
     getActiveYearRange(activeYear, true)
@@ -25,7 +28,7 @@ function PeriodCalendar({
   const firstYearInRange = yearRange[0]
   const lastYearInRange = yearRange[yearRange.length - 1]
   const navigatorLabel =
-    mode === ONE_YEAR ? activeYear : `${firstYearInRange}-${lastYearInRange}`
+    mode === ONE_YEAR ? activeYear : `${firstYearInRange}–${lastYearInRange}` // note the 'en dash'
 
   function canNavigateForward() {
     if (mode === ONE_YEAR) {
@@ -74,7 +77,10 @@ function PeriodCalendar({
                   className={classNames(
                     index === todaysMonth &&
                       activeYear === todaysYear &&
-                      'is-this-period'
+                      'is-this-period',
+                    index === activeMonth &&
+                      activeYear === selectedYear &&
+                      'is-selected'
                   )}
                   disabled={
                     !allowFutureDatePick &&
@@ -86,7 +92,13 @@ function PeriodCalendar({
                     goToDate(new Date(activeYear, index, 1), true)
                   }}
                 >
-                  {month.slice(0, 3)}
+                  <time
+                    dateTime={`${activeYear}-${(index + 1)
+                      .toString()
+                      .padStart(2, '0')}`}
+                  >
+                    {month.slice(0, 3)}
+                  </time>
                 </PeriodButtonUI>
               )
             })
@@ -94,7 +106,8 @@ function PeriodCalendar({
               return (
                 <PeriodButtonUI
                   className={classNames(
-                    year === todaysYear && 'is-this-period'
+                    year === todaysYear && 'is-this-period',
+                    year === selectedYear && 'is-selected'
                   )}
                   disabled={!allowFutureDatePick && year > todaysYear}
                   key={year}
@@ -103,7 +116,7 @@ function PeriodCalendar({
                     goToDate(new Date(year, 0, 1), false)
                   }}
                 >
-                  {year}
+                  <time dateTime={`${year}`}>{year}</time>
                 </PeriodButtonUI>
               )
             })}

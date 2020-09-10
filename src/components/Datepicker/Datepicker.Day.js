@@ -1,8 +1,13 @@
 import React, { useRef, useContext } from 'react'
 import { useDay } from '@datepicker-react/hooks'
+import { classNames } from '../../utilities/classNames'
 import { getColor } from '../../styles/utilities/color'
 import DatepickerContext from './Datepicker.Context'
-import { getDayColor, isToday } from './Datepicker.utils'
+import {
+  getDayColor,
+  isToday,
+  getValidDateTimeString,
+} from './Datepicker.utils'
 import { DayUI } from './Datepicker.css'
 
 function Day({ dayLabel, date, leading, trailing }) {
@@ -58,6 +63,11 @@ function Day({ dayLabel, date, leading, trailing }) {
 
   return (
     <DayUI
+      className={classNames(
+        'c-DatepickerDay',
+        (trailing || leading) && 'is-from-another-month',
+        isSelected && 'is-selected'
+      )}
       disabled={disabledDate}
       isSelected={isSelected}
       isDateToday={isDateToday}
@@ -86,7 +96,7 @@ function Day({ dayLabel, date, leading, trailing }) {
         todayColor: getColor('grey.300'),
       })}
     >
-      {dayLabel}
+      <time dateTime={getValidDateTimeString(date)}>{dayLabel}</time>
     </DayUI>
   )
 }

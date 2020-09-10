@@ -107,6 +107,7 @@ function Datepicker({
             }}
             goToNextYear={goToNextYear}
             goToPreviousYear={goToPreviousYear}
+            startDate={dates.startDate}
           />
         )}
       </CalendarContainerUI>

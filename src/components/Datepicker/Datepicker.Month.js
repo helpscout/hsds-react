@@ -2,7 +2,11 @@ import React from 'react'
 import { useMonth } from '@datepicker-react/hooks'
 import Day from '../Datepicker/Datepicker.Day'
 import { WeekdaysRowUI, DaysGridUI } from '../Datepicker/Datepicker.css'
-import { getLeadingDays, getTrailingDays } from '../Datepicker/Datepicker.utils'
+import {
+  getLeadingDays,
+  getTrailingDays,
+  getValidDateTimeString,
+} from '../Datepicker/Datepicker.utils'
 
 function Month({ year, month, firstDayOfWeek }) {
   const { days, weekdayLabels } = useMonth({
@@ -30,7 +34,7 @@ function Month({ year, month, firstDayOfWeek }) {
           return (
             <Day
               date={day.date}
-              key={day.date.toString()}
+              key={getValidDateTimeString(day.date)}
               dayLabel={day.dayLabel}
               leading
             />
@@ -41,7 +45,7 @@ function Month({ year, month, firstDayOfWeek }) {
             return (
               <Day
                 date={day.date}
-                key={day.date.toString()}
+                key={getValidDateTimeString(day.date)}
                 dayLabel={day.dayLabel}
               />
             )
@@ -52,7 +56,7 @@ function Month({ year, month, firstDayOfWeek }) {
           return (
             <Day
               date={day.date}
-              key={day.date.toString()}
+              key={getValidDateTimeString(day.date)}
               dayLabel={day.dayLabel}
               trailing
             />
