@@ -1,3 +1,9 @@
+/**
+ * Check if a Date is today
+ * @param {Object} someDate Date object to check
+ *
+ * @return {boolean} true if the provided Date object is today
+ */
 export function isToday(someDate) {
   const today = new Date()
 
@@ -8,6 +14,12 @@ export function isToday(someDate) {
   )
 }
 
+/**
+ * Check whether the month in a given Date is in the past
+ * @param {Object} someDate Date object to check
+ *
+ * @return {boolean} true if the provided Date's month is in the past
+ */
 export function isMonthInThePast(someDate) {
   const today = new Date()
 
@@ -17,10 +29,40 @@ export function isMonthInThePast(someDate) {
   )
 }
 
-export function getLeadingDays(date, startDay = 1) {
+/**
+ * Extracts a string in the form of `YYYY-MM-DD`, can ommit any of the sections
+ * @param {Object} someDate Date object to get the string from
+ * @param {Object} sections Object with keys (year, month, day) with boolean values to ommit sections from the string
+ *
+ * @return {string} date string in the form of `YYYY-MM-DD`
+ */
+export function getValidDateTimeString(
+  someDate,
+  { year, month, day } = { year: true, month: true, day: true }
+) {
+  const arr = []
+  const y = `${someDate.getFullYear()}`
+  const m = `${someDate.getMonth().toString().padStart(2, '0')}`
+  const d = `${someDate.getDate().toString().padStart(2, '0')}`
+
+  if (year) arr.push(y)
+  if (month) arr.push(m)
+  if (day) arr.push(d)
+
+  return arr.join('-')
+}
+
+/**
+ * In order to fill up the calendar, get the dates from the previous month in relation to the active month
+ * @param {Object} someDate Date object to check
+ * @param {number} startDay Which day the week starts with (Sunday 0, Monday 1, etc)
+ *
+ * @return {Object[]} Array of Date Objects
+ */
+export function getLeadingDays(someDate, startDay = 1) {
   const leadingDays = []
-  const year = date.getFullYear()
-  const month = date.getMonth()
+  const year = someDate.getFullYear()
+  const month = someDate.getMonth()
   const firstWeekday = new Date(year, month, 1).getDay()
   const days = firstWeekday + 7 - (startDay + 7) - 1
 
@@ -35,14 +77,22 @@ export function getLeadingDays(date, startDay = 1) {
   return leadingDays
 }
 
-export function getTrailingDays(date, leadingDays, allMonthDays) {
+/**
+ * In order to fill up the calendar, get the dates from the next month in relation to the active month
+ * @param {Object} someDate Date object to check
+ * @param {Object[]} leadingDays The "leading" days taken from the previous month (see `getLeadingDays`
+ * @param {Object[]} allMonthDays The current month days
+ *
+ * @return {Object[]} Array of Date Objects
+ */
+export function getTrailingDays(someDate, leadingDays, allMonthDays) {
   const trailingDays = []
   const monthDays = allMonthDays.filter(day => typeof day === 'object')
-  // const totalDaySlots = getTotalDaysSlots(monthDays.length + leadingDays.length)
-  const totalDaySlots = 42
+  // If you need to have a fixed height on the calendar, set `totalDaySlots` to 42
+  const totalDaySlots = getTotalDaysSlots(monthDays.length + leadingDays.length)
   const days = totalDaySlots - (leadingDays.length + monthDays.length)
-  const nextMonth = new Date(date.setMonth(date.getMonth() + 1, 1))
-  const year = date.getFullYear()
+  const nextMonth = new Date(someDate.setMonth(someDate.getMonth() + 1, 1))
+  const year = someDate.getFullYear()
 
   for (let i = 1; i <= days; i++) {
     trailingDays.push({
@@ -55,16 +105,29 @@ export function getTrailingDays(date, leadingDays, allMonthDays) {
   return trailingDays
 }
 
+/**
+ * Determine how many trailing days we need to fill up the calendar
+ * @param {number} numberOfDays
+ *
+ * @return {number} number of trailing days that fill up the calendar
+ */
 export function getTotalDaysSlots(numberOfDays) {
   if (numberOfDays === 28) return 28
   if (numberOfDays > 35) return 42
   return 35
 }
 
-export function getActiveYearRange(activeYear, initial) {
+/**
+ * Get an array of 12 years that surround a given year to fill up the Period Calendar in "multi year" mode
+ * @param {number|string} activeYear the year to put in the middle of the grid (index 4 of 12)
+ * @param {boolean} isInitial is the range generated for the first time
+ *
+ * @return {number[]} Range of years
+ */
+export function getActiveYearRange(activeYear, isInitial) {
   const RANGE = 12
   const middleIndex = 4
-  const startRange = initial
+  const startRange = isInitial
     ? Number.parseInt(activeYear) - middleIndex
     : Number.parseInt(activeYear) - RANGE
   const yearRange = []
