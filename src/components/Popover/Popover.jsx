@@ -83,7 +83,7 @@ export const Popover = props => {
       className={getClassName(className)}
       innerRef={innerRef}
       render={render}
-      trigger={triggerOn}
+      triggerOn={triggerOn}
       placement={placement}
     />
   )
