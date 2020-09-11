@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
-import { FONT_FAMILY } from '../../styles/configs/constants'
+import { FONT_FAMILY as SYSTEM_FONT_FAMILY } from '../../styles/configs/constants'
+import { FONT_FAMILY as AKTIV_FONT_FAMILY } from '../HSDS/GlobalStyle'
 
 export const CalendarContainerUI = styled('div')`
   width: ${({ numberOfMonths }) => `${numberOfMonths * 300}px`};
@@ -9,7 +10,7 @@ export const CalendarContainerUI = styled('div')`
   border: 1px solid ${getColor('grey.600')};
   border-radius: 4px;
   box-shadow: 0px 1px 7px rgba(0, 0, 0, 0.08);
-  font-family: ${FONT_FAMILY};
+  font-family: ${SYSTEM_FONT_FAMILY};
 `
 
 export const DailyCalendarUI = styled('div')`
@@ -43,6 +44,7 @@ export const DeepNavigatorButtonUI = styled('button')`
   color: #fff;
   font-size: 14px;
   font-weight: 500;
+  font-family: ${AKTIV_FONT_FAMILY};
   color: ${getColor('charcoal.600')};
   border: 2px solid transparent;
   border-radius: 4px;
@@ -56,6 +58,7 @@ export const DeepNavigatorButtonUI = styled('button')`
   &:not([disabled]):hover {
     color: ${getColor('blue.600')};
     background: ${getColor('blue.200')};
+    border-color: ${getColor('blue.200')};
   }
 `
 
@@ -75,6 +78,12 @@ export const SequentialNavButtonUI = styled('button')`
     border: 2px solid ${getColor('blue.500')};
   }
 
+  &:not([disabled]):hover {
+    color: ${getColor('blue.600')};
+    background: ${getColor('blue.200')};
+    border-color: ${getColor('blue.200')};
+  }
+
   .c-Icon {
     margin: 0 auto;
   }
@@ -86,6 +95,7 @@ export const WeekdaysRowUI = styled('div')`
   justify-content: center;
   margin-bottom: 10px;
   font-size: 14px;
+  font-family: ${AKTIV_FONT_FAMILY};
   color: ${getColor('charcoal.500')};
 `
 
@@ -108,8 +118,10 @@ export const DayUI = styled('button')`
     isSelected || isDateToday ? '500' : 'normal'};
   color: ${({ labelColor }) => labelColor};
   background: ${({ bgColor }) => bgColor};
-  -moz-osx-font-smoothing: antialiased;
-  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: ${({ isSelected, isDateToday }) =>
+    isSelected || isDateToday ? 'auto' : 'grayscale'};
+  -webkit-font-smoothing: ${({ isSelected, isDateToday }) =>
+    isSelected || isDateToday ? 'auto' : 'antialiased'};
   cursor: pointer;
 
   &:not([disabled]):not(.is-from-another-month):not(.is-selected):hover {
@@ -141,9 +153,13 @@ export const PeriodButtonUI = styled('button')`
   text-align: center;
   font-size: 14px;
   color: ${getColor('charcoal.600')};
-  -moz-osx-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   cursor: pointer;
+
+  .is-mode-months & {
+    font-family: ${AKTIV_FONT_FAMILY};
+  }
 
   &.is-this-period {
     color: ${getColor('charcoal.700')};
@@ -153,6 +169,8 @@ export const PeriodButtonUI = styled('button')`
   &.is-selected {
     color: #fff;
     background: ${getColor('blue.500')};
+    -moz-osx-font-smoothing: auto;
+    -webkit-font-smoothing: none;
   }
 
   &[disabled] {
@@ -162,6 +180,7 @@ export const PeriodButtonUI = styled('button')`
   &:not([disabled]):not(.is-selected):hover {
     color: ${getColor('blue.600')};
     background: ${getColor('blue.200')};
+    border-color: ${getColor('blue.200')};
   }
 
   &:focus {
