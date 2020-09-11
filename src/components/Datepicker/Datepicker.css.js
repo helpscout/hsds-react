@@ -84,6 +84,11 @@ export const SequentialNavButtonUI = styled('button')`
     border-color: ${getColor('blue.200')};
   }
 
+  &[disabled] {
+    cursor: default;
+    color: ${getColor('charcoal.200')};
+  }
+
   .c-Icon {
     margin: 0 auto;
   }
@@ -134,6 +139,10 @@ export const DayUI = styled('button')`
     outline: 0;
     border-color: ${getColor('blue.500')};
   }
+
+  &[disabled] {
+    cursor: default;
+  }
 `
 
 export const PeriodUI = styled('div')`
@@ -175,6 +184,7 @@ export const PeriodButtonUI = styled('button')`
 
   &[disabled] {
     color: ${getColor('charcoal.200')};
+    cursor: default;
   }
 
   &:not([disabled]):not(.is-selected):hover {

@@ -1,4 +1,27 @@
 /**
+ * Check if something is JS Date Object
+ * @param {*} someObject the item to check
+ *
+ * @return {boolean} Whether someObject is a JS Date Object
+ */
+export function isJSDate(someObject) {
+  return typeof someObject.getMonth === 'function'
+}
+
+/**
+ * Convert a valid ISO date string to a JS Date Object, bypass if the string is already a Date Object
+ * @param {string} someDateString
+ *
+ * @return {Object} a Date object
+ */
+export function getJSDateFromString(someDateString) {
+  if (!someDateString) return null
+  if (isJSDate(someDateString)) return someDateString
+
+  return new Date(someDateString)
+}
+
+/**
  * Check if a Date is today
  * @param {Object} someDate Date object to check
  *
@@ -30,26 +53,17 @@ export function isMonthInThePast(someDate) {
 }
 
 /**
- * Extracts a string in the form of `YYYY-MM-DD`, can ommit any of the sections
+ * Extracts a string in the form of `YYYY-MM-DD`
  * @param {Object} someDate Date object to get the string from
- * @param {Object} sections Object with keys (year, month, day) with boolean values to ommit sections from the string
  *
  * @return {string} date string in the form of `YYYY-MM-DD`
  */
-export function getValidDateTimeString(
-  someDate,
-  { year, month, day } = { year: true, month: true, day: true }
-) {
-  const arr = []
+export function getValidDateTimeString(someDate) {
   const y = `${someDate.getFullYear()}`
   const m = `${someDate.getMonth().toString().padStart(2, '0')}`
   const d = `${someDate.getDate().toString().padStart(2, '0')}`
 
-  if (year) arr.push(y)
-  if (month) arr.push(m)
-  if (day) arr.push(d)
-
-  return arr.join('-')
+  return `${y}-${m}-${d}`
 }
 
 /**

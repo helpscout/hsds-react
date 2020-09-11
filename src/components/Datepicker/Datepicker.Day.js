@@ -30,8 +30,6 @@ function Day({ dayLabel, date, leading, trailing }) {
     disabledDate,
     onClick,
     onKeyDown,
-    onMouseEnter,
-    tabIndex,
   } = useDay({
     date,
     focusedDate,
@@ -73,9 +71,6 @@ function Day({ dayLabel, date, leading, trailing }) {
       isDateToday={isDateToday}
       onClick={onClick}
       onKeyDown={onKeyDown}
-      onMouseEnter={onMouseEnter}
-      tabIndex={tabIndex}
-      type="button"
       ref={dayRef}
       labelColor={getColorFn({
         selectedFirstOrLastColor: '#FFFFFF',

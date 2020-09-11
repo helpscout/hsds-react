@@ -21,15 +21,15 @@ function Month({ year, month, firstDayOfWeek }) {
   const trailingDays = getTrailingDays(currentMonthDate, leadingDays, days)
 
   return (
-    <>
-      <WeekdaysRowUI>
+    <div className="c-DatepickerMonth">
+      <WeekdaysRowUI className="WeekdaysRow">
         {weekdayLabels.map(dayLabel => (
           <div css={{ textAlign: 'center' }} key={dayLabel}>
             {dayLabel}
           </div>
         ))}
       </WeekdaysRowUI>
-      <DaysGridUI>
+      <DaysGridUI className="DaysGrid">
         {leadingDays.map(day => {
           return (
             <Day
@@ -63,7 +63,7 @@ function Month({ year, month, firstDayOfWeek }) {
           )
         })}
       </DaysGridUI>
-    </>
+    </div>
   )
 }
 

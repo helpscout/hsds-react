@@ -33,6 +33,7 @@ function Navigator({
         <VisuallyHidden>Previous month</VisuallyHidden>
       </SequentialNavButtonUI>
       <DeepNavigatorButtonUI
+        className="DeepNavigatorButton"
         onClick={onDeepNavigationClick}
         disabled={isAtNavigationTopLevel}
       >

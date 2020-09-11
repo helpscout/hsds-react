@@ -1,5 +1,6 @@
 import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
-import { number } from '@storybook/addon-knobs'
+import { number, boolean, select } from '@storybook/addon-knobs'
+import { action } from '@storybook/addon-actions'
 import Datepicker from './'
 
 <Meta
@@ -16,14 +17,28 @@ import Datepicker from './'
 
 # Datepicker
 
-Minimal visual representation of current and total number of steps in a multi-step form.
+Renders a calendar that allows picking a date.
+
+Features:
+
+- Navigate to next and previous month
+- Navigate to a given month within the currently selected year
+- Navigate to a year inside a range
+- Disable selecting dates in the future
 
 <Preview>
   <Story name="default">
     <Datepicker
-      onDateChange={data => {
-        console.log(data)
-      }}
+      allowFutureDatePick={boolean('allowFutureDatePick', true)}
+      startDate={select(
+        'Start date',
+        {
+          today: new Date().toLocaleString(),
+          '25/03/1982': new Date(1982, 2, 25).toLocaleString(),
+        },
+        null
+      )}
+      onDateChange={action('onDateChange')}
     />
   </Story>
 </Preview>

@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useDatepicker, START_DATE } from '@datepicker-react/hooks'
 import { noop } from '../../utilities/other'
+import { getJSDateFromString } from './Datepicker.utils'
 import DatepickerContext from './Datepicker.Context'
 import { CalendarContainerUI } from './Datepicker.css'
 import PeriodCalendar from './Datepicker.PeriodCalendar'
@@ -17,8 +18,8 @@ function Datepicker({
   startDate,
 }) {
   const [dates, setDates] = useState({
-    startDate,
-    endDate: endDate || startDate,
+    startDate: getJSDateFromString(startDate),
+    endDate: getJSDateFromString(endDate) || getJSDateFromString(startDate),
     focusedInput: START_DATE,
   })
   const [deepNavVisible, setDeepNavVisibility] = useState(false)
@@ -49,6 +50,21 @@ function Datepicker({
     maxBookingDate: !allowFutureDatePick ? new Date() : undefined,
   })
 
+  useEffect(() => {
+    // This effect will cause a re-render of the calendar on mount
+    // we do this to keep the state and the date props in sync
+    // without increasing complexity in the code.
+    // To be refactored if it becomes an issue
+    setDates({
+      startDate: getJSDateFromString(startDate),
+      endDate: getJSDateFromString(endDate) || getJSDateFromString(startDate),
+      focusedInput: START_DATE,
+    })
+    goToDate(getJSDateFromString(startDate))
+    // Ignore goToDate as dependency
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [startDate, endDate])
+
   function handleDateChange(data) {
     if (!data.focusedInput) {
       setDates({ ...data, focusedInput: START_DATE })
@@ -73,30 +89,22 @@ function Datepicker({
         onDateHover,
       }}
     >
-      <div>
-        <strong>Date: </strong>
-        <span>{dates.startDate && dates.startDate.toLocaleString()}</span>
-        <br />
-        <br />
-      </div>
       <CalendarContainerUI
         className="c-Calendar"
         numberOfMonths={numberOfMonths}
       >
         {!deepNavVisible ? (
-          <>
-            <DailyCalendar
-              activeMonths={activeMonths}
-              allowFutureDatePick={allowFutureDatePick}
-              firstDayOfWeek={firstDayOfWeek}
-              goToPreviousMonth={goToPreviousMonthsByOneMonth}
-              goToNextMonth={goToNextMonthsByOneMonth}
-              numberOfMonths={numberOfMonths}
-              onDeepNavigationClick={() => {
-                setDeepNavVisibility(!deepNavVisible)
-              }}
-            />
-          </>
+          <DailyCalendar
+            activeMonths={activeMonths}
+            allowFutureDatePick={allowFutureDatePick}
+            firstDayOfWeek={firstDayOfWeek}
+            goToPreviousMonth={goToPreviousMonthsByOneMonth}
+            goToNextMonth={goToNextMonthsByOneMonth}
+            numberOfMonths={numberOfMonths}
+            onDeepNavigationClick={() => {
+              setDeepNavVisibility(!deepNavVisible)
+            }}
+          />
         ) : (
           <PeriodCalendar
             activeMonths={activeMonths}
@@ -136,8 +144,11 @@ Datepicker.propTypes = {
   minBookingDays: PropTypes.number,
   /** How many months to display at the same time. Note: Currently supported 1 */
   numberOfMonths: PropTypes.number,
-  /** Pass a starting date to the calendar to be selected */
-  startDate: PropTypes.instanceOf(Date),
+  /** Pass a starting date to the calendar to be selected. A valid Date object or valid date iso string required */
+  startDate: PropTypes.oneOfType([
+    PropTypes.instanceOf(Date),
+    PropTypes.string,
+  ]),
   /** Callback when the date is changed */
   onDateChange: PropTypes.func,
 }
