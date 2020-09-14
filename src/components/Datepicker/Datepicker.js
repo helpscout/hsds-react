@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { useDatepicker, START_DATE } from '@datepicker-react/hooks'
 import { noop } from '../../utilities/other'
-import { getJSDateFromString } from './Datepicker.utils'
+import { getJSDateFromString, getValidDateTimeString } from './Datepicker.utils'
 import DatepickerContext from './Datepicker.Context'
 import { CalendarContainerUI } from './Datepicker.css'
 import PeriodCalendar from './Datepicker.PeriodCalendar'
@@ -22,6 +22,7 @@ function Datepicker({
     endDate: getJSDateFromString(endDate) || getJSDateFromString(startDate),
     focusedInput: START_DATE,
   })
+  const [prevDates, setPrevDates] = useState({})
   const [deepNavVisible, setDeepNavVisibility] = useState(false)
 
   const {
@@ -50,20 +51,27 @@ function Datepicker({
     maxBookingDate: !allowFutureDatePick ? new Date() : undefined,
   })
 
-  useEffect(() => {
-    // This effect will cause a re-render of the calendar on mount
-    // we do this to keep the state and the date props in sync
-    // without increasing complexity in the code.
-    // To be refactored if it becomes an issue
+  /**
+   * This section performs a `getDerivedStateFromProps` style logic where we
+   * store the prop in state (as prevDate) so we can compare in the next render
+   * and only if the prop changes this gets run again
+   */
+  if (
+    getValidDateTimeString(startDate) !==
+    getValidDateTimeString(prevDates.startDate)
+  ) {
     setDates({
       startDate: getJSDateFromString(startDate),
       endDate: getJSDateFromString(endDate) || getJSDateFromString(startDate),
       focusedInput: START_DATE,
     })
+    setPrevDates({
+      startDate: getJSDateFromString(startDate),
+      endDate: getJSDateFromString(endDate) || getJSDateFromString(startDate),
+      focusedInput: START_DATE,
+    })
     goToDate(getJSDateFromString(startDate))
-    // Ignore goToDate as dependency
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startDate, endDate])
+  }
 
   function handleDateChange(data) {
     if (!data.focusedInput) {

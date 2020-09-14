@@ -33,6 +33,7 @@ Features:
       startDate={select(
         'Start date',
         {
+          unselected: null,
           today: new Date().toLocaleString(),
           '25/03/1982': new Date(1982, 2, 25).toLocaleString(),
         },

@@ -5,7 +5,7 @@
  * @return {boolean} Whether someObject is a JS Date Object
  */
 export function isJSDate(someObject) {
-  return typeof someObject.getMonth === 'function'
+  return someObject && typeof someObject.getMonth === 'function'
 }
 
 /**
@@ -59,9 +59,13 @@ export function isMonthInThePast(someDate) {
  * @return {string} date string in the form of `YYYY-MM-DD`
  */
 export function getValidDateTimeString(someDate) {
-  const y = `${someDate.getFullYear()}`
-  const m = `${someDate.getMonth().toString().padStart(2, '0')}`
-  const d = `${someDate.getDate().toString().padStart(2, '0')}`
+  if (!someDate) return ''
+
+  const dateToConvert = getJSDateFromString(someDate)
+
+  const y = `${dateToConvert.getFullYear()}`
+  const m = `${dateToConvert.getMonth().toString().padStart(2, '0')}`
+  const d = `${dateToConvert.getDate().toString().padStart(2, '0')}`
 
   return `${y}-${m}-${d}`
 }
