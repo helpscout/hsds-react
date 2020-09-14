@@ -25,6 +25,17 @@ Features:
 - Navigate to a given month within the currently selected year
 - Navigate to a year inside a range
 - Disable selecting dates in the future
+- Pass a starting date to be selected
+
+Notes:
+
+Datepicker uses [@datepicker-react/hooks](https://www.npmjs.com/package/@datepicker-react/hooks) to handle (most of) the calendar logic. For future reference and features it supports:
+
+- Date range selection
+- Blocking specific dates
+- Multiple month view
+
+Implementing these features in `Datepicker` should be straightforward 🤞 and only added as needed.
 
 <Preview>
   <Story name="default">
@@ -56,3 +67,16 @@ Features:
 ### Props
 
 <Props of={Datepicker} />
+
+## Sub-components
+
+Datepicker is composed of a few components that in normal circumstances you shouldn't need to use directly, listed here for reference:
+
+- **DailyCalendar**: Renders and handles the week/days calendar actions
+- **PeriodCalendar**: Renders and handles the months and years calendar actions
+- **Navigator**: Handles the calendar navigation
+  - Single step (month by month, year by year, year range by year range depending on the navigation level) using the arrow buttons
+  - Skip to any month faster by using the "deep navigator button"
+  - Skip to any year faster by using the "deep navigator button" again
+- **Month**: Renders a month inside `DailyCalendar`
+- **Day**: Renders a day inside `Month`

@@ -152,7 +152,7 @@ Datepicker.propTypes = {
   minBookingDays: PropTypes.number,
   /** How many months to display at the same time. Note: Currently supported 1 */
   numberOfMonths: PropTypes.number,
-  /** Pass a starting date to the calendar to be selected. A valid Date object or valid date iso string required */
+  /** Pass a starting date to the calendar to be selected. Accepts a valid Date object or a valid date iso string */
   startDate: PropTypes.oneOfType([
     PropTypes.instanceOf(Date),
     PropTypes.string,
