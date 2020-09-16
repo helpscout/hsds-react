@@ -32,10 +32,7 @@ function Datepicker({
     isFirstOrLastSelectedDate,
     isDateBlocked,
     isDateFocused,
-    focusedDate,
-    onDateHover,
     onDateSelect,
-    onDateFocus,
     goToDate,
     goToPreviousMonthsByOneMonth,
     goToNextMonthsByOneMonth,
@@ -86,15 +83,12 @@ function Datepicker({
   return (
     <DatepickerContext.Provider
       value={{
-        focusedDate,
-        isDateFocused,
-        isDateSelected,
-        isDateHovered,
         isDateBlocked,
+        isDateFocused,
+        isDateHovered,
+        isDateSelected,
         isFirstOrLastSelectedDate,
         onDateSelect,
-        onDateFocus,
-        onDateHover,
       }}
     >
       <CalendarContainerUI

@@ -13,15 +13,12 @@ import { DayUI } from './Datepicker.css'
 function Day({ dayLabel, date, leading, trailing }) {
   const dayRef = useRef(null)
   const {
-    focusedDate,
-    isDateFocused,
-    isDateSelected,
-    isDateHovered,
     isDateBlocked,
+    isDateFocused,
+    isDateHovered,
+    isDateSelected,
     isFirstOrLastSelectedDate,
     onDateSelect,
-    onDateFocus,
-    onDateHover,
   } = useContext(DatepickerContext)
   const {
     isSelected,
@@ -31,15 +28,12 @@ function Day({ dayLabel, date, leading, trailing }) {
     onClick,
   } = useDay({
     date,
-    focusedDate,
-    isDateFocused,
-    isDateSelected,
-    isDateHovered,
     isDateBlocked,
+    isDateFocused,
+    isDateHovered,
+    isDateSelected,
     isFirstOrLastSelectedDate,
-    onDateFocus,
-    onDateSelect,
-    onDateHover,
+    onDateSelect: handleDaySelect,
     dayRef,
   })
 
@@ -57,6 +51,11 @@ function Day({ dayLabel, date, leading, trailing }) {
     leading,
     trailing
   )
+
+  function handleDaySelect(date) {
+    onDateSelect(date)
+    dayRef && dayRef.current && dayRef.current.focus()
+  }
 
   return (
     <DayUI
