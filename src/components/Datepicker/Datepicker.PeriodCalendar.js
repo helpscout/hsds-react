@@ -65,6 +65,7 @@ function PeriodCalendar({
         }}
       />
       <PeriodUI
+        role="grid"
         className={classNames(
           'c-Period',
           mode === ONE_YEAR ? 'is-mode-months' : 'is-mode-years'
@@ -82,6 +83,9 @@ function PeriodCalendar({
                       activeYear === selectedYear &&
                       'is-selected'
                   )}
+                  aria-selected={
+                    index === activeMonth && activeYear === selectedYear
+                  }
                   disabled={
                     !allowFutureDatePick &&
                     index > todaysMonth &&
@@ -109,6 +113,7 @@ function PeriodCalendar({
                     year === todaysYear && 'is-this-period',
                     year === selectedYear && 'is-selected'
                   )}
+                  aria-selected={year === selectedYear}
                   disabled={!allowFutureDatePick && year > todaysYear}
                   key={year}
                   onClick={() => {

@@ -100,6 +100,7 @@ function Datepicker({
       <CalendarContainerUI
         className="c-Calendar"
         numberOfMonths={numberOfMonths}
+        role="dialog"
       >
         {!deepNavVisible ? (
           <DailyCalendar

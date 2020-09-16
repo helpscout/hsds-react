@@ -27,15 +27,21 @@ function Navigator({
     >
       <SequentialNavButtonUI
         className="SequentialNavButton go-previous"
+        aria-label={
+          !isAtNavigationTopLevel ? 'previous month' : 'previous year'
+        }
         onClick={goPrevious}
       >
         <Icon name="arrow-left-single-large" />
-        <VisuallyHidden>Previous month</VisuallyHidden>
+        <VisuallyHidden>
+          {!isAtNavigationTopLevel ? 'previous month' : 'previous year'}
+        </VisuallyHidden>
       </SequentialNavButtonUI>
       <DeepNavigatorButtonUI
         className="DeepNavigatorButton"
         onClick={onDeepNavigationClick}
         disabled={isAtNavigationTopLevel}
+        aria-live="polite"
       >
         {label}
       </DeepNavigatorButtonUI>
@@ -43,9 +49,12 @@ function Navigator({
         className="SequentialNavButton go-next"
         onClick={goNext}
         disabled={!canNavigateForward}
+        aria-label={!isAtNavigationTopLevel ? 'next month' : 'next year'}
       >
         <Icon name="arrow-right-single-large" />
-        <VisuallyHidden>Next month</VisuallyHidden>
+        <VisuallyHidden>
+          {!isAtNavigationTopLevel ? 'next month' : 'next year'}
+        </VisuallyHidden>
       </SequentialNavButtonUI>
     </NavigatorUI>
   )

@@ -29,7 +29,6 @@ function Day({ dayLabel, date, leading, trailing }) {
     isWithinHoverRange,
     disabledDate,
     onClick,
-    onKeyDown,
   } = useDay({
     date,
     focusedDate,
@@ -66,12 +65,13 @@ function Day({ dayLabel, date, leading, trailing }) {
         (trailing || leading) && 'is-from-another-month',
         isSelected && 'is-selected'
       )}
+      aria-selected={isSelected}
       disabled={disabledDate}
       isSelected={isSelected}
       isDateToday={isDateToday}
       onClick={onClick}
-      onKeyDown={onKeyDown}
       ref={dayRef}
+      tabIndex={trailing || leading ? '-1' : '0'}
       labelColor={getColorFn({
         selectedFirstOrLastColor: '#FFFFFF',
         normalColor: getColor('charcoal.600'),
