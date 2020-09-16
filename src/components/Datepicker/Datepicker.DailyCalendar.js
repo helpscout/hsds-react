@@ -2,10 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { useMonth } from '@datepicker-react/hooks'
 import { noop } from '../../utilities/other'
+import { isMonthInThePast } from './Datepicker.utils'
+import { NAVIGATION_LEVELS } from './Datepicker.constants'
 import Month from './Datepicker.Month'
 import Navigator from './Datepicker.Navigator'
 import { DailyCalendarUI } from './Datepicker.css'
-import { isMonthInThePast } from './Datepicker.utils'
 
 function DailyCalendar({
   activeMonths,
@@ -22,11 +23,12 @@ function DailyCalendar({
   })
 
   return (
-    <>
+    <div className="c-DailyCalendar">
       <Navigator
         label={monthLabel}
         goPrevious={goToPreviousMonth}
         goNext={goToNextMonth}
+        navigationLevel={NAVIGATION_LEVELS.MONTH_BY_MONTH}
         canNavigateForward={
           allowFutureDatePick ||
           isMonthInThePast(
@@ -35,7 +37,7 @@ function DailyCalendar({
         }
         onDeepNavigationClick={onDeepNavigationClick}
       />
-      <DailyCalendarUI numberOfMonths={numberOfMonths}>
+      <DailyCalendarUI numberOfMonths={numberOfMonths} role="grid">
         {activeMonths.map(month => (
           <Month
             key={`${month.year}-${month.month}`}
@@ -45,7 +47,7 @@ function DailyCalendar({
           />
         ))}
       </DailyCalendarUI>
-    </>
+    </div>
   )
 }
 

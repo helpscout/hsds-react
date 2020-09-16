@@ -1,0 +1,290 @@
+import React from 'react'
+import { render } from '@testing-library/react'
+import user from '@testing-library/user-event'
+import { MONTHS } from './Datepicker.constants'
+import { getValidDateTimeString } from './Datepicker.utils'
+import Datepicker from './'
+
+describe('Datepicker', () => {
+  test('should render the current date in the calendar by default', () => {
+    const todayDate = new Date()
+    const { getByText } = render(<Datepicker />)
+    const todayNode = getByText(`${todayDate.getDate()}`)
+
+    expect(
+      getByText(`${MONTHS[todayDate.getMonth()]} ${todayDate.getFullYear()}`)
+    ).toBeInTheDocument()
+    expect(todayNode.getAttribute('datetime')).toBe(
+      getValidDateTimeString(todayDate)
+    )
+    expect(
+      getByText(`${todayDate.getDate()}`).parentElement.classList.contains(
+        'is-today'
+      )
+    ).toBeTruthy()
+    expect(
+      getByText(`${todayDate.getDate()}`).parentElement.classList.contains(
+        'is-selected'
+      )
+    ).toBeFalsy()
+    expect(
+      getByText(`${todayDate.getDate()}`).parentElement.getAttribute(
+        'aria-selected'
+      )
+    ).toBe('false')
+  })
+
+  test('should render with a given date if provided', () => {
+    const someDate = new Date(2020, 2, 25)
+    const { getByText, rerender } = render(<Datepicker startDate={someDate} />)
+    const someDateNode = getByText(`${someDate.getDate()}`)
+
+    expect(
+      getByText(`${MONTHS[someDate.getMonth()]} ${someDate.getFullYear()}`)
+    ).toBeInTheDocument()
+    expect(someDateNode.getAttribute('datetime')).toBe(
+      getValidDateTimeString(someDate)
+    )
+    expect(
+      getByText(`${someDate.getDate()}`).parentElement.classList.contains(
+        'is-selected'
+      )
+    ).toBeTruthy()
+    expect(
+      getByText(`${someDate.getDate()}`).parentElement.getAttribute(
+        'aria-selected'
+      )
+    ).toBe('true')
+
+    const someOtherDate = new Date(2019, 2, 23)
+    rerender(<Datepicker startDate={someOtherDate} />)
+    const someOtherDateNode = getByText(`${someOtherDate.getDate()}`)
+
+    expect(
+      getByText(
+        `${MONTHS[someOtherDate.getMonth()]} ${someOtherDate.getFullYear()}`
+      )
+    ).toBeInTheDocument()
+    expect(someOtherDateNode.getAttribute('datetime')).toBe(
+      getValidDateTimeString(someOtherDate)
+    )
+    expect(
+      getByText(`${someOtherDate.getDate()}`).parentElement.classList.contains(
+        'is-selected'
+      )
+    ).toBeTruthy()
+    expect(
+      getByText(`${someOtherDate.getDate()}`).parentElement.getAttribute(
+        'aria-selected'
+      )
+    ).toBe('true')
+  })
+
+  test('should be able to navigate month by month', () => {
+    const someDate = new Date(2020, 2, 25)
+    const { getByLabelText, queryByText, getByText } = render(
+      <Datepicker startDate={someDate} />
+    )
+
+    const prevButton = getByLabelText(/previous month/i)
+    const nextButton = getByLabelText(/next month/i)
+
+    expect(
+      getByText(`${MONTHS[someDate.getMonth()]} ${someDate.getFullYear()}`)
+    ).toBeInTheDocument()
+
+    user.click(prevButton)
+
+    expect(
+      queryByText(`${MONTHS[someDate.getMonth()]} ${someDate.getFullYear()}`)
+    ).not.toBeInTheDocument()
+
+    expect(
+      getByText(`${MONTHS[someDate.getMonth() - 1]} ${someDate.getFullYear()}`)
+    ).toBeInTheDocument()
+
+    user.click(prevButton)
+
+    expect(
+      getByText(`${MONTHS[someDate.getMonth() - 2]} ${someDate.getFullYear()}`)
+    ).toBeInTheDocument()
+
+    user.click(nextButton)
+    user.click(nextButton)
+    user.click(nextButton)
+
+    expect(
+      getByText(`${MONTHS[someDate.getMonth() + 1]} ${someDate.getFullYear()}`)
+    ).toBeInTheDocument()
+  })
+
+  test('should be able to navigate months by clicking the period calendar button once', () => {
+    const someDate = new Date(2020, 2, 25)
+    const { getByLabelText, getByText, queryByText, queryByLabelText } = render(
+      <Datepicker startDate={someDate} />
+    )
+
+    const deepNavButton = queryByText(
+      `${MONTHS[someDate.getMonth()]} ${someDate.getFullYear()}`
+    )
+
+    user.click(deepNavButton)
+
+    expect(
+      queryByText(`${MONTHS[someDate.getMonth()]} ${someDate.getFullYear()}`)
+    ).not.toBeInTheDocument()
+    expect(queryByLabelText(/previous month/i)).not.toBeInTheDocument()
+    expect(queryByLabelText(/next month/i)).not.toBeInTheDocument()
+    expect(getByLabelText(/previous year/i)).toBeInTheDocument()
+    expect(getByLabelText(/next year/i)).toBeInTheDocument()
+
+    const prevButton = getByLabelText(/previous year/i)
+    const nextButton = getByLabelText(/next year/i)
+
+    user.click(prevButton)
+
+    expect(getByText(`${someDate.getFullYear() - 1}`)).toBeInTheDocument()
+
+    user.click(prevButton)
+
+    expect(getByText(`${someDate.getFullYear() - 2}`)).toBeInTheDocument()
+
+    user.click(nextButton)
+    user.click(nextButton)
+    user.click(nextButton)
+
+    expect(getByText(`${someDate.getFullYear() + 1}`)).toBeInTheDocument()
+  })
+
+  test('should be able to navigate years by clicking the period calendar button twice', () => {
+    const someDate = new Date(2020, 2, 25)
+    const { getByLabelText, getByText, queryByText, queryByLabelText } = render(
+      <Datepicker startDate={someDate} />
+    )
+
+    user.click(
+      queryByText(`${MONTHS[someDate.getMonth()]} ${someDate.getFullYear()}`)
+    )
+    user.click(queryByText(`${someDate.getFullYear()}`))
+    expect(getByText('2016–2027')).toBeInTheDocument()
+    expect(queryByLabelText(/previous month/i)).not.toBeInTheDocument()
+    expect(queryByLabelText(/next month/i)).not.toBeInTheDocument()
+    expect(getByLabelText(/previous years/i)).toBeInTheDocument()
+    expect(getByLabelText(/next years/i)).toBeInTheDocument()
+
+    const prevButton = getByLabelText(/previous years/i)
+    const nextButton = getByLabelText(/next years/i)
+
+    user.click(prevButton)
+
+    expect(getByText('2004–2015')).toBeInTheDocument()
+
+    user.click(prevButton)
+
+    expect(getByText('1992–2003')).toBeInTheDocument()
+
+    user.click(nextButton)
+    user.click(nextButton)
+    user.click(nextButton)
+
+    expect(getByText('2028–2039')).toBeInTheDocument()
+  })
+
+  test('should be able to select a month in the period calendar and navigate the daily calendar to the correct selection', () => {
+    const someDate = new Date(2020, 2, 25)
+    const { getByText, queryByText } = render(
+      <Datepicker startDate={someDate} />
+    )
+
+    const deepNavButton = getByText(
+      `${MONTHS[someDate.getMonth()]} ${someDate.getFullYear()}`
+    )
+
+    user.click(deepNavButton)
+
+    const julyButton = getByText(/jul/i)
+
+    expect(
+      queryByText(`${MONTHS[someDate.getMonth()]} ${someDate.getFullYear()}`)
+    ).not.toBeInTheDocument()
+
+    user.click(julyButton)
+
+    expect(
+      getByText(`${MONTHS[6]} ${someDate.getFullYear()}`)
+    ).toBeInTheDocument()
+  })
+
+  test('should be able to select a year in the period calendar and navigate the daily calendar to the correct selection', () => {
+    const someDate = new Date(2020, 2, 25)
+    const { getByText } = render(<Datepicker startDate={someDate} />)
+
+    user.click(
+      getByText(`${MONTHS[someDate.getMonth()]} ${someDate.getFullYear()}`)
+    )
+    user.click(getByText(`${someDate.getFullYear()}`))
+    user.click(getByText('2023'))
+    user.click(getByText('Sep'))
+
+    expect(getByText('September 2023')).toBeInTheDocument()
+  })
+
+  test('should be able to select a date', () => {
+    const changeSpy = jest.fn()
+    const someDate = new Date(2020, 2, 25)
+    const { getByText } = render(
+      <Datepicker startDate={someDate} onDateChange={changeSpy} />
+    )
+
+    const newDay = 21
+
+    user.click(getByText(`${newDay}`))
+
+    expect(changeSpy).toHaveBeenCalledTimes(1)
+    expect(changeSpy).toHaveBeenCalledWith({
+      endDate: new Date(2020, 2, newDay),
+      focusedInput: null,
+      startDate: new Date(2020, 2, newDay),
+    })
+
+    expect(
+      getByText(`${newDay}`).parentElement.classList.contains('is-selected')
+    ).toBeTruthy()
+    expect(
+      getByText(`${newDay}`).parentElement.getAttribute('aria-selected')
+    ).toBe('true')
+
+    user.click(
+      getByText(`${MONTHS[someDate.getMonth()]} ${someDate.getFullYear()}`)
+    )
+
+    expect(getByText('Mar').parentElement.getAttribute('aria-selected')).toBe(
+      'true'
+    )
+
+    user.click(getByText(`${someDate.getFullYear()}`))
+
+    expect(getByText('2020').parentElement.getAttribute('aria-selected')).toBe(
+      'true'
+    )
+  })
+
+  test('should be able to restrict navigation and selection of future dates', () => {
+    const someDate = new Date()
+    const { getByLabelText, getByText } = render(
+      <Datepicker startDate={someDate} allowFutureDatePick={false} />
+    )
+
+    expect(getByLabelText(/next month/i).disabled).toBeTruthy()
+
+    user.click(
+      getByText(`${MONTHS[someDate.getMonth()]} ${someDate.getFullYear()}`)
+    )
+
+    expect(getByLabelText(/next year/i).disabled).toBeTruthy()
+
+    user.click(getByText(`${someDate.getFullYear()}`))
+
+    expect(getByLabelText(/next years/i).disabled).toBeTruthy()
+  })
+})

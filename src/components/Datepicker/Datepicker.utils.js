@@ -1,3 +1,5 @@
+import { NAVIGATION_LEVELS } from './Datepicker.constants'
+
 /**
  * Check if something is JS Date Object
  * @param {*} someObject the item to check
@@ -190,5 +192,21 @@ export function getDayColor(
     } else {
       return normalColor
     }
+  }
+}
+
+export function getNavigatorButtonLabel(navigationLevel, direction) {
+  switch (navigationLevel) {
+    case NAVIGATION_LEVELS.MONTH_BY_MONTH:
+      return `${direction} month`
+
+    case NAVIGATION_LEVELS.YEAR_BY_YEAR:
+      return `${direction} year`
+
+    case NAVIGATION_LEVELS.YEAR_RANGES:
+      return `${direction} years`
+
+    default:
+      return ''
   }
 }

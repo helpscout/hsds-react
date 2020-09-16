@@ -13,5 +13,8 @@ export const MONTHS = [
   'December',
 ]
 
-export const ONE_YEAR = 'ONE_YEAR'
-export const MULTI_YEAR = 'MULTI_YEAR'
+export const NAVIGATION_LEVELS = {
+  MONTH_BY_MONTH: 'MONTH_BY_MONTH',
+  YEAR_BY_YEAR: 'YEAR_BY_YEAR',
+  YEAR_RANGES: 'YEAR_RANGES',
+}

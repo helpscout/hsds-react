@@ -62,7 +62,8 @@ function Day({ dayLabel, date, leading, trailing }) {
       className={classNames(
         'c-DatepickerDay',
         (trailing || leading) && 'is-from-another-month',
-        isSelected && 'is-selected'
+        isSelected && 'is-selected',
+        isDateToday && 'is-today'
       )}
       aria-selected={isSelected}
       disabled={disabledDate}

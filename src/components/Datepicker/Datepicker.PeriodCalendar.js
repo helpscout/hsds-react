@@ -5,7 +5,7 @@ import { classNames } from '../../utilities/classNames'
 import { getActiveYearRange } from './Datepicker.utils'
 import Navigator from './Datepicker.Navigator'
 import { PeriodUI, PeriodButtonUI } from './Datepicker.css'
-import { MONTHS, ONE_YEAR, MULTI_YEAR } from './Datepicker.constants'
+import { MONTHS, NAVIGATION_LEVELS } from './Datepicker.constants'
 
 function PeriodCalendar({
   activeMonths,
@@ -21,17 +21,19 @@ function PeriodCalendar({
   const activeMonth = activeMonths[0].month
   const activeYear = activeMonths[0].year
   const selectedYear = startDate ? startDate.getFullYear() : ''
-  const [mode, setMode] = useState(ONE_YEAR)
+  const [mode, setMode] = useState(NAVIGATION_LEVELS.YEAR_BY_YEAR)
   const [yearRange, setYearRange] = useState(
     getActiveYearRange(activeYear, true)
   )
   const firstYearInRange = yearRange[0]
   const lastYearInRange = yearRange[yearRange.length - 1]
   const navigatorLabel =
-    mode === ONE_YEAR ? activeYear : `${firstYearInRange}–${lastYearInRange}` // note the 'en dash'
+    mode === NAVIGATION_LEVELS.YEAR_BY_YEAR
+      ? activeYear
+      : `${firstYearInRange}–${lastYearInRange}` // note the 'en dash'
 
   function canNavigateForward() {
-    if (mode === ONE_YEAR) {
+    if (mode === NAVIGATION_LEVELS.YEAR_BY_YEAR) {
       return allowFutureDatePick || activeYear < todaysYear
     }
 
@@ -42,25 +44,25 @@ function PeriodCalendar({
     <div className="c-PeriodCalendar">
       <Navigator
         canNavigateForward={canNavigateForward()}
-        isAtNavigationTopLevel={mode === MULTI_YEAR}
+        navigationLevel={mode}
         label={navigatorLabel}
         goNext={() => {
-          if (mode === ONE_YEAR) {
+          if (mode === NAVIGATION_LEVELS.YEAR_BY_YEAR) {
             goToNextYear()
           } else {
             setYearRange(getActiveYearRange(lastYearInRange + 13, false))
           }
         }}
         goPrevious={() => {
-          if (mode === ONE_YEAR) {
+          if (mode === NAVIGATION_LEVELS.YEAR_BY_YEAR) {
             goToPreviousYear()
           } else {
             setYearRange(getActiveYearRange(firstYearInRange, false))
           }
         }}
         onDeepNavigationClick={() => {
-          if (mode === ONE_YEAR) {
-            setMode(MULTI_YEAR)
+          if (mode === NAVIGATION_LEVELS.YEAR_BY_YEAR) {
+            setMode(NAVIGATION_LEVELS.YEAR_RANGES)
           }
         }}
       />
@@ -68,10 +70,12 @@ function PeriodCalendar({
         role="grid"
         className={classNames(
           'c-Period',
-          mode === ONE_YEAR ? 'is-mode-months' : 'is-mode-years'
+          mode === NAVIGATION_LEVELS.YEAR_BY_YEAR
+            ? 'is-mode-months'
+            : 'is-mode-years'
         )}
       >
-        {mode === ONE_YEAR
+        {mode === NAVIGATION_LEVELS.YEAR_BY_YEAR
           ? MONTHS.map((month, index) => {
               return (
                 <PeriodButtonUI
@@ -117,7 +121,7 @@ function PeriodCalendar({
                   disabled={!allowFutureDatePick && year > todaysYear}
                   key={year}
                   onClick={() => {
-                    setMode(ONE_YEAR)
+                    setMode(NAVIGATION_LEVELS.YEAR_BY_YEAR)
                     goToDate(new Date(year, 0, 1), false)
                   }}
                 >

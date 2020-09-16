@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import { NAVIGATION_LEVELS } from './Datepicker.constants'
+import { getNavigatorButtonLabel } from './Datepicker.utils'
 import Icon from '../Icon'
 import VisuallyHidden from '../VisuallyHidden'
 import {
@@ -14,7 +16,7 @@ function Navigator({
   canNavigateForward,
   goPrevious,
   goNext,
-  isAtNavigationTopLevel,
+  navigationLevel,
   label,
   onDeepNavigationClick,
 }) {
@@ -22,25 +24,23 @@ function Navigator({
     <NavigatorUI
       className={classNames(
         'c-DatepickerNavigator',
-        isAtNavigationTopLevel && 'is-at-top-level'
+        navigationLevel === NAVIGATION_LEVELS.YEAR_RANGES && 'is-at-top-level'
       )}
     >
       <SequentialNavButtonUI
         className="SequentialNavButton go-previous"
-        aria-label={
-          !isAtNavigationTopLevel ? 'previous month' : 'previous year'
-        }
+        aria-label={getNavigatorButtonLabel(navigationLevel, 'previous')}
         onClick={goPrevious}
       >
         <Icon name="arrow-left-single-large" />
         <VisuallyHidden>
-          {!isAtNavigationTopLevel ? 'previous month' : 'previous year'}
+          {getNavigatorButtonLabel(navigationLevel, 'previous')}
         </VisuallyHidden>
       </SequentialNavButtonUI>
       <DeepNavigatorButtonUI
         className="DeepNavigatorButton"
         onClick={onDeepNavigationClick}
-        disabled={isAtNavigationTopLevel}
+        disabled={navigationLevel === NAVIGATION_LEVELS.YEAR_RANGES}
         aria-live="polite"
       >
         {label}
@@ -49,11 +49,11 @@ function Navigator({
         className="SequentialNavButton go-next"
         onClick={goNext}
         disabled={!canNavigateForward}
-        aria-label={!isAtNavigationTopLevel ? 'next month' : 'next year'}
+        aria-label={getNavigatorButtonLabel(navigationLevel, 'next')}
       >
         <Icon name="arrow-right-single-large" />
         <VisuallyHidden>
-          {!isAtNavigationTopLevel ? 'next month' : 'next year'}
+          {getNavigatorButtonLabel(navigationLevel, 'next')}
         </VisuallyHidden>
       </SequentialNavButtonUI>
     </NavigatorUI>
@@ -64,7 +64,7 @@ Navigator.defaultProps = {
   allowFutureDatePick: true,
   goPrevious: noop,
   goNext: noop,
-  isAtNavigationTopLevel: false,
+  navigationLevel: false,
   onDeepNavigationClick: noop,
 }
 
@@ -76,7 +76,11 @@ Navigator.propTypes = {
   /** Callback to navigate to the next period */
   goNext: PropTypes.func,
   /** Whether we are currently at the highest possible level of navigation */
-  isAtNavigationTopLevel: PropTypes.bool,
+  navigationLevel: PropTypes.oneOf([
+    'MONTH_BY_MONTH',
+    'YEAR_BY_YEAR',
+    'YEAR_RANGES',
+  ]),
   /** Callback to navigate to the next level of navigation */
   onDeepNavigationClick: PropTypes.func,
 }
