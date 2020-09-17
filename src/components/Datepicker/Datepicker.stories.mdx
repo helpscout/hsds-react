@@ -41,6 +41,14 @@ Implementing these features in `Datepicker` should be straightforward 🤞 and o
   <Story name="default">
     <Datepicker
       allowFutureDatePick={boolean('allowFutureDatePick', true)}
+      firstDayOfWeek={select(
+        'first Day Of Week',
+        {
+          sunday: 0,
+          monday: 1,
+        },
+        1
+      )}
       startDate={select(
         'Start date',
         {

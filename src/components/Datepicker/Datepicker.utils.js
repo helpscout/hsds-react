@@ -11,7 +11,7 @@ export function isJSDate(someObject) {
 }
 
 /**
- * Convert a valid ISO date string to a JS Date Object, bypass if the string is already a Date Object
+ * Convert a valid date string to a JS Date Object, bypass if the string is already a Date Object
  * @param {string} someDateString
  *
  * @return {Object} a Date object
@@ -66,7 +66,7 @@ export function getValidDateTimeString(someDate) {
   const dateToConvert = getJSDateFromString(someDate)
 
   const y = `${dateToConvert.getFullYear()}`
-  const m = `${dateToConvert.getMonth().toString().padStart(2, '0')}`
+  const m = `${(dateToConvert.getMonth() + 1).toString().padStart(2, '0')}`
   const d = `${dateToConvert.getDate().toString().padStart(2, '0')}`
 
   return `${y}-${m}-${d}`
@@ -101,17 +101,18 @@ export function getLeadingDays(someDate, startDay = 1) {
  * In order to fill up the calendar, get the dates from the next month in relation to the active month
  * @param {Object} someDate Date object to check
  * @param {Object[]} leadingDays The "leading" days taken from the previous month (see `getLeadingDays`
- * @param {Object[]} allMonthDays The current month days
+ * @param {Object[]} allMonthDays The current month days as given by datepicker hooks
  *
  * @return {Object[]} Array of Date Objects
  */
 export function getTrailingDays(someDate, leadingDays, allMonthDays) {
   const trailingDays = []
+  const someDateCopy = new Date(someDate.toString()) // avoid date mutation below
   const monthDays = allMonthDays.filter(day => typeof day === 'object')
   // If you need to have a fixed height on the calendar, set `totalDaySlots` to 42
   const totalDaySlots = getTotalDaysSlots(monthDays.length + leadingDays.length)
   const days = totalDaySlots - (leadingDays.length + monthDays.length)
-  const nextMonth = new Date(someDate.setMonth(someDate.getMonth() + 1, 1))
+  const nextMonth = new Date(someDateCopy.setMonth(someDate.getMonth() + 1, 1))
   const year = someDate.getFullYear()
 
   for (let i = 1; i <= days; i++) {

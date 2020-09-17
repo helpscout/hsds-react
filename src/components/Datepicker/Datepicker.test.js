@@ -80,6 +80,19 @@ describe('Datepicker', () => {
     ).toBe('true')
   })
 
+  test('should be able to pick the starting date of the week', () => {
+    const someDate = new Date(2020, 2, 25)
+    const { rerender } = render(<Datepicker startDate={someDate} />)
+
+    const weekdays = document.querySelectorAll('.WeekdaysRow > div')
+    expect(weekdays[0].textContent).toBe('Mo')
+
+    rerender(<Datepicker startDate={someDate} firstDayOfWeek={0} />)
+
+    const weekdays2 = document.querySelectorAll('.WeekdaysRow > div')
+    expect(weekdays2[0].textContent).toBe('Su')
+  })
+
   test('should be able to navigate month by month', () => {
     const someDate = new Date(2020, 2, 25)
     const { getByLabelText, queryByText, getByText } = render(
