@@ -37,10 +37,6 @@ function Day({ dayLabel, date, leading, trailing }) {
     dayRef,
   })
 
-  if (!dayLabel) {
-    return <div />
-  }
-
   const isDateToday = isToday(date)
   const getColorFn = getDayColor(
     isSelected,

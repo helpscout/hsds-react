@@ -1,3 +1,4 @@
+import { NAVIGATION_LEVELS } from './Datepicker.constants'
 import {
   isJSDate,
   getJSDateFromString,
@@ -8,6 +9,7 @@ import {
   getTrailingDays,
   getTotalDaysSlots,
   getActiveYearRange,
+  getNavigatorButtonLabel,
 } from './Datepicker.utils'
 
 describe('Datepicker Utils', () => {
@@ -100,5 +102,27 @@ describe('Datepicker Utils', () => {
       2018,
       2019,
     ])
+  })
+
+  test('getNavigatorButtonLabel', () => {
+    expect(
+      getNavigatorButtonLabel(NAVIGATION_LEVELS.MONTH_BY_MONTH, 'previous')
+    ).toBe('previous month')
+    expect(
+      getNavigatorButtonLabel(NAVIGATION_LEVELS.MONTH_BY_MONTH, 'next')
+    ).toBe('next month')
+    expect(
+      getNavigatorButtonLabel(NAVIGATION_LEVELS.YEAR_BY_YEAR, 'previous')
+    ).toBe('previous year')
+    expect(
+      getNavigatorButtonLabel(NAVIGATION_LEVELS.YEAR_BY_YEAR, 'next')
+    ).toBe('next year')
+    expect(
+      getNavigatorButtonLabel(NAVIGATION_LEVELS.YEAR_RANGES, 'previous')
+    ).toBe('previous years')
+    expect(getNavigatorButtonLabel(NAVIGATION_LEVELS.YEAR_RANGES, 'next')).toBe(
+      'next years'
+    )
+    expect(getNavigatorButtonLabel('hello', 'next')).toBe('')
   })
 })
