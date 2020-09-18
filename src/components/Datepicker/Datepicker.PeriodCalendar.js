@@ -40,6 +40,63 @@ function PeriodCalendar({
     return allowFutureDatePick || lastYearInRange < todaysYear
   }
 
+  function renderMonthsByYear() {
+    return MONTHS.map((month, index) => {
+      return (
+        <PeriodButtonUI
+          className={classNames(
+            index === todaysMonth &&
+              activeYear === todaysYear &&
+              'is-this-period',
+            index === activeMonth &&
+              activeYear === selectedYear &&
+              'is-selected'
+          )}
+          aria-selected={index === activeMonth && activeYear === selectedYear}
+          disabled={
+            !allowFutureDatePick &&
+            index > todaysMonth &&
+            activeYear >= todaysYear
+          }
+          key={month}
+          onClick={() => {
+            goToDate(new Date(activeYear, index, 1), true)
+          }}
+        >
+          <time
+            dateTime={`${activeYear}-${(index + 1)
+              .toString()
+              .padStart(2, '0')}`}
+          >
+            {month.slice(0, 3)}
+          </time>
+        </PeriodButtonUI>
+      )
+    })
+  }
+
+  function renderYearsByYearsRange() {
+    return yearRange.map(year => {
+      return (
+        <PeriodButtonUI
+          className={classNames(
+            year === todaysYear && 'is-this-period',
+            year === selectedYear && 'is-selected'
+          )}
+          aria-selected={year === selectedYear}
+          disabled={!allowFutureDatePick && year > todaysYear}
+          key={year}
+          onClick={() => {
+            setMode(NAVIGATION_LEVELS.YEAR_BY_YEAR)
+            goToDate(new Date(year, 0, 1), false)
+          }}
+        >
+          <time dateTime={`${year}`}>{year}</time>
+        </PeriodButtonUI>
+      )
+    })
+  }
+
   return (
     <div className="c-PeriodCalendar">
       <Navigator
@@ -76,59 +133,8 @@ function PeriodCalendar({
         )}
       >
         {mode === NAVIGATION_LEVELS.YEAR_BY_YEAR
-          ? MONTHS.map((month, index) => {
-              return (
-                <PeriodButtonUI
-                  className={classNames(
-                    index === todaysMonth &&
-                      activeYear === todaysYear &&
-                      'is-this-period',
-                    index === activeMonth &&
-                      activeYear === selectedYear &&
-                      'is-selected'
-                  )}
-                  aria-selected={
-                    index === activeMonth && activeYear === selectedYear
-                  }
-                  disabled={
-                    !allowFutureDatePick &&
-                    index > todaysMonth &&
-                    activeYear >= todaysYear
-                  }
-                  key={month}
-                  onClick={() => {
-                    goToDate(new Date(activeYear, index, 1), true)
-                  }}
-                >
-                  <time
-                    dateTime={`${activeYear}-${(index + 1)
-                      .toString()
-                      .padStart(2, '0')}`}
-                  >
-                    {month.slice(0, 3)}
-                  </time>
-                </PeriodButtonUI>
-              )
-            })
-          : yearRange.map(year => {
-              return (
-                <PeriodButtonUI
-                  className={classNames(
-                    year === todaysYear && 'is-this-period',
-                    year === selectedYear && 'is-selected'
-                  )}
-                  aria-selected={year === selectedYear}
-                  disabled={!allowFutureDatePick && year > todaysYear}
-                  key={year}
-                  onClick={() => {
-                    setMode(NAVIGATION_LEVELS.YEAR_BY_YEAR)
-                    goToDate(new Date(year, 0, 1), false)
-                  }}
-                >
-                  <time dateTime={`${year}`}>{year}</time>
-                </PeriodButtonUI>
-              )
-            })}
+          ? renderMonthsByYear()
+          : renderYearsByYearsRange()}
       </PeriodUI>
     </div>
   )
