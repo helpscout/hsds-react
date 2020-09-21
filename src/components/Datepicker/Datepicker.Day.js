@@ -10,7 +10,7 @@ import {
 } from './Datepicker.utils'
 import { DayUI } from './Datepicker.css'
 
-function Day({ dayLabel, date, leading, trailing }) {
+function Day({ dayLabel, date, leading = false, trailing = false }) {
   const dayRef = useRef(null)
   const {
     isDateBlocked,
@@ -90,11 +90,6 @@ function Day({ dayLabel, date, leading, trailing }) {
       <time dateTime={getValidDateTimeString(date)}>{dayLabel}</time>
     </DayUI>
   )
-}
-
-Day.defaultProps = {
-  leading: false,
-  trailing: false,
 }
 
 export default Day

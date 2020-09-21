@@ -9,13 +9,13 @@ import PeriodCalendar from './Datepicker.PeriodCalendar'
 import DailyCalendar from './Datepicker.DailyCalendar'
 
 function Datepicker({
-  allowFutureDatePick,
-  endDate,
-  firstDayOfWeek,
-  minBookingDays,
-  numberOfMonths,
-  onDateChange,
-  startDate,
+  allowFutureDatePick = true,
+  endDate = null,
+  firstDayOfWeek = 1,
+  minBookingDays = 1,
+  numberOfMonths = 1,
+  onDateChange = noop,
+  startDate = null,
 }) {
   const [dates, setDates] = useState({
     startDate: getJSDateFromString(startDate),
@@ -124,16 +124,6 @@ function Datepicker({
       </CalendarContainerUI>
     </DatepickerContext.Provider>
   )
-}
-
-Datepicker.defaultProps = {
-  allowFutureDatePick: true,
-  endDate: null,
-  firstDayOfWeek: 1,
-  minBookingDays: 1,
-  numberOfMonths: 1,
-  startDate: null,
-  onDateChange: noop,
 }
 
 Datepicker.propTypes = {

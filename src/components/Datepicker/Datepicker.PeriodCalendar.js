@@ -9,10 +9,10 @@ import { MONTHS, NAVIGATION_LEVELS } from './Datepicker.constants'
 
 function PeriodCalendar({
   activeMonths,
-  allowFutureDatePick,
-  goToDate,
-  goToPreviousYear,
-  goToNextYear,
+  allowFutureDatePick = true,
+  goToDate = noop,
+  goToPreviousYear = noop,
+  goToNextYear = noop,
   startDate,
 }) {
   const todaysDate = new Date()
@@ -138,13 +138,6 @@ function PeriodCalendar({
       </PeriodUI>
     </div>
   )
-}
-
-PeriodCalendar.defaultProps = {
-  allowFutureDatePick: true,
-  goToPreviousYear: noop,
-  goToNextYear: noop,
-  goToDate: noop,
 }
 
 PeriodCalendar.propTypes = {

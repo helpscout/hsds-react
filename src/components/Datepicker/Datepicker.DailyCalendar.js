@@ -10,12 +10,12 @@ import { DailyCalendarUI } from './Datepicker.css'
 
 function DailyCalendar({
   activeMonths,
-  allowFutureDatePick,
-  firstDayOfWeek,
-  goToPreviousMonth,
-  goToNextMonth,
-  numberOfMonths,
-  onDeepNavigationClick,
+  allowFutureDatePick = true,
+  firstDayOfWeek = 1,
+  goToPreviousMonth = noop,
+  goToNextMonth = noop,
+  numberOfMonths = 1,
+  onDeepNavigationClick = noop,
 }) {
   const { monthLabel } = useMonth({
     month: activeMonths[0].month,
@@ -49,15 +49,6 @@ function DailyCalendar({
       </DailyCalendarUI>
     </div>
   )
-}
-
-DailyCalendar.defaultProps = {
-  allowFutureDatePick: true,
-  firstDayOfWeek: 1,
-  goToPreviousMonth: noop,
-  goToNextMonth: noop,
-  numberOfMonths: 1,
-  onDeepNavigationClick: noop,
 }
 
 DailyCalendar.propTypes = {

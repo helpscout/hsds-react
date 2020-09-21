@@ -13,12 +13,12 @@ import {
 } from './Datepicker.css'
 
 function Navigator({
-  canNavigateForward,
-  goPrevious,
-  goNext,
-  navigationLevel,
+  canNavigateForward = true,
+  goPrevious = noop,
+  goNext = noop,
+  navigationLevel = 'MONTH_BY_MONTH',
   label,
-  onDeepNavigationClick,
+  onDeepNavigationClick = noop,
 }) {
   return (
     <NavigatorUI
@@ -60,17 +60,9 @@ function Navigator({
   )
 }
 
-Navigator.defaultProps = {
-  allowFutureDatePick: true,
-  goPrevious: noop,
-  goNext: noop,
-  navigationLevel: false,
-  onDeepNavigationClick: noop,
-}
-
 Navigator.propTypes = {
   /** Whether is possible to pick a date in the future */
-  allowFutureDatePick: PropTypes.bool,
+  canNavigateForward: PropTypes.bool,
   /** Callback to navigate to the previous period */
   goPrevious: PropTypes.func,
   /** Callback to navigate to the next period */
