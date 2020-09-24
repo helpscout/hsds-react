@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import Card from './'
 
 <Meta
@@ -17,11 +17,11 @@ import Card from './'
 
 A Card component is used to encapsulate pieces of UI that share a common concept or action.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Card>Hello, this is a card</Card>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -34,7 +34,7 @@ A Card component is used to encapsulate pieces of UI that share a common concept
 
 ### Props
 
-<Props of={Card} />
+<ArgsTable of={Card} />
 
 ### Stories
 
@@ -42,23 +42,23 @@ A Card component is used to encapsulate pieces of UI that share a common concept
 
 If a `to` or `href` prop is passed into the Card component, it will render the `Link` component, which provides additional link-based props.
 
-<Preview>
+<Canvas>
   <Story name="with link">
     <Card href="https://www.helpscout.net/">
       Link to: https://www.helpscout.net/
     </Card>
   </Story>
-</Preview>
+</Canvas>
 
 #### Floating
 
-<Preview>
+<Canvas>
   <Story name="Floating">
     <Card floating hover>
       Hello, this is a floating hoverable card
     </Card>
   </Story>
-</Preview>
+</Canvas>
 
 ## Card.Block
 
@@ -66,13 +66,13 @@ A Card.Block component is used to section content within a [`<Card>`](../Card).
 
 Note: It is highly recommended the `seamless` prop is used for the container `<Card>`. This allows for the `<Card.Block>` components to flow all the way to the inner-edges of `<Card>`.
 
-<Preview>
+<Canvas>
   <Story name="Card Blocks">
     <Card seamless>
       <Card.Block>Frank "The Tank"</Card.Block>
       <Card.Block>You're my boy, Blue!</Card.Block>
     </Card>
   </Story>
-</Preview>
+</Canvas>
 
-<Props of={Card.Block} />
+<ArgsTable of={Card.Block} />

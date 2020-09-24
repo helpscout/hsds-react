@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, select, text } from '@storybook/addon-knobs'
 import { Button } from './Button'
 import { ControlGroup } from '../index'
@@ -19,7 +19,7 @@ import { ControlGroup } from '../index'
 
 Actionable HTML buttons with different styles and support for React Router.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Button
       children={text('children', 'Button')}
@@ -74,7 +74,7 @@ Actionable HTML buttons with different styles and support for React Router.
       spinButtonOnLoading={boolean('spinButtonOnLoading', false)}
     />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -87,13 +87,13 @@ Actionable HTML buttons with different styles and support for React Router.
 
 ### Props
 
-<Props of={Button} />
+<ArgsTable of={Button} />
 
 ### Stories
 
 #### Button Group
 
-<Preview>
+<Canvas>
   <Story name="Button Group">
     <ControlGroup>
       <ControlGroup.Item>
@@ -107,4 +107,4 @@ Actionable HTML buttons with different styles and support for React Router.
       </ControlGroup.Item>
     </ControlGroup>
   </Story>
-</Preview>
+</Canvas>

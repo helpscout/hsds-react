@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import VerificationCode from './'
 
 <Meta
@@ -15,11 +15,11 @@ import VerificationCode from './'
 
 # VerificationCode
 
-<Preview>
+<Canvas>
   <Story name="default">
     <VerificationCode />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -32,13 +32,13 @@ import VerificationCode from './'
 
 ### Props
 
-<Props of={VerificationCode} />
+<ArgsTable of={VerificationCode} />
 
 ### Stories
 
 #### Invalid
 
-<Preview>
+<Canvas>
   <Story name="Invalid">
     <VerificationCode
       isValid={false}
@@ -47,4 +47,4 @@ import VerificationCode from './'
       }}
     />
   </Story>
-</Preview>
+</Canvas>

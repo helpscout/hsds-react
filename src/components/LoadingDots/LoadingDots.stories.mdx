@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import LoadingDots from './'
 
 <Meta
@@ -17,11 +17,11 @@ import LoadingDots from './'
 
 A LoadingDots component is a cycling ellipsis animation, typically used in chat/messaging based UI.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <LoadingDots />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -34,4 +34,4 @@ A LoadingDots component is a cycling ellipsis animation, typically used in chat/
 
 ### Props
 
-<Props of={LoadingDots} />
+<ArgsTable of={LoadingDots} />

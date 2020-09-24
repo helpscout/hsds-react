@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { select, boolean } from '@storybook/addon-knobs'
 import { Button } from '../index'
 import Page from './'
@@ -20,7 +20,7 @@ import Page from './'
 This component is a presentational wrapper used to render a variety of content.
 This component is typically used to render form-based UIs.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Page isResponsive={boolean('isResponsive', true)}>
       <Page.Card>
@@ -84,7 +84,7 @@ This component is typically used to render form-based UIs.
       </Page.Card>
     </Page>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -97,7 +97,7 @@ This component is typically used to render form-based UIs.
 
 ### Props
 
-<Props of={Page} />
+<ArgsTable of={Page} />
 
 ### SubComponents
 
@@ -114,7 +114,7 @@ Aside from those 2, you are free to add whatever markup you need: icons, links, 
 - `headingLevel`: The html tag to use "h1" or "h2", has no effect on looks, just semantics
 - `isSecondary`: This determines if it should look slightly smaller when true. Use when you need a secondary heading in the same Card.
 
-<Props of={Page.Header} />
+<ArgsTable of={Page.Header} />
 
 For backwards compatibility you can use the header using the "title" and "subtitle" props:
 
@@ -177,13 +177,13 @@ The use of sections, besides of being good for semantic purposes, allows the hea
 
 This component is a presentational wrapper used to render form actions.
 
-<Props of={Page.Actions} />
+<ArgsTable of={Page.Actions} />
 
 ### Stories
 
 #### With actions
 
-<Preview>
+<Canvas>
   <Story name="with actions">
     <Page>
       <Page.Card>
@@ -232,4 +232,4 @@ This component is a presentational wrapper used to render form actions.
       />
     </Page>
   </Story>
-</Preview>
+</Canvas>

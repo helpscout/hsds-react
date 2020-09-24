@@ -1,4 +1,4 @@
-import { Preview, Meta, Story, Props } from '@storybook/addon-docs/blocks'
+import { Canvas, Meta, Story, Props } from '@storybook/addon-docs/blocks'
 import Animate from './'
 import { Animate as AnimateComponent } from './Animate'
 import { Card, Heading, Text } from '../index'
@@ -10,7 +10,7 @@ import { AnimateOutExample } from './Animate.storiesHelpers'
 
 An Animate component is a wrapper component that provides CSS-based animations. Animate is an extension of `<Transition>` from [`react-transition-group`](https://github.com/reactjs/react-transition-group/).
 
-<Preview>
+<Canvas>
   <Story name="default">
     <div>
       <p>No delay</p>
@@ -22,11 +22,11 @@ An Animate component is a wrapper component that provides CSS-based animations. 
       </Animate>
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### Props
 
-<Props of={AnimateComponent} />
+<ArgsTable of={AnimateComponent} />
 
 #### Ownership
 
@@ -39,7 +39,7 @@ An Animate component is a wrapper component that provides CSS-based animations. 
 
 #### custom delay/duration
 
-<Preview>
+<Canvas>
   <Story name="custom delay/duration">
     <div>
       <p>Tiny tiny delay</p>
@@ -68,12 +68,12 @@ An Animate component is a wrapper component that provides CSS-based animations. 
       <br />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### animate out
 
-<Preview>
+<Canvas>
   <Story name="animateOut">
     <AnimateOutExample />
   </Story>
-</Preview>
+</Canvas>

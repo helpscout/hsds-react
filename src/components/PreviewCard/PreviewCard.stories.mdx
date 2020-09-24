@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import PreviewCard from './'
 
 <Meta
@@ -17,11 +17,11 @@ import PreviewCard from './'
 
 A PreviewCard component is an enhanced `Card`, with slight adjustments to presentation UI.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <PreviewCard title="Preview title">Preview content text</PreviewCard>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -34,4 +34,4 @@ A PreviewCard component is an enhanced `Card`, with slight adjustments to presen
 
 ### Props
 
-<Props of={PreviewCard} />
+<ArgsTable of={PreviewCard} />

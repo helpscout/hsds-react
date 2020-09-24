@@ -48,7 +48,7 @@ Also, mdx allows _some_ javascript to be run, but not everything can be. If you 
   // YourComponent.stories.mdx
 
   👇 Storybook's components to render stories
-  import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+  import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 
   👇 The "knobs" you'd like to use
   import { boolean, number } from '@storybook/addon-knobs'
@@ -79,7 +79,7 @@ Also, mdx allows _some_ javascript to be run, but not everything can be. If you 
   Component's description and any notes worth mentioning
 
   👇 Default story, a lot of the time this is all is needed
-  <Preview>
+  <Canvas>
     <Story name="default">
       <YourComponent
         shadow={boolean('shadow', false)}
@@ -94,7 +94,7 @@ Also, mdx allows _some_ javascript to be run, but not everything can be. If you 
         )}
       >Buddy!</YourComponent>
     </Story>
-  </Preview>
+  </Canvas>
 
   #### Reference
 
@@ -107,25 +107,25 @@ Also, mdx allows _some_ javascript to be run, but not everything can be. If you 
 
   ### Props
 
-  <Props of={YourComponent} /> 👈 This generates the "prop types" table, be sure to document them directly in the component file.
+  <ArgsTable of={YourComponent} /> 👈 This generates the "prop types" table, be sure to document them directly in the component file.
 
   ## Stories 👈 Write as many stories as you see fit, whenever you feel knobs are not enough or the right way to go.
 
   #### Wild mode
 
-  <Preview>
+  <Canvas>
     <Story name="wild mode">
       <YourComponent wildMode={true} />
     </Story>
-  </Preview>
+  </Canvas>
 
   #### Disco mode
 
-  <Preview>
+  <Canvas>
     <Story name="disco mode">
       <YourComponent discoMode={true} />
     </Story>
-  </Preview>
+  </Canvas>
 ```
 
 ## Component generator
@@ -139,7 +139,7 @@ Using the provided component generator npm script creates a template that includ
 > Too late to use the generator? Grab the template (hint use the copy button at the bottom of the block):
 
 ```
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, number } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import YourComponent from './'
@@ -159,11 +159,11 @@ import YourComponent from './'
 
 Component's description and any notes worth mentioning
 
-<Preview>
+<Canvas>
   <Story name="default">
     <YourComponent />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -176,15 +176,15 @@ Component's description and any notes worth mentioning
 
 ### Props
 
-<Props of={YourComponent} />
+<ArgsTable of={YourComponent} />
 
 ## Stories
 
 #### Wild mode
 
-<Preview>
+<Canvas>
   <Story name="wild mode">
     <YourComponent wildMode={true} />
   </Story>
-</Preview>
+</Canvas>
 ```

@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import Emoticon from './'
 
 <Meta title="🧬 Components/Elements/Emoticon" component={Emoticon} />
@@ -7,7 +7,7 @@ import Emoticon from './'
 
 The Emoticon renders multicolor SVG icons.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <div>
       <Emoticon name="reaction-happy" />
@@ -17,7 +17,7 @@ The Emoticon renders multicolor SVG icons.
       <Emoticon name="reaction-okay" />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -30,4 +30,4 @@ The Emoticon renders multicolor SVG icons.
 
 ### Props
 
-<Props of={Emoticon} />
+<ArgsTable of={Emoticon} />

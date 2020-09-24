@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { action } from '@storybook/addon-actions'
 import CopyButton from './'
 
@@ -18,11 +18,11 @@ import CopyButton from './'
 
 A button for copy action
 
-<Preview>
+<Canvas>
   <Story name="default">
     <CopyButton onClick={action('Click')} onReset={action('Reset')} />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -35,4 +35,4 @@ A button for copy action
 
 ### Props
 
-<Props of={CopyButton} />
+<ArgsTable of={CopyButton} />

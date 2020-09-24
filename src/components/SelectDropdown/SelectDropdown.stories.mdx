@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, number, select, text } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import { createSpec, faker } from '@helpscout/helix'
@@ -22,7 +22,7 @@ A SelectDropdown component is an enhanced version of the default HTML `<select>`
 
 Should be used instead of the deprecated `Select`
 
-<Preview>
+<Canvas>
   <Story name="default">
     <SelectDropdown
       disabled={boolean('disabled', false)}
@@ -47,7 +47,7 @@ Should be used instead of the deprecated `Select`
       onSelect={action('onSelect')}
     />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -60,7 +60,7 @@ Should be used instead of the deprecated `Select`
 
 ### Props
 
-<Props of={SelectDropdown} />
+<ArgsTable of={SelectDropdown} />
 
 <p>For additional customization and props, check out `Dropdown`</p>
 
@@ -68,7 +68,7 @@ Should be used instead of the deprecated `Select`
 
 #### States
 
-<Preview>
+<Canvas>
   <Story name="States">
     <div>
       <SelectDropdown state="error" />
@@ -78,4 +78,4 @@ Should be used instead of the deprecated `Select`
       <SelectDropdown state="warning" />
     </div>
   </Story>
-</Preview>
+</Canvas>

@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import ChatList from './'
 import { List, _Item } from './ChatList.storiesHelpers'
 
@@ -18,11 +18,11 @@ import { List, _Item } from './ChatList.storiesHelpers'
 
 A ChatList component is wrapper that renders a collection of `ChatList.Items`
 
-<Preview>
+<Canvas>
   <Story name="default">
     <List />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -35,20 +35,20 @@ A ChatList component is wrapper that renders a collection of `ChatList.Items`
 
 ### Props
 
-<Props of={ChatList} />
+<ArgsTable of={ChatList} />
 
 ### Stories
 
 #### Loading
 
-<Preview>
+<Canvas>
   <Story name="Loading">
     <ChatList>
       <ChatList.Item />
       <ChatList.Item />
     </ChatList>
   </Story>
-</Preview>
+</Canvas>
 
 ## ChatList.Item
 
@@ -56,19 +56,19 @@ A ChatList.Item component renders the UI that represents the state of a Chat con
 
 This component will automatically render `Skeleton` if the `name` or `message` prop is missing.
 
-<Preview>
+<Canvas>
   <Story name="Chat Item">
     <_Item />
   </Story>
-</Preview>
+</Canvas>
 
-<Props of={ChatList.Item} />
+<ArgsTable of={ChatList.Item} />
 
 ## ChatList.BlankSlate
 
 A ChatList.BlankSlate component provides information when there is no content. This component has been automatically integrated into `ChatList` when there are no ChatList.Items.
 
-<Preview>
+<Canvas>
   <Story name="Chat BlankSlate/Empty">
     <div>
       <ChatList.BlankSlate>Nothing to see here.</ChatList.BlankSlate>
@@ -76,6 +76,6 @@ A ChatList.BlankSlate component provides information when there is no content. T
       <ChatList />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
-<Props of={ChatList.BlankSlate} />
+<ArgsTable of={ChatList.BlankSlate} />

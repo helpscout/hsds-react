@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, select, text } from '@storybook/addon-knobs'
 import { Button, Flexy } from '../index'
 import Input from './'
@@ -19,7 +19,7 @@ import Input from './'
 
 An Input component is an enhanced version of the default HTML `<input>`. Input can be transformed into a `<textarea>` if the `multiline` prop is defined.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Input
       value="Here here nice input"
@@ -28,7 +28,7 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
       disabled={boolean('disabled', false)}
     />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -41,13 +41,13 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
 
 ### Props
 
-<Props of={Input} />
+<ArgsTable of={Input} />
 
 ### Stories
 
 #### With label
 
-<Preview>
+<Canvas>
   <Story name="With label">
     <Input
       label="Some label"
@@ -55,11 +55,11 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
       hintText={text('hintText', '')}
     />
   </Story>
-</Preview>
+</Canvas>
 
 #### Prefix/Suffix
 
-<Preview>
+<Canvas>
   <Story name="Prefix/Suffix">
     <Input
       value="1230.00"
@@ -67,11 +67,11 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
       inlineSuffix={text('inlineSuffix', '.00')}
     />
   </Story>
-</Preview>
+</Canvas>
 
 #### States
 
-<Preview>
+<Canvas>
   <Story name="States">
     <div>
       <Input
@@ -93,14 +93,14 @@ An Input component is an enhanced version of the default HTML `<input>`. Input c
       />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### Actions
 
 Actions (typically `Button` can be embedded within the `Input` using the `action` prop.
 The `Button` should be one step smaller compared to the `Input` (If the `Input` is `md` (default), then the `Button` should be `sm`).
 
-<Preview>
+<Canvas>
   <Story name="Actions">
     <Input
       label="Zip Code"
@@ -123,11 +123,11 @@ The `Button` should be one step smaller compared to the `Input` (If the `Input` 
       }
     />
   </Story>
-</Preview>
+</Canvas>
 
 #### Multiline
 
-<Preview>
+<Canvas>
   <Story name="Multiline">
     <div>
       <Input
@@ -145,7 +145,7 @@ The `Button` should be one step smaller compared to the `Input` (If the `Input` 
       />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 ## Input.AddOn
 
@@ -153,7 +153,7 @@ This component renders a "prefix"/"suffix" UI when combined with an `Input` when
 
 ### Props
 
-<Props of={Input.AddOn} />
+<ArgsTable of={Input.AddOn} />
 
 ### Example
 
@@ -177,7 +177,7 @@ This component renders a "prefix"/"suffix" UI when combined with an `Input` when
 
 ### Props
 
-<Props of={Input.Static} />
+<ArgsTable of={Input.Static} />
 
 ### Example
 

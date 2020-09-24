@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean } from '@storybook/addon-knobs'
 import {
   ItemSpec,
@@ -24,7 +24,7 @@ import { Dropdown as DropdownUnconnected } from './Dropdown'
 
 A Dropdown component is provides the UI to contain a series of actions, presented in a menu overlay.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <div style={{ height: '200px' }}>
       <Dropdown
@@ -34,7 +34,7 @@ A Dropdown component is provides the UI to contain a series of actions, presente
       />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -47,13 +47,13 @@ A Dropdown component is provides the UI to contain a series of actions, presente
 
 ### Props
 
-<Props of={DropdownUnconnected} />
+<ArgsTable of={DropdownUnconnected} />
 
 ### Stories
 
 #### Empty
 
-<Preview>
+<Canvas>
   <Story name="Empty">
     <div style={{ height: '70px' }}>
       <Dropdown
@@ -63,31 +63,31 @@ A Dropdown component is provides the UI to contain a series of actions, presente
       />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### With dividers
 
-<Preview>
+<Canvas>
   <Story name="With dividers">
     <div style={{ height: '250px' }}>
       <Dropdown items={itemsWithDivider} trigger="click to open" />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### Items in groups
 
-<Preview>
+<Canvas>
   <Story name="Items in groups">
     <div style={{ height: '250px' }}>
       <Dropdown items={groupedItems} trigger="click to open" />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### Multiple Selected Items
 
-<Preview>
+<Canvas>
   <Story name="Multiple selected items">
     <div style={{ height: '250px' }}>
       <Dropdown
@@ -96,4 +96,4 @@ A Dropdown component is provides the UI to contain a series of actions, presente
       />
     </div>
   </Story>
-</Preview>
+</Canvas>

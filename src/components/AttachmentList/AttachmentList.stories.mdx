@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { action } from '@storybook/addon-actions'
 import { Attachment } from '../index'
 import AttachmentList from './'
@@ -23,7 +23,7 @@ An AttachmentList component is a wrapper that renders `Attachment` components.
 
 If 2 or more `<Attachment>` components are provided, this component will automatically render a clickable "Download All" attachment UI.
 
-<Preview>
+<Canvas>
   <Story name="AttachmentList">
     <AttachmentList onDownloadAllClick={action('Download all')}>
       <Attachment name="parrot.png" size="5KB" onClick={action('on-click')} />
@@ -35,7 +35,7 @@ If 2 or more `<Attachment>` components are provided, this component will automat
       />
     </AttachmentList>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -48,13 +48,13 @@ If 2 or more `<Attachment>` components are provided, this component will automat
 
 ### Props
 
-<Props of={AttachmentList} />
+<ArgsTable of={AttachmentList} />
 
 ### Stories
 
 #### Preview theme
 
-<Preview>
+<Canvas>
   <Story name="AttachmentList with preview">
     <Attachment.Provider theme="preview">
       <AttachmentList>
@@ -68,4 +68,4 @@ If 2 or more `<Attachment>` components are provided, this component will automat
       </AttachmentList>
     </Attachment.Provider>
   </Story>
-</Preview>
+</Canvas>

@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, select, text } from '@storybook/addon-knobs'
 import HelpText from './'
 
@@ -8,7 +8,7 @@ import HelpText from './'
 
 A HelpText component is a light-weight text wrapper enhanced with a collection of aesthetic modifiers. HelpText is typically used with form elements / components.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <HelpText
       shade={select(
@@ -52,7 +52,7 @@ A HelpText component is a light-weight text wrapper enhanced with a collection o
       I am help text. Behold my text.
     </HelpText>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -65,4 +65,4 @@ A HelpText component is a light-weight text wrapper enhanced with a collection o
 
 ### Props
 
-<Props of={HelpText} />
+<ArgsTable of={HelpText} />

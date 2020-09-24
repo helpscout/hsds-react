@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import Flexy from './'
 
 <Meta title="🛠 Utilities/UI Convenience/Flexy" component={Flexy} />
@@ -7,7 +7,7 @@ import Flexy from './'
 
 A Flexy component is a layout-based component that uses Flexbox to intelligently align elements together. Flexy can be helpful to vertically align UI elements of varying heights.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Flexy>
       <Flexy.Block>
@@ -21,7 +21,7 @@ A Flexy component is a layout-based component that uses Flexbox to intelligently
       </Flexy.Item>
     </Flexy>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -33,7 +33,7 @@ A Flexy component is a layout-based component that uses Flexbox to intelligently
 
 ### Props
 
-<Props of={Flexy} />
+<ArgsTable of={Flexy} />
 
 ## Flexy
 

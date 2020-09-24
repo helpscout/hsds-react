@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { color } from '@storybook/addon-knobs'
 import Spinner from './'
 
@@ -18,13 +18,13 @@ import Spinner from './'
 
 A Spinner component provides the UI to indicate a loading state.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <div>
       <Spinner />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -37,13 +37,13 @@ A Spinner component provides the UI to indicate a loading state.
 
 ### Props
 
-<Props of={Spinner} />
+<ArgsTable of={Spinner} />
 
 ### Stories
 
 #### Sizes
 
-<Preview>
+<Canvas>
   <Story name="Sizes">
     <div>
       <div
@@ -93,4 +93,4 @@ A Spinner component provides the UI to indicate a loading state.
       </div>
     </div>
   </Story>
-</Preview>
+</Canvas>

@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import Alert from './'
 import { Button, Heading, Link, Text } from '../index'
 
@@ -18,11 +18,11 @@ import { Button, Heading, Link, Text } from '../index'
 
 An Alert component provides contextual feedback messages for user actions with the ability to provide additional actions.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Alert>Buddy!</Alert>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -35,13 +35,13 @@ An Alert component provides contextual feedback messages for user actions with t
 
 ### Props
 
-<Props of={Alert} />
+<ArgsTable of={Alert} />
 
 ## Stories
 
 #### With content
 
-<Preview>
+<Canvas>
   <Story name="with content">
     <Alert>
       <Heading size="h1">H1 Heading</Heading>
@@ -55,42 +55,42 @@ An Alert component provides contextual feedback messages for user actions with t
       </ul>
     </Alert>
   </Story>
-</Preview>
+</Canvas>
 
 #### Dismissible
 
-<Preview>
+<Canvas>
   <Story name="dismissible">
     <div>
       <Alert dismissible>Buddy! This is dismissible.</Alert>
       <p>Content</p>
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### With Badge
 
-<Preview>
+<Canvas>
   <Story name="with badge">
     <div>
       <Alert badge="Wow">Badge Buddy!</Alert>
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### With Icon
 
-<Preview>
+<Canvas>
   <Story name="with icon">
     <div>
       <Alert icon>Icon Buddy!</Alert>
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### Status
 
-<Preview>
+<Canvas>
   <Story name="status">
     <div>
       <Alert status="info">Info Buddy!</Alert>
@@ -99,11 +99,11 @@ An Alert component provides contextual feedback messages for user actions with t
       <Alert status="warning">Warning Buddy!</Alert>
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### With action on the right
 
-<Preview>
+<Canvas>
   <Story name="action on the right">
     <div>
       <Alert
@@ -118,4 +118,4 @@ An Alert component provides contextual feedback messages for user actions with t
       </Alert>
     </div>
   </Story>
-</Preview>
+</Canvas>

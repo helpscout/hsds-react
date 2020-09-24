@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { FormGroup, Flexy } from '../index'
 import Skeleton from './'
 
@@ -18,7 +18,7 @@ import Skeleton from './'
 
 A Skeleton component is a placeholder component, typically used in loading states.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <div style={{ width: 300 }}>
       <Flexy>
@@ -33,7 +33,7 @@ A Skeleton component is a placeholder component, typically used in loading state
       <Skeleton.Paragraph />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -52,7 +52,7 @@ The default `export` of Skeleton is a plain JS-object, which contains a collecti
 
 A Skeleton.Avatar component is a placeholder component for [Avatar]
 
-<Preview>
+<Canvas>
   <Story name="Avatar">
     <div>
       <Skeleton.Avatar size="lg" />
@@ -60,21 +60,21 @@ A Skeleton.Avatar component is a placeholder component for [Avatar]
       <Skeleton.Avatar size="sm" />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
-<Props of={Skeleton.Avatar} />
+<ArgsTable of={Skeleton.Avatar} />
 
 ### Block
 
 A Skeleton.Block component is the main base used to construct Skeleton component UI.
 
-<Props of={Skeleton.Block} />
+<ArgsTable of={Skeleton.Block} />
 
 ### Control
 
 A Skeleton.Control component is a placeholder component for form/control-based UI.
 
-<Preview>
+<Canvas>
   <Story name="Control">
     <div style={{ width: 300 }}>
       <FormGroup>
@@ -86,63 +86,63 @@ A Skeleton.Control component is a placeholder component for form/control-based U
       </FormGroup>
     </div>
   </Story>
-</Preview>
+</Canvas>
 
-<Props of={Skeleton.Control} />
+<ArgsTable of={Skeleton.Control} />
 
 ### Heading
 
 A Skeleton.Heading component is a placeholder component [Heading](../../Heading) UI.
 
-<Props of={Skeleton.Heading} />
+<ArgsTable of={Skeleton.Heading} />
 
-<Preview>
+<Canvas>
   <Story name="Heading">
     <div>
       <Skeleton.Heading width="70%" />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 ### Image
 
 A Skeleton.Image component is a placeholder component [Image](../../Image) UI.
 
-<Preview>
+<Canvas>
   <Story name="Image">
     <div style={{ width: 300 }}>
       <Skeleton.Heading />
       <Skeleton.Heading size="md" />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
-<Props of={Skeleton.Image} />
+<ArgsTable of={Skeleton.Image} />
 
 ### Paragraph
 
 A Skeleton.Paragraph component is a placeholder component for multiple [Skeleton.Text](./Text) UI.
 
-<Preview>
+<Canvas>
   <Story name="Paragraph">
     <div>
       <Skeleton.Paragraph />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
-<Props of={Skeleton.Paragraph} />
+<ArgsTable of={Skeleton.Paragraph} />
 
 ### Text
 
 A Skeleton.Text component is a placeholder component [Text](../../Text) UI.
 
-<Preview>
+<Canvas>
   <Story name="Text">
     <div>
       <Skeleton.Text width="70%" />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
-<Props of={Skeleton.Text} />
+<ArgsTable of={Skeleton.Text} />

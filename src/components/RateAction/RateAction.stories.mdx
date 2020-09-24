@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, select } from '@storybook/addon-knobs'
 import RateAction from './'
 
@@ -18,7 +18,7 @@ import RateAction from './'
 
 This component is a `button` used for ratings, visualized with an `Emoticon`.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <div>
       <RateAction
@@ -47,7 +47,7 @@ This component is a `button` used for ratings, visualized with an `Emoticon`.
       <br />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -60,4 +60,4 @@ This component is a `button` used for ratings, visualized with an `Emoticon`.
 
 ### Props
 
-<Props of={RateAction} />
+<ArgsTable of={RateAction} />

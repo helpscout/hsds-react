@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { ScopeProvider } from '../../styled'
 import { Avatar } from '../../index'
 import Message from '../'
@@ -19,7 +19,7 @@ import Message from '../'
 
 An embed component provides the UI to render rich-media embed content.
 
-<Preview>
+<Canvas>
   <Story name="Message.Embed">
     <Message.Provider theme="embed">
       <Message from avatar={<Avatar name="Artic Puffin" />}>
@@ -55,8 +55,8 @@ An embed component provides the UI to render rich-media embed content.
       </Message>
     </Message.Provider>
   </Story>
-</Preview>
+</Canvas>
 
 ### Props
 
-<Props of={Message.Embed} />
+<ArgsTable of={Message.Embed} />

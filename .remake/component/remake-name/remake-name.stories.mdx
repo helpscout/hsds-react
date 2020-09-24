@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import {
   boolean,
   number,
@@ -23,11 +23,11 @@ import <%= name %> from './<%= name %>'
 
 <%= name %> description
 
-<Preview>
+<Canvas>
   <Story name="default">
     <<%= name %> />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -40,14 +40,14 @@ import <%= name %> from './<%= name %>'
 
 ### Props
 
-<Props of={<%= name %>} />
+<ArgsTable of={<%= name %>} />
 
 ## Stories
 
 #### With content
 
-<Preview>
+<Canvas>
   <Story name="with content">
     <<%= name %> />
   </Story>
-</Preview>
+</Canvas>

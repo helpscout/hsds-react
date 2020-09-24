@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, number, text } from '@storybook/addon-knobs'
 import { ScopeProvider } from '../../styled'
 import { Avatar } from '../../index'
@@ -20,7 +20,7 @@ import Message from '../'
 
 A Media component provides the UI to render media-based content.
 
-<Preview>
+<Canvas>
   <Story name="Message.Media">
     <Message to avatar={<Avatar name="Arctic Puffin" />}>
       <Message.Chat>Agent Chat</Message.Chat>
@@ -45,8 +45,8 @@ A Media component provides the UI to render media-based content.
       />
     </Message>
   </Story>
-</Preview>
+</Canvas>
 
 ### Props
 
-<Props of={Message.Media} />
+<ArgsTable of={Message.Media} />

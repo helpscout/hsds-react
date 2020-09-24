@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean } from '@storybook/addon-knobs'
 import { ChoiceGroup } from '../index'
 import RadioCard from './'
@@ -19,7 +19,7 @@ import RadioCard from './'
 
 This component provides richer context to the of the default HTML `<input>` of type `radio`.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <RadioCard
       icon="fab-chat"
@@ -29,7 +29,7 @@ This component provides richer context to the of the default HTML `<input>` of t
       maxWidth="214px"
     />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -42,13 +42,13 @@ This component provides richer context to the of the default HTML `<input>` of t
 
 ### Props
 
-<Props of={RadioCard} />
+<ArgsTable of={RadioCard} />
 
 ### Stories
 
 #### Inside a group
 
-<Preview>
+<Canvas>
   <Story name="Inside a group">
     <ChoiceGroup
       align="horizontal"
@@ -72,11 +72,11 @@ This component provides richer context to the of the default HTML `<input>` of t
       <RadioCard icon="fab-question" value="question" />
     </ChoiceGroup>
   </Story>
-</Preview>
+</Canvas>
 
 #### With headings
 
-<Preview>
+<Canvas>
   <Story name="with headings">
     <ChoiceGroup
       align="horizontal"
@@ -105,4 +105,4 @@ This component provides richer context to the of the default HTML `<input>` of t
       />
     </ChoiceGroup>
   </Story>
-</Preview>
+</Canvas>

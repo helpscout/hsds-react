@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import FormLabel from './'
 import { Page, FormGroup, Input, Switch } from '../'
 
@@ -18,7 +18,7 @@ import { Page, FormGroup, Input, Switch } from '../'
 
 This component is a wrapper for Control components, such as `Input`. It can render `Label` and `HelpText` UI, and is automatically connected to the child Control component.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Page>
       <Page.Card>
@@ -33,7 +33,7 @@ This component is a wrapper for Control components, such as `Input`. It can rend
       </Page.Card>
     </Page>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -46,13 +46,13 @@ This component is a wrapper for Control components, such as `Input`. It can rend
 
 ### Props
 
-<Props of={FormLabel} />
+<ArgsTable of={FormLabel} />
 
 ### Stories
 
 #### Inline
 
-<Preview>
+<Canvas>
   <Story name="Inline">
     <Page>
       <Page.Card>
@@ -86,4 +86,4 @@ This component is a wrapper for Control components, such as `Input`. It can rend
       </Page.Card>
     </Page>
   </Story>
-</Preview>
+</Canvas>

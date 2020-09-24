@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, text } from '@storybook/addon-knobs'
 import { createSpec, faker } from '@helpscout/helix'
 import AvatarSpec from '../../utilities/specs/avatarList.specs'
@@ -21,7 +21,7 @@ import { Flexy, Text, Icon, StatusBadge, Avatar, AvatarList } from '../index'
 
 An ArticleCard component is used to encapsulate pieces of UI that share a common concept or action with some placeholders where we could insert any element (metaHeader, footer) or strings (title, content).
 
-<Preview>
+<Canvas>
   <Story name="default">
     <div style={{ position: 'relative' }}>
       <ArticleCard
@@ -58,7 +58,7 @@ An ArticleCard component is used to encapsulate pieces of UI that share a common
       />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -71,13 +71,13 @@ An ArticleCard component is used to encapsulate pieces of UI that share a common
 
 ### Props
 
-<Props of={ArticleCard} />
+<ArgsTable of={ArticleCard} />
 
 ## Stories
 
 #### With custom content
 
-<Preview>
+<Canvas>
   <Story name="with custom content">
     <ArticleCard
       content={
@@ -94,4 +94,4 @@ An ArticleCard component is used to encapsulate pieces of UI that share a common
       }
     />
   </Story>
-</Preview>
+</Canvas>

@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { MemoryRouter as Router } from 'react-router-dom'
 import Nav from './'
 
@@ -16,7 +16,7 @@ import Nav from './'
 
 # Nav
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Router>
       <Nav>
@@ -32,7 +32,7 @@ import Nav from './'
       </Nav>
     </Router>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -45,7 +45,7 @@ import Nav from './'
 
 ### Props
 
-<Props of={Nav} />
+<ArgsTable of={Nav} />
 
 ## Nav.Item
 
@@ -53,4 +53,4 @@ This component is renders the linkable elements for a navigation interface, with
 
 ### Props
 
-<Props of={Nav.Item} />
+<ArgsTable of={Nav.Item} />

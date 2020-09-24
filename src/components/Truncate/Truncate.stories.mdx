@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { createSpec, faker } from '@helpscout/helix'
 import Truncate from './'
 
@@ -6,7 +6,7 @@ import Truncate from './'
 
 # Truncate
 
-<Preview>
+<Canvas>
   <Story name="default">
     <div>
       <div style={{ marginBottom: '20px' }}>
@@ -50,7 +50,7 @@ import Truncate from './'
       <br />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -62,13 +62,13 @@ import Truncate from './'
 
 ### Props
 
-<Props of={Truncate} />
+<ArgsTable of={Truncate} />
 
 ### Stories
 
 #### With tooltip
 
-<Preview>
+<Canvas>
   <Story name="with tooltip">
     <div>
       <div style={{ marginBottom: '20px' }}>
@@ -109,4 +109,4 @@ import Truncate from './'
       <br />
     </div>
   </Story>
-</Preview>
+</Canvas>

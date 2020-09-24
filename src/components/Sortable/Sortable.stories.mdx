@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import Sortable from './'
 import { Card } from '../index'
 
@@ -10,7 +10,7 @@ This component provides the ability to drag sort child components. This componen
 
 Any child components placed inside this component automatically become sortable.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Sortable>
       <Card>Jacobim Mugatu</Card>
@@ -18,7 +18,7 @@ Any child components placed inside this component automatically become sortable.
       <Card>Brennan Huff</Card>
     </Sortable>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -32,4 +32,4 @@ Any child components placed inside this component automatically become sortable.
 
 This component accepts all props used by [react-sortable-hoc](https://github.com/clauderic/react-sortable-hoc).
 
-<Props of={Sortable} />
+<ArgsTable of={Sortable} />

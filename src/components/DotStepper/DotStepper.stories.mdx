@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { number } from '@storybook/addon-knobs'
 import DotStepper from './'
 
@@ -18,11 +18,11 @@ import DotStepper from './'
 
 Minimal visual representation of current and total number of steps in a multi-step form.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <DotStepper numSteps={number('numSteps', 4)} step={number('step', 2)} />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -35,4 +35,4 @@ Minimal visual representation of current and total number of steps in a multi-st
 
 ### Props
 
-<Props of={DotStepper} />
+<ArgsTable of={DotStepper} />

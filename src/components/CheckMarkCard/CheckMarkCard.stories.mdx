@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, number, text, select } from '@storybook/addon-knobs'
 import { getColor } from '../../styles/utilities/color'
 import CheckMarkCard from './CheckMarkCard'
@@ -21,7 +21,7 @@ import AvatarSpec from '../../utilities/specs/avatar.specs'
 
 This component provides richer context to the of the default HTML `<input>` of type `checkbox`.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <div>
       <CheckMarkCard label="Derek" value="derek">
@@ -59,7 +59,7 @@ This component provides richer context to the of the default HTML `<input>` of t
       </CheckMarkCard>
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -72,13 +72,13 @@ This component provides richer context to the of the default HTML `<input>` of t
 
 ### Props
 
-<Props of={CheckMarkCard} />
+<ArgsTable of={CheckMarkCard} />
 
 ## Stories
 
 #### Inside a group with selection limits
 
-<Preview>
+<Canvas>
   <Story name="inside group">
     <ChoiceGroup
       align="horizontal"
@@ -203,4 +203,4 @@ This component provides richer context to the of the default HTML `<input>` of t
       </CheckMarkCard>
     </ChoiceGroup>
   </Story>
-</Preview>
+</Canvas>

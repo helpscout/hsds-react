@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, select, text } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import StatusBar from './'
@@ -19,7 +19,7 @@ import StatusBar from './'
 
 A StatusBar component provides contextual feedback messages for user actions.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <StatusBar
       isOpen
@@ -49,7 +49,7 @@ A StatusBar component provides contextual feedback messages for user actions.
       How about that uh? <StatusBar.Button>Let's go there</StatusBar.Button>
     </StatusBar>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -62,10 +62,10 @@ A StatusBar component provides contextual feedback messages for user actions.
 
 ### Props
 
-<Props of={StatusBar} />
+<ArgsTable of={StatusBar} />
 
 ## StatusBar.Button
 
 A `StatusBar.Button` component provides an actionable UI
 
-<Props of={StatusBar.Button} />
+<ArgsTable of={StatusBar.Button} />

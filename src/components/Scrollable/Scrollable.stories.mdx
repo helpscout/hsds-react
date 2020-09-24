@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { text, boolean } from '@storybook/addon-knobs'
 import { Card, Image } from '../index'
 import Scrollable from './'
@@ -7,7 +7,7 @@ import Scrollable from './'
 
 # Scrollable
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Card
       style={{ height: 400, width: `${text('Container width', '400px')}` }}
@@ -49,7 +49,7 @@ import Scrollable from './'
       </Scrollable>
     </Card>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -62,4 +62,4 @@ import Scrollable from './'
 
 ### Props
 
-<Props of={Scrollable} />
+<ArgsTable of={Scrollable} />

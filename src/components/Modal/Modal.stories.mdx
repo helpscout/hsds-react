@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { select, text, boolean, number, array } from '@storybook/addon-knobs'
 import SpeechBubble from '@helpscout/hsds-illos/speech-bubble'
 import Modal from './'
@@ -21,7 +21,7 @@ A Modal component presents content within a container on top of the application'
 
 There are two versions of the Modal component, version 2 is the new standard (version 1 Modals will soon be deprecated).
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Modal
       kind={select(
@@ -74,7 +74,7 @@ There are two versions of the Modal component, version 2 is the new standard (ve
       />
     </Modal>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -87,43 +87,43 @@ There are two versions of the Modal component, version 2 is the new standard (ve
 
 ### Props
 
-<Props of={Modal} />
+<ArgsTable of={Modal} />
 
 ### SubComponents
 
 #### Modal.HeaderV2
 
-<Props of={Modal.HeaderV2} />
+<ArgsTable of={Modal.HeaderV2} />
 
 #### Modal.Body
 
-<Props of={Modal.Body} />
+<ArgsTable of={Modal.Body} />
 
 #### Modal.Content
 
-<Props of={Modal.Content} />
+<ArgsTable of={Modal.Content} />
 
 #### Modal.ActionFooter
 
-<Props of={Modal.ActionFooter} />
+<ArgsTable of={Modal.ActionFooter} />
 
 #### Modal.Footer
 
-<Props of={Modal.Footer} />
+<ArgsTable of={Modal.Footer} />
 
 #### Modal.Header (v1)
 
-<Props of={Modal.Header} />
+<ArgsTable of={Modal.Header} />
 
 #### Modal.Overlay
 
-<Props of={Modal.Overlay} />
+<ArgsTable of={Modal.Overlay} />
 
 ### Stories
 
 #### Sequence
 
-<Preview>
+<Canvas>
   <Story name="sequence">
     <Modal
       version={2}
@@ -156,11 +156,11 @@ There are two versions of the Modal component, version 2 is the new standard (ve
       <Modal.ActionFooter kind="default" primaryButtonText="Send code" />
     </Modal>
   </Story>
-</Preview>
+</Canvas>
 
 #### Version 1 (legacy)
 
-<Preview>
+<Canvas>
   <Story name="Version 1 (legacy)">
     <Modal
       trigger={
@@ -188,4 +188,4 @@ There are two versions of the Modal component, version 2 is the new standard (ve
       </Modal.Body>
     </Modal>
   </Story>
-</Preview>
+</Canvas>

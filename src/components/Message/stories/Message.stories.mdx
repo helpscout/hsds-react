@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { ScopeProvider } from '../../styled'
 import { Avatar } from '../../index'
 import Message from '../'
@@ -19,7 +19,7 @@ import Message from '../'
 
 Message components provides the UI to display content within a Chat context.
 
-<Preview>
+<Canvas>
   <Story name="Message">
     <div>
       <Message from avatar={<Avatar name="Arctic Puffin" />} />
@@ -144,7 +144,7 @@ Message components provides the UI to display content within a Chat context.
       </Message>
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -157,4 +157,4 @@ Message components provides the UI to display content within a Chat context.
 
 ### Props
 
-<Props of={Message} />
+<ArgsTable of={Message} />

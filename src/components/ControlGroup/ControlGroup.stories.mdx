@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import ControlGroup from './'
 import { Input } from '../'
 
@@ -18,7 +18,7 @@ import { Input } from '../'
 
 This component is used as a wrapper to create interfaces where Control-based components (like `Input`) can be combined.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <ControlGroup>
       <ControlGroup.Item>
@@ -32,7 +32,7 @@ This component is used as a wrapper to create interfaces where Control-based com
       </ControlGroup.Item>
     </ControlGroup>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -45,7 +45,7 @@ This component is used as a wrapper to create interfaces where Control-based com
 
 ### Props
 
-<Props of={ControlGroup} />
+<ArgsTable of={ControlGroup} />
 
 <br />
 <br />
@@ -57,7 +57,7 @@ This component's width is determined by it's child content.
 
 ### Props
 
-<Props of={ControlGroup.Item} />
+<ArgsTable of={ControlGroup.Item} />
 
 ## ControlGroup.Block
 
@@ -66,4 +66,4 @@ This component's width is determined by it's child content.
 
 ### Props
 
-<Props of={ControlGroup.Block} />
+<ArgsTable of={ControlGroup.Block} />

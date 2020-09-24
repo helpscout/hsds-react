@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import Condition from './'
 import { Builder } from './Condition.storiesHelpers'
 
@@ -19,11 +19,11 @@ import { Builder } from './Condition.storiesHelpers'
 A Condition is a single item that renders within a `ConditionList`.
 It's values are represented by a collection of `ConditionFields` and various Form elements such as Inputs and Selects.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Builder />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -36,7 +36,7 @@ It's values are represented by a collection of `ConditionFields` and various For
 
 ### Props
 
-<Props of={Condition} />
+<ArgsTable of={Condition} />
 
 <br />
 <br />
@@ -47,7 +47,7 @@ A Condition.Operator renders an "And" or "Or" interface, used to visually group 
 
 ### Props
 
-<Props of={Condition.Operator} />
+<ArgsTable of={Condition.Operator} />
 
 ## Condition.AddButton
 
@@ -55,4 +55,4 @@ A Condition.AddButton renders an "And" or "Or" interface. It is an action used t
 
 ### Props
 
-<Props of={Condition.AddButton} />
+<ArgsTable of={Condition.AddButton} />

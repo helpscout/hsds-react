@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { StoryComponent } from './InfiniteScroller.storiesHelpers'
 import InfiniteScroller from './'
 
@@ -11,11 +11,11 @@ import InfiniteScroller from './'
 
 An InfiniteScroller component makes it easy to handle dynamically adding content based on scroll actions.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <StoryComponent />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -27,4 +27,4 @@ An InfiniteScroller component makes it easy to handle dynamically adding content
 
 ### Props
 
-<Props of={InfiniteScroller} />
+<ArgsTable of={InfiniteScroller} />

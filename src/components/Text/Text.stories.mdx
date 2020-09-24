@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import Text from './'
 
 <Meta title="🧬 Components/Text/Text" component={Text} />
@@ -7,7 +7,7 @@ import Text from './'
 
 A Text component is a light-weight text wrapper enhanced with a collection of aesthetic modifiers.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <div>
       <Text size="10">Font size: 10</Text>
@@ -28,7 +28,7 @@ A Text component is a light-weight text wrapper enhanced with a collection of ae
       <br />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -41,13 +41,13 @@ A Text component is a light-weight text wrapper enhanced with a collection of ae
 
 ### Props
 
-<Props of={Text} />
+<ArgsTable of={Text} />
 
 ### Stories
 
 #### Shades
 
-<Preview>
+<Canvas>
   <Story name="Shades">
     <div>
       <Text>Default</Text>
@@ -60,11 +60,11 @@ A Text component is a light-weight text wrapper enhanced with a collection of ae
       <br />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### States
 
-<Preview>
+<Canvas>
   <Story name="States">
     <div>
       <Text>Default</Text>
@@ -77,11 +77,11 @@ A Text component is a light-weight text wrapper enhanced with a collection of ae
       <br />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### Weights
 
-<Preview>
+<Canvas>
   <Story name="Weights">
     <div>
       <Text weight={900}>Font weight: 900</Text>
@@ -104,4 +104,4 @@ A Text component is a light-weight text wrapper enhanced with a collection of ae
       <br />
     </div>
   </Story>
-</Preview>
+</Canvas>

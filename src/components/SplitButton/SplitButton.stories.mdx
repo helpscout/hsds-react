@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { action } from '@storybook/addon-actions'
 import { boolean, select, text } from '@storybook/addon-knobs'
 import { createSpec, faker } from '@helpscout/helix'
@@ -20,7 +20,7 @@ import SplitButton from './'
 
 A SplitButton component is a wrapper component for [Button](../Button/README.md) and [`Dropdown V2`](../Dropdown/V2/docs/Dropdown.md) components. It provides a primary function of HTML button along with an additional options menu.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <SplitButton
       dropdownProps={{
@@ -69,7 +69,7 @@ A SplitButton component is a wrapper component for [Button](../Button/README.md)
       Submit
     </SplitButton>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -82,4 +82,4 @@ A SplitButton component is a wrapper component for [Button](../Button/README.md)
 
 ### Props
 
-<Props of={SplitButton} />
+<ArgsTable of={SplitButton} />

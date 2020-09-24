@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { action } from '@storybook/addon-actions'
 import { boolean } from '@storybook/addon-knobs'
 import CopyInput from './'
@@ -19,7 +19,7 @@ import CopyInput from './'
 
 This component renders a content with the ability to copy to clipboard, powered by `CopyButton`.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <CopyInput
       value="testing"
@@ -27,9 +27,9 @@ This component renders a content with the ability to copy to clipboard, powered 
       readOnly={boolean('readOnly', false)}
     />
   </Story>
-</Preview>
+</Canvas>
 
-<Preview>
+<Canvas>
   <Story name="text button">
     <CopyInput
       value="testing"
@@ -38,7 +38,7 @@ This component renders a content with the ability to copy to clipboard, powered 
       buttonLabel={'Copy'}
     />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -51,4 +51,4 @@ This component renders a content with the ability to copy to clipboard, powered 
 
 ### Props
 
-<Props of={CopyInput} />
+<ArgsTable of={CopyInput} />
