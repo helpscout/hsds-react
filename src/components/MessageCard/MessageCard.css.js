@@ -76,7 +76,7 @@ export const BodyUI = styled.div`
   margin-top: ${({ withMargin }) => (withMargin ? '12px' : '0')};
   color: ${getColor('charcoal.700')};
   font-size: ${editorHtmlFontSize}px;
-  line-height: 26px;
+  line-height: 22px;
   padding: 0 20px;
   flex: 1 1 100%;
   overflow: auto;
