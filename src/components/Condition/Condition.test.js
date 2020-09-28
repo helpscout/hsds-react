@@ -1,23 +1,6 @@
 import React from 'react'
-import { cy } from '@helpscout/cyan'
+import { render } from '@testing-library/react'
 import Condition from './Condition'
-
-describe('className', () => {
-  test('Has default className', () => {
-    cy.render(<Condition />)
-    const el = cy.getByCy('Condition')
-
-    expect(el.hasClass('c-Condition')).toBeTruthy()
-  })
-
-  test('Can render custom className', () => {
-    const customClassName = 'blue'
-    cy.render(<Condition className={customClassName} />)
-    const el = cy.getByCy('Condition')
-
-    expect(el.hasClass(customClassName)).toBeTruthy()
-  })
-})
 
 describe('Select', () => {
   test('Renders a Select with options', () => {
@@ -25,14 +8,11 @@ describe('Select', () => {
       { value: 'brick', label: 'Brick' },
       { value: 'ron', label: 'Ron' },
     ]
-    cy.render(<Condition options={options} />)
+    const { getAllByRole } = render(<Condition options={options} />)
+    const optionsNodes = getAllByRole('option')
 
-    const els = cy.get('select > option')
-
-    expect(cy.get('select').exists()).toBeTruthy()
-    expect(els.length).toBe(2)
-
-    expect(els.first().text()).toBe('Brick')
+    expect(optionsNodes.length).toBe(2)
+    expect(optionsNodes[0].textContent).toBe('Brick')
   })
 
   test('Can set the value of the Select', () => {
@@ -40,8 +20,8 @@ describe('Select', () => {
       { value: 'brick', label: 'Brick' },
       { value: 'ron', label: 'Ron' },
     ]
-    cy.render(<Condition options={options} value="ron" />)
+    const { container } = render(<Condition options={options} value="ron" />)
 
-    expect(cy.get('select').value()).toBe('ron')
+    expect(container.querySelector('select').value).toBe('ron')
   })
 })

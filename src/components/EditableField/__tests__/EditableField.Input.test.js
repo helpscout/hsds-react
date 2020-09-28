@@ -1,7 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { cy } from '@helpscout/cyan'
-
+import { render } from '@testing-library/react'
 import { EditableFieldInput } from '../EditableField.Input'
 import {
   INPUT_CLASSNAMES,
@@ -142,9 +141,13 @@ describe('validation', () => {
       value: 'hello',
       id: 'greeting_0',
     }
-    cy.render(<EditableFieldInput name="greeting" fieldValue={val} />)
+    const { container } = render(
+      <EditableFieldInput name="greeting" fieldValue={val} />
+    )
 
-    expect(cy.get(`.${INPUT_CLASSNAMES.validation}`).exists()).toBeFalsy()
+    expect(container.querySelector(`.${INPUT_CLASSNAMES.validation}`)).toBe(
+      null
+    )
   })
 
   test('should render validation if passed and name is correct', () => {
@@ -159,7 +162,7 @@ describe('validation', () => {
       type: 'error',
     }
 
-    cy.render(
+    const { container } = render(
       <EditableFieldInput
         name="greeting_0"
         fieldValue={val}
@@ -167,8 +170,12 @@ describe('validation', () => {
       />
     )
 
-    expect(cy.get(`.${INPUT_CLASSNAMES.validation}`).exists()).toBeTruthy()
-    expect(cy.get(`.${STATES_CLASSNAMES.withValidation}`).exists()).toBeTruthy()
+    expect(
+      container.querySelector(`.${INPUT_CLASSNAMES.validation}`)
+    ).toBeTruthy()
+    expect(
+      container.querySelector(`.${STATES_CLASSNAMES.withValidation}`)
+    ).toBeTruthy()
   })
 
   test('should render alert icon by default', () => {
@@ -183,7 +190,7 @@ describe('validation', () => {
       type: 'error',
     }
 
-    cy.render(
+    const { container } = render(
       <EditableFieldInput
         name="greeting_0"
         fieldValue={val}
@@ -191,8 +198,8 @@ describe('validation', () => {
       />
     )
     expect(
-      cy
-        .get(`.${OTHERCOMPONENTS_CLASSNAMES.icon}`)
+      container
+        .querySelector(`.${OTHERCOMPONENTS_CLASSNAMES.icon}`)
         .getAttribute('data-icon-name')
     ).toBe('alert-small')
   })
@@ -210,7 +217,7 @@ describe('validation', () => {
       icon: 'cross',
     }
 
-    cy.render(
+    const { container } = render(
       <EditableFieldInput
         name="greeting_0"
         fieldValue={val}
@@ -218,8 +225,8 @@ describe('validation', () => {
       />
     )
     expect(
-      cy
-        .get(`.${OTHERCOMPONENTS_CLASSNAMES.icon}`)
+      container
+        .querySelector(`.${OTHERCOMPONENTS_CLASSNAMES.icon}`)
         .getAttribute('data-icon-name')
     ).toBe('cross')
   })
@@ -236,7 +243,7 @@ describe('validation', () => {
       type: 'error',
     }
 
-    cy.render(
+    const { container } = render(
       <EditableFieldInput
         name="greeting_0"
         fieldValue={val}
@@ -244,7 +251,9 @@ describe('validation', () => {
       />
     )
 
-    expect(cy.get(`.${INPUT_CLASSNAMES.validation}`).exists()).toBeFalsy()
+    expect(container.querySelector(`.${INPUT_CLASSNAMES.validation}`)).toBe(
+      null
+    )
   })
 })
 

@@ -1,132 +1,91 @@
 import React from 'react'
-import { cy } from '@helpscout/cyan'
-import Input from '../Input'
+import { render, waitFor } from '@testing-library/react'
+import user from '@testing-library/user-event'
 import ConditionField from './ConditionField'
-
-describe('className', () => {
-  test('Has default className', () => {
-    cy.render(<ConditionField />)
-    const el = cy.getByCy('ConditionField')
-
-    expect(el.hasClass('c-ConditionField')).toBeTruthy()
-  })
-
-  test('Can render custom className', () => {
-    const customClassName = 'blue'
-    cy.render(<ConditionField className={customClassName} />)
-    const el = cy.getByCy('ConditionField')
-
-    expect(el.hasClass(customClassName)).toBeTruthy()
-  })
-})
 
 describe('onRemove', () => {
   test('Renders a remove button', () => {
-    cy.render(<ConditionField />)
-    const el = cy.getByCy('ConditionFieldRemoveButton')
+    const { getByRole, getByTitle } = render(<ConditionField />)
 
-    expect(el.exists()).toBeTruthy()
-    expect(el.getTagName()).toBe('button')
+    expect(getByRole('button')).toBeInTheDocument()
+    expect(getByTitle('collapse')).toBeInTheDocument()
   })
 
   test('Does not render a remove button', () => {
-    cy.render(<ConditionField isWithRemove={false} />)
-    const el = cy.getByCy('ConditionFieldRemoveButton')
-
-    expect(el.exists()).toBeFalsy()
-  })
-
-  test('Fires onRemove callback when remove button is clicked', () => {
-    const spy = jest.fn()
-    cy.render(<ConditionField onRemove={spy} />)
-    const el = cy.getByCy('ConditionFieldRemoveButton')
-
-    el.click()
-
-    expect(spy).toHaveBeenCalled()
-  })
-})
-
-describe('Item/Block/Static', () => {
-  test('Can render sub-components', () => {
-    cy.render(
-      <ConditionField>
-        <ConditionField.Item>
-          <Input data-cy="ron" />
-        </ConditionField.Item>
-        <ConditionField.Block>
-          <Input data-cy="brick" />
-        </ConditionField.Block>
-        <ConditionField.Block>
-          <ConditionField.Static>Loud Noises!</ConditionField.Static>
-        </ConditionField.Block>
-      </ConditionField>
+    const { queryByRole, queryByTitle } = render(
+      <ConditionField isWithRemove={false} />
     )
 
-    expect(cy.getByCy('ron').exists()).toBeTruthy()
-    expect(cy.getByCy('brick').exists()).toBeTruthy()
-    expect(cy.getByCy('ConditionFieldStatic').exists()).toBeTruthy()
-    expect(cy.getByCy('ConditionFieldStatic').text()).toBe('Loud Noises!')
+    expect(queryByRole('button')).toBe(null)
+    expect(queryByTitle('collapse')).toBe(null)
+  })
+
+  test('Fires onRemove callback when remove button is clicked', async () => {
+    const spy = jest.fn()
+    const { getByRole } = render(<ConditionField onRemove={spy} />)
+
+    user.click(getByRole('button'))
+
+    await waitFor(() => {
+      expect(spy).toHaveBeenCalled()
+    })
   })
 })
 
 describe('Group', () => {
   test('Renders an AddButton by default', () => {
-    cy.render(<ConditionField.Group />)
+    const { getByRole, getByTitle } = render(<ConditionField.Group />)
 
-    expect(cy.getByCy('ConditionFieldAddButton').exists()).toBeTruthy()
+    expect(getByRole('button')).toBeInTheDocument()
+    expect(getByTitle('plus-small')).toBeInTheDocument()
   })
 
   test('Can hide AddButton', () => {
-    cy.render(<ConditionField.Group isAddEnabled={false} />)
+    const { queryByRole, queryByTitle } = render(
+      <ConditionField.Group isAddEnabled={false} />
+    )
 
-    expect(cy.getByCy('ConditionFieldAddButton').exists()).toBeFalsy()
+    expect(queryByRole('button')).toBe(null)
+    expect(queryByTitle('plus-small')).toBe(null)
   })
 
   test('Can render ConditionField within a Group', () => {
-    cy.render(
+    const { container } = render(
       <ConditionField.Group>
         <ConditionField />
       </ConditionField.Group>
     )
-
-    expect(cy.getByCy('ConditionFieldGroup').exists()).toBeTruthy()
-    expect(cy.getByCy('ConditionField').exists()).toBeTruthy()
-    expect(cy.getByCy('ConditionField').length).toBe(1)
   })
 
   test('Does not render OR operator if there are no children', () => {
-    cy.render(<ConditionField.Group />)
+    const { container } = render(<ConditionField.Group />)
 
-    expect(cy.getByCy('ConditionFieldOr').exists()).toBeFalsy()
+    expect(container.querySelector('.c-ConditionOr')).toBe(null)
   })
 
   test('Does not render OR operator if there is one child', () => {
-    cy.render(
+    const { container } = render(
       <ConditionField.Group>
         <ConditionField />
       </ConditionField.Group>
     )
 
-    expect(cy.getByCy('ConditionFieldOr').exists()).toBeFalsy()
+    expect(container.querySelector('.c-ConditionOr')).toBe(null)
   })
 
   test('Renders OR operator if there is two children', () => {
-    cy.render(
+    const { container } = render(
       <ConditionField.Group>
         <ConditionField />
         <ConditionField />
       </ConditionField.Group>
     )
 
-    const el = cy.getByCy('ConditionFieldOr')
-
-    expect(el.exists()).toBeTruthy()
-    expect(el.length).toBe(1)
+    expect(container.querySelector('.is-or')).toBeInTheDocument()
   })
 
   test('Renders one fewer OR operator compared to children', () => {
-    cy.render(
+    const { container } = render(
       <ConditionField.Group>
         <ConditionField />
         <ConditionField />
@@ -135,18 +94,18 @@ describe('Group', () => {
       </ConditionField.Group>
     )
 
-    const el = cy.getByCy('ConditionFieldOr')
-
-    expect(el.exists()).toBeTruthy()
-    expect(el.length).toBe(3)
+    expect(
+      container.querySelectorAll('[data-cy="ConditionFieldOr"]').length
+    ).toBe(3)
   })
 })
 
 describe('Tooltip', () => {
   test('Renders a Tooltip', () => {
-    cy.render(<ConditionField />)
-    const el = cy.getByCy('Tooltip')
+    const { container } = render(<ConditionField />)
 
-    expect(el.exists()).toBeTruthy()
+    expect(
+      container.querySelectorAll('[data-cy="Tooltip"]').length
+    ).toBeTruthy()
   })
 })

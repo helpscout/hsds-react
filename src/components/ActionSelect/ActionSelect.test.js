@@ -1,9 +1,9 @@
 import React from 'react'
-import { cy } from '@helpscout/cyan'
+import { render } from '@testing-library/react'
+import user from '@testing-library/user-event'
 import ActionSelect from './ActionSelect'
-import { mount } from 'enzyme'
 
-cy.useFakeTimers()
+jest.useFakeTimers()
 
 const mockItems = [
   {
@@ -17,71 +17,52 @@ const mockItems = [
   },
 ]
 
-describe('className', () => {
-  test('Has default className', () => {
-    const wrapper = cy.render(<ActionSelect />)
-
-    expect(wrapper.hasClass('c-ActionSelect')).toBeTruthy()
-  })
-
-  test('Can render custom className', () => {
-    const customClassName = 'blue'
-    const wrapper = cy.render(<ActionSelect className={customClassName} />)
-
-    expect(wrapper.hasClass(customClassName)).toBeTruthy()
-  })
-})
-
-describe('HTML props', () => {
-  test('Can render default HTML props', () => {
-    cy.render(<ActionSelect data-cy="BlueBlueBlue" />)
-    const el = cy.getByCy('BlueBlueBlue')
-
-    expect(el.exists()).toBeTruthy()
-  })
-})
-
 describe('SelectDropdown', () => {
   test('Renders a SelectDropdown with items', () => {
-    cy.render(<ActionSelect items={mockItems} isOpen={true} />)
+    const { getAllByRole } = render(
+      <ActionSelect items={mockItems} isOpen={true} />
+    )
 
-    const el = cy.getByCy('DropdownItem')
+    const items = getAllByRole('option')
 
-    expect(el).toHaveLength(3)
-    expect(el.first().text()).toBe('Derek')
+    expect(items).toHaveLength(3)
+    expect(items[0].textContent).toBe('Derek')
   })
 
   test('Renders a SelectDropdown with a selected item', () => {
-    cy.render(<ActionSelect items={mockItems} selectedItem={mockItems[1]} />)
+    const { getByRole, getAllByRole } = render(
+      <ActionSelect items={mockItems} selectedItem={mockItems[1]} />
+    )
 
-    cy.getByCy('DropdownTrigger').click()
+    user.click(getByRole('button'))
 
-    const el = cy.getByCy('DropdownItem').filter('.is-active')
+    const selectedItem = getAllByRole('option').filter(item =>
+      item.classList.contains('is-active')
+    )
 
-    expect(el.exists()).toBeTruthy()
-    expect(el.text()).toBe('Hansel')
+    expect(selectedItem.length).toBeTruthy()
+    expect(selectedItem[0].textContent).toBe('Hansel')
   })
 })
 
 describe('Focus', () => {
   test('Can refocuses trigger on close, by default', () => {
     const spy = jest.fn()
-    cy.render(<ActionSelect items={mockItems} onFocus={spy} />)
+    const { getByRole } = render(
+      <ActionSelect items={mockItems} onFocus={spy} />
+    )
 
-    cy.getByCy('DropdownTrigger').click()
+    user.click(getByRole('button'))
+    user.type('{esc}')
 
-    expect(spy).not.toHaveBeenCalled()
-
-    cy.type('{esc}')
-
-    expect(spy).toHaveBeenCalled()
+    expect(spy).toHaveBeenCalledTimes(1)
   })
 
   test('Can not trigger on close, with custom shouldRefocusOnClose', () => {
     const spy = jest.fn()
     const shouldRefocusOnClose = () => false
 
-    cy.render(
+    render(
       <ActionSelect
         items={mockItems}
         isOpen={true}
@@ -90,7 +71,7 @@ describe('Focus', () => {
       />
     )
 
-    cy.type('{esc}')
+    user.type('{esc}')
 
     expect(spy).not.toHaveBeenCalled()
   })
@@ -98,7 +79,7 @@ describe('Focus', () => {
   test('Autofocuses node within children on select, by default', () => {
     const spy = jest.fn()
 
-    cy.render(
+    const { getAllByRole } = render(
       <ActionSelect items={mockItems} isOpen={true}>
         <input onFocus={spy} />
       </ActionSelect>
@@ -106,9 +87,7 @@ describe('Focus', () => {
 
     expect(spy).not.toHaveBeenCalled()
 
-    cy.getByCy('DropdownItem')
-      .first()
-      .click()
+    user.click(getAllByRole('option')[0])
 
     expect(spy).toHaveBeenCalled()
   })
@@ -116,7 +95,7 @@ describe('Focus', () => {
   test('Does not autofocus node within children on select, if specified', () => {
     const spy = jest.fn()
 
-    cy.render(
+    const { getAllByRole } = render(
       <ActionSelect
         items={mockItems}
         isOpen={true}
@@ -126,9 +105,7 @@ describe('Focus', () => {
       </ActionSelect>
     )
 
-    cy.getByCy('DropdownItem')
-      .first()
-      .click()
+    user.click(getAllByRole('option')[0])
 
     expect(spy).not.toHaveBeenCalled()
   })
@@ -137,28 +114,28 @@ describe('Focus', () => {
 describe('Open/Close', () => {
   test('onOpen callback works', () => {
     const spy = jest.fn()
-    cy.render(<ActionSelect onOpen={spy} />)
+    const { getByRole } = render(<ActionSelect onOpen={spy} />)
 
-    cy.getByCy('DropdownTrigger').click()
+    user.click(getByRole('button'))
 
     expect(spy).toHaveBeenCalled()
   })
 
   test('onClose callback works', () => {
     const spy = jest.fn()
-    cy.render(<ActionSelect onClose={spy} isOpen />)
+    const { getByRole } = render(<ActionSelect onClose={spy} isOpen />)
 
-    cy.getByCy('DropdownTrigger').click()
+    user.click(getByRole('button'))
 
     expect(spy).toHaveBeenCalled()
   })
 })
 
 describe('Resize', () => {
-  test('Don\t resize content if the selectedItem is the same', () => {
+  test("Don't resize content if the selectedItem is the same", () => {
     const spy = jest.fn()
 
-    const wrapper = mount(
+    const { rerender } = render(
       <ActionSelect
         items={mockItems}
         isOpen={true}
@@ -167,7 +144,17 @@ describe('Resize', () => {
         onResize={spy}
       />
     )
-    wrapper.setProps({ selectedItem: mockItems[1] })
+
+    rerender(
+      <ActionSelect
+        items={mockItems}
+        isOpen={true}
+        isAutoFocusNodeOnSelect={false}
+        selectedItem={mockItems[1]}
+        onResize={spy}
+      />
+    )
+
     expect(spy).toHaveBeenCalledTimes(0)
   })
 })

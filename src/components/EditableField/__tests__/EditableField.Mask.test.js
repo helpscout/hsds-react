@@ -1,8 +1,6 @@
 import React from 'react'
-import { cy } from '@helpscout/cyan'
-
+import { render } from '@testing-library/react'
 import { EditableFieldMask as Mask } from '../EditableField.Mask'
-
 import { TRUNCATED_CLASSNAMES, STATES_CLASSNAMES } from '../EditableField.utils'
 
 describe('class names', () => {
@@ -18,7 +16,7 @@ describe('class names', () => {
       type: 'error',
     }
 
-    cy.render(
+    const { container } = render(
       <Mask
         type="email"
         name="email"
@@ -27,7 +25,9 @@ describe('class names', () => {
       />
     )
 
-    expect(cy.get(`.${STATES_CLASSNAMES.withValidation}`).exists()).toBeTruthy()
+    expect(
+      container.querySelector(`.${STATES_CLASSNAMES.withValidation}`)
+    ).toBeTruthy()
   })
 
   test('disabled', () => {
@@ -36,9 +36,13 @@ describe('class names', () => {
       id: 'greeting_0',
     }
 
-    cy.render(<Mask type="email" name="email" fieldValue={val} disabled />)
+    const { container } = render(
+      <Mask type="email" name="email" fieldValue={val} disabled />
+    )
 
-    expect(cy.get(`.${STATES_CLASSNAMES.isDisabled}`).exists()).toBeTruthy()
+    expect(
+      container.querySelector(`.${STATES_CLASSNAMES.isDisabled}`)
+    ).toBeTruthy()
   })
 })
 
@@ -49,16 +53,25 @@ describe('email type', () => {
       id: 'email_0',
     }
 
-    cy.render(<Mask type="email" name="email" fieldValue={val} />)
+    const { container } = render(
+      <Mask type="email" name="email" fieldValue={val} />
+    )
 
     expect(
-      cy.get(`.${TRUNCATED_CLASSNAMES.withSplitter}`).exists()
+      container.querySelector(`.${TRUNCATED_CLASSNAMES.withSplitter}`)
     ).toBeTruthy()
-    expect(cy.get(`.${TRUNCATED_CLASSNAMES.firstChunk}`).exists()).toBeTruthy()
-    expect(cy.get(`.${TRUNCATED_CLASSNAMES.secondChunk}`).exists()).toBeTruthy()
-    expect(cy.get(`.${TRUNCATED_CLASSNAMES.firstChunk}`).text()).toBe('email')
-    expect(cy.get(`.${TRUNCATED_CLASSNAMES.secondChunk}`).text()).toBe(
-      '@somethingcool.com'
-    )
+    expect(
+      container.querySelector(`.${TRUNCATED_CLASSNAMES.firstChunk}`)
+    ).toBeTruthy()
+    expect(
+      container.querySelector(`.${TRUNCATED_CLASSNAMES.secondChunk}`)
+    ).toBeTruthy()
+    expect(
+      container.querySelector(`.${TRUNCATED_CLASSNAMES.firstChunk}`).textContent
+    ).toBe('email')
+    expect(
+      container.querySelector(`.${TRUNCATED_CLASSNAMES.secondChunk}`)
+        .textContent
+    ).toBe('@somethingcool.com')
   })
 })

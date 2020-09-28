@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { EditableFieldActionsUI, FieldButtonUI } from './EditableField.css'
 import Icon from '../Icon'
 import { classNames } from '../../utilities/classNames'
@@ -45,7 +44,7 @@ export class EditableFieldActions extends React.Component {
 
     return (
       <EditableFieldActionsUI
-        {...getValidProps(rest)}
+        {...rest}
         className={classNames(
           ACTIONS_CLASSNAMES.actions,
           validationInfo && STATES_CLASSNAMES.withValidation

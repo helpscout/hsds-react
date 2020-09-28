@@ -1,6 +1,7 @@
 import React from 'react'
+import { render } from '@testing-library/react'
+import user from '@testing-library/user-event'
 import { mount } from 'enzyme'
-import { cy } from '@helpscout/cyan'
 import { Avatar } from './Avatar'
 import AvatarImage, { clearCache } from './Avatar.Image'
 import { getCircleProps } from './Avatar.css'
@@ -11,8 +12,12 @@ const ui = {
   crop: '.c-Avatar__crop',
   cropBorder: '.c-Avatar__cropBorder',
   outerBorder: '.c-Avatar__outerBorder',
+  focusBorder: '.c-Avatar__focusBorder',
+  borderAnimation: '.c-Avatar__borderAnimation',
   image: '.c-Avatar__image',
+  imageWrapper: '.c-Avatar__imageWrapper',
   initials: '.c-Avatar__title',
+  action: '.c-Avatar__action',
 }
 
 jest.useFakeTimers()
@@ -24,86 +29,94 @@ beforeEach(() => {
 
 describe('Name', () => {
   test('Uses the `initials` attribute if specified', () => {
-    const wrapper = mount(<Avatar name="Ron Burgandy" initials="XY" />)
-    const title = wrapper.find(`div${ui.initials}`)
+    const { getByText } = render(<Avatar name="Ron Burgandy" initials="XY" />)
 
-    expect(title.text()).toBe('XY')
+    expect(getByText('XY')).toBeInTheDocument()
   })
 
   test('Initializes first/last name to two letters', () => {
-    const wrapper = mount(<Avatar name="Ron Burgandy" />)
-    const title = wrapper.find(`div${ui.initials}`)
+    const { getByText } = render(<Avatar name="Ron Burgundy" />)
 
-    expect(title.text()).toBe('RB')
+    expect(getByText('RB')).toBeInTheDocument()
   })
 
   test('Initializes multi-word names to two letters', () => {
-    const wrapper = mount(<Avatar name="Buddy the Elf" />)
-    const title = wrapper.find(`div${ui.initials}`)
+    const { getByText } = render(<Avatar name="Buddy the Elf" />)
 
-    expect(title.text()).toBe('BE')
+    expect(getByText('BE')).toBeInTheDocument()
   })
 
   test('Initializes single names to one letters', () => {
-    const wrapper = mount(<Avatar name="Buddy" />)
-    const title = wrapper.find(`div${ui.initials}`)
+    const { getByText } = render(<Avatar name="Buddy" />)
 
-    expect(title.text()).toBe('B')
+    expect(getByText('B')).toBeInTheDocument()
   })
 
   test('Can be overridden by count prop', () => {
-    const wrapper = mount(<Avatar name="Buddy" count="Elf" />)
-    const title = wrapper.find(`div${ui.initials}`)
+    const { getByText } = render(<Avatar name="Buddy" count="Elf" />)
 
-    expect(title.text()).toBe('Elf')
+    expect(getByText('Elf')).toBeInTheDocument()
   })
 
   test('Sets `title` attribute to the `name`', () => {
-    const wrapper = mount(<Avatar name="Bobby McGee" />)
-    const root = wrapper.find(`div${ui.root}`)
-    expect(root.prop('title')).toBe('Bobby McGee')
+    const { getByTitle } = render(<Avatar name="Bobby McGee" />)
+
+    expect(getByTitle('Bobby McGee')).toBeInTheDocument()
   })
 })
 
 describe('Image', () => {
   test('Has the correct className', () => {
-    const wrapper = mount(
+    const { getByTitle } = render(
       <Avatar name="Buddy the Elf" image="buddy.jpg" withShadow />
     )
-    const image = wrapper.find(`div${ui.image}`)
 
-    expect(image.exists()).toBeTruthy()
-    expect(wrapper.find('.is-withShadow').length).toBeTruthy()
+    const avatar = getByTitle('Buddy the Elf')
+
+    expect(avatar.querySelector(`div${ui.image}`)).toBeInTheDocument()
+    expect(avatar.querySelector('.is-withShadow')).toBeInTheDocument()
   })
 
   test('Background is currentColor to prevent flash of color before image loads', () => {
-    cy.render(<Avatar name="Buddy the Elf" image="buddy.jpg" />)
-    const crop = cy.get(`div${ui.crop}`)
+    const { getByTitle } = render(
+      <Avatar name="Buddy the Elf" image="buddy.jpg" />
+    )
+    const avatar = getByTitle('Buddy the Elf')
 
-    expect(crop.exists()).toBeTruthy()
-    expect(crop.getComputedStyle().backgroundColor).toEqual('transparent')
+    expect(avatar.querySelector(`div${ui.crop}`)).toBeInTheDocument()
+    expect(
+      window.getComputedStyle(avatar.querySelector(`div${ui.crop}`))
+        .backgroundColor
+    ).toEqual('transparent')
   })
 
   test('Background is transparent if there is an image', cb => {
     global.Image.prototype.decode = () => Promise.resolve()
 
     const onLoad = () => {
-      const crop = cy.get(`div${ui.crop}`)
-      expect(crop.exists()).toBeTruthy()
-      expect(crop.getComputedStyle().backgroundColor).toEqual('transparent')
+      const crop = avatar.querySelector(`div${ui.crop}`)
+      expect(crop).toBeInTheDocument()
+      expect(
+        window.getComputedStyle(avatar.querySelector(`div${ui.crop}`))
+          .backgroundColor
+      ).toEqual('transparent')
       cb()
     }
 
-    cy.render(<Avatar image="buddy.jpg" onLoad={onLoad} />)
+    const { getByTitle } = render(
+      <Avatar name="Buddy the Elf" image="buddy.jpg" onLoad={onLoad} />
+    )
+    const avatar = getByTitle('Buddy the Elf')
   })
 
   test('Do not render image if image prop is specified but image is loading', () => {
     const src = 'buddy.jpg'
-    cy.render(<Avatar name="Buddy the Elf" image={src} />)
-    const image = cy.get(`div${ui.image}`)
+    const { getByTitle } = render(<Avatar name="Buddy the Elf" image={src} />)
+    const avatar = getByTitle('Buddy the Elf')
+    const image = avatar.querySelector(`div${ui.image}`)
 
-    expect(image.exists()).toBeTruthy()
-    expect(image.getComputedStyle().backgroundImage).toBeFalsy()
+    expect(image).toBeInTheDocument()
+    expect(window.getComputedStyle(image).backgroundImage).toBeFalsy()
   })
 
   test('Render image if image prop is specified and image has finished loading', cb => {
@@ -119,25 +132,23 @@ describe('Image', () => {
     const wrapper = mount(
       <Avatar name="Buddy the Elf" image={src} onLoad={onLoad} />
     )
-    wrapper
-      .find(AvatarImage)
-      .instance()
-      .image.onload()
+    wrapper.find(AvatarImage).instance().image.onload()
   })
 
   test('Rendered image should have name within', () => {
     const name = 'Buddy the Elf'
-    const wrapper = mount(<Avatar name={name} image="buddy.jpg" />)
-    const image = wrapper.find(`div${ui.image}`)
+    const { getByText } = render(<Avatar name={name} image="buddy.jpg" />)
 
-    expect(image.text()).toBe(name)
+    expect(getByText(name)).toBeInTheDocument()
   })
 
   test('Replaces Initials with image', () => {
-    const wrapper = mount(<Avatar name="Buddy the Elf" image="buddy.jpg" />)
-    const initials = wrapper.find(ui.initials)
+    const { getByTitle } = render(
+      <Avatar name="Buddy the Elf" image="buddy.jpg" />
+    )
+    const avatar = getByTitle('Buddy the Elf')
 
-    expect(initials.exists()).toBeFalsy()
+    expect(avatar.querySelector(`${ui.initials}`)).toBe(null)
   })
 
   test('Replaces image with initials on error', cb => {
@@ -153,10 +164,7 @@ describe('Image', () => {
       <Avatar name="Buddy the Elf" image="buddy.jpg" onError={onError} />
     )
 
-    wrapper
-      .find(AvatarImage)
-      .instance()
-      .image.onerror()
+    wrapper.find(AvatarImage).instance().image.onerror()
   })
 
   test('Replaces image with fallback on error', cb => {
@@ -178,64 +186,61 @@ describe('Image', () => {
         onLoad={onLoad}
       />
     )
-    wrapper
-      .find(AvatarImage)
-      .instance()
-      .image.onerror()
-    wrapper
-      .find(AvatarImage)
-      .instance()
-      .image.onload()
-  })
-
-  test('Sets `title` attribute to the `name`', () => {
-    const wrapper = mount(<Avatar name="Bobby McGee" />)
-    const root = wrapper.find(`div${ui.root}`)
-    expect(root.prop('title')).toBe('Bobby McGee')
-  })
-
-  test('Avatar src should be an array', () => {
-    const firstSrc = 'test2.jpg'
-
-    const wrapper = mount(<Avatar image={firstSrc} />)
-    expect(Array.isArray(wrapper.instance().src)).toBeTruthy()
+    wrapper.find(AvatarImage).instance().image.onerror()
+    wrapper.find(AvatarImage).instance().image.onload()
   })
 
   test('Updating the props will update the src value', () => {
     const firstSrc = 'test2.jpg'
     const secondSrc = 'test3.jpg'
+    const { getByTitle, rerender } = render(
+      <Avatar name="Buddy the Elf" image={firstSrc} />
+    )
+    const avatar = getByTitle('Buddy the Elf')
 
-    const wrapper = mount(<Avatar image={firstSrc} />)
-    expect(wrapper.instance().src.join('')).toContain(firstSrc)
-    wrapper.setProps({ image: secondSrc })
-    expect(wrapper.instance().src.join('')).toContain(secondSrc)
+    expect(avatar.querySelector(`${ui.imageWrapper}`).getAttribute('src')).toBe(
+      firstSrc
+    )
+
+    rerender(<Avatar image={secondSrc} />)
+
+    expect(avatar.querySelector(`${ui.imageWrapper}`).getAttribute('src')).toBe(
+      secondSrc
+    )
   })
 
   test('Clearing the props will hide the actual image', () => {
-    const wrapper = mount(<Avatar image="buddy.jpg" />)
-    wrapper.setProps({ image: null })
-    expect(wrapper.instance().src.join('')).toBe('')
-    expect(wrapper.find(AvatarImage).state().isLoading).toBeFalsy()
+    const { getByTitle, rerender } = render(
+      <Avatar name="Buddy the Elf" image="buddy.jpg" />
+    )
+    const avatar = getByTitle('Buddy the Elf')
+    expect(avatar.querySelector(`${ui.imageWrapper}`).getAttribute('src')).toBe(
+      'buddy.jpg'
+    )
+
+    rerender(<Avatar image={null} />)
+
+    expect(avatar.querySelector(`${ui.imageWrapper}`)).toBe(null)
   })
 
   test('Uses decoding image if available', cb => {
     global.Image.prototype.decode = () => Promise.resolve()
 
     const onLoad = () => {
-      wrapper.update()
-      expect(wrapper.find(AvatarImage).state().isLoaded).toBeTruthy()
+      const imageWrapper = avatar.querySelector(`div${ui.imageWrapper}`)
+      expect(imageWrapper.classList.contains('is-loaded')).toBeTruthy()
       cb()
     }
 
-    const wrapper = mount(<Avatar image="buddy.jpg" onLoad={onLoad} />)
+    const { getByTitle } = render(
+      <Avatar name="Buddy the Elf" image="buddy.jpg" onLoad={onLoad} />
+    )
+    const avatar = getByTitle('Buddy the Elf')
   })
 
   test('Use image from the cache', () => {
     const wrapper = mount(<Avatar image="buddy.jpg" />)
-    wrapper
-      .find(AvatarImage)
-      .instance()
-      .image.onload()
+    wrapper.find(AvatarImage).instance().image.onload()
     const wrapperCache = mount(<Avatar image="buddy.jpg" />)
     const state = wrapperCache.find(AvatarImage).state()
     expect(state.isLoading).toBeFalsy()
@@ -251,10 +256,7 @@ describe('Image', () => {
 
   test('Use cache when loading fallback image if it exists', () => {
     const wrapper1 = mount(<Avatar image="buddy.jpg" />)
-    wrapper1
-      .find(AvatarImage)
-      .instance()
-      .image.onload()
+    wrapper1.find(AvatarImage).instance().image.onload()
 
     const spy = jest.fn()
     const wrapper = mount(
@@ -286,12 +288,9 @@ describe('ClassNames', () => {
     const root = wrapper.find(`div${ui.root}`)
 
     expect(root.props().className).toContain('is-light')
-    expect(
-      wrapper
-        .find(ui.initials)
-        .first()
-        .prop('className')
-    ).toContain('is-light')
+    expect(wrapper.find(ui.initials).first().prop('className')).toContain(
+      'is-light'
+    )
   })
 
   test('Add active classname to component', () => {
@@ -322,24 +321,37 @@ describe('ClassNames', () => {
 
 describe('Border color', () => {
   test('Can apply borderColor', () => {
-    const wrapper = cy.render(<Avatar name="Buddy" borderColor="green" />)
-    const crop = cy.get(`div${ui.cropBorder}`)
+    const { getByTitle } = render(
+      <Avatar name="Buddy the Elf" image="buddy.jpg" borderColor="green" />
+    )
+    const avatar = getByTitle('Buddy the Elf')
 
-    expect(crop.getComputedStyle().borderColor).toBe('green')
+    expect(
+      window.getComputedStyle(avatar.querySelector(`div${ui.cropBorder}`))
+        .borderColor
+    ).toEqual('green')
   })
 
   test('Does not have a border by default', () => {
-    const wrapper = cy.render(<Avatar name="Buddy" />)
-    const crop = cy.get(`div${ui.cropBorder}`)
+    const { getByTitle } = render(
+      <Avatar name="Buddy the Elf" image="buddy.jpg" />
+    )
+    const avatar = getByTitle('Buddy the Elf')
 
-    expect(crop.getComputedStyle().borderColor).toBe('transparent')
+    expect(
+      window.getComputedStyle(avatar.querySelector(`div${ui.cropBorder}`))
+        .borderColor
+    ).toEqual('transparent')
   })
 
   test('CropBorder UI renders Avatar shape', () => {
-    const wrapper = mount(<Avatar name="Buddy" outerBorderColor="green" />)
-    const el = wrapper.find(`div${ui.cropBorder}`)
+    const { getByTitle } = render(
+      <Avatar name="Buddy the Elf" image="buddy.jpg" outerBorderColor="green" />
+    )
+    const avatar = getByTitle('Buddy the Elf')
+    const cropBorder = avatar.querySelector(`div${ui.cropBorder}`)
 
-    expect(el.props().className).toContain(wrapper.prop('shape'))
+    expect(cropBorder.classList.contains('is-circle')).toBeTruthy()
   })
 
   test('Adds a style class to the component', () => {
@@ -375,20 +387,29 @@ describe('Border color', () => {
 
 describe('Outer border color', () => {
   test('Does not apply outerBorderColor by default', () => {
-    const wrapper = cy.render(<Avatar name="Buddy" />)
-    const el = cy.get(`div${ui.outerBorder}`)
+    const { getByTitle } = render(
+      <Avatar name="Buddy the Elf" image="buddy.jpg" />
+    )
+    const avatar = getByTitle('Buddy the Elf')
 
-    expect(el.getComputedStyle().borderColor).toBe('transparent')
+    expect(avatar.querySelector(`div${ui.crop}`)).toBeInTheDocument()
+    expect(
+      window.getComputedStyle(avatar.querySelector(`div${ui.outerBorder}`))
+        .borderColor
+    ).toEqual('transparent')
   })
 
   test('Can apply outerBorderColor', () => {
-    const wrapper = cy.render(
-      <Avatar name="Buddy" outerBorderColor="green" shape="circle" />
+    const { getByTitle } = render(
+      <Avatar name="Buddy the Elf" image="buddy.jpg" outerBorderColor="green" />
     )
-    const el = cy.get(`div${ui.outerBorder}`)
+    const avatar = getByTitle('Buddy the Elf')
 
-    expect(el.getComputedStyle().borderColor).toBe('green')
-    expect(el.hasClassName('is-circle')).toBeTruthy()
+    expect(avatar.querySelector(`div${ui.crop}`)).toBeInTheDocument()
+    expect(
+      window.getComputedStyle(avatar.querySelector(`div${ui.outerBorder}`))
+        .borderColor
+    ).toEqual('green')
   })
 
   test('OuterBorder UI renders Avatar shape', () => {
@@ -464,10 +485,7 @@ describe('onError', () => {
     const wrapper = mount(
       <Avatar name="Buddy" image="buddy.jpg" onError={spy} />
     )
-    wrapper
-      .find(AvatarImage)
-      .instance()
-      .image.onerror()
+    wrapper.find(AvatarImage).instance().image.onerror()
     expect(spy).toHaveBeenCalled()
   })
 })
@@ -478,129 +496,167 @@ describe('onLoad', () => {
     const wrapper = mount(
       <Avatar name="Buddy" image="buddy.jpg" onLoad={spy} />
     )
-    wrapper
-      .find(AvatarImage)
-      .instance()
-      .image.onload()
+    wrapper.find(AvatarImage).instance().image.onload()
     expect(spy).toHaveBeenCalled()
   })
 })
 
 describe('Action', () => {
   test("Doesn't render the action", () => {
-    const wrapper = cy.render(
-      <Avatar name="Buddy" size="sm" actionable={false} />
+    const { getByTitle } = render(
+      <Avatar name="Buddy the Elf" image="buddy.jpg" actionable={false} />
     )
-    expect(wrapper.exists()).toBeTruthy()
-    expect(cy.getByCy('Avatar.Action').exists()).toBeFalsy()
+
+    const avatar = getByTitle('Buddy the Elf')
+
+    expect(avatar.querySelector(`div${ui.action}`)).toBe(null)
   })
 
   test('Adds action to Avatar', () => {
-    const wrapper = cy.render(
-      <Avatar name="Buddy" size="sm" actionable={true} />
+    const { getByTitle } = render(
+      <Avatar name="Buddy the Elf" image="buddy.jpg" actionable />
     )
-    expect(wrapper.exists()).toBeTruthy()
-    expect(cy.getByCy('Avatar.Action').exists()).toBeTruthy()
+    const avatar = getByTitle('Buddy the Elf')
+
+    expect(avatar.querySelector(`div${ui.action}`)).toBeInTheDocument()
   })
 
   test('Renders as a button element', () => {
-    const wrapper = cy.render(
-      <Avatar name="Buddy" size="sm" actionable={true} />
+    const { getByTitle } = render(
+      <Avatar name="Buddy the Elf" image="buddy.jpg" actionable />
     )
-    expect(cy.getByCy('Avatar').exists()).toBeTruthy()
-    expect(cy.getByCy('Avatar').is('button')).toBeTruthy()
+    const avatar = getByTitle('Buddy the Elf')
+
+    expect(avatar.tagName).toBe('BUTTON')
   })
 
   test('Renders action default trash icon', () => {
-    const wrapper = cy.render(
-      <Avatar name="Buddy" size="sm" actionable={true} />
+    const { getByTitle } = render(
+      <Avatar name="Buddy the Elf" image="buddy.jpg" actionable />
     )
-    expect(cy.get('.c-Icon').exists()).toBeTruthy()
-    expect(cy.get('.c-Icon').hasClassName('is-iconName-trash')).toBeTruthy()
+    const avatar = getByTitle('Buddy the Elf')
+    const icon = avatar.querySelector('.c-Icon')
+
+    expect(icon).toBeInTheDocument()
+    expect(icon.classList.contains('is-iconName-trash')).toBeTruthy()
   })
 
   test('Renders custom action icon', () => {
-    const wrapper = cy.render(
-      <Avatar name="Buddy" size="sm" actionable={true} actionIcon="plus" />
+    const { getByTitle } = render(
+      <Avatar
+        name="Buddy the Elf"
+        image="buddy.jpg"
+        actionable
+        actionIcon="plus"
+      />
     )
-    expect(cy.get('.c-Icon').exists()).toBeTruthy()
-    expect(cy.get('.c-Icon').hasClassName('is-iconName-plus')).toBeTruthy()
+    const avatar = getByTitle('Buddy the Elf')
+    const icon = avatar.querySelector('.c-Icon')
+
+    expect(icon).toBeInTheDocument()
+    expect(icon.classList.contains('is-iconName-plus')).toBeTruthy()
   })
 
   test('Updates the shape of the Action based on parent prop', () => {
-    const wrapper = cy.render(
-      <Avatar name="Buddy" size="sm" actionable={true} shape="rounded" />
+    const { getByTitle } = render(
+      <Avatar
+        name="Buddy the Elf"
+        image="buddy.jpg"
+        actionable
+        shape="rounded"
+      />
     )
-    expect(cy.getByCy('Avatar.Action').hasClassName('is-rounded')).toBeTruthy()
+    const avatar = getByTitle('Buddy the Elf')
+
+    expect(
+      avatar.querySelector(`div${ui.action}`).classList.contains('is-rounded')
+    ).toBeTruthy()
   })
 
   test('Renders a focus border', () => {
-    const wrapper = cy.render(
-      <Avatar name="Buddy" size="sm" actionable={true} shape="rounded" />
+    const { getByTitle } = render(
+      <Avatar
+        name="Buddy the Elf"
+        image="buddy.jpg"
+        actionable
+        shape="rounded"
+      />
     )
-    expect(cy.getByCy('Avatar.FocusBorder').exists()).toBeTruthy()
+    const avatar = getByTitle('Buddy the Elf')
+
+    expect(avatar.querySelector(`${ui.focusBorder}`)).toBeInTheDocument()
   })
 
   test('Renders an animate svg', () => {
-    const wrapper = cy.render(
+    const { getByTitle } = render(
       <Avatar
-        name="Buddy"
-        size="sm"
-        actionable={true}
+        name="Buddy the Elf"
+        image="buddy.jpg"
+        actionable
         shape="rounded"
         animateActionBorder={true}
       />
     )
-    expect(cy.getByCy('Avatar.BorderAnimation').exists()).toBeTruthy()
+    const avatar = getByTitle('Buddy the Elf')
+
+    expect(avatar.querySelector(`${ui.borderAnimation}`)).toBeInTheDocument()
   })
 
   test('Evokes the callback when clicking on the Action component', () => {
     const fn = jest.fn()
-    const wrapper = cy.render(
+    const { getByTitle } = render(
       <Avatar
-        name="Buddy"
-        size="sm"
-        actionable={true}
+        name="Buddy the Elf"
+        image="buddy.jpg"
+        actionable
         shape="rounded"
         onActionClick={fn}
       />
     )
-    cy.getByCy('Avatar').click()
+    const avatar = getByTitle('Buddy the Elf')
+    user.click(avatar)
+
     expect(fn).toHaveBeenCalled()
   })
 
   test('Evokes the callback when clicking on the Action component only if the action exists', () => {
     const fn = jest.fn()
-    const wrapper = cy.render(
+    const { getByTitle, rerender } = render(
       <Avatar
-        name="Buddy"
-        size="sm"
-        actionable={true}
+        name="Buddy the Elf"
+        image="buddy.jpg"
+        actionable
         shape="rounded"
         onActionClick={fn}
       />
     )
-    cy.getByCy('Avatar').click()
+    const avatar = getByTitle('Buddy the Elf')
+
+    user.click(avatar)
+
     expect(fn).toHaveBeenCalled()
 
-    wrapper.setProps({ removingAvatarAnimation: true })
-    cy.getByCy('Avatar').click()
+    rerender(<Avatar removingAvatarAnimation />)
+    user.click(avatar)
+
     expect(fn).toHaveBeenCalledTimes(1)
   })
 
   test('Hide the action overlay when animating', () => {
     const fn = jest.fn()
-    const wrapper = cy.render(
+    const { getByTitle } = render(
       <Avatar
-        name="Buddy"
-        size="sm"
-        actionable={true}
+        name="Buddy the Elf"
+        image="buddy.jpg"
+        actionable
         shape="rounded"
         onActionClick={fn}
         removingAvatarAnimation={true}
       />
     )
-    expect(cy.getByCy('Avatar.Action').exists()).toBeFalsy()
+    const avatar = getByTitle('Buddy the Elf')
+
+    expect(avatar.querySelector(`div${ui.action}`)).toBe(null)
   })
 
   test('getCircleProps will return a full props object for svg circle', () => {

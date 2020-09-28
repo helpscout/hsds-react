@@ -1,11 +1,8 @@
 import React from 'react'
-import cy from '@helpscout/cyan'
-
 import { Transition } from 'react-transition-group'
 import { mount } from 'enzyme'
 import { Animate } from './Animate'
 
-cy.useFakeTimers()
 jest.useFakeTimers()
 
 describe('ClassName', () => {
@@ -53,17 +50,18 @@ describe('AnimateOnMount', () => {
 
 describe('Unmounting', () => {
   test('Unmounts from DOM by default', () => {
-    const wrapper = cy.render(
+    const wrapper = mount(
       <Animate in duration={0}>
         <div className="your">
           <div className="my-boy">Blue</div>
         </div>
       </Animate>
     )
+    const o = wrapper.find('div.c-Animate').getDOMNode()
 
     wrapper.setProps({ in: false })
 
-    expect(wrapper.get('.ax-exiting').exists()).toBeTruthy()
+    expect(o.classList.contains('ax-exiting')).toBeTruthy()
   })
 
   test('Does not unmounts from DOM if specified', () => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { cy } from '@helpscout/cyan'
+import { render } from '@testing-library/react'
 import { mount } from 'enzyme'
 import { EditableFieldActions as Actions } from '../EditableField.Actions'
 import * as urlUtils from '../../../utilities/urls'
@@ -20,7 +20,7 @@ describe('Rendering', () => {
       id: 'greeting_0',
     }
 
-    cy.render(
+    const { getByRole } = render(
       <Actions
         name="email"
         fieldValue={val}
@@ -32,7 +32,7 @@ describe('Rendering', () => {
       />
     )
 
-    expect(cy.get('.action-delete').getAttribute('tabindex')).toBe('-1')
+    expect(getByRole('button').getAttribute('tabindex')).toBe('-1')
   })
 
   test('should have with-validation class if validation info is present', () => {
@@ -41,7 +41,7 @@ describe('Rendering', () => {
       id: 'greeting_0',
     }
 
-    const wrapper = cy.render(
+    const { container } = render(
       <Actions
         name="email"
         fieldValue={val}
@@ -54,7 +54,9 @@ describe('Rendering', () => {
       />
     )
 
-    expect(wrapper.hasClass(STATES_CLASSNAMES.withValidation)).toBeTruthy()
+    expect(
+      container.querySelector(`.${STATES_CLASSNAMES.withValidation}`)
+    ).toBeTruthy()
   })
 })
 

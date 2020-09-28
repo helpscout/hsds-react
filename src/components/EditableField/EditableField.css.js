@@ -219,7 +219,7 @@ export const InputWrapperUI = styled('div')`
   .${STATES_CLASSNAMES.withFloatingLabels} &,
   .${STATES_CLASSNAMES.hasActiveFields} & {
     &::before {
-      content: ${({ placeholder }) => `"${placeholder}"`};
+      content: ${({ withPlaceholder }) => `"${withPlaceholder}"`};
       opacity: ${({ value }) => `${value ? '1' : '0'}`};
       transform: ${({ value }) => `translateY(${value ? -15 : -10}px)`};
       transform-origin: center left;

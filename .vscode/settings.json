@@ -12,5 +12,6 @@
   "workbench.colorCustomizations": {},
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
-  }
+  },
+  "jestrunner.configPath": "jest.config.js"
 }

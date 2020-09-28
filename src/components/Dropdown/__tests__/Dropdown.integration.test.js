@@ -1,50 +1,57 @@
 import React from 'react'
-import { cy } from '@helpscout/cyan'
+import { render, waitFor } from '@testing-library/react'
+import user from '@testing-library/user-event'
 import Dropdown from '../index'
 
-cy.useFakeTimers()
+jest.useFakeTimers()
 
 describe('Opening', () => {
-  test('Can be opened by clicking Trigger', () => {
-    cy.render(<Dropdown />)
+  test('Can be opened by clicking Trigger', async () => {
+    const { queryByRole, getByRole } = render(<Dropdown />)
 
-    expect(cy.getByCy('DropdownMenu').exists()).toBeFalsy()
+    expect(queryByRole('listbox')).toBe(null)
 
-    cy.getByCy('DropdownTrigger').click()
+    await waitFor(() => {
+      user.click(getByRole('button'))
+    })
 
-    expect(cy.getByCy('DropdownMenu').exists()).toBeTruthy()
+    expect(getByRole('listbox')).toBeInTheDocument()
   })
 })
 
 describe('Closing', () => {
-  test('Can close with ESC key press', () => {
-    cy.render(<Dropdown isOpen={true} />)
+  test('Can close with ESC key press', async () => {
+    const { getByText, baseElement } = render(<Dropdown isOpen />)
 
-    expect(cy.getByCy('DropdownMenu').exists()).toBeTruthy()
+    expect(getByText(/is opened/i)).toBeInTheDocument()
 
-    cy.type('{esc}')
+    user.type(baseElement, '{esc}')
 
-    expect(cy.getByCy('DropdownMenu').exists()).toBeFalsy()
+    await waitFor(() => {
+      expect(getByText(/is closed/i)).toBeInTheDocument()
+    })
   })
 })
 
 describe('Focus', () => {
-  test('Can refocuses trigger on close, by default', () => {
+  test('Can refocuses trigger on close, by default', async () => {
     const spy = jest.fn()
-    cy.render(<Dropdown onFocus={spy} isOpen={true} />)
+    const { container } = render(<Dropdown onFocus={spy} isOpen={true} />)
 
     expect(spy).not.toHaveBeenCalled()
 
-    cy.type('{esc}')
+    user.type(container, '{esc}')
 
-    expect(spy).toHaveBeenCalled()
+    await waitFor(() => {
+      expect(spy).toHaveBeenCalled()
+    })
   })
 
-  test('Can not trigger on close, with custom shouldRefocusOnClose', () => {
+  test('Can not trigger on close, with custom shouldRefocusOnClose', async () => {
     const spy = jest.fn()
     const shouldRefocusOnClose = () => false
 
-    cy.render(
+    const { container } = render(
       <Dropdown
         isOpen={true}
         onFocus={spy}
@@ -52,30 +59,32 @@ describe('Focus', () => {
       />
     )
 
-    cy.type('{esc}')
+    user.type(container, '{esc}')
 
-    expect(spy).not.toHaveBeenCalled()
+    await waitFor(() => {
+      expect(spy).not.toHaveBeenCalled()
+    })
   })
 })
 
 describe('Accessibility', () => {
   test('Aria live (polite) announces when open/closed', () => {
-    cy.render(<Dropdown label="Blue select" />)
+    const { container, getByRole } = render(<Dropdown label="Blue select" />)
 
-    const el = cy.getByCy('DropdownAriaLive')
+    const el = container.querySelector('[data-cy="DropdownAriaLive"]')
 
-    expect(el.attr('aria-live')).toBe('polite')
-    expect(el.attr('role')).toBe('region')
-    expect(el.text()).toContain('Blue select')
+    expect(el.getAttribute('aria-live')).toBe('polite')
+    expect(el.getAttribute('role')).toBe('region')
+    expect(el.textContent).toContain('Blue select')
 
-    expect(el.text()).toContain('closed')
+    expect(el.textContent).toContain('closed')
 
-    cy.getByCy('DropdownTrigger').click()
+    user.click(getByRole('button'))
 
-    expect(el.text()).toContain('opened')
+    expect(el.textContent).toContain('opened')
 
-    cy.getByCy('DropdownTrigger').click()
+    user.click(getByRole('button'))
 
-    expect(el.text()).toContain('closed')
+    expect(el.textContent).toContain('closed')
   })
 })

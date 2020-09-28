@@ -1,46 +1,30 @@
 import React from 'react'
-import { cy } from '@helpscout/cyan'
+import { render } from '@testing-library/react'
+import user from '@testing-library/user-event'
 import ConditionList from './ConditionList'
 import Condition from '../Condition'
 import Page from '../Page'
 
-describe('className', () => {
-  test('Has default className', () => {
-    const wrapper = cy.render(<ConditionList />)
-
-    expect(wrapper.hasClass('c-ConditionList')).toBeTruthy()
-  })
-
-  test('Can render custom className', () => {
-    const customClassName = 'blue'
-    const wrapper = cy.render(<ConditionList className={customClassName} />)
-
-    expect(wrapper.hasClass(customClassName)).toBeTruthy()
-  })
-})
-
 describe('AddButton', () => {
   test('Renders an AddButton by default', () => {
-    cy.render(<ConditionList />)
-    const el = cy.getByCy('ConditionListAddButton')
+    const { getByRole } = render(<ConditionList />)
 
-    expect(el.exists()).toBeTruthy()
+    expect(getByRole('button')).toBeInTheDocument()
   })
 
   test('Can be disabled', () => {
-    cy.render(<ConditionList isAddEnabled={false} />)
-    const el = cy.getByCy('ConditionListAddButton')
+    const { queryByRole } = render(<ConditionList isAddEnabled={false} />)
 
-    expect(el.exists()).toBeFalsy()
+    expect(queryByRole('button')).toBe(null)
   })
 
   test('onAdd callback can be triggered', () => {
     const spy = jest.fn()
-    cy.render(<ConditionList onAdd={spy} />)
+    const { getByRole } = render(<ConditionList onAdd={spy} />)
 
     expect(spy).not.toHaveBeenCalled()
 
-    cy.getByCy('ConditionListAddButton').click()
+    user.click(getByRole('button'))
 
     expect(spy).toHaveBeenCalled()
   })
@@ -48,37 +32,34 @@ describe('AddButton', () => {
 
 describe('And', () => {
   test('Does not render an And for no conditions', () => {
-    cy.render(<ConditionList />)
-    const el = cy.get('ConditionAnd')
+    const { container } = render(<ConditionList />)
 
-    expect(el.exists()).toBeFalsy()
+    expect(container.querySelector('.c-ConditionAnd')).toBe(null)
   })
 
   test('Does not render an And for one condition', () => {
-    cy.render(
+    const { container } = render(
       <ConditionList>
         <Condition />
       </ConditionList>
     )
-    const el = cy.get('ConditionAnd')
 
-    expect(el.exists()).toBeFalsy()
+    expect(container.querySelector('.c-ConditionAnd')).toBe(null)
   })
 
   test('Renders an And for more two conditions', () => {
-    cy.render(
+    const { container } = render(
       <ConditionList>
         <Condition />
         <Condition />
       </ConditionList>
     )
-    const el = cy.getByCy('ConditionAnd')
 
-    expect(el.exists()).toBeTruthy()
+    expect(container.querySelector('.c-ConditionAnd')).toBeTruthy()
   })
 
   test('Renders one less And for every condition', () => {
-    cy.render(
+    const { container } = render(
       <ConditionList>
         <Condition />
         <Condition />
@@ -86,33 +67,33 @@ describe('And', () => {
         <Condition />
       </ConditionList>
     )
-    const el = cy.getByCy('ConditionAnd')
 
-    expect(el.length).toBe(3)
+    expect(container.querySelectorAll('[data-cy="ConditionAnd"]').length).toBe(
+      3
+    )
   })
 })
 
 describe('Offset', () => {
   test('Does not render with offset by default', () => {
-    const wrapper = cy.render(<ConditionList />)
+    const { container } = render(<ConditionList />)
 
-    expect(wrapper.hasClass('is-withOffset')).toBeFalsy()
+    expect(container.querySelector('.is-withOffset')).toBe(null)
   })
 
   test('Can render with offset', () => {
-    const wrapper = cy.render(<ConditionList isWithOffset={true} />)
+    const { container } = render(<ConditionList isWithOffset />)
 
-    expect(wrapper.hasClass('is-withOffset')).toBeTruthy()
+    expect(container.querySelector('.is-withOffset')).toBeTruthy()
   })
 
   test('Renders with offset within Page', () => {
-    cy.render(
+    const { container } = render(
       <Page>
         <ConditionList />
       </Page>
     )
-    const el = cy.getByCy('ConditionList')
 
-    expect(el.hasClass('is-withOffset')).toBeTruthy()
+    expect(container.querySelector('.is-withOffset')).toBeTruthy()
   })
 })

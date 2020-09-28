@@ -1052,6 +1052,7 @@ export class EditableField extends React.Component {
       floatingLabels,
       inline,
       label,
+      placeholder,
       name,
       type,
       value,

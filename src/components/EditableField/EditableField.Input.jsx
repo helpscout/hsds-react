@@ -289,7 +289,7 @@ export class EditableFieldInput extends React.Component {
 
         <InputWrapperUI
           className={INPUT_CLASSNAMES.inputWrapper}
-          placeholder={placeholder}
+          withPlaceholder={placeholder}
           value={fieldValue.value}
           ref={this.inputWrapperRef}
         >
