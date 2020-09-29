@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 // Excluding most of the branches in these functions from test coverage.
 // Reason is because interactions are difficult to mock or are not supported
 // by JSDOM.

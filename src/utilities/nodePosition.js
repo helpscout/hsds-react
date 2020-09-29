@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { isNodeEnv } from './other'
 import { isNodeElement, getViewportHeight, getViewportWidth } from './node'
 
