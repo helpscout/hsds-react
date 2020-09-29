@@ -1,5 +1,6 @@
 import React, { PureComponent as Component } from 'react'
 import { mount } from 'enzyme'
+import { waitFor } from '@testing-library/react'
 import { Overflow } from './Overflow'
 
 jest.useFakeTimers()
@@ -55,7 +56,7 @@ describe('Fade', () => {
     expect(fade.style.transform).toBe('scaleX(1)')
   })
 
-  test('Applies left fade styles when scrolled', () => {
+  test('Applies left fade styles when scrolled', async () => {
     const wrapper = mount(<Overflow />)
     const o = wrapper.instance()
 
@@ -67,9 +68,9 @@ describe('Fade', () => {
 
     o.handleOnScroll({ currentTarget })
 
-    jest.runAllTimers()
-
-    expect(o.faderNodeLeft.style.transform).toContain('scaleX')
+    await waitFor(() => {
+      expect(o.faderNodeLeft.style.transform).toContain('scaleX')
+    })
   })
 
   test('Applies right fade styles when scrolled', () => {

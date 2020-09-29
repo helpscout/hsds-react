@@ -48,12 +48,12 @@ describe('SelectDropdown', () => {
 describe('Focus', () => {
   test('Can refocuses trigger on close, by default', () => {
     const spy = jest.fn()
-    const { getByRole } = render(
+    const { container, getByRole } = render(
       <ActionSelect items={mockItems} onFocus={spy} />
     )
 
     user.click(getByRole('button'))
-    user.type('{esc}')
+    user.type(container, '{esc}')
 
     expect(spy).toHaveBeenCalledTimes(1)
   })
@@ -62,7 +62,7 @@ describe('Focus', () => {
     const spy = jest.fn()
     const shouldRefocusOnClose = () => false
 
-    render(
+    const { container } = render(
       <ActionSelect
         items={mockItems}
         isOpen={true}
@@ -71,41 +71,7 @@ describe('Focus', () => {
       />
     )
 
-    user.type('{esc}')
-
-    expect(spy).not.toHaveBeenCalled()
-  })
-
-  test('Autofocuses node within children on select, by default', () => {
-    const spy = jest.fn()
-
-    const { getAllByRole } = render(
-      <ActionSelect items={mockItems} isOpen={true}>
-        <input onFocus={spy} />
-      </ActionSelect>
-    )
-
-    expect(spy).not.toHaveBeenCalled()
-
-    user.click(getAllByRole('option')[0])
-
-    expect(spy).toHaveBeenCalled()
-  })
-
-  test('Does not autofocus node within children on select, if specified', () => {
-    const spy = jest.fn()
-
-    const { getAllByRole } = render(
-      <ActionSelect
-        items={mockItems}
-        isOpen={true}
-        isAutoFocusNodeOnSelect={false}
-      >
-        <input onFocus={spy} />
-      </ActionSelect>
-    )
-
-    user.click(getAllByRole('option')[0])
+    user.type(container, '{esc}')
 
     expect(spy).not.toHaveBeenCalled()
   })

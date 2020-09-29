@@ -1,5 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import { waitFor } from '@testing-library/react'
 import { SearchableDropdown } from './SearchableDropdown'
 import { hasClass } from '../../tests/helpers/enzyme'
 
@@ -455,13 +456,15 @@ describe('onMenuMount/Unmount', () => {
     expect(wrapper.state().inputValue).toBeFalsy()
   })
 
-  test('Attempts to scroll to top on reset', () => {
+  test('Attempts to scroll to top on reset', async () => {
     const wrapper = mount(<SearchableDropdown />)
 
     wrapper.instance().menuWrapperNode = { scrollTop: 50 }
     wrapper.instance().resetInputValue()
 
-    expect(wrapper.instance().menuWrapperNode.scrollTop).toBe(0)
+    await waitFor(() => {
+      expect(wrapper.instance().menuWrapperNode.scrollTop).toBe(0)
+    })
   })
 })
 

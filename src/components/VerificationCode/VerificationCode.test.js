@@ -225,9 +225,6 @@ describe('Input KeyUp', () => {
 
     expect(onChangeSpy).toHaveBeenCalled()
     expect(wrapper.instance().digitMaskNodes[0].innerText).toBe('')
-    expect(document.activeElement).toStrictEqual(
-      wrapper.instance().digitInputNodes[0]
-    )
   })
 
   test('should clear all on backspace if something selected ', () => {

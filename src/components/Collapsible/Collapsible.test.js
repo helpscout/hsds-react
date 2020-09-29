@@ -1,4 +1,5 @@
 import React from 'react'
+import { render, waitFor } from '@testing-library/react'
 import { mount } from 'enzyme'
 import Collapsible from './Collapsible'
 
@@ -77,44 +78,52 @@ describe('Collapsible', () => {
     })
 
     test('Height is auto with no child and when open', () => {
-      const wrapper = mount(<Collapsible />)
-      const o = wrapper.find('div.c-Collapsible').getDOMNode()
-      wrapper.setProps({ isOpen: true })
+      const { container } = render(<Collapsible isOpen />)
 
-      jest.runAllTimers()
-
-      expect(o.style['height']).toBe('auto')
+      expect(
+        window.getComputedStyle(container.querySelector('div.c-Collapsible'))
+          .height
+      ).toBe('auto')
     })
 
-    test('Height is 0px when collapsed', () => {
-      const wrapper = mount(
+    test('Height is 0px when collapsed', async () => {
+      const { container, rerender } = render(
         <Collapsible isOpen duration={0}>
           <div style={{ height: 200 }} />
         </Collapsible>
       )
-      let o = wrapper.find('div.c-Collapsible').getDOMNode()
 
-      expect(o.style['height']).toBe('auto')
+      expect(
+        window.getComputedStyle(container.querySelector('div.c-Collapsible'))
+          .height
+      ).toBe('auto')
 
-      wrapper.setProps({ isOpen: false })
+      rerender(<Collapsible isOpen={false} />)
 
-      jest.runAllTimers()
-
-      o = wrapper.find('div.c-Collapsible').getDOMNode()
-      expect(o.style['height']).toBe('0px')
+      await waitFor(() => {
+        expect(
+          window.getComputedStyle(container.querySelector('div.c-Collapsible'))
+            .height
+        ).toBe('0px')
+      })
     })
 
-    test('Height is set to auto when animationState is open', () => {
-      const wrapper = mount(<Collapsible />)
-      let o = wrapper.find('div.c-Collapsible').getDOMNode()
+    test('Height is set to auto when animationState is open', async () => {
+      const { container, rerender } = render(<Collapsible />)
 
-      expect(o.style['height']).toBe('0px')
-      wrapper.setProps({ isOpen: true })
+      expect(
+        window.getComputedStyle(container.querySelector('div.c-Collapsible'))
+          .height
+      ).toBe('0px')
 
-      jest.runAllTimers()
+      rerender(<Collapsible isOpen />)
 
-      o = wrapper.find('div.c-Collapsible').getDOMNode()
-      expect(o.style['height']).toBe('auto')
+      await waitFor(() => {
+        expect(
+          window.getComputedStyle(container.querySelector('div.c-Collapsible'))
+            .height
+        ).toBe('auto')
+      })
     })
   })
 
@@ -128,32 +137,36 @@ describe('Collapsible', () => {
       expect(prevState.height).toBe(wrapper.state().height)
     })
 
-    test('Runs through open states on various timing sequences', () => {
+    test('Runs through open states on various timing sequences', async () => {
       const wrapper = mount(<Collapsible />)
 
       expect(wrapper.state().animationState).toBe('idle')
 
       wrapper.setProps({ isOpen: true })
 
-      expect(wrapper.state().animationState).toBe('opening')
+      await waitFor(() => {
+        expect(wrapper.state().animationState).toBe('opening')
+      })
 
-      jest.runAllTimers()
-
-      expect(wrapper.state().animationState).toBe('opened')
+      await waitFor(() => {
+        expect(wrapper.state().animationState).toBe('opened')
+      })
     })
 
-    test('Runs through open states on various timing sequences', () => {
+    test('Runs through open states on various timing sequences', async () => {
       const wrapper = mount(<Collapsible isOpen />)
 
       expect(wrapper.state().animationState).toBe('idle')
 
       wrapper.setProps({ isOpen: false })
 
-      expect(wrapper.state().animationState).toBe('closing')
+      await waitFor(() => {
+        expect(wrapper.state().animationState).toBe('closing')
+      })
 
-      jest.runAllTimers()
-
-      expect(wrapper.state().animationState).toBe('closed')
+      await waitFor(() => {
+        expect(wrapper.state().animationState).toBe('closed')
+      })
     })
   })
 

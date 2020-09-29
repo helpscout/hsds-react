@@ -1,4 +1,5 @@
 import React from 'react'
+import { waitFor } from '@testing-library/react'
 import { mount } from 'enzyme'
 import DropdownContainer from '../Dropdown.Container'
 
@@ -14,14 +15,16 @@ describe('Prop changes', () => {
     expect(store.getState().items).toEqual([])
   })
 
-  test('Update store on isOpen change', () => {
+  test('Update store on isOpen change', async () => {
     const wrapper = mount(<DropdownContainer isOpen={false} />)
 
     wrapper.setProps({ isOpen: true })
 
-    const store = wrapper.instance().store
+    await waitFor(() => {
+      const store = wrapper.instance().store
 
-    expect(store.getState().isOpen).toEqual(true)
+      expect(store.getState().isOpen).toEqual(true)
+    })
   })
 
   test('Update store on index change', () => {

@@ -112,7 +112,6 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "@helpscout/colorway": "0.6.0",
-    "@helpscout/cyan": "0.12.1",
     "@helpscout/fancy": "^2.2.8",
     "@helpscout/helix": "^0.1.0",
     "@helpscout/hsds-illos": "1.7.1",

@@ -1,4 +1,5 @@
 import React from 'react'
+import { waitFor } from '@testing-library/react'
 import { mount } from 'enzyme'
 import { MenuContainer } from '../Dropdown.MenuContainer'
 import { initialState } from '../Dropdown.store'
@@ -96,7 +97,7 @@ describe('Portal', () => {
     expect(spy).toHaveBeenCalled()
   })
 
-  test('Adjusts position on Portal mount', () => {
+  test('Adjusts position on Portal mount', async () => {
     const spy = jest.fn()
     const wrapper = mount(<MenuContainer isOpen={true} />)
 
@@ -107,7 +108,9 @@ describe('Portal', () => {
 
     portal.props().onOpen()
 
-    expect(spy).toHaveBeenCalled()
+    await waitFor(() => {
+      expect(spy).toHaveBeenCalled()
+    })
   })
 
   test('Refocuses triggerNode on close', () => {
