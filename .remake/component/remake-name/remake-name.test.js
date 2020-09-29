@@ -1,18 +1,22 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import { render, waitFor } from '@testing-library/react'
+import user from '@testing-library/user-event'
 import <%= name %> from '../<%= name %>'
 
-describe('className', () => {
-  test('Has default className', () => {
-    const wrapper = mount(<<%= name %> />)
+describe('renders', () => {
+  test('Should render something', () => {
+    const { getByText } = render(<<%= name %> />)
 
-    expect(wrapper.find('.c-<%= name %>').length).toBeTruthy()
+    expect(getByText('')).toBeInTheDocument()
   })
+  
+  test('Should do something', async () => {
+    const { getByRole } = render(<<%= name %> />)
 
-  test('Can render custom className', () => {
-    const customClassName = 'blue'
-    const wrapper = mount(<<%= name %> className={customClassName} />)
+    user.click(getByRole('button'))
 
-    expect(wrapper.hasClass(customClassName)).toBeTruthy()
+    await waitFor(() => {
+      expect(true).toBeTruthy()
+    })
   })
 })

@@ -1,8 +1,18 @@
 # Writing tests
 
-In this guide, we'll walk through writing test for our [custom `Strong` component](creating.md) in [Storybook](https://storybook.js.org/).
+In this guide, we'll walk through writing test for a custom `Input` component.
 
-HSDS uses [Jest](https://jestjs.io/) and [Enzyme](https://github.com/airbnb/enzyme) for testing.
+HSDS uses [Jest](https://jestjs.io/) as the testing framework and [React Testing Library](https://testing-library.com/) to write the actual tests.
+
+We also have included the [User Event](https://www.npmjs.com/package/@testing-library/user-event) package to make writing tests that need simulating user events easier and more readable.
+
+In the past we have used [Enzyme](https://github.com/airbnb/enzyme) for testing, and a lot of tests still uses it, but do try to write your tests using the above.
+
+**Tips**
+
+- Test the _output_ of your rendered components, [debug](https://testing-library.com/docs/react-testing-library/api#debug) is your friend.
+- Avoid testing implementation details (internal `state` for example) that enzyme tends to encourage.
+- [Check these guiding principles](https://testing-library.com/docs/guiding-principles)
 
 ## Directory
 
@@ -11,32 +21,44 @@ All of HSDS's component test files are scoped in the same directory as the compo
 ```
 hsds-react/
   └── components/
-      └── Strong/
-          └── Strong.test.js
+      └── Input/
+          └── Input.test.js
 ```
 
 ## Base test code
 
-In our `Strong.test.js` file, we'll need to add:
+In our `Input.test.js` file, we'll need to add:
 
 ```jsx
 import React from 'react'
-import { mount } from 'enzyme'
-import Strong from '../Strong'
+import { render, waitFor } from '@testing-library/react'
+import user from '@testing-library/user-event'
+import Input from '../Input'
 
-describe('classNames', () => {
-  test('Has default className', () => {
-    const wrapper = mount(<Strong />)
-    const el = wrapper.find('Strong')
+describe('Input', () => {
+  test('Should render', () => {
+    const { getByLabelText } = render(<Input name="user" />)
 
-    expect(el.hasClass('c-Strong')).toBe(true)
+    expect(getByLabelText('user')).toBeInTheDocument()
+    expect(getByLabelText('user').classList.contains('c-Input')).toBe(true)
+  })
+
+  // Example of a test with user interaction
+  test('Should fire on change event when typing', async () => {
+    const spy = jest.spy()
+    const { getByLabelText } = render(<Input name="user" onChange={spy} />)
+    const input = getByLabelText('user')
+
+    user.type(input, 'hola')
+
+    // You don't always need to "waitFor" after the event simulation
+    await waitFor(() => {
+      expect(input.value).toBe('hola')
+      expect(spy).toHaveBeenCalled()
+    })
   })
 })
 ```
-
-#### `mount`
-
-HSDS favours [mount rendering vs. shallow rendering](https://blog.kentcdodds.com/why-i-never-use-shallow-rendering-c08851a68bb7) for testing. The benefits are many. The only downside is `mount` is slightly slower compared to `shallow`.
 
 ## Test development
 
@@ -82,6 +104,8 @@ Let's [write some documentation](documentation.md) to make sure other folks know
 ## See also
 
 - [Jest](https://jestjs.io/)
+- [React Testing Library](https://testing-library.com/)
+- [User Event](https://www.npmjs.com/package/@testing-library/user-event)
 - [Enzyme](https://github.com/airbnb/enzyme)
 - [Istanbul](https://istanbul.js.org/)
 - [Coveralls](https://coveralls.io/)
