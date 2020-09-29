@@ -87,6 +87,7 @@
   "dependencies": {
     "@datepicker-react/hooks": "^2.7.0",
     "@helpscout/motion": "0.0.8",
+    "@helpscout/hsds-illos": "1.8.0",
     "@helpscout/react-utils": "^2.4.0",
     "@helpscout/wedux": "0.0.11",
     "@tippyjs/react": "^4.0.2",
@@ -112,9 +113,7 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "@helpscout/colorway": "0.6.0",
-    "@helpscout/fancy": "^2.2.8",
     "@helpscout/helix": "^0.1.0",
-    "@helpscout/hsds-illos": "1.7.1",
     "@helpscout/prestart": "^0.0.9",
     "@storybook/addon-a11y": "5.3.19",
     "@storybook/addon-actions": "5.3.19",
