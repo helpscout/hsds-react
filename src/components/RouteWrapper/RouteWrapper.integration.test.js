@@ -1,5 +1,5 @@
 import React from 'react'
-import { cy } from '@helpscout/cyan'
+import { render } from '@testing-library/react'
 import { BrowserRouter, HashRouter } from 'react-router-dom'
 import RouteWrapper from './RouteWrapper'
 
@@ -17,67 +17,67 @@ describe('RouteWrapper', () => {
   test('Can create a component that can render', () => {
     const Link = RouteWrapper(BaseLink)
 
-    cy.render(<Link href="/hello" target="_blank" />)
+    const { container } = render(<Link href="/hello" target="_blank" />)
 
-    const el = cy.get('a')
+    const el = container.querySelector('a')
 
-    expect(el.attr('href')).toBe('/hello')
-    expect(el.attr('target')).toBe('_blank')
+    expect(el.getAttribute('href')).toBe('/hello')
+    expect(el.getAttribute('target')).toBe('_blank')
   })
 
   test('Renders the routable to attribute with the router basename', () => {
     const Link = RouteWrapper(BaseLink)
 
-    cy.render(
+    const { container } = render(
       <BrowserRouter basename="/some/nested/base/name">
         <Link to="/hello" />
       </BrowserRouter>
     )
 
-    const el = cy.get('a')
+    const el = container.querySelector('a')
 
-    expect(el.attr('href')).toBe('/some/nested/base/name/hello')
+    expect(el.getAttribute('href')).toBe('/some/nested/base/name/hello')
   })
 
   test('Renders the routable to attribute with hash, if within HashRouter', () => {
     const Link = RouteWrapper(BaseLink)
 
-    cy.render(
+    const { container } = render(
       <HashRouter basename="/some/nested/base/name">
         <Link to="/hello" />
       </HashRouter>
     )
 
-    const el = cy.get('a')
+    const el = container.querySelector('a')
 
-    expect(el.attr('href')).toBe('#/some/nested/base/name/hello')
+    expect(el.getAttribute('href')).toBe('#/some/nested/base/name/hello')
   })
 
   test('Renders routable to with nested paths', () => {
     const Link = RouteWrapper(BaseLink)
 
-    cy.render(
+    const { container } = render(
       <BrowserRouter basename="/some/nested/base/name">
         <Link to="/hello/there/" />
       </BrowserRouter>
     )
 
-    const el = cy.get('a')
+    const el = container.querySelector('a')
 
-    expect(el.attr('href')).toBe('/some/nested/base/name/hello/there')
+    expect(el.getAttribute('href')).toBe('/some/nested/base/name/hello/there')
   })
 
   test('Renders pathname without param matchers', () => {
     const Link = RouteWrapper(BaseLink)
 
-    cy.render(
+    const { container } = render(
       <BrowserRouter basename="/some/nested/base/name">
         <Link to="/hello/:post/:id/there" />
       </BrowserRouter>
     )
 
-    const el = cy.get('a')
+    const el = container.querySelector('a')
 
-    expect(el.attr('href')).toBe('/some/nested/base/name/hello/there')
+    expect(el.getAttribute('href')).toBe('/some/nested/base/name/hello/there')
   })
 })

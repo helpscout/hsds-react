@@ -1,5 +1,5 @@
 import React from 'react'
-import cy from '@helpscout/cyan'
+import { render } from '@testing-library/react'
 import { mount } from 'enzyme'
 import Chat from '../Message.Chat'
 import ChatBlock from '../Message.ChatBlock'
@@ -14,20 +14,6 @@ const ui = {
   metaState: `.${cx}__metaState`,
   loadingSpinner: `.${cx}__loadingSpinner`,
 }
-
-describe('ClassNames', () => {
-  test('Has default className', () => {
-    const wrapper = mount(<Chat />)
-
-    expect(wrapper.length).toBeTruthy()
-  })
-
-  test('Accepts custom classNames', () => {
-    const wrapper = mount(<Chat className="mugatu" />)
-
-    expect(wrapper.getDOMNode().classList.contains('mugatu')).toBeTruthy()
-  })
-})
 
 describe('Bubble', () => {
   test('Contains Bubble component', () => {
@@ -186,45 +172,41 @@ describe('Loading', () => {
 
 describe('Meta', () => {
   test('Renders meta', () => {
-    const wrapper = cy.render(<Chat caption="test" />)
+    const { container } = render(<Chat caption="test" />)
 
-    expect(wrapper.get('.c-MessageChat__meta').exists()).toBeTruthy()
-    expect(wrapper.get('.c-MessageChat__meta').text()).toBe('test')
+    expect(container.querySelector('.c-MessageChat__meta')).toBeInTheDocument()
+    expect(container.querySelector('.c-MessageChat__meta').textContent).toBe(
+      'test'
+    )
   })
 
   test('Renders meta before the bubble', () => {
-    const wrapper = cy.render(<Chat caption="test" metaPosition="top" />)
+    const { container } = render(<Chat caption="test" metaPosition="top" />)
 
     expect(
-      wrapper
-        .get('.c-MessageChatBlock')
-        .children()
-        .first()
-        .hasClassName('c-MessageChat__meta')
+      container
+        .querySelector('.c-MessageChatBlock')
+        .children[0].classList.contains('c-MessageChat__meta')
     ).toBeTruthy()
   })
 
   test('Renders meta after bubble by default', () => {
-    const wrapper = cy.render(<Chat caption="test" />)
+    const { container } = render(<Chat caption="test" />)
+
+    const children = container.querySelector('.c-MessageChatBlock').children
 
     expect(
-      wrapper
-        .get('.c-MessageChatBlock')
-        .children()
-        .last()
-        .hasClassName('c-MessageChat__meta')
+      children[children.length - 1].classList.contains('c-MessageChat__meta')
     ).toBeTruthy()
   })
 
   test('Renders meta after bubble when passing random value', () => {
-    const wrapper = cy.render(<Chat caption="test" metaPostion="noclue" />)
+    const { container } = render(<Chat caption="test" metaPostion="noclue" />)
+
+    const children = container.querySelector('.c-MessageChatBlock').children
 
     expect(
-      wrapper
-        .get('.c-MessageChatBlock')
-        .children()
-        .last()
-        .hasClassName('c-MessageChat__meta')
+      children[children.length - 1].classList.contains('c-MessageChat__meta')
     ).toBeTruthy()
   })
 })

@@ -17,9 +17,9 @@ class TypingDots extends React.PureComponent {
 
     return (
       <TypingDotsUI {...getValidProps(rest)} className={this.getClassName()}>
-        <DotUI delay="0s" opacity="1" />
-        <DotUI delay="-1.1s" opacity=".6" />
-        <DotUI delay="-0.9s" opacity=".2" />
+        <DotUI className="Dot" delay="0s" opacity="1" />
+        <DotUI className="Dot" delay="-1.1s" opacity=".6" />
+        <DotUI className="Dot" delay="-0.9s" opacity=".2" />
       </TypingDotsUI>
     )
   }

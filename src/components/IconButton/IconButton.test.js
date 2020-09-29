@@ -1,144 +1,135 @@
 import React from 'react'
-import { cy } from '@helpscout/cyan'
+import { render } from '@testing-library/react'
+import user from '@testing-library/user-event'
 import IconButton from './IconButton'
 import '../../adapters/app'
 
-describe('className', () => {
-  test('Has default className', () => {
-    const wrapper = cy.render(<IconButton />)
-
-    expect(wrapper.hasClass('c-IconButton')).toBeTruthy()
-  })
-
-  test('Can render custom className', () => {
-    const customClassName = 'blue'
-    const wrapper = cy.render(<IconButton className={customClassName} />)
-
-    expect(wrapper.hasClass(customClassName)).toBeTruthy()
-  })
-})
-
 describe('Icon', () => {
   test('Renders an Icon component', () => {
-    cy.render(<IconButton />)
-    expect(cy.get('.c-Icon').exists()).toBeTruthy()
+    const { container } = render(<IconButton />)
+
+    expect(container.querySelector('.c-Icon')).toBeTruthy()
   })
 
   test('Renders an Icon SVG', () => {
-    const wrapper = cy.render(<IconButton />)
+    const { container } = render(<IconButton />)
 
-    expect(wrapper.find('svg').exists()).toBeTruthy()
+    expect(container.querySelector('svg')).toBeInTheDocument()
   })
 
   test('Can customize Icon SVG', () => {
-    const wrapper = cy.render(<IconButton icon="chat" />)
+    const { container } = render(<IconButton icon="chat" />)
 
-    expect(wrapper.find('[data-icon-name="chat"]').exists()).toBeTruthy()
-    expect(wrapper.find('svg').exists()).toBeTruthy()
+    expect(
+      container.querySelector('[data-icon-name="chat"]')
+    ).toBeInTheDocument()
+    expect(container.querySelector('svg')).toBeInTheDocument()
   })
 
   test('Can customize Icon size', () => {
-    const wrapper = cy.render(<IconButton icon="chat" iconSize={20} />)
-    const icon = wrapper.get('.c-Icon')
+    const { container } = render(<IconButton icon="chat" iconSize={20} />)
+    const icon = container.querySelector('.c-Icon')
 
-    expect(icon.style('height')).toBe('20px')
-    expect(icon.style('width')).toBe('20px')
+    expect(window.getComputedStyle(icon).height).toBe('20px')
+    expect(window.getComputedStyle(icon).width).toBe('20px')
   })
 
   test('Can render with caret', () => {
-    const wrapper = cy.render(<IconButton withCaret />)
-    const icon = wrapper.get('.c-Icon')
+    const { container } = render(<IconButton withCaret />)
+    const icon = container.querySelector('.c-Icon')
 
-    expect(icon.find('.is-caret').exists()).toBeTruthy()
+    expect(icon.querySelector('.is-caret')).toBeInTheDocument()
   })
 
   test('Does not render with caret by default', () => {
-    const wrapper = cy.render(<IconButton />)
-    const icon = wrapper.get('.c-Icon')
+    const { container } = render(<IconButton />)
+    const icon = container.querySelector('.c-Icon')
 
-    expect(icon.find('.is-caret').exists()).toBeFalsy()
+    expect(icon.querySelector('.is-caret')).toBe(null)
   })
 
   test('Auto adjusts Icon size, if Button size is smaller', () => {
-    const wrapper = cy.render(<IconButton icon="chat" iconSize={24} />)
+    const { container, rerender } = render(
+      <IconButton icon="chat" iconSize={24} />
+    )
     let icon
 
-    wrapper.setProps({ size: 'sm' })
+    rerender(<IconButton icon="chat" iconSize={18} />)
 
-    icon = wrapper.get('.c-Icon')
-    expect(icon.style('height')).toBe('18px')
-    expect(icon.style('width')).toBe('18px')
+    icon = container.querySelector('.c-Icon')
+    expect(window.getComputedStyle(icon).height).toBe('18px')
+    expect(window.getComputedStyle(icon).width).toBe('18px')
 
-    wrapper.setProps({ size: 'xs' })
+    rerender(<IconButton icon="chat" iconSize={16} />)
 
-    icon = wrapper.get('.c-Icon')
-    expect(icon.style('height')).toBe('16px')
-    expect(icon.style('width')).toBe('16px')
+    icon = container.querySelector('.c-Icon')
+    expect(window.getComputedStyle(icon).height).toBe('16px')
+    expect(window.getComputedStyle(icon).width).toBe('16px')
   })
 })
 
 describe('Button', () => {
   test('Renders a button', () => {
-    cy.render(<IconButton />)
+    const { getByRole } = render(<IconButton />)
 
-    expect(cy.getByCy('IconButton').exists()).toBeTruthy()
-    expect(cy.get('button').exists()).toBeTruthy()
+    expect(getByRole('button')).toBeInTheDocument()
   })
 
   test('Renders a button with various kinds', () => {
-    const wrapper = cy.render(<IconButton kind="primary" />)
+    const { getByRole, rerender } = render(<IconButton kind="primary" />)
 
-    expect(wrapper.hasClass('is-primary')).toBeTruthy()
+    expect(getByRole('button').classList.contains('is-primary')).toBeTruthy()
 
-    wrapper.setProps({ kind: 'secondary' })
+    rerender(<IconButton kind="secondary" />)
 
-    expect(wrapper.hasClass('is-secondary')).toBeTruthy()
+    expect(getByRole('button').classList.contains('is-secondary')).toBeTruthy()
   })
 
   test('Renders a button with various sizes', () => {
-    const wrapper = cy.render(<IconButton size="lg" />)
+    const { getByRole, rerender } = render(<IconButton size="lg" />)
 
-    expect(wrapper.hasClass('is-lg')).toBeTruthy()
+    expect(getByRole('button').classList.contains('is-lg')).toBeTruthy()
 
-    wrapper.setProps({ size: 'xs' })
+    rerender(<IconButton size="xs" />)
 
-    expect(wrapper.hasClass('is-xs')).toBeTruthy()
+    expect(getByRole('button').classList.contains('is-xs')).toBeTruthy()
   })
 })
 
 describe('Events', () => {
   test('onClick callback still works', () => {
     const spy = jest.fn()
-    const wrapper = cy.render(<IconButton onClick={spy} />)
+    const { getByRole } = render(<IconButton onClick={spy} />)
 
-    wrapper.click()
+    user.click(getByRole('button'))
 
     expect(spy).toHaveBeenCalled()
   })
 
   test('onBlur callback still works', () => {
     const spy = jest.fn()
-    const wrapper = cy.render(<IconButton onBlur={spy} />)
+    const { getByRole } = render(<IconButton onBlur={spy} />)
 
-    wrapper.blur()
+    getByRole('button').focus()
+    getByRole('button').blur()
 
     expect(spy).toHaveBeenCalled()
   })
 
   test('onFocus callback still works', () => {
     const spy = jest.fn()
-    const wrapper = cy.render(<IconButton onFocus={spy} />)
+    const { getByRole } = render(<IconButton onFocus={spy} />)
 
-    wrapper.focus()
+    getByRole('button').focus()
 
     expect(spy).toHaveBeenCalled()
   })
 
   test('Clicking on the Icon propagates event to Button', () => {
     const spy = jest.fn()
-    const wrapper = cy.render(<IconButton onClick={spy} />)
+    const { container } = render(<IconButton onClick={spy} />)
 
-    wrapper.get('.c-Icon').click()
+    user.click(container.querySelector('.c-Icon'))
 
     expect(spy).toHaveBeenCalled()
   })
@@ -146,29 +137,39 @@ describe('Events', () => {
 
 describe('Styles', () => {
   test('Renders borderless, by default', () => {
-    const wrapper = cy.render(<IconButton />)
-    expect(wrapper.style('border-color')).toBe('transparent')
+    const { container } = render(<IconButton />)
+    expect(
+      window.getComputedStyle(container.querySelector('.c-IconButton'))
+        .borderColor
+    ).toBe('transparent')
   })
 
   test('Can render with border styles', () => {
-    const wrapper = cy.render(
+    const { container } = render(
       <IconButton kind="secondary" isBorderless={false} />
     )
 
-    expect(wrapper.style('border-color')).not.toBe('transparent')
+    expect(
+      window.getComputedStyle(container.querySelector('.c-IconButton'))
+        .borderColor
+    ).not.toBe('transparent')
   })
 
   test('Renders a circle shape, by default', () => {
-    const wrapper = cy.render(<IconButton />)
-    const borderRadius = wrapper.style('border-radius')
+    const { container } = render(<IconButton />)
+    const borderRadius = window.getComputedStyle(
+      container.querySelector('.c-IconButton')
+    ).borderRadius
     const value = borderRadius && parseInt(borderRadius, 10)
 
     expect(value).toBeGreaterThan(100)
   })
 
   test('Shape can be set to not render a circle', () => {
-    const wrapper = cy.render(<IconButton shape="default" />)
-    const borderRadius = wrapper.style('border-radius')
+    const { container } = render(<IconButton shape="default" />)
+    const borderRadius = window.getComputedStyle(
+      container.querySelector('.c-IconButton')
+    ).borderRadius
     const value = borderRadius && parseInt(borderRadius, 10)
 
     expect(value).toBeLessThan(100)

@@ -1,5 +1,6 @@
 import React from 'react'
-import { cy } from '@helpscout/cyan'
+import { render as renderComponent } from '@testing-library/react'
+import user from '@testing-library/user-event'
 import { mount, shallow, render } from 'enzyme'
 import Input from '../Input'
 import Resizer from '../Input.Resizer'
@@ -1115,12 +1116,14 @@ describe('onEnterUp', () => {
 describe('inputType', () => {
   test('Removes characters for number inputType', () => {
     const spy = jest.fn()
-    const wrapper = cy.render(<Input inputType="number" onChange={spy} />)
-    const el = wrapper.get('input')
+    const { container } = renderComponent(
+      <Input inputType="number" onChange={spy} />
+    )
+    const input = container.querySelector('input')
 
-    el.type('abc123def ~!@#$%^&*()-=[]')
+    user.type(input, 'abc123def ~!@#$%^&*()-=[]')
 
-    expect(el.attr('value')).toBe('123')
+    expect(input.value).toBe('123')
     expect(spy).toHaveBeenCalledWith('123')
   })
 })

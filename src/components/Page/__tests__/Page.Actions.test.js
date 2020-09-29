@@ -1,93 +1,67 @@
 import React from 'react'
-import { act } from 'react-dom/test-utils'
-import { cy } from '@helpscout/cyan'
+import { render, act } from '@testing-library/react'
 import Page from '../Page'
 import Actions from '../Page.Actions'
 
-describe('ClassName', () => {
-  test('Has default className', () => {
-    const wrapper = cy.render(<Actions />)
-    const el = wrapper.find('.c-PageActions')
-
-    expect(el.exists()).toBe(true)
-  })
-
-  test('Applies custom className if specified', () => {
-    const className = 'channel-4'
-    const wrapper = cy.render(<Actions className={className} />)
-    const el = wrapper.find('.c-PageActions')
-
-    expect(el.hasClass(className)).toBe(true)
-  })
-})
-
-describe('Content', () => {
-  test('Does not renders child content', () => {
-    const wrapper = cy.render(<Actions>Channel 4</Actions>)
-
-    expect(wrapper.text()).not.toBe('Channel 4')
-  })
-})
-
 describe('Direction', () => {
   test('Renders right-aligned, by default', () => {
-    const wrapper = cy.render(<Actions />)
-    const el = wrapper.find('.c-PageActions')
+    const { container } = render(<Actions />)
+    const el = container.querySelector('.c-PageActions')
 
-    expect(el.hasClass('is-right')).toBe(true)
+    expect(el.classList.contains('is-right')).toBeTruthy()
   })
 
   test('Can render left-aligned, if specified', () => {
-    const wrapper = cy.render(<Actions direction="left" />)
-    const el = wrapper.find('.c-PageActions')
+    const { container } = render(<Actions direction="left" />)
+    const el = container.querySelector('.c-PageActions')
 
-    expect(el.hasClass('is-right')).toBe(false)
-    expect(el.hasClass('is-left')).toBe(true)
+    expect(el.classList.contains('is-right')).toBeFalsy()
+    expect(el.classList.contains('is-left')).toBeTruthy()
   })
 })
 
 describe('Slots', () => {
   test('Can render in primary slot', () => {
-    const wrapper = cy.render(<Actions primary={<button />} />)
-    const el = wrapper.find('.c-PageActions')
+    const { container } = render(<Actions primary={<button />} />)
+    const el = container.querySelector('.c-PageActions')
 
-    expect(cy.get('button').length).toBeTruthy()
-    expect(el.hasClass('withPrimary')).toBeTruthy()
+    expect(container.querySelector('button')).toBeInTheDocument()
+    expect(el.classList.contains('withPrimary')).toBeTruthy()
   })
 
   test('Can render in secondary slot', () => {
-    const wrapper = cy.render(
+    const { container } = render(
       <Actions
         primary={<button id="primary" />}
         secondary={<button id="secondary" />}
       />
     )
-    const el = wrapper.find('.c-PageActions')
+    const el = container.querySelector('.c-PageActions')
 
-    expect(cy.get('#primary').exists()).toBeTruthy()
-    expect(cy.get('#secondary').exists()).toBeTruthy()
+    expect(container.querySelector('#primary')).toBeTruthy()
+    expect(container.querySelector('#secondary')).toBeTruthy()
 
-    expect(el.hasClass('withPrimary')).toBe(true)
-    expect(el.hasClass('withSecondary')).toBe(true)
+    expect(el.classList.contains('withPrimary')).toBeTruthy()
+    expect(el.classList.contains('withSecondary')).toBeTruthy()
   })
 
   test('Can render in serious slot', () => {
-    const wrapper = cy.render(
+    const { container } = render(
       <Actions
         primary={<button id="primary" />}
         secondary={<button id="secondary" />}
         serious={<button id="serious" />}
       />
     )
-    const el = wrapper.find('.c-PageActions')
+    const el = container.querySelector('.c-PageActions')
 
-    expect(cy.get('#primary').exists()).toBeTruthy()
-    expect(cy.get('#secondary').exists()).toBeTruthy()
-    expect(cy.get('#serious').exists()).toBeTruthy()
+    expect(container.querySelector('#primary')).toBeTruthy()
+    expect(container.querySelector('#secondary')).toBeTruthy()
+    expect(container.querySelector('#serious')).toBeTruthy()
 
-    expect(el.hasClass('withPrimary')).toBe(true)
-    expect(el.hasClass('withSecondary')).toBe(true)
-    expect(el.hasClass('withSerious')).toBe(true)
+    expect(el.classList.contains('withPrimary')).toBeTruthy()
+    expect(el.classList.contains('withSecondary')).toBeTruthy()
+    expect(el.classList.contains('withSerious')).toBeTruthy()
   })
 })
 
@@ -114,49 +88,47 @@ describe('Sticky', () => {
   })
 
   test('Does not render sticky wrapper, by default', () => {
-    const wrapper = cy.render(<Actions />)
-    const el = wrapper.find('.c-PageActions__stickyWrapper')
+    const { container } = render(<Actions />)
+    const el = container.querySelector('.c-PageActions__stickyWrapper')
 
-    expect(el.exists()).toBeFalsy()
+    expect(el).toBe(null)
   })
 
   test('Renders sticky wrapper, if defined', () => {
-    const wrapper = cy.render(<Actions isSticky={true} />)
-    const el = wrapper.find('.c-PageActions__stickyWrapper')
+    const { container } = render(<Actions isSticky={true} />)
+    const el = container.querySelector('.c-PageActions__stickyWrapper')
 
-    expect(el.exists()).toBeTruthy()
+    expect(el).toBeTruthy()
   })
 
   test('Can remove sticky wrapper', () => {
-    const wrapper = cy.render(<Actions isSticky={true} />)
+    const { container, rerender } = render(<Actions isSticky />)
 
-    act(() => {
-      wrapper.setProps({ isSticky: false })
-    })
+    rerender(<Actions isSticky={false} />)
 
-    const el = wrapper.find('.c-PageActions__stickyWrapper')
+    const el = container.querySelector('.c-PageActions__stickyWrapper')
 
-    expect(el.exists()).toBeFalsy()
+    expect(el).toBe(null)
   })
 
   test('Renders a responsive (inner) Page component that wraps sticky actions', () => {
-    cy.render(
-      <Page isResponsive={true}>
+    const { container, rerender } = render(
+      <Page isResponsive>
         <Actions isSticky />
       </Page>
     )
 
-    let el = cy.get('.c-Page .c-Page')
-    expect(el.hasClass('is-responsive')).toBeTruthy()
+    let el = container.querySelector('.c-Page .c-Page')
+    expect(el.classList.contains('is-responsive')).toBeTruthy()
 
-    cy.render(
+    rerender(
       <Page isResponsive={false}>
         <Actions isSticky />
       </Page>
     )
 
-    el = cy.get('.c-Page .c-Page')
-    expect(el.hasClass('is-responsive')).toBeFalsy()
+    el = container.querySelector('.c-Page .c-Page')
+    expect(el.classList.contains('is-responsive')).toBeFalsy()
   })
 
   test('Starts an IntersectionObserver on render', () => {
@@ -167,7 +139,7 @@ describe('Sticky', () => {
       disconnect: jest.fn(),
     })
 
-    cy.render(<Actions isSticky />)
+    render(<Actions isSticky />)
 
     expect(spy).toHaveBeenCalled()
   })
@@ -181,11 +153,11 @@ describe('Sticky', () => {
       disconnect: jest.fn(),
     })
 
-    const wrapper = cy.render(<Actions isSticky />)
+    const { unmount } = render(<Actions isSticky />)
 
     expect(spy).not.toHaveBeenCalled()
 
-    wrapper.unmount()
+    unmount()
 
     expect(spy).toHaveBeenCalled()
   })
@@ -197,9 +169,7 @@ describe('Sticky', () => {
 
     window.IntersectionObserver = MockIntersectionObserver
 
-    cy.render(
-      <Actions isSticky onStickyStart={startSpy} onStickyEnd={endSpy} />
-    )
+    render(<Actions isSticky onStickyStart={startSpy} onStickyEnd={endSpy} />)
 
     act(() => {
       // Mock the IntersectionObserver event

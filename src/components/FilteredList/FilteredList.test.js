@@ -1,35 +1,17 @@
 import React from 'react'
-import { cy } from '@helpscout/cyan'
+import { render } from '@testing-library/react'
 import { mount } from 'enzyme'
-
 import { Tooltip } from '..'
-
 import { FilteredList } from './FilteredList'
-import {
-  FilteredListUI,
-  ItemUI,
-  BadgeUI,
-  SeparatorUI,
-} from './FilteredList.css'
+import { ItemUI, BadgeUI, SeparatorUI } from './FilteredList.css'
 
 describe('Rendering', () => {
-  it('Renders the component', () => {
-    const wrapper = mount(<FilteredList />)
-
-    expect(wrapper.find(FilteredListUI).length).toBeTruthy()
-  })
-
   it('Renders a list of items', () => {
     const items = ['test@test.com', 'test2@test.com']
     const wrapper = mount(<FilteredList items={items} />)
 
     expect(wrapper.find(ItemUI).length).toBe(items.length)
-    expect(
-      wrapper
-        .find(ItemUI)
-        .first()
-        .text()
-    ).toBe(items[0])
+    expect(wrapper.find(ItemUI).first().text()).toBe(items[0])
   })
 
   it('Should not re-renderer the component if items are the same', () => {
@@ -80,12 +62,9 @@ describe('Badge', () => {
     const limit = 1
     const wrapper = mount(<FilteredList items={items} limit={limit} />)
 
-    expect(
-      wrapper
-        .find(BadgeUI)
-        .first()
-        .text()
-    ).toBe(`+${items.length - limit}`)
+    expect(wrapper.find(BadgeUI).first().text()).toBe(
+      `+${items.length - limit}`
+    )
 
     expect(wrapper.find(ItemUI).length).toBe(items.length - limit)
   })
@@ -95,12 +74,7 @@ describe('Badge', () => {
     const limit = 1
     const wrapper = mount(<FilteredList items={items} limit={limit} />)
 
-    expect(
-      wrapper
-        .find(ItemUI)
-        .last()
-        .find(BadgeUI).length
-    ).toBeTruthy()
+    expect(wrapper.find(ItemUI).last().find(BadgeUI).length).toBeTruthy()
   })
   it('Does not render a badge if limit is null', () => {
     const items = ['test@test.com', 'test2@test.com']
@@ -146,9 +120,9 @@ describe('Tooltip', () => {
     ]
     const limit = 1
     const component = <FilteredList items={items} limit={limit} />
-    cy.render(component)
+    const { container } = render(component)
 
-    expect(cy.getByCy('FilteredList.Badge').text()).toBe(
+    expect(container.querySelector('.c-Badge').textContent).toBe(
       `+${items.length - limit}`
     )
 
@@ -169,7 +143,7 @@ describe('Custom Renderer', () => {
       return <a href={item.href}>{item.label}</a>
     }
 
-    cy.render(
+    const { container } = render(
       <FilteredList
         renderItem={renderItem}
         items={items}
@@ -179,13 +153,8 @@ describe('Custom Renderer', () => {
       />
     )
 
-    expect(cy.get('a').length).toBe(3)
-    expect(
-      cy
-        .get('a')
-        .first()
-        .text()
-    ).toBe('Google')
+    expect(container.querySelectorAll('a').length).toBe(3)
+    expect(container.querySelectorAll('a')[0].textContent).toBe('Google')
   })
 
   it('Renders the item using a different item key', () => {
@@ -195,14 +164,9 @@ describe('Custom Renderer', () => {
       { label: 'DuckDuckGo', href: 'https://duckduckgo.com' },
     ]
 
-    cy.render(<FilteredList items={items} itemKey="href" />)
+    const { getByText } = render(<FilteredList items={items} itemKey="href" />)
 
-    expect(
-      cy
-        .getByCy('FilteredList.ItemLabel')
-        .first()
-        .text()
-    ).toBe('https://google.com')
+    expect(getByText('https://google.com')).toBeInTheDocument()
   })
 
   it('Should update if the value of one item change ', () => {

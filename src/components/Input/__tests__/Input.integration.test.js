@@ -1,5 +1,5 @@
 import React from 'react'
-import { cy } from '@helpscout/cyan'
+import { render } from '@testing-library/react'
 import Input from '../index'
 
 describe('Input', () => {
@@ -9,25 +9,24 @@ describe('Input', () => {
         state: 'error',
         errorMessage: 'some error',
       }
-      cy.render(<Input {...props} />)
+      const { container } = render(<Input {...props} />)
 
-      expect(cy.get('.c-Input__errorIcon').exists()).toBeTruthy()
+      expect(container.querySelector('.c-Input__errorIcon')).toBeInTheDocument()
     })
 
     test('Can style the input to be red upon an error', () => {
-      cy.render(<Input state={'error'} />)
-      const input = cy.get('.c-InputField.is-error')
+      const { container } = render(<Input state={'error'} />)
+      const input = container.querySelector('.c-InputField.is-error')
 
-      expect(input.exists()).toBeTruthy()
-      expect(input.style('color')).toBe('rgb(157, 31, 26)')
+      expect(input).toBeInTheDocument()
+      expect(window.getComputedStyle(input).color).toBe('rgb(157, 31, 26)')
     })
 
     test('Can render a placeholder', () => {
-      cy.render(<Input placeholder={'ho ho ho!'} />)
-      const input = cy.get('input')
+      const { container } = render(<Input placeholder={'ho ho ho!'} />)
+      const input = container.querySelector('input')
 
-      expect(input.hasAttribute('placeholder')).toBeTruthy()
-      expect(input.attr('placeholder')).toBe('ho ho ho!')
+      expect(input.getAttribute('placeholder')).toBe('ho ho ho!')
     })
 
     test('Can render a label and sub label (help text)', () => {
@@ -35,16 +34,20 @@ describe('Input', () => {
         label: 'label text',
         helpText: 'sub text',
       }
-      cy.render(<Input {...props} />)
+      const { container } = render(<Input {...props} />)
 
-      expect(cy.get('label').text('label text')).toBeTruthy()
-      expect(cy.get('.c-HelpText').text('sub text')).toBeTruthy()
+      expect(container.querySelector('label').textContent).toBe('label text')
+      expect(container.querySelector('.c-HelpText').textContent).toBe(
+        'sub text'
+      )
     })
 
     test('Can render a multiline input with a max-height', () => {
-      cy.render(<Input maxHeight={420} multiline={true} />)
+      const { container } = render(<Input maxHeight={420} multiline={true} />)
 
-      expect(cy.get('textArea').style('max-height')).toBe('420px')
+      expect(
+        window.getComputedStyle(container.querySelector('textArea')).maxHeight
+      ).toBe('420px')
     })
   })
 })

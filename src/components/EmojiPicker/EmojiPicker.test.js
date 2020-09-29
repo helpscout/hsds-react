@@ -1,106 +1,87 @@
 import React from 'react'
-import { cy } from '@helpscout/cyan'
+import { render, waitFor } from '@testing-library/react'
+import user from '@testing-library/user-event'
 import EmojiPicker from './index'
 import EmojiItem from './EmojiPicker.Item'
 
-cy.useFakeTimers()
-
-describe('className', () => {
-  test('Has default className', () => {
-    const wrapper = cy.render(<EmojiPicker />)
-
-    expect(wrapper.hasClass('c-EmojiPicker')).toBeTruthy()
-  })
-
-  test('Can render custom className', () => {
-    const customClassName = 'blue'
-    const wrapper = cy.render(<EmojiPicker className={customClassName} />)
-
-    expect(wrapper.hasClass(customClassName)).toBeTruthy()
-  })
-})
-
-describe('HTML props', () => {
-  test('Can render default HTML props', () => {
-    cy.render(<EmojiPicker data-cy="BlueBlueBlue" />)
-    const el = cy.getByCy('BlueBlueBlue')
-
-    expect(el.exists()).toBeTruthy()
-  })
-})
+jest.useFakeTimers()
 
 describe('renderTrigger', () => {
   test('Has default trigger component', () => {
-    cy.render(<EmojiPicker />)
-    const trigger = cy.get('.c-EmojiPickerTrigger')
+    const { container } = render(<EmojiPicker />)
+    const trigger = container.querySelector('.c-EmojiPickerTrigger')
 
-    expect(trigger.exists()).toBeTruthy()
+    expect(trigger).toBeInTheDocument()
   })
 
   test('Can render custom trigger', () => {
-    cy.render(
+    const { container } = render(
       <EmojiPicker
         renderTrigger={() => (
           <span className="custom-trigger">Custom Trigger</span>
         )}
       />
     )
-    const defaultTrigger = cy.get('.c-EmojiPickerTrigger')
-    const customTrigger = cy.get('.custom-trigger')
+    const defaultTrigger = container.querySelector('.c-EmojiPickerTrigger')
+    const customTrigger = container.querySelector('.custom-trigger')
 
-    expect(defaultTrigger.exists()).toBeFalsy()
-    expect(customTrigger.exists()).toBeTruthy()
+    expect(defaultTrigger).toBe(null)
+    expect(customTrigger).toBeInTheDocument()
   })
 })
 
 describe('Menu/Item', () => {
   test('Renders an Emoji correctly within a Menu/Item', () => {
-    cy.render(<EmojiPicker isOpen={true} />)
+    const { getByRole, getAllByRole } = render(<EmojiPicker isOpen={true} />)
 
-    expect(cy.get('.c-EmojiPickerMenu').exists()).toBeTruthy()
-    expect(cy.get('.c-EmojiPickerItem').exists()).toBeTruthy()
-
+    expect(getByRole('listbox')).toBeInTheDocument()
+    expect(getAllByRole('option').length).toBeTruthy()
     expect(
-      cy
-        .get('.c-EmojiPickerItem')
-        .find('[data-cy="EmojiPickerEmoji"]')
-        .exists()
-    ).toBeTruthy()
+      getAllByRole('option')[0].querySelector('.c-EmojiPickerView')
+    ).toBeInTheDocument()
   })
 })
 
 describe('onOpen', () => {
-  it('should handle onOpen event', () => {
+  it('should handle onOpen event', async () => {
     const onOpenSpy = jest.fn()
-    cy.render(<EmojiPicker onOpen={onOpenSpy} />)
-    const trigger = cy.get('.c-EmojiPickerTrigger')
+    const { container, queryByRole, getByRole } = render(
+      <EmojiPicker onOpen={onOpenSpy} />
+    )
+    const trigger = container.querySelector('.c-EmojiPickerTrigger')
 
-    expect(cy.getByCy('EmojiPickerMenu').exists()).toBeFalsy()
+    expect(queryByRole('listbox')).toBe(null)
 
-    trigger.click()
+    user.click(trigger)
 
-    expect(cy.getByCy('EmojiPickerMenu').exists()).toBeTruthy()
-    expect(onOpenSpy).toHaveBeenCalled()
+    await waitFor(() => {
+      expect(getByRole('listbox')).toBeInTheDocument()
+      expect(onOpenSpy).toHaveBeenCalled()
+    })
   })
 })
 
 describe('onClose', () => {
-  it('should handle onOpen event', () => {
+  it('should handle onOpen event', async () => {
     const onCloseSpy = jest.fn()
-    cy.render(<EmojiPicker onClose={onCloseSpy} isOpen={true} />)
+    const { container, queryByRole, getByRole } = render(
+      <EmojiPicker onClose={onCloseSpy} isOpen={true} />
+    )
 
-    expect(cy.getByCy('EmojiPickerMenu').exists()).toBeTruthy()
+    expect(getByRole('listbox')).toBeInTheDocument()
 
-    cy.type('{esc}')
+    user.type(container, '{esc}')
 
-    expect(cy.getByCy('EmojiPickerMenu').exists()).toBeFalsy()
-    expect(onCloseSpy).toHaveBeenCalled()
+    await waitFor(() => {
+      expect(queryByRole('listbox')).toBe(null)
+      expect(onCloseSpy).toHaveBeenCalled()
+    })
   })
 })
 
 describe('render EmojiItem', () => {
   test('has default content', () => {
-    cy.render(<EmojiItem />)
-    expect(cy.get('.c-EmojiPickerItem').exists()).toBeTruthy()
+    const { container } = render(<EmojiItem />)
+    expect(container.querySelector('.c-EmojiPickerItem')).toBeInTheDocument()
   })
 })

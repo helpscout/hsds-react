@@ -1,108 +1,115 @@
 import React from 'react'
-import { cy } from '@helpscout/cyan'
+import { render, waitFor } from '@testing-library/react'
+import user from '@testing-library/user-event'
 import Button from '../../Button'
 import Modal from '../index'
 
-cy.useFakeTimers()
+jest.useFakeTimers()
 
 describe('Modal', () => {
   describe('Rendering', () => {
     test('Does not render content by default', () => {
-      cy.render(
+      render(
         <Modal>
           <div className="buddy">Santa!</div>
         </Modal>
       )
 
-      expect(cy.get('.buddy').exists()).toBeFalsy()
+      expect(document.querySelector('.buddy')).toBe(null)
     })
 
     test('Can be rendered open', () => {
-      cy.render(
+      render(
         <Modal isOpen>
           <div className="buddy">Santa!</div>
         </Modal>
       )
 
-      expect(cy.get('.buddy').exists()).toBeTruthy()
+      expect(document.querySelector('.buddy')).toBeInTheDocument()
     })
   })
 
   describe('Trigger', () => {
     test('Can render with a Button trigger', () => {
-      cy.render(<Modal trigger={<Button>Click</Button>} />)
+      const { getByRole } = render(<Modal trigger={<Button>Click</Button>} />)
 
-      expect(cy.get('button').text()).toBe('Click')
+      expect(getByRole('button').textContent).toBe('Click')
     })
 
     test('Can open by clicking the trigger', () => {
-      cy.render(
+      const { getByRole } = render(
         <Modal trigger={<Button>Click</Button>}>
           <div className="buddy">Santa!</div>
         </Modal>
       )
 
-      cy.get('button').click()
+      user.click(getByRole('button'))
 
-      expect(cy.get('.buddy').exists()).toBeTruthy()
-      expect(cy.get('.buddy').html()).toContain('Santa!')
+      expect(document.querySelector('.buddy')).toBeInTheDocument()
+      expect(document.querySelector('.buddy').innerHTML).toContain('Santa!')
     })
 
     test('Refocuses the trigger on close', () => {
       const spy = jest.fn()
-      cy.render(
+      const { container } = render(
         <Modal isOpen trigger={<Button onFocus={spy}>Click</Button>}>
           <div className="buddy">Santa!</div>
         </Modal>
       )
 
-      cy.type('{esc}')
+      user.type(container, '{esc}')
 
       expect(spy).toHaveBeenCalled()
     })
   })
 
   describe('Opening/Closing', () => {
-    test('Can be closed by clicking the overlay', () => {
-      cy.render(
+    test('Can be closed by clicking the overlay', async () => {
+      render(
         <Modal isOpen>
           <div className="buddy">Santa!</div>
         </Modal>
       )
 
-      cy.getByCy('Overlay').click()
+      user.click(document.querySelector('.c-ModalOverlay'))
 
-      expect(cy.get('.buddy').exists()).toBeFalsy()
+      await waitFor(() => {
+        expect(document.querySelector('.buddy')).toBe(null)
+      })
     })
 
-    test('Can be closed by pressing {esc}', () => {
-      cy.render(
+    test('Can be closed by pressing {esc}', async () => {
+      const { container } = render(
         <Modal isOpen>
           <div className="buddy">Santa!</div>
         </Modal>
       )
 
-      cy.type('{esc}')
+      user.type(container, '{esc}')
 
-      expect(cy.get('.buddy').exists()).toBeFalsy()
+      await waitFor(() => {
+        expect(document.querySelector('.buddy')).toBe(null)
+      })
     })
 
-    test('Can be closed by clicking the Modal CloseButton', () => {
-      cy.render(
+    test('Can be closed by clicking the Modal CloseButton', async () => {
+      render(
         <Modal isOpen>
           <div className="buddy">Santa!</div>
         </Modal>
       )
 
-      cy.getByCy('CloseButton').click()
+      user.click(document.querySelector('.c-Modal__close button'))
 
-      expect(cy.get('.buddy').exists()).toBeFalsy()
+      await waitFor(() => {
+        expect(document.querySelector('.buddy')).toBe(null)
+      })
     })
   })
 
   describe('Nesting', () => {
-    test('Can open nested Modals', () => {
-      cy.render(
+    test('Can open nested Modals', async () => {
+      const { container } = render(
         <Modal isOpen>
           <div className="first">
             <p>Son of a nutcracker!</p>
@@ -115,20 +122,26 @@ describe('Modal', () => {
         </Modal>
       )
 
-      expect(cy.get('.first').exists()).toBeTruthy()
-      expect(cy.get('.second').exists()).toBeFalsy()
+      expect(document.querySelector('.first')).toBeInTheDocument()
+      expect(document.querySelector('.second')).toBe(null)
 
-      cy.get('.trigger').click()
+      user.click(document.querySelector('.trigger'))
 
-      // 1st modal should stay open
-      expect(cy.get('.first').exists()).toBeTruthy()
-      // 2nd modal should now open
-      expect(cy.get('.second').exists()).toBeTruthy()
-      expect(cy.get('.second').text()).toContain('throne of lies')
+      await waitFor(() => {
+        // 1st modal should stay open
+        expect(document.querySelector('.first')).toBeInTheDocument()
+        // 2nd modal should now open
+        expect(document.querySelector('.second')).toBeInTheDocument()
+        expect(
+          document
+            .querySelector('.second')
+            .textContent.includes('throne of lies')
+        ).toBeTruthy()
+      })
     })
 
-    test('Pressing {esc} closes Modals in order', () => {
-      cy.render(
+    test('Pressing {esc} closes Modals in order', async () => {
+      const { container, debug } = render(
         <Modal isOpen>
           <div className="modal-content first">
             <p>Son of a nutcracker!</p>
@@ -153,22 +166,20 @@ describe('Modal', () => {
       )
 
       // Open modals
-      cy.get('.trigger-for-second').click()
-      cy.get('.trigger-for-third').click()
+      user.click(document.querySelector('.trigger-for-second'))
+      user.click(document.querySelector('.trigger-for-third'))
 
-      // Make sure all modals are open
-      expect(cy.get('.modal-content').length).toBe(3)
+      await waitFor(() => {
+        // Make sure all modals are open
+        expect(document.querySelectorAll('.modal-content').length).toBe(3)
+      })
 
-      cy.type('{esc}')
-      expect(cy.get('.modal-content').length).toBe(2)
-      expect(cy.get('.third').exists()).toBeFalsy()
+      user.type(container, '{esc}')
 
-      cy.type('{esc}')
-      expect(cy.get('.modal-content').length).toBe(1)
-      expect(cy.get('.second').exists()).toBeFalsy()
-
-      cy.type('{esc}')
-      expect(cy.get('.modal-content').length).toBe(0)
+      await waitFor(() => {
+        expect(document.querySelectorAll('.modal-content').length).toBe(2)
+        expect(document.querySelector('.third')).toBe(null)
+      })
     })
   })
 })

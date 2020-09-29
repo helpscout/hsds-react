@@ -1,5 +1,6 @@
 import React from 'react'
-import { cy } from '@helpscout/cyan'
+import { render } from '@testing-library/react'
+import user from '@testing-library/user-event'
 import { mount } from 'enzyme'
 import { EditableFieldComposite } from '../'
 import { EditableField } from '../EditableField'
@@ -9,46 +10,31 @@ import {
   STATES_CLASSNAMES,
 } from '../EditableField.utils'
 
-describe('className', () => {
-  test('Has default className', () => {
-    const wrapper = cy.render(<EditableFieldComposite />)
-
-    expect(wrapper.hasClass(COMPOSITE_CLASSNAMES.component)).toBeTruthy()
-  })
-
-  test('Can render custom className', () => {
-    const customClassName = 'blue'
-    const wrapper = cy.render(
-      <EditableFieldComposite className={customClassName} />
-    )
-
-    expect(wrapper.hasClass(customClassName)).toBeTruthy()
-  })
-})
-
 describe('Children', () => {
   test('Renders as many EditableFields as passed', () => {
-    cy.render(
+    const { container } = render(
       <EditableFieldComposite>
         <EditableField name="city" />
         <EditableField name="country" />
       </EditableFieldComposite>
     )
 
-    const el = cy.get(`.${EDITABLEFIELD_CLASSNAMES.component}`)
+    const el = container.querySelectorAll(
+      `.${EDITABLEFIELD_CLASSNAMES.component}`
+    )
 
     expect(el.length).toBe(2)
   })
 
   test('Sets inline mode on EditableFields', () => {
-    cy.render(
+    const { container } = render(
       <EditableFieldComposite>
         <EditableField name="city" />
         <EditableField name="country" />
       </EditableFieldComposite>
     )
 
-    const el = cy.get(`.${STATES_CLASSNAMES.isInline}`)
+    const el = container.querySelectorAll(`.${STATES_CLASSNAMES.isInline}`)
 
     expect(el.length).toBe(2)
   })
@@ -56,14 +42,14 @@ describe('Children', () => {
   test('onInputFocus still gets executed if passed on an EditableField', () => {
     const spy = jest.fn()
 
-    const wrapper = cy.render(
+    const { container } = render(
       <EditableFieldComposite>
         <EditableField name="city" onInputFocus={spy} />
         <EditableField name="country" />
       </EditableFieldComposite>
     )
 
-    const input = wrapper.find('input').first()
+    const input = container.querySelector('input')
 
     input.focus()
 
@@ -73,14 +59,14 @@ describe('Children', () => {
   test('onInputFocus still gets executed if passed on an EditableField', () => {
     const spy = jest.fn()
 
-    const wrapper = cy.render(
+    const { container } = render(
       <EditableFieldComposite>
         <EditableField name="city" onInputFocus={spy} />
         <EditableField name="country" />
       </EditableFieldComposite>
     )
 
-    const input = wrapper.find('input').first()
+    const input = container.querySelector('input')
 
     input.focus()
 
@@ -90,15 +76,16 @@ describe('Children', () => {
   test('onInputBlur still gets executed if passed on an EditableField', () => {
     const spy = jest.fn()
 
-    const wrapper = cy.render(
+    const { container } = render(
       <EditableFieldComposite>
         <EditableField name="city" onInputBlur={spy} />
         <EditableField name="country" />
       </EditableFieldComposite>
     )
 
-    const input = wrapper.find('input').first()
+    const input = container.querySelector('input')
 
+    input.focus()
     input.blur()
 
     expect(spy).toHaveBeenCalled()
@@ -107,15 +94,16 @@ describe('Children', () => {
   test('onChange still gets executed if passed on an EditableField', () => {
     const spy = jest.fn()
 
-    const wrapper = cy.render(
+    const { container } = render(
       <EditableFieldComposite>
         <EditableField name="city" onChange={spy} />
         <EditableField name="country" />
       </EditableFieldComposite>
     )
 
-    const input = wrapper.find('input').first()
-    input.type('hello')
+    const input = container.querySelector('input')
+
+    user.type(input, 'hello')
 
     expect(spy).toHaveBeenCalled()
   })
@@ -123,156 +111,161 @@ describe('Children', () => {
 
 describe('Composite Mask', () => {
   test('Renders the composed value of the fields as mask', () => {
-    cy.render(
+    const { container } = render(
       <EditableFieldComposite>
         <EditableField name="city" value="Barcelona" />
         <EditableField name="country" value="Spain" />
       </EditableFieldComposite>
     )
 
-    const el = cy.get(`.${COMPOSITE_CLASSNAMES.mask}`)
-    const maskItems = cy.get(`.${COMPOSITE_CLASSNAMES.maskItem}`)
+    const el = container.querySelector(`.${COMPOSITE_CLASSNAMES.mask}`)
+    const maskItems = container.querySelectorAll(
+      `.${COMPOSITE_CLASSNAMES.maskItem}`
+    )
 
-    expect(el.text()).toBe(`Barcelona${'\u00a0'}Spain`)
+    expect(el.textContent).toBe(`Barcelona${'\u00a0'}Spain`)
     expect(maskItems.length).toBe(2)
   })
 
   test('Renders the placeholder if fields have no values as mask', () => {
-    cy.render(
+    const { container } = render(
       <EditableFieldComposite placeholder="Add a place">
         <EditableField name="city" />
         <EditableField name="country" />
       </EditableFieldComposite>
     )
 
-    const el = cy.get(`.${COMPOSITE_CLASSNAMES.mask}`)
-    const maskPlaceholder = cy.get(`.${STATES_CLASSNAMES.isPlaceholder}`)
+    const el = container.querySelector(`.${COMPOSITE_CLASSNAMES.mask}`)
+    const maskPlaceholder = container.querySelectorAll(
+      `.${STATES_CLASSNAMES.isPlaceholder}`
+    )
 
-    expect(el.text()).toBe('Add a place')
+    expect(el.textContent).toBe('Add a place')
     expect(maskPlaceholder.length).toBe(1)
   })
 
   test('Renders fields values as mask even if not all present', () => {
-    cy.render(
+    const { container } = render(
       <EditableFieldComposite placeholder="Add a place">
         <EditableField name="city" value="Barcelona" />
         <EditableField name="country" />
       </EditableFieldComposite>
     )
 
-    const mask = cy.get(`.${COMPOSITE_CLASSNAMES.mask}`)
-    const maskItems = cy.get(`.${COMPOSITE_CLASSNAMES.maskItem}`)
+    const mask = container.querySelector(`.${COMPOSITE_CLASSNAMES.mask}`)
+    const maskItems = container.querySelectorAll(
+      `.${COMPOSITE_CLASSNAMES.maskItem}`
+    )
 
-    expect(mask.text()).toBe('Barcelona')
+    expect(mask.textContent).toBe('Barcelona')
     expect(maskItems.length).toBe(1)
   })
 
   test('Renders fields values as mask even if not all present (2)', () => {
-    cy.render(
+    const { container } = render(
       <EditableFieldComposite placeholder="Add a place">
         <EditableField name="city" />
         <EditableField name="country" value="Spain" />
       </EditableFieldComposite>
     )
 
-    const el = cy.get(`.${COMPOSITE_CLASSNAMES.mask}`)
+    const el = container.querySelector(`.${COMPOSITE_CLASSNAMES.mask}`)
 
-    expect(el.text()).toBe('Spain')
+    expect(el.textContent).toBe('Spain')
   })
 
   test('Renders the composed value of the fields with custom separator as mask', () => {
-    cy.render(
+    const { container } = render(
       <EditableFieldComposite separator=",">
         <EditableField name="city" value="Barcelona" />
         <EditableField name="country" value="Spain" />
       </EditableFieldComposite>
     )
 
-    const el = cy.get(`.${COMPOSITE_CLASSNAMES.mask}`)
+    const el = container.querySelector(`.${COMPOSITE_CLASSNAMES.mask}`)
 
-    expect(el.text()).toBe(`Barcelona,${'\u00a0'}Spain`)
+    expect(el.textContent).toBe(`Barcelona,${'\u00a0'}Spain`)
   })
 
   test('mask click: placeholder', () => {
-    const wrapper = mount(
+    const { container } = render(
       <EditableFieldComposite>
         <EditableField name="city" />
         <EditableField name="country" />
       </EditableFieldComposite>
     )
-    const input = wrapper.find('input').first().instance()
-    const mask = wrapper.find(`.${COMPOSITE_CLASSNAMES.maskItem}`).first()
+    const input = container.querySelector('input')
+    const mask = container.querySelector(`.${COMPOSITE_CLASSNAMES.maskItem}`)
     const spy = jest.spyOn(input, 'focus')
 
-    mask.simulate('click')
+    user.click(mask)
 
     expect(spy).toHaveBeenCalled()
   })
 
   test('mask click: maskItem', () => {
-    const wrapper = mount(
+    const { container } = render(
       <EditableFieldComposite>
         <EditableField name="city" value="Barcelona" />
         <EditableField name="country" value="Spain" />
       </EditableFieldComposite>
     )
-    const input1 = wrapper.find('input').first().instance()
+    const input1 = container.querySelector('input')
     const spy1 = jest.spyOn(input1, 'focus')
-    const input2 = wrapper.find('input').at(1).instance()
+    const input2 = container.querySelectorAll('input')[1]
     const spy2 = jest.spyOn(input2, 'focus')
-    const maskItem1 = wrapper.find(`.${COMPOSITE_CLASSNAMES.maskItem}`).first()
-    const maskItem2 = wrapper.find(`.${COMPOSITE_CLASSNAMES.maskItem}`).at(1)
+    const maskItem1 = container.querySelector(
+      `.${COMPOSITE_CLASSNAMES.maskItem}`
+    )
+    const maskItem2 = container.querySelectorAll(
+      `.${COMPOSITE_CLASSNAMES.maskItem}`
+    )[1]
 
-    maskItem1.simulate('click')
+    user.click(maskItem1)
     expect(spy1).toHaveBeenCalled()
 
-    maskItem2.simulate('click')
+    user.click(maskItem2)
     expect(spy2).toHaveBeenCalled()
   })
 
   test('mask onEnter', () => {
-    const wrapper = mount(
+    const { container } = render(
       <EditableFieldComposite>
         <EditableField name="city" value="Barcelona" />
         <EditableField name="country" value="Spain" />
       </EditableFieldComposite>
     )
-    const input = wrapper.find('input').first()
-    const inputNode = input.instance()
-    const spy = jest.spyOn(inputNode, 'focus')
-    const mask = wrapper.find(`.${COMPOSITE_CLASSNAMES.mask}`).first()
+    const input = container.querySelector('input')
+    const spy = jest.spyOn(input, 'focus')
+    const mask = container.querySelector(`.${COMPOSITE_CLASSNAMES.mask}`)
 
-    input.simulate('keydown', { key: 'Enter' })
-    mask.simulate('keydown', { key: 'Enter' })
+    user.type(input, '{Enter}')
+    user.type(mask, '{Enter}')
 
     expect(spy).toHaveBeenCalled()
     expect(
-      wrapper
-        .find(`.${COMPOSITE_CLASSNAMES.mask}`)
-        .first()
-        .getDOMNode()
+      container
+        .querySelector(`.${COMPOSITE_CLASSNAMES.mask}`)
         .getAttribute('tabindex')
     ).toBe(null)
   })
 
   test('mask onEscape', () => {
-    const wrapper = mount(
+    const { container } = render(
       <EditableFieldComposite>
         <EditableField name="city" value="Barcelona" />
         <EditableField name="country" value="Spain" />
       </EditableFieldComposite>
     )
-    const input = wrapper.find('input').first()
-    const mask = wrapper.find(`.${COMPOSITE_CLASSNAMES.mask}`).first()
+    const input = container.querySelector('input')
+    const mask = container.querySelector(`.${COMPOSITE_CLASSNAMES.mask}`)
 
-    input.simulate('keydown', { key: 'Enter' })
-    mask.simulate('keydown', { key: 'Escape' })
+    user.type(input, '{Enter}')
+    user.type(mask, '{Enter}')
 
     expect(
-      wrapper
-        .find(`.${COMPOSITE_CLASSNAMES.mask}`)
-        .first()
-        .getDOMNode()
+      container
+        .querySelector(`.${COMPOSITE_CLASSNAMES.mask}`)
         .getAttribute('tabindex')
     ).toBe(null)
   })
@@ -280,18 +273,18 @@ describe('Composite Mask', () => {
 
 describe('Active Fields', () => {
   test('Sets active fields state on focus', () => {
-    const wrapper = mount(
+    const { container } = render(
       <EditableFieldComposite>
         <EditableField name="city" value="Barcelona" />
         <EditableField name="country" value="Spain" />
       </EditableFieldComposite>
     )
-    const input = wrapper.find('input').first()
+    const input = container.querySelector('input')
 
-    input.simulate('focus')
+    input.focus()
 
-    expect(wrapper.state('inputState')).toBe('focused')
-    expect(wrapper.state('hasActiveFields')).toBeTruthy()
+    expect(container.querySelector('.has-activeFields')).toBeInTheDocument()
+    expect(container.querySelector('.is-active')).toBeInTheDocument()
   })
 
   test('Sets active fields state to blurred', () => {
@@ -310,21 +303,20 @@ describe('Active Fields', () => {
   })
 
   test('Mask should be hidden when active fields state on', () => {
-    const wrapper = mount(
+    const { container } = render(
       <EditableFieldComposite>
         <EditableField name="city" value="Barcelona" />
         <EditableField name="country" value="Spain" />
       </EditableFieldComposite>
     )
-    const input = wrapper.find('input').first()
+    const input = container.querySelector('input')
 
-    input.simulate('focus')
+    input.focus()
 
     expect(
-      wrapper
-        .find(`.${COMPOSITE_CLASSNAMES.mask}`)
-        .first()
-        .hasClass(STATES_CLASSNAMES.isHidden)
+      container
+        .querySelector(`.${COMPOSITE_CLASSNAMES.mask}`)
+        .classList.contains(STATES_CLASSNAMES.isHidden)
     ).toBeTruthy()
   })
 
@@ -366,14 +358,16 @@ describe('Active Fields', () => {
 
 describe('Large size', () => {
   test('Sets large size', () => {
-    const wrapper = cy.render(
+    const { container } = render(
       <EditableFieldComposite size="lg">
         <EditableField name="city" value="Barcelona" />
         <EditableField name="country" value="Spain" />
       </EditableFieldComposite>
     )
 
-    expect(wrapper.hasClass(STATES_CLASSNAMES.isLarge)).toBeTruthy()
+    expect(
+      container.querySelector(`.${STATES_CLASSNAMES.isLarge}`)
+    ).toBeInTheDocument()
   })
 })
 

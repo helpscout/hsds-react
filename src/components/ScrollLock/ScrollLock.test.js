@@ -1,5 +1,5 @@
 import React from 'react'
-import { cy } from '@helpscout/cyan'
+import { render, fireEvent } from '@testing-library/react'
 import ScrollLock from './ScrollLock'
 import { handleWheelEvent } from './ScrollLock.utils'
 
@@ -132,25 +132,25 @@ describe('Direction: X', () => {
 
 describe('Normal usage', () => {
   test('Clones child node instead of wrapping it', () => {
-    cy.render(
+    const { container } = render(
       <ScrollLock>
         <div className="hi" style={{ overflow: 'auto', height: '2px' }}>
           Hi
         </div>
       </ScrollLock>
     )
-    const hi = cy.get('div')
+    const hi = container.querySelectorAll('div')
 
-    expect(hi.exists()).toBeTruthy()
+    expect(hi[0]).toBeInTheDocument()
     expect(hi.length).toBe(1)
-    expect(hi.text()).toBe('Hi')
+    expect(hi[0].textContent).toBe('Hi')
   })
 })
 
 describe('Disabled', () => {
   test('Does not swallow onWheel prop if disabled', () => {
     const spy = jest.fn()
-    cy.render(
+    const { container } = render(
       <ScrollLock isDisabled>
         <div style={{ overflow: 'auto', height: '12px' }} onWheel={spy}>
           Hi
@@ -162,7 +162,7 @@ describe('Disabled', () => {
       </ScrollLock>
     )
 
-    cy.get('div').wheel()
+    fireEvent.wheel(container.querySelector('div'))
 
     expect(spy).toHaveBeenCalled()
   })
@@ -170,8 +170,8 @@ describe('Disabled', () => {
 
 describe('Childless', () => {
   test('Renders nothing', () => {
-    cy.render(<ScrollLock />)
-    const div = cy.get('div')
+    const { container } = render(<ScrollLock />)
+    const div = container.querySelectorAll('div')
 
     expect(div.length).toBe(0)
   })
@@ -224,20 +224,20 @@ describe('Events', () => {
     })
 
     const spy = jest.fn()
-    cy.render(
+    const { container } = render(
       <ScrollLock onWheel={spy}>
         <div style={{ overflow: 'auto', height: '12px' }}>Hi</div>
       </ScrollLock>
     )
 
-    cy.get('div').wheel()
+    fireEvent.wheel(container.querySelector('div'))
 
     expect(spy).toHaveBeenCalled()
   })
 
   test('child onWheel callback can be triggered', () => {
     const spy = jest.fn()
-    cy.render(
+    const { container } = render(
       <ScrollLock>
         <div style={{ overflow: 'auto', height: '12px' }} onWheel={spy}>
           Hi
@@ -245,7 +245,7 @@ describe('Events', () => {
       </ScrollLock>
     )
 
-    cy.get('div').wheel()
+    fireEvent.wheel(container.querySelector('div'))
 
     expect(spy).toHaveBeenCalled()
   })
