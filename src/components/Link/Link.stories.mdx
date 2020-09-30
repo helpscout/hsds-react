@@ -1,17 +1,17 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import Link from './'
 
-<Meta title="🧬 Components/Text/Link" component={Link} />
+<Meta title="Components/Text/Link" component={Link} />
 
 # Link
 
 A Link component is a light-weight wrapper for the default HTML `<a>` selector. This component supports `react-router`
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Link href="https://github.com/helpscout/hsds-react">Link somewhere</Link>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -24,4 +24,4 @@ A Link component is a light-weight wrapper for the default HTML `<a>` selector. 
 
 ### Props
 
-<Props of={Link} />
+<ArgsTable of={Link} />

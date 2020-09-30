@@ -1,10 +1,10 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { ScopeProvider } from '../../styled'
 import { Avatar } from '../../index'
 import Message from '../'
 
 <Meta
-  title="🧬 Components/Conversation/Message"
+  title="Components/Conversation/Message"
   component={Message}
   parameters={{
     design: {
@@ -19,7 +19,7 @@ import Message from '../'
 
 A Chat component provides the UI for the primary content within a Message.
 
-<Preview>
+<Canvas>
   <Story name="Message.Chat">
     <Message to avatar={<Avatar name="Buddy" />}>
       <Message.Chat read timestamp="9:41am">
@@ -64,17 +64,17 @@ A Chat component provides the UI for the primary content within a Message.
       </Message.Chat>
     </Message>
   </Story>
-</Preview>
+</Canvas>
 
 ### Props
 
-<Props of={Message.Chat} />
+<ArgsTable of={Message.Chat} />
 
 ### Stories
 
 #### Note
 
-<Preview>
+<Canvas>
   <Story name="note">
     <Message to avatar={<Avatar name="Buddy" />}>
       <Message.Chat isNote read timestamp="9:41am">
@@ -82,14 +82,14 @@ A Chat component provides the UI for the primary content within a Message.
       </Message.Chat>
     </Message>
   </Story>
-</Preview>
+</Canvas>
 
 #### Typing
 
-<Preview>
+<Canvas>
   <Story name="typing">
     <Message from avatar={<Avatar name="Arctic Puffin" />}>
       <Message.Chat typing />
     </Message>
   </Story>
-</Preview>
+</Canvas>

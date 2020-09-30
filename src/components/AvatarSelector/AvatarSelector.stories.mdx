@@ -1,9 +1,9 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { faker } from '@helpscout/helix'
 import AvatarSelector from './'
 
 <Meta
-  title="🧬 Components/Badges/AvatarSelector"
+  title="Components/Badges/AvatarSelector"
   component={AvatarSelector}
   parameters={{
     design: {
@@ -18,11 +18,11 @@ import AvatarSelector from './'
 
 An AvatarSelector can be used as a custom renderTrigger for a Dropdown.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <AvatarSelector />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -35,14 +35,14 @@ An AvatarSelector can be used as a custom renderTrigger for a Dropdown.
 
 ### Props
 
-<Props of={AvatarSelector} />
+<ArgsTable of={AvatarSelector} />
 
 ### Stories
 
 #### With Image
 
-<Preview>
+<Canvas>
   <Story name="with image">
     <AvatarSelector image={faker.image.avatar()()} name="Buzz Arooooooo" />
   </Story>
-</Preview>
+</Canvas>

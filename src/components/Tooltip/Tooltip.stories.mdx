@@ -1,9 +1,9 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import Tooltip from './'
 import { Default, CustomContent } from './Tooltip.storiesHelpers'
 
 <Meta
-  title="🧬 Components/Overlay/Tooltip"
+  title="Components/Overlay/Tooltip"
   component={Tooltip}
   parameters={{
     design: {
@@ -18,11 +18,11 @@ import { Default, CustomContent } from './Tooltip.storiesHelpers'
 
 A Tooltip component is UI component that provides the user with additional context when engaged.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Default />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -37,14 +37,14 @@ A Tooltip component is UI component that provides the user with additional conte
 
 Tooltip is powered by [react-tippy](https://github.com/atomiks/tippyjs-react) and [react-popper](https://github.com/popperjs/react-popper). You can see all available props that can be passed to [Tippy here](https://atomiks.github.io/tippyjs/v6/all-props).
 
-<Props of={Tooltip} />
+<ArgsTable of={Tooltip} />
 
 ### Stories
 
 #### With custom content
 
-<Preview>
+<Canvas>
   <Story name="with custom content">
     <CustomContent />
   </Story>
-</Preview>
+</Canvas>

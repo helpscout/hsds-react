@@ -1,14 +1,14 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import AnimateGroup from './'
 import { Animate, Card } from '../index'
 
-<Meta title="🛠 Utilities/Animation/AnimateGroup" component={AnimateGroup} />
+<Meta title="Utilities/Animation/AnimateGroup" component={AnimateGroup} />
 
 # AnimateGroup
 
 This component is a light wrapper for `TransitionGroup` from the [react-transition-group](https://github.com/reactjs/react-transition-group) library.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <div>
       <p>Stagger fade in</p>
@@ -28,7 +28,7 @@ This component is a light wrapper for `TransitionGroup` from the [react-transiti
       </AnimateGroup>
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -39,7 +39,7 @@ This component is a light wrapper for `TransitionGroup` from the [react-transiti
 
 ### Props
 
-<Props of={AnimateGroup} />
+<ArgsTable of={AnimateGroup} />
 
 See `react-transition-group`'s [documentation](https://reactcommunity.org/react-transition-group/#TransitionGroup) for additional details.
 
@@ -47,7 +47,7 @@ See `react-transition-group`'s [documentation](https://reactcommunity.org/react-
 
 #### Expand
 
-<Preview>
+<Canvas>
   <Story name="expand">
     <div>
       <p>Stagger fade in</p>
@@ -88,11 +88,11 @@ See `react-transition-group`'s [documentation](https://reactcommunity.org/react-
       </div>
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### Sequence
 
-<Preview>
+<Canvas>
   <Story name="sequence">
     <div>
       <p>Sequence defined by Group</p>
@@ -115,4 +115,4 @@ See `react-transition-group`'s [documentation](https://reactcommunity.org/react-
       </AnimateGroup>
     </div>
   </Story>
-</Preview>
+</Canvas>

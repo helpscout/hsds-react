@@ -1,14 +1,14 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { Card, FormGroup, Input } from '../'
 import Grid from './'
 
-<Meta title="🛠 Utilities/UI Convenience/Grid" component={Grid} />
+<Meta title="Utilities/UI Convenience/Grid" component={Grid} />
 
 # Grid
 
 A Grid component provide layout-based styles to help structure UI elements.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Grid>
       <Grid.Col size="8, 6@lg">
@@ -19,7 +19,7 @@ A Grid component provide layout-based styles to help structure UI elements.
       </Grid.Col>
     </Grid>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -31,25 +31,25 @@ A Grid component provide layout-based styles to help structure UI elements.
 
 ### Props
 
-<Props of={Grid} />
+<ArgsTable of={Grid} />
 
 ## Grid.Container
 
-<Props of={Grid.Container} />
+<ArgsTable of={Grid.Container} />
 
 ## Grid.Col
 
-<Props of={Grid.Col} />
+<ArgsTable of={Grid.Col} />
 
 ## Grid.Row
 
-<Props of={Grid.Row} />
+<ArgsTable of={Grid.Row} />
 
 ### Stories
 
 #### Sizes
 
-<Preview>
+<Canvas>
   <Story name="Sizes">
     <div>
       <Grid style={{ marginBottom: 10 }}>
@@ -93,11 +93,11 @@ A Grid component provide layout-based styles to help structure UI elements.
       </Grid>
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### In a Form
 
-<Preview>
+<Canvas>
   <Story name="In a Form">
     <form>
       <FormGroup.Grid>
@@ -118,4 +118,4 @@ A Grid component provide layout-based styles to help structure UI elements.
       </FormGroup.Grid>
     </form>
   </Story>
-</Preview>
+</Canvas>

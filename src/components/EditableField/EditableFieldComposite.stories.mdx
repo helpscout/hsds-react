@@ -1,11 +1,11 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { withAktiv } from '../../utilities/storybook'
 import { ContainerUI } from './EditableField.storiesHelpers'
 import EditableField from '.'
 import { EditableFieldComposite } from './'
 
 <Meta
-  title="🧬 Components/Forms/EditableField"
+  title="Components/Forms/EditableField"
   component={EditableFieldComposite}
   parameters={{
     design: {
@@ -23,7 +23,7 @@ This component allows the grouping and in-lining of multiple single value Editab
 
 `EditableFieldComposite` is in essence a Higher Order Component that decorates its children to enable grouping them.
 
-<Preview>
+<Canvas>
   <Story name="EditableField Composite">
     <ContainerUI>
       <EditableFieldComposite placeholder="Add a name">
@@ -44,7 +44,7 @@ This component allows the grouping and in-lining of multiple single value Editab
       </EditableFieldComposite>
     </ContainerUI>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -57,13 +57,13 @@ This component allows the grouping and in-lining of multiple single value Editab
 
 ### Props
 
-<Props of={EditableFieldComposite} />
+<ArgsTable of={EditableFieldComposite} />
 
 ### Stories
 
 #### EditableField Composite empty
 
-<Preview>
+<Canvas>
   <Story name="EditableField Composite empty">
     <ContainerUI>
       <EditableFieldComposite placeholder="Add a pet">
@@ -82,11 +82,11 @@ This component allows the grouping and in-lining of multiple single value Editab
       </EditableFieldComposite>
     </ContainerUI>
   </Story>
-</Preview>
+</Canvas>
 
 #### EditableField Composite large
 
-<Preview>
+<Canvas>
   <Story name="EditableField Composite large">
     <ContainerUI>
       <EditableFieldComposite placeholder="Add a name" size="lg">
@@ -110,4 +110,4 @@ This component allows the grouping and in-lining of multiple single value Editab
       </EditableFieldComposite>
     </ContainerUI>
   </Story>
-</Preview>
+</Canvas>

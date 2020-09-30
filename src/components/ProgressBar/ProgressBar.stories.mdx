@@ -1,8 +1,8 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import ProgressBar from './'
 
 <Meta
-  title="🧬 Components/Elements/ProgressBar"
+  title="Components/Elements/ProgressBar"
   component={ProgressBar}
   parameters={{
     design: {
@@ -17,7 +17,7 @@ import ProgressBar from './'
 
 A ProgressBar component visualizes the progression of a task. This component is typically used to illustrate loading progress.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <div>
       <ProgressBar value={50} size="lg" />
@@ -28,7 +28,7 @@ A ProgressBar component visualizes the progression of a task. This component is 
       <br />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -41,4 +41,4 @@ A ProgressBar component visualizes the progression of a task. This component is 
 
 ### Props
 
-<Props of={ProgressBar} />
+<ArgsTable of={ProgressBar} />

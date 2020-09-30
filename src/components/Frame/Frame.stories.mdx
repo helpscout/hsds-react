@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { select, text, boolean, number, array } from '@storybook/addon-knobs'
 import Frame from './'
 import Card from '../Card'
@@ -7,13 +7,13 @@ import Button from '../Button'
 import HSDS from '../HSDS'
 import Modal from '../Modal'
 
-<Meta title="🛠 Utilities/DOM/Frame" component={Frame} />
+<Meta title="Utilities/DOM/Frame" component={Frame} />
 
 # Frame
 
 A frame component will wrap the content inside an iFrame. It will leverage the Stylesheet Manager from `styled-components` to make sure to keep all styles injected within the iframe
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Frame style={{ border: 0, height: '500px' }}>
       <HSDS.Provider>
@@ -40,7 +40,7 @@ A frame component will wrap the content inside an iFrame. It will leverage the S
       </HSDS.Provider>
     </Frame>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 

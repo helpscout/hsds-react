@@ -1,8 +1,8 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { select, boolean } from '@storybook/addon-knobs'
 import ScrollLock from './'
 
-<Meta title="🛠 Utilities/UI Interactive/ScrollLock" component={ScrollLock} />
+<Meta title="Utilities/UI Interactive/ScrollLock" component={ScrollLock} />
 
 # ScrollLock
 
@@ -16,7 +16,7 @@ Under the hood it applies the css rule [`overscroll-behavior`](https://developer
 
 For Safari we use an event handler on the `wheel` event, is less performant but it only applies on this browser.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <ScrollLock isDisabled={boolean('isDisabled', false)} direction="y">
       <div
@@ -47,7 +47,7 @@ For Safari we use an event handler on the `wheel` event, is less performant but 
       </div>
     </ScrollLock>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -59,4 +59,4 @@ For Safari we use an event handler on the `wheel` event, is less performant but 
 
 ### Props
 
-<Props of={ScrollLock} />
+<ArgsTable of={ScrollLock} />

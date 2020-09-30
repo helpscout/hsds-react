@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { withAktiv } from '../../utilities/storybook'
 import {
   ContainerUI,
@@ -12,7 +12,7 @@ import {
 import EditableField from './'
 
 <Meta
-  title="🧬 Components/Forms/EditableField"
+  title="Components/Forms/EditableField"
   component={EditableField}
   parameters={{
     design: {
@@ -28,7 +28,7 @@ import EditableField from './'
 
 A special type of inputs that allow you to edit it inline
 
-<Preview>
+<Canvas>
   <Story name="default">
     <div>
       <EditableField
@@ -46,7 +46,7 @@ A special type of inputs that allow you to edit it inline
       />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -59,7 +59,7 @@ A special type of inputs that allow you to edit it inline
 
 ### Props
 
-<Props of={EditableField} />
+<ArgsTable of={EditableField} />
 
 ### actions
 
@@ -132,7 +132,7 @@ const ATLAS = {
 
 #### Large
 
-<Preview>
+<Canvas>
   <Story name="Large">
     <ContainerUI>
       <EditableField
@@ -145,11 +145,11 @@ const ATLAS = {
       />
     </ContainerUI>
   </Story>
-</Preview>
+</Canvas>
 
 #### Floating Labels
 
-<Preview>
+<Canvas>
   <Story name="Floating Labels">
     <ContainerUI>
       <EditableField
@@ -169,11 +169,11 @@ const ATLAS = {
       />
     </ContainerUI>
   </Story>
-</Preview>
+</Canvas>
 
 #### Multiple value fields
 
-<Preview>
+<Canvas>
   <Story name="Multiple value fields">
     <ContainerUI>
       <EditableField
@@ -207,11 +207,11 @@ const ATLAS = {
       />
     </ContainerUI>
   </Story>
-</Preview>
+</Canvas>
 
 #### Url field
 
-<Preview>
+<Canvas>
   <Story name="Url field">
     <ContainerUI>
       <EditableField
@@ -242,11 +242,11 @@ const ATLAS = {
       />
     </ContainerUI>
   </Story>
-</Preview>
+</Canvas>
 
 #### With options
 
-<Preview>
+<Canvas>
   <Story name="With options">
     <ContainerUI>
       <EditableField
@@ -279,11 +279,11 @@ const ATLAS = {
       />
     </ContainerUI>
   </Story>
-</Preview>
+</Canvas>
 
 #### disabled
 
-<Preview>
+<Canvas>
   <Story name="disabled">
     <ContainerUI>
       <EditableField
@@ -328,12 +328,12 @@ const ATLAS = {
       />
     </ContainerUI>
   </Story>
-</Preview>
+</Canvas>
 
 #### Validation
 
-<Preview>
+<Canvas>
   <Story name="Validation">
     <ValidationApp />
   </Story>
-</Preview>
+</Canvas>

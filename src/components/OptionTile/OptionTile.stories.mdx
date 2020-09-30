@@ -1,8 +1,8 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import OptionTile from './'
 
 <Meta
-  title="🧬 Components/Wayfinding/OptionTile"
+  title="Components/Wayfinding/OptionTile"
   component={OptionTile}
   parameters={{
     design: {
@@ -19,7 +19,7 @@ A OptionTile component is to render a link, displayed in a stylized `FluffyCard`
 
 This component, specifically the inner `OptionIcon`, can be themed using `ThemeProvider`.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <OptionTile
       href="#"
@@ -28,7 +28,7 @@ This component, specifically the inner `OptionIcon`, can be themed using `ThemeP
       subtitle="Talk with a friendly member of our support team"
     />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -41,7 +41,7 @@ This component, specifically the inner `OptionIcon`, can be themed using `ThemeP
 
 ### Props
 
-<Props of={OptionTile} />
+<ArgsTable of={OptionTile} />
 
 ## OptionTile.Container
 

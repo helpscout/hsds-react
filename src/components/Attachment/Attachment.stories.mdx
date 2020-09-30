@@ -1,9 +1,9 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { select, text } from '@storybook/addon-knobs'
 import Attachment from './'
 
 <Meta
-  title="🧬 Components/Badges/Attachment"
+  title="Components/Badges/Attachment"
   component={Attachment}
   parameters={{
     design: {
@@ -18,7 +18,7 @@ import Attachment from './'
 
 An Attachment component provides UI for file attachments, typically found in Chat-based (ie ChatTranscript) components.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Attachment
       name={text('name', 'derek.png')}
@@ -37,7 +37,7 @@ An Attachment component provides UI for file attachments, typically found in Cha
       )}
     />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -50,7 +50,7 @@ An Attachment component provides UI for file attachments, typically found in Cha
 
 ### Props
 
-<Props of={Attachment} />
+<ArgsTable of={Attachment} />
 
 <br />
 <br />
@@ -61,13 +61,13 @@ A Provider component provides child components with props accessible as `context
 
 ### Props
 
-<Props of={Attachment.Provider} />
+<ArgsTable of={Attachment.Provider} />
 
 ## Stories
 
 #### Preview theme
 
-<Preview>
+<Canvas>
   <Story name="Preview theme">
     <Attachment.Provider theme="preview">
       <Attachment
@@ -97,4 +97,4 @@ A Provider component provides child components with props accessible as `context
       />
     </Attachment.Provider>
   </Story>
-</Preview>
+</Canvas>

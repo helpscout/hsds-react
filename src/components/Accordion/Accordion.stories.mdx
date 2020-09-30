@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { select, text, boolean, number, array } from '@storybook/addon-knobs'
 import {
   data,
@@ -13,7 +13,7 @@ import Accordion from './'
 import { Page, Text } from '../index'
 
 <Meta
-  title="🧬 Components/Structural/Accordion"
+  title="Components/Structural/Accordion"
   component={Accordion}
   parameters={{
     design: {
@@ -29,7 +29,7 @@ import { Page, Text } from '../index'
 This component is a graphic control element which includes one or more
 vertically stacked section which can be expanded or collapsed.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Accordion
       distance={number('distance', 5)}
@@ -50,7 +50,7 @@ vertically stacked section which can be expanded or collapsed.
       {createSections(dataWithIds)}
     </Accordion>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -63,7 +63,7 @@ vertically stacked section which can be expanded or collapsed.
 
 ### Props
 
-<Props of={Accordion} />
+<ArgsTable of={Accordion} />
 
 <br />
 <br />
@@ -83,7 +83,7 @@ This component is to be used within an [`Accordion`](./Accordion.md).
 
 ### Props
 
-<Props of={Accordion.Section} />
+<ArgsTable of={Accordion.Section} />
 
 <br />
 <br />
@@ -99,7 +99,7 @@ This component is to be used within a `Section`.
 
 ### Props
 
-<Props of={Accordion.Body} />
+<ArgsTable of={Accordion.Body} />
 
 <br />
 <br />
@@ -116,7 +116,7 @@ This component is to be used within a `Section`.
 
 ### Props
 
-<Props of={Accordion.Title} />
+<ArgsTable of={Accordion.Title} />
 
 <br />
 <br />
@@ -128,7 +128,7 @@ This component is to be used within an `Accordion`.
 
 ### Props
 
-<Props of={Accordion.Link} />
+<ArgsTable of={Accordion.Link} />
 
 <br />
 <br />
@@ -145,7 +145,7 @@ They're to be used within a `Section` or `Link`.
 
 #### Inside a page
 
-<Preview>
+<Canvas>
   <Story name="Inside a page">
     <Page>
       <Page.Card>
@@ -168,11 +168,11 @@ They're to be used within a `Section` or `Link`.
       </Page.Card>
     </Page>
   </Story>
-</Preview>
+</Canvas>
 
 #### Row Link
 
-<Preview>
+<Canvas>
   <Story name="Row Link">
     <Page>
       <Page.Card>
@@ -203,11 +203,11 @@ They're to be used within a `Section` or `Link`.
       </Page.Card>
     </Page>
   </Story>
-</Preview>
+</Canvas>
 
 #### All link styles
 
-<Preview>
+<Canvas>
   <Story name="All link styles">
     <Page>
       <Page.Card>
@@ -272,11 +272,11 @@ They're to be used within a `Section` or `Link`.
       </Page.Card>
     </Page>
   </Story>
-</Preview>
+</Canvas>
 
 #### With custom ids
 
-<Preview>
+<Canvas>
   <Story name="Custom-Ids">
     <Page>
       <Page.Card>
@@ -284,4 +284,4 @@ They're to be used within a `Section` or `Link`.
       </Page.Card>
     </Page>
   </Story>
-</Preview>
+</Canvas>

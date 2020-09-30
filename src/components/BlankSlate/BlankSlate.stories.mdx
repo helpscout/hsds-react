@@ -1,9 +1,9 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, text } from '@storybook/addon-knobs'
 import BlankSlate from './'
 
 <Meta
-  title="🧬 Components/Text/BlankSlate"
+  title="Components/Text/BlankSlate"
   component={BlankSlate}
   parameters={{
     design: {
@@ -20,7 +20,7 @@ A BlankSlate component displays an illustration, heading and a message all toget
 
 This component can be used to display an error on a 404 page, or an empty state after a search result.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <BlankSlate
       lightBackground={boolean('lightBackground', false)}
@@ -33,7 +33,7 @@ This component can be used to display an error on a 404 page, or an empty state 
       illoName={text('illoName', 'spot-misc-empty')}
     />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -46,4 +46,4 @@ This component can be used to display an error on a 404 page, or an empty state 
 
 ### Props
 
-<Props of={BlankSlate} />
+<ArgsTable of={BlankSlate} />

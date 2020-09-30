@@ -1,11 +1,11 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, text, number } from '@storybook/addon-knobs'
 import { faker } from '@helpscout/helix'
 import { ArticleCard } from '../index'
 import CardList from './'
 
 <Meta
-  title="🧬 Components/Structural/CardList"
+  title="Components/Structural/CardList"
   component={CardList}
   parameters={{
     design: {
@@ -22,7 +22,7 @@ A CardList component displays an array of `Card`s.
 
 The children must be an `ArticleCard` or `Card` components.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <div style={{ margin: 'auto', maxWidth: 420 }}>
       <CardList
@@ -53,7 +53,7 @@ The children must be an `ArticleCard` or `Card` components.
       </CardList>
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -66,4 +66,4 @@ The children must be an `ArticleCard` or `Card` components.
 
 ### Props
 
-<Props of={CardList} />
+<ArgsTable of={CardList} />

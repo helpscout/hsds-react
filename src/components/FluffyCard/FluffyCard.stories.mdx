@@ -1,8 +1,8 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import FluffyCard from './'
 
 <Meta
-  title="🧬 Components/Structural/FluffyCard"
+  title="Components/Structural/FluffyCard"
   component={FluffyCard}
   parameters={{
     design: {
@@ -17,14 +17,14 @@ import FluffyCard from './'
 
 A FluffyCard component is used to encapsulate pieces of UI that share a common concept or action. It is an enhanced version of `Card`.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <FluffyCard href="#">
       Elf is a 2003 American Christmas fantasy comedy film, directed by Jon
       Favreau and written by David Berenbaum.{' '}
     </FluffyCard>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -37,7 +37,7 @@ A FluffyCard component is used to encapsulate pieces of UI that share a common c
 
 ### Props
 
-<Props of={FluffyCard} />
+<ArgsTable of={FluffyCard} />
 
 ### Stories
 
@@ -45,7 +45,7 @@ A FluffyCard component is used to encapsulate pieces of UI that share a common c
 
 This component is used to wrap `FluffyCard` components, allowing them to have unified spacing and height.
 
-<Preview>
+<Canvas>
   <Story name="Container">
     <FluffyCard.Container>
       <FluffyCard href="#">
@@ -61,4 +61,4 @@ This component is used to wrap `FluffyCard` components, allowing them to have un
       </FluffyCard>
     </FluffyCard.Container>
   </Story>
-</Preview>
+</Canvas>

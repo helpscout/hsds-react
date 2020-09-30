@@ -1,4 +1,4 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import Table from '../'
 import {
   createFakeCustomers,
@@ -9,7 +9,7 @@ import TableWithPagination from './TableWithPagination'
 import TableWithSorting from './TableWithSorting'
 
 <Meta
-  title="🧬 Components/Structural/Table"
+  title="Components/Structural/Table"
   component={Table}
   parameters={{
     design: {
@@ -36,11 +36,11 @@ At it simplest:
 
 `data` is a list of objects, one row per object will be rendered. Columns and Data should be related.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <TableWithPagination />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -53,7 +53,7 @@ At it simplest:
 
 ### Props
 
-<Props of={Table} />
+<ArgsTable of={Table} />
 
 ## Columns
 
@@ -136,26 +136,26 @@ const purpleTheme = {
 
 #### With compound columns
 
-<Preview>
+<Canvas>
   <Story name="with compound columns">
     <Table
       columns={compoundColumns}
       data={createFakeCustomers({ amount: 10 })}
     />
   </Story>
-</Preview>
+</Canvas>
 
 #### With sorting
 
-<Preview>
+<Canvas>
   <Story name="with sorting">
     <TableWithSorting />
   </Story>
-</Preview>
+</Canvas>
 
 #### Expandable
 
-<Preview>
+<Canvas>
   <Story name="expandable">
     <Table
       columns={defaultColumns}
@@ -163,4 +163,4 @@ const purpleTheme = {
       maxRowsToDisplay={4}
     />
   </Story>
-</Preview>
+</Canvas>

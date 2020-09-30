@@ -1,12 +1,12 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { select, number } from '@storybook/addon-knobs'
 import StatusBadge from './'
 
-<Meta title="🧬 Components/Badges/StatusBadge" component={StatusBadge} />
+<Meta title="Components/Badges/StatusBadge" component={StatusBadge} />
 
 # StatusBadge
 
-<Preview>
+<Canvas>
   <Story name="default">
     <div>
       <StatusBadge
@@ -26,7 +26,7 @@ import StatusBadge from './'
       />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -39,4 +39,4 @@ import StatusBadge from './'
 
 ### Props
 
-<Props of={StatusBadge} />
+<ArgsTable of={StatusBadge} />

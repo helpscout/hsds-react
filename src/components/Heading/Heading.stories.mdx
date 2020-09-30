@@ -1,9 +1,9 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, select, text } from '@storybook/addon-knobs'
 import Heading from './'
 
 <Meta
-  title="🧬 Components/Text/Heading"
+  title="Components/Text/Heading"
   component={Heading}
   parameters={{
     design: {
@@ -18,7 +18,7 @@ import Heading from './'
 
 A Heading component is a light-weight text heading wrapper enhanced with a collection of aesthetic modifiers.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Heading
       center={boolean('center', false)}
@@ -49,7 +49,7 @@ A Heading component is a light-weight text heading wrapper enhanced with a colle
       Heading
     </Heading>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -62,4 +62,4 @@ A Heading component is a light-weight text heading wrapper enhanced with a colle
 
 ### Props
 
-<Props of={Heading} />
+<ArgsTable of={Heading} />

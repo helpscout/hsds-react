@@ -1,11 +1,11 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { ContainerUI } from '../EditableField/EditableField.storiesHelpers'
 import { ValidationApp } from './EditableTextarea.storiesHelpers'
 import { withAktiv } from '../../utilities/storybook'
 import EditableTextarea from './'
 
 <Meta
-  title="🧬 Components/Forms/EditableTextarea"
+  title="Components/Forms/EditableTextarea"
   component={EditableTextarea}
   parameters={{
     design: {
@@ -30,7 +30,7 @@ A EditableTextarea it's a sibling of the EditableField, but a textarea...
 - Number of rows (max height of the textarea) is configurable (default 5)
 - Styles follow EditableFields as close as possible
 
-<Preview>
+<Canvas>
   <Story name="default">
     <ContainerUI>
       <EditableTextarea />
@@ -57,7 +57,7 @@ A EditableTextarea it's a sibling of the EditableField, but a textarea...
       />
     </ContainerUI>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -70,13 +70,13 @@ A EditableTextarea it's a sibling of the EditableField, but a textarea...
 
 ### Props
 
-<Props of={EditableTextarea} />
+<ArgsTable of={EditableTextarea} />
 
 ### Stories
 
 #### Floating labels
 
-<Preview>
+<Canvas>
   <Story name="Floating labels">
     <ContainerUI>
       <EditableTextarea
@@ -100,12 +100,12 @@ A EditableTextarea it's a sibling of the EditableField, but a textarea...
       />
     </ContainerUI>
   </Story>
-</Preview>
+</Canvas>
 
 #### Validation
 
-<Preview>
+<Canvas>
   <Story name="Validation">
     <ValidationApp />
   </Story>
-</Preview>
+</Canvas>

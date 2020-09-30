@@ -1,10 +1,10 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { ScopeProvider } from '../../styled'
 import { Avatar } from '../../index'
 import Message from '../'
 
 <Meta
-  title="🧬 Components/Conversation/Message"
+  title="Components/Conversation/Message"
   component={Message}
   parameters={{
     design: {
@@ -19,7 +19,7 @@ import Message from '../'
 
 A Content component provides the UI to render non text-based content within a Message.
 
-<Preview>
+<Canvas>
   <Story name="Message.Content">
     <ScopeProvider scope="#Messages">
       <div id="Messages">
@@ -90,8 +90,8 @@ A Content component provides the UI to render non text-based content within a Me
       </div>
     </ScopeProvider>
   </Story>
-</Preview>
+</Canvas>
 
 ### Props
 
-<Props of={Message.Content} />
+<ArgsTable of={Message.Content} />

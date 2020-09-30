@@ -1,9 +1,9 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, number } from '@storybook/addon-knobs'
 import FilteredList from './'
 
 <Meta
-  title="🧬 Components/Text/FilteredList"
+  title="Components/Text/FilteredList"
   component={FilteredList}
   parameters={{
     design: {
@@ -19,7 +19,7 @@ import FilteredList from './'
 A FilteredList component will display a list of items based on a limit number. If the number of items goes over the limit, a badge will be displayed after the list.
 Hovering on the badge will show all remainder items in a tooltip
 
-<Preview>
+<Canvas>
   <Story name="default">
     <FilteredList
       items={[
@@ -33,7 +33,7 @@ Hovering on the badge will show all remainder items in a tooltip
       inline={boolean('inline', false)}
     />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -46,4 +46,4 @@ Hovering on the badge will show all remainder items in a tooltip
 
 ### Props
 
-<Props of={FilteredList} />
+<ArgsTable of={FilteredList} />

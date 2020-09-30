@@ -1,10 +1,10 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { ScopeProvider } from '../../styled'
 import { Avatar } from '../../index'
 import Message from '../'
 
 <Meta
-  title="🧬 Components/Conversation/Message"
+  title="Components/Conversation/Message"
   component={Message}
   parameters={{
     design: {
@@ -19,7 +19,7 @@ import Message from '../'
 
 An Attachment component provides the UI to render caption text within a [Message](./Message.md). This component is typically used within other Message sub-components.
 
-<Preview>
+<Canvas>
   <Story name="Message.Attachment">
     <Message.Provider theme="embed">
       <Message from avatar={<Avatar name="Arctic Puffin" />}>
@@ -39,8 +39,8 @@ An Attachment component provides the UI to render caption text within a [Message
       </Message>
     </Message.Provider>
   </Story>
-</Preview>
+</Canvas>
 
 ### Props
 
-<Props of={Message.Attachment} />
+<ArgsTable of={Message.Attachment} />

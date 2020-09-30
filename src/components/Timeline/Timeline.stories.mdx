@@ -1,9 +1,9 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { createSpec, faker } from '@helpscout/helix'
 import Timeline from './'
 
 <Meta
-  title="🧬 Components/Conversation/Timeline"
+  title="Components/Conversation/Timeline"
   component={Timeline}
   parameters={{
     design: {
@@ -16,7 +16,7 @@ import Timeline from './'
 
 # Timeline
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Timeline>
       {createSpec({
@@ -33,7 +33,7 @@ import Timeline from './'
         })}
     </Timeline>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -46,13 +46,13 @@ import Timeline from './'
 
 ### Props
 
-<Props of={Timeline} />
+<ArgsTable of={Timeline} />
 
 ## Timeline.Item
 
 A `Timeline.Item` component renders individual items within a `Timeline`.
 
-<Props of={Timeline.Item} />
+<ArgsTable of={Timeline.Item} />
 
 ### Example
 

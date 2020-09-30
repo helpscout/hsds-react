@@ -1,10 +1,10 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { ScopeProvider } from '../../styled'
 import { Avatar } from '../../index'
 import Message from '../'
 
 <Meta
-  title="🧬 Components/Conversation/Message"
+  title="Components/Conversation/Message"
   component={Message}
   parameters={{
     design: {
@@ -19,7 +19,7 @@ import Message from '../'
 
 An Action component provides the UI for action-based content.
 
-<Preview>
+<Canvas>
   <Story name="Message.Action">
     <Message to>
       <Message.Action read timestamp="9:41am">
@@ -28,8 +28,8 @@ An Action component provides the UI for action-based content.
       </Message.Action>
     </Message>
   </Story>
-</Preview>
+</Canvas>
 
 ### Props
 
-<Props of={Message.Action} />
+<ArgsTable of={Message.Action} />

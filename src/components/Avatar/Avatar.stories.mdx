@@ -1,5 +1,5 @@
 import { ThemeProvider } from 'styled-components'
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, select } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import AvatarSpec from '../../utilities/specs/avatar.specs'
@@ -7,7 +7,7 @@ import Avatar from './'
 import { Flexy } from '../index'
 
 <Meta
-  title="🧬 Components/Badges/Avatar"
+  title="Components/Badges/Avatar"
   component={Avatar}
   parameters={{
     design: {
@@ -22,7 +22,7 @@ import { Flexy } from '../index'
 
 Displays a user's avatar image, or their initials if an image isn't available.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Avatar
       name={AvatarSpec.generate().name}
@@ -34,7 +34,7 @@ Displays a user's avatar image, or their initials if an image isn't available.
       image={AvatarSpec.generate().image}
     />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -47,7 +47,7 @@ Displays a user's avatar image, or their initials if an image isn't available.
 
 ### Props
 
-<Props of={Avatar} />
+<ArgsTable of={Avatar} />
 
 ### Stories
 
@@ -55,17 +55,17 @@ Displays a user's avatar image, or their initials if an image isn't available.
 
 When an image fails to load and no fallback is provided (or fails too), displays the initials of the name by default, or use custom initials.
 
-<Preview>
+<Canvas>
   <Story name="With initials">
     <Avatar name={AvatarSpec.generate().name} image="https://notfound" />
   </Story>
-</Preview>
+</Canvas>
 
 #### Themed
 
 This component can be themed using a [ThemeProvider](../styled).
 
-<Preview>
+<Canvas>
   <Story name="Themed">
     <ThemeProvider theme={{ brandColor: { brandColor: 'red' } }}>
       <Avatar name={AvatarSpec.generate().name} image="https://notfound" />
@@ -79,11 +79,11 @@ This component can be themed using a [ThemeProvider](../styled).
       <Avatar name={AvatarSpec.generate().name} image="https://notfound" />
     </ThemeProvider>
   </Story>
-</Preview>
+</Canvas>
 
 #### Status
 
-<Preview>
+<Canvas>
   <Story name="Status">
     <div style={{ background: 'dodgerblue', padding: 20 }}>
       <Flexy just="left">
@@ -172,11 +172,11 @@ This component can be themed using a [ThemeProvider](../styled).
       </Flexy>
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### With border
 
-<Preview>
+<Canvas>
   <Story name="With border">
     <div style={{ background: 'orangered', padding: 20 }}>
       <Avatar
@@ -189,11 +189,11 @@ This component can be themed using a [ThemeProvider](../styled).
       />
     </div>
   </Story>
-</Preview>
+</Canvas>
 
 #### With action
 
-<Preview>
+<Canvas>
   <Story name="With action">
     <Avatar
       name={AvatarSpec.generate().name}
@@ -217,4 +217,4 @@ This component can be themed using a [ThemeProvider](../styled).
       fallbackImage="https://d33v4339jhl8k0.cloudfront.net/customer-avatar/01.png"
     />
   </Story>
-</Preview>
+</Canvas>

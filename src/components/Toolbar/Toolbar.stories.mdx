@@ -1,12 +1,12 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, select } from '@storybook/addon-knobs'
 import Toolbar from './'
 
-<Meta title="🧬 Components/Conversation/Toolbar" component={Toolbar} />
+<Meta title="Components/Conversation/Toolbar" component={Toolbar} />
 
 # Toolbar
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Toolbar
       shadow={boolean('shadow', false)}
@@ -24,7 +24,7 @@ import Toolbar from './'
       <Toolbar.Item>Right Content</Toolbar.Item>
     </Toolbar>
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -37,7 +37,7 @@ import Toolbar from './'
 
 ### Props
 
-<Props of={Toolbar} />
+<ArgsTable of={Toolbar} />
 
 ## Toolbar.Block
 
@@ -51,7 +51,7 @@ A Toolbar.Item component is a layout-based component. This component takes up as
 
 #### Placement
 
-<Preview>
+<Canvas>
   <Story name="Placement">
     <div>
       <Toolbar placement="top">
@@ -65,4 +65,4 @@ A Toolbar.Item component is a layout-based component. This component takes up as
       </Toolbar>
     </div>
   </Story>
-</Preview>
+</Canvas>

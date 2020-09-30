@@ -1,9 +1,9 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { select, boolean } from '@storybook/addon-knobs'
 import Switch from './'
 
 <Meta
-  title="🧬 Components/Forms/Switch"
+  title="Components/Forms/Switch"
   component={Switch}
   parameters={{
     design: {
@@ -18,7 +18,7 @@ import Switch from './'
 
 A Switch component is an alternative to a `Checkbox` that provides a switch-toggle UI.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Switch
       checked={boolean('checked', false)}
@@ -43,7 +43,7 @@ A Switch component is an alternative to a `Checkbox` that provides a switch-togg
       )}
     />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -56,4 +56,4 @@ A Switch component is an alternative to a `Checkbox` that provides a switch-togg
 
 ### Props
 
-<Props of={Switch} />
+<ArgsTable of={Switch} />

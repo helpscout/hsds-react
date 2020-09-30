@@ -1,9 +1,9 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { select, boolean } from '@storybook/addon-knobs'
 import Notification from './'
 
 <Meta
-  title="🧬 Components/Conversation/Notification"
+  title="Components/Conversation/Notification"
   component={Notification}
   parameters={{
     design: {
@@ -20,7 +20,7 @@ A Notification component displays content that requires attention from the user.
 
 An example where Notifications may be used would be within the context of new Chat messages.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Notification
       isDismissable={boolean('isDismissable', false)}
@@ -45,7 +45,7 @@ An example where Notifications may be used would be within the context of new Ch
       )}
     />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -58,4 +58,4 @@ An example where Notifications may be used would be within the context of new Ch
 
 ### Props
 
-<Props of={Notification} />
+<ArgsTable of={Notification} />

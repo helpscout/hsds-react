@@ -1,17 +1,17 @@
-import { Meta, Story, Props, Preview } from '@storybook/addon-docs/blocks'
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import Timestamp from './'
 
-<Meta title="🧬 Components/Text/Timestamp" component={Timestamp} />
+<Meta title="Components/Text/Timestamp" component={Timestamp} />
 
 # Timestamp
 
 A Timestamp component renders the UI for the time and read status, typicaly used within a `Message` component.
 
-<Preview>
+<Canvas>
   <Story name="default">
     <Timestamp timestamp="10:41am" />
   </Story>
-</Preview>
+</Canvas>
 
 #### Reference
 
@@ -24,13 +24,13 @@ A Timestamp component renders the UI for the time and read status, typicaly used
 
 ### Props
 
-<Props of={Timestamp} />
+<ArgsTable of={Timestamp} />
 
 ### Stories
 
 #### Formatter
 
-<Preview>
+<Canvas>
   <Story name="Formatter">
     <Timestamp
       timestamp={new Date().toISOString()}
@@ -41,4 +41,4 @@ A Timestamp component renders the UI for the time and read status, typicaly used
       }}
     />
   </Story>
-</Preview>
+</Canvas>
