@@ -1,0 +1,65 @@
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
+import { boolean, select } from '@storybook/addon-knobs'
+import Button from '../Button'
+import Depth from './'
+
+<Meta
+  title="Utilities/UI Convenience/Depth"
+  component={Depth}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/NQFAyT84uJfTrK1akZl6rhJm/HSDS-Core?node-id=1349%3A1633',
+    },
+  }}
+/>
+
+# Depth
+
+UI convenience component that can be used to apply "depth" styles according to [HSDS's style guide on Depth](/docs/style-2-depth--page?path=/docs/style-2-depth--page). Use it instead of a `<div>` to have a container with _Depth_ styles applied to.
+
+> Bear in mind not all levels of Depth include a "hover" effect
+
+<Canvas>
+  <Story name="default">
+    <Depth
+      isActive={boolean('isActive', false)}
+      withHoverEffect={boolean('withHoverEffect', true)}
+      level={select(
+        'Level',
+        {
+          '100': 100,
+          '200': 200,
+          '300': 300,
+          '400': 400,
+          '500': 500,
+          '600': 600,
+          '700': 700,
+        },
+        100
+      )}
+      style={{
+        display: 'flex',
+        width: '300px',
+        padding: '50px',
+        justifyContent: 'space-between',
+      }}
+    >
+      <Button kind="secondary">OK</Button>
+      <Button kind="tertiary">Cancel</Button>
+    </Depth>
+  </Story>
+</Canvas>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+
+<br />
+<br />
+
+### Props
+
+<ArgsTable of={Depth} />
