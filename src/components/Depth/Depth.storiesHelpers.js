@@ -4,6 +4,15 @@ import { getColor } from '../../styles/utilities/color'
 import { FONT_FAMILY as AKTIV_FONT_FAMILY } from '../HSDS/GlobalStyle'
 import Depth from './Depth'
 
+export const ContainerWithDepth = styled(Depth).attrs(props => ({
+  level: props.level,
+}))`
+  display: flex;
+  width: 300px;
+  padding: 50px;
+  justify-content: space-between;
+`
+
 const SwitcherUI = styled('div')`
   display: flex;
   position: absolute;
