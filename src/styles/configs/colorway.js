@@ -1,4 +1,4 @@
-// Generated with @helpscout/colorway (v0.6.0)
+// Generated with @helpscout/colorway (v0.7.0)
 //
 // This file was automatically generated with @helpscout/colorway
 // Please don't modify this file. Your changes will be overwritten.
@@ -19,24 +19,24 @@ const palette = {
     default: '#1292EE',
   },
   charcoal: {
-    '200': '#93a1af',
-    '300': '#72808e',
-    '400': '#4f5d6b',
-    '500': '#394956',
-    '600': '#2a3b47',
-    '700': '#253540',
+    '200': '#93A1B0',
+    '300': '#748494',
+    '400': '#556575',
+    '500': '#405261',
+    '600': '#314351',
+    '700': '#253642',
     '800': '#1d2b36',
-    default: '#394956',
+    default: '#405261',
   },
   grey: {
-    '200': '#f9fafa',
-    '300': '#f1f3f5',
-    '400': '#e3e8eb',
-    '500': '#d6dde3',
-    '600': '#c1cbd4',
-    '700': '#b4c0ca',
-    '800': '#a5b2bd',
-    default: '#d6dde3',
+    '200': '#F9FAFA',
+    '300': '#F1F3F5',
+    '400': '#E5E9EC',
+    '500': '#D5DCE1',
+    '600': '#A5B2BD',
+    '700': '#B7C2CC',
+    '800': '#A5B2BD',
+    default: '#D5DCE1',
   },
   yellow: {
     '100': '#FFF9EF',
@@ -98,6 +98,16 @@ const palette = {
     '900': '#813c00',
     default: '#ff9139',
   },
+  ash: {
+    '200': '#F9FAFA',
+    '300': '#F1F3F5',
+    '400': '#E5E9EC',
+    '500': '#D5DCE1',
+    '600': '#A5B2BD',
+    '700': '#B7C2CC',
+    '800': '#A5B2BD',
+    default: '#D5DCE1',
+  },
   indigo: {
     '100': '#F2F6FF',
     '200': '#DFE7FF',
@@ -110,18 +120,6 @@ const palette = {
     '900': '#071E57',
     default: '#527CEB',
   },
-  whaletail: {
-    '100': '#F3F7FF',
-    '200': '#E5EDFE',
-    '300': '#D0DEFD',
-    '400': '#AFC7F9',
-    '500': '#8AABF1',
-    '600': '#7296E1',
-    '700': '#5174BB',
-    '800': '#304F8B',
-    '900': '#142F5E',
-    default: '#8AABF1',
-  },
   lavender: {
     '100': '#F9F9FF',
     '200': '#EBECFF',
@@ -133,6 +131,18 @@ const palette = {
     '800': '#404996',
     '900': '#232A5C',
     default: '#9FA6FF',
+  },
+  whaletail: {
+    '100': '#F3F7FF',
+    '200': '#E5EDFE',
+    '300': '#D0DEFD',
+    '400': '#AFC7F9',
+    '500': '#8AABF1',
+    '600': '#7296E1',
+    '700': '#5174BB',
+    '800': '#304F8B',
+    '900': '#142F5E',
+    default: '#8AABF1',
   },
 }
 
