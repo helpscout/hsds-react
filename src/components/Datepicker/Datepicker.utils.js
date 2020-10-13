@@ -98,7 +98,8 @@ export function getLeadingDays(someDate, startDay = 1) {
 }
 
 /**
- * In order to fill up the calendar, get the dates from the previous month in relation to the active month
+ * Get the number of leading dates needed based on the selected start day of the week
+ * and which day of the week the first of the month falls on
  * @param {number} startDay Which day the week starts with (Sunday 0, Monday 1, etc)
  * @param {number} firstOfTheMonthWeekday The weekday that is the first of the month
  *
