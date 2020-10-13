@@ -1,0 +1,178 @@
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
+import { boolean, select } from '@storybook/addon-knobs'
+import Button from '../Button'
+import Depth from './'
+import { ContainerWithDepth } from './Depth.storiesHelpers'
+
+<Meta
+  title="Utilities/UI Convenience/Depth"
+  component={Depth}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/NQFAyT84uJfTrK1akZl6rhJm/HSDS-Core?node-id=1349%3A1633',
+    },
+  }}
+/>
+
+# Depth
+
+UI convenience component that can be used to apply "depth" styles according to [HSDS's style guide on Depth](/docs/style-2-depth--page?path=/docs/style-2-depth--page). Use it instead of a `<div>` to have a container with _Depth_ styles applied to.
+
+> Bear in mind not all levels of Depth include a "hover" effect
+
+<Canvas>
+  <Story name="default">
+    <ContainerWithDepth
+      isActive={boolean('isActive', false)}
+      withHoverEffect={boolean('withHoverEffect', true)}
+      level={select(
+        'Level',
+        {
+          '100': 100,
+          '200': 200,
+          '300': 300,
+          '400': 400,
+          '500': 500,
+          '600': 600,
+          '700': 700,
+        },
+        100
+      )}
+    >
+      <Button kind="secondary">OK</Button>
+      <Button kind="tertiary">Cancel</Button>
+    </ContainerWithDepth>
+  </Story>
+</Canvas>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+
+<br />
+<br />
+
+### Props
+
+<ArgsTable of={Depth} />
+
+## Usage with `styled-components`
+
+This is probably the most common way you'll want to use _Depth_
+
+#### Option a: using styled().attrs()
+
+This option keeps the component code that will use your container a bit cleaner and allows you to swap the underlying `<div>` for another element tag using `forwardedAs`.
+
+```jsx
+// Your css.js file
+import styled from 'styled-components'
+import { Depth } from '@helpscout/hsds-react'
+
+/**
+ * You can set any <Depth> prop here,
+ * if you need this container to be flexible and be able to provide
+ * custom props value to that particular prop,
+ * add something like `level: props.level || 300`
+ */
+export const LabelWithDepth = styled(Depth).attrs(props => ({
+  level: 300,
+  forwardedAs: 'label',
+}))`
+  display: flex;
+  width: 300px;
+  padding: 50px;
+  justify-content: space-between;
+`
+
+// Your component file
+import { LabelWithDepth } from './'
+
+//...
+return (
+  <LabelWithDepth>
+    <p>Some content here</p>
+  </LabelWithDepth>
+)
+//...
+```
+
+#### Option b: passing props directly to the styled component
+
+This option is a bit more common it adds a bit of unnecessary information to your component that is using it and you have to remember to set the prop as desired, no big deal though:
+
+```jsx
+// Your css.js file
+import styled from 'styled-components'
+import { Depth } from '@helpscout/hsds-react'
+
+export const LabelWithDepth = styled(Depth)`
+  display: flex;
+  width: 300px;
+  padding: 50px;
+  justify-content: space-between;
+`
+
+// Your component file
+import { LabelWithDepth } from './'
+
+//...
+return (
+  <LabelWithDepth level={300} forwardedAs="label">
+    <p>Some content here</p>
+  </LabelWithDepth>
+)
+//...
+```
+
+## Usage as "css mixins"
+
+Sometimes you'd just like to grab the css rules and apply them to a container manually, for this use case you can import each depth level style rules and add them to your existing container.
+
+Available mixins:
+
+- d100
+- d200
+- d200Effect
+- d300
+- d300Effect
+- d400
+- d400Effect
+- d500
+- d500Effect
+- d600
+- d700
+
+Each mixin (d100, d200, d300, d400, d500, d600, d700) includes the following CSS rules (which you can easily override if you need to):
+
+```css
+common {
+  background-color: #fff;
+  transition: all 0.16s;
+  will-change: box-shadow;
+}
+```
+
+Example:
+
+```javascript
+// YourComponent.css.js
+
+import styled from 'styled-components'
+// Bring all, levels = { d100, d200, d200Effect, d300, etc }
+import levels from '@helpscout/hsds-react/styles/mixins/depth.css'
+// Bring the depth level you need
+import { d200, d200Effect } from '@helpscout/hsds-react/styles/mixins/depth.css'
+
+const ContainerUI = styled(div)``
+  ${levels.d200}
+  background-color: dodgerblue; // override default
+
+  &:hover {
+    ${levels.d200Effect}
+  }
+`` // ignore the doble backticks, there just to help mdx display this section of code
+```
