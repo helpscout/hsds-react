@@ -83,10 +83,10 @@ export function getLeadingDays(someDate, startDay = 1) {
   const leadingDays = []
   const year = someDate.getFullYear()
   const month = someDate.getMonth()
-  const firstWeekday = new Date(year, month, 1).getDay()
-  const days = firstWeekday + 7 - (startDay + 7) - 1
+  const firstOfTheMonthWeekday = new Date(year, month, 1).getDay()
+  const days = calculateNumberOfLeadingDays(startDay, firstOfTheMonthWeekday)
 
-  for (let i = days * -1; i <= 0; i++) {
+  for (let i = (days - 1) * -1; i <= 0; i++) {
     leadingDays.push({
       date: new Date(year, month, i),
       dayLabel: new Date(year, month, i).getDate(),
@@ -98,9 +98,22 @@ export function getLeadingDays(someDate, startDay = 1) {
 }
 
 /**
+ * In order to fill up the calendar, get the dates from the previous month in relation to the active month
+ * @param {number} startDay Which day the week starts with (Sunday 0, Monday 1, etc)
+ * @param {number} firstOfTheMonthWeekday The weekday that is the first of the month
+ *
+ * @return {number} The amount of leading days needed to fill the start of the monthly calendar
+ */
+export function calculateNumberOfLeadingDays(startDay, firstOfTheMonthWeekday) {
+  return startDay > firstOfTheMonthWeekday
+    ? 7 + firstOfTheMonthWeekday - startDay
+    : firstOfTheMonthWeekday - startDay
+}
+
+/**
  * In order to fill up the calendar, get the dates from the next month in relation to the active month
  * @param {Object} someDate Date object to check
- * @param {Object[]} leadingDays The "leading" days taken from the previous month (see `getLeadingDays`
+ * @param {Object[]} leadingDays The "leading" days taken from the previous month (see `getLeadingDays`)
  * @param {Object[]} allMonthDays The current month days as given by datepicker hooks
  *
  * @return {Object[]} Array of Date Objects

@@ -10,6 +10,7 @@ import {
   getTotalDaysSlots,
   getActiveYearRange,
   getNavigatorButtonLabel,
+  calculateNumberOfLeadingDays,
 } from './Datepicker.utils'
 
 describe('Datepicker Utils', () => {
@@ -53,13 +54,33 @@ describe('Datepicker Utils', () => {
     expect(getValidDateTimeString(someDate)).toBe('2020-06-29')
   })
 
+  test('calculateNumberOfLeadingDays', () => {
+    expect(calculateNumberOfLeadingDays(0, 0)).toBe(0)
+    expect(calculateNumberOfLeadingDays(0, 1)).toBe(1)
+    expect(calculateNumberOfLeadingDays(0, 2)).toBe(2)
+    expect(calculateNumberOfLeadingDays(1, 0)).toBe(6)
+    expect(calculateNumberOfLeadingDays(1, 2)).toBe(1)
+    expect(calculateNumberOfLeadingDays(4, 1)).toBe(4)
+    expect(calculateNumberOfLeadingDays(5, 5)).toBe(0)
+  })
+
   test('getLeadingDays', () => {
     const someDate = new Date(2020, 8, 29)
 
-    // Week starting on Monday (default)
-    expect(getLeadingDays(someDate).length).toBe(1)
     // Week starting on Sunday
     expect(getLeadingDays(someDate, 0).length).toBe(2)
+    // Week starting on Monday
+    expect(getLeadingDays(someDate, 1).length).toBe(1)
+    // Week starting on Tuesday
+    expect(getLeadingDays(someDate, 2).length).toBe(0)
+    // Week starting on Wednesday
+    expect(getLeadingDays(someDate, 3).length).toBe(6)
+    // Week starting on Thursday
+    expect(getLeadingDays(someDate, 4).length).toBe(5)
+    // Week starting on Friday
+    expect(getLeadingDays(someDate, 5).length).toBe(4)
+    // Week starting on Saturday
+    expect(getLeadingDays(someDate, 6).length).toBe(3)
   })
 
   test('getTrailingDays', () => {
