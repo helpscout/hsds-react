@@ -53,14 +53,15 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
     dayRef && dayRef.current && dayRef.current.focus()
   }
 
+  /**
+   * "trailing" days are not supported by `@datepicker-react/hooks`
+   * if one is clicked and it's going to move to January, make sure to also
+   * go to the next year
+   */
   function getCorrectDateToSet(date) {
     // Avoid mutation of `date`
     const dateCopy = new Date(date.toString())
-    /**
-     * "trailing" days are not supported by `@datepicker-react/hooks`
-     * if one is clicked and it's going to move to January, make sure to also
-     * go to the next year
-     */
+
     if (trailing && date.getMonth() === 0) {
       dateCopy.setFullYear(dateCopy.getFullYear() + 1)
     }
