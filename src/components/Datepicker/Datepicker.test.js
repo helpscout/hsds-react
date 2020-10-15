@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import user from '@testing-library/user-event'
 import { MONTHS } from './Datepicker.constants'
 import { getValidDateTimeString } from './Datepicker.utils'
@@ -36,8 +36,12 @@ describe('Datepicker', () => {
 
   test('should render with a given date if provided', () => {
     const someDate = new Date(2020, 2, 25)
-    const { getByText, rerender } = render(<Datepicker startDate={someDate} />)
-    const someDateNode = getByText(`${someDate.getDate()}`)
+    const { getByText, getAllByText, rerender } = render(
+      <Datepicker startDate={someDate} />
+    )
+    const someDateNode = getAllByText(`${someDate.getDate()}`).filter(
+      node => node.getAttribute('datetime') === getValidDateTimeString(someDate)
+    )[0]
 
     expect(
       getByText(`${MONTHS[someDate.getMonth()]} ${someDate.getFullYear()}`)
@@ -46,15 +50,11 @@ describe('Datepicker', () => {
       getValidDateTimeString(someDate)
     )
     expect(
-      getByText(`${someDate.getDate()}`).parentElement.classList.contains(
-        'is-selected'
-      )
+      someDateNode.parentElement.classList.contains('is-selected')
     ).toBeTruthy()
-    expect(
-      getByText(`${someDate.getDate()}`).parentElement.getAttribute(
-        'aria-selected'
-      )
-    ).toBe('true')
+    expect(someDateNode.parentElement.getAttribute('aria-selected')).toBe(
+      'true'
+    )
 
     const someOtherDate = new Date(2019, 2, 23)
     rerender(<Datepicker startDate={someOtherDate} />)
@@ -280,6 +280,41 @@ describe('Datepicker', () => {
     expect(getByText('2020').parentElement.getAttribute('aria-selected')).toBe(
       'true'
     )
+  })
+
+  test('should be able to select a date (trailing)', async () => {
+    const changeSpy = jest.fn()
+    const someDate = new Date(2020, 11, 25)
+    const { getByText, getAllByText } = render(
+      <Datepicker startDate={someDate} onDateChange={changeSpy} />
+    )
+
+    const trailingDay = getAllByText('1').filter(
+      node => node.getAttribute('datetime') === '2021-01-01'
+    )[0]
+
+    user.click(trailingDay)
+
+    expect(changeSpy).toHaveBeenCalledTimes(1)
+    expect(changeSpy).toHaveBeenCalledWith({
+      endDate: new Date(2021, 0, 1),
+      focusedInput: null,
+      startDate: new Date(2021, 0, 1),
+    })
+
+    await waitFor(() => {
+      const selectedDay = getAllByText('1').filter(
+        node => node.getAttribute('datetime') === '2021-01-01'
+      )[0]
+
+      expect(
+        selectedDay.parentElement.classList.contains('is-selected')
+      ).toBeTruthy()
+      expect(selectedDay.parentElement.getAttribute('aria-selected')).toBe(
+        'true'
+      )
+      expect(getByText('January 2021')).toBeInTheDocument()
+    })
   })
 
   test('should be able to restrict navigation and selection of future dates', () => {

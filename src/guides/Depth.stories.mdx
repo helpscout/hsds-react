@@ -1,0 +1,232 @@
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
+import { select } from '@storybook/addon-knobs'
+import { getColor } from '../styles/utilities/color'
+import {
+  BoxWithDepthUI,
+  InteractiveContainer,
+  RelatedLink,
+} from '../components/Depth/Depth.storiesHelpers'
+import Depth from '../components/Depth'
+
+<Meta title="Style/2. Depth" />
+
+# HSDS Depth
+
+<br />
+<br />
+
+<InteractiveContainer columns={3}>
+  <BoxWithDepthUI level={100}>100</BoxWithDepthUI>
+  <BoxWithDepthUI level={200}>200</BoxWithDepthUI>
+  <BoxWithDepthUI level={300}>300</BoxWithDepthUI>
+  <BoxWithDepthUI level={400}>400</BoxWithDepthUI>
+  <BoxWithDepthUI level={500}>500</BoxWithDepthUI>
+  <BoxWithDepthUI level={600}>600</BoxWithDepthUI>
+  <BoxWithDepthUI level={700}>700</BoxWithDepthUI>
+</InteractiveContainer>
+
+<br />
+
+### Depth 100
+
+<InteractiveContainer>
+  <BoxWithDepthUI level={100}>100</BoxWithDepthUI>
+</InteractiveContainer>
+
+Used in the profile sidebar for both profile (with avatar) and sidebar apps. There is currently no hover state for this depth.
+
+<br />
+
+#### Related
+
+<RelatedLink
+  className="figma"
+  href="https://www.figma.com/file/NQFAyT84uJfTrK1akZl6rhJm/HSDS-Core?node-id=1349%3A1633"
+>
+  Core/ D100
+</RelatedLink>
+
+<br />
+<br />
+<br />
+
+### Depth 200
+
+<InteractiveContainer>
+  <BoxWithDepthUI level={200}>200</BoxWithDepthUI>
+</InteractiveContainer>
+
+Currently only used in Beacon for escalation menu, both in the Ask overview screen and escalation popover.
+
+#### Related
+
+<RelatedLink
+  className="figma"
+  href="https://www.figma.com/file/NQFAyT84uJfTrK1akZl6rhJm/HSDS-Core?node-id=1349%3A1754"
+>
+  Core/ D200
+</RelatedLink>
+<br />
+<RelatedLink
+  className="storybook"
+  href="/?path=/docs/components-structural-fluffycard--default-story"
+>
+  Fluffy Card
+</RelatedLink>
+
+<br />
+<br />
+<br />
+
+### Depth 300
+
+<InteractiveContainer>
+  <BoxWithDepthUI level={300}>300</BoxWithDepthUI>
+</InteractiveContainer>
+
+Settings pages use this depth for background containers and the hover state denotes active focus.
+
+#### Related
+
+<RelatedLink
+  className="figma"
+  href="https://www.figma.com/file/NQFAyT84uJfTrK1akZl6rhJm/HSDS-Core?node-id=1349%3A1754"
+>
+  Core/ D300
+</RelatedLink>
+<br />
+<RelatedLink
+  className="storybook"
+  href="/?path=/docs/components-structural-page--default-story"
+>
+  Page
+</RelatedLink>
+<br />
+<RelatedLink
+  className="storybook"
+  href="/?path=/docs/components-forms-radiocard--default-story"
+>
+  RadioCard
+</RelatedLink>
+
+<br />
+<br />
+<br />
+
+### Depth 400
+
+<InteractiveContainer>
+  <BoxWithDepthUI level={400}>400</BoxWithDepthUI>
+</InteractiveContainer>
+
+Used for all types of "cards" both in-app and Beacon. For example, unfurled URLs and articles.
+
+#### Related
+
+<RelatedLink
+  className="figma"
+  href="https://www.figma.com/file/NQFAyT84uJfTrK1akZl6rhJm/HSDS-Core?node-id=1349%3A1830"
+>
+  Core/ D400
+</RelatedLink>
+<br />
+<RelatedLink
+  className="storybook"
+  href="/?path=/docs/components-structural-articlecard--default-story"
+>
+  ArticleCard
+</RelatedLink>
+
+<br />
+<br />
+<br />
+
+### Depth 500 (default)
+
+<InteractiveContainer>
+  <BoxWithDepthUI level={500}>500</BoxWithDepthUI>
+</InteractiveContainer>
+
+If in doubt, this depth is the default. Currently used heavily throughout the app for dropdowns and dashboard cards. Hover state is optional depending on usage.
+
+#### Related
+
+<RelatedLink
+  className="figma"
+  href="https://www.figma.com/file/NQFAyT84uJfTrK1akZl6rhJm/HSDS-Core?node-id=1349%3A1851"
+>
+  Core/ D500
+</RelatedLink>
+<br />
+<RelatedLink
+  className="storybook"
+  href="/?path=/docs/components-dropdowns-dropdown--default-story"
+>
+  Dropdown
+</RelatedLink>
+
+<br />
+<br />
+<br />
+
+### Depth 600
+
+<InteractiveContainer>
+  <BoxWithDepthUI level={600}>600</BoxWithDepthUI>
+</InteractiveContainer>
+
+Used for Beacon notifications (i.e. new chat message) and Messages popovers, often accompanied by a URL card. These can have unusual border radius for directionality, and do not have a hover.
+
+#### Related
+
+<RelatedLink
+  className="figma"
+  href="https://www.figma.com/file/NQFAyT84uJfTrK1akZl6rhJm/HSDS-Core?node-id=1349%3A1917"
+>
+  Core/ D600
+</RelatedLink>
+<br />
+<RelatedLink
+  className="storybook"
+  href="/?path=/docs/components-conversation-notification--default-story"
+>
+  Notification
+</RelatedLink>
+
+<br />
+<br />
+<br />
+
+### Depth 700
+
+<InteractiveContainer>
+  <BoxWithDepthUI level={700}>700</BoxWithDepthUI>
+</InteractiveContainer>
+
+This is the largest depth and only used for modals.
+
+#### Related
+
+<RelatedLink
+  className="figma"
+  href="https://www.figma.com/file/NQFAyT84uJfTrK1akZl6rhJm/HSDS-Core?node-id=1349%3A1971"
+>
+  Core/ D700
+</RelatedLink>
+<br />
+<RelatedLink
+  className="storybook"
+  href="/?path=/docs/components-overlay-modal--default-story"
+>
+  Modal
+</RelatedLink>
+
+<br />
+<br />
+<br />
+<br />
+
+## In HSDS React
+
+- [Component](/docs/utilities-ui-convenience-depth--default-story?path=/docs/utilities-ui-convenience-depth--default-story)
+- [Mixins](/docs/utilities-ui-convenience-depth--default-story?path=/docs/utilities-ui-convenience-depth--default-story#usage-as-css-mixins)

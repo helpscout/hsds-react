@@ -131,8 +131,8 @@ Datepicker.propTypes = {
   allowFutureDatePick: PropTypes.bool,
   /** Pass an ending date to the calendar to select range. Note: Range not supported yet */
   endDate: PropTypes.instanceOf(Date),
-  /** Which day of the week is first in the calendar (0 -> sunday, 1 -> monday) */
-  firstDayOfWeek: PropTypes.oneOf([0, 1]),
+  /** Which day of the week is first in the calendar (0 -> sunday, 1 -> monday, etc) */
+  firstDayOfWeek: PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6]),
   /** How many days can be selected in a range (minimum). Note: Currently supported 1 */
   minBookingDays: PropTypes.number,
   /** How many months to display at the same time. Note: Currently supported 1 */

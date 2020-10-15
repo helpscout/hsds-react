@@ -16,7 +16,7 @@ function Month({ year, month, firstDayOfWeek }) {
     dayLabelFormat: date => date.getDate(),
   })
 
-  const currentMonthDate = new Date(`${year}-${month + 1}-01`)
+  const currentMonthDate = new Date(year, month, 1)
   const leadingDays = getLeadingDays(currentMonthDate, firstDayOfWeek)
   const trailingDays = getTrailingDays(currentMonthDate, leadingDays, days)
 

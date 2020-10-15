@@ -49,8 +49,24 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
   )
 
   function handleDaySelect(date) {
-    onDateSelect(date)
+    onDateSelect(getCorrectDateToSet(date))
     dayRef && dayRef.current && dayRef.current.focus()
+  }
+
+  /**
+   * "trailing" days are not supported by `@datepicker-react/hooks`
+   * if one is clicked and it's going to move to January, make sure to also
+   * go to the next year
+   */
+  function getCorrectDateToSet(date) {
+    // Avoid mutation of `date`
+    const dateCopy = new Date(date.toString())
+
+    if (trailing && date.getMonth() === 0) {
+      dateCopy.setFullYear(dateCopy.getFullYear() + 1)
+    }
+
+    return dateCopy
   }
 
   return (
@@ -87,7 +103,9 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
         todayColor: getColor('grey.300'),
       })}
     >
-      <time dateTime={getValidDateTimeString(date)}>{dayLabel}</time>
+      <time dateTime={getValidDateTimeString(getCorrectDateToSet(date))}>
+        {dayLabel}
+      </time>
     </DayUI>
   )
 }
