@@ -1,17 +1,7 @@
-import Card from '../Card'
 import styled from 'styled-components'
-import { getColor, rgba } from '../../styles/utilities/color'
-
-export const config = {
-  hover: {
-    baseShadow: `
-      0 1px 3px 0 rgba(0, 0, 0, 0.1),
-      inset 0 0 0 1px ${rgba(getColor('grey.600'), 0.7)},
-      inset 0 -1px 0 0 ${getColor('grey.600')};
-    `,
-    baseHoverShadow: `0 4px 40px 0 ${rgba('#000', 0.1)}`,
-  },
-}
+import { getColor } from '../../styles/utilities/color'
+import { d400, d400Effect } from '../../styles/mixins/depth.css'
+import Card from '../Card'
 
 export const MetaHeaderUI = styled('header')`
   margin-bottom: 10px;
@@ -34,6 +24,7 @@ export const FooterUI = styled('footer')`
 `
 
 export const ArticleCardUI = styled(Card)`
+  ${d400}
   margin-bottom: 3px;
   padding: 20px 20px 22px;
   position: relative;
@@ -49,20 +40,19 @@ export const ArticleCardUI = styled(Card)`
   }
 
   &.is-hoverable {
-    box-shadow: ${config.hover.baseShadow};
+    ${d400}
     border: none;
     transform: translateZ(0);
-    transition: all 550ms cubic-bezier(0.23, 1, 0.32, 1);
     text-decoration: none;
 
     &:hover {
       border: none;
-      box-shadow: ${config.hover.baseShadow};
-      transform: translate(0, -2px);
+      ${d400Effect}
+      transform: translateY(-2px);
     }
 
     &:after {
-      box-shadow: ${config.hover.baseHoverShadow};
+      ${d400Effect}
       border-radius: 4px;
       content: '';
       height: 100%;
@@ -71,7 +61,6 @@ export const ArticleCardUI = styled(Card)`
       position: absolute;
       top: 0;
       transform: translateZ(0);
-      transition: all 200ms linear;
       width: 100%;
       z-index: -1;
     }
