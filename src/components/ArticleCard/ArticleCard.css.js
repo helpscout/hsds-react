@@ -25,6 +25,7 @@ export const FooterUI = styled('footer')`
 
 export const ArticleCardUI = styled(Card)`
   ${d400}
+  border: 0 !important;
   margin-bottom: 3px;
   padding: 20px 20px 22px;
   position: relative;
