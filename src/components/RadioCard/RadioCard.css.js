@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
+import { d300, d300Effect } from '../../styles/mixins/depth.css'
 import Heading from '../Heading'
 import Text from '../Text'
 
@@ -18,17 +19,11 @@ export const RadioCardUI = styled('label')`
   height: ${({ height }) => (height ? height : 'auto')};
   padding: 5px 12px 15px;
   border-radius: 4px;
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  box-shadow: 0px 5px 8px rgba(99, 116, 134, 0.03),
-    0px 2px 8px rgba(0, 0, 0, 0.04);
-  transition: all 0.15s;
-  will-change: box-shadow, border;
+  ${d300}
   cursor: pointer;
 
   &:hover {
-    border: 1px solid ${getColor('grey.500')};
-    box-shadow: 0px 5px 8px rgba(99, 116, 134, 0.03),
-      0px 2px 8px rgba(0, 0, 0, 0.04);
+    ${d300Effect}
     transform: translateY(-2px);
   }
 
@@ -36,15 +31,12 @@ export const RadioCardUI = styled('label')`
   &.is-focused.is-checked,
   &:focus-within,
   &.is-checked:focus-within {
-    border-color: transparent;
     border-radius: 7px;
     box-shadow: 0px 0px 0 2px ${getColor('blue.500')};
   }
 
   &.is-checked {
-    border: 1px solid ${getColor('grey.500')};
-    box-shadow: 0px 5px 8px rgba(99, 116, 134, 0.03),
-      0px 2px 8px rgba(0, 0, 0, 0.04);
+    ${d300Effect}
   }
 `
 
