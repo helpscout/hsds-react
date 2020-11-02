@@ -27,6 +27,7 @@ export const FluffyCardUI = styled(Card)`
 
     &:hover {
       ${d200Effect}
+      transform: translateY(-4px);
       text-decoration: none;
     }
   }

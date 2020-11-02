@@ -17,7 +17,6 @@ export const d200 = `
 `
 export const d200Effect = `
   box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
-  transform: translateY(-4px);
 `
 
 export const d300 = `
