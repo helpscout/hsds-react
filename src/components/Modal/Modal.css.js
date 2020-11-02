@@ -1,9 +1,10 @@
 import styled from 'styled-components'
 import { BEM } from '../../utilities/classNames'
+import { getColor } from '../../styles/utilities/color'
+import { d700 } from '../../styles/mixins/depth.css'
 import Animate from '../Animate'
 import Card from '../Card'
 import Toolbar from '../Toolbar'
-import { getColor } from '../../styles/utilities/color'
 
 const modalBodyBEM = BEM('.c-ModalBody')
 
@@ -101,9 +102,8 @@ export const AnimatedCardContainerUI = styled(Animate)`
 `
 
 export const CardUI = styled(Card)`
+  ${d700}
   border: none;
-  box-shadow: rgba(42, 59, 71, 0.1) 0px 1px 1px,
-    rgba(42, 59, 71, 0.25) 0px 10px 30px;
   display: flex;
   flex-direction: column;
   min-height: 0;
