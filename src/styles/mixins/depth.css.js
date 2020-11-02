@@ -34,12 +34,12 @@ export const d300Effect = `
 export const d400 = `
   ${common}
   box-shadow: 0 0 0 1px rgba(197, 206, 214, 0.7),
-                  0 1px 0 0 ${getColor('grey.600')},
+                  0 1px 0 0 ${getColor('ash.700')},
                   0 1px 3px rgba(0, 0, 0, 0.1);
 `
 export const d400Effect = `
   box-shadow: 0 0 0 1px rgba(197, 206, 214, 0.7),
-                  0 1px 0 0 ${getColor('grey.600')},
+                  0 1px 0 0 ${getColor('ash.700')},
                   0 4px 20px rgba(0, 0, 0, 0.1);
 `
 export const d500 = `
