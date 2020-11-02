@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import PageActions from './Page.Actions'
 import PageCard from './Page.Card'
 import PageContent from './Page.Content'
@@ -42,7 +41,7 @@ export class Page extends React.PureComponent {
 
     return (
       <PageContext.Provider value={this.getContextValue()}>
-        <PageUI {...getValidProps(rest)} className={componentClassName}>
+        <PageUI {...rest} className={componentClassName}>
           {children}
         </PageUI>
       </PageContext.Provider>
