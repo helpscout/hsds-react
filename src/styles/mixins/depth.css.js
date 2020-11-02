@@ -15,7 +15,11 @@ export const d200 = `
   ${common}
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 `
-export const d200Effect = `box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);`
+export const d200Effect = `
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+`
+
 export const d300 = `
   ${common}
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04),

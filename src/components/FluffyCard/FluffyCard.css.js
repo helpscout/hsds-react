@@ -1,43 +1,33 @@
 import styled from 'styled-components'
+import { d200, d200Effect } from '../../styles/mixins/depth.css'
 import Card from '../Card'
-
-export const config = {
-  borderRadius: 4,
-  boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.1)',
-  boxShadowHover: '0px 8px 15px 0 rgba(0, 0, 0, 0.2)',
-  horizontalOffset: 10,
-  padding: '20px 15px',
-  transformHover: 'translateY(-3px)',
-  transition: 'box-shadow 200ms linear, transform 200ms linear',
-}
 
 export const FluffyCardContainerUI = styled('div')`
   display: flex;
 `
 
 export const FluffyCardUI = styled(Card)`
-  box-shadow: ${config.boxShadow};
-  border-radius: ${config.borderRadius}px;
+  ${d200}
+  border-radius: 4px;
   flex: 1;
   max-width: 100%;
   min-width: 0;
-  padding: ${config.padding};
+  padding: 20px 15px;
+  transform: translateY(0);
+  border: 0;
 
   & + & {
-    margin-left: ${config.horizontalOffset}px;
+    margin-left: 10px;
   }
 
   &.is-hoverable {
-    box-shadow: ${config.boxShadow};
+    ${d200}
     color: currentColor;
     text-decoration: none;
-    transform: translateY(0);
-    transition: ${config.transition};
 
     &:hover {
-      box-shadow: ${config.boxShadowHover};
+      ${d200Effect}
       text-decoration: none;
-      transform: ${config.transformHover};
     }
   }
 
