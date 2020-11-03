@@ -1,8 +1,7 @@
 import styled from 'styled-components'
 import { BEM } from '../../utilities/classNames'
-import cardStyles, {
-  cardSubtleStyles,
-} from '../../styles/mixins/cardStyles.css'
+import cardStyles from '../../styles/mixins/cardStyles.css'
+import { d400, d400Effect } from '../../styles/mixins/depth.css'
 import linkStyles from '../../styles/mixins/linkStyles.css'
 import { getColor } from '../../styles/utilities/color'
 
@@ -63,11 +62,16 @@ export const AttachmentUI = styled.a`
   }
 
   &.is-theme-preview {
-    ${cardSubtleStyles()};
+    ${d400}
     border: none;
+    border-radius: 3px;
     display: block;
     font-weight: 500;
     padding: 15px 17px;
+
+    &:hover {
+      ${d400Effect}
+    }
 
     &.has-image {
       padding: 3px;
