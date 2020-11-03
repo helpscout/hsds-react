@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
-import { d300, d300Effect } from '../../styles/mixins/depth.css'
+import { d400, d400Effect } from '../../styles/mixins/depth.css'
 import { rgba } from '../../utilities/color'
 
 export const CheckMarkCardUI = styled('label')`
@@ -15,11 +15,11 @@ export const CheckMarkCardUI = styled('label')`
   height: ${({ height }) => (height ? height : 'auto')};
   min-height: 100px;
   border-radius: 4px;
-  ${d300}
+  ${d400}
   cursor: pointer;
 
   &:hover {
-    ${d300Effect}
+    ${d400Effect}
     transform: translateY(-2px);
   }
 
@@ -32,13 +32,13 @@ export const CheckMarkCardUI = styled('label')`
   }
 
   &.is-disabled {
-    ${d300}
+    ${d400}
     color: ${rgba(getColor('charcoal.500'), 0.85)};
     opacity: 0.8;
     cursor: not-allowed;
 
     &:hover {
-      ${d300}
+      ${d400}
       transform: translateY(0);
     }
   }
