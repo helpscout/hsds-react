@@ -1,15 +1,16 @@
 import styled from 'styled-components'
-import Card from '../Card'
-import Button from '../Button'
-import Heading from '../Heading'
 import { makeFontFamily, setFontSize } from '../../styles/utilities/font'
 import { getColor } from '../../styles/utilities/color'
 import { FONT_FAMILY } from '../../styles/configs/constants'
+import { d600 } from '../../styles/mixins/depth.css'
+import Card from '../Card'
+import Button from '../Button'
+import Heading from '../Heading'
 const fontFamily = makeFontFamily('Barlow')
 
 export const MessageCardUI = styled(Card)`
-  background-color: white;
   border-color: transparent !important;
+  background-color: white;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 20px 0 25px;
@@ -25,7 +26,7 @@ export const MessageCardUI = styled(Card)`
     border-bottom-left-radius: 4px;
   }
   &.is-with-box-shadow {
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.15);
+    ${d600}
   }
   &.is-mobile {
     width: 100%;
