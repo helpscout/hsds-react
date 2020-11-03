@@ -114,7 +114,7 @@ export const BoxWithDepthUI = styled(Depth)`
 
 export const RelatedLink = styled('a')`
   display: inline-block;
-  margin: 2px 0;
+  margin: 2px 5px 2px 0;
   padding: 4px 10px 4px 35px;
   border-radius: 4px;
   background: #f1f3f5;
