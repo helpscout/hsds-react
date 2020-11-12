@@ -19,6 +19,7 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
     isDateSelected,
     isFirstOrLastSelectedDate,
     onDateSelect,
+    onDateHover,
   } = useContext(DatepickerContext)
   const {
     isSelected,
@@ -26,6 +27,7 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
     isWithinHoverRange,
     disabledDate,
     onClick,
+    onMouseEnter,
   } = useDay({
     date,
     isDateBlocked,
@@ -34,6 +36,7 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
     isDateSelected,
     isFirstOrLastSelectedDate,
     onDateSelect: handleDaySelect,
+    onDateHover: handleDayHover,
     dayRef,
   })
 
@@ -47,6 +50,10 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
     leading,
     trailing
   )
+
+  function handleDayHover(date) {
+    onDateHover(getCorrectDateToSet(date))
+  }
 
   function handleDaySelect(date) {
     onDateSelect(getCorrectDateToSet(date))
@@ -82,6 +89,7 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
       isSelected={isSelected}
       isDateToday={isDateToday}
       onClick={onClick}
+      onMouseEnter={onMouseEnter}
       ref={dayRef}
       tabIndex={trailing || leading ? '-1' : '0'}
       labelColor={getColorFn({
@@ -97,7 +105,7 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
         selectedFirstOrLastColor: getColor('blue.500'),
         normalColor: '#FFFFFF',
         selectedColor: getColor('blue.500'),
-        rangeHoverColor: getColor('blue.600'),
+        rangeHoverColor: getColor('blue.200'),
         disabledColor: '#FFFFFF',
         inactiveMonthColor: '#FFFFFF',
         todayColor: getColor('grey.300'),

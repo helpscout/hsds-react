@@ -12,7 +12,7 @@ function Datepicker({
   allowFutureDatePick = true,
   endDate = null,
   firstDayOfWeek = 1,
-  minBookingDays = 1,
+  minBookingDays = 2,
   numberOfMonths = 1,
   onDateChange = noop,
   startDate = null,
@@ -33,6 +33,7 @@ function Datepicker({
     isDateBlocked,
     isDateFocused,
     onDateSelect,
+    onDateHover,
     goToDate,
     goToPreviousMonthsByOneMonth,
     goToNextMonthsByOneMonth,
@@ -89,6 +90,7 @@ function Datepicker({
         isDateSelected,
         isFirstOrLastSelectedDate,
         onDateSelect,
+        onDateHover,
       }}
     >
       <CalendarContainerUI
