@@ -12,7 +12,7 @@ function Datepicker({
   allowFutureDatePick = true,
   endDate = null,
   firstDayOfWeek = 1,
-  minBookingDays = 2,
+  minBookingDays = 1,
   numberOfMonths = 1,
   onDateChange = noop,
   startDate = null,
