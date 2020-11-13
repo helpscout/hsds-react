@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { useDatepicker, START_DATE } from '@datepicker-react/hooks'
 import { noop } from '../../utilities/other'
@@ -81,20 +81,35 @@ function Datepicker({
     onDateChange(data)
   }
 
+  // We don't recreate the context value object unless it's needed.
+  // That stop all the childrens from being re-rendering on each datepicker evokation
+  const contextValue = useMemo(
+    () => ({
+      isDateBlocked,
+      isDateFocused,
+      isDateHovered,
+      isDateSelected,
+      isFirstOrLastSelectedDate,
+      onDateSelect,
+      onDateHover,
+      startDate: dates.startDate,
+      endDate: dates.endDate,
+    }),
+    [
+      isDateBlocked,
+      isDateFocused,
+      isDateHovered,
+      isDateSelected,
+      isFirstOrLastSelectedDate,
+      onDateSelect,
+      onDateHover,
+      dates.startDate,
+      dates.endDate,
+    ]
+  )
+
   return (
-    <DatepickerContext.Provider
-      value={{
-        isDateBlocked,
-        isDateFocused,
-        isDateHovered,
-        isDateSelected,
-        isFirstOrLastSelectedDate,
-        onDateSelect,
-        onDateHover,
-        startDate: dates.startDate,
-        endDate: dates.endDate,
-      }}
-    >
+    <DatepickerContext.Provider value={contextValue}>
       <CalendarContainerUI
         className="c-Calendar"
         numberOfMonths={numberOfMonths}
