@@ -31,6 +31,7 @@ function Navigator({
         className="SequentialNavButton go-previous"
         aria-label={getNavigatorButtonLabel(navigationLevel, 'previous')}
         onClick={goPrevious}
+        type="button"
       >
         <Icon name="arrow-left-single-large" />
         <VisuallyHidden>
@@ -42,6 +43,7 @@ function Navigator({
         onClick={onDeepNavigationClick}
         disabled={navigationLevel === NAVIGATION_LEVELS.YEAR_RANGES}
         aria-live="polite"
+        type="button"
       >
         {label}
       </DeepNavigatorButtonUI>
@@ -50,6 +52,7 @@ function Navigator({
         onClick={goNext}
         disabled={!canNavigateForward}
         aria-label={getNavigatorButtonLabel(navigationLevel, 'next')}
+        type="button"
       >
         <Icon name="arrow-right-single-large" />
         <VisuallyHidden>

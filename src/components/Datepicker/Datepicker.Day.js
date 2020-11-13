@@ -126,6 +126,7 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
           inactiveMonthColor: '#FFFFFF',
           todayColor: getColor('grey.300'),
         })}
+        type="button"
       >
         <time dateTime={getValidDateTimeString(getCorrectDateToSet(date))}>
           {dayLabel}

@@ -62,6 +62,7 @@ function PeriodCalendar({
           onClick={() => {
             goToDate(new Date(activeYear, index, 1), true)
           }}
+          type="button"
         >
           <time
             dateTime={`${activeYear}-${(index + 1)
@@ -90,6 +91,7 @@ function PeriodCalendar({
             setMode(NAVIGATION_LEVELS.YEAR_BY_YEAR)
             goToDate(new Date(year, 0, 1), false)
           }}
+          type="button"
         >
           <time dateTime={`${year}`}>{year}</time>
         </PeriodButtonUI>
