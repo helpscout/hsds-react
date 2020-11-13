@@ -91,6 +91,8 @@ function Datepicker({
         isFirstOrLastSelectedDate,
         onDateSelect,
         onDateHover,
+        startDate: dates.startDate,
+        endDate: dates.endDate,
       }}
     >
       <CalendarContainerUI

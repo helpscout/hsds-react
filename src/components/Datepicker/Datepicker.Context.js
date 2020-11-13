@@ -3,6 +3,8 @@ import React from 'react'
 
 export const datepickerContextDefaultValue = {
   focusedDate: null,
+  endDate: null,
+  startDate: null,
   isDateFocused: () => false,
   isDateSelected: () => false,
   isDateHovered: () => false,

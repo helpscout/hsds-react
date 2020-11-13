@@ -110,7 +110,28 @@ export const DaysGridUI = styled('div')`
   justify-content: center;
 `
 
+export const DayWrapperUI = styled('div')`
+  position: relative;
+
+  /* First day per row in the month grid */
+  &:nth-child(7n-6) {
+    .is-selected,
+    .is-within-hover-range {
+      border-radius: 50% 0 0 50% !important;
+    }
+  }
+
+  /* Last day per row in the month grid*/
+  &:nth-child(7n) {
+    .is-selected,
+    .is-within-hover-range {
+      border-radius: 0 50% 50% 0 !important;
+    }
+  }
+`
+
 export const DayUI = styled('button')`
+  position: relative;
   width: 36px;
   height: 36px;
   padding: 0;
@@ -128,6 +149,7 @@ export const DayUI = styled('button')`
   -webkit-font-smoothing: ${({ isSelected, isDateToday }) =>
     isSelected || isDateToday ? 'auto' : 'antialiased'};
   cursor: pointer;
+  z-index: 1;
 
   &:not([disabled]):not(.is-from-another-month):not(.is-selected):hover {
     color: ${getColor('blue.600')};
@@ -142,6 +164,37 @@ export const DayUI = styled('button')`
 
   &[disabled] {
     cursor: default;
+  }
+
+  &.is-within-hover-range:not(.is-selected-start):not(.is-selected-end) {
+    border-radius: 0;
+  }
+
+  &.is-selected {
+    border-radius: 0;
+
+    &.is-selected-end,
+    &.is-selected-start {
+      border-radius: 50%;
+    }
+  }
+`
+
+export const SelectedDateMarkerUI = styled('div')`
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  background: ${getColor('blue.200')};
+  top: 0;
+  left: 0;
+  z-index: 0;
+
+  &.is-selected-start-marker {
+    border-radius: 50% 0 0 50%;
+  }
+
+  &.is-selected-end-marker {
+    border-radius: 0 50% 50% 0;
   }
 `
 
