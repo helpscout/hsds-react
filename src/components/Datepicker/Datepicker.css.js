@@ -127,6 +127,10 @@ export const DayWrapperUI = styled('div')`
     .is-within-hover-range {
       border-radius: 0 50% 50% 0 !important;
     }
+
+    .is-selected-start-marker {
+      display: none;
+    }
   }
 `
 
@@ -174,17 +178,25 @@ export const DayUI = styled('button')`
     }
   }
 
+  &.is-within-hover-range.is-selected-start:hover + .is-selected-start-marker {
+    border-radius: 50% !important;
+  }
+
   &.is-selected {
     border-radius: 0;
 
     &.is-selected-end,
     &.is-selected-start {
-      border-radius: 50%;
+      border-radius: 50% !important;
     }
+  }
+
+  &.is-within-hover-range.is-selected-start {
+    border-radius: 50% !important;
   }
 `
 
-export const SelectedDateMarkerUI = styled('div')`
+export const DateRangeBGHelperUI = styled('div')`
   position: absolute;
   width: 36px;
   height: 36px;

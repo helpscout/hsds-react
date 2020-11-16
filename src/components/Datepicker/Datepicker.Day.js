@@ -8,7 +8,7 @@ import {
   isToday,
   getValidDateTimeString,
 } from './Datepicker.utils'
-import { DayUI, DayWrapperUI, SelectedDateMarkerUI } from './Datepicker.css'
+import { DayUI, DayWrapperUI, DateRangeBGHelperUI } from './Datepicker.css'
 
 function Day({ dayLabel, date, leading = false, trailing = false }) {
   const dayRef = useRef(null)
@@ -81,19 +81,20 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
     return dateCopy
   }
 
-  function shouldShowRangeMarker() {
+  const dateString = getValidDateTimeString(getCorrectDateToSet(date))
+  const startDateString = getValidDateTimeString(startDate)
+  const endDateString = getValidDateTimeString(endDate)
+
+  function shouldShowDateRangeBGHelper() {
+    if (!enableRangeSelection) return false
+
     return (
-      enableRangeSelection &&
       (isWithinHoverRange || (startDateString && endDateString)) &&
       endDateString !== startDateString &&
       ((isSelectedStartOrEnd && dateString === startDateString) ||
-        (isSelectedStartOrEnd && dateString === endDateString))
+        dateString === endDateString)
     )
   }
-
-  const dateString = getValidDateTimeString(getCorrectDateToSet(date))
-  const startDateString = getValidDateTimeString(getCorrectDateToSet(startDate))
-  const endDateString = getValidDateTimeString(getCorrectDateToSet(endDate))
 
   return (
     <DayWrapperUI className="DayWrapper">
@@ -101,19 +102,21 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
         className={classNames(
           'c-DatepickerDay',
           (trailing || leading) && 'is-from-another-month',
-          isSelected && 'is-selected',
+          (isSelected || dateString === endDateString) && 'is-selected',
           isSelectedStartOrEnd &&
             dateString === startDateString &&
             'is-selected-start',
-          isSelectedStartOrEnd &&
+          (isSelectedStartOrEnd ||
+            isSelected ||
+            dateString === endDateString) &&
             dateString === endDateString &&
             'is-selected-end',
           isDateToday && 'is-today',
           isWithinHoverRange && 'is-within-hover-range'
         )}
-        aria-selected={isSelected}
+        aria-selected={isSelected || dateString === endDateString}
         disabled={disabledDate}
-        isSelected={isSelected}
+        isSelected={isSelected || dateString === endDateString}
         isDateToday={isDateToday}
         onClick={onClick}
         onMouseEnter={onMouseEnter}
@@ -144,14 +147,14 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
         </time>
       </DayUI>
 
-      {shouldShowRangeMarker() ? (
-        <SelectedDateMarkerUI
+      {shouldShowDateRangeBGHelper() ? (
+        <DateRangeBGHelperUI
           className={classNames(
             'selected-date-marker',
             dateString === startDateString && 'is-selected-start-marker',
             dateString === endDateString && 'is-selected-end-marker'
           )}
-        ></SelectedDateMarkerUI>
+        ></DateRangeBGHelperUI>
       ) : null}
     </DayWrapperUI>
   )

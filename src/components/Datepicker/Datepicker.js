@@ -171,7 +171,7 @@ Datepicker.propTypes = {
     PropTypes.instanceOf(Date),
     PropTypes.string,
   ]),
-  /** Callback when the date is changed */
+  /** Callback when the date is changed, returns selected start date (and end date if a range selection)  */
   onDateChange: PropTypes.func,
 }
 
