@@ -84,6 +84,7 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
   function shouldShowRangeMarker() {
     return (
       enableRangeSelection &&
+      (isWithinHoverRange || (startDateString && endDateString)) &&
       endDateString !== startDateString &&
       ((isSelectedStartOrEnd && dateString === startDateString) ||
         (isSelectedStartOrEnd && dateString === endDateString))
