@@ -22,6 +22,7 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
     isFirstOrLastSelectedDate,
     onDateSelect,
     onDateHover,
+    minBookingDays,
   } = useContext(DatepickerContext)
   const {
     isSelected,
@@ -80,6 +81,15 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
     return dateCopy
   }
 
+  function shouldShowRangeMarker() {
+    return (
+      minBookingDays > 1 &&
+      endDateString !== startDateString &&
+      ((isSelectedStartOrEnd && dateString === startDateString) ||
+        (isSelectedStartOrEnd && dateString === endDateString))
+    )
+  }
+
   const dateString = getValidDateTimeString(getCorrectDateToSet(date))
   const startDateString = getValidDateTimeString(getCorrectDateToSet(startDate))
   const endDateString = getValidDateTimeString(getCorrectDateToSet(endDate))
@@ -133,8 +143,7 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
         </time>
       </DayUI>
 
-      {(isSelectedStartOrEnd && dateString === startDateString) ||
-      (isSelectedStartOrEnd && dateString === endDateString) ? (
+      {shouldShowRangeMarker() ? (
         <SelectedDateMarkerUI
           className={classNames(
             'selected-date-marker',

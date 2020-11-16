@@ -94,6 +94,7 @@ function Datepicker({
       onDateHover,
       startDate: dates.startDate,
       endDate: dates.endDate,
+      minBookingDays,
     }),
     [
       isDateBlocked,
@@ -105,6 +106,7 @@ function Datepicker({
       onDateHover,
       dates.startDate,
       dates.endDate,
+      minBookingDays,
     ]
   )
 

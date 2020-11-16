@@ -168,6 +168,10 @@ export const DayUI = styled('button')`
 
   &.is-within-hover-range:not(.is-selected-start):not(.is-selected-end) {
     border-radius: 0;
+
+    &:hover {
+      border-radius: 0 50% 50% 0 !important;
+    }
   }
 
   &.is-selected {
