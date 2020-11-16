@@ -10,6 +10,7 @@ import DailyCalendar from './Datepicker.DailyCalendar'
 
 function Datepicker({
   allowFutureDatePick = true,
+  enableRangeSelection = false,
   endDate = null,
   firstDayOfWeek = 1,
   minBookingDays = 1,
@@ -46,7 +47,7 @@ function Datepicker({
     onDatesChange: handleDateChange,
     numberOfMonths,
     minBookingDays,
-    exactMinBookingDays: minBookingDays === 1,
+    exactMinBookingDays: !enableRangeSelection,
     maxBookingDate: !allowFutureDatePick ? new Date() : undefined,
   })
 
@@ -76,7 +77,7 @@ function Datepicker({
     if (!data.focusedInput) {
       setDates({ ...data, focusedInput: START_DATE })
     } else {
-      if (minBookingDays > 1 && data.endDate) {
+      if (enableRangeSelection && data.endDate) {
         setDates({ ...data, endDate: null })
       } else {
         setDates(data)
@@ -99,7 +100,7 @@ function Datepicker({
       onDateHover,
       startDate: dates.startDate,
       endDate: dates.endDate,
-      minBookingDays,
+      enableRangeSelection,
     }),
     [
       isDateBlocked,
@@ -111,7 +112,7 @@ function Datepicker({
       onDateHover,
       dates.startDate,
       dates.endDate,
-      minBookingDays,
+      enableRangeSelection,
     ]
   )
 
@@ -155,11 +156,13 @@ function Datepicker({
 Datepicker.propTypes = {
   /** Whether is possible to pick a date in the future */
   allowFutureDatePick: PropTypes.bool,
+  /** Allows the selection of start and end date dates, use `minBookingDays` to enforce a minimun number of dates in the range*/
+  enableRangeSelection: PropTypes.bool,
   /** Pass an ending date to the calendar to select range. Note: Range not supported yet */
   endDate: PropTypes.instanceOf(Date),
   /** Which day of the week is first in the calendar (0 -> sunday, 1 -> monday, etc) */
   firstDayOfWeek: PropTypes.oneOf([0, 1, 2, 3, 4, 5, 6]),
-  /** How many days can be selected in a range (minimum). Note: Currently supported 1 */
+  /** How many days can be selected in a range (minimum). */
   minBookingDays: PropTypes.number,
   /** How many months to display at the same time. Note: Currently supported 1 */
   numberOfMonths: PropTypes.number,

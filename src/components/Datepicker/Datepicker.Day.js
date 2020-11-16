@@ -13,6 +13,7 @@ import { DayUI, DayWrapperUI, SelectedDateMarkerUI } from './Datepicker.css'
 function Day({ dayLabel, date, leading = false, trailing = false }) {
   const dayRef = useRef(null)
   const {
+    enableRangeSelection,
     endDate,
     startDate,
     isDateBlocked,
@@ -22,7 +23,6 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
     isFirstOrLastSelectedDate,
     onDateSelect,
     onDateHover,
-    minBookingDays,
   } = useContext(DatepickerContext)
   const {
     isSelected,
@@ -83,7 +83,7 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
 
   function shouldShowRangeMarker() {
     return (
-      minBookingDays > 1 &&
+      enableRangeSelection &&
       endDateString !== startDateString &&
       ((isSelectedStartOrEnd && dateString === startDateString) ||
         (isSelectedStartOrEnd && dateString === endDateString))

@@ -2,10 +2,10 @@
 import React from 'react'
 
 export const datepickerContextDefaultValue = {
-  focusedDate: null,
+  enableRangeSelection: false,
   endDate: null,
+  focusedDate: null,
   startDate: null,
-  minBookingDays: 1,
   isDateFocused: () => false,
   isDateSelected: () => false,
   isDateHovered: () => false,
