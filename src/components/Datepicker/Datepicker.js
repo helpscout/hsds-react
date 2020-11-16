@@ -45,6 +45,7 @@ function Datepicker({
     focusedInput: dates.focusedInput,
     onDatesChange: handleDateChange,
     numberOfMonths,
+    minBookingDays,
     exactMinBookingDays: minBookingDays === 1,
     maxBookingDate: !allowFutureDatePick ? new Date() : undefined,
   })
@@ -75,7 +76,11 @@ function Datepicker({
     if (!data.focusedInput) {
       setDates({ ...data, focusedInput: START_DATE })
     } else {
-      setDates(data)
+      if (minBookingDays > 1 && data.endDate) {
+        setDates({ ...data, endDate: null })
+      } else {
+        setDates(data)
+      }
     }
 
     onDateChange(data)
