@@ -183,7 +183,8 @@ export const DayUI = styled('button')`
   }
 
   &.is-selected {
-    border-radius: 0;
+    border-radius: ${({ enableRangeSelection }) =>
+      enableRangeSelection ? '0' : '50%'};
 
     &.is-selected-end,
     &.is-selected-start {

@@ -335,4 +335,149 @@ describe('Datepicker', () => {
 
     expect(getByLabelText(/next years/i).disabled).toBeTruthy()
   })
+
+  describe('Range selection', () => {
+    test('should allow range selection when enableRangeSelection is true', () => {
+      const changeSpy = jest.fn()
+      const someDate = new Date(2020, 10, 25)
+      const { getByText } = render(
+        <Datepicker
+          enableRangeSelection
+          startDate={someDate}
+          onDateChange={changeSpy}
+        />
+      )
+      const startDay = 21
+      const middleDay = 22
+      const endDay = 24
+
+      user.click(getByText(`${startDay}`).parentElement)
+
+      expect(
+        getByText(`${startDay}`).parentElement.classList.contains(
+          'is-selected-start'
+        )
+      ).toBeTruthy()
+
+      user.hover(getByText(`${endDay}`).parentElement)
+
+      expect(
+        getByText(`${middleDay}`).parentElement.classList.contains(
+          'is-within-hover-range'
+        )
+      ).toBeTruthy()
+
+      expect(
+        getByText(`${endDay}`).parentElement.classList.contains(
+          'is-within-hover-range'
+        )
+      ).toBeTruthy()
+
+      user.click(getByText(`${endDay}`).parentElement)
+
+      expect(
+        getByText(`${endDay}`).parentElement.classList.contains(
+          'is-selected-end'
+        )
+      ).toBeTruthy()
+      expect(
+        getByText(`${middleDay}`).parentElement.classList.contains(
+          'is-selected'
+        )
+      ).toBeTruthy()
+      expect(changeSpy).toHaveBeenCalledTimes(2)
+      expect(changeSpy).toHaveBeenCalledWith({
+        endDate: new Date(2020, 10, endDay),
+        focusedInput: null,
+        startDate: new Date(2020, 10, startDay),
+      })
+    })
+
+    test('should allow range selection with minimum days', () => {
+      const changeSpy = jest.fn()
+      const someDate = new Date(2020, 10, 25)
+      const { getByText } = render(
+        <Datepicker
+          enableRangeSelection
+          minBookingDays={4}
+          startDate={someDate}
+          onDateChange={changeSpy}
+        />
+      )
+      const startDay = 21
+      const middleDay = 22
+      const middleDay2 = 23
+      const endDay = 24
+
+      user.click(getByText(`${startDay}`).parentElement)
+
+      expect(
+        getByText(`${startDay}`).parentElement.classList.contains(
+          'is-selected-start'
+        )
+      ).toBeTruthy()
+
+      user.hover(getByText(`${middleDay}`).parentElement)
+
+      expect(
+        getByText(`${middleDay}`).parentElement.getAttribute('disabled')
+      ).toBe('')
+
+      user.hover(getByText(`${middleDay2}`).parentElement)
+
+      expect(
+        getByText(`${middleDay2}`).parentElement.getAttribute('disabled')
+      ).toBe('')
+
+      expect(
+        getByText(`${endDay}`).parentElement.getAttribute('disabled')
+      ).toBe(null)
+
+      user.click(getByText(`${endDay}`).parentElement)
+
+      expect(changeSpy).toHaveBeenCalledTimes(2)
+      expect(changeSpy).toHaveBeenCalledWith({
+        endDate: new Date(2020, 10, endDay),
+        focusedInput: null,
+        startDate: new Date(2020, 10, startDay),
+      })
+    })
+
+    test('should clear previous range if making a new one', () => {
+      const changeSpy = jest.fn()
+      const someDate = new Date(2020, 10, 25)
+      const { getByText } = render(
+        <Datepicker
+          enableRangeSelection
+          startDate={someDate}
+          onDateChange={changeSpy}
+        />
+      )
+      const startDay = 21
+      const endDay = 24
+
+      user.click(getByText(`${startDay}`).parentElement)
+      user.click(getByText(`${endDay}`).parentElement)
+
+      expect(changeSpy).toHaveBeenCalledTimes(2)
+      expect(changeSpy).toHaveBeenCalledWith({
+        endDate: new Date(2020, 10, endDay),
+        focusedInput: null,
+        startDate: new Date(2020, 10, startDay),
+      })
+
+      const startDay2 = 18
+      const endDay2 = 22
+
+      user.click(getByText(`${startDay2}`).parentElement)
+      user.click(getByText(`${endDay2}`).parentElement)
+
+      expect(changeSpy).toHaveBeenCalledTimes(4)
+      expect(changeSpy).toHaveBeenCalledWith({
+        endDate: new Date(2020, 10, endDay2),
+        focusedInput: null,
+        startDate: new Date(2020, 10, startDay2),
+      })
+    })
+  })
 })

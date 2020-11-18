@@ -103,17 +103,20 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
           'c-DatepickerDay',
           (trailing || leading) && 'is-from-another-month',
           (isSelected || dateString === endDateString) && 'is-selected',
-          isSelectedStartOrEnd &&
+          enableRangeSelection &&
+            isSelectedStartOrEnd &&
             dateString === startDateString &&
             'is-selected-start',
-          (isSelectedStartOrEnd ||
-            isSelected ||
-            dateString === endDateString) &&
+          enableRangeSelection &&
+            (isSelectedStartOrEnd ||
+              isSelected ||
+              dateString === endDateString) &&
             dateString === endDateString &&
             'is-selected-end',
           isDateToday && 'is-today',
           isWithinHoverRange && 'is-within-hover-range'
         )}
+        enableRangeSelection={enableRangeSelection}
         aria-selected={isSelected || dateString === endDateString}
         disabled={disabledDate}
         isSelected={isSelected || dateString === endDateString}
