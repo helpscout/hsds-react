@@ -53,6 +53,9 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
     leading,
     trailing
   )
+  const dateString = getValidDateTimeString(getCorrectDateToSet(date))
+  const startDateString = getValidDateTimeString(startDate)
+  const endDateString = getValidDateTimeString(endDate)
 
   function handleDayHover(date) {
     onDateHover(getCorrectDateToSet(date))
@@ -81,10 +84,9 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
     return dateCopy
   }
 
-  const dateString = getValidDateTimeString(getCorrectDateToSet(date))
-  const startDateString = getValidDateTimeString(startDate)
-  const endDateString = getValidDateTimeString(endDate)
-
+  /** This UI Helper is the light blue background
+   *  that appears on a start and end dates in a range
+   */
   function shouldShowDateRangeBGHelper() {
     if (!enableRangeSelection) return false
 
@@ -96,26 +98,28 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
     )
   }
 
+  function getClassNames() {
+    return classNames(
+      'c-DatepickerDay',
+      (trailing || leading) && 'is-from-another-month',
+      (isSelected || dateString === endDateString) && 'is-selected',
+      enableRangeSelection &&
+        isSelectedStartOrEnd &&
+        dateString === startDateString &&
+        'is-selected-start',
+      enableRangeSelection &&
+        (isSelectedStartOrEnd || isSelected || dateString === endDateString) &&
+        dateString === endDateString &&
+        'is-selected-end',
+      isDateToday && 'is-today',
+      isWithinHoverRange && 'is-within-hover-range'
+    )
+  }
+
   return (
     <DayWrapperUI className="DayWrapper">
       <DayUI
-        className={classNames(
-          'c-DatepickerDay',
-          (trailing || leading) && 'is-from-another-month',
-          (isSelected || dateString === endDateString) && 'is-selected',
-          enableRangeSelection &&
-            isSelectedStartOrEnd &&
-            dateString === startDateString &&
-            'is-selected-start',
-          enableRangeSelection &&
-            (isSelectedStartOrEnd ||
-              isSelected ||
-              dateString === endDateString) &&
-            dateString === endDateString &&
-            'is-selected-end',
-          isDateToday && 'is-today',
-          isWithinHoverRange && 'is-within-hover-range'
-        )}
+        className={getClassNames()}
         enableRangeSelection={enableRangeSelection}
         aria-selected={isSelected || dateString === endDateString}
         disabled={disabledDate}
@@ -145,9 +149,7 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
         })}
         type="button"
       >
-        <time dateTime={getValidDateTimeString(getCorrectDateToSet(date))}>
-          {dayLabel}
-        </time>
+        <time dateTime={dateString}>{dayLabel}</time>
       </DayUI>
 
       {shouldShowDateRangeBGHelper() ? (

@@ -24,7 +24,7 @@ export const DailyCalendarUI = styled('div')`
     justify-items: center;
   `
       : `
-      width: calc(100% - 40px);
+      width: calc(100% - 26px);
       margin: 0 auto;
       `}
 `
@@ -185,6 +185,13 @@ export const DayUI = styled('button')`
   &.is-selected {
     border-radius: ${({ enableRangeSelection }) =>
       enableRangeSelection ? '0' : '50%'};
+
+    &.is-today {
+      background: ${({ enableRangeSelection }) =>
+        enableRangeSelection ? getColor('blue.200') : ''};
+      color: ${({ enableRangeSelection }) =>
+        enableRangeSelection ? getColor('blue.500') : ''};
+    }
 
     &.is-selected-end,
     &.is-selected-start {

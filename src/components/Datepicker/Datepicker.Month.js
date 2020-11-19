@@ -24,7 +24,11 @@ function Month({ year, month, firstDayOfWeek }) {
     <div className="c-DatepickerMonth">
       <WeekdaysRowUI className="WeekdaysRow">
         {weekdayLabels.map(dayLabel => (
-          <div css={{ textAlign: 'center' }} key={dayLabel}>
+          <div
+            className="WeekdayLabel"
+            css={{ textAlign: 'center' }}
+            key={dayLabel}
+          >
             {dayLabel}
           </div>
         ))}
