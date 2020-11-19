@@ -110,37 +110,13 @@ export const DaysGridUI = styled('div')`
   justify-content: center;
 `
 
-export const DayWrapperUI = styled('div')`
-  position: relative;
-
-  /* First day per row in the month grid */
-  &:nth-child(7n-6) {
-    .is-selected,
-    .is-within-hover-range {
-      border-radius: 50% 0 0 50% !important;
-    }
-  }
-
-  /* Last day per row in the month grid*/
-  &:nth-child(7n) {
-    .is-selected,
-    .is-within-hover-range {
-      border-radius: 0 50% 50% 0 !important;
-    }
-
-    .is-selected-start-marker {
-      display: none;
-    }
-  }
-`
-
 export const DayUI = styled('button')`
   position: relative;
   width: 36px;
   height: 36px;
   padding: 0;
-  line-height: 32px;
-  border: 2px solid transparent;
+  line-height: 36px;
+  border: 0;
   border-radius: 50%;
   text-align: center;
   font-size: 14px;
@@ -155,52 +131,73 @@ export const DayUI = styled('button')`
   cursor: pointer;
   z-index: 1;
 
-  &:not([disabled]):not(.is-from-another-month):not(.is-selected):hover {
-    color: ${getColor('blue.600')};
-    background: ${getColor('blue.200')};
-    border-color: ${getColor('blue.200')};
-  }
-
   &:focus {
     outline: 0;
-    border-color: ${getColor('blue.500')};
+    border: 2px solid ${getColor('blue.500')};
   }
 
   &[disabled] {
     cursor: default;
   }
 
-  &.is-within-hover-range:not(.is-selected-start):not(.is-selected-end) {
-    border-radius: 0;
-
-    &:hover {
-      border-radius: 0 50% 50% 0 !important;
+  &.is-selected,
+  &.is-selected-start {
+    &:focus {
+      border: 0;
     }
   }
 
-  &.is-within-hover-range.is-selected-start:hover + .is-selected-start-marker {
-    border-radius: 50% !important;
-  }
-
-  &.is-selected {
-    border-radius: ${({ enableRangeSelection }) =>
-      enableRangeSelection ? '0' : '50%'};
-
-    &.is-today {
-      background: ${({ enableRangeSelection }) =>
-        enableRangeSelection ? getColor('blue.200') : ''};
-      color: ${({ enableRangeSelection }) =>
-        enableRangeSelection ? getColor('blue.500') : ''};
+  &.with-range-selection {
+    &.is-selected.is-today,
+    &.is-selected.is-from-another-month:not(.is-selected-end),
+    &.is-within-hover-range.is-today {
+      background-color: ${getColor('blue.200')};
+      color: ${getColor('blue.500')};
     }
 
+    &.is-from-another-month.is-selected-end {
+      color: white;
+    }
+
+    &.is-selected,
+    &.is-within-hover-range {
+      border-radius: 0;
+      font-weight: 500;
+    }
+
+    &.is-within-hover-range:hover,
+    &.is-within-hover-range:nth-child(7n),
+    &.is-selected:nth-child(7n) {
+      border-radius: 0 50% 50% 0;
+    }
+
+    &.is-within-hover-range:nth-child(7n - 6),
+    &.is-selected:nth-child(7n - 6) {
+      border-radius: 50% 0 0 50%;
+    }
+
+    &.is-selected-start,
     &.is-selected-end,
-    &.is-selected-start {
-      border-radius: 50% !important;
+    &.is-selected-start:hover,
+    &.is-selected-end:hover {
+      border-radius: 50%;
     }
   }
+`
 
-  &.is-within-hover-range.is-selected-start {
-    border-radius: 50% !important;
+export const TimeUI = styled('time')`
+  display: block;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+
+  .is-selected-start &,
+  .is-selected-end & {
+    background-color: ${getColor('blue.500')};
+    border-radius: 50%;
   }
 `
 
@@ -212,6 +209,10 @@ export const DateRangeBGHelperUI = styled('div')`
   top: 0;
   left: 0;
   z-index: 0;
+
+  .is-within-hover-range:hover &.is-selected-start-marker {
+    border-radius: 50%;
+  }
 
   &.is-selected-start-marker {
     border-radius: 50% 0 0 50%;

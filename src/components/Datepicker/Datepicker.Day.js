@@ -6,9 +6,10 @@ import DatepickerContext from './Datepicker.Context'
 import {
   getDayColor,
   isToday,
+  isInsideRange,
   getValidDateTimeString,
 } from './Datepicker.utils'
-import { DayUI, DayWrapperUI, DateRangeBGHelperUI } from './Datepicker.css'
+import { DayUI, TimeUI, DateRangeBGHelperUI } from './Datepicker.css'
 
 function Day({ dayLabel, date, leading = false, trailing = false }) {
   const dayRef = useRef(null)
@@ -56,6 +57,18 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
   const dateString = getValidDateTimeString(getCorrectDateToSet(date))
   const startDateString = getValidDateTimeString(startDate)
   const endDateString = getValidDateTimeString(endDate)
+  let isTrailingDayInsideRange
+
+  if (enableRangeSelection && trailing && startDate && endDate) {
+    isTrailingDayInsideRange = isInsideRange({
+      to: endDate,
+      from: startDate,
+      check: getCorrectDateToSet(date),
+    })
+  }
+
+  const isDaySelected =
+    isSelected || dateString === endDateString || isTrailingDayInsideRange
 
   function handleDayHover(date) {
     onDateHover(getCorrectDateToSet(date))
@@ -84,25 +97,25 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
     return dateCopy
   }
 
-  /** This UI Helper is the light blue background
-   *  that appears on a start and end dates in a range
+  /**
+   * This UI Helper is the light blue background
+   * that appears on a start and end dates in a range
    */
   function shouldShowDateRangeBGHelper() {
     if (!enableRangeSelection) return false
+    if (startDateString === endDateString) return false
+    if (isSelectedStartOrEnd && isSelected) return true
+    if (isSelectedStartOrEnd && !isWithinHoverRange) return false
+    if (trailing && isDaySelected) return true
 
-    return (
-      (isWithinHoverRange || (startDateString && endDateString)) &&
-      endDateString !== startDateString &&
-      ((isSelectedStartOrEnd && dateString === startDateString) ||
-        dateString === endDateString)
-    )
+    return isSelectedStartOrEnd
   }
 
   function getClassNames() {
     return classNames(
       'c-DatepickerDay',
       (trailing || leading) && 'is-from-another-month',
-      (isSelected || dateString === endDateString) && 'is-selected',
+      isDaySelected && 'is-selected',
       enableRangeSelection &&
         isSelectedStartOrEnd &&
         dateString === startDateString &&
@@ -112,46 +125,43 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
         dateString === endDateString &&
         'is-selected-end',
       isDateToday && 'is-today',
+      enableRangeSelection && 'with-range-selection',
       isWithinHoverRange && 'is-within-hover-range'
     )
   }
 
   return (
-    <DayWrapperUI className="DayWrapper">
-      <DayUI
-        className={getClassNames()}
-        enableRangeSelection={enableRangeSelection}
-        aria-selected={isSelected || dateString === endDateString}
-        disabled={disabledDate}
-        isSelected={isSelected || dateString === endDateString}
-        isDateToday={isDateToday}
-        onClick={onClick}
-        onMouseEnter={onMouseEnter}
-        ref={dayRef}
-        tabIndex={trailing || leading ? '-1' : '0'}
-        labelColor={getColorFn({
-          selectedFirstOrLastColor: '#FFFFFF',
-          normalColor: getColor('charcoal.600'),
-          selectedColor: getColor('blue.500'),
-          rangeHoverColor: getColor('blue.500'),
-          disabledColor: '#808285',
-          inactiveMonthColor: getColor('charcoal.200'),
-          todayColor: getColor('charcoal.700'),
-        })}
-        bgColor={getColorFn({
-          selectedFirstOrLastColor: getColor('blue.500'),
-          normalColor: '#FFFFFF',
-          selectedColor: getColor('blue.200'),
-          rangeHoverColor: getColor('blue.200'),
-          disabledColor: '#FFFFFF',
-          inactiveMonthColor: '#FFFFFF',
-          todayColor: getColor('grey.300'),
-        })}
-        type="button"
-      >
-        <time dateTime={dateString}>{dayLabel}</time>
-      </DayUI>
-
+    <DayUI
+      className={getClassNames()}
+      enableRangeSelection={enableRangeSelection}
+      aria-selected={isDaySelected}
+      disabled={disabledDate}
+      isSelected={isDaySelected}
+      isDateToday={isDateToday}
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      ref={dayRef}
+      tabIndex={trailing || leading ? '-1' : '0'}
+      labelColor={getColorFn({
+        selectedFirstOrLastColor: '#FFFFFF',
+        normalColor: getColor('charcoal.600'),
+        selectedColor: getColor('blue.500'),
+        rangeHoverColor: getColor('blue.500'),
+        disabledColor: '#808285',
+        inactiveMonthColor: getColor('charcoal.200'),
+        todayColor: getColor('charcoal.700'),
+      })}
+      bgColor={getColorFn({
+        selectedFirstOrLastColor: getColor('blue.500'),
+        normalColor: '#FFFFFF',
+        selectedColor: getColor('blue.200'),
+        rangeHoverColor: getColor('blue.200'),
+        disabledColor: '#FFFFFF',
+        inactiveMonthColor: '#FFFFFF',
+        todayColor: getColor('grey.300'),
+      })}
+      type="button"
+    >
       {shouldShowDateRangeBGHelper() ? (
         <DateRangeBGHelperUI
           className={classNames(
@@ -161,7 +171,8 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
           )}
         ></DateRangeBGHelperUI>
       ) : null}
-    </DayWrapperUI>
+      <TimeUI dateTime={dateString}>{dayLabel}</TimeUI>
+    </DayUI>
   )
 }
 

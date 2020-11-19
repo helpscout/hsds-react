@@ -54,6 +54,10 @@ export function isMonthInThePast(someDate) {
   )
 }
 
+export function isInsideRange({ check, to, from }) {
+  return check.getTime() <= to.getTime() && check.getTime() >= from.getTime()
+}
+
 /**
  * Extracts a string in the form of `YYYY-MM-DD`
  * @param {Object} someDate Date object to get the string from
