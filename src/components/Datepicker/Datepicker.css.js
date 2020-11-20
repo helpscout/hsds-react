@@ -130,27 +130,29 @@ export const DayUI = styled('button')`
     isSelected || isDateToday ? 'auto' : 'antialiased'};
   cursor: pointer;
   z-index: 1;
+  transition: box-shadow ease-in-out 0.05s;
+
+  &:not([disabled]):not(.is-from-another-month):not(.is-selected):not(.is-selected-end):not(.is-selected-start):hover {
+    color: ${getColor('blue.600')};
+    background: ${getColor('blue.200')};
+  }
 
   &:focus {
     outline: 0;
-    border: 2px solid ${getColor('blue.500')};
+    box-shadow: inset 0 0 0 2px ${getColor('blue.500')};
+  }
+
+  &:not(.is-selected):focus {
   }
 
   &[disabled] {
     cursor: default;
   }
 
-  &.is-selected,
-  &.is-selected-start {
-    &:focus {
-      border: 0;
-    }
-  }
-
   &.with-range-selection {
-    &.is-selected.is-today,
+    &.is-selected.is-today:not(.is-selected-end):not(.is-selected-start),
     &.is-selected.is-from-another-month:not(.is-selected-end),
-    &.is-within-hover-range.is-today {
+    &.is-within-hover-range.is-today:not(.is-selected-end):not(.is-selected-start) {
       background-color: ${getColor('blue.200')};
       color: ${getColor('blue.500')};
     }
@@ -171,9 +173,13 @@ export const DayUI = styled('button')`
       border-radius: 0 50% 50% 0;
     }
 
-    &.is-within-hover-range:nth-child(7n - 6),
-    &.is-selected:nth-child(7n - 6) {
+    &.is-within-hover-range:not(.is-selected-end):not(.is-selected-start):nth-child(7n-6),
+    &.is-selected:not(.is-selected-end):not(.is-selected-start):nth-child(7n-6) {
       border-radius: 50% 0 0 50%;
+
+      &:not(.is-selected):hover {
+        border-radius: 50%;
+      }
     }
 
     &.is-selected-start,
