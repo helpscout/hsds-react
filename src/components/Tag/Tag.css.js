@@ -32,7 +32,7 @@ export const config = {
       secondary: 'white',
     },
     purple: {
-      main: getColor('purple.500'),
+      main: getColor('indigo.500'),
       secondary: 'white',
     },
     red: {

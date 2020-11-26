@@ -2,7 +2,7 @@ import { getColor, getThemeBrandProp } from '../../styles/utilities/color'
 import styled from 'styled-components'
 
 export const config = {
-  backgroundColor: getColor('purple.500'),
+  backgroundColor: getColor('indigo.500'),
   color: 'white',
   size: 44,
 }

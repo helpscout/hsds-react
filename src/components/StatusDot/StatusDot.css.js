@@ -11,7 +11,7 @@ export const config = {
     inactive: getColor('grey.600'),
     offline: getColor('red.500'),
     busy: getColor('yellow.500'),
-    custom: getColor('purple.400'),
+    custom: getColor('indigo.400'),
   },
   dotSize: 6,
   defaultSize: 2 * 2 + 6,
