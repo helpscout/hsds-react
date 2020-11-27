@@ -18,7 +18,7 @@ describe('Datepicker', () => {
       getValidDateTimeString(todayDate)
     )
     expect(todayNode.classList.contains('is-selected')).toBeFalsy()
-    expect(todayNode.getAttribute('aria-selected')).toBe('false')
+    expect(todayNode.getAttribute('aria-selected')).toBeFalsy()
   })
 
   test('should render with a given date if provided', () => {
