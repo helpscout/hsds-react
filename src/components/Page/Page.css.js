@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import { breakpoint } from '../../styles/mixins/breakpoints.css'
+import { d300, d300Effect } from '../../styles/mixins/depth.css'
 import {
   pageConfig,
   headerConfig,
@@ -101,16 +102,16 @@ ${({ zIndex }) =>
   z-index: ${zIndex};
 `};
 
-/**
- * Fixes for Firefox. The IntersectionObserver stops working as expected
- * when horizontal scrolling occurs. In this scenario, we'll hide the
- * sticky actions.
- */
-@media (max-width: ${parseInt(pageBreakpointsConfig.minWidth, 10) + 1}px) {
-  @-moz-document url-prefix() {
-    display: none;
+  /**
+  * Fixes for Firefox. The IntersectionObserver stops working as expected
+  * when horizontal scrolling occurs. In this scenario, we'll hide the
+  * sticky actions.
+  */
+  @media (max-width: ${parseInt(pageBreakpointsConfig.minWidth, 10) + 1}px) {
+    @-moz-document url-prefix() {
+      display: none;
+    }
   }
-}
 }
 `
 
@@ -133,18 +134,16 @@ export const ContentUI = styled('div')`
  */
 
 export const CardUI = styled('div')`
-  background-color: white;
+  ${d300}
   border-radius: ${pageCardConfig.borderRadius};
-  box-shadow: ${pageCardConfig.boxShadow};
   display: flex;
   flex-direction: ${pageCardConfig.flexDirection.default};
   padding: ${pageCardConfig.padding.default};
   margin-bottom: ${pageCardConfig.marginBottom};
-  transition: ${pageCardConfig.transition};
   width: 100%;
 
   &:hover {
-    box-shadow: ${pageCardConfig.boxShadowHover};
+    ${d300Effect}
   }
 
   ${breakpoint(

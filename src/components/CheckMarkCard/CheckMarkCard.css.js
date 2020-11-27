@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
+import { d400, d400Effect } from '../../styles/mixins/depth.css'
 import { rgba } from '../../utilities/color'
 
 export const CheckMarkCardUI = styled('label')`
@@ -13,16 +14,12 @@ export const CheckMarkCardUI = styled('label')`
   max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '100px')};
   height: ${({ height }) => (height ? height : 'auto')};
   min-height: 100px;
-  border: 1px solid ${rgba(getColor('grey.700'), 0.7)};
   border-radius: 4px;
-  background: white;
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
-  transition: all 0.15s;
-  will-change: box-shadow, border;
+  ${d400}
   cursor: pointer;
 
   &:hover {
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    ${d400Effect}
     transform: translateY(-2px);
   }
 
@@ -31,24 +28,23 @@ export const CheckMarkCardUI = styled('label')`
   &.is-focused.is-checked,
   &:focus-within,
   &.is-checked:focus-within {
-    border-color: transparent;
     box-shadow: 0px 0px 0 2px ${getColor('blue.500')};
   }
 
   &.is-disabled {
+    ${d400}
+    color: ${rgba(getColor('charcoal.500'), 0.85)};
+    opacity: 0.8;
     cursor: not-allowed;
-    opacity: 0.4;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
 
     &:hover {
-      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+      ${d400}
       transform: translateY(0);
     }
   }
 
   &.with-status {
     cursor: default;
-    border-color: transparent;
     box-shadow: 0px 0px 0 2px
       ${({ withStatus }) =>
         Boolean(withStatus) ? withStatus.color : 'rgba(0, 0, 0, 0.1)'};

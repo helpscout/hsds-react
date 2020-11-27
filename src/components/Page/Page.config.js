@@ -49,16 +49,6 @@ export const actionsConfig = {
 
 export const pageCardConfig = {
   borderRadius: '4px',
-  boxShadow: `
-    0 0 0 1px rgba(0, 0, 0, 0.04),
-    0 2px 8px 0 rgba(0,0,0,0.04),
-    0 5px 10px 0 rgba(99, 116, 134, 0.03)
-  `,
-  boxShadowHover: `
-    rgb(214, 221, 227) 0px 0px 0px 1px,
-    0 2px 8px 0 rgba(0,0,0,0.04),
-    0 5px 10px 0 rgba(99, 116, 134, 0.03)
-  `,
   flexDirection: {
     default: 'column',
     superWidescreen: 'row',
@@ -70,5 +60,4 @@ export const pageCardConfig = {
     superWidescreen: '65px 50px',
     fullscreen: '65px 100px',
   },
-  transition: 'all 300ms ease',
 }

@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import ModalActionFooter from './Modal.ActionFooter'
 import ModalBody from './Modal.Body'
 import ModalContent from './Modal.Content'
@@ -230,7 +229,7 @@ class Modal extends React.PureComponent {
     ) : null
     const contentMarkup = !seamless ? (
       <CardUI
-        {...getValidProps(rest)}
+        {...rest}
         className={componentClassName}
         seamless
         role="dialog"
@@ -349,7 +348,7 @@ class Modal extends React.PureComponent {
 
     return (
       <ModalUI
-        {...getValidProps(rest)}
+        {...rest}
         className={componentClassName}
         data-cy={dataCy}
         role="document"
@@ -368,7 +367,7 @@ class Modal extends React.PureComponent {
         />
         <EventListener event="resize" handler={this.handleOnResize} />
         <InnerWrapperUI
-          {...getValidProps(rest)}
+          {...rest}
           className={innerWrapperClassName}
           isHsApp={isHsApp}
         >

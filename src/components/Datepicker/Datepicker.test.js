@@ -8,30 +8,17 @@ import Datepicker from './'
 describe('Datepicker', () => {
   test('should render the current date in the calendar by default', () => {
     const todayDate = new Date()
-    const { getByText } = render(<Datepicker />)
-    const todayNode = getByText(`${todayDate.getDate()}`)
+    const { getByText, container } = render(<Datepicker />)
+    const todayNode = container.querySelector('.is-today')
 
     expect(
       getByText(`${MONTHS[todayDate.getMonth()]} ${todayDate.getFullYear()}`)
     ).toBeInTheDocument()
-    expect(todayNode.getAttribute('datetime')).toBe(
+    expect(todayNode.querySelector('time').getAttribute('datetime')).toBe(
       getValidDateTimeString(todayDate)
     )
-    expect(
-      getByText(`${todayDate.getDate()}`).parentElement.classList.contains(
-        'is-today'
-      )
-    ).toBeTruthy()
-    expect(
-      getByText(`${todayDate.getDate()}`).parentElement.classList.contains(
-        'is-selected'
-      )
-    ).toBeFalsy()
-    expect(
-      getByText(`${todayDate.getDate()}`).parentElement.getAttribute(
-        'aria-selected'
-      )
-    ).toBe('false')
+    expect(todayNode.classList.contains('is-selected')).toBeFalsy()
+    expect(todayNode.getAttribute('aria-selected')).toBe('false')
   })
 
   test('should render with a given date if provided', () => {

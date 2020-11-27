@@ -1,8 +1,8 @@
 import styled from 'styled-components'
+import { getColor, rgba } from '../../styles/utilities/color'
+import { d600 } from '../../styles/mixins/depth.css'
 import Animate from '../Animate'
 import Text from '../Text'
-
-import { getColor, rgba } from '../../styles/utilities/color'
 
 export const config = {
   borderRadius: {
@@ -16,9 +16,7 @@ export const NotificationUI = styled(Animate)`
   max-width: 300px;
 
   ${config.bubbleClassName} {
-    background-color: white;
-    border-color: transparent !important;
-    box-shadow: 0 0 0 1px ${rgba('#000', 0.1)}, 0 4px 6px ${rgba('#000', 0.15)};
+    ${d600}
     cursor: pointer;
     max-width: 100%;
     text-align: right;
