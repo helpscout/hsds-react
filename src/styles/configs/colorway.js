@@ -1,4 +1,4 @@
-// Generated with @helpscout/colorway (v0.7.0)
+// Generated with @helpscout/colorway (v0.9.2)
 //
 // This file was automatically generated with @helpscout/colorway
 // Please don't modify this file. Your changes will be overwritten.
@@ -51,16 +51,16 @@ const palette = {
     default: '#FFC555',
   },
   green: {
-    '100': '#fafdfb',
-    '200': '#e4fbe6',
-    '300': '#c4f0ce',
-    '400': '#81dc9e',
-    '500': '#4bc27d',
-    '600': '#3cb170',
-    '700': '#2f9f62',
-    '800': '#228350',
-    '900': '#23633e',
-    default: '#4bc27d',
+    '100': '#F5FFF9',
+    '200': '#E3FBEE',
+    '300': '#C2F0D7',
+    '400': '#87DBAE',
+    '500': '#56C288',
+    '600': '#39AC6E',
+    '700': '#268C55',
+    '800': '#106236',
+    '900': '#003C1C',
+    default: '#56C288',
   },
   red: {
     '100': '#fef7f6',
@@ -131,6 +131,18 @@ const palette = {
     '800': '#404996',
     '900': '#232A5C',
     default: '#9FA6FF',
+  },
+  pink: {
+    '100': '#FFF9FB',
+    '200': '#FFEEF1',
+    '300': '#FFE1E7',
+    '400': '#FFCCD7',
+    '500': '#FFB3C3',
+    '600': '#FD9AAE',
+    '700': '#FD9AAE',
+    '800': '#FC5D7D',
+    '900': '#F23459',
+    default: '#FFB3C3',
   },
   whaletail: {
     '100': '#F3F7FF',
