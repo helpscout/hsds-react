@@ -107,6 +107,18 @@ describe('Body', () => {
 
     expect(o.render().find('br').length).toBe(1)
   })
+
+  test('Accepts a custom onBodyClick callback', () => {
+    const body = 'some text with a <a href="#">link</a> in it'
+    const callback = jest.fn()
+    const wrapper = mount(<MessageCard body={body} onBodyClick={callback} />)
+
+    wrapper.simulate('click')
+    expect(callback).not.toHaveBeenCalled()
+
+    wrapper.find(BodyUI).simulate('click')
+    expect(callback).toHaveBeenCalled()
+  })
 })
 
 describe('Title', () => {
