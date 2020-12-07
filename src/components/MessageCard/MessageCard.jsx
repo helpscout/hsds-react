@@ -133,7 +133,7 @@ MessageCard.defaultProps = {
   in: true,
   isMobile: false,
   isWithBoxShadow: true,
-  onBodyClick: () => {},
+  onBodyClick: noop,
 }
 
 MessageCard.propTypes = {
@@ -158,7 +158,7 @@ MessageCard.propTypes = {
   isMobile: PropTypes.bool,
   /** Adds a box shadow. */
   isWithBoxShadow: PropTypes.bool,
-  /** Callback invoked when the body of the Message is clicked. **/
+  /** Callback invoked when the body of the Message is clicked. */
   onBodyClick: PropTypes.func,
   /** Subtitle of the Message. */
   subtitle: PropTypes.string,
