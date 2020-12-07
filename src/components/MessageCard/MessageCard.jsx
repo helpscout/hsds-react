@@ -61,7 +61,7 @@ export class MessageCard extends React.PureComponent {
   }
 
   renderBody() {
-    const { title, subtitle } = this.props
+    const { onBodyClick, title, subtitle } = this.props
     let { body } = this.props
     const withMargin = title || subtitle
 
@@ -71,7 +71,11 @@ export class MessageCard extends React.PureComponent {
     }
 
     return body ? (
-      <BodyUI withMargin={withMargin} data-cy="beacon-message-body-content">
+      <BodyUI
+        onClick={onBodyClick}
+        withMargin={withMargin}
+        data-cy="beacon-message-body-content"
+      >
         <div dangerouslySetInnerHTML={{ __html: body }} />
       </BodyUI>
     ) : null
@@ -129,6 +133,7 @@ MessageCard.defaultProps = {
   in: true,
   isMobile: false,
   isWithBoxShadow: true,
+  onBodyClick: noop,
 }
 
 MessageCard.propTypes = {
@@ -153,9 +158,11 @@ MessageCard.propTypes = {
   isMobile: PropTypes.bool,
   /** Adds a box shadow. */
   isWithBoxShadow: PropTypes.bool,
-  /** Title of the Message. */
-  subtitle: PropTypes.string,
+  /** Callback invoked when the body of the Message is clicked. */
+  onBodyClick: PropTypes.func,
   /** Subtitle of the Message. */
+  subtitle: PropTypes.string,
+  /** Title of the Message. */
   title: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
