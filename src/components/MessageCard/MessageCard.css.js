@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { makeFontFamily, setFontSize } from '../../styles/utilities/font'
 import { getColor } from '../../styles/utilities/color'
 import { FONT_FAMILY } from '../../styles/configs/constants'
-import { d600 } from '../../styles/mixins/depth.css'
+import { d600Effect } from '../../styles/mixins/depth.css'
 import Card from '../Card'
 import Button from '../Button'
 import Heading from '../Heading'
@@ -26,7 +26,7 @@ export const MessageCardUI = styled(Card)`
     border-bottom-left-radius: 4px;
   }
   &.is-with-box-shadow {
-    ${d600}
+    ${d600Effect}
   }
   &.is-mobile {
     width: 100%;

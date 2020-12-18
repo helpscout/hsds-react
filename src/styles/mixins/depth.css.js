@@ -55,6 +55,10 @@ export const d600 = `
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1),
                   0 4px 6px rgba(0, 0, 0, 0.15);
 `
+export const d600Effect = `
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1),
+                  0 4px 6px rgba(0, 0, 0, 0.15);
+`
 export const d700 = `
   ${common}
   box-shadow: 0 2px 3px rgba(64, 82, 97, 0.2),
