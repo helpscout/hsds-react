@@ -13,7 +13,7 @@ hsds-react/
         └── Strong.stories.mdx
 ```
 
-[Writing stories](https://hsds.helpscout.com/?path=/docs/%F0%9F%8F%A0-welcome-4-writing-stories--page)
+[Writing stories](https://hsds.helpscout.com/?path=/docs/welcome-4-writing-stories--page)
 
 ## Next
 
