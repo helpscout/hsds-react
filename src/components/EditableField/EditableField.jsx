@@ -174,10 +174,20 @@ export class EditableField extends React.Component {
     const { onInputFocus } = this.props
     const { fieldValue } = this.state
 
+    // There is a bug in Safari as of version 14.x where a second focus event
+    // is being received on inputs. It would appear that Safari has had
+    // on-again/off-again issues with focus events.
+    // See: https://github.com/facebook/react/issues/10871
+    // See: https://bugs.webkit.org/show_bug.cgi?id=179990
+    //
+    // The second event has a unique signature in that the relatedTarget is set
+    // to the FieldMask__value element.
     if (
-      !!event.relatedTarget &&
       navigator.userAgent.indexOf('Safari') !== -1 &&
-      navigator.userAgent.indexOf('Chrome') === -1
+      navigator.userAgent.indexOf('Chrome') === -1 &&
+      !!event.relatedTarget &&
+      event.relatedTarget.nodeName === 'SPAN' &&
+      event.relatedTarget.classList.contains('FieldMask__value')
     ) {
       event.target.blur()
       return
