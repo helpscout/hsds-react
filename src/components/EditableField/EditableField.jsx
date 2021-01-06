@@ -174,6 +174,15 @@ export class EditableField extends React.Component {
     const { onInputFocus } = this.props
     const { fieldValue } = this.state
 
+    if (
+      !!event.relatedTarget &&
+      navigator.userAgent.indexOf('Safari') !== -1 &&
+      navigator.userAgent.indexOf('Chrome') === -1
+    ) {
+      event.target.blur()
+      return
+    }
+
     this.setState(
       {
         activeField: name,
