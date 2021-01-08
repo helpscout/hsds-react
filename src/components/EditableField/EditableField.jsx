@@ -174,6 +174,30 @@ export class EditableField extends React.Component {
     const { onInputFocus } = this.props
     const { fieldValue } = this.state
 
+    // There is a bug in Safari as of version 14.0.1 where a second focus event
+    // is being received on inputs. The bug is not fixed in the technology
+    // preview of 14.1.0 either. It would appear that Safari has had an on-again
+    // off-again issue with focus events.
+    // See: https://github.com/facebook/react/issues/10871
+    // See: https://bugs.webkit.org/show_bug.cgi?id=179990
+
+    // In the case where this happens, the second focus event will have a
+    // secondary target. If we have an EditableField, the secondary target
+    // will be the field mask. If we have an EditableFieldComposite, the
+    // secondary target will be the composed mask. Otherwise the secondary
+    // target will be null or another element in the case of tab navigation.
+    const isSafari =
+      navigator.userAgent.indexOf('Safari') !== -1 &&
+      navigator.userAgent.indexOf('Chrome') === -1
+    const maskIsSecondaryTarget =
+      !!event.relatedTarget &&
+      (event.relatedTarget.classList.contains('FieldMask__value') ||
+        event.relatedTarget.classList.contains('ComposedMask'))
+    if (isSafari && maskIsSecondaryTarget) {
+      event.target.blur()
+      return
+    }
+
     this.setState(
       {
         activeField: name,
