@@ -34,17 +34,18 @@ describe('Datepicker Utils', () => {
     expect(isToday(new Date(1992, 3, 24))).toBeFalsy()
   })
 
-  test('isMonthInThePast', () => {
-    const currentDate = new Date()
-    const pastDate = new Date(2020, 5, 29)
-    const futureDate = new Date(
-      currentDate.getFullYear,
-      currentDate.getMonth + 1,
-      4
-    )
-
-    expect(isMonthInThePast(pastDate)).toBeTruthy()
-    expect(isMonthInThePast(futureDate)).toBeFalsy()
+  test.each([
+    [new Date(2020, 10, 29), new Date(2020, 5, 29), true],
+    [new Date(2021, 1, 11), new Date(2020, 5, 29), true],
+    [new Date(2021, 1, 11), new Date(2021, 1, 11), false],
+    [new Date(2021, 1, 11), new Date(2021, 1, 12), false],
+  ])('isMonthInThePast(%i)', (mockDate, someDate, expected) => {
+    const spyDateFn = jest
+      .spyOn(global, 'Date')
+      .mockImplementation(() => mockDate)
+    expect(isMonthInThePast(someDate)).toEqual(expected)
+    expect(spyDateFn).toHaveBeenCalled()
+    spyDateFn.mockRestore()
   })
 
   test('getValidDateTimeString', () => {
