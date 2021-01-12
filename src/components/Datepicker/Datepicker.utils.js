@@ -47,11 +47,14 @@ export function isToday(someDate) {
  */
 export function isMonthInThePast(someDate) {
   const today = new Date()
+  const thisYear = today.getFullYear()
+  const someYear = someDate.getFullYear()
 
-  return (
-    someDate.getFullYear() <= today.getFullYear() &&
-    someDate.getMonth() < today.getMonth()
-  )
+  if (someYear === thisYear) {
+    return someDate.getMonth() < today.getMonth()
+  }
+
+  return someYear < thisYear
 }
 
 export function isInsideRange({ check, to, from }) {
