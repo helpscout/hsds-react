@@ -4,7 +4,7 @@ import { getColor } from '../../styles/utilities/color'
 
 const common = `
   background-color: #fff;
-  transition: all 0.16s;
+  transition: box-shadow 0.16s;
   will-change: box-shadow;
 `
 export const d100 = `
