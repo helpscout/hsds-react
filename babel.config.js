@@ -1,7 +1,6 @@
 module.exports = api => {
   const isTest = api.env('test')
   const plugins = [
-    '@babel/plugin-proposal-class-properties',
     [
       'prismjs',
       {
@@ -47,9 +46,10 @@ module.exports = api => {
             firefox: '60',
             chrome: '65',
             safari: '10',
-            node: '8',
+            node: '12.16.3',
           },
           loose: true,
+          shippedProposals: true,
         },
       ],
       '@babel/react',
