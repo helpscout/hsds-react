@@ -1,0 +1,47 @@
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
+import { boolean, number, text, select } from '@storybook/addon-knobs'
+import DropList from './DropList'
+
+<Meta
+  title="🧬 Components/DropList"
+  component={DropList}
+  parameters={{
+    design: {
+      type: 'figma',
+      url: '',
+    },
+  }}
+/>
+
+# DropList
+
+DropList description
+
+<Canvas>
+  <Story name="default">
+    <DropList />
+  </Story>
+</Canvas>
+
+#### Reference
+
+- **Designer**:
+- **Engineering**:
+- **Usage**:
+
+<br />
+<br />
+
+### Props
+
+<ArgsTable of={DropList} />
+
+## Stories
+
+#### With content
+
+<Canvas>
+  <Story name="with content">
+    <DropList />
+  </Story>
+</Canvas>
