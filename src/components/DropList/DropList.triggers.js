@@ -3,6 +3,17 @@ import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import { FONT_FAMILY as AKTIV_FONT_FAMILY } from '../HSDS/GlobalStyle'
 import { noop } from '../../utilities/other'
+import HSDSButton from '../Button'
+
+export const Button = forwardRef(
+  ({ children = '', kind = 'primary', onClick = noop }, ref) => {
+    return (
+      <HSDSButton kind={kind} onClick={onClick} buttonRef={ref}>
+        {children}
+      </HSDSButton>
+    )
+  }
+)
 
 export const Select = forwardRef(({ text = '', onClick = noop }, ref) => {
   return (
