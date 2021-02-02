@@ -1,4 +1,5 @@
 import React, { useCallback, useState, useRef, useEffect } from 'react'
+import useDeepCompareEffect from 'use-deep-compare-effect'
 import { useCombobox, useMultipleSelection } from 'downshift'
 import Tippy from '@tippyjs/react/headless'
 import { noop } from '../../utilities/other'
@@ -9,42 +10,97 @@ import {
   DropListWrapperUI,
   InputSearchHolderUI,
 } from './DropList.css'
-import { Button, Select } from './DropList.triggers'
+import { Button, Select } from './DropList.togglers'
+import { isSelectTypeToggler, displayWarnings } from './DropList.utils'
 import Animate from '../Animate'
 
-function DropListManager({ closeOnSelection = false, onSelect = noop }) {
+function DropListManager({
+  closeOnSelection = false,
+  withMultipleSelection = true,
+  onSelect = noop,
+  tippy = {},
+  toggler = {},
+  animate = {},
+}) {
   const [isDropdownOpen, setDropdownState] = useState(false)
-  const [selectedItem, setSelectedItem] = useState('')
+  const [selectedItem, setSelectedItems] = useState(null)
+
+  const onSelectionChange = useCallback(
+    selection => {
+      onSelect(selection)
+      setSelectedItems(selection)
+    },
+    [onSelect]
+  )
 
   function openDropdwon(isOpen) {
     setDropdownState(isOpen)
   }
 
-  const onSelectionChange = useCallback(changes => {
-    console.log('changes', changes)
-  }, [])
+  displayWarnings({ toggler, withMultipleSelection })
+
+  const tippyProps = {
+    interactive: true,
+    placement: 'bottom-start',
+    ...tippy,
+  }
+
+  const animateProps = {
+    animateOnMount: false,
+    duration: 200,
+    easing: 'ease-in-out',
+    sequence: 'fade down',
+    unmountOnExit: false,
+    ...animate,
+  }
+
+  let Toggler
+
+  if (React.isValidElement(toggler)) {
+    const { onClick } = toggler.props
+    const props = {
+      onClick: () => {
+        onClick && onClick()
+        setDropdownState(!isDropdownOpen)
+      },
+    }
+
+    if (toggler.type === Select) {
+      const { text } = toggler.props
+
+      if (text == null) {
+        props.text = selectedItem
+      }
+    }
+
+    Toggler = React.cloneElement(toggler, props)
+  } else {
+    Toggler = (
+      <Button
+        onClick={() => {
+          setDropdownState(!isDropdownOpen)
+        }}
+        text="Fallback Toggler"
+      />
+    )
+  }
 
   return (
     <Tippy
-      interactive={true}
+      {...tippyProps}
       visible={isDropdownOpen}
-      placement="bottom-start"
-      onClickOutside={(instance, event) => {
+      onClickOutside={() => {
         setDropdownState(false)
       }}
       onHidden={({ reference }) => {
         reference.focus()
       }}
       render={() => (
-        <Animate
-          animateOnMount={false}
-          duration={200}
-          easing="ease-in-out"
-          in={isDropdownOpen}
-          sequence="fade down"
-          unmountOnExit={false}
-        >
-          <DropdownComboboxMultiple
+        <Animate {...animateProps} in={isDropdownOpen}>
+          <DropdownCombobox
+            withMultipleSelection={
+              isSelectTypeToggler() ? false : withMultipleSelection
+            }
             isDropdownOpen={isDropdownOpen}
             closeOnSelection={closeOnSelection}
             openDropdwon={openDropdwon}
@@ -53,32 +109,29 @@ function DropListManager({ closeOnSelection = false, onSelect = noop }) {
         </Animate>
       )}
     >
-      <Button
-        type="button"
-        aria-label="toggle menu"
-        onClick={() => {
-          setDropdownState(!isDropdownOpen)
-        }}
-      >
-        Mailbox
-      </Button>
+      {Toggler}
     </Tippy>
   )
 }
+// <Button
+//   onClick={() => {
+//     setDropdownState(!isDropdownOpen)
+//   }}
+// >
+// </Button>
 /* <Select
-  type="button"
-  aria-label="toggle menu"
   onClick={() => {
     setDropdownState(!isDropdownOpen)
   }}
   text={selectedItem}
 /> */
 
-function DropdownComboboxMultiple({
+function DropdownCombobox({
   closeOnSelection,
   isDropdownOpen,
-  onSelectionChange,
+  onSelectionChange = noop,
   openDropdwon,
+  withMultipleSelection,
 }) {
   const [inputItems, setInputItems] = useState(items)
   const inputEl = useRef(null)
@@ -88,7 +141,6 @@ function DropdownComboboxMultiple({
     removeSelectedItem,
     selectedItems,
   } = useMultipleSelection()
-
   const {
     highlightedIndex,
     getComboboxProps,
@@ -134,7 +186,7 @@ function DropdownComboboxMultiple({
         case useCombobox.stateChangeTypes.InputKeyDownEnter:
         case useCombobox.stateChangeTypes.ItemClick:
           if (selectedItem) {
-            if (Array.isArray(selectedItems)) {
+            if (withMultipleSelection) {
               if (selectedItems.length === 0) {
                 addSelectedItem(selectedItem)
               } else {
@@ -144,9 +196,8 @@ function DropdownComboboxMultiple({
                   addSelectedItem(selectedItem)
                 }
               }
+              selectItem(null)
             }
-
-            selectItem(null)
           }
 
           break
@@ -181,11 +232,13 @@ function DropdownComboboxMultiple({
     isDropdownOpen && inputEl.current.focus()
   }, [isDropdownOpen])
 
-  useEffect(() => {
-    if (selectedItems.length > 0) {
+  useDeepCompareEffect(() => {
+    if (withMultipleSelection && selectedItems.length > 0) {
       onSelectionChange(selectedItems)
+    } else {
+      selectedItem != null && onSelectionChange(selectedItem)
     }
-  }, [selectedItems, onSelectionChange])
+  }, [withMultipleSelection, selectedItems, selectedItem, onSelectionChange])
 
   function isItemSelected(item) {
     return selectedItem === item || selectedItems.includes(item)
@@ -215,106 +268,6 @@ function DropdownComboboxMultiple({
       <MenuListUI {...getMenuProps()}>
         {inputItems.length > 0 ? (
           inputItems.map(renderListItem)
-        ) : (
-          <ListItemUI>No results for {inputValue}</ListItemUI>
-        )}
-      </MenuListUI>
-    </DropListWrapperUI>
-  )
-}
-
-function DropdownCombobox({
-  closeOnSelection,
-  isDropdownOpen,
-  onSelectedItemChange,
-  openDropdwon,
-}) {
-  const [inputItems, setInputItems] = useState(items)
-  const inputEl = useRef(null)
-  const {
-    highlightedIndex,
-    getComboboxProps,
-    getInputProps,
-    getItemProps,
-    getMenuProps,
-    selectedItem,
-    inputValue,
-  } = useCombobox({
-    initialIsOpen: isDropdownOpen,
-    isOpen: isDropdownOpen,
-    items: inputItems,
-    onInputValueChange: ({ inputValue }) => {
-      setInputItems(
-        items.filter(item =>
-          item.toLowerCase().startsWith(inputValue.toLowerCase())
-        )
-      )
-    },
-    onIsOpenChange: changes => {
-      const { type } = changes
-
-      switch (type) {
-        case useCombobox.stateChangeTypes.InputKeyDownEnter:
-        case useCombobox.stateChangeTypes.ItemClick:
-          openDropdwon(!closeOnSelection)
-          break
-
-        case useCombobox.stateChangeTypes.InputKeyDownEscape:
-          openDropdwon(false)
-          break
-
-        default:
-          break
-      }
-    },
-
-    onSelectedItemChange: ({ selectedItem }) => {
-      onSelectedItemChange({ selectedItem })
-    },
-
-    stateReducer: (state, actionAndChanges) => {
-      const { type, changes } = actionAndChanges
-
-      switch (type) {
-        case useCombobox.stateChangeTypes.InputChange:
-          return {
-            ...changes,
-            highlightedIndex: 0,
-          }
-
-        case useCombobox.stateChangeTypes.InputKeyDownEnter:
-        case useCombobox.stateChangeTypes.ItemClick:
-          return {
-            ...changes,
-            inputValue: '',
-          }
-        default:
-          return changes
-      }
-    },
-  })
-
-  useEffect(() => {
-    isDropdownOpen && inputEl.current.focus()
-  }, [isDropdownOpen])
-
-  return (
-    <DropListWrapperUI {...getComboboxProps()}>
-      <InputSearchHolderUI>
-        <input {...getInputProps({ ref: inputEl })} placeholder="Search" />
-      </InputSearchHolderUI>
-      <MenuListUI {...getMenuProps()}>
-        {inputItems.length > 0 ? (
-          inputItems.map((item, index) => (
-            <ListItemUI
-              highlighted={highlightedIndex === index}
-              selected={selectedItem === item}
-              key={`${item}${index}`}
-              {...getItemProps({ item, index })}
-            >
-              {item}
-            </ListItemUI>
-          ))
         ) : (
           <ListItemUI>No results for {inputValue}</ListItemUI>
         )}

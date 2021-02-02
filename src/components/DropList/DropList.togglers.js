@@ -6,10 +6,16 @@ import { noop } from '../../utilities/other'
 import HSDSButton from '../Button'
 
 export const Button = forwardRef(
-  ({ children = '', kind = 'primary', onClick = noop }, ref) => {
+  ({ text = '', kind = 'primary', onClick = noop }, ref) => {
     return (
-      <HSDSButton kind={kind} onClick={onClick} buttonRef={ref}>
-        {children}
+      <HSDSButton
+        type="button"
+        aria-label="toggle menu"
+        kind={kind}
+        onClick={onClick}
+        buttonRef={ref}
+      >
+        {text}
       </HSDSButton>
     )
   }
