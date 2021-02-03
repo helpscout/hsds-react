@@ -2,17 +2,29 @@ import React, { useCallback, useState, useRef, useEffect } from 'react'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 import { useCombobox, useMultipleSelection } from 'downshift'
 import Tippy from '@tippyjs/react/headless'
+import { isObject } from '../../utilities/is'
 import { noop } from '../../utilities/other'
 import {
-  items,
+  itemToString,
+  isItemSelected,
+  isSelectTypeToggler,
+  useWarnings,
+} from './DropList.utils'
+import {
+  ItemSpec,
+  itemsWithDivider,
+  groupedItems,
+} from '../../utilities/specs/dropdown.specs'
+import {
   MenuListUI,
   ListItemUI,
   DropListWrapperUI,
   InputSearchHolderUI,
 } from './DropList.css'
 import { Button, Select } from './DropList.togglers'
-import { isSelectTypeToggler, displayWarnings } from './DropList.utils'
 import Animate from '../Animate'
+
+const regularItems = ItemSpec.generate(5)
 
 function DropListManager({
   closeOnSelection = false,
@@ -25,6 +37,8 @@ function DropListManager({
   const [isDropdownOpen, setDropdownState] = useState(false)
   const [selectedItem, setSelectedItems] = useState(null)
 
+  useWarnings({ toggler, withMultipleSelection })
+
   const onSelectionChange = useCallback(
     selection => {
       onSelect(selection)
@@ -36,8 +50,6 @@ function DropListManager({
   function openDropdwon(isOpen) {
     setDropdownState(isOpen)
   }
-
-  displayWarnings({ toggler, withMultipleSelection })
 
   const tippyProps = {
     interactive: true,
@@ -69,7 +81,7 @@ function DropListManager({
       const { text } = toggler.props
 
       if (text == null) {
-        props.text = selectedItem
+        props.text = itemToString(selectedItem)
       }
     }
 
@@ -99,9 +111,10 @@ function DropListManager({
         <Animate {...animateProps} in={isDropdownOpen}>
           <DropdownCombobox
             withMultipleSelection={
-              isSelectTypeToggler() ? false : withMultipleSelection
+              isSelectTypeToggler(toggler) ? false : withMultipleSelection
             }
             isDropdownOpen={isDropdownOpen}
+            items={regularItems}
             closeOnSelection={closeOnSelection}
             openDropdwon={openDropdwon}
             onSelectionChange={onSelectionChange}
@@ -132,9 +145,12 @@ function DropdownCombobox({
   onSelectionChange = noop,
   openDropdwon,
   withMultipleSelection,
+  items,
 }) {
   const [inputItems, setInputItems] = useState(items)
   const inputEl = useRef(null)
+
+  /** ========== <DOWNSHIFT> ============= */
   const {
     getDropdownProps,
     addSelectedItem,
@@ -142,22 +158,23 @@ function DropdownCombobox({
     selectedItems,
   } = useMultipleSelection()
   const {
-    highlightedIndex,
     getComboboxProps,
     getInputProps,
     getItemProps,
     getMenuProps,
+    highlightedIndex,
+    inputValue,
     selectItem,
     selectedItem,
-    inputValue,
   } = useCombobox({
     initialIsOpen: isDropdownOpen,
     isOpen: isDropdownOpen,
     items: inputItems,
+    itemToString,
     onInputValueChange: ({ inputValue }) => {
       setInputItems(
         items.filter(item =>
-          item.toLowerCase().startsWith(inputValue.toLowerCase())
+          itemToString(item).toLowerCase().startsWith(inputValue.toLowerCase())
         )
       )
     },
@@ -185,19 +202,17 @@ function DropdownCombobox({
       switch (type) {
         case useCombobox.stateChangeTypes.InputKeyDownEnter:
         case useCombobox.stateChangeTypes.ItemClick:
-          if (selectedItem) {
-            if (withMultipleSelection) {
-              if (selectedItems.length === 0) {
-                addSelectedItem(selectedItem)
+          if (selectedItem && withMultipleSelection) {
+            if (selectedItems.length === 0) {
+              addSelectedItem(selectedItem)
+            } else {
+              if (selectedItems.includes(selectedItem)) {
+                removeSelectedItem(selectedItem)
               } else {
-                if (selectedItems.includes(selectedItem)) {
-                  removeSelectedItem(selectedItem)
-                } else {
-                  addSelectedItem(selectedItem)
-                }
+                addSelectedItem(selectedItem)
               }
-              selectItem(null)
             }
+            selectItem(null)
           }
 
           break
@@ -227,7 +242,9 @@ function DropdownCombobox({
       }
     },
   })
+  /** ========== </DOWNSHIFT> ============= */
 
+  /** ========== <EFFECTS> ============= */
   useEffect(() => {
     isDropdownOpen && inputEl.current.focus()
   }, [isDropdownOpen])
@@ -239,17 +256,30 @@ function DropdownCombobox({
       selectedItem != null && onSelectionChange(selectedItem)
     }
   }, [withMultipleSelection, selectedItems, selectedItem, onSelectionChange])
+  /** ========== </EFFECTS> ============= */
 
-  function isItemSelected(item) {
-    return selectedItem === item || selectedItems.includes(item)
-  }
-
+  /** ========== <RENDER> ============= */
   function renderListItem(item, index) {
+    if (isObject(item)) {
+      const { id, label } = item
+      const key = id || `${label}_${index}`
+
+      return (
+        <ListItemUI
+          highlighted={highlightedIndex === index}
+          selected={isItemSelected({ item, selectedItem, selectedItems })}
+          key={key}
+          {...getItemProps({ item, index })}
+        >
+          {item.label}
+        </ListItemUI>
+      )
+    }
     return (
       <ListItemUI
         highlighted={highlightedIndex === index}
-        selected={isItemSelected(item)}
-        key={`${item}${index}`}
+        selected={isItemSelected({ item, selectedItem, selectedItems })}
+        key={`${item}_${index}`}
         {...getItemProps({ item, index })}
       >
         {item}
@@ -274,6 +304,7 @@ function DropdownCombobox({
       </MenuListUI>
     </DropListWrapperUI>
   )
+  /** ========== </RENDER> ============= */
 }
 
 export default DropListManager

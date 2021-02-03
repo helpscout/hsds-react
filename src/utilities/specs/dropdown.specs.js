@@ -4,7 +4,7 @@ export const ItemSpec = createSpec({
   id: faker.random.uuid(),
   label: faker.name.firstName(),
   value: faker.name.firstName(),
-  onClick: () => (value, props) => console.log('Clicked!', value),
+  // onClick: () => (value, props) => console.log('Clicked!', value),
 })
 
 export const itemsWithDivider = ItemSpec.generate(8).map((item, index) => {

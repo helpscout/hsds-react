@@ -59,32 +59,3 @@ export const ListItemUI = styled('li')`
     selected ? 'rebeccapurple' : getColor('charcoal.600')};
   line-height: 36px;
 `
-
-export const items = [
-  'Neptunium',
-  'Plutonium',
-  'Americium',
-  'Curium',
-  'Berkelium',
-  // 'Californium',
-  // 'Einsteinium',
-  // 'Fermium',
-  // 'Mendelevium',
-  // 'Nobelium',
-  // 'Lawrencium',
-  // 'Rutherfordium',
-  // 'Dubnium',
-  // 'Seaborgium',
-  // 'Bohrium',
-  // 'Hassium',
-  // 'Meitnerium',
-  // 'Darmstadtium',
-  // 'Roentgenium',
-  // 'Copernicium',
-  // 'Nihonium',
-  // 'Flerovium',
-  // 'Moscovium',
-  // 'Livermorium',
-  // 'Tennessine',
-  // 'Oganesson',
-]
