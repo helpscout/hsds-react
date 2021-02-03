@@ -11,7 +11,7 @@ export const DropListWrapperUI = styled('div')`
   box-sizing: border-box;
   box-shadow: 0px 1px 7px rgba(0, 0, 0, 0.08);
   border-radius: 4px;
-  padding: 4px;
+  padding: 0;
 
   * {
     box-sizing: border-box;
@@ -23,13 +23,13 @@ export const MenuListUI = styled('ul')`
   max-height: 120px;
   overflow-y: scroll;
   margin: 0;
-  padding: 0;
+  padding: 0 0 5px 0;
   list-style: none;
 `
 
 export const InputSearchHolderUI = styled('div')`
-  width: 100%;
-  margin-bottom: 5px;
+  width: calc(100% - 10px);
+  margin: 5px 5px 10px 5px;
 
   input {
     width: 100%;
@@ -44,18 +44,61 @@ export const InputSearchHolderUI = styled('div')`
 
     &:focus {
       outline: 0;
-      box-shadow: inset 0 0 0 2px ${getColor('blue.500')};
+      box-shadow: 0 0 0 2px ${getColor('blue.500')};
     }
   }
 `
 
 export const ListItemUI = styled('li')`
-  padding: 0 15px;
   height: 36px;
+  margin: 0 5px;
+  padding: 0 15px;
   border-radius: 3px;
-  background-color: ${({ highlighted }) =>
-    highlighted ? '#bde4ff' : 'transparent'};
-  color: ${({ selected }) =>
-    selected ? 'rebeccapurple' : getColor('charcoal.600')};
   line-height: 36px;
+  ${({ highlighted, selected }) => getListItemColors({ highlighted, selected })}
+
+  &:last-child {
+    margin-bottom: 5px;
+  }
 `
+export const DividerUI = styled('div')`
+  width: 100%;
+  height: 1px;
+  margin: 9px 0;
+  background-color: ${getColor('grey.500')};
+`
+
+export const GroupLabelUI = styled('div')`
+  height: 36px;
+  margin: 0 5px;
+  padding: 0 15px;
+  line-height: 36px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: ${getColor('charcoal.200')};
+`
+
+export function getListItemColors({ selected, highlighted }) {
+  let color
+  let bgc
+
+  if (selected && highlighted) {
+    color = 'white'
+    bgc = getColor('blue.500')
+  } else if (selected) {
+    color = 'white'
+    bgc = getColor('blue.500')
+  } else if (highlighted) {
+    bgc = getColor('blue.100')
+    color = getColor('charcoal.800')
+  } else {
+    bgc = 'transparent'
+    color = getColor('charcoal.600')
+  }
+
+  return `
+    color: ${color};
+    background-color: ${bgc};
+  `
+}

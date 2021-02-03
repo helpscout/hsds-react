@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react'
-import { isObject } from '../../utilities/is'
+import { isDefined, isObject } from '../../utilities/is'
 import { Select } from './DropList.togglers'
+
+const ITEM_TYPES = {
+  DIVIDER: 'divider',
+  GROUP: 'group',
+  GROUP_LABEL: 'group_label',
+}
 
 export function displayWarnings({ toggler, withMultipleSelection }) {
   if (process.env.NODE_ENV !== 'production') {
@@ -47,4 +53,41 @@ export function isItemSelected({ item, selectedItem, selectedItems }) {
   }
 
   return selectedItem === item || selectedItems.includes(item)
+}
+
+export function objectHasField(obj, field) {
+  return isObject(obj) && isDefined(obj[field])
+}
+
+export function isItemADivider(item) {
+  return objectHasField(item, 'type') && item.type === ITEM_TYPES.DIVIDER
+}
+
+export function isItemAGroupLabel(item) {
+  return objectHasField(item, 'type') && item.type === ITEM_TYPES.GROUP_LABEL
+}
+
+export function areItemsGrouped(items) {
+  if (!Array.isArray(items) || items.length === 0) return false
+
+  return isDefined(items.find(item => item.type === ITEM_TYPES.GROUP))
+}
+
+export function flattenGroups(items) {
+  if (areItemsGrouped(items)) {
+    return items.reduce((accumulator, group) => {
+      const itemsInGroup = group.items.map(item => ({
+        ...item,
+        group: group.label,
+      }))
+
+      return itemsInGroup.length > 0
+        ? accumulator
+            .concat({ type: ITEM_TYPES.GROUP_LABEL, label: group.label })
+            .concat(itemsInGroup)
+        : accumulator
+    }, [])
+  }
+
+  return items
 }

@@ -3,12 +3,20 @@ import useDeepCompareEffect from 'use-deep-compare-effect'
 import { useCombobox, useMultipleSelection } from 'downshift'
 import { isObject } from '../../utilities/is'
 import { noop } from '../../utilities/other'
-import { itemToString, isItemSelected } from './DropList.utils'
 import {
-  MenuListUI,
-  ListItemUI,
+  itemToString,
+  isItemADivider,
+  isItemAGroupLabel,
+  isItemSelected,
+  flattenGroups,
+} from './DropList.utils'
+import {
+  DividerUI,
   DropListWrapperUI,
+  GroupLabelUI,
   InputSearchHolderUI,
+  ListItemUI,
+  MenuListUI,
 } from './DropList.css'
 
 function Combobox({
@@ -19,7 +27,8 @@ function Combobox({
   withMultipleSelection,
   items,
 }) {
-  const [inputItems, setInputItems] = useState(items)
+  const parsedItems = flattenGroups(items)
+  const [inputItems, setInputItems] = useState(parsedItems)
   const inputEl = useRef(null)
 
   /** ========== <DOWNSHIFT> ============= */
@@ -43,14 +52,14 @@ function Combobox({
     isOpen: isDropdownOpen,
     items: inputItems,
     itemToString,
-    onInputValueChange: ({ inputValue }) => {
+    onInputValueChange({ inputValue }) {
       setInputItems(
-        items.filter(item =>
+        parsedItems.filter(item =>
           itemToString(item).toLowerCase().startsWith(inputValue.toLowerCase())
         )
       )
     },
-    onIsOpenChange: changes => {
+    onIsOpenChange(changes) {
       const { type } = changes
 
       switch (type) {
@@ -68,7 +77,7 @@ function Combobox({
       }
     },
 
-    onStateChange: changes => {
+    onStateChange(changes) {
       const { type, selectedItem } = changes
 
       switch (type) {
@@ -93,7 +102,7 @@ function Combobox({
       }
     },
 
-    stateReducer: (state, actionAndChanges) => {
+    stateReducer(state, actionAndChanges) {
       const { type, changes } = actionAndChanges
 
       switch (type) {
@@ -132,6 +141,16 @@ function Combobox({
 
   /** ========== <RENDER> ============= */
   function renderListItem(item, index) {
+    if (isItemADivider(item)) {
+      return <DividerUI key={`divider_${index}`} />
+    }
+
+    if (isItemAGroupLabel(item)) {
+      return (
+        <GroupLabelUI key={`group_label_${index}`}>{item.label}</GroupLabelUI>
+      )
+    }
+
     if (isObject(item)) {
       const { id, label } = item
       const key = id || `${label}_${index}`
@@ -147,6 +166,7 @@ function Combobox({
         </ListItemUI>
       )
     }
+
     return (
       <ListItemUI
         highlighted={highlightedIndex === index}

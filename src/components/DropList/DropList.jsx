@@ -22,9 +22,9 @@ function DropListManager({
   closeOnSelection = false,
   withMultipleSelection = true,
   onSelect = noop,
+  animate = {},
   tippy = {},
   toggler = {},
-  animate = {},
 }) {
   const [isDropdownOpen, setDropdownState] = useState(false)
   const [selectedItem, setSelectedItems] = useState(null)
@@ -106,7 +106,7 @@ function DropListManager({
               isSelectTypeToggler(toggler) ? false : withMultipleSelection
             }
             isDropdownOpen={isDropdownOpen}
-            items={regularItems}
+            items={groupedItems}
             closeOnSelection={closeOnSelection}
             openDropdwon={openDropdwon}
             onSelectionChange={onSelectionChange}
@@ -120,15 +120,15 @@ function DropListManager({
 }
 // <Button
 //   onClick={() => {
-//     setDropdownState(!isDropdownOpen)
+//     console.log('clicked!')
 //   }}
-// >
-// </Button>
-/* <Select
-  onClick={() => {
-    setDropdownState(!isDropdownOpen)
-  }}
-  text={selectedItem}
-/> */
+//   text="Mailbox"
+// />
+
+// <Select
+//   onClick={() => {
+//     console.log('clicked!')
+//   }}
+// />
 
 export default DropListManager
