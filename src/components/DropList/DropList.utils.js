@@ -41,30 +41,57 @@ export function itemToString(item) {
 }
 
 export function isItemSelected({ item, selectedItem, selectedItems }) {
-  if (selectedItem == null) return false
+  if (selectedItem == null && selectedItems.length === 0) return false
 
   if (isObject(item)) {
     const { label } = item
-    const { label: selectedItemLabel } = selectedItem
-    return (
-      selectedItemLabel === label ||
-      selectedItems.find(selected => selected.label === label)
-    )
+
+    if (selectedItem != null && selectedItems.length === 0) {
+      const { label: selectedItemLabel } = selectedItem
+
+      return selectedItemLabel === label
+    }
+
+    return Boolean(selectedItems.find(item => item.label === label))
   }
 
   return selectedItem === item || selectedItems.includes(item)
 }
 
-export function objectHasField(obj, field) {
-  return isObject(obj) && isDefined(obj[field])
+export function objectHasKey(obj, key) {
+  return isObject(obj) && isDefined(obj[key])
+}
+
+export function findItemInArray({ item, arr, key = 'label' }) {
+  return arr.find(i => {
+    if (isObject(i)) {
+      return i[key] === item[key]
+    }
+    if (isObject(item)) {
+      return i === item[key]
+    }
+    return i === item
+  })
+}
+
+export function removeItemFromArray({ item, arr, key = 'label' }) {
+  return arr.filter(i => {
+    if (isObject(i)) {
+      return i[key] !== item[key]
+    }
+    if (isObject(item)) {
+      return i !== item[key]
+    }
+    return i !== item
+  })
 }
 
 export function isItemADivider(item) {
-  return objectHasField(item, 'type') && item.type === ITEM_TYPES.DIVIDER
+  return objectHasKey(item, 'type') && item.type === ITEM_TYPES.DIVIDER
 }
 
 export function isItemAGroupLabel(item) {
-  return objectHasField(item, 'type') && item.type === ITEM_TYPES.GROUP_LABEL
+  return objectHasKey(item, 'type') && item.type === ITEM_TYPES.GROUP_LABEL
 }
 
 export function areItemsGrouped(items) {

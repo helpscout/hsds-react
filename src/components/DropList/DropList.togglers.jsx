@@ -4,11 +4,13 @@ import { getColor } from '../../styles/utilities/color'
 import { FONT_FAMILY as AKTIV_FONT_FAMILY } from '../HSDS/GlobalStyle'
 import { noop } from '../../utilities/other'
 import HSDSButton from '../Button'
+import Icon from '../Icon'
 
 export const Button = forwardRef(
   ({ text = '', kind = 'primary', onClick = noop }, ref) => {
     return (
       <HSDSButton
+        className="DropListToggler ButtonToggler"
         type="button"
         aria-label="toggle menu"
         kind={kind}
@@ -24,6 +26,7 @@ export const Button = forwardRef(
 export const Select = forwardRef(({ text = '', onClick = noop }, ref) => {
   return (
     <SelectUI
+      className="DropListToggler SelectToggler"
       ref={ref}
       type="button"
       aria-label="toggle menu"
@@ -35,7 +38,7 @@ export const Select = forwardRef(({ text = '', onClick = noop }, ref) => {
   )
 })
 
-export const SelectUI = styled('button')`
+const SelectUI = styled('button')`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -82,3 +85,35 @@ const SelectArrowsUI = styled('div')`
     bottom: 0;
   }
 `
+
+const ThreeDotsUI = styled('button')`
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background-color: white;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: 0;
+    box-shadow: inset 0 0 0 2px ${getColor('blue.500')};
+  }
+`
+
+export const ThreeDots = forwardRef(({ onClick = noop }, ref) => {
+  return (
+    <ThreeDotsUI
+      className="DropListToggler ThreeDotsToggler"
+      ref={ref}
+      type="button"
+      aria-label="toggle menu"
+      onClick={onClick}
+    >
+      <Icon name="kebab" size="24" />
+    </ThreeDotsUI>
+  )
+})

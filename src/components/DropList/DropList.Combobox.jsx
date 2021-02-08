@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react'
-import useDeepCompareEffect from 'use-deep-compare-effect'
 import { useCombobox, useMultipleSelection } from 'downshift'
 import { isObject } from '../../utilities/is'
 import { noop } from '../../utilities/other'
@@ -8,7 +7,9 @@ import {
   isItemADivider,
   isItemAGroupLabel,
   isItemSelected,
+  findItemInArray,
   flattenGroups,
+  removeItemFromArray,
 } from './DropList.utils'
 import {
   DividerUI,
@@ -17,6 +18,7 @@ import {
   InputSearchHolderUI,
   ListItemUI,
   MenuListUI,
+  SelectedBadge,
 } from './DropList.css'
 
 function Combobox({
@@ -59,6 +61,7 @@ function Combobox({
         )
       )
     },
+
     onIsOpenChange(changes) {
       const { type } = changes
 
@@ -83,20 +86,39 @@ function Combobox({
       switch (type) {
         case useCombobox.stateChangeTypes.InputKeyDownEnter:
         case useCombobox.stateChangeTypes.ItemClick:
-          if (selectedItem && withMultipleSelection) {
-            if (selectedItems.length === 0) {
-              addSelectedItem(selectedItem)
-            } else {
-              if (selectedItems.includes(selectedItem)) {
-                removeSelectedItem(selectedItem)
-              } else {
+          if (!withMultipleSelection) {
+            onSelectionChange(Boolean(selectedItem) ? selectedItem : null)
+            !Boolean(selectedItem) && selectItem(null)
+          } else {
+            if (selectedItem) {
+              const { remove } = selectedItem
+
+              if (!Boolean(remove)) {
                 addSelectedItem(selectedItem)
+                onSelectionChange(selectedItems.concat(selectedItem))
+              } else {
+                const itemToRemove = findItemInArray({
+                  arr: selectedItems,
+                  item: changes.selectedItem,
+                })
+
+                if (Boolean(itemToRemove)) {
+                  removeSelectedItem(itemToRemove)
+                  onSelectionChange(
+                    removeItemFromArray({
+                      arr: selectedItems,
+                      item: itemToRemove,
+                    })
+                  )
+
+                  selectedItems.length === 1 && selectItem(null)
+                }
               }
             }
-            selectItem(null)
           }
 
           break
+
         default:
           break
       }
@@ -114,10 +136,39 @@ function Combobox({
 
         case useCombobox.stateChangeTypes.InputKeyDownEnter:
         case useCombobox.stateChangeTypes.ItemClick:
-          return {
-            ...changes,
-            inputValue: '',
+          if (withMultipleSelection) {
+            const newState = {
+              ...changes,
+              isOpen: !closeOnSelection ? true : changes.isOpen,
+              highlightedIndex: !closeOnSelection
+                ? state.highlightedIndex
+                : changes.highlightedIndex,
+              inputValue: '',
+            }
+
+            if (
+              Boolean(
+                findItemInArray({
+                  arr: selectedItems,
+                  item: changes.selectedItem,
+                })
+              )
+            ) {
+              newState.selectedItem = isObject(changes.selectedItem)
+                ? {
+                    ...changes.selectedItem,
+                    remove: true,
+                  }
+                : {
+                    label: changes.selectedItem,
+                    remove: true,
+                  }
+            }
+            return newState
+          } else {
+            return { ...changes, inputValue: '' }
           }
+
         default:
           return changes
       }
@@ -129,17 +180,9 @@ function Combobox({
   useEffect(() => {
     isDropdownOpen && inputEl.current.focus()
   }, [isDropdownOpen])
-
-  useDeepCompareEffect(() => {
-    if (withMultipleSelection && selectedItems.length > 0) {
-      onSelectionChange(selectedItems)
-    } else {
-      selectedItem != null && onSelectionChange(selectedItem)
-    }
-  }, [withMultipleSelection, selectedItems, selectedItem, onSelectionChange])
   /** ========== </EFFECTS> ============= */
 
-  /** ========== <RENDER> ============= */
+  /** ========== <RENDERING> ============= */
   function renderListItem(item, index) {
     if (isItemADivider(item)) {
       return <DividerUI key={`divider_${index}`} />
@@ -151,30 +194,28 @@ function Combobox({
       )
     }
 
-    if (isObject(item)) {
-      const { id, label } = item
-      const key = id || `${label}_${index}`
+    const isSelected = isItemSelected({ item, selectedItem, selectedItems })
+    let key
+    let label
 
-      return (
-        <ListItemUI
-          highlighted={highlightedIndex === index}
-          selected={isItemSelected({ item, selectedItem, selectedItems })}
-          key={key}
-          {...getItemProps({ item, index })}
-        >
-          {item.label}
-        </ListItemUI>
-      )
+    if (isObject(item)) {
+      key = item.id || `${label}_${index}`
+      label = item.label
+    } else {
+      key = `${item}_${index}`
+      label = item
     }
 
     return (
       <ListItemUI
         highlighted={highlightedIndex === index}
-        selected={isItemSelected({ item, selectedItem, selectedItems })}
-        key={`${item}_${index}`}
+        selected={isSelected}
+        withMultipleSelection={withMultipleSelection}
+        key={key}
         {...getItemProps({ item, index })}
       >
-        {item}
+        <span>{label}</span>
+        {withMultipleSelection && isSelected ? <SelectedBadge /> : null}
       </ListItemUI>
     )
   }
@@ -196,7 +237,7 @@ function Combobox({
       </MenuListUI>
     </DropListWrapperUI>
   )
-  /** ========== </RENDER> ============= */
+  /** ========== </RENDERING> ============= */
 }
 
 export default Combobox

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import Tippy from '@tippyjs/react/headless'
 import { noop } from '../../utilities/other'
 import {
@@ -12,15 +12,23 @@ import {
   groupedItems,
 } from '../../utilities/specs/dropdown.specs'
 
-import { Button, Select } from './DropList.togglers'
+import { Button, Select, ThreeDots } from './DropList.togglers'
 import Animate from '../Animate'
 import Combobox from './DropList.Combobox'
 
 const regularItems = ItemSpec.generate(5)
-
+const plainItems = [
+  'hello',
+  'hola',
+  'goodbye',
+  'adios',
+  'alo',
+  'arrivederci',
+  'gutten tag',
+]
 function DropListManager({
-  closeOnSelection = false,
-  withMultipleSelection = true,
+  closeOnSelection = true,
+  withMultipleSelection = false,
   onSelect = noop,
   animate = {},
   tippy = {},
@@ -31,13 +39,10 @@ function DropListManager({
 
   useWarnings({ toggler, withMultipleSelection })
 
-  const onSelectionChange = useCallback(
-    selection => {
-      onSelect(selection)
-      setSelectedItems(selection)
-    },
-    [onSelect]
-  )
+  const onSelectionChange = selection => {
+    onSelect(selection)
+    setSelectedItems(selection)
+  }
 
   function openDropdwon(isOpen) {
     setDropdownState(isOpen)
@@ -77,6 +82,11 @@ function DropListManager({
       }
     }
 
+    if (toggler.type === ThreeDots) {
+      tippyProps.placement = 'bottom-end'
+      tippyProps.offset = [0, 3]
+    }
+
     Toggler = React.cloneElement(toggler, props)
   } else {
     Toggler = (
@@ -106,7 +116,7 @@ function DropListManager({
               isSelectTypeToggler(toggler) ? false : withMultipleSelection
             }
             isDropdownOpen={isDropdownOpen}
-            items={groupedItems}
+            items={regularItems}
             closeOnSelection={closeOnSelection}
             openDropdwon={openDropdwon}
             onSelectionChange={onSelectionChange}
@@ -118,17 +128,5 @@ function DropListManager({
     </Tippy>
   )
 }
-// <Button
-//   onClick={() => {
-//     console.log('clicked!')
-//   }}
-//   text="Mailbox"
-// />
-
-// <Select
-//   onClick={() => {
-//     console.log('clicked!')
-//   }}
-// />
 
 export default DropListManager
