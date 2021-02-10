@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Tippy from '@tippyjs/react/headless'
 import { noop } from '../../utilities/other'
 import {
+  flattenGroups,
   itemToString,
   isSelectTypeToggler,
   useWarnings,
@@ -17,7 +18,7 @@ import Animate from '../Animate'
 import Combobox from './DropList.Combobox'
 import Select from './DropList.Select'
 
-const regularItems = ItemSpec.generate(5)
+const regularItems = ItemSpec.generate(15)
 const plainItems = [
   'hello',
   'hola',
@@ -28,15 +29,20 @@ const plainItems = [
   'gutten tag',
 ]
 function DropListManager({
-  closeOnSelection = false,
+  closeOnSelection = true,
+  initialIsOpen = false,
+  initialSelectedItem = groupedItems[0].items[3],
+  items = groupedItems,
   withMultipleSelection = true,
+  onOpenedStateChange = noop,
   onSelect = noop,
   animate = {},
   tippy = {},
   toggler = {},
 }) {
-  const [isDropdownOpen, setDropdownState] = useState(false)
-  const [selectedItem, setSelectedItem] = useState(null)
+  const parsedItems = flattenGroups(items)
+  const [isOpen, setOpenedState] = useState(initialIsOpen)
+  const [selectedItem, setSelectedItem] = useState(initialSelectedItem)
 
   useWarnings({ toggler, withMultipleSelection })
 
@@ -45,8 +51,9 @@ function DropListManager({
     setSelectedItem(selection)
   }
 
-  function openDropdwon(isOpen) {
-    setDropdownState(isOpen)
+  function toggleOpenedState(isOpen) {
+    setOpenedState(isOpen)
+    onOpenedStateChange(isOpen)
   }
 
   const tippyProps = {
@@ -56,12 +63,14 @@ function DropListManager({
   }
 
   const animateProps = {
-    animateOnMount: false,
     duration: 200,
     easing: 'ease-in-out',
     sequence: 'fade down',
-    unmountOnExit: false,
     ...animate,
+    // These shouldn't be overriden
+    animateOnMount: true,
+    mountOnEnter: false,
+    unmountOnExit: false,
   }
 
   let Toggler
@@ -71,7 +80,7 @@ function DropListManager({
     const props = {
       onClick: () => {
         onClick && onClick()
-        setDropdownState(!isDropdownOpen)
+        toggleOpenedState(!isOpen)
       },
     }
 
@@ -93,7 +102,7 @@ function DropListManager({
     Toggler = (
       <Button
         onClick={() => {
-          setDropdownState(!isDropdownOpen)
+          toggleOpenedState(!isOpen)
         }}
         text="Fallback Toggler"
       />
@@ -103,24 +112,25 @@ function DropListManager({
   return (
     <Tippy
       {...tippyProps}
-      visible={isDropdownOpen}
+      visible={isOpen}
       onClickOutside={() => {
-        setDropdownState(false)
+        toggleOpenedState(false)
       }}
       onHidden={({ reference }) => {
         reference.focus()
       }}
       render={() => (
-        <Animate {...animateProps} in={isDropdownOpen}>
+        <Animate {...animateProps} in={isOpen}>
           <Combobox
+            closeOnSelection={closeOnSelection}
+            initialSelectedItem={initialSelectedItem}
+            isOpen={isOpen}
+            items={parsedItems}
+            onSelectionChange={onSelectionChange}
+            toggleOpenedState={toggleOpenedState}
             withMultipleSelection={
               isSelectTypeToggler(toggler) ? false : withMultipleSelection
             }
-            isDropdownOpen={isDropdownOpen}
-            items={regularItems}
-            closeOnSelection={closeOnSelection}
-            openDropdwon={openDropdwon}
-            onSelectionChange={onSelectionChange}
           />
         </Animate>
       )}

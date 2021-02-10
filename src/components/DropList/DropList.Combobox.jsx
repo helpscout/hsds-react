@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useCombobox } from 'downshift'
 import { noop } from '../../utilities/other'
-import { itemToString, isItemSelected, flattenGroups } from './DropList.utils'
+import { itemToString, isItemSelected } from './DropList.utils'
 import {
   getA11ySelectionMessageCommon,
   onIsOpenChangeCommon,
@@ -17,15 +17,15 @@ import {
 import ListItem, { generateListItemKey } from './DropList.ListItem'
 
 function Combobox({
-  closeOnSelection,
-  isDropdownOpen,
+  closeOnSelection = true,
+  initialSelectedItem,
+  isOpen = false,
+  items = [],
   onSelectionChange = noop,
-  openDropdwon,
-  withMultipleSelection,
-  items,
+  toggleOpenedState = noop,
+  withMultipleSelection = false,
 }) {
-  const parsedItems = flattenGroups(items)
-  const [inputItems, setInputItems] = useState(parsedItems)
+  const [inputItems, setInputItems] = useState(items)
   const [selectedItems, setSelectedItems] = useState([])
   const inputEl = useRef(null)
 
@@ -39,8 +39,10 @@ function Combobox({
     selectItem,
     selectedItem,
   } = useCombobox({
-    initialIsOpen: isDropdownOpen,
-    isOpen: isDropdownOpen,
+    initialInputValue: '',
+    initialIsOpen: isOpen,
+    initialSelectedItem,
+    isOpen,
     items: inputItems,
     itemToString,
 
@@ -54,14 +56,18 @@ function Combobox({
 
     onInputValueChange({ inputValue }) {
       setInputItems(
-        parsedItems.filter(item =>
+        items.filter(item =>
           itemToString(item).toLowerCase().startsWith(inputValue.toLowerCase())
         )
       )
     },
 
     onIsOpenChange(changes) {
-      onIsOpenChangeCommon({ changes, closeOnSelection, openDropdwon })
+      onIsOpenChangeCommon({
+        changes,
+        closeOnSelection,
+        toggleOpenedState,
+      })
     },
 
     onStateChange(changes) {
@@ -87,15 +93,15 @@ function Combobox({
   })
 
   useEffect(() => {
-    isDropdownOpen && inputEl.current.focus()
-  }, [isDropdownOpen])
+    isOpen && inputEl.current.focus()
+  }, [isOpen])
 
   return (
     <DropListWrapperUI {...getComboboxProps()}>
       <InputSearchHolderUI>
         <input {...getInputProps({ ref: inputEl })} placeholder="Search" />
       </InputSearchHolderUI>
-      <MenuListUI {...getMenuProps()}>
+      <MenuListUI className="MenuList MenuList-Combobox" {...getMenuProps()}>
         {inputItems.length > 0 ? (
           inputItems.map((item, index) => {
             return (

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSelect } from 'downshift'
 import { noop } from '../../utilities/other'
-import { itemToString, isItemSelected, flattenGroups } from './DropList.utils'
+import { itemToString, isItemSelected } from './DropList.utils'
 import {
   getA11ySelectionMessageCommon,
   onIsOpenChangeCommon,
@@ -12,14 +12,13 @@ import { A11yTogglerUI, DropListWrapperUI, MenuListUI } from './DropList.css'
 import ListItem, { generateListItemKey } from './DropList.ListItem'
 
 function Select({
-  closeOnSelection,
-  isDropdownOpen,
+  closeOnSelection = true,
+  isOpen = false,
+  items = [],
   onSelectionChange = noop,
-  openDropdwon,
-  withMultipleSelection,
-  items,
+  toggleOpenedState = noop,
+  withMultipleSelection = false,
 }) {
-  const parsedItems = flattenGroups(items)
   const [selectedItems, setSelectedItems] = useState([])
 
   const {
@@ -30,9 +29,9 @@ function Select({
     selectItem,
     selectedItem,
   } = useSelect({
-    initialIsOpen: isDropdownOpen,
-    isOpen: isDropdownOpen,
-    items: parsedItems,
+    initialIsOpen: isOpen,
+    isOpen,
+    items,
     itemToString,
 
     getA11ySelectionMessage: ({ selectedItem }) => {
@@ -44,7 +43,11 @@ function Select({
     },
 
     onIsOpenChange(changes) {
-      onIsOpenChangeCommon({ changes, closeOnSelection, openDropdwon })
+      onIsOpenChangeCommon({
+        changes,
+        closeOnSelection,
+        toggleOpenedState,
+      })
     },
 
     onStateChange(changes) {
@@ -73,7 +76,7 @@ function Select({
     <DropListWrapperUI>
       <A11yTogglerUI {...getToggleButtonProps()}>Toggler</A11yTogglerUI>
       <MenuListUI {...getMenuProps()}>
-        {parsedItems.map((item, index) => {
+        {items.map((item, index) => {
           return (
             <ListItem
               highlightedIndex={highlightedIndex}

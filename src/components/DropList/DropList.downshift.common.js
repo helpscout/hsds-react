@@ -117,7 +117,7 @@ export function stateReducerCommon({
 export function onIsOpenChangeCommon({
   changes,
   closeOnSelection,
-  openDropdwon,
+  toggleOpenedState,
 }) {
   const { type } = changes
 
@@ -126,12 +126,12 @@ export function onIsOpenChangeCommon({
     case useCombobox.stateChangeTypes.ItemClick:
     case useSelect.stateChangeTypes.MenuKeyDownEnter:
     case useSelect.stateChangeTypes.ItemClick:
-      openDropdwon(!closeOnSelection)
+      closeOnSelection && toggleOpenedState(false)
       break
 
     case useCombobox.stateChangeTypes.InputKeyDownEscape:
     case useSelect.stateChangeTypes.MenuKeyDownEscape:
-      openDropdwon(false)
+      toggleOpenedState(false)
       break
 
     default:

@@ -30,6 +30,10 @@ export const MenuListUI = styled('ul')`
   padding: 10px 0 0 0;
   list-style: none;
 
+  &.MenuList-Combobox {
+    padding: 5px 0 0 0;
+  }
+
   &:focus {
     outline: 0;
   }
