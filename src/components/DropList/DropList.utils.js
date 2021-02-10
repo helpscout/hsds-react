@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { isDefined, isObject } from '../../utilities/is'
-import { Select } from './DropList.togglers'
+import { SelectTag } from './DropList.togglers'
 
 const ITEM_TYPES = {
   DIVIDER: 'divider',
@@ -31,7 +31,7 @@ export function useWarnings({ toggler, withMultipleSelection }) {
 }
 
 export function isSelectTypeToggler(toggler) {
-  return React.isValidElement(toggler) && toggler.type === Select
+  return React.isValidElement(toggler) && toggler.type === SelectTag
 }
 
 export function itemToString(item) {
@@ -63,6 +63,8 @@ export function objectHasKey(obj, key) {
 }
 
 export function findItemInArray({ item, arr, key = 'label' }) {
+  if (item == null) return undefined
+
   return arr.find(i => {
     if (isObject(i)) {
       return i[key] === item[key]

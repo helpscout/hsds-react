@@ -27,8 +27,12 @@ export const MenuListUI = styled('ul')`
   max-height: 120px;
   overflow-y: scroll;
   margin: 0;
-  padding: 0 0 5px 0;
+  padding: 10px 0 0 0;
   list-style: none;
+
+  &:focus {
+    outline: 0;
+  }
 `
 
 export const InputSearchHolderUI = styled('div')`
@@ -72,7 +76,7 @@ export const ListItemUI = styled('li')`
   transition: color ease-in-out 0.1s;
   
   &:last-child {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
   }
 `
 
@@ -117,6 +121,10 @@ export const GroupLabelUI = styled('div')`
   text-transform: uppercase;
   letter-spacing: 0.7px;
   color: ${getColor('charcoal.200')};
+`
+
+export const A11yTogglerUI = styled('button')`
+  display: none;
 `
 
 export function getListItemColors({

@@ -12,9 +12,10 @@ import {
   groupedItems,
 } from '../../utilities/specs/dropdown.specs'
 
-import { Button, Select, ThreeDots } from './DropList.togglers'
+import { Button, SelectTag, ThreeDots } from './DropList.togglers'
 import Animate from '../Animate'
 import Combobox from './DropList.Combobox'
+import Select from './DropList.Select'
 
 const regularItems = ItemSpec.generate(5)
 const plainItems = [
@@ -27,21 +28,21 @@ const plainItems = [
   'gutten tag',
 ]
 function DropListManager({
-  closeOnSelection = true,
-  withMultipleSelection = false,
+  closeOnSelection = false,
+  withMultipleSelection = true,
   onSelect = noop,
   animate = {},
   tippy = {},
   toggler = {},
 }) {
   const [isDropdownOpen, setDropdownState] = useState(false)
-  const [selectedItem, setSelectedItems] = useState(null)
+  const [selectedItem, setSelectedItem] = useState(null)
 
   useWarnings({ toggler, withMultipleSelection })
 
   const onSelectionChange = selection => {
     onSelect(selection)
-    setSelectedItems(selection)
+    setSelectedItem(selection)
   }
 
   function openDropdwon(isOpen) {
@@ -74,7 +75,7 @@ function DropListManager({
       },
     }
 
-    if (toggler.type === Select) {
+    if (toggler.type === SelectTag) {
       const { text } = toggler.props
 
       if (text == null) {

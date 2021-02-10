@@ -23,7 +23,7 @@ export const Button = forwardRef(
   }
 )
 
-export const Select = forwardRef(({ text = '', onClick = noop }, ref) => {
+export const SelectTag = forwardRef(({ text = '', onClick = noop }, ref) => {
   return (
     <SelectUI
       className="DropListToggler SelectToggler"
@@ -89,7 +89,7 @@ const SelectArrowsUI = styled('div')`
 const ThreeDotsUI = styled('button')`
   width: 24px;
   height: 24px;
-  padding: 0;
+  padding: 0.5px 0px 0px 0.5px;
   border: 0;
   border-radius: 3px;
   background-color: white;
