@@ -1,7 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useCombobox } from 'downshift'
 import { noop } from '../../utilities/other'
-import { itemToString, isItemSelected } from './DropList.utils'
+import { isFunction } from '../../utilities/is'
+import {
+  itemToString,
+  isItemSelected,
+  renderListContents,
+} from './DropList.utils'
 import {
   getA11ySelectionMessageCommon,
   onIsOpenChangeCommon,
@@ -11,22 +16,28 @@ import {
 import {
   DropListWrapperUI,
   InputSearchHolderUI,
-  ListItemUI,
   MenuListUI,
 } from './DropList.css'
 import ListItem, { generateListItemKey } from './DropList.ListItem'
 
 function Combobox({
   closeOnSelection = true,
+  customEmptyList = null,
   initialSelectedItem,
   isOpen = false,
   items = [],
   onSelectionChange = noop,
+  renderCustomListItem = null,
   toggleOpenedState = noop,
   withMultipleSelection = false,
 }) {
+  const initialSelectedItemsArr =
+    withMultipleSelection && initialSelectedItem != null
+      ? [].concat(initialSelectedItem)
+      : []
+
   const [inputItems, setInputItems] = useState(items)
-  const [selectedItems, setSelectedItems] = useState([])
+  const [selectedItems, setSelectedItems] = useState(initialSelectedItemsArr)
   const inputEl = useRef(null)
 
   const {
@@ -96,33 +107,42 @@ function Combobox({
     isOpen && inputEl.current.focus()
   }, [isOpen])
 
+  function renderListItem(item, index) {
+    const itemProps = {
+      highlightedIndex,
+      index,
+      isSelected: isItemSelected({
+        item,
+        selectedItem,
+        selectedItems,
+      }),
+      item,
+      key: generateListItemKey(item, index),
+      withMultipleSelection,
+    }
+
+    if (renderCustomListItem != null && isFunction(renderCustomListItem)) {
+      return renderCustomListItem({ ...itemProps, getItemProps })
+    }
+
+    return <ListItem {...itemProps} {...getItemProps({ item, index })} />
+  }
+
   return (
     <DropListWrapperUI {...getComboboxProps()}>
-      <InputSearchHolderUI>
+      <InputSearchHolderUI
+        style={{ display: items.length === 0 ? 'none' : 'block' }}
+      >
         <input {...getInputProps({ ref: inputEl })} placeholder="Search" />
       </InputSearchHolderUI>
       <MenuListUI className="MenuList MenuList-Combobox" {...getMenuProps()}>
-        {inputItems.length > 0 ? (
-          inputItems.map((item, index) => {
-            return (
-              <ListItem
-                highlightedIndex={highlightedIndex}
-                index={index}
-                isSelected={isItemSelected({
-                  item,
-                  selectedItem,
-                  selectedItems,
-                })}
-                item={item}
-                key={generateListItemKey(item, index)}
-                withMultipleSelection={withMultipleSelection}
-                {...getItemProps({ item, index })}
-              />
-            )
-          })
-        ) : (
-          <ListItemUI>No results for {inputValue}</ListItemUI>
-        )}
+        {renderListContents({
+          customEmptyList,
+          emptyList: items.length === 0,
+          inputValue,
+          items: inputItems,
+          renderListItem,
+        })}
       </MenuListUI>
     </DropListWrapperUI>
   )

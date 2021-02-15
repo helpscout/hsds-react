@@ -84,6 +84,13 @@ export const ListItemUI = styled('li')`
   }
 `
 
+export const EmptyListUI = styled('div')`
+  height: 36px;
+  margin: 0 5px;
+  padding: 5px 15px 0;
+  font-style: italic;
+`
+
 const SelectedBadgeUI = styled('div')`
   width: 24px;
   height: 24px;

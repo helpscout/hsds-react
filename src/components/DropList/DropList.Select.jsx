@@ -1,7 +1,12 @@
 import React, { useState } from 'react'
 import { useSelect } from 'downshift'
 import { noop } from '../../utilities/other'
-import { itemToString, isItemSelected } from './DropList.utils'
+import { isFunction } from '../../utilities/is'
+import {
+  itemToString,
+  isItemSelected,
+  renderListContents,
+} from './DropList.utils'
 import {
   getA11ySelectionMessageCommon,
   onIsOpenChangeCommon,
@@ -13,13 +18,20 @@ import ListItem, { generateListItemKey } from './DropList.ListItem'
 
 function Select({
   closeOnSelection = true,
+  initialSelectedItem,
+  customEmptyList = null,
   isOpen = false,
   items = [],
   onSelectionChange = noop,
+  renderCustomListItem = null,
   toggleOpenedState = noop,
   withMultipleSelection = false,
 }) {
-  const [selectedItems, setSelectedItems] = useState([])
+  const initialSelectedItemsArr =
+    withMultipleSelection && initialSelectedItem != null
+      ? [].concat(initialSelectedItem)
+      : []
+  const [selectedItems, setSelectedItems] = useState(initialSelectedItemsArr)
 
   const {
     getToggleButtonProps,
@@ -51,14 +63,14 @@ function Select({
     },
 
     onStateChange(changes) {
-      onStateChangeCommon(
+      onStateChangeCommon({
         changes,
         withMultipleSelection,
         onSelectionChange,
         selectItem,
         selectedItems,
-        setSelectedItems
-      )
+        setSelectedItems,
+      })
     },
 
     stateReducer(state, actionAndChanges) {
@@ -72,26 +84,36 @@ function Select({
     },
   })
 
+  function renderListItem(item, index) {
+    const itemProps = {
+      highlightedIndex,
+      index,
+      isSelected: isItemSelected({
+        item,
+        selectedItem,
+        selectedItems,
+      }),
+      item,
+      key: generateListItemKey(item, index),
+      withMultipleSelection,
+    }
+
+    if (renderCustomListItem != null && isFunction(renderCustomListItem)) {
+      return renderCustomListItem({ ...itemProps, getItemProps })
+    }
+
+    return <ListItem {...itemProps} {...getItemProps({ item, index })} />
+  }
+
   return (
     <DropListWrapperUI>
       <A11yTogglerUI {...getToggleButtonProps()}>Toggler</A11yTogglerUI>
       <MenuListUI {...getMenuProps()}>
-        {items.map((item, index) => {
-          return (
-            <ListItem
-              highlightedIndex={highlightedIndex}
-              index={index}
-              isSelected={isItemSelected({
-                item,
-                selectedItem,
-                selectedItems,
-              })}
-              item={item}
-              key={generateListItemKey(item, index)}
-              withMultipleSelection={withMultipleSelection}
-              {...getItemProps({ item, index })}
-            />
-          )
+        {renderListContents({
+          customEmptyList,
+          emptyList: items.length === 0,
+          items,
+          renderListItem,
         })}
       </MenuListUI>
     </DropListWrapperUI>

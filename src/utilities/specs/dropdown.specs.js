@@ -34,3 +34,15 @@ export const groupedItems = [
     value: 'thing2',
   },
 ]
+
+export const regularItems = ItemSpec.generate(15)
+
+export const plainItems = [
+  'hello',
+  'hola',
+  'goodbye',
+  'adios',
+  'alo',
+  'arrivederci',
+  'gutten tag',
+]

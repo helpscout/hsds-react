@@ -2,6 +2,12 @@ import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, number, text, select } from '@storybook/addon-knobs'
 import DropList from './DropList'
 import { Button, SelectTag, ThreeDots } from './DropList.togglers'
+import {
+  itemsWithDivider,
+  groupedItems,
+  plainItems,
+  regularItems,
+} from '../../utilities/specs/dropdown.specs'
 
 <Meta
   title="Components/Dropdowns/DropList"
@@ -30,11 +36,29 @@ DropList description
       }}
     >
       <DropList
+        renderCustomListItem={props => {
+          const { item, index, isSelected, key, getItemProps } = props
+          return (
+            <li key={key} {...getItemProps({ item, index })}>
+              <span>{item.label}</span>
+              {isSelected ? '✅' : null}
+            </li>
+          )
+        }}
+        initialIsOpen={true}
+        variant="combobox"
+        closeOnSelection={false}
+        withMultipleSelection={true}
+        items={regularItems}
         onOpenedStateChange={isOpen => {
           console.log('isOpen', isOpen)
         }}
+        onSelect={selection => {
+          console.log('selection', selection)
+        }}
         toggler={
-          <SelectTag
+          <Button
+            text="Click"
             onClick={() => {
               console.log('Clicked from story!')
             }}

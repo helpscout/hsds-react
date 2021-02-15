@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { isDefined, isObject } from '../../utilities/is'
 import { SelectTag } from './DropList.togglers'
+import { ListItemUI, EmptyListUI } from './DropList.css'
 
 const ITEM_TYPES = {
   DIVIDER: 'divider',
@@ -119,4 +120,28 @@ export function flattenGroups(items) {
   }
 
   return items
+}
+
+export function renderListContents({
+  customEmptyList,
+  emptyList,
+  inputValue,
+  items,
+  renderListItem,
+}) {
+  if (emptyList && !customEmptyList) return <EmptyListUI>No items</EmptyListUI>
+
+  if (emptyList && customEmptyList) {
+    return React.isValidElement(customEmptyList) ? (
+      <customEmptyList />
+    ) : (
+      <EmptyListUI>No items</EmptyListUI>
+    )
+  }
+
+  if (items.length > 0) {
+    return items.map(renderListItem)
+  }
+
+  return <ListItemUI>No results for {inputValue}</ListItemUI>
 }
