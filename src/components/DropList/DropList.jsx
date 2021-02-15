@@ -5,10 +5,11 @@ import { noop } from '../../utilities/other'
 import {
   flattenGroups,
   itemToString,
-  isSelectTypeToggler,
+  isSplitButtonAction,
+  isTogglerOfType,
   useWarnings,
 } from './DropList.utils'
-import { Button, SelectTag, ThreeDots } from './DropList.togglers'
+import { Button, SelectTag, SplitButton, ThreeDots } from './DropList.togglers'
 import Animate from '../Animate'
 import Combobox from './DropList.Combobox'
 import Select from './DropList.Select'
@@ -108,8 +109,10 @@ function DropListManager({
     <Tippy
       {...tippyProps}
       visible={isOpen}
-      onClickOutside={() => {
-        toggleOpenedState(false)
+      onClickOutside={(instance, { target }) => {
+        if (!isSplitButtonAction({ el: target, toggler })) {
+          toggleOpenedState(false)
+        }
       }}
       onHidden={({ reference }) => {
         reference.focus()
@@ -126,7 +129,9 @@ function DropListManager({
             customEmptyList={customEmptyList}
             toggleOpenedState={toggleOpenedState}
             withMultipleSelection={
-              isSelectTypeToggler(toggler) ? false : withMultipleSelection
+              isTogglerOfType(toggler, SelectTag)
+                ? false
+                : withMultipleSelection
             }
           />
         </Animate>

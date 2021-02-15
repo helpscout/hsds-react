@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { isDefined, isObject } from '../../utilities/is'
-import { SelectTag } from './DropList.togglers'
+import { SelectTag, SplitButton } from './DropList.togglers'
 import { ListItemUI, EmptyListUI } from './DropList.css'
+import { CLASSNAMES } from './DropList.togglers'
 
 const ITEM_TYPES = {
   DIVIDER: 'divider',
@@ -16,7 +17,7 @@ export function displayWarnings({ toggler, withMultipleSelection }) {
         'Pass one of the provided togglers or a custom one to the `toggler` prop'
       )
     }
-    if (isSelectTypeToggler(toggler) && withMultipleSelection) {
+    if (isTogglerOfType(toggler, SelectTag) && withMultipleSelection) {
       console.info(
         'The Select toggler option should not have withMultipleSelection enabled, it has been disabled for you'
       )
@@ -31,8 +32,16 @@ export function useWarnings({ toggler, withMultipleSelection }) {
   }, [])
 }
 
-export function isSelectTypeToggler(toggler) {
-  return React.isValidElement(toggler) && toggler.type === SelectTag
+export function isTogglerOfType(toggler, type) {
+  return React.isValidElement(toggler) && toggler.type === type
+}
+
+export function isSplitButtonAction({ toggler, el }) {
+  if (isTogglerOfType(toggler, SplitButton)) {
+    return el.classList.contains(CLASSNAMES.SPLITBUTTON_ACTION)
+  }
+
+  return false
 }
 
 export function itemToString(item) {

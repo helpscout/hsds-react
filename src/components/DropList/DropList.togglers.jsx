@@ -3,25 +3,100 @@ import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import { FONT_FAMILY as AKTIV_FONT_FAMILY } from '../HSDS/GlobalStyle'
 import { noop } from '../../utilities/other'
+import ControlGroup from '../ControlGroup'
 import HSDSButton from '../Button'
 import Icon from '../Icon'
 
+export const CLASSNAMES = {
+  SPLITBUTTON_ACTION: 'SplitButton__Action',
+}
+
 export const Button = forwardRef(
-  ({ text = '', kind = 'primary', onClick = noop }, ref) => {
+  ({ text = '', kind = 'primary', size = 'lg', onClick = noop }, ref) => {
     return (
       <HSDSButton
-        className="DropListToggler ButtonToggler"
-        type="button"
         aria-label="toggle menu"
+        buttonRef={ref}
+        className="DropListToggler ButtonToggler"
         kind={kind}
         onClick={onClick}
-        buttonRef={ref}
+        size={size}
+        type="button"
       >
         {text}
       </HSDSButton>
     )
   }
 )
+
+export const SplitButton = forwardRef(
+  (
+    {
+      text = '',
+      kind = 'primary',
+      size = 'lg',
+      onActionClick = noop,
+      onClick = noop,
+    },
+    ref
+  ) => {
+    return (
+      <ControlGroup className="DropListToggler SplitButtonToggler">
+        <ControlGroup.Item>
+          <HSDSButton
+            aria-label="toggle menu"
+            className={CLASSNAMES.SPLITBUTTON_ACTION}
+            kind={kind}
+            onClick={onActionClick}
+            size={size}
+            type="button"
+          >
+            {text}
+          </HSDSButton>
+        </ControlGroup.Item>
+        <ControlGroup.Item>
+          <SplitButtonTogglerUI
+            buttonRef={ref}
+            className="SplitButton__Toggler"
+            isLast
+            kind={kind}
+            onClick={onClick}
+            size={size}
+          >
+            <Icon name="caret-down" size="14" />
+          </SplitButtonTogglerUI>
+        </ControlGroup.Item>
+      </ControlGroup>
+    )
+  }
+)
+
+const SplitButtonTogglerUI = styled(HSDSButton)`
+  &.SplitButton__Toggler {
+    min-width: 30px !important;
+    padding: 0;
+    pointer-events: all;
+
+    &.is-primary {
+      box-shadow: -1px 0 0 ${getColor('blue.600')};
+
+      &.is-success {
+        box-shadow: -1px 0 0 ${getColor('green.600')};
+      }
+      &.is-danger {
+        box-shadow: -1px 0 0 ${getColor('red.600')};
+      }
+      &[disabled] {
+        box-shadow: -1px 0 0 ${getColor('grey.600')};
+      }
+    }
+
+    .c-Button__content {
+      padding-top: 2px;
+      width: 16px;
+    }
+  }
+`
 
 export const SelectTag = forwardRef(({ text = '', onClick = noop }, ref) => {
   return (
