@@ -14,7 +14,7 @@ export const CLASSNAMES = {
 export const Button = forwardRef(
   ({ text = '', kind = 'primary', size = 'lg', onClick = noop }, ref) => {
     return (
-      <HSDSButton
+      <ButtonTogglerUI
         aria-label="toggle menu"
         buttonRef={ref}
         className="DropListToggler ButtonToggler"
@@ -23,11 +23,25 @@ export const Button = forwardRef(
         size={size}
         type="button"
       >
-        {text}
-      </HSDSButton>
+        <span>{text}</span>
+        <Icon name="caret-down" size="14" />
+      </ButtonTogglerUI>
     )
   }
 )
+
+const ButtonTogglerUI = styled(HSDSButton)`
+  &.DropListToggler.ButtonToggler {
+    width: 250px;
+    height: 55px;
+    padding: 0 35px;
+    justify-content: flex-start;
+  }
+
+  .c-Icon {
+    margin-top: 3px;
+  }
+`
 
 export const SplitButton = forwardRef(
   (
@@ -102,7 +116,7 @@ const SplitButtonTogglerUI = styled(HSDSButton)`
 export const SelectTag = forwardRef(({ text = '', onClick = noop }, ref) => {
   return (
     <SelectUI
-      className="DropListToggler SelectToggler"
+      className="DropListToggler SelectTagToggler"
       ref={ref}
       type="button"
       aria-label="toggle menu"
@@ -162,7 +176,7 @@ const SelectArrowsUI = styled('div')`
   }
 `
 
-const ThreeDotsUI = styled('button')`
+const KebabUI = styled('button')`
   width: 24px;
   height: 24px;
   padding: 0.5px 0px 0px 0.5px;
@@ -180,16 +194,100 @@ const ThreeDotsUI = styled('button')`
   }
 `
 
-export const ThreeDots = forwardRef(({ onClick = noop }, ref) => {
+export const Kebab = forwardRef(({ onClick = noop }, ref) => {
   return (
-    <ThreeDotsUI
-      className="DropListToggler ThreeDotsToggler"
+    <KebabUI
+      className="DropListToggler KebabToggler"
       ref={ref}
       type="button"
       aria-label="toggle menu"
       onClick={onClick}
     >
       <Icon name="kebab" size="24" />
-    </ThreeDotsUI>
+    </KebabUI>
   )
 })
+
+const IconButtonUI = styled('button')`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45px;
+  height: 34px;
+  padding: 5px;
+  border: 0;
+  border-radius: 3px;
+  background-color: white;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: 0;
+    box-shadow: inset 0 0 0 2px ${getColor('blue.500')};
+  }
+
+  .is-iconName-caret-down {
+    margin-left: -3px;
+  }
+`
+
+export const IconButton = forwardRef(
+  ({ onClick = noop, iconName = 'assign' }, ref) => {
+    return (
+      <IconButtonUI
+        className="DropListToggler IconButtonToggler"
+        ref={ref}
+        type="button"
+        aria-label="toggle menu"
+        onClick={onClick}
+      >
+        <Icon name={iconName} size="24" />
+        <Icon name="caret-down" size="14" />
+      </IconButtonUI>
+    )
+  }
+)
+
+export function getTogglerPlacementProps(toggler) {
+  if (toggler.type === Button) {
+    return {
+      placement: 'bottom',
+      offset: [0, -10],
+    }
+  }
+
+  if (toggler.type === Kebab) {
+    return {
+      placement: 'bottom-end',
+      offset: [0, 3],
+    }
+  }
+
+  if (toggler.type === SplitButton) {
+    return {
+      placement: 'bottom-end',
+      offset: [0, 5],
+    }
+  }
+
+  if (toggler.type === IconButton) {
+    return {
+      placement: 'bottom-start',
+      offset: [-5, 0],
+    }
+  }
+
+  if (toggler.type === SelectTag) {
+    return {
+      placement: 'bottom-start',
+      offset: [0, 5],
+    }
+  }
+
+  return {
+    placement: 'bottom-start',
+    offset: [0, 0],
+  }
+}

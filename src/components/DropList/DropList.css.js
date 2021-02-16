@@ -7,7 +7,7 @@ import Icon from '../Icon'
 
 export const DropListWrapperUI = styled('div')`
   box-sizing: border-box;
-  width: 300px;
+  width: 200px;
   padding: 0;
   background-color: white;
   border: 1px solid ${getColor('grey.600')};
