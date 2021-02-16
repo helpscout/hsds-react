@@ -17,6 +17,7 @@ import ListItem, { generateListItemKey } from './DropList.ListItem'
 
 function Select({
   closeOnSelection = true,
+  'data-cy': dataCy = 'DropList.Select',
   initialSelectedItem,
   customEmptyList = null,
   isOpen = false,
@@ -103,7 +104,7 @@ function Select({
   }
 
   return (
-    <DropListWrapperUI>
+    <DropListWrapperUI data-cy={dataCy}>
       <A11yTogglerUI {...getToggleButtonProps()}>Toggler</A11yTogglerUI>
       <MenuListUI {...getMenuProps()}>
         {renderListContents({

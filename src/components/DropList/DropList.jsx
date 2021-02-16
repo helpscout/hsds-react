@@ -28,6 +28,7 @@ function DropListManager({
   autoSetComboboxAt = 0,
   closeOnSelection = true,
   customEmptyList = null,
+  'data-cy': dataCy,
   initialIsOpen = false,
   initialSelectedItem = null,
   items = [],
@@ -128,6 +129,7 @@ function DropListManager({
           <DropListVariant
             closeOnSelection={closeOnSelection}
             customEmptyList={customEmptyList}
+            data-cy={dataCy}
             initialSelectedItem={initialSelectedItem}
             isOpen={isOpen}
             items={parsedItems}
@@ -162,6 +164,8 @@ DropListManager.propTypes = {
   closeOnSelection: PropTypes.bool,
   /** Pass a React Element to render a custom message or style when the List is empty */
   customEmptyList: PropTypes.element,
+  /** Data attr applied to the DropList for Cypress tests. By default one of 'DropList.Select' or 'DropList.Combobox' depending on the variant used */
+  'data-cy': PropTypes.string,
   /** Should the DropList be open on mount */
   initialIsOpen: PropTypes.bool,
   /** An item or array of items to be selected on initial mount */

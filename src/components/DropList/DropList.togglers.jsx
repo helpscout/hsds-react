@@ -18,6 +18,7 @@ export const Button = forwardRef(
         aria-label="toggle menu"
         buttonRef={ref}
         className="DropListToggler ButtonToggler"
+        data-cy="DropList.ButtonToggler"
         kind={kind}
         onClick={onClick}
         size={size}
@@ -55,7 +56,10 @@ export const SplitButton = forwardRef(
     ref
   ) => {
     return (
-      <ControlGroup className="DropListToggler SplitButtonToggler">
+      <ControlGroup
+        className="DropListToggler SplitButtonToggler"
+        data-cy="DropList.SplitButtonToggler"
+      >
         <ControlGroup.Item>
           <HSDSButton
             className={CLASSNAMES.SPLITBUTTON_ACTION}
@@ -116,11 +120,12 @@ const SplitButtonTogglerUI = styled(HSDSButton)`
 export const SelectTag = forwardRef(({ text = '', onClick = noop }, ref) => {
   return (
     <SelectUI
+      aria-label="toggle menu"
       className="DropListToggler SelectTagToggler"
+      data-cy="DropList.SelectTagToggler"
+      onClick={onClick}
       ref={ref}
       type="button"
-      aria-label="toggle menu"
-      onClick={onClick}
     >
       <span>{text}</span>
       <SelectArrowsUI />
@@ -197,11 +202,12 @@ const KebabUI = styled('button')`
 export const Kebab = forwardRef(({ onClick = noop }, ref) => {
   return (
     <KebabUI
+      aria-label="toggle menu"
       className="DropListToggler KebabToggler"
+      data-cy="DropList.KebabToggler"
+      onClick={onClick}
       ref={ref}
       type="button"
-      aria-label="toggle menu"
-      onClick={onClick}
     >
       <Icon name="kebab" size="24" />
     </KebabUI>
@@ -237,11 +243,12 @@ export const IconButton = forwardRef(
   ({ onClick = noop, iconName = 'assign' }, ref) => {
     return (
       <IconButtonUI
+        aria-label="toggle menu"
         className="DropListToggler IconButtonToggler"
+        data-cy="DropList.IconButtonToggler"
+        onClick={onClick}
         ref={ref}
         type="button"
-        aria-label="toggle menu"
-        onClick={onClick}
       >
         <Icon name={iconName} size="24" />
         <Icon name="caret-down" size="14" />

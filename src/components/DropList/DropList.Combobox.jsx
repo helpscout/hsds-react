@@ -23,6 +23,7 @@ import ListItem, { generateListItemKey } from './DropList.ListItem'
 function Combobox({
   closeOnSelection = true,
   customEmptyList = null,
+  'data-cy': dataCy = 'DropList.Combobox',
   initialSelectedItem,
   isOpen = false,
   items = [],
@@ -127,7 +128,7 @@ function Combobox({
   }
 
   return (
-    <DropListWrapperUI {...getComboboxProps()}>
+    <DropListWrapperUI data-cy={dataCy} {...getComboboxProps()}>
       <InputSearchHolderUI
         style={{ display: items.length === 0 ? 'none' : 'block' }}
       >

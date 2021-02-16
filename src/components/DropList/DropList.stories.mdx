@@ -44,8 +44,6 @@ DropList description
       <DropList
         initialIsOpen={true}
         variant="combobox"
-        closeOnSelection={false}
-        withMultipleSelection={true}
         items={regularItems}
         onOpenedStateChange={isOpen => {
           console.log('isOpen', isOpen)
@@ -60,7 +58,7 @@ DropList description
               console.log('Action!')
             }}
             onClick={() => {
-              console.log('Clicked from story!')
+              console.log('Clicked from story')
             }}
           />
         }
@@ -86,21 +84,12 @@ DropList description
     >
       <DropList
         initialIsOpen={true}
-        variant="select"
-        closeOnSelection={false}
-        withMultipleSelection={true}
         items={regularItems}
-        onOpenedStateChange={isOpen => {
-          console.log('isOpen', isOpen)
-        }}
-        onSelect={selection => {
-          console.log('selection', selection)
-        }}
         toggler={
           <Button
             text="Click"
             onClick={() => {
-              console.log('Clicked from story!')
+              console.log('Clicked from story')
             }}
           />
         }
@@ -119,20 +108,11 @@ DropList description
     >
       <DropList
         initialIsOpen={true}
-        variant="select"
-        closeOnSelection={false}
-        withMultipleSelection={true}
         items={regularItems}
-        onOpenedStateChange={isOpen => {
-          console.log('isOpen', isOpen)
-        }}
-        onSelect={selection => {
-          console.log('selection', selection)
-        }}
         toggler={
           <IconButton
             onClick={() => {
-              console.log('Clicked from story!')
+              console.log('Clicked from story')
             }}
           />
         }
@@ -151,20 +131,11 @@ DropList description
     >
       <DropList
         initialIsOpen={true}
-        variant="select"
-        closeOnSelection={false}
-        withMultipleSelection={true}
         items={regularItems}
-        onOpenedStateChange={isOpen => {
-          console.log('isOpen', isOpen)
-        }}
-        onSelect={selection => {
-          console.log('selection', selection)
-        }}
         toggler={
           <Kebab
             onClick={() => {
-              console.log('Clicked from story!')
+              console.log('Clicked from story')
             }}
           />
         }
@@ -183,20 +154,11 @@ DropList description
     >
       <DropList
         initialIsOpen={true}
-        variant="select"
-        closeOnSelection={false}
-        withMultipleSelection={true}
         items={regularItems}
-        onOpenedStateChange={isOpen => {
-          console.log('isOpen', isOpen)
-        }}
-        onSelect={selection => {
-          console.log('selection', selection)
-        }}
         toggler={
           <SelectTag
             onClick={() => {
-              console.log('Clicked from story!')
+              console.log('Clicked from story')
             }}
           />
         }
@@ -215,16 +177,7 @@ DropList description
     >
       <DropList
         initialIsOpen={true}
-        variant="select"
-        closeOnSelection={false}
-        withMultipleSelection={true}
         items={regularItems}
-        onOpenedStateChange={isOpen => {
-          console.log('isOpen', isOpen)
-        }}
-        onSelect={selection => {
-          console.log('selection', selection)
-        }}
         toggler={
           <SplitButton
             text="Click"
@@ -232,7 +185,7 @@ DropList description
               console.log('Action!')
             }}
             onClick={() => {
-              console.log('Clicked from story!')
+              console.log('Clicked from story')
             }}
           />
         }
