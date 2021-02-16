@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react'
-import { isObject } from '../../utilities/is'
+import { classNames } from '../../utilities/classNames'
+import { isFunction, isObject, isString } from '../../utilities/is'
 import { isItemADivider, isItemAGroupLabel } from './DropList.utils'
 import {
   DividerUI,
@@ -16,6 +17,7 @@ const ListItem = forwardRef(
       highlightedIndex,
       withMultipleSelection,
       isSelected,
+      renderCustomListItem,
       ...itemProps
     },
     ref
@@ -30,10 +32,38 @@ const ListItem = forwardRef(
       )
     }
 
+    function getListItemClassNames(extraClassNames) {
+      return classNames(
+        'DropListItem',
+        isSelected && 'is-selected',
+        highlightedIndex === index && 'is-highlighted',
+        withMultipleSelection && 'with-multiple-selection',
+        isString(extraClassNames) && extraClassNames
+      )
+    }
+
+    if (renderCustomListItem != null && isFunction(renderCustomListItem)) {
+      return (
+        <li
+          className={getListItemClassNames('DropListItem--custom')}
+          ref={ref}
+          {...itemProps}
+        >
+          {renderCustomListItem({
+            item,
+            isSelected,
+            isHighlighted: highlightedIndex === index,
+            withMultipleSelection,
+          })}
+        </li>
+      )
+    }
+
     return (
       <ListItemUI
-        ref={ref}
+        className={getListItemClassNames()}
         highlighted={highlightedIndex === index}
+        ref={ref}
         selected={isSelected}
         withMultipleSelection={withMultipleSelection}
         {...itemProps}

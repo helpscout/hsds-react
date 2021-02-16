@@ -44,7 +44,6 @@ export const SplitButton = forwardRef(
       <ControlGroup className="DropListToggler SplitButtonToggler">
         <ControlGroup.Item>
           <HSDSButton
-            aria-label="toggle menu"
             className={CLASSNAMES.SPLITBUTTON_ACTION}
             kind={kind}
             onClick={onActionClick}
@@ -56,12 +55,14 @@ export const SplitButton = forwardRef(
         </ControlGroup.Item>
         <ControlGroup.Item>
           <SplitButtonTogglerUI
+            aria-label="toggle menu"
             buttonRef={ref}
             className="SplitButton__Toggler"
             isLast
             kind={kind}
             onClick={onClick}
             size={size}
+            type="button"
           >
             <Icon name="caret-down" size="14" />
           </SplitButtonTogglerUI>

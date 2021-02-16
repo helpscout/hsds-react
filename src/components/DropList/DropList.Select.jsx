@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useSelect } from 'downshift'
 import { noop } from '../../utilities/other'
-import { isFunction } from '../../utilities/is'
 import {
   itemToString,
   isItemSelected,
@@ -96,13 +95,11 @@ function Select({
       item,
       key: generateListItemKey(item, index),
       withMultipleSelection,
+      renderCustomListItem,
+      ...getItemProps({ item, index }),
     }
 
-    if (renderCustomListItem != null && isFunction(renderCustomListItem)) {
-      return renderCustomListItem({ ...itemProps, getItemProps })
-    }
-
-    return <ListItem {...itemProps} {...getItemProps({ item, index })} />
+    return <ListItem {...itemProps} />
   }
 
   return (

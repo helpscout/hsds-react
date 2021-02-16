@@ -121,12 +121,12 @@ function DropListManager({
         <Animate {...animateProps} in={isOpen}>
           <DropListVariant
             closeOnSelection={closeOnSelection}
+            customEmptyList={customEmptyList}
             initialSelectedItem={initialSelectedItem}
             isOpen={isOpen}
             items={parsedItems}
             onSelectionChange={onSelectionChange}
             renderCustomListItem={renderCustomListItem}
-            customEmptyList={customEmptyList}
             toggleOpenedState={toggleOpenedState}
             withMultipleSelection={
               isTogglerOfType(toggler, SelectTag)

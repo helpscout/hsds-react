@@ -119,13 +119,11 @@ function Combobox({
       item,
       key: generateListItemKey(item, index),
       withMultipleSelection,
+      renderCustomListItem,
+      ...getItemProps({ item, index }),
     }
 
-    if (renderCustomListItem != null && isFunction(renderCustomListItem)) {
-      return renderCustomListItem({ ...itemProps, getItemProps })
-    }
-
-    return <ListItem {...itemProps} {...getItemProps({ item, index })} />
+    return <ListItem {...itemProps} />
   }
 
   return (
