@@ -67,15 +67,11 @@ export const MarkUI = styled('div')`
   height: 28px;
   width: 28px;
   border-radius: 4px 0px 5px;
-  opacity: 0;
+  opacity: ${({ markShown }) => (markShown ? '1' : '0')};
   transition: opacity 0.15s cubic-bezier(0.55, 0, 1, 0.45);
   will-change: opacity;
   background-color: ${({ color }) => color};
   z-index: 100;
-
-  &.card-checked {
-    opacity: 1;
-  }
 
   .mark-icon {
     color: white;

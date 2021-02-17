@@ -82,11 +82,16 @@ export class CheckMarkCard extends React.Component {
   renderMark = () => {
     const { withStatus } = this.props
     const { cardChecked } = this.state
-    let iconName = 'checkmark'
-    let iconSize = '24'
-    let color = getColor('blue.500')
+    let iconName
+    let iconSize
+    let color
     let tooltip
 
+    if (cardChecked) {
+      iconName = 'checkmark'
+      iconSize = '24'
+      color = getColor('blue.500')
+    }
     // If the card has a status provided, it should take precedence even if the card
     // is checked from external props for some reason
     if (withStatus) {
@@ -100,11 +105,9 @@ export class CheckMarkCard extends React.Component {
     // so we can animate the transition
     return (
       <MarkUI
-        className={classNames(
-          'c-CheckMarkCard__mark',
-          cardChecked && 'card-checked'
-        )}
+        className="c-CheckMarkCard__mark"
         color={color}
+        markShown={Boolean(iconName)}
       >
         {Boolean(tooltip) ? (
           <Tooltip
