@@ -1,14 +1,15 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { classNames } from '../../utilities/classNames'
-import { createUniqueIDFactory } from '../../utilities/id'
-import { noop } from '../../utilities/other'
-import { getColor } from '../../styles/utilities/color'
-import Icon from '../Icon'
+import { CheckMarkCardUI, MarkUI } from './CheckMarkCard.css'
+
 import Checkbox from '../Checkbox'
+import Icon from '../Icon'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Tooltip from '../Tooltip'
 import VisuallyHidden from '../VisuallyHidden'
-import { CheckMarkCardUI, MarkUI } from './CheckMarkCard.css'
+import { classNames } from '../../utilities/classNames'
+import { createUniqueIDFactory } from '../../utilities/id'
+import { getColor } from '../../styles/utilities/color'
+import { noop } from '../../utilities/other'
 
 const uniqueID = createUniqueIDFactory('CheckMarkCard')
 

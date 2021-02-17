@@ -1,7 +1,8 @@
-import styled from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
 import { d400, d400Effect } from '../../styles/mixins/depth.css'
+
+import { getColor } from '../../styles/utilities/color'
 import { rgba } from '../../utilities/color'
+import styled from 'styled-components'
 
 export const CheckMarkCardUI = styled('label')`
   box-sizing: border-box;
