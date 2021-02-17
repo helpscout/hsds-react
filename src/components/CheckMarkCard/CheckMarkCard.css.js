@@ -39,9 +39,11 @@ export const CheckMarkCardUI = styled('label')`
     color: ${rgba(getColor('charcoal.500'), 0.85)};
     opacity: 0.8;
     cursor: not-allowed;
+    transition: none;
 
     &:hover {
       ${d400}
+      transition: none;
       transform: translateY(0);
     }
   }
