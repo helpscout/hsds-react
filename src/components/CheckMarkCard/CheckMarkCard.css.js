@@ -16,6 +16,8 @@ export const CheckMarkCardUI = styled('label')`
   min-height: 100px;
   border-radius: 4px;
   ${d400}
+  will-change: transform, box-shadow;
+  transition: transform 0.16s ease-in-out, box-shadow 0.16s ease-in-out;
   cursor: pointer;
 
   &:hover {
@@ -62,11 +64,15 @@ export const MarkUI = styled('div')`
   height: 28px;
   width: 28px;
   border-radius: 4px 0px 5px;
-  opacity: ${({ markShown }) => (markShown ? '1' : '0')};
-  transition: opacity 0.15s;
+  opacity: 0;
+  transition: opacity 0.15s cubic-bezier(0.55, 0, 1, 0.45);
   will-change: opacity;
-  background: ${({ color }) => color};
+  background-color: ${({ color }) => color};
   z-index: 100;
+
+  &.card-checked {
+    opacity: 1;
+  }
 
   .mark-icon {
     color: white;
