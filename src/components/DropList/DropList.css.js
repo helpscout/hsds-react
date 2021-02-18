@@ -42,6 +42,7 @@ export const MenuListUI = styled('ul')`
 export const InputSearchHolderUI = styled('div')`
   width: calc(100% - 10px);
   margin: 5px 5px 10px 5px;
+  display: ${({ show }) => (show ? 'block' : 'none')};
 
   input {
     width: 100%;

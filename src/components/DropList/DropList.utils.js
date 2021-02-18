@@ -133,7 +133,7 @@ export function renderListContents({
 
   if (emptyList && customEmptyList) {
     return React.isValidElement(customEmptyList) ? (
-      <customEmptyList />
+      React.cloneElement(customEmptyList)
     ) : (
       <EmptyListUI>No items</EmptyListUI>
     )

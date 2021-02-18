@@ -169,6 +169,56 @@ const groupedItems = [
   </Story>
 </Canvas>
 
+- Empty list
+
+<Canvas>
+  <Story name="Items: empty list">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        items={[]}
+        toggler={<Button text="Click" />}
+        variant="combobox"
+      />
+    </div>
+  </Story>
+  <Story name="Items: custom empty list">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        customEmptyList={
+          <div
+            style={{
+              fontSize: '16px',
+              textShadow: '0 0 5px rgba(100, 100, 100, 0.5)',
+              textAlign: 'center',
+              padding: '10px 0',
+            }}
+          >
+            👁‍🗨 Nothing to see 👁‍🗨
+          </div>
+        }
+        items={[]}
+        toggler={<Button text="Click" />}
+      />
+    </div>
+  </Story>
+</Canvas>
+
 ### Multiple selection
 
 Depending on your use case, you might want to set `closeOnSelection = false` when multiple selection is enabled.
