@@ -5,7 +5,6 @@ import { noop } from '../../utilities/other'
 import {
   flattenGroups,
   itemToString,
-  isSplitButtonAction,
   isTogglerOfType,
   useWarnings,
 } from './DropList.utils'
@@ -26,6 +25,7 @@ const VARIANTS = {
 function DropListManager({
   animateOptions = {},
   autoSetComboboxAt = 0,
+  closeOnClickOutside = true,
   closeOnSelection = true,
   customEmptyList = null,
   'data-cy': dataCy,
@@ -117,9 +117,17 @@ function DropListManager({
       {...tippyProps}
       visible={isOpen}
       onClickOutside={(instance, { target }) => {
-        if (!isSplitButtonAction({ el: target, toggler })) {
-          toggleOpenedState(false)
+        if (
+          target.dataset.ignoreToggling &&
+          target.dataset.ignoreToggling === 'true'
+        ) {
+          return
         }
+        if (!closeOnClickOutside) {
+          return
+        }
+
+        toggleOpenedState(false)
       }}
       onHidden={({ reference }) => {
         reference.focus()
@@ -151,15 +159,17 @@ function DropListManager({
 }
 
 const ItemObjectShape = PropTypes.shape({
-  label: PropTypes.string,
+  label: PropTypes.string.isRequired,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 })
 
 DropListManager.propTypes = {
-  /** Props to configure the DropList animation (see HSDS Animate) */
+  /** Props to configure the DropList animation (see [HSDS Animate](/?path=/docs/utilities-animation-animate--default-story)) */
   animateOptions: PropTypes.object,
-  /** When the number of items is larger than this number, set the variant to combobox (make the DropList searchable) */
+  /** When the number of items is larger than this number, automatically set the variant to combobox */
   autoSetComboboxAt: PropTypes.number,
+  /** Whether to close the DropList when clicking outside the droplist */
+  closeOnClickOutside: PropTypes.bool,
   /** Whether to close the DropList when an item is selected */
   closeOnSelection: PropTypes.bool,
   /** Pass a React Element to render a custom message or style when the List is empty */

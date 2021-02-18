@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
 import { isDefined, isObject } from '../../utilities/is'
-import { SelectTag, SplitButton } from './DropList.togglers'
+import { SelectTag } from './DropList.togglers'
 import { ListItemUI, EmptyListUI } from './DropList.css'
-import { CLASSNAMES } from './DropList.togglers'
 
 const ITEM_TYPES = {
   DIVIDER: 'divider',
@@ -34,14 +33,6 @@ export function useWarnings({ toggler, withMultipleSelection }) {
 
 export function isTogglerOfType(toggler, type) {
   return React.isValidElement(toggler) && toggler.type === type
-}
-
-export function isSplitButtonAction({ toggler, el }) {
-  if (isTogglerOfType(toggler, SplitButton)) {
-    return el.classList.contains(CLASSNAMES.SPLITBUTTON_ACTION)
-  }
-
-  return false
 }
 
 export function itemToString(item) {

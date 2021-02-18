@@ -7,10 +7,6 @@ import ControlGroup from '../ControlGroup'
 import HSDSButton from '../Button'
 import Icon from '../Icon'
 
-export const CLASSNAMES = {
-  SPLITBUTTON_ACTION: 'SplitButton__Action',
-}
-
 export const Button = forwardRef(
   ({ text = '', kind = 'primary', size = 'lg', onClick = noop }, ref) => {
     return (
@@ -62,7 +58,7 @@ export const SplitButton = forwardRef(
       >
         <ControlGroup.Item>
           <HSDSButton
-            className={CLASSNAMES.SPLITBUTTON_ACTION}
+            className="SplitButton__Action"
             kind={kind}
             onClick={onActionClick}
             size={size}
