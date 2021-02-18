@@ -1,7 +1,8 @@
-import styled from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
 import { d400, d400Effect } from '../../styles/mixins/depth.css'
+
+import { getColor } from '../../styles/utilities/color'
 import { rgba } from '../../utilities/color'
+import styled from 'styled-components'
 
 export const CheckMarkCardUI = styled('label')`
   box-sizing: border-box;
@@ -16,6 +17,8 @@ export const CheckMarkCardUI = styled('label')`
   min-height: 100px;
   border-radius: 4px;
   ${d400}
+  will-change: transform, box-shadow;
+  transition: transform 0.16s ease-in-out, box-shadow 0.16s ease-in-out;
   cursor: pointer;
 
   &:hover {
@@ -36,9 +39,11 @@ export const CheckMarkCardUI = styled('label')`
     color: ${rgba(getColor('charcoal.500'), 0.85)};
     opacity: 0.8;
     cursor: not-allowed;
+    transition: none;
 
     &:hover {
       ${d400}
+      transition: none;
       transform: translateY(0);
     }
   }
@@ -63,9 +68,9 @@ export const MarkUI = styled('div')`
   width: 28px;
   border-radius: 4px 0px 5px;
   opacity: ${({ markShown }) => (markShown ? '1' : '0')};
-  transition: opacity 0.15s;
+  transition: opacity 0.15s cubic-bezier(0.55, 0, 1, 0.45);
   will-change: opacity;
-  background: ${({ color }) => color};
+  background-color: ${({ color }) => color};
   z-index: 100;
 
   .mark-icon {
