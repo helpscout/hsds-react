@@ -10,7 +10,7 @@ import {
 } from './DropList.togglers'
 import {
   itemsWithDivider,
-  groupedItems,
+  simpleGroupedItems,
   plainItems,
   regularItems,
 } from '../../utilities/specs/dropdown.specs'
@@ -42,20 +42,6 @@ Downshift fundamentally treats "select" and "combobox" components as 2 different
 
 We use this library to power our `Tooltip` component and it's being used here to handle the positioning of the DropList, as well as its open/closed state.
 
-### List items
-
-DropList accepts an array of items, these items can be:
-
-- Strings: `['a', 'b', 'c']`
-- Objects (only the label is required):
-
-```js
-const ItemObjectShape = PropTypes.shape({
-  label: PropTypes.string.isRequired,
-  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-})
-```
-
 <Canvas>
   <Story name="default">
     <div
@@ -68,7 +54,6 @@ const ItemObjectShape = PropTypes.shape({
       }}
     >
       <DropList
-        initialIsOpen={true}
         variant="combobox"
         items={regularItems}
         onOpenedStateChange={isOpen => {
@@ -107,6 +92,109 @@ const ItemObjectShape = PropTypes.shape({
 <ArgsTable of={DropList} />
 
 ## Stories
+
+### List items
+
+DropList accepts an array of items, these items can be:
+
+- Strings: `['a', 'b', 'c']`
+- Objects (only the label is required):
+
+```js
+const ItemObjectShape = PropTypes.shape({
+  label: PropTypes.string.isRequired,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+})
+```
+
+- Dividers: Add a `type = divider` property to an object to create a divider
+
+```js
+const items = [
+  { label: 'a' },
+  { label: 'ab' },
+  { label: 'abc' },
+  { type: 'divider' },
+  { label: 'b' },
+]
+```
+
+<Canvas>
+  <Story name="Items: divider">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList items={itemsWithDivider} toggler={<Button text="Click" />} />
+    </div>
+  </Story>
+</Canvas>
+
+- Groups: Add a `type = group` property (don't forget to add `label` to the group) and nest items to an object to create a group:
+
+```js
+const groupedItems = [
+  {
+    items: [{}, {}, {}],
+    label: 'Group 1',
+    type: 'group',
+  },
+  {
+    items: [{}, {}, {}],
+    label: 'Group 2',
+    type: 'group',
+  },
+]
+```
+
+<Canvas>
+  <Story name="Items: groups">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList items={simpleGroupedItems} toggler={<Button text="Click" />} />
+    </div>
+  </Story>
+</Canvas>
+
+### Multiple selection
+
+Depending on your use case, you might want to set `closeOnSelection = false` when multiple selection is enabled.
+
+<Canvas>
+  <Story name="Multiple Selection">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        items={regularItems}
+        closeOnSelection={false}
+        onSelect={selection => {
+          console.log('selection', selection)
+        }}
+        toggler={<Button text="Submit" />}
+        withMultipleSelection
+      />
+    </div>
+  </Story>
+</Canvas>
 
 ### Togglers
 
@@ -212,6 +300,7 @@ The `toggler` prop accepts any React component, so you can provide your own cust
     </div>
   </Story>
   <Story name="Toggler: SplitButton">
+    <pre>{JSON.stringify(regularItems, null, ' ')}</pre>
     <div
       style={{
         width: '400px',

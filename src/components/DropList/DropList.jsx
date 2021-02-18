@@ -158,9 +158,20 @@ function DropListManager({
   )
 }
 
-const ItemObjectShape = PropTypes.shape({
+const itemShape = PropTypes.shape({
   label: PropTypes.string.isRequired,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+})
+const dividerShape = PropTypes.shape({
+  type: PropTypes.oneOf(['divider', 'Divider']).isRequired,
+})
+const groupShape = PropTypes.shape({
+  label: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(['group', 'Group']).isRequired,
+  items: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.arrayOf(itemShape),
+  ]),
 })
 
 DropListManager.propTypes = {
@@ -181,14 +192,12 @@ DropListManager.propTypes = {
   /** An item or array of items to be selected on initial mount */
   initialSelectedItem: PropTypes.oneOfType([
     PropTypes.string,
-    ItemObjectShape,
-    PropTypes.arrayOf(ItemObjectShape),
+    itemShape,
+    PropTypes.arrayOf(itemShape),
   ]),
-  /** The array of items for the DropList */
-  items: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.string),
-    PropTypes.arrayOf(ItemObjectShape),
-  ]),
+  items: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.string, itemShape, dividerShape, groupShape])
+  ),
   /** Callback that fires whenever the DropList opens and closes */
   onOpenedStateChange: PropTypes.func,
   /** Callback that fires whenever the selection in the DropList changes */

@@ -8,7 +8,7 @@ export const ItemSpec = createSpec({
 })
 
 export const itemsWithDivider = ItemSpec.generate(8).map((item, index) => {
-  if (index !== 5) return item
+  if (index !== 2) return item
   return {
     type: 'divider',
   }
@@ -29,6 +29,21 @@ export const groupedItems = [
   },
   {
     items: ItemSpec.generate(8),
+    label: 'Group 2',
+    type: 'group',
+    value: 'thing2',
+  },
+]
+
+export const simpleGroupedItems = [
+  {
+    items: ItemSpec.generate(3),
+    label: 'Group 1',
+    value: 'thing',
+    type: 'group',
+  },
+  {
+    items: ItemSpec.generate(5),
     label: 'Group 2',
     type: 'group',
     value: 'thing2',

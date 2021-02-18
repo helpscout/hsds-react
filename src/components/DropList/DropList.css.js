@@ -24,7 +24,7 @@ export const DropListWrapperUI = styled('div')`
 
 export const MenuListUI = styled('ul')`
   width: 100%;
-  max-height: 120px;
+  max-height: 200px;
   overflow-y: scroll;
   margin: 0;
   padding: 10px 0 0 0;
