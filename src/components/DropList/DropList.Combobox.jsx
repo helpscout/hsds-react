@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useCombobox } from 'downshift'
 import { noop } from '../../utilities/other'
-import { isFunction } from '../../utilities/is'
 import {
   itemToString,
   isItemSelected,

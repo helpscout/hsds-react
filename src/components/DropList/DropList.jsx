@@ -168,10 +168,7 @@ const dividerShape = PropTypes.shape({
 const groupShape = PropTypes.shape({
   label: PropTypes.string.isRequired,
   type: PropTypes.oneOf(['group', 'Group']).isRequired,
-  items: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.string),
-    PropTypes.arrayOf(itemShape),
-  ]),
+  items: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, itemShape])),
 })
 
 DropListManager.propTypes = {
