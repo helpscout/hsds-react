@@ -28,14 +28,40 @@ import {
 
 # DropList
 
-DropList description
+A component to build simple WAI-ARIA compliant combobox or select dropdowns that conform to Help Scout's design guidelines and sensible defaults.
+
+Under the hood DropList is powered by two third party open source libraries: [Downshift](https://www.downshift-js.com/) and [Tippy](https://atomiks.github.io/tippyjs/v6/all-props/).
+
+#### Downshift
+
+This library has 2 flavours, _hooks_ and _components_. DropList utilices the provided hooks `useSelect` and `useCombobox`, which handle most of the logic a dropdown requires like events, a11y and state.
+
+Downshift fundamentally treats "select" and "combobox" components as 2 different paradigms with their own separate considerations (especially when it comes in how each handle a11y stuff and events). In a nutshell a _select_ is not just a _combobox_ with the search input hidden. DropList abstracts this for you providing a unified component while under the hood following the Downshift paradigm.
+
+#### Tippy
+
+We use this library to power our `Tooltip` component and it's being used here to handle the positioning of the DropList, as well as its open/closed state.
+
+### List items
+
+DropList accepts an array of items, these items can be:
+
+- Strings: `['a', 'b', 'c']`
+- Objects (only the label is required):
+
+```js
+const ItemObjectShape = PropTypes.shape({
+  label: PropTypes.string.isRequired,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+})
+```
 
 <Canvas>
   <Story name="default">
     <div
       style={{
         width: '400px',
-        margin: '50px 60px 0 300px',
+        margin: '50px 100px 200px 150px',
         border: '1px dashed silver',
         borderRadius: '5px',
         padding: '20px',
@@ -67,23 +93,46 @@ DropList description
   </Story>
 </Canvas>
 
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<ArgsTable of={DropList} />
+
 ## Stories
 
-#### Togglers
+### Togglers
+
+DropList provides a set of ready-to-use "triggers" or "togglers" components that should cover most if not all of our current needs: `Button`, `IconButton`, `Kebab`, `SelectTag` and `SplitButton`. Import them into your project from `src/components/DropList/DropList.togglers.jsx` and feed them to the `toggler` prop.
+
+#### Custom Toggler
+
+The `toggler` prop accepts any React component, so you can provide your own custom trigger. Just one thing is necessary for everything to work as expected and a couple of other considerations:
+
+- (Required) Refs: Wrap your toggler component in `React.forwardRef`, this in turn is fed to Tippy so that it can do its thing. The `ref` should be applied to the button that when clicked is the one that opens/closes the DropList. For a component that illustrates this check the SplitButton toggler (since this "toggler" is composed of 2 buttons).
+- `onClick`: DropList will merge your `onClick` prop with an internal one that opens/closes the DropList (this way you can attach extra actions to the click event). Again, check SplitButton as an example for when you have 2 buttons each with its own click handler, the one with the prop named `onClick` is the one that will actually open/close the list.
+- If your "toggler" contains a button or any other clickable element and you would like to avoid closing the DropList on clicking it, add the data attribute `data-ignore-toggling="true"` to that element.
+- Aria label: Don't forget to add `aria-label` to the toggler button, with something like "toggle menu".
 
 <Canvas>
   <Story name="Toggler: Button">
     <div
       style={{
         width: '400px',
-        margin: '50px 60px 0 300px',
+        margin: '50px 100px 0 150px',
         border: '1px dashed silver',
         borderRadius: '5px',
         padding: '20px',
       }}
     >
       <DropList
-        initialIsOpen={true}
         items={regularItems}
         toggler={
           <Button
@@ -100,14 +149,13 @@ DropList description
     <div
       style={{
         width: '400px',
-        margin: '50px 60px 0 300px',
+        margin: '50px 100px 0 150px',
         border: '1px dashed silver',
         borderRadius: '5px',
         padding: '20px',
       }}
     >
       <DropList
-        initialIsOpen={true}
         items={regularItems}
         toggler={
           <IconButton
@@ -123,14 +171,13 @@ DropList description
     <div
       style={{
         width: '400px',
-        margin: '50px 60px 0 300px',
+        margin: '50px 100px 0 150px',
         border: '1px dashed silver',
         borderRadius: '5px',
         padding: '20px',
       }}
     >
       <DropList
-        initialIsOpen={true}
         items={regularItems}
         toggler={
           <Kebab
@@ -146,14 +193,13 @@ DropList description
     <div
       style={{
         width: '400px',
-        margin: '50px 60px 0 300px',
+        margin: '50px 100px 0 150px',
         border: '1px dashed silver',
         borderRadius: '5px',
         padding: '20px',
       }}
     >
       <DropList
-        initialIsOpen={true}
         items={regularItems}
         toggler={
           <SelectTag
@@ -169,14 +215,13 @@ DropList description
     <div
       style={{
         width: '400px',
-        margin: '50px 60px 0 300px',
+        margin: '50px 100px 0 150px',
         border: '1px dashed silver',
         borderRadius: '5px',
         padding: '20px',
       }}
     >
       <DropList
-        initialIsOpen={true}
         items={regularItems}
         toggler={
           <SplitButton
