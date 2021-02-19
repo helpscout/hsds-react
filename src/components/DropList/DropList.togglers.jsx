@@ -8,13 +8,23 @@ import HSDSButton from '../Button'
 import Icon from '../Icon'
 
 export const Button = forwardRef(
-  ({ text = '', kind = 'primary', size = 'lg', onClick = noop }, ref) => {
+  (
+    {
+      text = '',
+      isActive = false,
+      kind = 'primary',
+      size = 'lg',
+      onClick = noop,
+    },
+    ref
+  ) => {
     return (
       <ButtonTogglerUI
         aria-label="toggle menu"
         buttonRef={ref}
         className="DropListToggler ButtonToggler"
         data-cy="DropList.ButtonToggler"
+        isActive={isActive}
         kind={kind}
         onClick={onClick}
         size={size}
@@ -48,6 +58,7 @@ export const SplitButton = forwardRef(
       size = 'lg',
       onActionClick = noop,
       onClick = noop,
+      isActive = false,
     },
     ref
   ) => {
@@ -72,6 +83,7 @@ export const SplitButton = forwardRef(
             aria-label="toggle menu"
             buttonRef={ref}
             className="SplitButton__Toggler"
+            isActive={isActive}
             isLast
             kind={kind}
             onClick={onClick}

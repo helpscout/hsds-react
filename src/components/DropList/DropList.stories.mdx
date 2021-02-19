@@ -69,7 +69,7 @@ We use this library to power our `Tooltip` component and it's being used here to
             onActionClick={() => {
               console.log('Action!')
             }}
-            onClick={() => {
+            onClick={e => {
               console.log('Clicked from story')
             }}
           />
@@ -257,6 +257,7 @@ The `toggler` prop accepts any React component, so you can provide your own cust
 
 - (Required) Refs: Wrap your toggler component in `React.forwardRef`, this in turn is fed to Tippy so that it can do its thing. The `ref` should be applied to the button that when clicked is the one that opens/closes the DropList. For a component that illustrates this check the SplitButton toggler (since this "toggler" is composed of 2 buttons).
 - `onClick`: DropList will merge your `onClick` prop with an internal one that opens/closes the DropList (this way you can attach extra actions to the click event). Again, check SplitButton as an example for when you have 2 buttons each with its own click handler, the one with the prop named `onClick` is the one that will actually open/close the list.
+- Active state: Besides adding the `onClick` handler, we also attach the modal open state as the `isActive` prop so you can use it on your toggler, see Button or SplitButton for an example of this.
 - If your "toggler" contains a button or any other clickable element and you would like to avoid closing the DropList on clicking it, add the data attribute `data-ignore-toggling="true"` to that element.
 - Aria label: Don't forget to add `aria-label` to the toggler button, with something like "toggle menu".
 

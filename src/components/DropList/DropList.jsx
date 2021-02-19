@@ -76,10 +76,11 @@ function DropListManager({
   if (React.isValidElement(toggler)) {
     const { onClick } = toggler.props
     const togglerProps = {
-      onClick: () => {
-        onClick && onClick()
+      onClick: e => {
+        onClick && onClick(e)
         toggleOpenedState(!isOpen)
       },
+      isActive: isOpen,
     }
 
     if (toggler.type === SelectTag) {
