@@ -127,7 +127,12 @@ function Combobox({
   }
 
   return (
-    <DropListWrapperUI data-cy={dataCy} {...getComboboxProps()}>
+    <DropListWrapperUI
+      className="DropList DropList__Combobox"
+      data-cy={dataCy}
+      variant="combobox"
+      {...getComboboxProps()}
+    >
       <InputSearchHolderUI show={items.length > 0}>
         <input {...getInputProps({ ref: inputEl })} placeholder="Search" />
       </InputSearchHolderUI>

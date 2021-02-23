@@ -7,15 +7,15 @@ import Icon from '../Icon'
 
 export const DropListWrapperUI = styled('div')`
   box-sizing: border-box;
-  width: 200px;
+  width: ${({ variant }) => (variant === 'combobox' ? '220px' : '200px')};
   padding: 0;
   background-color: white;
-  border: 1px solid ${getColor('grey.600')};
+  border: 1px solid #c5ced6; // TODO: should be grey.600 replace when fixed in colorway
   border-radius: 4px;
   box-shadow: 0px 1px 7px rgba(0, 0, 0, 0.08);
   font-family: ${AKTIV_FONT_FAMILY};
   font-size: 13px;
-  color: ${getColor('charcoal.600')};
+  color: #c5ced6; // TODO: should be grey.600 replace when fixed in colorway
 
   * {
     box-sizing: border-box;
@@ -27,11 +27,11 @@ export const MenuListUI = styled('ul')`
   max-height: 200px;
   overflow-y: scroll;
   margin: 0;
-  padding: 10px 0 0 0;
+  padding: 5px 0 0 0;
   list-style: none;
 
   &.MenuList-Combobox {
-    padding: 5px 0 0 0;
+    padding: 0;
   }
 
   &:focus {
@@ -40,18 +40,18 @@ export const MenuListUI = styled('ul')`
 `
 
 export const InputSearchHolderUI = styled('div')`
-  width: calc(100% - 10px);
-  margin: 5px 5px 10px 5px;
+  width: calc(100% - 8px);
+  margin: 4px 4px 5px 4px;
   display: ${({ show }) => (show ? 'block' : 'none')};
 
   input {
     width: 100%;
-    height: 40px;
+    height: 38px;
     padding: 0 15px;
     font-family: ${AKTIV_FONT_FAMILY};
     font-size: 13px;
     color: ${getColor('charcoal.600')};
-    box-shadow: inset 0 0 0 1px ${getColor('grey.600')};
+    box-shadow: inset 0 0 0 1px #c5ced6; // TODO: should be grey.600 replace when fixed in colorway
     border: 0;
     border-radius: 3px;
 
@@ -67,7 +67,7 @@ export const ListItemUI = styled('li')`
   justify-content: space-between;
   align-items: center;
   height: 36px;
-  margin: 0 5px;
+  margin: 0 5px 2px;
   padding: 0 15px;
   border-radius: 3px;
   line-height: 36px;
@@ -79,7 +79,8 @@ export const ListItemUI = styled('li')`
   -webkit-font-smoothing: ${({ selected }) =>
     selected ? 'auto' : 'antialiased'};
   transition: color ease-in-out 0.1s;
-  
+  cursor: pointer;
+
   &:last-child {
     margin-bottom: 10px;
   }
@@ -95,7 +96,7 @@ export const EmptyListUI = styled('div')`
 const SelectedBadgeUI = styled('div')`
   width: 24px;
   height: 24px;
-  padding: 2px;
+  padding: 3px;
   border-radius: 50%;
   color: white;
   background-color: ${getColor('blue.500')};
@@ -111,7 +112,7 @@ export const SelectedBadge = () => {
       unmountOnExit={false}
     >
       <SelectedBadgeUI className="SelectedBadge">
-        <Icon name="check" size="20" />
+        <Icon name="check" size="18" />
       </SelectedBadgeUI>
     </Animate>
   )
@@ -133,6 +134,10 @@ export const GroupLabelUI = styled('div')`
   text-transform: uppercase;
   letter-spacing: 0.7px;
   color: ${getColor('charcoal.200')};
+
+  &:first-child {
+    margin-top: 5px;
+  }
 `
 
 export const A11yTogglerUI = styled('button')`

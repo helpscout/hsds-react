@@ -104,7 +104,7 @@ function Select({
   }
 
   return (
-    <DropListWrapperUI data-cy={dataCy}>
+    <DropListWrapperUI className="DropList DropList__Select" data-cy={dataCy}>
       <A11yTogglerUI {...getToggleButtonProps()}>Toggler</A11yTogglerUI>
       <MenuListUI {...getMenuProps()}>
         {renderListContents({

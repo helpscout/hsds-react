@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react'
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
+import { classNames } from '../../utilities/classNames'
 import { FONT_FAMILY as AKTIV_FONT_FAMILY } from '../HSDS/GlobalStyle'
 import { noop } from '../../utilities/other'
 import ControlGroup from '../ControlGroup'
@@ -19,7 +20,7 @@ export const Button = forwardRef(
     ref
   ) => {
     return (
-      <ButtonTogglerUI
+      <HSDSButton
         aria-label="toggle menu"
         buttonRef={ref}
         className="DropListToggler ButtonToggler"
@@ -31,22 +32,62 @@ export const Button = forwardRef(
         type="button"
       >
         <span>{text}</span>
-        <Icon name="caret-down" size="14" />
-      </ButtonTogglerUI>
+      </HSDSButton>
     )
   }
 )
 
-const ButtonTogglerUI = styled(HSDSButton)`
-  &.DropListToggler.ButtonToggler {
-    width: 250px;
-    height: 55px;
-    padding: 0 35px;
-    justify-content: flex-start;
+export const NavLink = forwardRef(
+  (
+    {
+      text = '',
+      isActive = false,
+      kind = 'primary',
+      size = 'lg',
+      onClick = noop,
+    },
+    ref
+  ) => {
+    return (
+      <NavLinkTogglerUI
+        aria-label="toggle menu"
+        ref={ref}
+        className={classNames(
+          'DropListToggler',
+          'NavLinkToggler',
+          isActive && 'is-active'
+        )}
+        data-cy="DropList.NavLinkToggler"
+        isActive={isActive}
+        onClick={onClick}
+        type="button"
+      >
+        <span>{text}</span>
+        <Icon name="caret-down" size="14" />
+      </NavLinkTogglerUI>
+    )
+  }
+)
+
+const NavLinkTogglerUI = styled('button')`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 55px;
+  padding: 0 18px;
+  background: transparent;
+  border: 0;
+  font-family: ${AKTIV_FONT_FAMILY};
+  font-size: 14px;
+  color: ${getColor('blue.300')};
+  cursor: pointer;
+
+  &.is-active {
+    color: white;
   }
 
   .c-Icon {
-    margin-top: 3px;
+    margin: 3px 0 0 3px;
   }
 `
 
@@ -267,6 +308,13 @@ export const IconButton = forwardRef(
 
 export function getTogglerPlacementProps(toggler) {
   if (toggler.type === Button) {
+    return {
+      placement: 'bottom-end',
+      offset: [0, 5],
+    }
+  }
+
+  if (toggler.type === NavLink) {
     return {
       placement: 'bottom',
       offset: [0, -10],

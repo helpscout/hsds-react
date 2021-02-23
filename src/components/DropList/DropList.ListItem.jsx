@@ -23,12 +23,19 @@ const ListItem = forwardRef(
     ref
   ) => {
     if (isItemADivider(item)) {
-      return <DividerUI key={`divider_${index}`} />
+      return (
+        <DividerUI className="DropListItem--divider" key={`divider_${index}`} />
+      )
     }
 
     if (isItemAGroupLabel(item)) {
       return (
-        <GroupLabelUI key={`group_label_${index}`}>{item.label}</GroupLabelUI>
+        <GroupLabelUI
+          className="DropListItem--groupLabel"
+          key={`group_label_${index}`}
+        >
+          {item.label}
+        </GroupLabelUI>
       )
     }
 
