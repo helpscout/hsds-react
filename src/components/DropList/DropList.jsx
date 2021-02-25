@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import Tippy from '@tippyjs/react/headless'
 import { noop } from '../../utilities/other'
+import { GlobalContext } from '../HSDS/Provider'
 import {
   flattenGroups,
   itemToString,
@@ -43,6 +44,8 @@ function DropListManager({
   const parsedItems = flattenGroups(items)
   const [isOpen, setOpenedState] = useState(initialIsOpen)
   const [selectedItem, setSelectedItem] = useState(initialSelectedItem)
+  const { getCurrentScope } = useContext(GlobalContext) || {}
+  const scope = getCurrentScope ? getCurrentScope() : null
 
   useWarnings({ toggler, withMultipleSelection })
 
@@ -129,6 +132,11 @@ function DropListManager({
         }
 
         toggleOpenedState(false)
+      }}
+      onShow={({ popper }) => {
+        if (scope && tippyOptions.appendTo) {
+          popper.classList.add(scope)
+        }
       }}
       onHidden={({ reference }) => {
         reference.focus()

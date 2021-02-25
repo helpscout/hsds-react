@@ -44,6 +44,22 @@ Downshift fundamentally treats "select" and "combobox" components as 2 different
 
 We use this library to power our `Tooltip` component and it's being used here to handle the positioning of the DropList, as well as its open/closed state.
 
+#### Portaling
+
+Sometimes the list needs to be appended to a different DOM context due to accessibility, clipping, or z-index issues. Use [Tippy's `appendTo`](https://atomiks.github.io/tippyjs/v6/all-props/#appendto) option:
+
+```jsx
+<DropList
+  items={regularItems}
+  toggler={<Button text="Click" />}
+  tippyOptions={{
+    appendTo: () => document.body,
+  }}
+/>
+```
+
+## Example
+
 <Canvas>
   <Story name="default">
     <div
