@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import { FONT_FAMILY as AKTIV_FONT_FAMILY } from '../HSDS/GlobalStyle'
-import Animate from '../Animate'
 import Icon from '../Icon'
 
 export const DropListWrapperUI = styled('div')`
@@ -98,23 +97,28 @@ const SelectedBadgeUI = styled('div')`
   height: 24px;
   padding: 3px;
   border-radius: 50%;
-  color: white;
-  background-color: ${getColor('blue.500')};
+  color: ${getColor('blue.500')};
+  background-color: transparent;
+  opacity: 0;
+  transition: opacity ease-in-out 0.2s, color ease-in-out 0.2s,
+    background-color ease-in-out 0.2s;
+
+  .is-selected & {
+    color: white;
+    background-color: ${getColor('blue.500')};
+    opacity: 1;
+  }
+
+  .DropListItem:hover & {
+    opacity: 1;
+  }
 `
 
-export const SelectedBadge = () => {
+export const SelectedBadge = ({ isSelected }) => {
   return (
-    <Animate
-      animateOnMount={true}
-      duration={150}
-      easing="ease-in-out"
-      sequence="fade"
-      unmountOnExit={false}
-    >
-      <SelectedBadgeUI className="SelectedBadge">
-        <Icon name="check" size="18" />
-      </SelectedBadgeUI>
-    </Animate>
+    <SelectedBadgeUI className="SelectedBadge">
+      <Icon name="check" size="18" />
+    </SelectedBadgeUI>
   )
 }
 

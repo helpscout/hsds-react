@@ -76,7 +76,9 @@ const ListItem = forwardRef(
         {...itemProps}
       >
         <span>{isObject(item) ? item.label : item}</span>
-        {withMultipleSelection && isSelected ? <SelectedBadge /> : null}
+        {withMultipleSelection ? (
+          <SelectedBadge isSelected={isSelected} />
+        ) : null}
       </ListItemUI>
     )
   }
