@@ -10,12 +10,12 @@ export const DropListWrapperUI = styled('div')`
   width: ${({ variant }) => (variant === 'combobox' ? '220px' : '200px')};
   padding: 0;
   background-color: white;
-  border: 1px solid #c5ced6; // TODO: should be grey.600 replace when fixed in colorway
+  border: 1px solid ${getColor('grey.600')};
   border-radius: 4px;
   box-shadow: 0px 1px 7px rgba(0, 0, 0, 0.08);
   font-family: ${AKTIV_FONT_FAMILY};
   font-size: 13px;
-  color: #c5ced6; // TODO: should be grey.600 replace when fixed in colorway
+  color: ${getColor('grey.600')};
 
   * {
     box-sizing: border-box;
@@ -51,7 +51,7 @@ export const InputSearchHolderUI = styled('div')`
     font-family: ${AKTIV_FONT_FAMILY};
     font-size: 13px;
     color: ${getColor('charcoal.600')};
-    box-shadow: inset 0 0 0 1px #c5ced6; // TODO: should be grey.600 replace when fixed in colorway
+    box-shadow: inset 0 0 0 1px ${getColor('grey.600')};
     border: 0;
     border-radius: 3px;
 
