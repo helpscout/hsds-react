@@ -63,6 +63,7 @@ function Select({
     },
 
     onStateChange(changes) {
+      console.log('changes', changes)
       onStateChangeCommon({
         changes,
         withMultipleSelection,
