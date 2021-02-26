@@ -64,56 +64,63 @@ function Select({
 
     onStateChange(changes) {
       const { type } = changes
-      console.log(
-        type === '__menu_keydown_arrow_down__'
-          ? '__menu_keydown_arrow_down__'
-          : ''
-      )
-      console.log(
-        type === '__menu_keydown_arrow_up__' ? '__menu_keydown_arrow_up__' : ''
-      )
-      console.log(
-        type === '__menu_keydown_escape__' ? '__menu_keydown_escape__' : ''
-      )
-      console.log(
-        type === '__menu_keydown_home__' ? '__menu_keydown_home__' : ''
-      )
-      console.log(type === '__menu_keydown_end__' ? '__menu_keydown_end__' : '')
-      console.log(
-        type === '__menu_keydown_enter__' ? '__menu_keydown_enter__' : ''
-      )
-      console.log(
-        type === '__menu_keydown_space_button__'
-          ? '__menu_keydown_space_button__'
-          : ''
-      )
-      console.log(
-        type === '__menu_keydown_character__'
-          ? '__menu_keydown_character__'
-          : ''
-      )
-      console.log(type === '__menu_blur__' ? '__menu_blur__' : '')
-      console.log(type === '__menu_mouse_leave__' ? '__menu_mouse_leave__' : '')
-      console.log(type === '__item_mouse_move__' ? '__item_mouse_move__' : '')
-      console.log(type === '__item_click__' ? '__item_click__' : '')
-      console.log(
-        type === '__togglebutton_keydown_character__'
-          ? '__togglebutton_keydown_character__'
-          : ''
-      )
-      console.log(
-        type === '__togglebutton_keydown_arrow_down__'
-          ? '__togglebutton_keydown_arrow_down__'
-          : ''
-      )
-      console.log(
-        type === '__togglebutton_keydown_arrow_up__'
-          ? '__togglebutton_keydown_arrow_up__'
-          : ''
-      )
-      console.log(
-        type === '__togglebutton_click__' ? '__togglebutton_click__' : ''
-      )
+      if (type === useSelect.stateChangeTypes.MenuKeyDownArrowDown) {
+        console.log('__menu_keydown_arrow_down__')
+      }
+
+      if (type === useSelect.stateChangeTypes.MenuKeyDownArrowUp) {
+        console.log('__menu_keydown_arrow_up__')
+      }
+
+      if (type === useSelect.stateChangeTypes.MenuKeyDownEscape) {
+        console.log('__menu_keydown_escape__')
+      }
+
+      if (type === useSelect.stateChangeTypes.MenuKeyDownHome) {
+        console.log('__menu_keydown_home__')
+      }
+      if (type === useSelect.stateChangeTypes.MenuKeyDownEnd) {
+        console.log('__menu_keydown_end__')
+      }
+
+      if (type === useSelect.stateChangeTypes.MenuKeyDownEnter) {
+        console.log('__menu_keydown_enter__')
+      }
+      if (type === useSelect.stateChangeTypes.MenuKeyDownSpaceButton) {
+        console.log('__menu_keydown_space_button__')
+      }
+      if (type === useSelect.stateChangeTypes.MenuKeyDownCharacter) {
+        console.log('__menu_keydown_character__')
+      }
+      if (type === useSelect.stateChangeTypes.MenuBlur) {
+        console.log('__menu_blur__')
+      }
+      if (type === useSelect.stateChangeTypes.MenuMouseLeave) {
+        console.log('__menu_mouse_leave__')
+      }
+
+      if (type === useSelect.stateChangeTypes.ItemMouseMove) {
+        console.log('__item_mouse_move__')
+      }
+
+      if (type === useSelect.stateChangeTypes.ItemClick) {
+        console.log('__item_click__')
+      }
+      if (type === useSelect.stateChangeTypes.ToggleButtonKeyDownCharacter) {
+        console.log('__togglebutton_keydown_character__')
+      }
+      if (type === useSelect.stateChangeTypes.ToggleButtonKeyDownArrowDown) {
+        console.log('__togglebutton_keydown_arrow_down__')
+      }
+
+      if (type === useSelect.stateChangeTypes.ToggleButtonKeyDownArrowUp) {
+        console.log('__togglebutton_keydown_arrow_up__')
+      }
+
+      if (type === useSelect.stateChangeTypes.ToggleButtonClick) {
+        console.log('__togglebutton_click__')
+      }
+
       onStateChangeCommon({
         changes,
         withMultipleSelection,
