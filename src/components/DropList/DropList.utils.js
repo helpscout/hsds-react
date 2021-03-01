@@ -93,33 +93,31 @@ export function isItemADivider(item) {
   return objectHasKey(item, 'type') && item.type === ITEM_TYPES.DIVIDER
 }
 
+export function isItemAGroup(item) {
+  return objectHasKey(item, 'type') && item.type === ITEM_TYPES.GROUP
+}
+
 export function isItemAGroupLabel(item) {
   return objectHasKey(item, 'type') && item.type === ITEM_TYPES.GROUP_LABEL
 }
 
-export function areItemsGrouped(items) {
-  if (!Array.isArray(items) || items.length === 0) return false
-
-  return isDefined(items.find(item => item.type === ITEM_TYPES.GROUP))
-}
-
-export function flattenGroups(items) {
-  if (areItemsGrouped(items)) {
-    return items.reduce((accumulator, group) => {
-      const itemsInGroup = group.items.map(item => ({
+export function flattenListItems(listItems) {
+  return listItems.reduce((accumulator, listItem) => {
+    if (isItemAGroup(listItem)) {
+      const itemsInGroup = listItem.items.map(item => ({
         ...item,
-        group: group.label,
+        group: listItem.label,
       }))
 
       return itemsInGroup.length > 0
         ? accumulator
-            .concat({ type: ITEM_TYPES.GROUP_LABEL, label: group.label })
+            .concat({ type: ITEM_TYPES.GROUP_LABEL, label: listItem.label })
             .concat(itemsInGroup)
         : accumulator
-    }, [])
-  }
+    }
 
-  return items
+    return accumulator.concat(listItem)
+  }, [])
 }
 
 export function renderListContents({

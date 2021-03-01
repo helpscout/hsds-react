@@ -88,7 +88,7 @@ export const ListItemUI = styled('li')`
 export const EmptyListUI = styled('div')`
   height: 36px;
   margin: 0 5px;
-  padding: 5px 15px 0;
+  padding: 9px 15px 0;
   font-style: italic;
 `
 

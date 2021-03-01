@@ -4,7 +4,7 @@ import Tippy from '@tippyjs/react/headless'
 import { noop } from '../../utilities/other'
 import { GlobalContext } from '../HSDS/Provider'
 import {
-  flattenGroups,
+  flattenListItems,
   itemToString,
   isTogglerOfType,
   useWarnings,
@@ -41,7 +41,7 @@ function DropListManager({
   variant = VARIANTS.SELECT,
   withMultipleSelection = false,
 }) {
-  const parsedItems = flattenGroups(items)
+  const parsedItems = flattenListItems(items)
   const [isOpen, setOpenedState] = useState(initialIsOpen)
   const [selectedItem, setSelectedItem] = useState(initialSelectedItem)
   const { getCurrentScope } = useContext(GlobalContext) || {}

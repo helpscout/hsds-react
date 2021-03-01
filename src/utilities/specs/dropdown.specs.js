@@ -50,6 +50,24 @@ export const simpleGroupedItems = [
   },
 ]
 
+export const groupAndDividerItems = [
+  {
+    items: ItemSpec.generate(3),
+    label: 'Group 1',
+    value: 'thing',
+    type: 'group',
+  },
+  {
+    type: 'divider',
+  },
+  {
+    items: ItemSpec.generate(5),
+    label: 'Group 2',
+    type: 'group',
+    value: 'thing2',
+  },
+]
+
 export const regularItems = ItemSpec.generate(15)
 
 export const plainItems = [

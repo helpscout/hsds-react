@@ -11,9 +11,10 @@ import {
 } from './DropList.togglers'
 import {
   itemsWithDivider,
-  simpleGroupedItems,
+  groupAndDividerItems,
   plainItems,
   regularItems,
+  simpleGroupedItems,
 } from '../../utilities/specs/dropdown.specs'
 
 <Meta
@@ -111,6 +112,61 @@ Sometimes the list needs to be appended to a different DOM context due to access
 
 ## Stories
 
+### Variants
+
+There are two variations of this component: "Select" and "Combobox". The only difference between them is that "Combobox" includes a text input to search and filter the list of items.
+
+You can use the `autoSetComboboxAt` prop to automatically choose between the 2 variants depending on the number of items on the list.
+
+```jsx
+<DropList
+  items={regularItems}
+  toggler={<Button text="Click" />}
+  autoSetComboboxAt={10}
+/>
+
+// regularItems.length < 10 ? "will render a Select" : "will render a Combobox"
+```
+
+<Canvas>
+  <Story name="Variant: Select">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        items={regularItems}
+        toggler={<Button text="This is a select" />}
+      />
+    </div>
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Variant: Combobox">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        variant="combobox"
+        items={regularItems}
+        toggler={<Button text="This is a combobox" />}
+      />
+    </div>
+  </Story>
+</Canvas>
+
 ### List items
 
 DropList accepts an array of items, these items can be:
@@ -186,6 +242,25 @@ const groupedItems = [
   </Story>
 </Canvas>
 
+<Canvas>
+  <Story name="Items: groups and divider">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        items={groupAndDividerItems}
+        toggler={<Button text="Click" />}
+      />
+    </div>
+  </Story>
+</Canvas>
+
 - Empty list
 
 <Canvas>
@@ -220,13 +295,14 @@ const groupedItems = [
         customEmptyList={
           <div
             style={{
-              fontSize: '16px',
-              textShadow: '0 0 5px rgba(100, 100, 100, 0.5)',
-              textAlign: 'center',
-              padding: '10px 0',
+              fontSize: '13px',
+              color: 'thistle',
+              letterSpacing: '2px',
+              textAlign: 'right',
+              padding: '10px 10px 15px 0',
             }}
           >
-            👁‍🗨 Nothing to see 👁‍🗨
+            Empty list
           </div>
         }
         items={[]}
