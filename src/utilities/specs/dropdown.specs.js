@@ -60,6 +60,10 @@ export const groupAndDividerItems = [
   {
     type: 'divider',
   },
+  ...ItemSpec.generate(2),
+  {
+    type: 'divider',
+  },
   {
     items: ItemSpec.generate(5),
     label: 'Group 2',
