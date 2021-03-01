@@ -57,42 +57,34 @@ function Select({
     },
 
     onIsOpenChange(changes) {
-      const { type } = changes
-      const typeAndVariant = `${VARIANT}.${type}`
-
       onIsOpenChangeCommon({
-        changes,
         closeOnSelection,
         toggleOpenedState,
-        type: typeAndVariant,
+        type: `${VARIANT}.${changes.type}`,
       })
     },
 
     onStateChange(changes) {
-      const { type } = changes
-      const typeAndVariant = `${VARIANT}.${type}`
-
       onStateChangeCommon({
         changes,
         onSelectionChange,
         selectItem,
         selectedItems,
         setSelectedItems,
-        type: typeAndVariant,
+        type: `${VARIANT}.${changes.type}`,
         withMultipleSelection,
       })
     },
 
     stateReducer(state, actionAndChanges) {
       const { changes, type } = actionAndChanges
-      const typeAndVariant = `${VARIANT}.${type}`
 
       return stateReducerCommon({
         changes,
         closeOnSelection,
         selectedItems,
         state,
-        type: typeAndVariant,
+        type: `${VARIANT}.${type}`,
         withMultipleSelection,
       })
     },

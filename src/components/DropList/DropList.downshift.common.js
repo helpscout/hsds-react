@@ -122,7 +122,6 @@ export function stateReducerCommon({
 }
 
 export function onIsOpenChangeCommon({
-  changes,
   closeOnSelection,
   toggleOpenedState,
   type,
