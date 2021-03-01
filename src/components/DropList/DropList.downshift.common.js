@@ -1,7 +1,7 @@
 import { useSelect, useCombobox } from 'downshift'
 import { isObject } from '../../utilities/is'
 import { findItemInArray, removeItemFromArray } from './DropList.utils'
-import { VARIANTS } from './DropList.constants'
+import { OPEN_ACTION_ORIGIN, VARIANTS } from './DropList.constants'
 
 const { SELECT, COMBOBOX } = VARIANTS
 
@@ -138,9 +138,12 @@ export function onIsOpenChangeCommon({
       break
 
     case `${COMBOBOX}.${useCombobox.stateChangeTypes.InputKeyDownEscape}`:
-    case `${COMBOBOX}.${useCombobox.stateChangeTypes.InputBlur}`:
     case `${SELECT}.${useSelect.stateChangeTypes.MenuKeyDownEscape}`:
       toggleOpenedState(false)
+      break
+
+    case `${COMBOBOX}.${useCombobox.stateChangeTypes.InputBlur}`:
+      toggleOpenedState(false, OPEN_ACTION_ORIGIN.INPUT_BLUR)
       break
 
     default:

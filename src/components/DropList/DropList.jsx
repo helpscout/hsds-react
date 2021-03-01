@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Tippy from '@tippyjs/react/headless'
 import { noop } from '../../utilities/other'
 import { GlobalContext } from '../HSDS/Provider'
-import { VARIANTS } from './DropList.constants'
+import { OPEN_ACTION_ORIGIN, VARIANTS } from './DropList.constants'
 import {
   flattenListItems,
   itemToString,
@@ -39,6 +39,7 @@ function DropListManager({
 }) {
   const parsedItems = flattenListItems(items)
   const [isOpen, setOpenedState] = useState(initialIsOpen)
+  const [openOrigin, setOpenOrigin] = useState('')
   const [selectedItem, setSelectedItem] = useState(initialSelectedItem)
   const { getCurrentScope } = useContext(GlobalContext) || {}
   const scope = getCurrentScope ? getCurrentScope() : null
@@ -50,8 +51,9 @@ function DropListManager({
     setSelectedItem(selection)
   }
 
-  function toggleOpenedState(isOpen) {
+  function toggleOpenedState(isOpen, origin = '') {
     setOpenedState(isOpen)
+    setOpenOrigin(origin)
     onOpenedStateChange(isOpen)
   }
 
@@ -77,7 +79,16 @@ function DropListManager({
     const togglerProps = {
       onClick: e => {
         onClick && onClick(e)
-        toggleOpenedState(!isOpen)
+
+        /**
+         * On combobox when clicking the button a blur event happens first that closes
+         * the DropList, here we check if the menu was closed due to the input blur and ignore the
+         * click action to toggle the open state, we also always reset the "origin" to resume normal behaviour
+         */
+        if (openOrigin !== OPEN_ACTION_ORIGIN.INPUT_BLUR) {
+          toggleOpenedState(!isOpen)
+        }
+        setOpenOrigin('')
       },
       isActive: isOpen,
     }
