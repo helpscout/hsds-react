@@ -43,17 +43,18 @@ module.exports = api => {
           targets: {
             ie: '11',
             edge: '16',
-            firefox: '60',
-            chrome: '65',
-            safari: '10',
+            firefox: '85',
+            chrome: '86',
+            safari: '12',
             node: '12.16.3',
           },
-          loose: true,
+          loose: false,
           shippedProposals: true,
         },
       ],
       '@babel/react',
     ],
     plugins: plugins,
+    exclude: ['node_modules'],
   }
 }

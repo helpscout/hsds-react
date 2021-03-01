@@ -15,9 +15,11 @@ import {
 import { A11yTogglerUI, DropListWrapperUI, MenuListUI } from './DropList.css'
 import ListItem, { generateListItemKey } from './DropList.ListItem'
 
+const VARIANT = 'Select'
+
 function Select({
   closeOnSelection = true,
-  'data-cy': dataCy = 'DropList.Select',
+  'data-cy': dataCy = `DropList.${VARIANT}`,
   initialSelectedItem,
   customEmptyList = null,
   isOpen = false,
@@ -55,89 +57,43 @@ function Select({
     },
 
     onIsOpenChange(changes) {
+      const { type } = changes
+      const typeAndVariant = `${VARIANT}.${type}`
+
       onIsOpenChangeCommon({
         changes,
         closeOnSelection,
         toggleOpenedState,
+        type: typeAndVariant,
       })
     },
 
     onStateChange(changes) {
       const { type } = changes
-      if (type === useSelect.stateChangeTypes.MenuKeyDownArrowDown) {
-        console.log('__menu_keydown_arrow_down__')
-      }
-
-      if (type === useSelect.stateChangeTypes.MenuKeyDownArrowUp) {
-        console.log('__menu_keydown_arrow_up__')
-      }
-
-      if (type === useSelect.stateChangeTypes.MenuKeyDownEscape) {
-        console.log('__menu_keydown_escape__')
-      }
-
-      if (type === useSelect.stateChangeTypes.MenuKeyDownHome) {
-        console.log('__menu_keydown_home__')
-      }
-      if (type === useSelect.stateChangeTypes.MenuKeyDownEnd) {
-        console.log('__menu_keydown_end__')
-      }
-
-      if (type === useSelect.stateChangeTypes.MenuKeyDownEnter) {
-        console.log('__menu_keydown_enter__')
-      }
-      if (type === useSelect.stateChangeTypes.MenuKeyDownSpaceButton) {
-        console.log('__menu_keydown_space_button__')
-      }
-      if (type === useSelect.stateChangeTypes.MenuKeyDownCharacter) {
-        console.log('__menu_keydown_character__')
-      }
-      if (type === useSelect.stateChangeTypes.MenuBlur) {
-        console.log('__menu_blur__')
-      }
-      if (type === useSelect.stateChangeTypes.MenuMouseLeave) {
-        console.log('__menu_mouse_leave__')
-      }
-
-      if (type === useSelect.stateChangeTypes.ItemMouseMove) {
-        console.log('__item_mouse_move__')
-      }
-
-      if (type === useSelect.stateChangeTypes.ItemClick) {
-        console.log('__item_click__')
-      }
-      if (type === useSelect.stateChangeTypes.ToggleButtonKeyDownCharacter) {
-        console.log('__togglebutton_keydown_character__')
-      }
-      if (type === useSelect.stateChangeTypes.ToggleButtonKeyDownArrowDown) {
-        console.log('__togglebutton_keydown_arrow_down__')
-      }
-
-      if (type === useSelect.stateChangeTypes.ToggleButtonKeyDownArrowUp) {
-        console.log('__togglebutton_keydown_arrow_up__')
-      }
-
-      if (type === useSelect.stateChangeTypes.ToggleButtonClick) {
-        console.log('__togglebutton_click__')
-      }
+      const typeAndVariant = `${VARIANT}.${type}`
 
       onStateChangeCommon({
         changes,
-        withMultipleSelection,
         onSelectionChange,
         selectItem,
         selectedItems,
         setSelectedItems,
+        type: typeAndVariant,
+        withMultipleSelection,
       })
     },
 
     stateReducer(state, actionAndChanges) {
+      const { changes, type } = actionAndChanges
+      const typeAndVariant = `${VARIANT}.${type}`
+
       return stateReducerCommon({
-        state,
-        actionAndChanges,
-        withMultipleSelection,
+        changes,
         closeOnSelection,
         selectedItems,
+        state,
+        type: typeAndVariant,
+        withMultipleSelection,
       })
     },
   })

@@ -4,19 +4,20 @@ import { findItemInArray, removeItemFromArray } from './DropList.utils'
 
 export function onStateChangeCommon({
   changes,
-  withMultipleSelection,
   onSelectionChange,
   selectItem,
   selectedItems,
   setSelectedItems,
+  type,
+  withMultipleSelection,
 }) {
-  const { type, selectedItem } = changes
+  const { selectedItem } = changes
 
   switch (type) {
-    case useCombobox.stateChangeTypes.InputKeyDownEnter:
-    case useCombobox.stateChangeTypes.ItemClick:
-    case useSelect.stateChangeTypes.MenuKeyDownEnter:
-    case useSelect.stateChangeTypes.ItemClick:
+    case `Combobox.${useCombobox.stateChangeTypes.InputKeyDownEnter}`:
+    case `Combobox.${useCombobox.stateChangeTypes.ItemClick}`:
+    case `Select.${useSelect.stateChangeTypes.MenuKeyDownEnter}`:
+    case `Select.${useSelect.stateChangeTypes.ItemClick}`:
       if (!withMultipleSelection) {
         onSelectionChange(Boolean(selectedItem) ? selectedItem : null)
         !Boolean(selectedItem) && selectItem(null)
@@ -57,25 +58,31 @@ export function onStateChangeCommon({
 }
 
 export function stateReducerCommon({
-  state,
-  actionAndChanges,
-  withMultipleSelection,
+  changes,
   closeOnSelection,
   selectedItems,
+  state,
+  type,
+  withMultipleSelection,
 }) {
-  const { type, changes } = actionAndChanges
-
   switch (type) {
-    case useCombobox.stateChangeTypes.InputChange:
+    case `Combobox.${useCombobox.stateChangeTypes.InputChange}`:
       return {
         ...changes,
         highlightedIndex: 0,
       }
 
-    case useCombobox.stateChangeTypes.InputKeyDownEnter:
-    case useCombobox.stateChangeTypes.ItemClick:
-    case useSelect.stateChangeTypes.MenuKeyDownEnter:
-    case useSelect.stateChangeTypes.ItemClick:
+    case `Combobox.${useCombobox.stateChangeTypes.InputBlur}`:
+      return {
+        ...changes,
+        selectedItem: state.selectedItem,
+        inputValue: '',
+      }
+
+    case `Combobox.${useCombobox.stateChangeTypes.InputKeyDownEnter}`:
+    case `Combobox.${useCombobox.stateChangeTypes.ItemClick}`:
+    case `Select.${useSelect.stateChangeTypes.MenuKeyDownEnter}`:
+    case `Select.${useSelect.stateChangeTypes.ItemClick}`:
       if (withMultipleSelection) {
         const newState = {
           ...changes,
@@ -118,19 +125,19 @@ export function onIsOpenChangeCommon({
   changes,
   closeOnSelection,
   toggleOpenedState,
+  type,
 }) {
-  const { type } = changes
-
   switch (type) {
-    case useCombobox.stateChangeTypes.InputKeyDownEnter:
-    case useCombobox.stateChangeTypes.ItemClick:
-    case useSelect.stateChangeTypes.MenuKeyDownEnter:
-    case useSelect.stateChangeTypes.ItemClick:
+    case `Combobox.${useCombobox.stateChangeTypes.InputKeyDownEnter}`:
+    case `Combobox.${useCombobox.stateChangeTypes.ItemClick}`:
+    case `Select.${useSelect.stateChangeTypes.MenuKeyDownEnter}`:
+    case `Select.${useSelect.stateChangeTypes.ItemClick}`:
       closeOnSelection && toggleOpenedState(false)
       break
 
-    case useCombobox.stateChangeTypes.InputKeyDownEscape:
-    case useSelect.stateChangeTypes.MenuKeyDownEscape:
+    case `Combobox.${useCombobox.stateChangeTypes.InputKeyDownEscape}`:
+    case `Combobox.${useCombobox.stateChangeTypes.InputBlur}`:
+    case `Select.${useSelect.stateChangeTypes.MenuKeyDownEscape}`:
       toggleOpenedState(false)
       break
 

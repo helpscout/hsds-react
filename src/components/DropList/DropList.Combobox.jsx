@@ -19,10 +19,12 @@ import {
 } from './DropList.css'
 import ListItem, { generateListItemKey } from './DropList.ListItem'
 
+const VARIANT = 'Combobox'
+
 function Combobox({
   closeOnSelection = true,
   customEmptyList = null,
-  'data-cy': dataCy = 'DropList.Combobox',
+  'data-cy': dataCy = `DropList.${VARIANT}`,
   initialSelectedItem,
   isOpen = false,
   items = [],
@@ -74,31 +76,43 @@ function Combobox({
     },
 
     onIsOpenChange(changes) {
+      const { type } = changes
+      const typeAndVariant = `${VARIANT}.${type}`
+
       onIsOpenChangeCommon({
         changes,
         closeOnSelection,
         toggleOpenedState,
+        type: typeAndVariant,
       })
     },
 
     onStateChange(changes) {
+      const { type } = changes
+      const typeAndVariant = `${VARIANT}.${type}`
+
       onStateChangeCommon({
         changes,
-        withMultipleSelection,
         onSelectionChange,
         selectItem,
         selectedItems,
         setSelectedItems,
+        type: typeAndVariant,
+        withMultipleSelection,
       })
     },
 
     stateReducer(state, actionAndChanges) {
+      const { changes, type } = actionAndChanges
+      const typeAndVariant = `${VARIANT}.${type}`
+
       return stateReducerCommon({
-        state,
-        actionAndChanges,
-        withMultipleSelection,
+        changes,
         closeOnSelection,
         selectedItems,
+        state,
+        type: typeAndVariant,
+        withMultipleSelection,
       })
     },
   })
