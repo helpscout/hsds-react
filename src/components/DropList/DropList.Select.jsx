@@ -14,12 +14,11 @@ import {
 } from './DropList.downshift.common'
 import { A11yTogglerUI, DropListWrapperUI, MenuListUI } from './DropList.css'
 import ListItem, { generateListItemKey } from './DropList.ListItem'
-
-const VARIANT = 'Select'
+import { VARIANTS } from './DropList.constants'
 
 function Select({
   closeOnSelection = true,
-  'data-cy': dataCy = `DropList.${VARIANT}`,
+  'data-cy': dataCy = `DropList.${VARIANTS.SELECT}`,
   initialSelectedItem,
   customEmptyList = null,
   isOpen = false,
@@ -60,7 +59,7 @@ function Select({
       onIsOpenChangeCommon({
         closeOnSelection,
         toggleOpenedState,
-        type: `${VARIANT}.${changes.type}`,
+        type: `${VARIANTS.SELECT}.${changes.type}`,
       })
     },
 
@@ -71,7 +70,7 @@ function Select({
         selectItem,
         selectedItems,
         setSelectedItems,
-        type: `${VARIANT}.${changes.type}`,
+        type: `${VARIANTS.SELECT}.${changes.type}`,
         withMultipleSelection,
       })
     },
@@ -84,7 +83,7 @@ function Select({
         closeOnSelection,
         selectedItems,
         state,
-        type: `${VARIANT}.${type}`,
+        type: `${VARIANTS.SELECT}.${type}`,
         withMultipleSelection,
       })
     },

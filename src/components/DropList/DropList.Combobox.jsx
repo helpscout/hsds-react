@@ -18,13 +18,12 @@ import {
   MenuListUI,
 } from './DropList.css'
 import ListItem, { generateListItemKey } from './DropList.ListItem'
-
-const VARIANT = 'Combobox'
+import { VARIANTS } from './DropList.constants'
 
 function Combobox({
   closeOnSelection = true,
   customEmptyList = null,
-  'data-cy': dataCy = `DropList.${VARIANT}`,
+  'data-cy': dataCy = `DropList.${VARIANTS.COMBOBOX}`,
   initialSelectedItem,
   isOpen = false,
   items = [],
@@ -79,7 +78,7 @@ function Combobox({
       onIsOpenChangeCommon({
         closeOnSelection,
         toggleOpenedState,
-        type: `${VARIANT}.${changes.type}`,
+        type: `${VARIANTS.COMBOBOX}.${changes.type}`,
       })
     },
 
@@ -90,7 +89,7 @@ function Combobox({
         selectItem,
         selectedItems,
         setSelectedItems,
-        type: `${VARIANT}.${changes.type}`,
+        type: `${VARIANTS.COMBOBOX}.${changes.type}`,
         withMultipleSelection,
       })
     },
@@ -103,7 +102,7 @@ function Combobox({
         closeOnSelection,
         selectedItems,
         state,
-        type: `${VARIANT}.${type}`,
+        type: `${VARIANTS.COMBOBOX}.${type}`,
         withMultipleSelection,
       })
     },

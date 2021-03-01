@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Tippy from '@tippyjs/react/headless'
 import { noop } from '../../utilities/other'
 import { GlobalContext } from '../HSDS/Provider'
+import { VARIANTS } from './DropList.constants'
 import {
   flattenListItems,
   itemToString,
@@ -17,11 +18,6 @@ import {
 import Animate from '../Animate'
 import Combobox from './DropList.Combobox'
 import Select from './DropList.Select'
-
-const VARIANTS = {
-  SELECT: 'select',
-  COMBOBOX: 'combobox',
-}
 
 function DropListManager({
   animateOptions = {},
@@ -111,7 +107,7 @@ function DropListManager({
   }
 
   const DropListVariant =
-    variant === VARIANTS.COMBOBOX ||
+    variant.toLowerCase() === VARIANTS.COMBOBOX ||
     (autoSetComboboxAt > 0 && parsedItems.length >= autoSetComboboxAt)
       ? Combobox
       : Select

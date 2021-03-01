@@ -1,13 +1,8 @@
 import React, { useEffect } from 'react'
 import { isDefined, isObject } from '../../utilities/is'
+import { ITEM_TYPES } from './DropList.constants'
 import { SelectTag } from './DropList.togglers'
 import { ListItemUI, EmptyListUI } from './DropList.css'
-
-const ITEM_TYPES = {
-  DIVIDER: 'divider',
-  GROUP: 'group',
-  GROUP_LABEL: 'group_label',
-}
 
 export function displayWarnings({ toggler, withMultipleSelection }) {
   if (process.env.NODE_ENV !== 'production') {
