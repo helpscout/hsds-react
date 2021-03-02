@@ -141,8 +141,8 @@ function DropListManager({
         toggleOpenedState(false)
       }}
       onShow={({ popper }) => {
-        if (scope && tippyOptions.appendTo) {
-          popper.classList.add(scope)
+        if (tippyOptions.appendTo) {
+          popper.classList.add(scope ? scope : 'hsds-react')
         }
       }}
       onHidden={({ reference }) => {

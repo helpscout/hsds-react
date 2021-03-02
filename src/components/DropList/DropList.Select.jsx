@@ -5,6 +5,7 @@ import {
   itemToString,
   isItemSelected,
   renderListContents,
+  setInitialSelection,
 } from './DropList.utils'
 import {
   getA11ySelectionMessageCommon,
@@ -28,10 +29,10 @@ function Select({
   toggleOpenedState = noop,
   withMultipleSelection = false,
 }) {
-  const initialSelectedItemsArr =
-    withMultipleSelection && initialSelectedItem != null
-      ? [].concat(initialSelectedItem)
-      : []
+  const initialSelectedItemsArr = setInitialSelection({
+    initialSelectedItem,
+    withMultipleSelection,
+  })
   const [selectedItems, setSelectedItems] = useState(initialSelectedItemsArr)
 
   const {

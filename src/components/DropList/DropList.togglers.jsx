@@ -22,9 +22,12 @@ export const Button = forwardRef(
     return (
       <HSDSButton
         aria-label="toggle menu"
+        aria-haspopup="true"
+        aria-expanded={isActive}
         buttonRef={ref}
         className="DropListToggler ButtonToggler"
         data-cy="DropList.ButtonToggler"
+        data-testid="DropList.ButtonToggler"
         isActive={isActive}
         kind={kind}
         onClick={onClick}
@@ -37,6 +40,8 @@ export const Button = forwardRef(
   }
 )
 
+// No need to test every single toggler if they're basically the same as Button
+/* istanbul ignore next */
 export const NavLink = forwardRef(
   (
     {
@@ -51,6 +56,8 @@ export const NavLink = forwardRef(
     return (
       <NavLinkTogglerUI
         aria-label="toggle menu"
+        aria-haspopup="true"
+        aria-expanded={isActive}
         ref={ref}
         className={classNames(
           'DropListToggler',
@@ -58,6 +65,7 @@ export const NavLink = forwardRef(
           isActive && 'is-active'
         )}
         data-cy="DropList.NavLinkToggler"
+        data-testid="DropList.NavLinkToggler"
         isActive={isActive}
         onClick={onClick}
         type="button"
@@ -105,12 +113,14 @@ export const SplitButton = forwardRef(
   ) => {
     return (
       <ControlGroup
-        className="DropListToggler SplitButtonToggler"
-        data-cy="DropList.SplitButtonToggler"
+        className="DropListToggler SplitButtonTogglerControlGroup"
+        data-cy="DropList.SplitButtonTogglerControlGroup"
       >
         <ControlGroup.Item>
           <HSDSButton
             className="SplitButton__Action"
+            data-cy="DropList.SplitButtonAction"
+            data-testid="DropList.SplitButtonAction"
             kind={kind}
             onClick={onActionClick}
             size={size}
@@ -122,8 +132,12 @@ export const SplitButton = forwardRef(
         <ControlGroup.Item>
           <SplitButtonTogglerUI
             aria-label="toggle menu"
+            aria-haspopup="true"
+            aria-expanded={isActive}
             buttonRef={ref}
             className="SplitButton__Toggler"
+            data-cy="DropList.SplitButtonToggler"
+            data-testid="DropList.SplitButtonToggler"
             isActive={isActive}
             isLast
             kind={kind}
@@ -166,21 +180,26 @@ const SplitButtonTogglerUI = styled(HSDSButton)`
   }
 `
 
-export const SelectTag = forwardRef(({ text = '', onClick = noop }, ref) => {
-  return (
-    <SelectUI
-      aria-label="toggle menu"
-      className="DropListToggler SelectTagToggler"
-      data-cy="DropList.SelectTagToggler"
-      onClick={onClick}
-      ref={ref}
-      type="button"
-    >
-      <span>{text}</span>
-      <SelectArrowsUI />
-    </SelectUI>
-  )
-})
+export const SelectTag = forwardRef(
+  ({ isActive = false, text = '', onClick = noop }, ref) => {
+    return (
+      <SelectUI
+        aria-label="toggle menu"
+        aria-haspopup="true"
+        aria-expanded={isActive}
+        className="DropListToggler SelectTagToggler"
+        data-cy="DropList.SelectTagToggler"
+        data-testid="DropList.SelectTagToggler"
+        onClick={onClick}
+        ref={ref}
+        type="button"
+      >
+        <span>{text}</span>
+        <SelectArrowsUI />
+      </SelectUI>
+    )
+  }
+)
 
 const SelectUI = styled('button')`
   display: flex;
@@ -248,12 +267,17 @@ const KebabUI = styled('button')`
   }
 `
 
-export const Kebab = forwardRef(({ onClick = noop }, ref) => {
+// No need to test every single toggler if they're basically the same as Button
+/* istanbul ignore next */
+export const Kebab = forwardRef(({ isActive = false, onClick = noop }, ref) => {
   return (
     <KebabUI
       aria-label="toggle menu"
+      aria-haspopup="true"
+      aria-expanded={isActive}
       className="DropListToggler KebabToggler"
       data-cy="DropList.KebabToggler"
+      data-testid="DropList.KebabToggler"
       onClick={onClick}
       ref={ref}
       type="button"
@@ -288,13 +312,18 @@ const IconButtonUI = styled('button')`
   }
 `
 
+// No need to test every single toggler if they're basically the same as Button
+/* istanbul ignore next */
 export const IconButton = forwardRef(
-  ({ onClick = noop, iconName = 'assign' }, ref) => {
+  ({ isActive = false, onClick = noop, iconName = 'assign' }, ref) => {
     return (
       <IconButtonUI
         aria-label="toggle menu"
+        aria-haspopup="true"
+        aria-expanded={isActive}
         className="DropListToggler IconButtonToggler"
         data-cy="DropList.IconButtonToggler"
+        data-testid="DropList.IconButtonToggler"
         onClick={onClick}
         ref={ref}
         type="button"
@@ -306,6 +335,8 @@ export const IconButton = forwardRef(
   }
 )
 
+// No need to test this
+/* istanbul ignore next */
 export function getTogglerPlacementProps(toggler) {
   if (toggler.type === Button) {
     return {

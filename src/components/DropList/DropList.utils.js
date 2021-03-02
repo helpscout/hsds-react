@@ -4,8 +4,13 @@ import { ITEM_TYPES } from './DropList.constants'
 import { SelectTag } from './DropList.togglers'
 import { ListItemUI, EmptyListUI } from './DropList.css'
 
+// No need to test this helper
+/* istanbul ignore next */
 export function displayWarnings({ toggler, withMultipleSelection }) {
-  if (process.env.NODE_ENV !== 'production') {
+  if (
+    process.env.NODE_ENV !== 'production' &&
+    process.env.NODE_ENV !== 'test'
+  ) {
     if (!React.isValidElement(toggler)) {
       console.info(
         'Pass one of the provided togglers or a custom one to the `toggler` prop'
@@ -34,6 +39,19 @@ export function itemToString(item) {
   if (item == null) return ''
   if (isObject(item)) return item.label || ''
   return item
+}
+
+export function setInitialSelection({
+  withMultipleSelection,
+  initialSelectedItem,
+}) {
+  if (withMultipleSelection && initialSelectedItem != null) {
+    return [].concat(initialSelectedItem)
+  }
+  if (initialSelectedItem != null) {
+    return [initialSelectedItem]
+  }
+  return []
 }
 
 export function isItemSelected({ item, selectedItem, selectedItems }) {

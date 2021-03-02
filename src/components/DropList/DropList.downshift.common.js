@@ -151,6 +151,8 @@ export function onIsOpenChangeCommon({
   }
 }
 
+// Haven't found a realiable way to test this, it's handled by downshift so no big deal
+/* istanbul ignore next */
 export function getA11ySelectionMessageCommon({
   selectedItem,
   selectedItems,

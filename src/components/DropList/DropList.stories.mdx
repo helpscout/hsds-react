@@ -75,6 +75,7 @@ Sometimes the list needs to be appended to a different DOM context due to access
       <DropList
         variant="combobox"
         items={regularItems}
+        initialIsOpen
         onOpenedStateChange={isOpen => {
           console.log('isOpen', isOpen)
         }}
@@ -140,6 +141,7 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
       }}
     >
       <DropList
+        initialSelectedItem={regularItems[1]}
         items={regularItems}
         toggler={<Button text="This is a select" />}
       />

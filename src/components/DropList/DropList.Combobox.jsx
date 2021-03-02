@@ -5,6 +5,7 @@ import {
   itemToString,
   isItemSelected,
   renderListContents,
+  setInitialSelection,
 } from './DropList.utils'
 import {
   getA11ySelectionMessageCommon,
@@ -32,11 +33,10 @@ function Combobox({
   toggleOpenedState = noop,
   withMultipleSelection = false,
 }) {
-  const initialSelectedItemsArr =
-    withMultipleSelection && initialSelectedItem != null
-      ? [].concat(initialSelectedItem)
-      : []
-
+  const initialSelectedItemsArr = setInitialSelection({
+    initialSelectedItem,
+    withMultipleSelection,
+  })
   const [inputItems, setInputItems] = useState(items)
   const [selectedItems, setSelectedItems] = useState(initialSelectedItemsArr)
   const inputEl = useRef(null)
