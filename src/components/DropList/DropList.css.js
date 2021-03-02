@@ -103,21 +103,23 @@ const SelectedBadgeUI = styled('div')`
   transition: opacity ease-in-out 0.2s, color ease-in-out 0.2s,
     background-color ease-in-out 0.2s;
 
-  .is-selected & {
+  .is-selected &,
+  .DropListItem.is-selected:hover & {
+    opacity: 1;
     color: white;
     background-color: ${getColor('blue.500')};
-    opacity: 1;
   }
 
   .DropListItem:hover & {
     opacity: 1;
+    background-color: white;
   }
 `
 
 export const SelectedBadge = ({ isSelected }) => {
   return (
     <SelectedBadgeUI className="SelectedBadge">
-      <Icon name="check" size="18" />
+      <Icon name="checkmark" size="18" />
     </SelectedBadgeUI>
   )
 }
