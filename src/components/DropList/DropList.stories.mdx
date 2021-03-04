@@ -75,7 +75,6 @@ Sometimes the list needs to be appended to a different DOM context due to access
       <DropList
         variant="combobox"
         items={regularItems}
-        initialIsOpen
         onOpenedStateChange={isOpen => {
           console.log('isOpen', isOpen)
         }}
@@ -311,6 +310,67 @@ const groupedItems = [
         }
         items={[]}
         toggler={<Button text="Click" />}
+      />
+    </div>
+  </Story>
+</Canvas>
+
+- Custom List Items: Sometimes you might need to render the list items in a different manner, for that you can use the render prop `renderCustomListItem`.
+
+```jsx
+// Signature
+function renderCustomListItem({
+  item,
+  isSelected,
+  isHighlighted,
+  withMultipleSelection,
+})
+
+// example
+<DropList
+  items={[{}, {}, {}, {}]}
+  toggler={<Button text="Click" />}
+  renderCustomListItem={({
+    item,
+    isSelected,
+    isHighlighted,
+    withMultipleSelection,
+  }) => (
+    <div className={classnames(isSelected && 'is-selected')}>
+      <strong>{item.label}</strong>
+    </div>
+  )}
+/>
+
+```
+
+<Canvas>
+  <Story name="Items: custom list items">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        items={regularItems}
+        toggler={<Button text="Click" />}
+        renderCustomListItem={({ item, isSelected }) => (
+          <div
+            style={{ padding: '5px 10px', fontSize: '14px', color: '#404996' }}
+          >
+            {isSelected ? (
+              <strong style={{ color: 'white', backgroundColor: '#404996' }}>
+                {item.label}
+              </strong>
+            ) : (
+              <span>{item.label}</span>
+            )}
+          </div>
+        )}
       />
     </div>
   </Story>
