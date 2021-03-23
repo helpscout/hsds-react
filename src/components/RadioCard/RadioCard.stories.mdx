@@ -3,6 +3,10 @@ import { boolean } from '@storybook/addon-knobs'
 import { ChoiceGroup } from '../index'
 import RadioCard from './'
 
+import MessagesFirstVisit from '@helpscout/hsds-illos/messages-first-visit'
+import MessagesManual from '@helpscout/hsds-illos/messages-manual'
+import MessagesSequence from '@helpscout/hsds-illos/messages-sequence'
+
 <Meta
   title="Components/Forms/RadioCard"
   component={RadioCard}
@@ -102,6 +106,40 @@ This component provides richer context to the of the default HTML `<input>` of t
         content="some content"
         heading="Buoy"
         value="buoy"
+      />
+    </ChoiceGroup>
+  </Story>
+</Canvas>
+
+#### With illos
+
+<Canvas>
+  <Story name="with illos">
+    <ChoiceGroup
+      align="horizontal"
+      choiceMaxWidth="160px"
+      choiceHeight="160px"
+      isResponsive
+      multiSelect={false}
+      value={['first']}
+    >
+      <RadioCard
+        icon={<MessagesFirstVisit />}
+        content="First visit"
+        value="first"
+        iconSize="72"
+      />
+      <RadioCard
+        icon={<MessagesSequence />}
+        content="Sequence"
+        value="sequence"
+        iconSize="72"
+      />
+      <RadioCard
+        icon={<MessagesManual />}
+        content="Manual"
+        value="manual"
+        iconSize="72"
       />
     </ChoiceGroup>
   </Story>

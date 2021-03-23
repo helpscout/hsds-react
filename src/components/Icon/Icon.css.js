@@ -7,7 +7,7 @@ import styled from 'styled-components'
 
 const bem = BEM('.c-Icon')
 
-const ICON_SIZES = [8, 10, 12, 13, 14, 15, 16, 18, 20, 24, 32, 48, 52]
+const ICON_SIZES = [8, 10, 12, 13, 14, 15, 16, 18, 20, 24, 32, 48, 52, 72]
 
 export const config = {
   caretSize: 13,
