@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
-import { d300, d300Effect } from '../../styles/mixins/depth.css'
+import { d300Effect, d400Effect } from '../../styles/mixins/depth.css'
 import Heading from '../Heading'
 import Text from '../Text'
 
@@ -17,16 +17,18 @@ export const RadioCardUI = styled('label')`
   min-height: ${({ withContent, withHeading }) =>
     withHeading || withContent ? 'auto' : '100px'};
   height: ${({ height }) => (height ? height : 'auto')};
-  padding: 5px 12px 15px;
+  padding: 14px 12px 14px;
   border-radius: 4px;
-  ${d300}
+  ${d300Effect}
   cursor: pointer;
+  transition: all 0.15s;
 
   &:hover {
-    ${d300Effect}
+    ${d400Effect}
     transform: translateY(-2px);
   }
 
+  &.is-checked:active,
   &.is-focused,
   &.is-focused.is-checked,
   &:focus-within,
@@ -36,7 +38,18 @@ export const RadioCardUI = styled('label')`
   }
 
   &.is-checked {
-    ${d300Effect}
+    &:hover {
+      transform: scale(1.05) translateY(-2px);
+    }
+
+    &,
+    &:active,
+    &.is-focused,
+    &.is-focused.is-checked,
+    &:focus-within,
+    &.is-checked:focus-within {
+      transform: scale(1.05);
+    }
   }
 `
 
@@ -44,13 +57,15 @@ export const IconWrapperUI = styled('div')`
   align-items: center;
   justify-content: center;
   display: flex;
-  width: 52px;
-  height: 52px;
-  margin-bottom: ${({ withContent, withHeading }) =>
-    withHeading || withContent ? '0' : '5px'};
+  width: auto;
+  height: ${({ iconSize }) => (iconSize ? `${iconSize}px` : 'auto')};
+  min-height: ${({ iconSize }) => (iconSize ? `${iconSize}px` : '52px')};
+  margin-bottom: ${({ withHeading }) => (withHeading ? '0' : '10px')};
   color: ${getColor('charcoal.200')};
+  opacity: 0.5;
 
   &.is-checked {
+    opacity: 1;
     color: ${getColor('charcoal.500')};
   }
 `

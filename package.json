@@ -86,7 +86,7 @@
   },
   "dependencies": {
     "@datepicker-react/hooks": "^2.7.0",
-    "@helpscout/hsds-illos": "1.8.0",
+    "@helpscout/hsds-illos": "1.9.0",
     "@helpscout/motion": "0.0.8",
     "@helpscout/react-utils": "^2.4.0",
     "@helpscout/wedux": "0.0.11",

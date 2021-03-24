@@ -129,6 +129,7 @@ class RadioCard extends React.PureComponent {
       isFocused,
       height,
       maxWidth,
+      iconSize,
       title,
       value,
       ...rest
@@ -153,6 +154,7 @@ class RadioCard extends React.PureComponent {
           )}
           withHeading={Boolean(heading)}
           withContent={Boolean(content)}
+          iconSize={iconSize}
         >
           {this.getIconMarkup()}
         </IconWrapperUI>
