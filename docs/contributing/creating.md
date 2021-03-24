@@ -234,7 +234,7 @@ hsds-react/
 
 ## Next
 
-Let's add some [styles](stying.md)!
+Let's add some [styles](styling.md)!
 
 ## See also
 
