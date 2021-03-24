@@ -28,6 +28,7 @@ export const RadioCardUI = styled('label')`
     transform: translateY(-2px);
   }
 
+  &.is-checked:active,
   &.is-focused,
   &.is-focused.is-checked,
   &:focus-within,
@@ -42,6 +43,7 @@ export const RadioCardUI = styled('label')`
     }
 
     &,
+    &:active,
     &.is-focused,
     &.is-focused.is-checked,
     &:focus-within,
