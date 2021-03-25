@@ -41,6 +41,24 @@ Tooltip is powered by [react-tippy](https://github.com/atomiks/tippyjs-react) an
 
 ### Stories
 
+#### Without trigger wrapper
+
+We wrap all children with a span to ensure that any children will work with Tippy.
+It requires a forwardable ref to work correctly. Having a `span` ensure that Tippy can attach events to any children.
+In some cases, we want to remove that span, the `withTriggerWrapper` will allow us to do exactly that:
+
+**Warning:** If there is multiple children or if the children is not a valid React element, we will still wrap everything with a span
+
+<Canvas>
+  <Story name="without trigger wrapper">
+    <div style={{ padding: '20%', textAlign: 'center' }}>
+      <Tooltip title="Hello" withTriggerWrapper={false}>
+        <button>No wrapping span Trigger</button>
+      </Tooltip>
+    </div>
+  </Story>
+</Canvas>
+
 #### With custom content
 
 <Canvas>

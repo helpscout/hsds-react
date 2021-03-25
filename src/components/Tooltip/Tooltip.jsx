@@ -57,6 +57,7 @@ const Tooltip = props => {
     renderContent,
     title,
     triggerOn,
+    withTriggerWrapper,
     zIndex: zIndexProp,
     ...rest
   } = props
@@ -67,7 +68,6 @@ const Tooltip = props => {
   const [isEntered, setEntered] = useState(animationDuration === 0)
 
   const scope = getCurrentScope ? getCurrentScope() : null
-  const trigger = triggerOn === 'hover' ? 'mouseenter' : triggerOn
 
   const hasRenderContent = renderContent && isFunction(renderContent)
   const hasRender = renderProp && isFunction(renderProp)
@@ -149,7 +149,7 @@ const Tooltip = props => {
     placement,
     plugins,
     render,
-    trigger,
+    trigger: triggerOn === 'hover' ? 'mouseenter' : triggerOn,
     showOnCreate: isOpen,
     ...rest,
     ...extraProps,
@@ -163,8 +163,22 @@ const Tooltip = props => {
     ) : null
   }
 
-  return (
-    <Tippy {...tippyProps}>
+  let trigger
+
+  if (
+    !withTriggerWrapper &&
+    React.isValidElement(children) &&
+    React.Children.count(children) === 1
+  ) {
+    const component = React.Children.only(children)
+    const triggerProps = {
+      className: classNames('TooltipTrigger', component.props.className),
+      'data-cy': component.props['data-cy'] || dataCy,
+      tabIndex: component.props['tabIndex'] || 0,
+    }
+    trigger = React.cloneElement(component, triggerProps)
+  } else {
+    trigger = (
       <TooltipTriggerUI
         tabIndex="0"
         display={display}
@@ -173,8 +187,10 @@ const Tooltip = props => {
       >
         {children}
       </TooltipTriggerUI>
-    </Tippy>
-  )
+    )
+  }
+
+  return <Tippy {...tippyProps}>{trigger}</Tippy>
 }
 
 Tooltip.defaultProps = {
@@ -187,6 +203,7 @@ Tooltip.defaultProps = {
   isOpen: false,
   placement: 'top',
   triggerOn: 'mouseenter focus',
+  withTriggerWrapper: true,
 }
 
 Tooltip.propTypes = {
@@ -216,6 +233,8 @@ Tooltip.propTypes = {
   triggerOn: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
+  /** Wrap the trigger with a span */
+  withTriggerWrapper: PropTypes.bool,
 }
 
 export default Tooltip
