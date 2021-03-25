@@ -31,6 +31,26 @@ describe('Children', () => {
 
     expect(el.length).toBeTruthy()
   })
+
+  test('Wraps the chidlren with a span', () => {
+    const wrapper = mount(
+      <Tooltip title="Pop">
+        <div className="ron" />
+      </Tooltip>
+    )
+
+    expect(wrapper.find('.TooltipTrigger').first().hasClass('ron')).toBeFalsy()
+  })
+
+  test('Can render directly a children', () => {
+    const wrapper = mount(
+      <Tooltip title="Pop" withTriggerWrapper={false}>
+        <div className="ron" />
+      </Tooltip>
+    )
+
+    expect(wrapper.find('.TooltipTrigger').hasClass('ron')).toBeTruthy()
+  })
 })
 
 describe('Tippy', () => {

@@ -127,6 +127,7 @@ Icon.propTypes = {
     32,
     48,
     52,
+    72,
     '8',
     '10',
     '12',
@@ -140,6 +141,7 @@ Icon.propTypes = {
     '32',
     '48',
     '52',
+    '72',
   ]),
   /** Provides a name for the component. */
   title: PropTypes.string,
