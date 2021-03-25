@@ -70,7 +70,8 @@ export const ListItemUI = styled('li')`
   padding: 0 15px;
   border-radius: 3px;
   line-height: 36px;
-  ${props => getListItemColors(props)}
+  color: ${getColor('charcoal.600')};
+  background-color: transparent;
   font-weight: ${props =>
     props.selected && props.withMultipleSelection ? '500' : '400'};
   -moz-osx-font-smoothing: ${({ selected }) =>
@@ -82,6 +83,34 @@ export const ListItemUI = styled('li')`
 
   &:last-child {
     margin-bottom: 10px;
+  }
+
+  &.is-selected,
+  &.is-highlighted.is-selected {
+    color: white;
+    background-color: ${getColor('blue.600')};
+  }
+
+  &.is-highlighted {
+    color: ${getColor('charcoal.800')};
+    background-color: ${getColor('blue.100')};
+  }
+
+  &.with-multiple-selection {
+    &.is-highlighted.is-selected {
+      color: ${getColor('blue.600')};
+      background-color: ${getColor('blue.100')};
+    }
+
+    &.is-selected {
+      color: ${getColor('blue.600')};
+      background-color: white;
+    }
+
+    &.is-highlighted {
+      color: ${getColor('charcoal.800')};
+      background-color: ${getColor('blue.100')};
+    }
   }
 `
 
@@ -149,47 +178,3 @@ export const GroupLabelUI = styled('div')`
 export const A11yTogglerUI = styled('button')`
   display: none;
 `
-
-export function getListItemColors({
-  selected,
-  highlighted,
-  withMultipleSelection,
-}) {
-  let color
-  let bgc
-
-  if (!withMultipleSelection) {
-    if (selected && highlighted) {
-      color = 'white'
-      bgc = getColor('blue.500')
-    } else if (selected) {
-      color = 'white'
-      bgc = getColor('blue.500')
-    } else if (highlighted) {
-      bgc = getColor('blue.100')
-      color = getColor('charcoal.800')
-    } else {
-      bgc = 'transparent'
-      color = getColor('charcoal.600')
-    }
-  } else {
-    if (selected && highlighted) {
-      color = getColor('blue.600')
-      bgc = getColor('blue.100')
-    } else if (selected) {
-      color = getColor('blue.600')
-      bgc = 'white'
-    } else if (highlighted) {
-      bgc = getColor('blue.100')
-      color = getColor('charcoal.800')
-    } else {
-      bgc = 'transparent'
-      color = getColor('charcoal.600')
-    }
-  }
-
-  return `
-    color: ${color};
-    background-color: ${bgc};
-  `
-}
