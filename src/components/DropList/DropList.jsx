@@ -101,9 +101,13 @@ function DropListManager({
       }
     }
 
+    // Respect the user's placement and offsets, otherwise apply defaults
     const { placement, offset } = getTogglerPlacementProps(toggler)
-    tippyProps.placement = placement
-    tippyProps.offset = offset
+
+    tippyProps.placement = tippyOptions.placement
+      ? tippyOptions.placement
+      : placement
+    tippyProps.offset = tippyOptions.offset ? tippyOptions.offset : offset
 
     Toggler = React.cloneElement(toggler, togglerProps)
   } else {
