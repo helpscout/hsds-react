@@ -16,6 +16,7 @@ export const Button = forwardRef(
       kind = 'primary',
       size = 'lg',
       onClick = noop,
+      ...rest
     },
     ref
   ) => {
@@ -33,6 +34,7 @@ export const Button = forwardRef(
         onClick={onClick}
         size={size}
         type="button"
+        {...rest}
       >
         <span>{text}</span>
       </HSDSButton>
@@ -50,6 +52,7 @@ export const NavLink = forwardRef(
       kind = 'primary',
       size = 'lg',
       onClick = noop,
+      ...rest
     },
     ref
   ) => {
@@ -69,6 +72,7 @@ export const NavLink = forwardRef(
         isActive={isActive}
         onClick={onClick}
         type="button"
+        {...rest}
       >
         <span>{text}</span>
         <Icon name="caret-down" size="14" />
@@ -181,7 +185,7 @@ const SplitButtonTogglerUI = styled(HSDSButton)`
 `
 
 export const SelectTag = forwardRef(
-  ({ isActive = false, text = '', onClick = noop }, ref) => {
+  ({ isActive = false, text = '', onClick = noop, ...rest }, ref) => {
     return (
       <SelectUI
         aria-label="toggle menu"
@@ -193,6 +197,7 @@ export const SelectTag = forwardRef(
         onClick={onClick}
         ref={ref}
         type="button"
+        {...rest}
       >
         <span>{text}</span>
         <SelectArrowsUI />
@@ -269,23 +274,26 @@ const KebabUI = styled('button')`
 
 // No need to test every single toggler if they're basically the same as Button
 /* istanbul ignore next */
-export const Kebab = forwardRef(({ isActive = false, onClick = noop }, ref) => {
-  return (
-    <KebabUI
-      aria-label="toggle menu"
-      aria-haspopup="true"
-      aria-expanded={isActive}
-      className="DropListToggler KebabToggler"
-      data-cy="DropList.KebabToggler"
-      data-testid="DropList.KebabToggler"
-      onClick={onClick}
-      ref={ref}
-      type="button"
-    >
-      <Icon name="kebab" size="24" />
-    </KebabUI>
-  )
-})
+export const Kebab = forwardRef(
+  ({ isActive = false, onClick = noop, ...rest }, ref) => {
+    return (
+      <KebabUI
+        aria-label="toggle menu"
+        aria-haspopup="true"
+        aria-expanded={isActive}
+        className="DropListToggler KebabToggler"
+        data-cy="DropList.KebabToggler"
+        data-testid="DropList.KebabToggler"
+        onClick={onClick}
+        ref={ref}
+        type="button"
+        {...rest}
+      >
+        <Icon name="kebab" size="24" />
+      </KebabUI>
+    )
+  }
+)
 
 const IconButtonUI = styled('button')`
   display: flex;
@@ -315,7 +323,7 @@ const IconButtonUI = styled('button')`
 // No need to test every single toggler if they're basically the same as Button
 /* istanbul ignore next */
 export const IconButton = forwardRef(
-  ({ isActive = false, onClick = noop, iconName = 'assign' }, ref) => {
+  ({ isActive = false, onClick = noop, iconName = 'assign', ...rest }, ref) => {
     return (
       <IconButtonUI
         aria-label="toggle menu"
@@ -327,6 +335,7 @@ export const IconButton = forwardRef(
         onClick={onClick}
         ref={ref}
         type="button"
+        {...rest}
       >
         <Icon name={iconName} size="24" />
         <Icon name="caret-down" size="14" />
