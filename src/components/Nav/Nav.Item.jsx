@@ -35,6 +35,7 @@ export class NavItem extends React.Component {
       location,
       strict,
       to,
+      'data-bypass': this.props['data-bypass'],
     }
   }
 
@@ -136,6 +137,8 @@ NavItem.propTypes = {
   innerRef: PropTypes.func,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
+  /** Data attr for bypassing external router handler. */
+  'data-bypass': PropTypes.string,
 }
 
 NavItem.defaultProps = {
