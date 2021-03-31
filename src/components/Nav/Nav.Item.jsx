@@ -138,7 +138,7 @@ NavItem.propTypes = {
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
   /** Data attr for bypassing external router handler. */
-  'data-bypass': PropTypes.string,
+  'data-bypass': PropTypes.bool,
 }
 
 NavItem.defaultProps = {
