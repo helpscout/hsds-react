@@ -11,6 +11,8 @@ import {
   SubtitleUI,
   BodyUI,
   ActionUI,
+  ImageUI,
+  ImageContainerUI,
 } from './MessageCard.css'
 import Truncate from '../Truncate'
 
@@ -81,6 +83,21 @@ export class MessageCard extends React.PureComponent {
     ) : null
   }
 
+  renderImage() {
+    const { image } = this.props
+
+    return image ? (
+      <ImageContainerUI>
+        <ImageUI
+          src={image.url}
+          alt={'Message image'}
+          width={image.width || '100%'}
+          height={image.height || 'auto'}
+        />
+      </ImageContainerUI>
+    ) : null
+  }
+
   renderAction() {
     const { action } = this.props
     return action ? (
@@ -117,6 +134,7 @@ export class MessageCard extends React.PureComponent {
           {this.renderTitle()}
           {this.renderSubtitle()}
           {this.renderBody()}
+          {this.renderImage()}
           {children}
           {this.renderAction()}
         </MessageCardUI>
@@ -164,6 +182,12 @@ MessageCard.propTypes = {
   subtitle: PropTypes.string,
   /** Title of the Message. */
   title: PropTypes.string,
+  /** Definition of the Message image */
+  image: PropTypes.shape({
+    url: PropTypes.string,
+    width: PropTypes.string,
+    height: PropTypes.string,
+  }),
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
 }

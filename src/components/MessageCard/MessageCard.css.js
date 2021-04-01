@@ -6,6 +6,7 @@ import { d600Effect } from '../../styles/mixins/depth.css'
 import Card from '../Card'
 import Button from '../Button'
 import Heading from '../Heading'
+import Image from '../Image'
 const fontFamily = makeFontFamily('Barlow')
 
 export const MessageCardUI = styled(Card)`
@@ -266,4 +267,16 @@ export const ActionButtonUI = styled(Button)`
   font-family: ${FONT_FAMILY};
   height: 54px !important;
   line-height: normal !important;
+`
+
+export const ImageUI = styled(Image)`
+  border-radius: 3px;
+`
+
+export const ImageContainerUI = styled('div')`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+  padding: 0 10px;
 `
