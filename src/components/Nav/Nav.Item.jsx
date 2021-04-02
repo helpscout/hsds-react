@@ -26,7 +26,15 @@ export class NavItem extends React.Component {
   }
 
   getLinkProps() {
-    const { disabled, exact, isActive, location, strict, to } = this.props
+    const {
+      disabled,
+      exact,
+      isActive,
+      location,
+      strict,
+      to,
+      'data-bypass': dataBypass,
+    } = this.props
 
     return {
       disabled,
@@ -35,7 +43,7 @@ export class NavItem extends React.Component {
       location,
       strict,
       to,
-      'data-bypass': this.props['data-bypass'],
+      'data-bypass': dataBypass,
     }
   }
 
