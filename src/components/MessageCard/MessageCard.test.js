@@ -204,6 +204,26 @@ describe('image', () => {
     expect(image.prop('width')).toEqual('100%')
     expect(image.prop('height')).toEqual('auto')
   })
+
+  test('Sets provided alt text', () => {
+    const wrapper = mount(
+      <MessageCard
+        image={{ url: 'https://path.to/image.png', altText: 'Alt text' }}
+      />
+    )
+    const image = wrapper.find('img')
+
+    expect(image.prop('alt')).toEqual('Alt text')
+  })
+
+  test('Sets default alt text', () => {
+    const wrapper = mount(
+      <MessageCard image={{ url: 'https://path.to/image.png' }} />
+    )
+    const image = wrapper.find('img')
+
+    expect(image.prop('alt')).toEqual('Message image')
+  })
 })
 
 describe('Action', () => {

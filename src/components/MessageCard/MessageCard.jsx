@@ -90,7 +90,7 @@ export class MessageCard extends React.PureComponent {
       <ImageContainerUI>
         <ImageUI
           src={image.url}
-          alt={'Message image'}
+          alt={image.altText || 'Message image'}
           width={image.width || '100%'}
           height={image.height || 'auto'}
         />
@@ -184,9 +184,10 @@ MessageCard.propTypes = {
   title: PropTypes.string,
   /** Definition of the Message image */
   image: PropTypes.shape({
-    url: PropTypes.string,
+    url: PropTypes.string.isRequired,
     width: PropTypes.string,
     height: PropTypes.string,
+    altText: PropTypes.string,
   }),
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
