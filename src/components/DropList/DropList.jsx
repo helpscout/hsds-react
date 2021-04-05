@@ -29,6 +29,7 @@ function DropListManager({
   initialIsOpen = false,
   initialSelectedItem = null,
   items = [],
+  onMenuBlur = noop,
   onOpenedStateChange = noop,
   onSelect = noop,
   renderCustomListItem = null,
@@ -161,6 +162,7 @@ function DropListManager({
             initialSelectedItem={initialSelectedItem}
             isOpen={isOpen}
             items={parsedItems}
+            onMenuBlur={onMenuBlur}
             onSelectionChange={onSelectionChange}
             renderCustomListItem={renderCustomListItem}
             toggleOpenedState={toggleOpenedState}
@@ -215,6 +217,8 @@ DropListManager.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.string, itemShape, dividerShape, groupShape])
   ),
+  /** Callback that fires when the menu loses focus */
+  onMenuBlur: PropTypes.func,
   /** Callback that fires whenever the DropList opens and closes */
   onOpenedStateChange: PropTypes.func,
   /** Callback that fires whenever the selection in the DropList changes */

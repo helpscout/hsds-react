@@ -7,6 +7,7 @@ const { SELECT, COMBOBOX } = VARIANTS
 
 export function onStateChangeCommon({
   changes,
+  onMenuBlur,
   onSelectionChange,
   selectItem,
   selectedItems,
@@ -53,6 +54,10 @@ export function onStateChangeCommon({
         }
       }
 
+      break
+
+    case `${SELECT}.${useSelect.stateChangeTypes.MenuBlur}`:
+      onMenuBlur()
       break
 
     default:
@@ -144,6 +149,10 @@ export function onIsOpenChangeCommon({
 
     case `${COMBOBOX}.${useCombobox.stateChangeTypes.InputBlur}`:
       toggleOpenedState(false, OPEN_ACTION_ORIGIN.INPUT_BLUR)
+      break
+
+    case `${SELECT}.${useSelect.stateChangeTypes.MenuBlur}`:
+      toggleOpenedState(false)
       break
 
     default:

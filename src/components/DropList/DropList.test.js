@@ -43,12 +43,6 @@ describe('Render', () => {
         expect(queryByText(beatle)).toBeInTheDocument()
       })
     })
-
-    user.click(toggler)
-
-    await waitFor(() => {
-      expect(queryByRole('listbox')).not.toBeInTheDocument()
-    })
   })
 
   test('should render a menu list with object items that include a label', async () => {
@@ -70,12 +64,6 @@ describe('Render', () => {
       regularItems.forEach(item => {
         expect(queryByText(item.label)).toBeInTheDocument()
       })
-    })
-
-    user.click(toggler)
-
-    await waitFor(() => {
-      expect(queryByRole('listbox')).not.toBeInTheDocument()
     })
   })
 
@@ -145,12 +133,6 @@ describe('Render', () => {
       expect(toggler.getAttribute('aria-expanded')).toBe('true')
       expect(queryByRole('listbox')).toBeInTheDocument()
       expect(queryByText('No items')).toBeInTheDocument()
-    })
-
-    user.click(toggler)
-
-    await waitFor(() => {
-      expect(queryByRole('listbox')).not.toBeInTheDocument()
     })
   })
 
@@ -293,6 +275,25 @@ describe('Menu', () => {
 
     await waitFor(() => {
       expect(queryByRole('listbox')).toBeInTheDocument()
+    })
+  })
+
+  test('should close on menu blur', async () => {
+    const onMenuBlur = jest.fn()
+    const { getByRole } = render(
+      <DropList
+        items={beatles}
+        initialIsOpen
+        onMenuBlur={onMenuBlur}
+        toggler={<Button text="Click" />}
+      />
+    )
+
+    user.tab()
+
+    await waitFor(() => {
+      expect(getByRole('button').getAttribute('aria-expanded')).toBe('false')
+      expect(onMenuBlur).toHaveBeenCalled()
     })
   })
 
@@ -463,12 +464,6 @@ describe('Togglers', () => {
 
     await waitFor(() => {
       expect(toggler.classList.contains('is-active')).toBeTruthy()
-    })
-
-    user.click(toggler)
-
-    await waitFor(() => {
-      expect(toggler.classList.contains('is-active')).toBeFalsy()
     })
   })
 

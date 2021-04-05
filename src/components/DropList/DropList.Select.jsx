@@ -24,6 +24,7 @@ function Select({
   customEmptyList = null,
   isOpen = false,
   items = [],
+  onMenuBlur = noop,
   onSelectionChange = noop,
   renderCustomListItem = null,
   toggleOpenedState = noop,
@@ -67,6 +68,7 @@ function Select({
     onStateChange(changes) {
       onStateChangeCommon({
         changes,
+        onMenuBlur,
         onSelectionChange,
         selectItem,
         selectedItems,
