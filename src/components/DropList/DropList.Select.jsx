@@ -1,16 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelect } from 'downshift'
 import { noop } from '../../utilities/other'
 import {
   itemToString,
   isItemSelected,
   renderListContents,
-  setInitialSelection,
 } from './DropList.utils'
 import {
   getA11ySelectionMessageCommon,
   onIsOpenChangeCommon,
-  onStateChangeCommon,
   stateReducerCommon,
 } from './DropList.downshift.common'
 import { A11yTogglerUI, DropListWrapperUI, MenuListUI } from './DropList.css'
@@ -20,34 +18,28 @@ import { VARIANTS } from './DropList.constants'
 function Select({
   closeOnSelection = true,
   'data-cy': dataCy = `DropList.${VARIANTS.SELECT}`,
-  initialSelectedItem,
+  selectedItem = null,
+  selectedItems,
   customEmptyList = null,
   isOpen = false,
   items = [],
   onMenuBlur = noop,
-  onSelectionChange = noop,
+  handleSelectedItemChange = noop,
   renderCustomListItem = null,
   toggleOpenedState = noop,
   withMultipleSelection = false,
 }) {
-  const initialSelectedItemsArr = setInitialSelection({
-    initialSelectedItem,
-    withMultipleSelection,
-  })
-  const [selectedItems, setSelectedItems] = useState(initialSelectedItemsArr)
-
   const {
     getToggleButtonProps,
     getItemProps,
     getMenuProps,
     highlightedIndex,
-    selectItem,
-    selectedItem,
   } = useSelect({
     initialIsOpen: isOpen,
     isOpen,
     items,
     itemToString,
+    selectedItem,
 
     getA11ySelectionMessage: ({ selectedItem }) => {
       return getA11ySelectionMessageCommon({
@@ -65,17 +57,17 @@ function Select({
       })
     },
 
-    onStateChange(changes) {
-      onStateChangeCommon({
-        changes,
-        onMenuBlur,
-        onSelectionChange,
-        selectItem,
-        selectedItems,
-        setSelectedItems,
-        type: `${VARIANTS.SELECT}.${changes.type}`,
-        withMultipleSelection,
-      })
+    onSelectedItemChange: handleSelectedItemChange,
+
+    onStateChange({ type }) {
+      switch (type) {
+        case useSelect.stateChangeTypes.MenuBlur:
+          onMenuBlur()
+          break
+
+        default:
+          break
+      }
     },
 
     stateReducer(state, actionAndChanges) {

@@ -140,7 +140,15 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
       }}
     >
       <DropList
-        initialSelectedItem={regularItems[1]}
+        selection={select(
+          'Selection',
+          {
+            first: regularItems[0],
+            second: regularItems[1],
+            third: regularItems[2],
+          },
+          regularItems[1]
+        )}
         items={regularItems}
         toggler={<Button text="This is a select" />}
       />
@@ -161,7 +169,15 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
     >
       <DropList
         variant="combobox"
-        items={regularItems}
+        items={select(
+          'Items',
+          {
+            regular: regularItems,
+            withDivider: itemsWithDivider,
+            grouped: simpleGroupedItems,
+          },
+          regularItems
+        )}
         toggler={<Button text="This is a combobox" />}
       />
     </div>
@@ -392,11 +408,21 @@ Depending on your use case, you might want to set `closeOnSelection = false` whe
       }}
     >
       <DropList
+        variant="combobox"
         items={regularItems}
         closeOnSelection={false}
         onSelect={selection => {
           console.log('selection', selection)
         }}
+        selection={select(
+          'Selection',
+          {
+            first: [regularItems[0], regularItems[1]],
+            second: [regularItems[1]],
+            third: [regularItems[1], regularItems[2]],
+          },
+          [regularItems[0], regularItems[1]]
+        )}
         toggler={<Button text="Submit" />}
         withMultipleSelection
       />

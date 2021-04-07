@@ -41,17 +41,13 @@ export function itemToString(item) {
   return item
 }
 
-export function setInitialSelection({
-  withMultipleSelection,
-  initialSelectedItem,
-}) {
-  if (withMultipleSelection && initialSelectedItem != null) {
-    return [].concat(initialSelectedItem)
+export function getInitialSelection({ withMultipleSelection, selection }) {
+  if (withMultipleSelection) {
+    return selection != null ? [].concat(selection) : []
   }
-  if (initialSelectedItem != null) {
-    return [initialSelectedItem]
+  if (selection != null) {
+    return selection != null ? selection : null
   }
-  return []
 }
 
 export function isItemSelected({ item, selectedItem, selectedItems }) {

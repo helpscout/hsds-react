@@ -1,14 +1,18 @@
 import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
+import useDeepCompareEffect from 'use-deep-compare-effect'
 import Tippy from '@tippyjs/react/headless'
 import { noop } from '../../utilities/other'
 import { GlobalContext } from '../HSDS/Provider'
 import { OPEN_ACTION_ORIGIN, VARIANTS } from './DropList.constants'
 import {
   flattenListItems,
+  getInitialSelection,
   itemToString,
   isTogglerOfType,
   useWarnings,
+  findItemInArray,
+  removeItemFromArray,
 } from './DropList.utils'
 import {
   Button,
@@ -27,7 +31,7 @@ function DropListManager({
   customEmptyList = null,
   'data-cy': dataCy,
   initialIsOpen = false,
-  initialSelectedItem = null,
+  selection = null,
   items = [],
   onMenuBlur = noop,
   onOpenedStateChange = noop,
@@ -38,18 +42,66 @@ function DropListManager({
   variant = VARIANTS.SELECT,
   withMultipleSelection = false,
 }) {
-  const parsedItems = flattenListItems(items)
   const [isOpen, setOpenedState] = useState(initialIsOpen)
   const [openOrigin, setOpenOrigin] = useState('')
-  const [selectedItem, setSelectedItem] = useState(initialSelectedItem)
   const { getCurrentScope } = useContext(GlobalContext) || {}
   const scope = getCurrentScope ? getCurrentScope() : null
+  const parsedSelection = getInitialSelection({
+    withMultipleSelection,
+    selection,
+  })
+
+  const [selectedItem, setSelectedItem] = useState(parsedSelection)
+  const [selectedItems, setSelectedItems] = useState(
+    withMultipleSelection ? parsedSelection : []
+  )
+  const [parsedItems, setParsedItems] = useState(flattenListItems(items))
+
+  useDeepCompareEffect(() => {
+    if (withMultipleSelection) {
+      setSelectedItems(parsedSelection)
+    } else {
+      setSelectedItem(parsedSelection)
+    }
+  }, [{ state: parsedSelection }, withMultipleSelection])
+
+  useDeepCompareEffect(() => {
+    setParsedItems(flattenListItems(items))
+  }, [items])
 
   useWarnings({ toggler, withMultipleSelection })
 
-  function onSelectionChange(selection) {
-    onSelect(selection)
-    setSelectedItem(selection)
+  function handleSelectedItemChange({ selectedItem }) {
+    setSelectedItem(selectedItem || null)
+
+    if (withMultipleSelection) {
+      if (selectedItem) {
+        const { remove } = selectedItem
+        let updatedSelection = []
+
+        if (!Boolean(remove)) {
+          updatedSelection = selectedItems.concat(selectedItem)
+        } else {
+          const itemToRemove = findItemInArray({
+            arr: selectedItems,
+            item: selectedItem,
+          })
+
+          if (Boolean(itemToRemove)) {
+            updatedSelection = removeItemFromArray({
+              arr: selectedItems,
+              item: itemToRemove,
+            })
+          }
+        }
+
+        setSelectedItems(updatedSelection)
+        handleSelectedItemChange(updatedSelection)
+        onSelect(updatedSelection)
+      }
+    } else {
+      onSelect(selectedItem)
+    }
   }
 
   function toggleOpenedState(isOpen, origin = '') {
@@ -159,12 +211,13 @@ function DropListManager({
             closeOnSelection={closeOnSelection}
             customEmptyList={customEmptyList}
             data-cy={dataCy}
-            initialSelectedItem={initialSelectedItem}
+            handleSelectedItemChange={handleSelectedItemChange}
             isOpen={isOpen}
             items={parsedItems}
             onMenuBlur={onMenuBlur}
-            onSelectionChange={onSelectionChange}
             renderCustomListItem={renderCustomListItem}
+            selectedItem={selectedItem}
+            selectedItems={selectedItems}
             toggleOpenedState={toggleOpenedState}
             withMultipleSelection={
               isTogglerOfType(toggler, SelectTag)
@@ -208,12 +261,13 @@ DropListManager.propTypes = {
   'data-cy': PropTypes.string,
   /** Should the DropList be open on mount */
   initialIsOpen: PropTypes.bool,
-  /** An item or array of items to be selected on initial mount */
-  initialSelectedItem: PropTypes.oneOfType([
+  /** An item or array of items to be selected */
+  selection: PropTypes.oneOfType([
     PropTypes.string,
     itemShape,
     PropTypes.arrayOf(itemShape),
   ]),
+  /** Items to populate the list with */
   items: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.string, itemShape, dividerShape, groupShape])
   ),

@@ -1,69 +1,9 @@
 import { useSelect, useCombobox } from 'downshift'
 import { isObject } from '../../utilities/is'
-import { findItemInArray, removeItemFromArray } from './DropList.utils'
+import { findItemInArray } from './DropList.utils'
 import { OPEN_ACTION_ORIGIN, VARIANTS } from './DropList.constants'
 
 const { SELECT, COMBOBOX } = VARIANTS
-
-export function onStateChangeCommon({
-  changes,
-  onMenuBlur,
-  onSelectionChange,
-  selectItem,
-  selectedItems,
-  setSelectedItems,
-  type,
-  withMultipleSelection,
-}) {
-  const { selectedItem } = changes
-
-  switch (type) {
-    case `${COMBOBOX}.${useCombobox.stateChangeTypes.InputKeyDownEnter}`:
-    case `${COMBOBOX}.${useCombobox.stateChangeTypes.ItemClick}`:
-    case `${SELECT}.${useSelect.stateChangeTypes.MenuKeyDownEnter}`:
-    case `${SELECT}.${useSelect.stateChangeTypes.ItemClick}`:
-      if (!withMultipleSelection) {
-        onSelectionChange(Boolean(selectedItem) ? selectedItem : null)
-        !Boolean(selectedItem) && selectItem(null)
-      } else {
-        if (selectedItem) {
-          const { remove } = selectedItem
-
-          if (!Boolean(remove)) {
-            const added = selectedItems.concat(selectedItem)
-
-            setSelectedItems(added)
-            onSelectionChange(added)
-          } else {
-            const itemToRemove = findItemInArray({
-              arr: selectedItems,
-              item: changes.selectedItem,
-            })
-
-            if (Boolean(itemToRemove)) {
-              const removed = removeItemFromArray({
-                arr: selectedItems,
-                item: itemToRemove,
-              })
-              setSelectedItems(removed)
-              onSelectionChange(removed)
-
-              selectedItems.length === 1 && selectItem(null)
-            }
-          }
-        }
-      }
-
-      break
-
-    case `${SELECT}.${useSelect.stateChangeTypes.MenuBlur}`:
-      onMenuBlur()
-      break
-
-    default:
-      break
-  }
-}
 
 export function stateReducerCommon({
   changes,
@@ -87,6 +27,7 @@ export function stateReducerCommon({
         inputValue: '',
       }
 
+    case `${COMBOBOX}.${useCombobox.stateChangeTypes.ControlledPropUpdatedSelectedItem}`:
     case `${COMBOBOX}.${useCombobox.stateChangeTypes.InputKeyDownEnter}`:
     case `${COMBOBOX}.${useCombobox.stateChangeTypes.ItemClick}`:
     case `${SELECT}.${useSelect.stateChangeTypes.MenuKeyDownEnter}`:
@@ -148,11 +89,8 @@ export function onIsOpenChangeCommon({
       break
 
     case `${COMBOBOX}.${useCombobox.stateChangeTypes.InputBlur}`:
-      toggleOpenedState(false, OPEN_ACTION_ORIGIN.INPUT_BLUR)
-      break
-
     case `${SELECT}.${useSelect.stateChangeTypes.MenuBlur}`:
-      toggleOpenedState(false)
+      toggleOpenedState(false, OPEN_ACTION_ORIGIN.INPUT_BLUR)
       break
 
     default:

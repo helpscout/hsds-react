@@ -43,6 +43,12 @@ describe('Render', () => {
         expect(queryByText(beatle)).toBeInTheDocument()
       })
     })
+
+    user.click(toggler)
+
+    await waitFor(() => {
+      expect(queryByRole('listbox')).not.toBeInTheDocument()
+    })
   })
 
   test('should render a menu list with object items that include a label', async () => {
@@ -64,6 +70,12 @@ describe('Render', () => {
       regularItems.forEach(item => {
         expect(queryByText(item.label)).toBeInTheDocument()
       })
+    })
+
+    user.click(toggler)
+
+    await waitFor(() => {
+      expect(queryByRole('listbox')).not.toBeInTheDocument()
     })
   })
 
@@ -133,6 +145,12 @@ describe('Render', () => {
       expect(toggler.getAttribute('aria-expanded')).toBe('true')
       expect(queryByRole('listbox')).toBeInTheDocument()
       expect(queryByText('No items')).toBeInTheDocument()
+    })
+
+    user.click(toggler)
+
+    await waitFor(() => {
+      expect(queryByRole('listbox')).not.toBeInTheDocument()
     })
   })
 
@@ -465,6 +483,12 @@ describe('Togglers', () => {
     await waitFor(() => {
       expect(toggler.classList.contains('is-active')).toBeTruthy()
     })
+
+    user.click(toggler)
+
+    await waitFor(() => {
+      expect(toggler.classList.contains('is-active')).toBeFalsy()
+    })
   })
 
   test('Should pass the selected item text to the SelectTag toggler', async () => {
@@ -716,7 +740,7 @@ describe('Selection', () => {
         items={beatles}
         toggler={<Button text="Button Toggler" />}
         initialIsOpen
-        initialSelectedItem="Ringo"
+        selection="Ringo"
       />
     )
 
@@ -735,7 +759,7 @@ describe('Selection', () => {
         items={regularItems}
         toggler={<Button text="Button Toggler" />}
         initialIsOpen
-        initialSelectedItem={regularItems[2]}
+        selection={regularItems[2]}
       />
     )
 
@@ -756,7 +780,7 @@ describe('Selection', () => {
         items={regularItems}
         toggler={<Button text="Button Toggler" />}
         initialIsOpen
-        initialSelectedItem={[regularItems[0], regularItems[2]]}
+        selection={[regularItems[0], regularItems[2]]}
         withMultipleSelection
       />
     )

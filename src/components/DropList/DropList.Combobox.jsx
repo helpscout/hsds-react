@@ -1,16 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useCombobox } from 'downshift'
+import useDeepCompareEffect from 'use-deep-compare-effect'
 import { noop } from '../../utilities/other'
 import {
   itemToString,
   isItemSelected,
   renderListContents,
-  setInitialSelection,
 } from './DropList.utils'
 import {
   getA11ySelectionMessageCommon,
   onIsOpenChangeCommon,
-  onStateChangeCommon,
   stateReducerCommon,
 } from './DropList.downshift.common'
 import {
@@ -25,20 +24,16 @@ function Combobox({
   closeOnSelection = true,
   customEmptyList = null,
   'data-cy': dataCy = `DropList.${VARIANTS.COMBOBOX}`,
-  initialSelectedItem,
+  selectedItem = null,
+  selectedItems,
   isOpen = false,
   items = [],
-  onSelectionChange = noop,
+  handleSelectedItemChange = noop,
   renderCustomListItem = null,
   toggleOpenedState = noop,
   withMultipleSelection = false,
 }) {
-  const initialSelectedItemsArr = setInitialSelection({
-    initialSelectedItem,
-    withMultipleSelection,
-  })
   const [inputItems, setInputItems] = useState(items)
-  const [selectedItems, setSelectedItems] = useState(initialSelectedItemsArr)
   const inputEl = useRef(null)
 
   const {
@@ -48,15 +43,13 @@ function Combobox({
     getMenuProps,
     highlightedIndex,
     inputValue,
-    selectItem,
-    selectedItem,
   } = useCombobox({
     initialInputValue: '',
     initialIsOpen: isOpen,
-    initialSelectedItem,
     isOpen,
     items: inputItems,
     itemToString,
+    selectedItem,
 
     getA11ySelectionMessage: ({ selectedItem }) => {
       return getA11ySelectionMessageCommon({
@@ -82,17 +75,7 @@ function Combobox({
       })
     },
 
-    onStateChange(changes) {
-      onStateChangeCommon({
-        changes,
-        onSelectionChange,
-        selectItem,
-        selectedItems,
-        setSelectedItems,
-        type: `${VARIANTS.COMBOBOX}.${changes.type}`,
-        withMultipleSelection,
-      })
-    },
+    onSelectedItemChange: handleSelectedItemChange,
 
     stateReducer(state, actionAndChanges) {
       const { changes, type } = actionAndChanges
@@ -111,6 +94,10 @@ function Combobox({
   useEffect(() => {
     isOpen && inputEl.current.focus()
   }, [isOpen])
+
+  useDeepCompareEffect(() => {
+    setInputItems(items)
+  }, [items])
 
   function renderListItem(item, index) {
     const itemProps = {
