@@ -346,51 +346,51 @@ export const IconButton = forwardRef(
 
 // No need to test this
 /* istanbul ignore next */
-export function getTogglerPlacementProps(toggler) {
+export function getTogglerPlacementProps(toggler, { placement, offset }) {
   if (toggler.type === Button) {
     return {
-      placement: 'bottom-end',
-      offset: [0, 5],
+      placement: placement || 'bottom-end',
+      offset: offset || [0, 5],
     }
   }
 
   if (toggler.type === NavLink) {
     return {
-      placement: 'bottom',
-      offset: [0, -10],
+      placement: placement || 'bottom',
+      offset: offset || [0, -10],
     }
   }
 
   if (toggler.type === Kebab) {
     return {
-      placement: 'bottom-end',
-      offset: [0, 3],
+      placement: placement || 'bottom-end',
+      offset: offset || [0, 3],
     }
   }
 
   if (toggler.type === SplitButton) {
     return {
-      placement: 'bottom-end',
-      offset: [0, 5],
+      placement: placement || 'bottom-end',
+      offset: offset || [0, 5],
     }
   }
 
   if (toggler.type === IconButton) {
     return {
-      placement: 'bottom-start',
-      offset: [-5, 0],
+      placement: placement || 'bottom-start',
+      offset: offset || [-5, 0],
     }
   }
 
   if (toggler.type === SelectTag) {
     return {
-      placement: 'bottom-start',
-      offset: [0, 5],
+      placement: placement || 'bottom-start',
+      offset: offset || [0, 5],
     }
   }
 
   return {
-    placement: 'bottom-start',
-    offset: [0, 0],
+    placement: placement || 'bottom-start',
+    offset: offset || [0, 0],
   }
 }

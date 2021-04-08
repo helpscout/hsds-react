@@ -123,9 +123,8 @@ function DropListManager({
     unmountOnExit: false,
   }
   const tippyProps = {
-    interactive: true,
-    placement: 'bottom-start',
     ...tippyOptions,
+    interactive: true,
   }
   let Toggler
 
@@ -143,6 +142,7 @@ function DropListManager({
         if (openOrigin !== OPEN_ACTION_ORIGIN.INPUT_BLUR) {
           toggleOpenedState(!isOpen)
         }
+
         setOpenOrigin('')
       },
       isActive: isOpen,
@@ -156,13 +156,13 @@ function DropListManager({
       }
     }
 
-    // Respect the user's placement and offsets, otherwise apply defaults
-    const { placement, offset } = getTogglerPlacementProps(toggler)
+    const { placement, offset } = getTogglerPlacementProps(
+      toggler,
+      tippyOptions
+    )
 
-    tippyProps.placement = tippyOptions.placement
-      ? tippyOptions.placement
-      : placement
-    tippyProps.offset = tippyOptions.offset ? tippyOptions.offset : offset
+    tippyProps.placement = placement
+    tippyProps.offset = offset
 
     Toggler = React.cloneElement(toggler, togglerProps)
   } else {
