@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
-import { FONT_FAMILY as AKTIV_FONT_FAMILY } from '../HSDS/GlobalStyle'
 import Icon from '../Icon'
 
 export const DropListWrapperUI = styled('div')`
@@ -12,7 +11,7 @@ export const DropListWrapperUI = styled('div')`
   border: 1px solid ${getColor('grey.600')};
   border-radius: 4px;
   box-shadow: 0px 1px 7px rgba(0, 0, 0, 0.08);
-  font-family: ${AKTIV_FONT_FAMILY};
+  font-family: var(--HSDSGlobalFontFamily);
   font-size: 13px;
   color: ${getColor('grey.600')};
 
@@ -47,7 +46,7 @@ export const InputSearchHolderUI = styled('div')`
     width: 100%;
     height: 38px;
     padding: 0 15px;
-    font-family: ${AKTIV_FONT_FAMILY};
+    font-family: var(--HSDSGlobalFontFamily);
     font-size: 13px;
     color: ${getColor('charcoal.600')};
     box-shadow: inset 0 0 0 1px ${getColor('grey.600')};

@@ -2,7 +2,6 @@ import React, { forwardRef } from 'react'
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import { classNames } from '../../utilities/classNames'
-import { FONT_FAMILY as AKTIV_FONT_FAMILY } from '../HSDS/GlobalStyle'
 import { noop } from '../../utilities/other'
 import ControlGroup from '../ControlGroup'
 import HSDSButton from '../Button'
@@ -89,7 +88,7 @@ const NavLinkTogglerUI = styled('button')`
   padding: 0 18px;
   background: transparent;
   border: 0;
-  font-family: ${AKTIV_FONT_FAMILY};
+  font-family: var(--HSDSGlobalFontFamily);
   font-size: 14px;
   color: ${getColor('blue.300')};
   cursor: pointer;
@@ -219,7 +218,7 @@ const SelectUI = styled('button')`
   box-shadow: inset 0 0 0 1px ${getColor('grey.800')};
   box-sizing: border-box;
   border-radius: 3px;
-  font-family: ${AKTIV_FONT_FAMILY};
+  font-family: var(--HSDSGlobalFontFamily);
   font-size: 13px;
   color: ${getColor('charcoal.600')};
 
