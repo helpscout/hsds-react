@@ -79,6 +79,37 @@ describe('Render', () => {
     })
   })
 
+  test('should render a menu list with object items that include a value and no label', async () => {
+    const regularValueItems = regularItems.map(item => {
+      return { value: item.value }
+    })
+    const { getByRole, queryByText, queryByRole } = render(
+      <DropList
+        items={regularValueItems}
+        toggler={<Button text="Button Toggler" />}
+      />
+    )
+    const toggler = getByRole('button')
+
+    expect(queryByRole('listbox')).not.toBeInTheDocument()
+
+    user.click(toggler)
+
+    await waitFor(() => {
+      expect(queryByRole('listbox')).toBeInTheDocument()
+
+      regularValueItems.forEach(item => {
+        expect(queryByText(item.value)).toBeInTheDocument()
+      })
+    })
+
+    user.click(toggler)
+
+    await waitFor(() => {
+      expect(queryByRole('listbox')).not.toBeInTheDocument()
+    })
+  })
+
   test('should render a menu list with dividers', async () => {
     const { container, getByRole, queryByRole } = render(
       <DropList

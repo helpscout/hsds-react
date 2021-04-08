@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { isDefined, isObject } from '../../utilities/is'
+import { isDefined, isObject, isString } from '../../utilities/is'
 import { ITEM_TYPES } from './DropList.constants'
 import { SelectTag } from './DropList.togglers'
 import { ListItemUI, EmptyListUI } from './DropList.css'
@@ -37,7 +37,7 @@ export function isTogglerOfType(toggler, type) {
 
 export function itemToString(item) {
   if (item == null) return ''
-  if (isObject(item)) return item.label || ''
+  if (isObject(item)) return item[getItemContentKeyName(item)]
   return item
 }
 
@@ -54,18 +54,29 @@ export function isItemSelected({ item, selectedItem, selectedItems }) {
   if (selectedItem == null && selectedItems.length === 0) return false
 
   if (isObject(item)) {
-    const { label } = item
+    const itemContentKey = getItemContentKeyName(item)
+    const itemContent = item[itemContentKey]
 
     if (selectedItem != null && selectedItems.length === 0) {
-      const { label: selectedItemLabel } = selectedItem
+      const selectedItemContentKey = getItemContentKeyName(selectedItem)
+      const selectedItemContent = selectedItem[selectedItemContentKey]
 
-      return selectedItemLabel === label
+      return selectedItemContent === itemContent
     }
 
-    return Boolean(selectedItems.find(item => item.label === label))
+    return Boolean(
+      selectedItems.find(item => item[itemContentKey] === itemContent)
+    )
   }
 
   return selectedItem === item || selectedItems.includes(item)
+}
+
+export function getItemContentKeyName(item) {
+  if (objectHasKey(item, 'label')) return 'label'
+  if (objectHasKey(item, 'value')) return 'value'
+
+  return undefined
 }
 
 export function objectHasKey(obj, key) {
@@ -112,15 +123,20 @@ export function isItemAGroupLabel(item) {
 
 export function flattenListItems(listItems) {
   return listItems.reduce((accumulator, listItem) => {
+    const contentKey = getItemContentKeyName(listItem)
+
     if (isItemAGroup(listItem)) {
       const itemsInGroup = listItem.items.map(item => ({
         ...item,
-        group: listItem.label,
+        group: listItem[contentKey],
       }))
 
       return itemsInGroup.length > 0
         ? accumulator
-            .concat({ type: ITEM_TYPES.GROUP_LABEL, label: listItem.label })
+            .concat({
+              type: ITEM_TYPES.GROUP_LABEL,
+              [contentKey]: listItem[contentKey],
+            })
             .concat(itemsInGroup)
         : accumulator
     }

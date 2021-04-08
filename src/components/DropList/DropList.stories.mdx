@@ -189,11 +189,13 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
 DropList accepts an array of items, these items can be:
 
 - Strings: `['a', 'b', 'c']`
-- Objects (only the label is required):
+- Objects
+  - A `label` or `value` field is required, if both present `label` takes precedence in all calculations (also for rendering if you need to render something else, use `renderCustomListItem`)
 
 ```js
-const ItemObjectShape = PropTypes.shape({
-  label: PropTypes.string.isRequired,
+const itemShape = PropTypes.shape({
+  label: requiredItemPropsCheck,
+  value: requiredItemPropsCheck,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 })
 ```
@@ -226,7 +228,7 @@ const items = [
   </Story>
 </Canvas>
 
-- Groups: Add a `type = group` property (don't forget to add `label` to the group) and nest items to an object to create a group:
+- Groups: Add a `type = group` property (don't forget to add `label` or `value` to the group) and nest items to an object to create a group:
 
 ```js
 const groupedItems = [

@@ -1,7 +1,11 @@
 import React, { forwardRef } from 'react'
 import { classNames } from '../../utilities/classNames'
 import { isFunction, isObject, isString } from '../../utilities/is'
-import { isItemADivider, isItemAGroupLabel } from './DropList.utils'
+import {
+  getItemContentKeyName,
+  isItemADivider,
+  isItemAGroupLabel,
+} from './DropList.utils'
 import {
   DividerUI,
   GroupLabelUI,
@@ -28,13 +32,15 @@ const ListItem = forwardRef(
       )
     }
 
+    const contentKey = getItemContentKeyName(item)
+
     if (isItemAGroupLabel(item)) {
       return (
         <GroupLabelUI
           className="DropListItem--groupLabel"
           key={`group_label_${index}`}
         >
-          {item.label}
+          {item[contentKey]}
         </GroupLabelUI>
       )
     }
@@ -75,7 +81,7 @@ const ListItem = forwardRef(
         withMultipleSelection={withMultipleSelection}
         {...itemProps}
       >
-        <span>{isObject(item) ? item.label : item}</span>
+        <span>{isObject(item) ? item[contentKey] : item}</span>
         {withMultipleSelection ? (
           <SelectedBadge isSelected={isSelected} />
         ) : null}
@@ -85,8 +91,10 @@ const ListItem = forwardRef(
 )
 
 export function generateListItemKey(item, index) {
+  const contentKey = getItemContentKeyName(item)
+
   return isObject(item)
-    ? item.id || `${item.label}_${index}`
+    ? item.id || `${item[contentKey]}_${index}`
     : `${item}_${index}`
 }
 

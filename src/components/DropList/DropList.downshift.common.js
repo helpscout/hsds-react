@@ -1,6 +1,6 @@
 import { useSelect, useCombobox } from 'downshift'
 import { isObject } from '../../utilities/is'
-import { findItemInArray } from './DropList.utils'
+import { findItemInArray, getItemContentKeyName } from './DropList.utils'
 import { OPEN_ACTION_ORIGIN, VARIANTS } from './DropList.constants'
 
 const { SELECT, COMBOBOX } = VARIANTS
@@ -41,12 +41,14 @@ export function stateReducerCommon({
             : changes.highlightedIndex,
           inputValue: '',
         }
+        const contentKey = getItemContentKeyName(changes.selectedItem)
 
         if (
           Boolean(
             findItemInArray({
               arr: selectedItems,
               item: changes.selectedItem,
+              key: contentKey,
             })
           )
         ) {
@@ -56,7 +58,7 @@ export function stateReducerCommon({
                 remove: true,
               }
             : {
-                label: changes.selectedItem,
+                [contentKey || 'label']: changes.selectedItem,
                 remove: true,
               }
         }
@@ -109,15 +111,16 @@ export function getA11ySelectionMessageCommon({
     return 'All have been deselected'
   }
 
-  const msg = isObject(selectedItem) ? selectedItem.label : selectedItem
+  const contentKey = getItemContentKeyName(selectedItem)
+  const msg = isObject(selectedItem) ? selectedItem[contentKey] : selectedItem
 
   if (!withMultipleSelection) {
     return `${msg} was selected`
   }
-
   const foundItem = findItemInArray({
     arr: selectedItems,
     item: selectedItem,
+    key: contentKey,
   })
 
   if (!Boolean(foundItem)) {

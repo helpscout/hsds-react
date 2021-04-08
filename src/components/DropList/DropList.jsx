@@ -8,6 +8,7 @@ import { OPEN_ACTION_ORIGIN, VARIANTS } from './DropList.constants'
 import {
   flattenListItems,
   getInitialSelection,
+  getItemContentKeyName,
   itemToString,
   isTogglerOfType,
   useWarnings,
@@ -82,21 +83,23 @@ function DropListManager({
         if (!Boolean(remove)) {
           updatedSelection = selectedItems.concat(selectedItem)
         } else {
+          const contentKey = getItemContentKeyName(selectedItem)
           const itemToRemove = findItemInArray({
             arr: selectedItems,
             item: selectedItem,
+            key: contentKey,
           })
 
           if (Boolean(itemToRemove)) {
             updatedSelection = removeItemFromArray({
               arr: selectedItems,
               item: itemToRemove,
+              key: contentKey,
             })
           }
         }
 
         setSelectedItems(updatedSelection)
-        handleSelectedItemChange(updatedSelection)
         onSelect(updatedSelection)
       }
     } else {
@@ -233,15 +236,25 @@ function DropListManager({
   )
 }
 
+const requiredItemPropsCheck = (props, propName, componentName) => {
+  if (!props.label && !props.value) {
+    return new Error(
+      `One of 'label' or 'value' is required by '${componentName}' component.`
+    )
+  }
+}
+
 const itemShape = PropTypes.shape({
-  label: PropTypes.string.isRequired,
+  label: requiredItemPropsCheck,
+  value: requiredItemPropsCheck,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 })
 const dividerShape = PropTypes.shape({
   type: PropTypes.oneOf(['divider', 'Divider']).isRequired,
 })
 const groupShape = PropTypes.shape({
-  label: PropTypes.string.isRequired,
+  label: requiredItemPropsCheck,
+  value: requiredItemPropsCheck,
   type: PropTypes.oneOf(['group', 'Group']).isRequired,
   items: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, itemShape])),
 })
