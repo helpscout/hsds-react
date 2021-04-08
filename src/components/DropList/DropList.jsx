@@ -73,8 +73,6 @@ function DropListManager({
   useWarnings({ toggler, withMultipleSelection })
 
   function handleSelectedItemChange({ selectedItem }) {
-    setSelectedItem(selectedItem || null)
-
     if (withMultipleSelection) {
       if (selectedItem) {
         const { remove } = selectedItem
@@ -103,6 +101,7 @@ function DropListManager({
         onSelect(updatedSelection)
       }
     } else {
+      setSelectedItem(selectedItem || null)
       onSelect(selectedItem)
     }
   }
