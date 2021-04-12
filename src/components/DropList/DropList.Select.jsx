@@ -17,23 +17,25 @@ import { VARIANTS } from './DropList.constants'
 
 function Select({
   closeOnSelection = true,
-  'data-cy': dataCy = `DropList.${VARIANTS.SELECT}`,
-  selectedItem = null,
-  selectedItems,
   customEmptyList = null,
+  'data-cy': dataCy = `DropList.${VARIANTS.SELECT}`,
+  enableLeftRightNavigation = false,
+  handleSelectedItemChange = noop,
   isOpen = false,
   items = [],
   onMenuBlur = noop,
-  handleSelectedItemChange = noop,
   renderCustomListItem = null,
+  selectedItem = null,
+  selectedItems,
   toggleOpenedState = noop,
   withMultipleSelection = false,
 }) {
   const {
-    getToggleButtonProps,
+    highlightedIndex,
     getItemProps,
     getMenuProps,
-    highlightedIndex,
+    getToggleButtonProps,
+    setHighlightedIndex,
   } = useSelect({
     initialIsOpen: isOpen,
     isOpen,
@@ -103,10 +105,30 @@ function Select({
     return <ListItem {...itemProps} />
   }
 
+  function handleSidewaysKeyNavigation(event) {
+    if (enableLeftRightNavigation) {
+      if (event.key === 'ArrowRight') {
+        if (highlightedIndex !== items.length - 1) {
+          setHighlightedIndex(highlightedIndex + 1)
+        }
+      } else if (event.key === 'ArrowLeft') {
+        if (highlightedIndex <= 0) {
+          setHighlightedIndex(0)
+        } else {
+          setHighlightedIndex(highlightedIndex - 1)
+        }
+      }
+    }
+  }
+
   return (
     <DropListWrapperUI className="DropList DropList__Select" data-cy={dataCy}>
       <A11yTogglerUI {...getToggleButtonProps()}>Toggler</A11yTogglerUI>
-      <MenuListUI {...getMenuProps()}>
+      <MenuListUI
+        {...getMenuProps({
+          onKeyDown: handleSidewaysKeyNavigation,
+        })}
+      >
         {renderListContents({
           customEmptyList,
           emptyList: items.length === 0,

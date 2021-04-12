@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { isDefined, isObject, isString } from '../../utilities/is'
+import { isDefined, isObject } from '../../utilities/is'
 import { ITEM_TYPES } from './DropList.constants'
 import { SelectTag } from './DropList.togglers'
 import { ListItemUI, EmptyListUI } from './DropList.css'
@@ -41,7 +41,7 @@ export function itemToString(item) {
   return item
 }
 
-export function getInitialSelection({ withMultipleSelection, selection }) {
+export function parseSelectionFromProps({ withMultipleSelection, selection }) {
   if (withMultipleSelection) {
     return selection != null ? [].concat(selection) : []
   }
@@ -167,4 +167,14 @@ export function renderListContents({
   }
 
   return <ListItemUI>No results for {inputValue}</ListItemUI>
+}
+
+// No need to test this helper
+/* istanbul ignore next */
+export function requiredItemPropsCheck(props, propName, componentName) {
+  if (!props.label && !props.value) {
+    return new Error(
+      `One of 'label' or 'value' is required by '${componentName}' component.`
+    )
+  }
 }

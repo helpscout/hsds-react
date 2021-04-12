@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 import Tippy from '@tippyjs/react/headless'
@@ -6,14 +6,15 @@ import { noop } from '../../utilities/other'
 import { GlobalContext } from '../HSDS/Provider'
 import { OPEN_ACTION_ORIGIN, VARIANTS } from './DropList.constants'
 import {
-  flattenListItems,
-  getInitialSelection,
-  getItemContentKeyName,
-  itemToString,
-  isTogglerOfType,
-  useWarnings,
   findItemInArray,
+  flattenListItems,
+  getItemContentKeyName,
+  isTogglerOfType,
+  itemToString,
+  parseSelectionFromProps,
   removeItemFromArray,
+  requiredItemPropsCheck,
+  useWarnings,
 } from './DropList.utils'
 import {
   Button,
@@ -31,32 +32,51 @@ function DropListManager({
   closeOnSelection = true,
   customEmptyList = null,
   'data-cy': dataCy,
-  initialIsOpen = false,
-  selection = null,
+  enableLeftRightNavigation = false,
+  focusTogglerOnMenuClose = true,
+  isMenuOpen = false,
   items = [],
   onMenuBlur = noop,
   onOpenedStateChange = noop,
   onSelect = noop,
   renderCustomListItem = null,
+  selection = null,
   tippyOptions = {},
   toggler = {},
   variant = VARIANTS.SELECT,
   withMultipleSelection = false,
 }) {
-  const [isOpen, setOpenedState] = useState(initialIsOpen)
+  const [isOpen, setOpenedState] = useState(isMenuOpen)
   const [openOrigin, setOpenOrigin] = useState('')
-  const { getCurrentScope } = useContext(GlobalContext) || {}
-  const scope = getCurrentScope ? getCurrentScope() : null
-  const parsedSelection = getInitialSelection({
+  const parsedSelection = parseSelectionFromProps({
     withMultipleSelection,
     selection,
   })
-
   const [selectedItem, setSelectedItem] = useState(parsedSelection)
   const [selectedItems, setSelectedItems] = useState(
     withMultipleSelection ? parsedSelection : []
   )
   const [parsedItems, setParsedItems] = useState(flattenListItems(items))
+  const { getCurrentScope } = useContext(GlobalContext) || {}
+  const scope = getCurrentScope ? getCurrentScope() : null
+  const animateProps = {
+    duration: 200,
+    easing: 'ease-in-out',
+    sequence: 'fade down',
+    ...animateOptions,
+    // These shouldn't be overriden
+    animateOnMount: true,
+    mountOnEnter: false,
+    unmountOnExit: false,
+  }
+  const tippyProps = {
+    ...tippyOptions,
+    interactive: true,
+  }
+  const Toggler = decorateUserToggler(toggler)
+  const DropListVariant = getDropListVariant()
+
+  useWarnings({ toggler, withMultipleSelection })
 
   useDeepCompareEffect(() => {
     if (withMultipleSelection) {
@@ -70,7 +90,66 @@ function DropListManager({
     setParsedItems(flattenListItems(items))
   }, [items])
 
-  useWarnings({ toggler, withMultipleSelection })
+  useEffect(() => {
+    setOpenedState(isMenuOpen)
+  }, [isMenuOpen])
+
+  function decorateUserToggler(userToggler) {
+    if (React.isValidElement(userToggler)) {
+      const { onClick } = userToggler.props
+      const togglerProps = {
+        onClick: e => {
+          onClick && onClick(e)
+
+          /**
+           * On combobox when clicking the button a blur event happens first that closes
+           * the DropList, here we check if the menu was closed due to the input blur and ignore the
+           * click action to toggle the open state, we also always reset the "origin" to resume normal behaviour
+           */
+          if (openOrigin !== OPEN_ACTION_ORIGIN.INPUT_BLUR) {
+            toggleOpenedState(!isOpen)
+          }
+
+          setOpenOrigin('')
+        },
+        isActive: isOpen,
+      }
+
+      if (userToggler.type === SelectTag) {
+        const { text } = userToggler.props
+
+        if (text == null) {
+          togglerProps.text = itemToString(selectedItem)
+        }
+      }
+
+      const { placement, offset } = getTogglerPlacementProps(
+        userToggler,
+        tippyOptions
+      )
+
+      tippyProps.placement = placement
+      tippyProps.offset = offset
+
+      return React.cloneElement(userToggler, togglerProps)
+    }
+
+    return (
+      <Button
+        onClick={() => {
+          toggleOpenedState(!isOpen)
+        }}
+        text="Fallback Toggler"
+      />
+    )
+  }
+
+  function getDropListVariant() {
+    return variant.toLowerCase() === VARIANTS.COMBOBOX ||
+      (autoSetComboboxAt > 0 && parsedItems.length >= autoSetComboboxAt)
+      ? Combobox
+      : Select
+  }
 
   function handleSelectedItemChange({ selectedItem }) {
     if (withMultipleSelection) {
@@ -112,76 +191,6 @@ function DropListManager({
     onOpenedStateChange(isOpen)
   }
 
-  const animateProps = {
-    duration: 200,
-    easing: 'ease-in-out',
-    sequence: 'fade down',
-    ...animateOptions,
-    // These shouldn't be overriden
-    animateOnMount: true,
-    mountOnEnter: false,
-    unmountOnExit: false,
-  }
-  const tippyProps = {
-    ...tippyOptions,
-    interactive: true,
-  }
-  let Toggler
-
-  if (React.isValidElement(toggler)) {
-    const { onClick } = toggler.props
-    const togglerProps = {
-      onClick: e => {
-        onClick && onClick(e)
-
-        /**
-         * On combobox when clicking the button a blur event happens first that closes
-         * the DropList, here we check if the menu was closed due to the input blur and ignore the
-         * click action to toggle the open state, we also always reset the "origin" to resume normal behaviour
-         */
-        if (openOrigin !== OPEN_ACTION_ORIGIN.INPUT_BLUR) {
-          toggleOpenedState(!isOpen)
-        }
-
-        setOpenOrigin('')
-      },
-      isActive: isOpen,
-    }
-
-    if (toggler.type === SelectTag) {
-      const { text } = toggler.props
-
-      if (text == null) {
-        togglerProps.text = itemToString(selectedItem)
-      }
-    }
-
-    const { placement, offset } = getTogglerPlacementProps(
-      toggler,
-      tippyOptions
-    )
-
-    tippyProps.placement = placement
-    tippyProps.offset = offset
-
-    Toggler = React.cloneElement(toggler, togglerProps)
-  } else {
-    Toggler = (
-      <Button
-        onClick={() => {
-          toggleOpenedState(!isOpen)
-        }}
-        text="Fallback Toggler"
-      />
-    )
-  }
-
-  const DropListVariant =
-    variant.toLowerCase() === VARIANTS.COMBOBOX ||
-    (autoSetComboboxAt > 0 && parsedItems.length >= autoSetComboboxAt)
-      ? Combobox
-      : Select
-
   return (
     <Tippy
       {...tippyProps}
@@ -205,7 +214,7 @@ function DropListManager({
         }
       }}
       onHidden={({ reference }) => {
-        reference.focus()
+        focusTogglerOnMenuClose && reference.focus()
       }}
       render={() => (
         <Animate {...animateProps} in={isOpen}>
@@ -213,6 +222,7 @@ function DropListManager({
             closeOnSelection={closeOnSelection}
             customEmptyList={customEmptyList}
             data-cy={dataCy}
+            enableLeftRightNavigation={enableLeftRightNavigation}
             handleSelectedItemChange={handleSelectedItemChange}
             isOpen={isOpen}
             items={parsedItems}
@@ -233,14 +243,6 @@ function DropListManager({
       {Toggler}
     </Tippy>
   )
-}
-
-const requiredItemPropsCheck = (props, propName, componentName) => {
-  if (!props.label && !props.value) {
-    return new Error(
-      `One of 'label' or 'value' is required by '${componentName}' component.`
-    )
-  }
 }
 
 const itemShape = PropTypes.shape({
@@ -271,14 +273,12 @@ DropListManager.propTypes = {
   customEmptyList: PropTypes.element,
   /** Data attr applied to the DropList for Cypress tests. By default one of 'DropList.Select' or 'DropList.Combobox' depending on the variant used */
   'data-cy': PropTypes.string,
-  /** Should the DropList be open on mount */
-  initialIsOpen: PropTypes.bool,
-  /** An item or array of items to be selected */
-  selection: PropTypes.oneOfType([
-    PropTypes.string,
-    itemShape,
-    PropTypes.arrayOf(itemShape),
-  ]),
+  /** Enable navigation with Right and Left arrows (useful for horizontally rendered lists) */
+  enableLeftRightNavigation: PropTypes.bool,
+  /** Automatically moves the focus back to the toggler when the DropList is closed */
+  focusTogglerOnMenuClose: PropTypes.bool,
+  /** Open/close the DropList externally */
+  isMenuOpen: PropTypes.bool,
   /** Items to populate the list with */
   items: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.string, itemShape, dividerShape, groupShape])
@@ -291,6 +291,12 @@ DropListManager.propTypes = {
   onSelect: PropTypes.func,
   /** Render prop that allows you to render a custom List Item */
   renderCustomListItem: PropTypes.func,
+  /** An item or array of items to be selected */
+  selection: PropTypes.oneOfType([
+    PropTypes.string,
+    itemShape,
+    PropTypes.arrayOf(itemShape),
+  ]),
   /** Options to configure Tippy (https://atomiks.github.io/tippyjs/v6/all-props/)*/
   tippyOptions: PropTypes.object,
   /** A component to render as the "toggler" or "trigger", a set of built-in options are provided: Button, IconButton, Kebab, SelectTag, SplitButton */

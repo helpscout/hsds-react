@@ -140,6 +140,7 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
       }}
     >
       <DropList
+        isMenuOpen={boolean('Is Menu Open', false)}
         selection={select(
           'Selection',
           {
@@ -435,6 +436,31 @@ Depending on your use case, you might want to set `closeOnSelection = false` whe
 ### Togglers
 
 DropList provides a set of ready-to-use "triggers" or "togglers" components that should cover most if not all of our current needs: `Button`, `IconButton`, `Kebab`, `SelectTag` and `SplitButton`. Import them into your project from `src/components/DropList/DropList.togglers.jsx` and feed them to the `toggler` prop.
+
+#### SplitButton
+
+This toggler replaces the previous `SplitButton` component. It's not very different from the other togglers except that it's composed of 2 HSDS Buttons, the "action" and the "toggler". The props to interact / customize them are:
+
+```
+{
+  /** The text on the "action" button */
+  text = '',
+  /** The HSDS Button kind, affects both buttons */
+  kind = 'primary',
+  /** The HSDS Button size, affects both buttons */
+  size = 'lg',
+  /** Callback on the "action" button click */
+  onActionClick = noop,
+  /** Callback on the "toggler" button click */
+  onClick = noop,
+  /** Whether the DropList is active (open) or not, affects the "toggler" button */
+  isActive = false,
+  /** Extra props to pass to the "action" button */
+  actionButtonProps = {},
+  /** Extra props to pass to the "toggler" button */
+  togglerButtonProps = {},
+}
+```
 
 #### Custom Toggler
 

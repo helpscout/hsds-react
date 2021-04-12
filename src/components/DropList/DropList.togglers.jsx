@@ -111,6 +111,8 @@ export const SplitButton = forwardRef(
       onActionClick = noop,
       onClick = noop,
       isActive = false,
+      actionButtonProps = {},
+      togglerButtonProps = {},
     },
     ref
   ) => {
@@ -128,6 +130,7 @@ export const SplitButton = forwardRef(
             onClick={onActionClick}
             size={size}
             type="button"
+            {...actionButtonProps}
           >
             {text}
           </HSDSButton>
@@ -147,6 +150,7 @@ export const SplitButton = forwardRef(
             onClick={onClick}
             size={size}
             type="button"
+            {...togglerButtonProps}
           >
             <Icon name="caret-down" size="14" />
           </SplitButtonTogglerUI>

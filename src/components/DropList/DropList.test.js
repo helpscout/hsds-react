@@ -192,7 +192,7 @@ describe('Render', () => {
         customEmptyList={
           <div>My Empty List is Better Than Your Empty List</div>
         }
-        initialIsOpen
+        isMenuOpen
         toggler={<Button text="Button Toggler" />}
       />
     )
@@ -209,7 +209,7 @@ describe('Render', () => {
       <DropList
         items={[]}
         customEmptyList="something"
-        initialIsOpen
+        isMenuOpen
         toggler={<Button text="Button Toggler" />}
       />
     )
@@ -226,7 +226,7 @@ describe('Render', () => {
         renderCustomListItem={({ item }) => (
           <span className="customized">{item}</span>
         )}
-        initialIsOpen
+        isMenuOpen
         toggler={<Button text="Button Toggler" />}
       />
     )
@@ -263,11 +263,7 @@ describe('Render', () => {
 
   test('should close on ESC', async () => {
     const { container, getByRole } = render(
-      <DropList
-        items={beatles}
-        initialIsOpen
-        toggler={<Button text="Click" />}
-      />
+      <DropList items={beatles} isMenuOpen toggler={<Button text="Click" />} />
     )
 
     user.type(container, '{esc}')
@@ -281,7 +277,7 @@ describe('Render', () => {
     const { getByPlaceholderText, getByRole } = render(
       <DropList
         items={beatles}
-        initialIsOpen
+        isMenuOpen
         variant="combobox"
         toggler={<Button text="Click" />}
       />
@@ -298,7 +294,7 @@ describe('Render', () => {
     const { getByRole } = render(
       <DropList
         items={beatles}
-        initialIsOpen
+        isMenuOpen
         variant="combobox"
         toggler={<Button text="Click" />}
       />
@@ -313,10 +309,10 @@ describe('Render', () => {
 })
 
 describe('Menu', () => {
-  test('should be open if initialIsOpen is true', async () => {
+  test('should be open if isMenuOpen is true', async () => {
     const { queryByRole } = render(
       <DropList
-        initialIsOpen
+        isMenuOpen
         items={regularItems}
         toggler={<Button text="Button Toggler" />}
       />
@@ -332,7 +328,7 @@ describe('Menu', () => {
     const { getByRole } = render(
       <DropList
         items={beatles}
-        initialIsOpen
+        isMenuOpen
         onMenuBlur={onMenuBlur}
         toggler={<Button text="Click" />}
       />
@@ -349,7 +345,7 @@ describe('Menu', () => {
   test('should render a combobox when autoSetComboboxAt is smaller than the number of items', async () => {
     const { queryByRole, getByPlaceholderText } = render(
       <DropList
-        initialIsOpen
+        isMenuOpen
         items={regularItems}
         toggler={<Button text="Button Toggler" />}
         autoSetComboboxAt={3}
@@ -370,7 +366,7 @@ describe('Menu', () => {
   test('should render a select when autoSetComboboxAt is larger than the number of items', async () => {
     const { queryByRole, queryByPlaceholderText } = render(
       <DropList
-        initialIsOpen
+        isMenuOpen
         items={regularItems}
         toggler={<Button text="Button Toggler" />}
         autoSetComboboxAt={16}
@@ -388,7 +384,7 @@ describe('Combobox', () => {
   test('should render a combobox', async () => {
     const { queryByRole, getByPlaceholderText } = render(
       <DropList
-        initialIsOpen
+        isMenuOpen
         items={regularItems}
         toggler={<Button text="Button Toggler" />}
         variant="combobox"
@@ -409,7 +405,7 @@ describe('Combobox', () => {
   test('should focus input when open', async () => {
     const { getByPlaceholderText } = render(
       <DropList
-        initialIsOpen
+        isMenuOpen
         items={regularItems}
         toggler={<Button text="Button Toggler" />}
         variant="combobox"
@@ -424,7 +420,7 @@ describe('Combobox', () => {
   test('should hide the search input on combobox if list empty', async () => {
     const { queryByRole, getByPlaceholderText } = render(
       <DropList
-        initialIsOpen
+        isMenuOpen
         items={[]}
         toggler={<Button text="Button Toggler" />}
         variant="combobox"
@@ -444,7 +440,7 @@ describe('Combobox', () => {
   test('should filter items', async () => {
     const { container, getByPlaceholderText } = render(
       <DropList
-        initialIsOpen
+        isMenuOpen
         items={beatles}
         toggler={<Button text="Button Toggler" />}
         variant="combobox"
@@ -465,7 +461,7 @@ describe('Combobox', () => {
   test('should filter items to empty if none found', async () => {
     const { container, getByText, getByPlaceholderText } = render(
       <DropList
-        initialIsOpen
+        isMenuOpen
         items={beatles}
         toggler={<Button text="Button Toggler" />}
         variant="combobox"
@@ -524,7 +520,7 @@ describe('Togglers', () => {
 
   test('Should pass the selected item text to the SelectTag toggler', async () => {
     const { container, getByText } = render(
-      <DropList items={beatles} toggler={<SelectTag />} initialIsOpen />
+      <DropList items={beatles} toggler={<SelectTag />} isMenuOpen />
     )
 
     await waitFor(() => {
@@ -546,7 +542,7 @@ describe('Togglers', () => {
       <DropList
         items={beatles}
         toggler={<SplitButton text="Submit" onActionClick={onActionClick} />}
-        initialIsOpen
+        isMenuOpen
       />
     )
 
@@ -609,7 +605,7 @@ describe('Selection', () => {
     const onSelect = jest.fn()
     const { getByText } = render(
       <DropList
-        initialIsOpen
+        isMenuOpen
         onSelect={onSelect}
         items={regularItems}
         toggler={<Button text="Button Toggler" />}
@@ -632,7 +628,7 @@ describe('Selection', () => {
     const onSelect = jest.fn()
     const { getByText } = render(
       <DropList
-        initialIsOpen
+        isMenuOpen
         onSelect={onSelect}
         items={beatles}
         toggler={<Button text="Button Toggler" />}
@@ -654,7 +650,7 @@ describe('Selection', () => {
     const onSelect = jest.fn()
     const { getByText } = render(
       <DropList
-        initialIsOpen
+        isMenuOpen
         onSelect={onSelect}
         items={regularItems}
         toggler={<Button text="Button Toggler" />}
@@ -679,7 +675,7 @@ describe('Selection', () => {
     const onSelect = jest.fn()
     const { getByText } = render(
       <DropList
-        initialIsOpen
+        isMenuOpen
         onSelect={onSelect}
         items={beatles}
         toggler={<Button text="Button Toggler" />}
@@ -747,7 +743,7 @@ describe('Selection', () => {
     const onSelect = jest.fn()
     const { getByPlaceholderText } = render(
       <DropList
-        initialIsOpen
+        isMenuOpen
         items={beatles}
         onSelect={onSelect}
         toggler={<Button text="Button Toggler" />}
@@ -770,7 +766,7 @@ describe('Selection', () => {
         onSelect={onSelect}
         items={beatles}
         toggler={<Button text="Button Toggler" />}
-        initialIsOpen
+        isMenuOpen
         selection="Ringo"
       />
     )
@@ -789,7 +785,7 @@ describe('Selection', () => {
         onSelect={onSelect}
         items={regularItems}
         toggler={<Button text="Button Toggler" />}
-        initialIsOpen
+        isMenuOpen
         selection={regularItems[2]}
       />
     )
@@ -810,7 +806,7 @@ describe('Selection', () => {
         onSelect={onSelect}
         items={regularItems}
         toggler={<Button text="Button Toggler" />}
-        initialIsOpen
+        isMenuOpen
         selection={[regularItems[0], regularItems[2]]}
         withMultipleSelection
       />
