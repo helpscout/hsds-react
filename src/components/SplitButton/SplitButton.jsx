@@ -14,8 +14,18 @@ const defaultDropdownProps = {
   onTriggerClick: noop,
 }
 
+// TODO: rollback changes here when switched to new DropList
 export class SplitButton extends React.PureComponent {
   static className = 'c-SplitButton'
+
+  isTriggerDisabled = () => {
+    const {
+      disabled,
+      dropdownProps: { disabled: dropdownDisabled },
+    } = this.props
+
+    return dropdownDisabled !== undefined ? dropdownDisabled : disabled
+  }
 
   renderButton() {
     const { dropdownProps, ...rest } = this.props
@@ -25,7 +35,6 @@ export class SplitButton extends React.PureComponent {
 
   renderDropdownTrigger() {
     const {
-      disabled,
       dropdownProps: { onTriggerClick },
       kind,
       size,
@@ -35,12 +44,13 @@ export class SplitButton extends React.PureComponent {
     return (
       <OptionsTriggerButtonUI
         className="c-SplitButton__dropdownTrigger"
-        disabled={disabled}
+        disabled={this.isTriggerDisabled()}
         isLast
         kind={kind}
         onClick={onTriggerClick}
         size={size}
         state={state}
+        aria-label={'dropdown trigger'}
       >
         <Icon name="caret-down" size="14" />
       </OptionsTriggerButtonUI>
@@ -50,14 +60,13 @@ export class SplitButton extends React.PureComponent {
   renderDropdown() {
     const trigger = this.renderDropdownTrigger()
     const {
-      disabled,
-      dropdownProps: { onTriggerClick, ...dropdownPropsRest },
+      dropdownProps: { onTriggerClick, disabled, ...dropdownPropsRest },
     } = this.props
 
     const props = {
       ...defaultDropdownProps,
       ...dropdownPropsRest,
-      disabled,
+      disabled: this.isTriggerDisabled(),
       renderTrigger: trigger,
       triggerProps: {
         tabIndex: -1,

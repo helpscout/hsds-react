@@ -32,6 +32,10 @@ const options = [
     label: 'Specific URL',
     value: 'specific-url',
   },
+  {
+    label: 'Last Page Viewed',
+    value: 'last-page',
+  },
 ]
 
 let ANIMATION_DURATION = 0
@@ -159,9 +163,15 @@ const RepeatPageViewCondition = ({ error, onRemove, value, ...rest }) => (
   </Condition>
 )
 
-const URLConditionField = ({ onRemove, removeTitle, onChange, url }) => {
+const URLConditionField = ({
+  onRemove,
+  removeTitle,
+  onChange,
+  url,
+  ...rest
+}) => {
   return (
-    <ConditionField onRemove={onRemove} removeTitle={removeTitle}>
+    <ConditionField onRemove={onRemove} removeTitle={removeTitle} {...rest}>
       <ConditionField.Block>
         <Input
           autoComplete="off"
@@ -224,10 +234,87 @@ class SpecificUrlCondition extends React.Component {
     const isAddEnabled = this.state.urls.length <= 2
     const removeTitle = this.state.urls.length === 1 ? 'Remove' : 'Remove URL'
     return (
-      <Condition options={options} value="specific-url">
+      <Condition options={options} value="specific-url" {...this.props}>
         <ConditionField.Group
           onAdd={this.handleOnAdd}
           isAddEnabled={isAddEnabled}
+        >
+          {this.state.urls.map((url, index) => (
+            <AnimatedURLConditionField
+              key={url.id}
+              onRemove={() => this.handleOnRemove(url.id)}
+              onChange={value => this.handleOnChange(value, url.id)}
+              removeTitle={removeTitle}
+              url={url.value}
+            />
+          ))}
+        </ConditionField.Group>
+      </Condition>
+    )
+  }
+}
+
+const AnimatedLastPageConditionField = withMotion({
+  componentDidMount: fadeInAnimation,
+  componentWillUnmount: fadeOutAnimation,
+})(URLConditionField)
+
+class LastPageCondition extends React.Component {
+  state = {
+    urls: [createUrlField('')],
+    conjunction: 'or',
+  }
+
+  handleOnAdd = () => {
+    this.setState({
+      urls: [...this.state.urls, createUrlField('')],
+    })
+  }
+
+  handleOnChange = (value, id) => {
+    const urls = this.state.urls.map(url => {
+      if (url.id !== id) return url
+
+      return {
+        ...url,
+        value,
+      }
+    })
+
+    this.setState({
+      urls,
+    })
+  }
+
+  handleConjunctionChange = conjunction => {
+    this.setState({
+      conjunction,
+    })
+  }
+
+  handleOnRemove = id => {
+    let urls = this.state.urls.filter(url => url.id !== id)
+    if (urls.length === 0) {
+      urls = [createUrlField('')]
+    }
+
+    this.setState({
+      urls,
+    })
+  }
+
+  render() {
+    const isAddEnabled = this.state.urls.length <= 2
+    const removeTitle = this.state.urls.length === 1 ? 'Remove' : 'Remove URL'
+
+    return (
+      <Condition options={options} value="last-page" {...this.props}>
+        <ConditionField.Group
+          onAdd={this.handleOnAdd}
+          isAddEnabled={isAddEnabled}
+          canChangeConjunction
+          conjunction={this.state.conjunction}
+          onConjunctionChange={this.handleConjunctionChange}
         >
           {this.state.urls.map((url, index) => (
             <AnimatedURLConditionField
@@ -249,6 +336,7 @@ const ComponentMap = {
   'repeat-page-views': RepeatPageViewCondition,
   'page-views': PageViewCondition,
   'specific-url': SpecificUrlCondition,
+  'last-page': LastPageCondition,
 }
 
 const ConditionElement = ({ type, ...rest }) => {
@@ -315,6 +403,7 @@ class ConditionBuilder extends React.Component {
     return (
       <ConditionList isAddEnabled={isAddEnabled} onAdd={this.handleOnAdd}>
         <SpecificUrlCondition />
+        <LastPageCondition />
         {this.state.conditions.map((condition, index) => {
           return (
             <AnimatedComponent

@@ -10,6 +10,7 @@ import ConditionFieldStatic from './ConditionField.Static'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import { FieldCloseWrapperUI } from './ConditionField.css'
+import ConditionFieldAnd from './ConditionField.And'
 
 export class ConditionField extends React.PureComponent {
   static Static = ConditionFieldStatic
@@ -23,10 +24,10 @@ export class ConditionField extends React.PureComponent {
   }
 
   renderOperator() {
-    const { isWithOr } = this.props
-    if (!isWithOr) return null
+    const { isWithConjunction, conjunction } = this.props
+    if (!isWithConjunction) return null
 
-    return <ConditionFieldOr />
+    return conjunction === 'and' ? <ConditionFieldAnd /> : <ConditionFieldOr />
   }
 
   render() {
@@ -80,7 +81,8 @@ ConditionField.defaultProps = {
   closeIcon: 'collapse',
   'data-cy': 'ConditionField',
   innerRef: noop,
-  isWithOr: false,
+  isWithConjunction: false,
+  conjunction: 'or',
   isWithRemove: true,
   onRemove: noop,
   removeTitle: 'Remove',
@@ -97,7 +99,8 @@ ConditionField.propTypes = {
   closeIcon: PropTypes.string,
   /** Retrieve the inner DOM node. */
   innerRef: PropTypes.func,
-  isWithOr: PropTypes.bool,
+  isWithConjunction: PropTypes.bool,
+  conjunction: PropTypes.oneOf(['and', 'or']),
   /** Whether to show the remove button or not. */
   isWithRemove: PropTypes.bool,
   /** Callback when the remove IconButton is clicked. */

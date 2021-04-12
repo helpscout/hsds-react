@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
-import Button from '../Button'
 import Centralize from '../Centralize'
 import Flexy from '../Flexy'
+import SplitButton from '../SplitButton'
+import Button from '../Button'
 
 export const config = {
   backgroundColor: getColor('grey.200'),
@@ -50,6 +51,34 @@ export const ButtonWrapperUI = styled('div')`
 `
 
 export const ButtonUI = styled(Button)`
+  box-shadow: 0 0 0 ${config.operatorBorderWidth} white;
+  margin-bottom: ${config.operatorBorderWidth};
+  margin-top: ${config.operatorBorderWidth};
+  text-transform: uppercase;
+
+  &.is-borderless {
+    box-shadow: none;
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+
+  .c-Icon {
+    margin: 0 0 0 -8px !important;
+  }
+
+  &.is-or {
+    .c-Button__content {
+      position: relative;
+      top: -1px;
+    }
+
+    .c-Icon {
+      margin: -0.5px -2px -0.5px -6px !important;
+    }
+  }
+`
+
+export const SplitButtonUI = styled(SplitButton)`
   box-shadow: 0 0 0 ${config.operatorBorderWidth} white;
   margin-bottom: ${config.operatorBorderWidth};
   margin-top: ${config.operatorBorderWidth};
