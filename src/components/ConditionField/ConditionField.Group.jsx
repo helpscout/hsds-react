@@ -70,8 +70,11 @@ ConditionFieldGroup.propTypes = {
   isAddEnabled: PropTypes.bool,
   /** Callback when the inner Condition.AddButton is clicked. */
   onAdd: PropTypes.func,
+  /** Currently used conjunction */
   conjunction: PropTypes.oneOf(['and', 'or']),
+  /** Callback when conjunction changed */
   onConjunctionChange: PropTypes.func,
+  /** Flag indicating if conjunction can change */
   canChangeConjunction: PropTypes.bool,
 }
 export default ConditionFieldGroup

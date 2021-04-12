@@ -58,8 +58,9 @@ ConditionFieldAddButton.propTypes = {
   type: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
-
+  /** Callback when type changed */
   onTypeChanged: PropTypes.func,
+  /** Indicate if type can be changed */
   selectableType: PropTypes.bool,
 }
 

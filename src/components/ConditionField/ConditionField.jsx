@@ -99,7 +99,9 @@ ConditionField.propTypes = {
   closeIcon: PropTypes.string,
   /** Retrieve the inner DOM node. */
   innerRef: PropTypes.func,
+  /** Whether to show conjunction before Field */
   isWithConjunction: PropTypes.bool,
+  /** Current conjunction */
   conjunction: PropTypes.oneOf(['and', 'or']),
   /** Whether to show the remove button or not. */
   isWithRemove: PropTypes.bool,
