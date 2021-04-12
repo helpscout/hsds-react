@@ -47,6 +47,7 @@ import chat from '../../icons/chat.svg'
 import chatSmall from '../../icons/chat-small.svg'
 import chatSquare from '../../icons/chat-square.svg'
 import checkmark from '../../icons/checkmark.svg'
+import checkmarkSmall from '../../icons/checkmark-small.svg'
 import checkboxLarge from '../../icons/checkbox-large.svg'
 import checkboxSmall from '../../icons/checkbox-small.svg'
 import circleArrowDown from '../../icons/circle-arrow-down.svg'
@@ -269,7 +270,7 @@ const ICONS = {
   'chat-square': chatSquare,
   chat,
   check: tickLarge,
-  checkmark,
+  checkmark: checkmarkSmall,
   'checkbox-large': checkboxLarge,
   'checkbox-small': checkboxSmall,
   'circle-arrow-down': circleArrowDown,

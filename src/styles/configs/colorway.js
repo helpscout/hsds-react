@@ -1,4 +1,4 @@
-// Generated with @helpscout/colorway (v0.9.2)
+// Generated with @helpscout/colorway (v0.9.5)
 //
 // This file was automatically generated with @helpscout/colorway
 // Please don't modify this file. Your changes will be overwritten.
@@ -33,7 +33,7 @@ const palette = {
     '300': '#F1F3F5',
     '400': '#E5E9EC',
     '500': '#D5DCE1',
-    '600': '#A5B2BD',
+    '600': '#C5CED6',
     '700': '#B7C2CC',
     '800': '#A5B2BD',
     default: '#D5DCE1',
@@ -103,7 +103,7 @@ const palette = {
     '300': '#F1F3F5',
     '400': '#E5E9EC',
     '500': '#D5DCE1',
-    '600': '#A5B2BD',
+    '600': '#C5CED6',
     '700': '#B7C2CC',
     '800': '#A5B2BD',
     default: '#D5DCE1',

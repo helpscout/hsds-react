@@ -1,0 +1,633 @@
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
+import { boolean, number, text, select } from '@storybook/addon-knobs'
+import DropList from './DropList'
+import {
+  Button,
+  IconButton,
+  Kebab,
+  NavLink,
+  SelectTag,
+  SplitButton,
+} from './DropList.togglers'
+import {
+  itemsWithDivider,
+  groupAndDividerItems,
+  plainItems,
+  regularItems,
+  simpleGroupedItems,
+} from '../../utilities/specs/dropdown.specs'
+
+<Meta
+  title="Components/Dropdowns/DropList"
+  component={DropList}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/eYf2reA21VBUMJRrA5z5zY/3.-Overlays?node-id=27%3A4404',
+    },
+  }}
+/>
+
+# DropList
+
+A component to build simple WAI-ARIA compliant combobox or select dropdowns that conform to Help Scout's design guidelines and sensible defaults.
+
+Under the hood DropList is powered by two third party open source libraries: [Downshift](https://www.downshift-js.com/) and [Tippy](https://atomiks.github.io/tippyjs/v6/all-props/).
+
+#### Downshift
+
+This library has 2 flavours, _hooks_ and _components_. DropList utilices the provided hooks `useSelect` and `useCombobox`, which handle most of the logic a dropdown requires like events, a11y and state.
+
+Downshift fundamentally treats "select" and "combobox" components as 2 different paradigms with their own separate considerations (especially when it comes in how each handle a11y stuff and events). In a nutshell a _select_ is not just a _combobox_ with the search input hidden. DropList abstracts this for you providing a unified component while under the hood following the Downshift paradigm.
+
+#### Tippy
+
+We use this library to power our `Tooltip` component and it's being used here to handle the positioning of the DropList, as well as its open/closed state.
+
+#### Portaling
+
+Sometimes the list needs to be appended to a different DOM context due to accessibility, clipping, or z-index issues. Use [Tippy's `appendTo`](https://atomiks.github.io/tippyjs/v6/all-props/#appendto) option:
+
+```jsx
+<DropList
+  items={regularItems}
+  toggler={<Button text="Click" />}
+  tippyOptions={{
+    appendTo: () => document.body,
+  }}
+/>
+```
+
+## Example
+
+<Canvas>
+  <Story name="default">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        variant="combobox"
+        items={regularItems}
+        onOpenedStateChange={isOpen => {
+          console.log('isOpen', isOpen)
+        }}
+        onSelect={selection => {
+          console.log('selection', selection)
+        }}
+        toggler={
+          <SplitButton
+            text="Click"
+            onActionClick={() => {
+              console.log('Action!')
+            }}
+            onClick={e => {
+              console.log('Clicked from story')
+            }}
+          />
+        }
+      />
+    </div>
+  </Story>
+</Canvas>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<ArgsTable of={DropList} />
+
+## Stories
+
+### Variants
+
+There are two variations of this component: "Select" and "Combobox". The only difference between them is that "Combobox" includes a text input to search and filter the list of items.
+
+You can use the `autoSetComboboxAt` prop to automatically choose between the 2 variants depending on the number of items on the list.
+
+```jsx
+<DropList
+  items={regularItems}
+  toggler={<Button text="Click" />}
+  autoSetComboboxAt={10}
+/>
+
+// regularItems.length < 10 ? "will render a Select" : "will render a Combobox"
+```
+
+<Canvas>
+  <Story name="Variant: Select">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        isMenuOpen={boolean('Is Menu Open', false)}
+        selection={select(
+          'Selection',
+          {
+            first: regularItems[0],
+            second: regularItems[1],
+            third: regularItems[2],
+          },
+          regularItems[1]
+        )}
+        items={regularItems}
+        toggler={<Button text="This is a select" />}
+      />
+    </div>
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Variant: Combobox">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        variant="combobox"
+        items={select(
+          'Items',
+          {
+            regular: regularItems,
+            withDivider: itemsWithDivider,
+            grouped: simpleGroupedItems,
+          },
+          regularItems
+        )}
+        toggler={<Button text="This is a combobox" />}
+      />
+    </div>
+  </Story>
+</Canvas>
+
+### List items
+
+DropList accepts an array of items, these items can be:
+
+- Strings: `['a', 'b', 'c']`
+- Objects
+  - A `label` or `value` field is required, if both present `label` takes precedence in all calculations (also for rendering if you need to render something else, use `renderCustomListItem`)
+
+```js
+const itemShape = PropTypes.shape({
+  label: requiredItemPropsCheck,
+  value: requiredItemPropsCheck,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+})
+```
+
+- Dividers: Add a `type = divider` property to an object to create a divider
+
+```js
+const items = [
+  { label: 'a' },
+  { label: 'ab' },
+  { label: 'abc' },
+  { type: 'divider' },
+  { label: 'b' },
+]
+```
+
+<Canvas>
+  <Story name="Items: divider">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList items={itemsWithDivider} toggler={<Button text="Click" />} />
+    </div>
+  </Story>
+</Canvas>
+
+- Groups: Add a `type = group` property (don't forget to add `label` or `value` to the group) and nest items to an object to create a group:
+
+```js
+const groupedItems = [
+  {
+    items: [{}, {}, {}],
+    label: 'Group 1',
+    type: 'group',
+  },
+  {
+    items: [{}, {}, {}],
+    label: 'Group 2',
+    type: 'group',
+  },
+]
+```
+
+<Canvas>
+  <Story name="Items: groups">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList items={simpleGroupedItems} toggler={<Button text="Click" />} />
+    </div>
+  </Story>
+</Canvas>
+
+- Mix'n Match dividers and groups:
+
+<Canvas>
+  <Story name="Items: groups and dividers">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        items={groupAndDividerItems}
+        toggler={<Button text="Click" />}
+      />
+    </div>
+  </Story>
+</Canvas>
+
+- Empty list
+
+<Canvas>
+  <Story name="Items: empty list">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        items={[]}
+        toggler={<Button text="Click" />}
+        variant="combobox"
+      />
+    </div>
+  </Story>
+  <Story name="Items: custom empty list">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        customEmptyList={
+          <div
+            style={{
+              fontSize: '13px',
+              color: 'thistle',
+              letterSpacing: '2px',
+              textAlign: 'right',
+              padding: '10px 10px 15px 0',
+            }}
+          >
+            Empty list
+          </div>
+        }
+        items={[]}
+        toggler={<Button text="Click" />}
+      />
+    </div>
+  </Story>
+</Canvas>
+
+- Custom List Items: Sometimes you might need to render the list items in a different manner, for that you can use the render prop `renderCustomListItem`.
+
+```jsx
+// Signature
+function renderCustomListItem({
+  item,
+  isSelected,
+  isHighlighted,
+  withMultipleSelection,
+})
+
+// example
+<DropList
+  items={[{}, {}, {}, {}]}
+  toggler={<Button text="Click" />}
+  renderCustomListItem={({
+    item,
+    isSelected,
+    isHighlighted,
+    withMultipleSelection,
+  }) => (
+    <div className={classnames(isSelected && 'is-selected')}>
+      <strong>{item.label}</strong>
+    </div>
+  )}
+/>
+
+```
+
+<Canvas>
+  <Story name="Items: custom list items">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        items={regularItems}
+        toggler={<Button text="Click" />}
+        renderCustomListItem={({ item, isSelected }) => (
+          <div
+            style={{ padding: '5px 10px', fontSize: '14px', color: '#404996' }}
+          >
+            {isSelected ? (
+              <strong style={{ color: 'white', backgroundColor: '#404996' }}>
+                {item.label}
+              </strong>
+            ) : (
+              <span>{item.label}</span>
+            )}
+          </div>
+        )}
+      />
+    </div>
+  </Story>
+</Canvas>
+
+### Multiple selection
+
+Depending on your use case, you might want to set `closeOnSelection = false` when multiple selection is enabled.
+
+<Canvas>
+  <Story name="Multiple Selection">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        variant="combobox"
+        items={regularItems}
+        closeOnSelection={false}
+        onSelect={selection => {
+          console.log('selection', selection)
+        }}
+        selection={select(
+          'Selection',
+          {
+            first: [regularItems[0], regularItems[1]],
+            second: [regularItems[1]],
+            third: [regularItems[1], regularItems[2]],
+          },
+          [regularItems[0], regularItems[1]]
+        )}
+        toggler={<Button text="Submit" />}
+        withMultipleSelection
+      />
+    </div>
+  </Story>
+</Canvas>
+
+### Togglers
+
+DropList provides a set of ready-to-use "triggers" or "togglers" components that should cover most if not all of our current needs: `Button`, `IconButton`, `Kebab`, `SelectTag` and `SplitButton`. Import them into your project from `src/components/DropList/DropList.togglers.jsx` and feed them to the `toggler` prop.
+
+#### SplitButton
+
+This toggler replaces the previous `SplitButton` component. It's not very different from the other togglers except that it's composed of 2 HSDS Buttons, the "action" and the "toggler". The props to interact / customize them are:
+
+```
+{
+  /** The text on the "action" button */
+  text = '',
+  /** The HSDS Button kind, affects both buttons */
+  kind = 'primary',
+  /** The HSDS Button size, affects both buttons */
+  size = 'lg',
+  /** Callback on the "action" button click */
+  onActionClick = noop,
+  /** Callback on the "toggler" button click */
+  onClick = noop,
+  /** Whether the DropList is active (open) or not, affects the "toggler" button */
+  isActive = false,
+  /** Extra props to pass to the "action" button */
+  actionButtonProps = {},
+  /** Extra props to pass to the "toggler" button */
+  togglerButtonProps = {},
+}
+```
+
+#### Custom Toggler
+
+The `toggler` prop accepts any React component, so you can provide your own custom trigger. Just one thing is necessary for everything to work as expected and a couple of other considerations:
+
+- (Required) Refs: Wrap your toggler component in `React.forwardRef`, this in turn is fed to Tippy so that it can do its thing. The `ref` should be applied to the button that when clicked is the one that opens/closes the DropList. For a component that illustrates this check the SplitButton toggler (since this "toggler" is composed of 2 buttons).
+- `onClick`: DropList will merge your `onClick` prop with an internal one that opens/closes the DropList (this way you can attach extra actions to the click event). Again, check SplitButton as an example for when you have 2 buttons each with its own click handler, the one with the prop named `onClick` is the one that will actually open/close the list.
+- Active state: Besides adding the `onClick` handler, we also attach the modal open state as the `isActive` prop so you can use it on your toggler, see Button or SplitButton for an example of this.
+- If your "toggler" contains a button or any other clickable element and you would like to avoid closing the DropList on clicking it, add the data attribute `data-ignore-toggling="true"` to that element.
+- Aria label: Don't forget to add `aria-label` to the toggler button, with something like "toggle menu".
+
+<Canvas>
+  <Story name="Toggler: Button">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 0 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        items={regularItems}
+        toggler={
+          <Button
+            text="Click"
+            onClick={() => {
+              console.log('Clicked from story')
+            }}
+          />
+        }
+      />
+    </div>
+  </Story>
+  <Story name="Toggler: IconButton">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 0 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        items={regularItems}
+        toggler={
+          <IconButton
+            onClick={() => {
+              console.log('Clicked from story')
+            }}
+          />
+        }
+      />
+    </div>
+  </Story>
+  <Story name="Toggler: Kebab">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 0 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        items={regularItems}
+        toggler={
+          <Kebab
+            onClick={() => {
+              console.log('Clicked from story')
+            }}
+          />
+        }
+      />
+    </div>
+  </Story>
+  <Story name="Toggler: NavLink">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 0 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <div
+        style={{
+          width: '100%',
+          background: '#005ca4',
+          display: 'flex',
+        }}
+      >
+        <DropList
+          items={regularItems}
+          toggler={
+            <NavLink
+              text="Mailboxes"
+              onClick={() => {
+                console.log('Clicked from story')
+              }}
+            />
+          }
+        />
+        <DropList
+          items={itemsWithDivider}
+          toggler={
+            <NavLink
+              text="Docs"
+              onClick={() => {
+                console.log('Clicked from story')
+              }}
+            />
+          }
+        />
+      </div>
+    </div>
+  </Story>
+  <Story name="Toggler: SelectTag">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 0 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        items={regularItems}
+        toggler={
+          <SelectTag
+            onClick={() => {
+              console.log('Clicked from story')
+            }}
+          />
+        }
+      />
+    </div>
+  </Story>
+  <Story name="Toggler: SplitButton">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 0 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        items={regularItems}
+        toggler={
+          <SplitButton
+            text="Click"
+            onActionClick={() => {
+              console.log('Action!')
+            }}
+            onClick={() => {
+              console.log('Clicked from story')
+            }}
+          />
+        }
+      />
+    </div>
+  </Story>
+</Canvas>
