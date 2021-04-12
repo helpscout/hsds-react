@@ -153,7 +153,7 @@ AddButton.propTypes = {
   type: PropTypes.oneOf(['and', 'or']),
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
-  /** Indicate if it is possible to select type for a Button */
+  /** Indicate if it is possible to select type for a Button ('and' or 'or') */
   selectableType: PropTypes.bool,
   /** Callback when type has changed */
   onTypeChanged: PropTypes.func,
