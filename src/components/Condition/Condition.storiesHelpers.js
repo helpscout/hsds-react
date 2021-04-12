@@ -254,11 +254,6 @@ class SpecificUrlCondition extends React.Component {
   }
 }
 
-const AnimatedLastPageConditionField = withMotion({
-  componentDidMount: fadeInAnimation,
-  componentWillUnmount: fadeOutAnimation,
-})(URLConditionField)
-
 class LastPageCondition extends React.Component {
   state = {
     urls: [createUrlField('')],
@@ -403,7 +398,7 @@ class ConditionBuilder extends React.Component {
     return (
       <ConditionList isAddEnabled={isAddEnabled} onAdd={this.handleOnAdd}>
         <SpecificUrlCondition />
-        <LastPageCondition />
+        <LastPageCondition noSelect={true} />
         {this.state.conditions.map((condition, index) => {
           return (
             <AnimatedComponent

@@ -30,6 +30,15 @@ export const OptionsWrapperUI = styled(Flexy.Item)`
   width: ${config.optionsWidth};
 `
 
+export const SelectedOptionUI = styled(Flexy)`
+  align-items: center;
+  height: 40px;
+  font-weight: 500;
+  font-size: 14px;
+  color: ${getColor('charcoal.700')};
+  padding: 0 16px;
+`
+
 export const OperatorUI = styled('div')`
   background: ${getColor('grey.600')};
   border-radius: ${config.operatorBorderWidth};
