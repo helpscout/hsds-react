@@ -5,7 +5,7 @@ import Flexy from '../Flexy'
 import Button from '../Button'
 
 export const config = {
-  backgroundColor: 'white',
+  backgroundColor: getColor('grey.200'),
   border: `1px solid ${getColor('border.ui')}`,
   borderRadius: '3px',
   padding: '10px',
@@ -66,7 +66,7 @@ export const ButtonWrapperUI = styled('div')`
       padding: 0 6px;
     }
     & .SplitButton__Toggler {
-      /* There's already important used, so I have to use it to overwrite */
+      /* There's already important used in a component, so I have to use it to overwrite */
       min-width: 20px !important;
       width: 20px;
     }
