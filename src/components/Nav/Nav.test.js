@@ -119,3 +119,12 @@ describe('Nav.Item Error', () => {
     expect(el.length).toBeTruthy()
   })
 })
+
+describe('Nav.Item data-bypass', () => {
+  test('Pushes data-bypass attribute to the link element', () => {
+    const wrapper = mountWithRouter(<Item data-bypass={true} />)
+    const link = wrapper.find('a')
+
+    expect(link.prop('data-bypass')).toBeTruthy()
+  })
+})

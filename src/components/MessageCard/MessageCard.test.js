@@ -1,7 +1,13 @@
 import React from 'react'
 import { mount, render } from 'enzyme'
 import { MessageCard } from './MessageCard'
-import { TitleUI, SubtitleUI, BodyUI, ActionUI } from './MessageCard.css'
+import {
+  TitleUI,
+  SubtitleUI,
+  BodyUI,
+  ActionUI,
+  ImageUI,
+} from './MessageCard.css'
 import { Animate } from '../index'
 import { MessageCardButton as Button } from './MessageCard.Button'
 
@@ -152,6 +158,71 @@ describe('Subtitle', () => {
 
     expect(o.length).toBe(1)
     expect(o.html()).toContain('Santa!')
+  })
+})
+
+describe('image', () => {
+  test('Does not render image if is not passed down as a prop', () => {
+    const wrapper = mount(<MessageCard />)
+    const image = wrapper.find('img')
+
+    expect(image).toHaveLength(0)
+  })
+
+  test('Renders image if it is passed down as a prop', () => {
+    const wrapper = mount(
+      <MessageCard image={{ url: 'https://path.to/image.png' }} />
+    )
+    const image = wrapper.find('img')
+
+    expect(image).toHaveLength(1)
+    expect(image.prop('src')).toEqual('https://path.to/image.png')
+  })
+
+  test('Sets size of image when provided', () => {
+    const wrapper = mount(
+      <MessageCard
+        image={{
+          url: 'https://path.to/image.png',
+          width: '100',
+          height: '200',
+        }}
+      />
+    )
+    const image = wrapper.find(ImageUI)
+
+    expect(image.prop('width')).toEqual('100')
+    expect(image.prop('height')).toEqual('200')
+  })
+
+  test('Sets default size of image when not provided', () => {
+    const wrapper = mount(
+      <MessageCard image={{ url: 'https://path.to/image.png' }} />
+    )
+    const image = wrapper.find(ImageUI)
+
+    expect(image.prop('width')).toEqual('100%')
+    expect(image.prop('height')).toEqual('auto')
+  })
+
+  test('Sets provided alt text', () => {
+    const wrapper = mount(
+      <MessageCard
+        image={{ url: 'https://path.to/image.png', altText: 'Alt text' }}
+      />
+    )
+    const image = wrapper.find('img')
+
+    expect(image.prop('alt')).toEqual('Alt text')
+  })
+
+  test('Sets default alt text', () => {
+    const wrapper = mount(
+      <MessageCard image={{ url: 'https://path.to/image.png' }} />
+    )
+    const image = wrapper.find('img')
+
+    expect(image.prop('alt')).toEqual('Message image')
   })
 })
 
