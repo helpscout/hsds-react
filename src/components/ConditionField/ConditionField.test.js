@@ -215,7 +215,7 @@ describe('With selectable conjunction', () => {
 
   const dropdownTrigger = () =>
     screen.queryByRole('button', {
-      name: 'dropdown trigger',
+      name: 'toggle menu',
     })
 
   const conjunctionMenu = () => screen.getByRole('listbox')

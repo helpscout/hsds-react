@@ -2,17 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Icon from '../Icon'
-import { ButtonUI, ButtonWrapperUI, SplitButtonUI } from './Condition.css'
+import { ButtonUI, ButtonWrapperUI } from './Condition.css'
 import { classNames } from '../../utilities/classNames'
 import { isNodeWithinViewport } from '../../utilities/node'
 import { noop } from '../../utilities/other'
 import { linear, smoothScrollTo } from '../../utilities/smoothScroll'
+import DropList from '../DropList/DropList'
+import { SplitButton } from '../DropList/DropList.togglers'
 
-const dropdownItem = (value, callback) => ({
+const dropdownItem = value => ({
   id: value,
   value,
   label: value.toUpperCase(),
-  onClick: () => callback(value),
 })
 
 class AddButton extends React.PureComponent {
@@ -70,6 +71,7 @@ class AddButton extends React.PureComponent {
       onTypeChanged,
       selectableType,
       showPlusIcon,
+      onClick,
       ...rest
     } = this.props
     const isAnd = type.toLowerCase() === 'and'
@@ -78,28 +80,27 @@ class AddButton extends React.PureComponent {
     const label = isAnd ? 'and' : 'or'
     const size = isAnd ? 'sm' : 'xxs'
 
-    const dropdownProps = {
-      selectedItem: type,
-      disabled: false,
-      items: [
-        dropdownItem('or', onTypeChanged),
-        dropdownItem('and', onTypeChanged),
-      ],
-    }
-
     return (
       <ButtonWrapperUI align={align} ref={this.setNodeRef}>
         {selectableType ? (
-          <SplitButtonUI
-            {...getValidProps(rest)}
-            className={this.getClassName()}
-            kind="tertiary"
-            onClick={this.handleOnClick}
-            size={size}
-            dropdownProps={dropdownProps}
-          >
-            {label}
-          </SplitButtonUI>
+          <DropList
+            items={[dropdownItem('or'), dropdownItem('and')]}
+            tippyOptions={{ placement: 'bottom-start', offset: [0, 5] }}
+            onSelect={({ value }) => onTypeChanged(value)}
+            toggler={
+              <SplitButton
+                {...getValidProps(rest)}
+                text={label}
+                kind="tertiary"
+                actionButtonProps={{ disabled: rest.disabled }}
+                togglerButtonProps={{
+                  kind: rest.disabled ? 'secondary' : 'tertiary',
+                }}
+                size={'xxs'}
+                onActionClick={this.handleOnClick}
+              />
+            }
+          />
         ) : (
           <ButtonUI
             {...getValidProps(rest)}

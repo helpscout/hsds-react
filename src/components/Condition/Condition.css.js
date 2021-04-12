@@ -2,11 +2,10 @@ import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import Centralize from '../Centralize'
 import Flexy from '../Flexy'
-import SplitButton from '../SplitButton'
 import Button from '../Button'
 
 export const config = {
-  backgroundColor: getColor('grey.200'),
+  backgroundColor: 'white',
   border: `1px solid ${getColor('border.ui')}`,
   borderRadius: '3px',
   padding: '10px',
@@ -57,37 +56,32 @@ export const OperatorUI = styled('div')`
 
 export const ButtonWrapperUI = styled('div')`
   ${({ align }) => `text-align: ${align};`};
+
+  & .c-ControlGroupItem {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    & .SplitButton__Action {
+      min-width: 32px;
+      text-transform: uppercase;
+      padding: 0 6px;
+    }
+    & .SplitButton__Toggler {
+      /* There's already important used, so I have to use it to overwrite */
+      min-width: 20px !important;
+      width: 20px;
+    }
+
+    & ul {
+      overflow-y: hidden;
+    }
+
+    & .DropList__Select {
+      width: 80px;
+    }
+  }
 `
 
 export const ButtonUI = styled(Button)`
-  box-shadow: 0 0 0 ${config.operatorBorderWidth} white;
-  margin-bottom: ${config.operatorBorderWidth};
-  margin-top: ${config.operatorBorderWidth};
-  text-transform: uppercase;
-
-  &.is-borderless {
-    box-shadow: none;
-    margin-bottom: 0;
-    margin-top: 0;
-  }
-
-  .c-Icon {
-    margin: 0 0 0 -8px !important;
-  }
-
-  &.is-or {
-    .c-Button__content {
-      position: relative;
-      top: -1px;
-    }
-
-    .c-Icon {
-      margin: -0.5px -2px -0.5px -6px !important;
-    }
-  }
-`
-
-export const SplitButtonUI = styled(SplitButton)`
   box-shadow: 0 0 0 ${config.operatorBorderWidth} white;
   margin-bottom: ${config.operatorBorderWidth};
   margin-top: ${config.operatorBorderWidth};
