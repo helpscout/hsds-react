@@ -137,7 +137,6 @@ describe('With selectable conjunction', () => {
 
     user.click(dropdownTrigger())
     expect(screen.getByRole('button', { name: 'or' })).toBeInTheDocument()
-    // expect(getSelectedConjunctionOption()).toHaveTextContent('OR')
   })
 
   test('should display AND conjunction selected', () => {
@@ -149,7 +148,6 @@ describe('With selectable conjunction', () => {
 
     user.click(dropdownTrigger())
     expect(screen.getByRole('button', { name: 'and' })).toBeInTheDocument()
-    // expect(getSelectedConjunctionOption()).toHaveTextContent('AND')
   })
 
   test('should make a callback when conjunction changed', () => {
@@ -219,10 +217,6 @@ describe('With selectable conjunction', () => {
     })
 
   const conjunctionMenu = () => screen.getByRole('listbox')
-
-  function getSelectedConjunctionOption() {
-    return within(conjunctionMenu()).getByRole('option', { selected: true })
-  }
 
   function getOrConjunctions(container) {
     return container.querySelectorAll('.c-ConditionOperator.is-or')
