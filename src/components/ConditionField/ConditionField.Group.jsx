@@ -11,16 +11,31 @@ export class ConditionFieldGroup extends React.PureComponent {
     return React.Children.map(children, (child, index) => {
       return React.cloneElement(child, {
         ...child.props,
-        isWithOr: index > 0,
+        isWithConjunction: index > 0,
+        conjunction: this.props.conjunction,
       })
     })
   }
 
   renderAddAction() {
-    const { isAddEnabled, onAdd } = this.props
-    if (!isAddEnabled) return null
+    const {
+      isAddEnabled,
+      canChangeConjunction,
+      onAdd,
+      conjunction,
+      onConjunctionChange,
+    } = this.props
+    if (!isAddEnabled && !canChangeConjunction) return null
 
-    return <AddButton onClick={onAdd} />
+    return (
+      <AddButton
+        onClick={onAdd}
+        onTypeChanged={onConjunctionChange}
+        type={conjunction}
+        disabled={!isAddEnabled}
+        selectableType={canChangeConjunction}
+      />
+    )
   }
 
   render() {
@@ -38,7 +53,10 @@ export class ConditionFieldGroup extends React.PureComponent {
 ConditionFieldGroup.defaultProps = {
   'data-cy': 'ConditionFieldGroup',
   isAddEnabled: true,
+  canChangeConjunction: false,
   onAdd: noop,
+  onConjunctionChange: noop,
+  conjunction: 'or',
 }
 
 ConditionFieldGroup.propTypes = {
@@ -52,5 +70,11 @@ ConditionFieldGroup.propTypes = {
   isAddEnabled: PropTypes.bool,
   /** Callback when the inner Condition.AddButton is clicked. */
   onAdd: PropTypes.func,
+  /** Currently used conjunction */
+  conjunction: PropTypes.oneOf(['and', 'or']),
+  /** Callback when conjunction changed */
+  onConjunctionChange: PropTypes.func,
+  /** Flag indicating if conjunction can change */
+  canChangeConjunction: PropTypes.bool,
 }
 export default ConditionFieldGroup

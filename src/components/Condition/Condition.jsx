@@ -11,9 +11,10 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 
 import {
-  ConditionUI,
   ConditionContentUI,
+  ConditionUI,
   OptionsWrapperUI,
+  SelectedOptionUI,
 } from './Condition.css'
 
 export class Condition extends React.PureComponent {
@@ -40,8 +41,21 @@ export class Condition extends React.PureComponent {
     return <And />
   }
 
+  getSelectedLabel = (options, value) => {
+    const foundOption = options.find(option => option.value === value)
+    return foundOption && foundOption.label
+  }
+
   render() {
-    const { children, innerRef, options, onChange, value, ...rest } = this.props
+    const {
+      children,
+      innerRef,
+      options,
+      onChange,
+      value,
+      noSelect,
+      ...rest
+    } = this.props
 
     return (
       <ConditionUI
@@ -57,7 +71,13 @@ export class Condition extends React.PureComponent {
             data-cy="ConditionContent"
           >
             <OptionsWrapperUI data-cy="ConditionSelectWrapper">
-              <Select onChange={onChange} options={options} value={value} />
+              {noSelect ? (
+                <SelectedOptionUI>
+                  {this.getSelectedLabel(options, value)}
+                </SelectedOptionUI>
+              ) : (
+                <Select onChange={onChange} options={options} value={value} />
+              )}
             </OptionsWrapperUI>
             <Flexy.Block data-cy="ConditionInnerContentWrapper">
               {children}
@@ -75,6 +95,7 @@ Condition.defaultProps = {
   isWithAnd: false,
   onChange: noop,
   options: [],
+  noSelect: false,
 }
 
 Condition.propTypes = {
@@ -92,6 +113,8 @@ Condition.propTypes = {
   value: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
+  /** Flag indicating if should not render Select component */
+  noSelect: PropTypes.bool,
 }
 
 export default Condition

@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
-import Button from '../Button'
 import Centralize from '../Centralize'
 import Flexy from '../Flexy'
+import Button from '../Button'
 
 export const config = {
   backgroundColor: getColor('grey.200'),
@@ -29,6 +29,15 @@ export const OptionsWrapperUI = styled(Flexy.Item)`
   width: ${config.optionsWidth};
 `
 
+export const SelectedOptionUI = styled(Flexy)`
+  align-items: center;
+  height: 40px;
+  font-weight: 500;
+  font-size: 14px;
+  color: ${getColor('charcoal.700')};
+  padding: 0 16px;
+`
+
 export const OperatorUI = styled('div')`
   background: ${getColor('grey.600')};
   border-radius: ${config.operatorBorderWidth};
@@ -47,6 +56,29 @@ export const OperatorUI = styled('div')`
 
 export const ButtonWrapperUI = styled('div')`
   ${({ align }) => `text-align: ${align};`};
+
+  & .c-ControlGroupItem {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    & .SplitButton__Action {
+      min-width: 32px;
+      text-transform: uppercase;
+      padding: 0 6px;
+    }
+    & .SplitButton__Toggler {
+      /* There's already important used in a component, so I have to use it to overwrite */
+      min-width: 20px !important;
+      width: 20px;
+    }
+
+    & ul {
+      overflow-y: hidden;
+    }
+
+    & .DropList__Select {
+      width: 80px;
+    }
+  }
 `
 
 export const ButtonUI = styled(Button)`

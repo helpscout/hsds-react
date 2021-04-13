@@ -25,7 +25,6 @@ export const ConditionListUI = styled('div')`
 
   > * {
     position: relative;
-    z-index: 1;
   }
 
   &.is-withOffset {

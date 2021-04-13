@@ -2,11 +2,19 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Icon from '../Icon'
-import { ButtonWrapperUI, ButtonUI } from './Condition.css'
+import { ButtonUI, ButtonWrapperUI } from './Condition.css'
 import { classNames } from '../../utilities/classNames'
 import { isNodeWithinViewport } from '../../utilities/node'
 import { noop } from '../../utilities/other'
-import { smoothScrollTo, linear } from '../../utilities/smoothScroll'
+import { linear, smoothScrollTo } from '../../utilities/smoothScroll'
+import DropList from '../DropList/DropList'
+import { SplitButton } from '../DropList/DropList.togglers'
+
+const dropdownItem = value => ({
+  id: value,
+  value,
+  label: value.toUpperCase(),
+})
 
 class AddButton extends React.PureComponent {
   static className = 'c-ConditionAddButton'
@@ -56,7 +64,16 @@ class AddButton extends React.PureComponent {
   setNodeRef = node => (this.node = node)
 
   render() {
-    const { className, isBorderless, type, ...rest } = this.props
+    const {
+      className,
+      isBorderless,
+      type,
+      onTypeChanged,
+      selectableType,
+      showPlusIcon,
+      onClick,
+      ...rest
+    } = this.props
     const isAnd = type.toLowerCase() === 'and'
     const align = isAnd ? 'center' : 'left'
     const iconSize = isAnd ? 24 : 20
@@ -65,16 +82,44 @@ class AddButton extends React.PureComponent {
 
     return (
       <ButtonWrapperUI align={align} ref={this.setNodeRef}>
-        <ButtonUI
-          {...getValidProps(rest)}
-          className={this.getClassName()}
-          kind="tertiary"
-          onClick={this.handleOnClick}
-          size={size}
-        >
-          <Icon name="plus-small" isWithHiddenTitle={false} size={iconSize} />
-          {label}
-        </ButtonUI>
+        {selectableType ? (
+          <DropList
+            items={[dropdownItem('or'), dropdownItem('and')]}
+            tippyOptions={{ placement: 'bottom-start', offset: [0, 5] }}
+            onSelect={({ value }) => onTypeChanged(value)}
+            toggler={
+              <SplitButton
+                {...getValidProps(rest)}
+                text={label}
+                kind="tertiary"
+                actionButtonProps={{ disabled: rest.disabled }}
+                togglerButtonProps={{
+                  kind: rest.disabled ? 'secondary' : 'tertiary',
+                  flipChevron: true,
+                }}
+                size={'xxs'}
+                onActionClick={this.handleOnClick}
+              />
+            }
+          />
+        ) : (
+          <ButtonUI
+            {...getValidProps(rest)}
+            className={this.getClassName()}
+            kind="tertiary"
+            onClick={this.handleOnClick}
+            size={size}
+          >
+            {showPlusIcon && (
+              <Icon
+                name="plus-small"
+                isWithHiddenTitle={false}
+                size={iconSize}
+              />
+            )}
+            {label}
+          </ButtonUI>
+        )}
       </ButtonWrapperUI>
     )
   }
@@ -84,9 +129,12 @@ AddButton.defaultProps = {
   'data-cy': 'ConditionAddButton',
   isBorderless: false,
   onClick: noop,
+  onTypeChanged: noop,
   scrollDuration: 300,
   scrollOffset: 200,
   type: 'or',
+  selectableType: false,
+  showPlusIcon: true,
 }
 
 AddButton.propTypes = {
@@ -106,6 +154,12 @@ AddButton.propTypes = {
   type: PropTypes.oneOf(['and', 'or']),
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
+  /** Indicate if it is possible to select type for a Button ('and' or 'or') */
+  selectableType: PropTypes.bool,
+  /** Callback when type has changed */
+  onTypeChanged: PropTypes.func,
+  /** Indicate if Plus Icon should be displayed next to text */
+  showPlusIcon: PropTypes.bool,
 }
 
 export default AddButton

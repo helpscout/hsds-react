@@ -5,9 +5,10 @@ import { withMotion } from '../Motion'
 import Condition from '../Condition'
 import { classNames } from '../../utilities/classNames'
 import { AddButtonContentUI } from './ConditionField.css'
+import { noop } from '../../utilities/other'
 
 export const ConditionFieldAddButton = props => {
-  const { className, ...rest } = props
+  const { className, onTypeChanged, selectableType, ...rest } = props
   const componentClassName = classNames('c-ConditionFieldAddButton', className)
 
   return (
@@ -15,7 +16,10 @@ export const ConditionFieldAddButton = props => {
       <AddButtonContentUI>
         <Condition.AddButton
           {...getValidProps(rest)}
+          onTypeChanged={onTypeChanged}
           className={componentClassName}
+          selectableType={selectableType}
+          showPlusIcon={false}
         />
       </AddButtonContentUI>
     </div>
@@ -29,6 +33,8 @@ ConditionFieldAddButton.defaultProps = {
   isBorderless: true,
   isWithMotion: true,
   type: 'or',
+  onTypeChanged: noop,
+  selectableType: false,
 }
 
 ConditionFieldAddButton.propTypes = {
@@ -52,6 +58,10 @@ ConditionFieldAddButton.propTypes = {
   type: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
+  /** Callback when type changed */
+  onTypeChanged: PropTypes.func,
+  /** Indicate if type can be changed */
+  selectableType: PropTypes.bool,
 }
 
 // @helpscout/motion prevents these animations from running within a
