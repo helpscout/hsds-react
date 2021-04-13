@@ -152,7 +152,14 @@ export const SplitButton = forwardRef(
             type="button"
             {...togglerButtonProps}
           >
-            <Icon name="caret-down" size="14" />
+            <Icon
+              name={
+                togglerButtonProps.flipChevron && isActive
+                  ? 'caret-up'
+                  : 'caret-down'
+              }
+              size="14"
+            />
           </SplitButtonTogglerUI>
         </ControlGroup.Item>
       </ControlGroup>

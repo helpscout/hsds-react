@@ -95,6 +95,7 @@ class AddButton extends React.PureComponent {
                 actionButtonProps={{ disabled: rest.disabled }}
                 togglerButtonProps={{
                   kind: rest.disabled ? 'secondary' : 'tertiary',
+                  flipChevron: true,
                 }}
                 size={'xxs'}
                 onActionClick={this.handleOnClick}

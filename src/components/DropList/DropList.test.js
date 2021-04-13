@@ -552,6 +552,35 @@ describe('Togglers', () => {
       expect(onActionClick).toBeCalled()
     })
   })
+
+  test('Should allow to change arrow direction when opened menu', async () => {
+    const { container, getByRole } = render(
+      <DropList
+        items={beatles}
+        toggler={
+          <SplitButton
+            text="Submit"
+            togglerButtonProps={{ flipChevron: true }}
+          />
+        }
+      />
+    )
+
+    expect(
+      container.querySelector('.is-iconName-caret-down')
+    ).toBeInTheDocument()
+
+    user.click(getByRole('button', { name: 'toggle menu' }))
+
+    await waitFor(() => {
+      expect(
+        container.querySelector('.is-iconName-caret-down')
+      ).not.toBeInTheDocument()
+      expect(
+        container.querySelector('.is-iconName-caret-up')
+      ).toBeInTheDocument()
+    })
+  })
 })
 
 describe('Selection', () => {
