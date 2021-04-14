@@ -441,6 +441,8 @@ Depending on your use case, you might want to set `closeOnSelection = false` whe
 
 ### Togglers
 
+DropList provides a set of ready-to-use "triggers" or "togglers" components that should cover most if not all of our current needs: `SimpleButton`, `IconBtn`, `Kebab`, `SelectTag` and `SplittedButton`. Import them into your project from `src/components/DropList/DropList.togglers.jsx` and feed them to the `toggler` prop.
+
 #### SplittedButton
 
 This toggler replaces the previous `SplittedButton` component. It's not very different from the other togglers except that it's composed of 2 HSDS Buttons, the "action" and the "toggler". The props to interact / customize them are:
@@ -501,11 +503,11 @@ The `toggler` prop accepts any React component, so you can provide your own cust
         }
       />
     </div>
+  </Story>
   <Story name="Toggler: IconBtn">
     <div
       style={{
         width: '400px',
-  </Story>
         margin: '50px 100px 0 150px',
         border: '1px dashed silver',
         borderRadius: '5px',
@@ -514,11 +516,11 @@ The `toggler` prop accepts any React component, so you can provide your own cust
     >
       <DropList
         items={regularItems}
+        toggler={
           <IconBtn
             onClick={() => {
               console.log('Clicked from story')
             }}
-        toggler={
           />
         }
       />
