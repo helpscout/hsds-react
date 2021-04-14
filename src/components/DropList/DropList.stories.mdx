@@ -59,6 +59,31 @@ Sometimes the list needs to be appended to a different DOM context due to access
 />
 ```
 
+Sometimes when portaling you might need to apply some custom css to the menu but find that adding styles using Styled Components doesn't work (this happens because the styled component can't target the menu as it's no longer in its scope). In these rare ocasions you can use the `menuCSS` prop to add your styles, it accepts the returned value from the [`css` helper from Styled Components](https://styled-components.com/docs/api#css)
+
+```jsx
+// import { css } from 'styled-components'
+
+<DropList
+  items={regularItems}
+  toggler={<SimpleButton text="Click" />}
+  tippyOptions={{
+    appendTo: () => document.body,
+  }}
+  menuCSS={css`
+    width: 134px;
+
+    &:hover {
+      color: salmon;
+    }
+  `}
+/>
+```
+
+> Note: `menuCSS` should only be used in conjuction with `tippyOptions.appendTo`, if not you will see errors in the console. Use regular styled components in any other instance.
+
+<br />
+
 ## Example
 
 <Canvas>

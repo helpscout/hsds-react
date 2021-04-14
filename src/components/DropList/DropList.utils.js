@@ -6,7 +6,12 @@ import { ListItemUI, EmptyListUI } from './DropList.css'
 
 // No need to test this helper
 /* istanbul ignore next */
-export function displayWarnings({ toggler, withMultipleSelection }) {
+export function displayWarnings({
+  toggler,
+  withMultipleSelection,
+  menuCSS,
+  tippyOptions,
+}) {
   if (
     process.env.NODE_ENV !== 'production' &&
     process.env.NODE_ENV !== 'test'
@@ -21,12 +26,17 @@ export function displayWarnings({ toggler, withMultipleSelection }) {
         'The Select toggler option should not have withMultipleSelection enabled, it has been disabled for you'
       )
     }
+    if (menuCSS != null && tippyOptions.appendTo === undefined) {
+      console.error(
+        'menuCSS is only needed when using tippyOptions.appendTo to portal the DropList, please use regular styled components if you need custom styles'
+      )
+    }
   }
 }
 
-export function useWarnings({ toggler, withMultipleSelection }) {
+export function useWarnings(props) {
   useEffect(() => {
-    displayWarnings({ toggler, withMultipleSelection })
+    displayWarnings(props)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 }

@@ -36,6 +36,7 @@ function DropListManager({
   focusTogglerOnMenuClose = true,
   isMenuOpen = false,
   items = [],
+  menuCSS,
   onMenuBlur = noop,
   onOpenedStateChange = noop,
   onSelect = noop,
@@ -76,7 +77,7 @@ function DropListManager({
   const Toggler = decorateUserToggler(toggler)
   const DropListVariant = getDropListVariant()
 
-  useWarnings({ toggler, withMultipleSelection })
+  useWarnings({ toggler, withMultipleSelection, menuCSS, tippyOptions })
 
   useDeepCompareEffect(() => {
     if (withMultipleSelection) {
@@ -226,6 +227,7 @@ function DropListManager({
             handleSelectedItemChange={handleSelectedItemChange}
             isOpen={isOpen}
             items={parsedItems}
+            menuCSS={menuCSS}
             onMenuBlur={onMenuBlur}
             renderCustomListItem={renderCustomListItem}
             selectedItem={selectedItem}
@@ -283,6 +285,8 @@ DropListManager.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.string, itemShape, dividerShape, groupShape])
   ),
+  /** Custom css for the Menu */
+  menuCSS: PropTypes.any,
   /** Callback that fires when the menu loses focus */
   onMenuBlur: PropTypes.func,
   /** Callback that fires whenever the DropList opens and closes */

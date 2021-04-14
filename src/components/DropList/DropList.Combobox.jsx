@@ -28,6 +28,7 @@ function Combobox({
   selectedItems,
   isOpen = false,
   items = [],
+  menuCSS,
   handleSelectedItemChange = noop,
   renderCustomListItem = null,
   toggleOpenedState = noop,
@@ -123,6 +124,7 @@ function Combobox({
       className="DropList DropList__Combobox"
       data-cy={dataCy}
       variant="combobox"
+      menuCSS={menuCSS}
       {...getComboboxProps()}
     >
       <InputSearchHolderUI show={items.length > 0}>

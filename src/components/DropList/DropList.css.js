@@ -18,6 +18,8 @@ export const DropListWrapperUI = styled('div')`
   * {
     box-sizing: border-box;
   }
+
+  ${props => (props.menuCSS ? props.menuCSS : '')};
 `
 
 export const MenuListUI = styled('ul')`

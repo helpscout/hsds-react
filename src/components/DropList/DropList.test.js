@@ -1,6 +1,7 @@
 import React from 'react'
 import { render, waitFor } from '@testing-library/react'
 import user from '@testing-library/user-event'
+import { css } from 'styled-components'
 import DropList from './DropList'
 import { SimpleButton, SelectTag, SplittedButton } from './DropList.togglers'
 import {
@@ -264,6 +265,31 @@ describe('Render', () => {
 
       expect(tippyContainer).toBeTruthy()
       expect(tippyContainer.classList.contains('hsds-react')).toBeTruthy()
+    })
+  })
+
+  test('should be able to pass custom css to the menu when portaling', async () => {
+    const { queryByText } = render(
+      <DropList
+        items={beatles}
+        tippyOptions={{
+          appendTo: () => document.body,
+        }}
+        toggler={<SimpleButton text="Click" />}
+        menuCSS={css`
+          outline: '2px solid salmon';
+        `}
+      />
+    )
+
+    user.click(queryByText('Click'))
+
+    await waitFor(() => {
+      const select = document.querySelector('.DropList__Select')
+
+      expect(window.getComputedStyle(select).getPropertyValue('outline')).toBe(
+        "'2px solid salmon'"
+      )
     })
   })
 

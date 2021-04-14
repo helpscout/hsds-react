@@ -23,6 +23,7 @@ function Select({
   handleSelectedItemChange = noop,
   isOpen = false,
   items = [],
+  menuCSS,
   onMenuBlur = noop,
   renderCustomListItem = null,
   selectedItem = null,
@@ -122,7 +123,11 @@ function Select({
   }
 
   return (
-    <DropListWrapperUI className="DropList DropList__Select" data-cy={dataCy}>
+    <DropListWrapperUI
+      className="DropList DropList__Select"
+      data-cy={dataCy}
+      menuCSS={menuCSS}
+    >
       <A11yTogglerUI {...getToggleButtonProps()}>Toggler</A11yTogglerUI>
       <MenuListUI
         {...getMenuProps({
