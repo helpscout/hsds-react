@@ -10,11 +10,13 @@ import { linear, smoothScrollTo } from '../../utilities/smoothScroll'
 import DropList from '../DropList/DropList'
 import { SplitButton } from '../DropList/DropList.togglers'
 
-const dropdownItem = value => ({
+const dropListItem = value => ({
   id: value,
   value,
   label: value.toUpperCase(),
 })
+
+const dropListItems = [dropListItem('or'), dropListItem('and')]
 
 class AddButton extends React.PureComponent {
   static className = 'c-ConditionAddButton'
@@ -70,7 +72,6 @@ class AddButton extends React.PureComponent {
       type,
       onTypeChanged,
       selectableType,
-      showPlusIcon,
       onClick,
       ...rest
     } = this.props
@@ -84,9 +85,10 @@ class AddButton extends React.PureComponent {
       <ButtonWrapperUI align={align} ref={this.setNodeRef}>
         {selectableType ? (
           <DropList
-            items={[dropdownItem('or'), dropdownItem('and')]}
+            items={dropListItems}
             tippyOptions={{ placement: 'bottom-start', offset: [0, 5] }}
             onSelect={({ value }) => onTypeChanged(value)}
+            selection={dropListItems.find(item => item.id === type)}
             toggler={
               <SplitButton
                 {...getValidProps(rest)}
@@ -110,13 +112,7 @@ class AddButton extends React.PureComponent {
             onClick={this.handleOnClick}
             size={size}
           >
-            {showPlusIcon && (
-              <Icon
-                name="plus-small"
-                isWithHiddenTitle={false}
-                size={iconSize}
-              />
-            )}
+            <Icon name="plus-small" isWithHiddenTitle={false} size={iconSize} />
             {label}
           </ButtonUI>
         )}
@@ -134,7 +130,6 @@ AddButton.defaultProps = {
   scrollOffset: 200,
   type: 'or',
   selectableType: false,
-  showPlusIcon: true,
 }
 
 AddButton.propTypes = {
@@ -158,8 +153,6 @@ AddButton.propTypes = {
   selectableType: PropTypes.bool,
   /** Callback when type has changed */
   onTypeChanged: PropTypes.func,
-  /** Indicate if Plus Icon should be displayed next to text */
-  showPlusIcon: PropTypes.bool,
 }
 
 export default AddButton

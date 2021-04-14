@@ -139,7 +139,7 @@ describe('With selectable conjunction', () => {
     expect(screen.getByRole('button', { name: 'or' })).toBeInTheDocument()
   })
 
-  test('should display AND conjunction selected', () => {
+  test('should mark provided item as selected', () => {
     render(
       <ConditionField.Group canChangeConjunction conjunction={'and'}>
         <ConditionField />
@@ -147,7 +147,11 @@ describe('With selectable conjunction', () => {
     )
 
     user.click(dropdownTrigger())
-    expect(screen.getByRole('button', { name: 'and' })).toBeInTheDocument()
+    expect(
+      within(conjunctionMenu())
+        .getAllByRole('option')
+        .find(el => el.classList.contains('is-selected')).textContent
+    ).toEqual('AND')
   })
 
   test('should make a callback when conjunction changed', () => {

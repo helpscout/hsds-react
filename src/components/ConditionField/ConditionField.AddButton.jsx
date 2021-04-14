@@ -19,7 +19,6 @@ export const ConditionFieldAddButton = props => {
           onTypeChanged={onTypeChanged}
           className={componentClassName}
           selectableType={selectableType}
-          showPlusIcon={false}
         />
       </AddButtonContentUI>
     </div>
