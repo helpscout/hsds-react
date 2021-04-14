@@ -11,6 +11,9 @@ import {
 } from '../../utilities/specs/dropdown.specs'
 
 const beatles = ['John', 'Paul', 'Ringo', 'George']
+let dedupedRegularItems = regularItems.filter(
+  (v, i, a) => a.findIndex(t => t.label === v.label) === i
+)
 
 describe('Render', () => {
   test('Should render a fallback toggler if none passed', () => {
@@ -57,7 +60,7 @@ describe('Render', () => {
   test('should render a menu list with object items that include a label', async () => {
     const { getByRole, queryByText, queryByRole } = render(
       <DropList
-        items={regularItems}
+        items={dedupedRegularItems}
         toggler={<SimpleButton text="Button Toggler" />}
       />
     )
@@ -70,7 +73,7 @@ describe('Render', () => {
     await waitFor(() => {
       expect(queryByRole('listbox')).toBeInTheDocument()
 
-      regularItems.forEach(item => {
+      dedupedRegularItems.forEach(item => {
         expect(queryByText(item.label)).toBeInTheDocument()
       })
     })
@@ -83,7 +86,7 @@ describe('Render', () => {
   })
 
   test('should render a menu list with object items that include a value and no label', async () => {
-    const regularValueItems = regularItems.map(item => {
+    const regularValueItems = dedupedRegularItems.map(item => {
       return { value: item.value }
     })
     const { getByRole, queryByText, queryByRole } = render(
@@ -320,7 +323,7 @@ describe('Menu', () => {
     const { queryByRole } = render(
       <DropList
         isMenuOpen
-        items={regularItems}
+        items={dedupedRegularItems}
         toggler={<SimpleButton text="Button Toggler" />}
       />
     )
@@ -353,7 +356,7 @@ describe('Menu', () => {
     const { queryByRole, getByPlaceholderText } = render(
       <DropList
         isMenuOpen
-        items={regularItems}
+        items={dedupedRegularItems}
         toggler={<SimpleButton text="Button Toggler" />}
         autoSetComboboxAt={3}
       />
@@ -374,7 +377,7 @@ describe('Menu', () => {
     const { queryByRole, queryByPlaceholderText } = render(
       <DropList
         isMenuOpen
-        items={regularItems}
+        items={dedupedRegularItems}
         toggler={<SimpleButton text="Button Toggler" />}
         autoSetComboboxAt={16}
       />
@@ -392,7 +395,7 @@ describe('Combobox', () => {
     const { queryByRole, getByPlaceholderText } = render(
       <DropList
         isMenuOpen
-        items={regularItems}
+        items={dedupedRegularItems}
         toggler={<SimpleButton text="Button Toggler" />}
         variant="combobox"
       />
@@ -413,7 +416,7 @@ describe('Combobox', () => {
     const { getByPlaceholderText } = render(
       <DropList
         isMenuOpen
-        items={regularItems}
+        items={dedupedRegularItems}
         toggler={<SimpleButton text="Button Toggler" />}
         variant="combobox"
       />
@@ -643,7 +646,7 @@ describe('Selection', () => {
       <DropList
         isMenuOpen
         onSelect={onSelect}
-        items={regularItems}
+        items={dedupedRegularItems}
         toggler={<SimpleButton text="Button Toggler" />}
       />
     )
@@ -688,7 +691,7 @@ describe('Selection', () => {
       <DropList
         isMenuOpen
         onSelect={onSelect}
-        items={regularItems}
+        items={dedupedRegularItems}
         toggler={<SimpleButton text="Button Toggler" />}
         variant="combobox"
       />
@@ -819,10 +822,10 @@ describe('Selection', () => {
     const { getByText } = render(
       <DropList
         onSelect={onSelect}
-        items={regularItems}
+        items={dedupedRegularItems}
         toggler={<SimpleButton text="Button Toggler" />}
         isMenuOpen
-        selection={regularItems[2]}
+        selection={dedupedRegularItems[2]}
       />
     )
 
@@ -840,7 +843,7 @@ describe('Selection', () => {
     const { getByText } = render(
       <DropList
         onSelect={onSelect}
-        items={regularItems}
+        items={dedupedRegularItems}
         toggler={<SimpleButton text="Button Toggler" />}
         isMenuOpen
         selection={[regularItems[0], regularItems[2]]}
