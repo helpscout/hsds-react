@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { act, render, waitFor } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import user from '@testing-library/user-event'
 import { EditableField } from '../EditableField'
 import {

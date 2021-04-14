@@ -1,5 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import { render } from '@testing-library/react'
 import { MemoryRouter as Router } from 'react-router'
 import { default as Modal, ModalComponent } from '../Modal'
 import { Card, Portal, Overlay, Scrollable } from '../../index'
@@ -688,10 +689,11 @@ describe('Keyboard: Tab', () => {
 describe('Card: Focus', () => {
   test('Autofocuses card on mount', () => {
     const spy = jest.fn()
-    const wrapper = mount(<ModalComponent />)
-    const o = wrapper.instance().cardNode
-    o.onfocus = spy
-    wrapper.setProps({ isOpen: true })
+    const { container, rerender } = render(<ModalComponent />)
+    const modal = container.querySelector('.c-Modal__Card')
+    modal.onfocus = spy
+
+    rerender(<ModalComponent isOpen />)
 
     jest.runAllTimers()
 

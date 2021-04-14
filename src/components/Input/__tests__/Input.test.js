@@ -633,13 +633,13 @@ describe('isFocused', () => {
 
   test('Can toggle isFocused', () => {
     const spy = jest.fn()
-    const wrapper = mount(
+    const { container, rerender } = renderComponent(
       <Input onFocus={spy} isFocused={false} forceAutoFocusTimeout={20} />
     )
-    const o = wrapper.instance().inputNode
-    o.onfocus = spy
+    const input = container.querySelector('.c-Input__inputField')
+    input.onfocus = spy
 
-    wrapper.setProps({ isFocused: true })
+    rerender(<Input isFocused />)
 
     jest.runAllTimers()
 

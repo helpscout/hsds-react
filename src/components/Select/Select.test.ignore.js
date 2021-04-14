@@ -1,5 +1,11 @@
+/**
+ ***DEPRECATED COMPONENT***
+ ***DEPRECATED COMPONENT***
+ ***DEPRECATED COMPONENT***
+ */
 import React from 'react'
 import { mount, render } from 'enzyme'
+import { render as testingLibRender } from '@testing-library/react'
 import { Select } from './Select'
 
 const ui = {
@@ -429,9 +435,9 @@ describe('selectNode', () => {
 describe('isFocused', () => {
   test('Can focus select using isFocused prop', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Select isFocused />)
-    const o = wrapper.instance().selectNode
-    o.onfocus = spy
+    const { container } = testingLibRender(<Select isFocused />)
+    const input = container.querySelector('.c-Select__inputField')
+    input.onfocus = spy
 
     jest.runAllTimers()
 
@@ -440,9 +446,11 @@ describe('isFocused', () => {
 
   test('Can focus select using custom timeout', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Select isFocused forceAutoFocusTimeout={20} />)
-    const o = wrapper.instance().selectNode
-    o.onfocus = spy
+    const { container } = testingLibRender(
+      <Select isFocused forceAutoFocusTimeout={20} />
+    )
+    const input = container.querySelector('.c-Select__inputField')
+    input.onfocus = spy
 
     expect(spy).not.toHaveBeenCalled()
 
@@ -453,13 +461,13 @@ describe('isFocused', () => {
 
   test('Can toggle isFocused', () => {
     const spy = jest.fn()
-    const wrapper = mount(
+    const { container, rerender } = testingLibRender(
       <Select onFocus={spy} isFocused={false} forceAutoFocusTimeout={20} />
     )
-    const o = wrapper.instance().selectNode
-    o.onfocus = spy
+    const input = container.querySelector('.c-Select__inputField')
+    input.onfocus = spy
 
-    wrapper.setProps({ isFocused: true })
+    rerender(<Select isFocused />)
 
     jest.runAllTimers()
 

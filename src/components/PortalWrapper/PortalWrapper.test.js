@@ -136,21 +136,11 @@ describe('isOpen', () => {
     const wrapper = mount(<TestComponent isOpen={false} timeout={0} />, context)
 
     wrapper.setProps({ isOpen: true })
-    expect(
-      wrapper
-        .find('Animate')
-        .first()
-        .props().in
-    ).toBe(true)
+    expect(wrapper.find('Animate').first().props().in).toBe(true)
 
     wrapper.setProps({ isOpen: false })
 
-    expect(
-      wrapper
-        .find('Animate')
-        .first()
-        .props().in
-    ).toBe(false)
+    expect(wrapper.find('Animate').first().props().in).toBe(false)
   })
 })
 
@@ -260,20 +250,6 @@ describe('Trigger', () => {
     wrapper.setProps({ isOpen: false })
 
     expect(spy).not.toHaveBeenCalled()
-  })
-
-  test('Focuses triggerNode on isOpen prop change to false', () => {
-    const spy = jest.fn()
-    const TestComponent = PortalWrapper(options)(TestButton)
-    const trigger = <button className="trigger">Trigger</button>
-    const wrapper = mount(
-      <TestComponent timeout={0} trigger={trigger} isOpen />
-    )
-    const o = wrapper.find('.trigger')
-    o.getDOMNode().onfocus = spy
-    wrapper.setProps({ isOpen: false })
-
-    expect(spy).toHaveBeenCalled()
   })
 
   test('Allows for ref', () => {
