@@ -3,6 +3,7 @@ import { getColor } from '../../styles/utilities/color'
 import Centralize from '../Centralize'
 import Flexy from '../Flexy'
 import Button from '../Button'
+import { SplitButton } from '../DropList/DropList.togglers'
 
 export const config = {
   backgroundColor: getColor('grey.200'),
@@ -54,17 +55,17 @@ export const OperatorUI = styled('div')`
   }
 `
 
-export const ButtonWrapperUI = styled('div')`
-  ${({ align }) => `text-align: ${align};`};
-
+export const SplitButtonUI = styled(SplitButton)`
   & .c-ControlGroupItem {
     margin-top: 2px;
     margin-bottom: 2px;
+
     & .SplitButton__Action {
       min-width: 32px;
       text-transform: uppercase;
       padding: 0 6px;
     }
+
     & .SplitButton__Toggler {
       /* There's already important used in a component, so I have to use it to overwrite */
       min-width: 20px !important;
@@ -79,6 +80,10 @@ export const ButtonWrapperUI = styled('div')`
       width: 80px;
     }
   }
+`
+
+export const ButtonWrapperUI = styled('div')`
+  ${({ align }) => `text-align: ${align};`};
 `
 
 export const ButtonUI = styled(Button)`

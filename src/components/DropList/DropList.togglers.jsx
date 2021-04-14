@@ -113,6 +113,7 @@ export const SplitButton = forwardRef(
       isActive = false,
       actionButtonProps = {},
       togglerButtonProps = {},
+      ...rest
     },
     ref
   ) => {
@@ -120,6 +121,7 @@ export const SplitButton = forwardRef(
       <ControlGroup
         className="DropListToggler SplitButtonTogglerControlGroup"
         data-cy="DropList.SplitButtonTogglerControlGroup"
+        {...rest}
       >
         <ControlGroup.Item>
           <HSDSButton
