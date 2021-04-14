@@ -90,11 +90,11 @@ const TimeOnPageCondition = ({ error, onRemove, value, time, ...rest }) => (
           <Flexy.Item>
             <Input
               inputType="number"
-              maxLength="3"
+              maxLength={3}
               autoComplete="off"
               width={error ? 75 : 60}
-              value={value}
-              state={error && 'error'}
+              value={value || ''}
+              state={error ? 'error' : ''}
             />
           </Flexy.Item>
           <Flexy.Block>
@@ -125,11 +125,11 @@ const PageViewCondition = ({ error, onRemove, value, ...rest }) => (
       <ConditionField.Item>
         <Input
           inputType="number"
-          maxLength="3"
+          maxLength={3}
           autoComplete="off"
           width={error ? 75 : 60}
-          value={value}
-          state={error && 'error'}
+          value={value || ''}
+          state={error ? 'error' : ''}
         />
       </ConditionField.Item>
       <ConditionField.Block>
@@ -147,11 +147,11 @@ const RepeatPageViewCondition = ({ error, onRemove, value, ...rest }) => (
       <ConditionField.Item>
         <Input
           inputType="number"
-          maxLength="3"
+          maxLength={3}
           autoComplete="off"
           width={error ? 75 : 60}
-          value={value}
-          state={error && 'error'}
+          value={value || ''}
+          state={error ? 'error' : ''}
         />
       </ConditionField.Item>
       <ConditionField.Block>
