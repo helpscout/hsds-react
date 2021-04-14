@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Icon from '../Icon'
-import { ButtonUI, ButtonWrapperUI, SplitButtonUI } from './Condition.css'
+import { ButtonUI, ButtonWrapperUI, SplittedButtonUI } from './Condition.css'
 import { classNames } from '../../utilities/classNames'
 import { isNodeWithinViewport } from '../../utilities/node'
 import { noop } from '../../utilities/other'
@@ -89,7 +89,7 @@ class AddButton extends React.PureComponent {
             onSelect={({ value }) => onTypeChanged(value)}
             selection={dropListItems.find(item => item.id === type)}
             toggler={
-              <SplitButtonUI
+              <SplittedButtonUI
                 {...getValidProps(rest)}
                 text={label}
                 kind="tertiary"

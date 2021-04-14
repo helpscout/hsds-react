@@ -17,7 +17,7 @@ import {
   useWarnings,
 } from './DropList.utils'
 import {
-  Button,
+  SimpleButton,
   SelectTag,
   getTogglerPlacementProps,
 } from './DropList.togglers'
@@ -135,7 +135,7 @@ function DropListManager({
     }
 
     return (
-      <Button
+      <SimpleButton
         onClick={() => {
           toggleOpenedState(!isOpen)
         }}

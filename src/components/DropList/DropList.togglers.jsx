@@ -7,7 +7,7 @@ import ControlGroup from '../ControlGroup'
 import HSDSButton from '../Button'
 import Icon from '../Icon'
 
-export const Button = forwardRef(
+export const SimpleButton = forwardRef(
   (
     {
       text = '',
@@ -102,7 +102,7 @@ const NavLinkTogglerUI = styled('button')`
   }
 `
 
-export const SplitButton = forwardRef(
+export const SplittedButton = forwardRef(
   (
     {
       text = '',
@@ -334,7 +334,7 @@ const IconButtonUI = styled('button')`
 
 // No need to test every single toggler if they're basically the same as Button
 /* istanbul ignore next */
-export const IconButton = forwardRef(
+export const IconBtn = forwardRef(
   ({ isActive = false, onClick = noop, iconName = 'assign', ...rest }, ref) => {
     return (
       <IconButtonUI
@@ -359,7 +359,7 @@ export const IconButton = forwardRef(
 // No need to test this
 /* istanbul ignore next */
 export function getTogglerPlacementProps(toggler, { placement, offset }) {
-  if (toggler.type === Button) {
+  if (toggler.type === SimpleButton) {
     return {
       placement: placement || 'bottom-end',
       offset: offset || [0, 5],
@@ -380,14 +380,14 @@ export function getTogglerPlacementProps(toggler, { placement, offset }) {
     }
   }
 
-  if (toggler.type === SplitButton) {
+  if (toggler.type === SplittedButton) {
     return {
       placement: placement || 'bottom-end',
       offset: offset || [0, 5],
     }
   }
 
-  if (toggler.type === IconButton) {
+  if (toggler.type === IconBtn) {
     return {
       placement: placement || 'bottom-start',
       offset: offset || [-5, 0],

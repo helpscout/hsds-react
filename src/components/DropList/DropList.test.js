@@ -2,7 +2,7 @@ import React from 'react'
 import { render, waitFor } from '@testing-library/react'
 import user from '@testing-library/user-event'
 import DropList from './DropList'
-import { Button, SelectTag, SplitButton } from './DropList.togglers'
+import { SimpleButton, SelectTag, SplittedButton } from './DropList.togglers'
 import {
   itemsWithDivider,
   groupAndDividerItems,
@@ -20,7 +20,7 @@ describe('Render', () => {
 
   test('Should render passed toggler', () => {
     const { getByText } = render(
-      <DropList items={[]} toggler={<Button text="Button Toggler" />} />
+      <DropList items={[]} toggler={<SimpleButton text="Button Toggler" />} />
     )
 
     expect(getByText('Button Toggler')).toBeInTheDocument()
@@ -28,7 +28,10 @@ describe('Render', () => {
 
   test('should render a menu list with string items', async () => {
     const { getByRole, queryByText, queryByRole } = render(
-      <DropList items={beatles} toggler={<Button text="Button Toggler" />} />
+      <DropList
+        items={beatles}
+        toggler={<SimpleButton text="Button Toggler" />}
+      />
     )
     const toggler = getByRole('button')
 
@@ -55,7 +58,7 @@ describe('Render', () => {
     const { getByRole, queryByText, queryByRole } = render(
       <DropList
         items={regularItems}
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
       />
     )
     const toggler = getByRole('button')
@@ -86,7 +89,7 @@ describe('Render', () => {
     const { getByRole, queryByText, queryByRole } = render(
       <DropList
         items={regularValueItems}
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
       />
     )
     const toggler = getByRole('button')
@@ -114,7 +117,7 @@ describe('Render', () => {
     const { container, getByRole, queryByRole } = render(
       <DropList
         items={itemsWithDivider}
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
       />
     )
     const toggler = getByRole('button')
@@ -131,7 +134,7 @@ describe('Render', () => {
     const { container, getByRole, queryByRole } = render(
       <DropList
         items={simpleGroupedItems}
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
       />
     )
     const toggler = getByRole('button')
@@ -148,7 +151,7 @@ describe('Render', () => {
     const { container, getByRole, queryByRole } = render(
       <DropList
         items={groupAndDividerItems}
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
       />
     )
     const toggler = getByRole('button')
@@ -164,7 +167,7 @@ describe('Render', () => {
 
   test('should render an empty menu list if no items in the array', async () => {
     const { getByRole, queryByText, queryByRole } = render(
-      <DropList items={[]} toggler={<Button text="Button Toggler" />} />
+      <DropList items={[]} toggler={<SimpleButton text="Button Toggler" />} />
     )
     const toggler = getByRole('button')
     expect(toggler.getAttribute('aria-expanded')).toBe('false')
@@ -193,7 +196,7 @@ describe('Render', () => {
           <div>My Empty List is Better Than Your Empty List</div>
         }
         isMenuOpen
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
       />
     )
 
@@ -210,7 +213,7 @@ describe('Render', () => {
         items={[]}
         customEmptyList="something"
         isMenuOpen
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
       />
     )
 
@@ -227,7 +230,7 @@ describe('Render', () => {
           <span className="customized">{item}</span>
         )}
         isMenuOpen
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
       />
     )
 
@@ -247,7 +250,7 @@ describe('Render', () => {
         tippyOptions={{
           appendTo: () => document.body,
         }}
-        toggler={<Button text="Click" />}
+        toggler={<SimpleButton text="Click" />}
       />
     )
 
@@ -263,7 +266,11 @@ describe('Render', () => {
 
   test('should close on ESC', async () => {
     const { container, getByRole } = render(
-      <DropList items={beatles} isMenuOpen toggler={<Button text="Click" />} />
+      <DropList
+        items={beatles}
+        isMenuOpen
+        toggler={<SimpleButton text="Click" />}
+      />
     )
 
     user.type(container, '{esc}')
@@ -279,7 +286,7 @@ describe('Render', () => {
         items={beatles}
         isMenuOpen
         variant="combobox"
-        toggler={<Button text="Click" />}
+        toggler={<SimpleButton text="Click" />}
       />
     )
 
@@ -296,7 +303,7 @@ describe('Render', () => {
         items={beatles}
         isMenuOpen
         variant="combobox"
-        toggler={<Button text="Click" />}
+        toggler={<SimpleButton text="Click" />}
       />
     )
 
@@ -314,7 +321,7 @@ describe('Menu', () => {
       <DropList
         isMenuOpen
         items={regularItems}
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
       />
     )
 
@@ -330,7 +337,7 @@ describe('Menu', () => {
         items={beatles}
         isMenuOpen
         onMenuBlur={onMenuBlur}
-        toggler={<Button text="Click" />}
+        toggler={<SimpleButton text="Click" />}
       />
     )
 
@@ -347,7 +354,7 @@ describe('Menu', () => {
       <DropList
         isMenuOpen
         items={regularItems}
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
         autoSetComboboxAt={3}
       />
     )
@@ -368,7 +375,7 @@ describe('Menu', () => {
       <DropList
         isMenuOpen
         items={regularItems}
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
         autoSetComboboxAt={16}
       />
     )
@@ -386,7 +393,7 @@ describe('Combobox', () => {
       <DropList
         isMenuOpen
         items={regularItems}
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
         variant="combobox"
       />
     )
@@ -407,7 +414,7 @@ describe('Combobox', () => {
       <DropList
         isMenuOpen
         items={regularItems}
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
         variant="combobox"
       />
     )
@@ -422,7 +429,7 @@ describe('Combobox', () => {
       <DropList
         isMenuOpen
         items={[]}
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
         variant="combobox"
       />
     )
@@ -442,7 +449,7 @@ describe('Combobox', () => {
       <DropList
         isMenuOpen
         items={beatles}
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
         variant="combobox"
       />
     )
@@ -463,7 +470,7 @@ describe('Combobox', () => {
       <DropList
         isMenuOpen
         items={beatles}
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
         variant="combobox"
       />
     )
@@ -487,7 +494,7 @@ describe('Togglers', () => {
     const { getByRole } = render(
       <DropList
         items={[]}
-        toggler={<Button onClick={onClick} text="Button Toggler" />}
+        toggler={<SimpleButton onClick={onClick} text="Button Toggler" />}
       />
     )
     const toggler = getByRole('button')
@@ -501,7 +508,7 @@ describe('Togglers', () => {
 
   test('Should pass the open/closed state to the toggler', async () => {
     const { getByRole } = render(
-      <DropList items={[]} toggler={<Button text="Button Toggler" />} />
+      <DropList items={[]} toggler={<SimpleButton text="Button Toggler" />} />
     )
     const toggler = getByRole('button')
 
@@ -536,12 +543,12 @@ describe('Togglers', () => {
     })
   })
 
-  test('Should run action click callback on a SplitButton', async () => {
+  test('Should run action click callback on a SplittedButton', async () => {
     const onActionClick = jest.fn()
     const { getByText } = render(
       <DropList
         items={beatles}
-        toggler={<SplitButton text="Submit" onActionClick={onActionClick} />}
+        toggler={<SplittedButton text="Submit" onActionClick={onActionClick} />}
         isMenuOpen
       />
     )
@@ -558,7 +565,7 @@ describe('Togglers', () => {
       <DropList
         items={beatles}
         toggler={
-          <SplitButton
+          <SplittedButton
             text="Submit"
             togglerButtonProps={{ flipChevron: true }}
           />
@@ -590,7 +597,7 @@ describe('Selection', () => {
       <DropList
         onSelect={onSelect}
         items={beatles}
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
       />
     )
     const toggler = getByRole('button')
@@ -637,7 +644,7 @@ describe('Selection', () => {
         isMenuOpen
         onSelect={onSelect}
         items={regularItems}
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
       />
     )
     const itemToSelect = regularItems[3]
@@ -660,7 +667,7 @@ describe('Selection', () => {
         isMenuOpen
         onSelect={onSelect}
         items={beatles}
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
         variant="combobox"
       />
     )
@@ -682,7 +689,7 @@ describe('Selection', () => {
         isMenuOpen
         onSelect={onSelect}
         items={regularItems}
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
         variant="combobox"
       />
     )
@@ -707,7 +714,7 @@ describe('Selection', () => {
         isMenuOpen
         onSelect={onSelect}
         items={beatles}
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
         withMultipleSelection
       />
     )
@@ -775,7 +782,7 @@ describe('Selection', () => {
         isMenuOpen
         items={beatles}
         onSelect={onSelect}
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
         variant="combobox"
       />
     )
@@ -794,7 +801,7 @@ describe('Selection', () => {
       <DropList
         onSelect={onSelect}
         items={beatles}
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
         isMenuOpen
         selection="Ringo"
       />
@@ -813,7 +820,7 @@ describe('Selection', () => {
       <DropList
         onSelect={onSelect}
         items={regularItems}
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
         isMenuOpen
         selection={regularItems[2]}
       />
@@ -834,7 +841,7 @@ describe('Selection', () => {
       <DropList
         onSelect={onSelect}
         items={regularItems}
-        toggler={<Button text="Button Toggler" />}
+        toggler={<SimpleButton text="Button Toggler" />}
         isMenuOpen
         selection={[regularItems[0], regularItems[2]]}
         withMultipleSelection

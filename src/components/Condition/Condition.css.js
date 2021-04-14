@@ -3,7 +3,7 @@ import { getColor } from '../../styles/utilities/color'
 import Centralize from '../Centralize'
 import Flexy from '../Flexy'
 import Button from '../Button'
-import { SplitButton } from '../DropList/DropList.togglers'
+import { SplittedButton } from '../DropList/DropList.togglers'
 
 export const config = {
   backgroundColor: getColor('grey.200'),
@@ -55,7 +55,7 @@ export const OperatorUI = styled('div')`
   }
 `
 
-export const SplitButtonUI = styled(SplitButton)`
+export const SplittedButtonUI = styled(SplittedButton)`
   & .c-ControlGroupItem {
     margin-top: 2px;
     margin-bottom: 2px;

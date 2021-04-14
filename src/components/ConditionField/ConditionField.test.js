@@ -109,7 +109,7 @@ describe('Tooltip', () => {
 })
 
 describe('With selectable conjunction', () => {
-  test('should display selectable conjunction button with AND/OR options', () => {
+  test('should display selectable conjunction button with AND/OR options', async () => {
     render(
       <ConditionField.Group canChangeConjunction>
         <ConditionField />
@@ -120,15 +120,17 @@ describe('With selectable conjunction', () => {
 
     user.click(dropdownTrigger())
 
-    expect(conjunctionMenu()).toBeInTheDocument()
-    expect(
-      within(conjunctionMenu())
-        .getAllByRole('option')
-        .map(el => el.textContent)
-    ).toEqual(['OR', 'AND'])
+    await waitFor(() => {
+      expect(conjunctionMenu()).toBeInTheDocument()
+      expect(
+        within(conjunctionMenu())
+          .getAllByRole('option')
+          .map(el => el.textContent)
+      ).toEqual(['OR', 'AND'])
+    })
   })
 
-  test('should display OR selected when no conjunction provided', () => {
+  test('should display OR selected when no conjunction provided', async () => {
     render(
       <ConditionField.Group canChangeConjunction>
         <ConditionField />
@@ -136,10 +138,13 @@ describe('With selectable conjunction', () => {
     )
 
     user.click(dropdownTrigger())
-    expect(screen.getByRole('button', { name: 'or' })).toBeInTheDocument()
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'or' })).toBeInTheDocument()
+    })
   })
 
-  test('should mark provided item as selected', () => {
+  test('should mark provided item as selected', async () => {
     render(
       <ConditionField.Group canChangeConjunction conjunction={'and'}>
         <ConditionField />
@@ -147,14 +152,17 @@ describe('With selectable conjunction', () => {
     )
 
     user.click(dropdownTrigger())
-    expect(
-      within(conjunctionMenu())
-        .getAllByRole('option')
-        .find(el => el.classList.contains('is-selected')).textContent
-    ).toEqual('AND')
+
+    await waitFor(() => {
+      expect(
+        within(conjunctionMenu())
+          .getAllByRole('option')
+          .find(el => el.classList.contains('is-selected')).textContent
+      ).toEqual('AND')
+    })
   })
 
-  test('should make a callback when conjunction changed', () => {
+  test('should make a callback when conjunction changed', async () => {
     const mock = jest.fn()
     render(
       <ConditionField.Group canChangeConjunction onConjunctionChange={mock}>
@@ -164,7 +172,10 @@ describe('With selectable conjunction', () => {
 
     user.click(dropdownTrigger())
     user.click(within(conjunctionMenu()).getByRole('option', { name: 'AND' }))
-    expect(mock).toHaveBeenCalledWith('and')
+
+    await waitFor(() => {
+      expect(mock).toHaveBeenCalledWith('and')
+    })
   })
 
   test('should render OR conjunction by default when more than one Field', () => {

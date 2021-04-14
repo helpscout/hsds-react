@@ -2,12 +2,12 @@ import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, number, text, select } from '@storybook/addon-knobs'
 import DropList from './DropList'
 import {
-  Button,
-  IconButton,
+  IconBtn,
   Kebab,
   NavLink,
   SelectTag,
-  SplitButton,
+  SimpleButton,
+  SplittedButton,
 } from './DropList.togglers'
 import {
   itemsWithDivider,
@@ -52,7 +52,7 @@ Sometimes the list needs to be appended to a different DOM context due to access
 ```jsx
 <DropList
   items={regularItems}
-  toggler={<Button text="Click" />}
+  toggler={<SimpleButton text="Click" />}
   tippyOptions={{
     appendTo: () => document.body,
   }}
@@ -82,7 +82,7 @@ Sometimes the list needs to be appended to a different DOM context due to access
           console.log('selection', selection)
         }}
         toggler={
-          <SplitButton
+          <SplittedButton
             text="Click"
             onActionClick={() => {
               console.log('Action!')
@@ -121,7 +121,7 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
 ```jsx
 <DropList
   items={regularItems}
-  toggler={<Button text="Click" />}
+  toggler={<SimpleButton text="Click" />}
   autoSetComboboxAt={10}
 />
 
@@ -151,7 +151,7 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
           regularItems[1]
         )}
         items={regularItems}
-        toggler={<Button text="This is a select" />}
+        toggler={<SimpleButton text="This is a select" />}
       />
     </div>
   </Story>
@@ -179,7 +179,7 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
           },
           regularItems
         )}
-        toggler={<Button text="This is a combobox" />}
+        toggler={<SimpleButton text="This is a combobox" />}
       />
     </div>
   </Story>
@@ -224,7 +224,10 @@ const items = [
         padding: '20px',
       }}
     >
-      <DropList items={itemsWithDivider} toggler={<Button text="Click" />} />
+      <DropList
+        items={itemsWithDivider}
+        toggler={<SimpleButton text="Click" />}
+      />
     </div>
   </Story>
 </Canvas>
@@ -257,7 +260,10 @@ const groupedItems = [
         padding: '20px',
       }}
     >
-      <DropList items={simpleGroupedItems} toggler={<Button text="Click" />} />
+      <DropList
+        items={simpleGroupedItems}
+        toggler={<SimpleButton text="Click" />}
+      />
     </div>
   </Story>
 </Canvas>
@@ -277,7 +283,7 @@ const groupedItems = [
     >
       <DropList
         items={groupAndDividerItems}
-        toggler={<Button text="Click" />}
+        toggler={<SimpleButton text="Click" />}
       />
     </div>
   </Story>
@@ -298,7 +304,7 @@ const groupedItems = [
     >
       <DropList
         items={[]}
-        toggler={<Button text="Click" />}
+        toggler={<SimpleButton text="Click" />}
         variant="combobox"
       />
     </div>
@@ -328,7 +334,7 @@ const groupedItems = [
           </div>
         }
         items={[]}
-        toggler={<Button text="Click" />}
+        toggler={<SimpleButton text="Click" />}
       />
     </div>
   </Story>
@@ -348,7 +354,7 @@ function renderCustomListItem({
 // example
 <DropList
   items={[{}, {}, {}, {}]}
-  toggler={<Button text="Click" />}
+  toggler={<SimpleButton text="Click" />}
   renderCustomListItem={({
     item,
     isSelected,
@@ -376,7 +382,7 @@ function renderCustomListItem({
     >
       <DropList
         items={regularItems}
-        toggler={<Button text="Click" />}
+        toggler={<SimpleButton text="Click" />}
         renderCustomListItem={({ item, isSelected }) => (
           <div
             style={{ padding: '5px 10px', fontSize: '14px', color: '#404996' }}
@@ -426,7 +432,7 @@ Depending on your use case, you might want to set `closeOnSelection = false` whe
           },
           [regularItems[0], regularItems[1]]
         )}
-        toggler={<Button text="Submit" />}
+        toggler={<SimpleButton text="Submit" />}
         withMultipleSelection
       />
     </div>
@@ -435,11 +441,10 @@ Depending on your use case, you might want to set `closeOnSelection = false` whe
 
 ### Togglers
 
-DropList provides a set of ready-to-use "triggers" or "togglers" components that should cover most if not all of our current needs: `Button`, `IconButton`, `Kebab`, `SelectTag` and `SplitButton`. Import them into your project from `src/components/DropList/DropList.togglers.jsx` and feed them to the `toggler` prop.
+#### SplittedButton
 
-#### SplitButton
-
-This toggler replaces the previous `SplitButton` component. It's not very different from the other togglers except that it's composed of 2 HSDS Buttons, the "action" and the "toggler". The props to interact / customize them are:
+This toggler replaces the previous `SplittedButton` component. It's not very different from the other togglers except that it's composed of 2 HSDS Buttons, the "action" and the "toggler". The props to interact / customize them are:
+DropList provides a set of ready-to-use "triggers" or "togglers" components that should cover most if not all of our current needs: `SimpleButton`, `IconBtn`, `Kebab`, `SelectTag` and `SplittedButton`. Import them into your project from `src/components/DropList/DropList.togglers.jsx` and feed them to the `toggler` prop.
 
 ```
 {
@@ -466,14 +471,15 @@ This toggler replaces the previous `SplitButton` component. It's not very differ
 
 The `toggler` prop accepts any React component, so you can provide your own custom trigger. Just one thing is necessary for everything to work as expected and a couple of other considerations:
 
-- (Required) Refs: Wrap your toggler component in `React.forwardRef`, this in turn is fed to Tippy so that it can do its thing. The `ref` should be applied to the button that when clicked is the one that opens/closes the DropList. For a component that illustrates this check the SplitButton toggler (since this "toggler" is composed of 2 buttons).
-- `onClick`: DropList will merge your `onClick` prop with an internal one that opens/closes the DropList (this way you can attach extra actions to the click event). Again, check SplitButton as an example for when you have 2 buttons each with its own click handler, the one with the prop named `onClick` is the one that will actually open/close the list.
-- Active state: Besides adding the `onClick` handler, we also attach the modal open state as the `isActive` prop so you can use it on your toggler, see Button or SplitButton for an example of this.
+- (Required) Refs: Wrap your toggler component in `React.forwardRef`, this in turn is fed to Tippy so that it can do its thing. The `ref` should be applied to the button that when clicked is the one that opens/closes the DropList. For a component that illustrates this check the SplittedButton toggler (since this "toggler" is composed of 2 buttons).
+- (Required) You need to collect `...rest` from props and spread them on the root of your toggler, for a more complex example ss SplittedButton's code.
+- `onClick`: DropList will merge your `onClick` prop with an internal one that opens/closes the DropList (this way you can attach extra actions to the click event). Again, check SplittedButton as an example for when you have 2 buttons each with its own click handler, the one with the prop named `onClick` is the one that will actually open/close the list.
+- Active state: Besides adding the `onClick` handler, we also attach the modal open state as the `isActive` prop so you can use it on your toggler, see Button or SplittedButton for an example of this.
 - If your "toggler" contains a button or any other clickable element and you would like to avoid closing the DropList on clicking it, add the data attribute `data-ignore-toggling="true"` to that element.
 - Aria label: Don't forget to add `aria-label` to the toggler button, with something like "toggle menu".
 
 <Canvas>
-  <Story name="Toggler: Button">
+  <Story name="Toggler: SimpleButton">
     <div
       style={{
         width: '400px',
@@ -486,7 +492,7 @@ The `toggler` prop accepts any React component, so you can provide your own cust
       <DropList
         items={regularItems}
         toggler={
-          <Button
+          <SimpleButton
             text="Click"
             onClick={() => {
               console.log('Clicked from story')
@@ -495,11 +501,11 @@ The `toggler` prop accepts any React component, so you can provide your own cust
         }
       />
     </div>
-  </Story>
-  <Story name="Toggler: IconButton">
+  <Story name="Toggler: IconBtn">
     <div
       style={{
         width: '400px',
+  </Story>
         margin: '50px 100px 0 150px',
         border: '1px dashed silver',
         borderRadius: '5px',
@@ -508,11 +514,11 @@ The `toggler` prop accepts any React component, so you can provide your own cust
     >
       <DropList
         items={regularItems}
-        toggler={
-          <IconButton
+          <IconBtn
             onClick={() => {
               console.log('Clicked from story')
             }}
+        toggler={
           />
         }
       />
@@ -604,7 +610,7 @@ The `toggler` prop accepts any React component, so you can provide your own cust
       />
     </div>
   </Story>
-  <Story name="Toggler: SplitButton">
+  <Story name="Toggler: SplittedButton">
     <div
       style={{
         width: '400px',
@@ -617,7 +623,7 @@ The `toggler` prop accepts any React component, so you can provide your own cust
       <DropList
         items={regularItems}
         toggler={
-          <SplitButton
+          <SplittedButton
             text="Click"
             onActionClick={() => {
               console.log('Action!')
