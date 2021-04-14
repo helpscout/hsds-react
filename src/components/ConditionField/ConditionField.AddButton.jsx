@@ -75,6 +75,7 @@ const AnimatedComponent = withMotion({
     const height = node.clientHeight
     node.style.height = 0
     node.style.overflow = 'hidden'
+    node.style.willChange = ''
 
     return animate({
       keyframes: [
@@ -86,6 +87,7 @@ const AnimatedComponent = withMotion({
       duration: props.animationDuration,
       easing: props.animationEasing,
     }).finished.then(() => {
+      node.style.willChange = ''
       node.style.overflow = 'initial'
     })
   },
@@ -95,6 +97,7 @@ const AnimatedComponent = withMotion({
     const height = node.clientHeight
     node.style.height = height
     node.style.overflow = 'hidden'
+    node.style.willChange = ''
 
     return animate({
       keyframes: [
