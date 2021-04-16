@@ -153,6 +153,9 @@ function DropListManager({
   }
 
   function handleSelectedItemChange({ selectedItem }) {
+    if (selectedItem.isDisabled) {
+      return
+    }
     if (withMultipleSelection) {
       if (selectedItem) {
         const { remove } = selectedItem
