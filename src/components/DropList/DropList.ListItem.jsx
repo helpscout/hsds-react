@@ -22,6 +22,8 @@ const ListItem = forwardRef(
       withMultipleSelection,
       isSelected,
       renderCustomListItem,
+      onClick,
+      isDisabled,
       ...itemProps
     },
     ref
@@ -45,10 +47,17 @@ const ListItem = forwardRef(
       )
     }
 
+    const handleClick = event => {
+      if (!isDisabled) {
+        onClick(event)
+      }
+    }
+
     function getListItemClassNames(extraClassNames) {
       return classNames(
         'DropListItem',
         isSelected && 'is-selected',
+        isDisabled && 'is-disabled',
         highlightedIndex === index && 'is-highlighted',
         withMultipleSelection && 'with-multiple-selection',
         isString(extraClassNames) && extraClassNames
@@ -60,6 +69,7 @@ const ListItem = forwardRef(
         <li
           className={getListItemClassNames('DropListItem--custom')}
           ref={ref}
+          onClick={handleClick}
           {...itemProps}
         >
           {renderCustomListItem({
@@ -79,6 +89,7 @@ const ListItem = forwardRef(
         ref={ref}
         selected={isSelected}
         withMultipleSelection={withMultipleSelection}
+        onClick={handleClick}
         {...itemProps}
       >
         <span>{isObject(item) ? item[contentKey] : item}</span>

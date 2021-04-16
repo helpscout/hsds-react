@@ -15,6 +15,7 @@ import {
   plainItems,
   regularItems,
   simpleGroupedItems,
+  disabledItems,
 } from '../../utilities/specs/dropdown.specs'
 
 <Meta
@@ -422,6 +423,24 @@ function renderCustomListItem({
           </div>
         )}
       />
+    </div>
+  </Story>
+</Canvas>
+
+- Disabled List Items: Sometimes you might need to render the list items that would be disabled, for that you can pass `isDisbaled` flag with an item.
+
+<Canvas>
+  <Story name="Items: disabled list items">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList items={disabledItems} toggler={<SimpleButton text="Click" />} />
     </div>
   </Story>
 </Canvas>

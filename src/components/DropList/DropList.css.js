@@ -113,6 +113,13 @@ export const ListItemUI = styled('li')`
       background-color: ${getColor('blue.100')};
     }
   }
+
+  &.is-disabled,
+  &.with-multiple-selection.is-disabled {
+    color: ${getColor('charcoal.200')};
+    background-color: transparent;
+    cursor: default;
+  }
 `
 
 export const EmptyListUI = styled('div')`

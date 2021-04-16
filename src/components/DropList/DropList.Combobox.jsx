@@ -113,6 +113,7 @@ function Combobox({
       key: generateListItemKey(item, index),
       withMultipleSelection,
       renderCustomListItem,
+      isDisabled: item.isDisabled,
       ...getItemProps({ item, index }),
     }
 

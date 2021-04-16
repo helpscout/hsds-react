@@ -74,6 +74,11 @@ export const groupAndDividerItems = [
 
 export const regularItems = ItemSpec.generate(15)
 
+export const disabledItems = ItemSpec.generate(10).map(item => ({
+  ...item,
+  isDisabled: true,
+}))
+
 export const plainItems = [
   'hello',
   'hola',

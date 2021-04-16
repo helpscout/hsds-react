@@ -251,6 +251,7 @@ const itemShape = PropTypes.shape({
   label: requiredItemPropsCheck,
   value: requiredItemPropsCheck,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  isDisabled: PropTypes.bool,
 })
 const dividerShape = PropTypes.shape({
   type: PropTypes.oneOf(['divider', 'Divider']).isRequired,

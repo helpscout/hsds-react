@@ -890,4 +890,55 @@ describe('Selection', () => {
       ).toBeTruthy()
     })
   })
+
+  describe('disabled items', () => {
+    test('should set an item as disabled and do not allow to select it (select)', async () => {
+      const onSelect = jest.fn()
+      const items = dedupedRegularItems.map(item => ({
+        ...item,
+        isDisabled: true,
+      }))
+      const { getByText } = render(
+        <DropList
+          onSelect={onSelect}
+          items={items}
+          toggler={<SimpleButton text="Button Toggler" />}
+          isMenuOpen
+        />
+      )
+
+      await waitFor(() => {
+        expect(getByText(regularItems[2].label).parentElement).toHaveClass(
+          'is-disabled'
+        )
+      })
+      user.click(getByText(regularItems[2].label))
+      expect(onSelect).not.toHaveBeenCalled()
+    })
+
+    test('should set an item as disabled and do not allow to select it (combobox)', async () => {
+      const onSelect = jest.fn()
+      const items = dedupedRegularItems.map(item => ({
+        ...item,
+        isDisabled: true,
+      }))
+      const { getByText } = render(
+        <DropList
+          onSelect={onSelect}
+          items={items}
+          toggler={<SimpleButton text="Button Toggler" />}
+          isMenuOpen
+          variant={'combobox'}
+        />
+      )
+
+      await waitFor(() => {
+        expect(getByText(regularItems[2].label).parentElement).toHaveClass(
+          'is-disabled'
+        )
+      })
+      user.click(getByText(regularItems[2].label))
+      expect(onSelect).not.toHaveBeenCalled()
+    })
+  })
 })
