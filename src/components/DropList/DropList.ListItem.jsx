@@ -77,6 +77,7 @@ const ListItem = forwardRef(
             isSelected,
             isHighlighted: highlightedIndex === index,
             withMultipleSelection,
+            isDisabled,
           })}
         </li>
       )

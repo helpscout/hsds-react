@@ -374,6 +374,7 @@ function renderCustomListItem({
   item,
   isSelected,
   isHighlighted,
+  isDisabled,
   withMultipleSelection,
 })
 
@@ -385,6 +386,7 @@ function renderCustomListItem({
     item,
     isSelected,
     isHighlighted,
+    isDisabled,
     withMultipleSelection,
   }) => (
     <div className={classnames(isSelected && 'is-selected')}>

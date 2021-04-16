@@ -892,12 +892,13 @@ describe('Selection', () => {
   })
 
   describe('disabled items', () => {
+    const items = dedupedRegularItems.map(item => ({
+      ...item,
+      isDisabled: true,
+    }))
+
     test('should set an item as disabled and do not allow to select it (select)', async () => {
       const onSelect = jest.fn()
-      const items = dedupedRegularItems.map(item => ({
-        ...item,
-        isDisabled: true,
-      }))
       const { getByText } = render(
         <DropList
           onSelect={onSelect}
@@ -918,10 +919,6 @@ describe('Selection', () => {
 
     test('should set an item as disabled and do not allow to select it (combobox)', async () => {
       const onSelect = jest.fn()
-      const items = dedupedRegularItems.map(item => ({
-        ...item,
-        isDisabled: true,
-      }))
       const { getByText } = render(
         <DropList
           onSelect={onSelect}
@@ -939,6 +936,29 @@ describe('Selection', () => {
       })
       user.click(getByText(regularItems[2].label))
       expect(onSelect).not.toHaveBeenCalled()
+    })
+
+    test('should set an item as disabled and do not allow to select it with custom list', async () => {
+      const onSelect = jest.fn()
+      const { getByText } = render(
+        <DropList
+          onSelect={onSelect}
+          items={items}
+          toggler={<SimpleButton text="Button Toggler" />}
+          isMenuOpen
+          renderCustomListItem={({ item, isDisabled }) => (
+            <div className={isDisabled ? 'is-disabled' : ''}>{item.label}</div>
+          )}
+        />
+      )
+
+      const exampleItem = getByText(regularItems[2].label)
+      await waitFor(() =>
+        expect(exampleItem.parentElement).toHaveClass('is-disabled')
+      )
+      user.click(exampleItem)
+      expect(onSelect).not.toHaveBeenCalled()
+      expect(exampleItem).toHaveClass('is-disabled')
     })
   })
 })
