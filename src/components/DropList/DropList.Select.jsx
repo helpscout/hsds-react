@@ -79,6 +79,7 @@ function Select({
       return stateReducerCommon({
         changes,
         closeOnSelection,
+        items,
         selectedItems,
         state,
         type: `${VARIANTS.SELECT}.${type}`,
@@ -100,7 +101,17 @@ function Select({
       key: generateListItemKey(item, index),
       withMultipleSelection,
       renderCustomListItem,
-      ...getItemProps({ item, index }),
+      isDisabled: item.isDisabled,
+      ...getItemProps({
+        item,
+        index,
+        onClick: event => {
+          if (item.isDisabled) {
+            event.nativeEvent.preventDownshiftDefault = true
+            return
+          }
+        },
+      }),
     }
 
     return <ListItem {...itemProps} />

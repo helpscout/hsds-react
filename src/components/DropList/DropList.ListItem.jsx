@@ -22,6 +22,7 @@ const ListItem = forwardRef(
       withMultipleSelection,
       isSelected,
       renderCustomListItem,
+      isDisabled,
       ...itemProps
     },
     ref
@@ -49,6 +50,7 @@ const ListItem = forwardRef(
       return classNames(
         'DropListItem',
         isSelected && 'is-selected',
+        isDisabled && 'is-disabled',
         highlightedIndex === index && 'is-highlighted',
         withMultipleSelection && 'with-multiple-selection',
         isString(extraClassNames) && extraClassNames
@@ -67,6 +69,7 @@ const ListItem = forwardRef(
             isSelected,
             isHighlighted: highlightedIndex === index,
             withMultipleSelection,
+            isDisabled,
           })}
         </li>
       )

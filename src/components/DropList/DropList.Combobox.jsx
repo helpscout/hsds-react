@@ -84,6 +84,7 @@ function Combobox({
       return stateReducerCommon({
         changes,
         closeOnSelection,
+        items,
         selectedItems,
         state,
         type: `${VARIANTS.COMBOBOX}.${type}`,
@@ -113,7 +114,17 @@ function Combobox({
       key: generateListItemKey(item, index),
       withMultipleSelection,
       renderCustomListItem,
-      ...getItemProps({ item, index }),
+      isDisabled: item.isDisabled,
+      ...getItemProps({
+        item,
+        index,
+        onClick: event => {
+          if (item.isDisabled) {
+            event.nativeEvent.preventDownshiftDefault = true
+            return
+          }
+        },
+      }),
     }
 
     return <ListItem {...itemProps} />

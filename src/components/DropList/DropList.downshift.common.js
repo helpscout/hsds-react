@@ -1,6 +1,10 @@
 import { useSelect, useCombobox } from 'downshift'
 import { isObject } from '../../utilities/is'
-import { findItemInArray, getItemContentKeyName } from './DropList.utils'
+import {
+  findItemInArray,
+  getEnabledItemIndex,
+  getItemContentKeyName,
+} from './DropList.utils'
 import { OPEN_ACTION_ORIGIN, VARIANTS } from './DropList.constants'
 
 const { SELECT, COMBOBOX } = VARIANTS
@@ -8,6 +12,7 @@ const { SELECT, COMBOBOX } = VARIANTS
 export function stateReducerCommon({
   changes,
   closeOnSelection,
+  items,
   selectedItems,
   state,
   type,
@@ -66,6 +71,34 @@ export function stateReducerCommon({
       } else {
         return { ...changes, inputValue: '' }
       }
+
+    case `${COMBOBOX}.${useCombobox.stateChangeTypes.InputKeyDownArrowUp}`:
+    case `${SELECT}.${useSelect.stateChangeTypes.MenuKeyDownArrowUp}`: {
+      const { highlightedIndex } = changes
+
+      return {
+        ...changes,
+        highlightedIndex: getEnabledItemIndex({
+          highlightedIndex,
+          items,
+          arrowKey: 'UP',
+        }),
+      }
+    }
+
+    case `${COMBOBOX}.${useCombobox.stateChangeTypes.InputKeyDownArrowDown}`:
+    case `${SELECT}.${useSelect.stateChangeTypes.MenuKeyDownArrowDown}`: {
+      const { highlightedIndex } = changes
+
+      return {
+        ...changes,
+        highlightedIndex: getEnabledItemIndex({
+          highlightedIndex,
+          items,
+          arrowKey: 'DOWN',
+        }),
+      }
+    }
 
     default:
       return changes
