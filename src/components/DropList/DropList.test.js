@@ -892,9 +892,9 @@ describe('Selection', () => {
   })
 
   describe('disabled items', () => {
-    const items = dedupedRegularItems.map(item => ({
+    const items = dedupedRegularItems.map((item, index) => ({
       ...item,
-      isDisabled: true,
+      isDisabled: index % 2 === 0,
     }))
 
     test('should set an item as disabled and do not allow to select it (select)', async () => {
@@ -908,13 +908,18 @@ describe('Selection', () => {
         />
       )
 
-      await waitFor(() => {
-        expect(getByText(regularItems[2].label).parentElement).toHaveClass(
-          'is-disabled'
-        )
-      })
+      expect(getByText(regularItems[2].label).parentElement).toHaveClass(
+        'is-disabled'
+      )
+      expect(getByText(regularItems[1].label).parentElement).not.toHaveClass(
+        'is-disabled'
+      )
+
       user.click(getByText(regularItems[2].label))
-      expect(onSelect).not.toHaveBeenCalled()
+
+      await waitFor(() => {
+        expect(onSelect).not.toHaveBeenCalled()
+      })
     })
 
     test('should set an item as disabled and do not allow to select it (combobox)', async () => {
@@ -925,17 +930,19 @@ describe('Selection', () => {
           items={items}
           toggler={<SimpleButton text="Button Toggler" />}
           isMenuOpen
-          variant={'combobox'}
+          variant="combobox"
         />
       )
 
-      await waitFor(() => {
-        expect(getByText(regularItems[2].label).parentElement).toHaveClass(
-          'is-disabled'
-        )
-      })
+      expect(getByText(regularItems[2].label).parentElement).toHaveClass(
+        'is-disabled'
+      )
+
       user.click(getByText(regularItems[2].label))
-      expect(onSelect).not.toHaveBeenCalled()
+
+      await waitFor(() => {
+        expect(onSelect).not.toHaveBeenCalled()
+      })
     })
 
     test('should set an item as disabled and do not allow to select it with custom list', async () => {
@@ -953,12 +960,87 @@ describe('Selection', () => {
       )
 
       const exampleItem = getByText(regularItems[2].label)
-      await waitFor(() =>
-        expect(exampleItem.parentElement).toHaveClass('is-disabled')
-      )
+
+      expect(exampleItem.parentElement).toHaveClass('is-disabled')
+
       user.click(exampleItem)
-      expect(onSelect).not.toHaveBeenCalled()
-      expect(exampleItem).toHaveClass('is-disabled')
+
+      await waitFor(() => {
+        expect(onSelect).not.toHaveBeenCalled()
+        expect(exampleItem).toHaveClass('is-disabled')
+      })
+    })
+
+    test('should skip disabled items when navigating down', async () => {
+      const { getByPlaceholderText, getByText } = render(
+        <DropList
+          items={items}
+          toggler={<SimpleButton text="Button Toggler" />}
+          isMenuOpen
+          variant="combobox"
+        />
+      )
+
+      user.type(getByPlaceholderText('Search'), '{arrowdown}')
+
+      await waitFor(() => {
+        expect(getByText(regularItems[0].label).parentElement).not.toHaveClass(
+          'is-highlighted'
+        )
+        expect(getByText(regularItems[1].label).parentElement).toHaveClass(
+          'is-highlighted'
+        )
+      })
+
+      user.type(getByPlaceholderText('Search'), '{arrowdown}')
+
+      await waitFor(() => {
+        expect(getByText(regularItems[1].label).parentElement).not.toHaveClass(
+          'is-highlighted'
+        )
+        expect(getByText(regularItems[2].label).parentElement).not.toHaveClass(
+          'is-highlighted'
+        )
+        expect(getByText(regularItems[3].label).parentElement).toHaveClass(
+          'is-highlighted'
+        )
+      })
+    })
+
+    test('should skip disabled items when navigating up', async () => {
+      const { getByPlaceholderText, getByText } = render(
+        <DropList
+          items={items}
+          toggler={<SimpleButton text="Button Toggler" />}
+          isMenuOpen
+          variant="combobox"
+        />
+      )
+
+      user.type(getByPlaceholderText('Search'), '{arrowup}')
+
+      await waitFor(() => {
+        expect(getByText(regularItems[0].label).parentElement).not.toHaveClass(
+          'is-highlighted'
+        )
+        expect(
+          getByText(regularItems[regularItems.length - 2].label).parentElement
+        ).toHaveClass('is-highlighted')
+      })
+
+      user.type(getByPlaceholderText('Search'), '{arrowup}')
+
+      await waitFor(() => {
+        expect(
+          getByText(regularItems[regularItems.length - 2].label).parentElement
+        ).not.toHaveClass('is-highlighted')
+        expect(
+          getByText(regularItems[regularItems.length - 3].label).parentElement
+        ).not.toHaveClass('is-highlighted')
+        expect(
+          getByText(regularItems[regularItems.length - 4].label).parentElement
+        ).toHaveClass('is-highlighted')
+      })
     })
   })
 })
