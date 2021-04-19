@@ -442,7 +442,60 @@ function renderCustomListItem({
         padding: '20px',
       }}
     >
-      <DropList items={disabledItems} toggler={<SimpleButton text="Click" />} />
+      <DropList
+        items={disabledItems}
+        toggler={<SimpleButton text="Click" />}
+        onSelect={selection => {
+          console.log('selection', selection)
+        }}
+      />
+    </div>
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Items: disabled list items (combobox)">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        items={disabledItems}
+        variant="combobox"
+        toggler={<SimpleButton text="Click" />}
+        onSelect={selection => {
+          console.log('selection', selection)
+        }}
+      />
+    </div>
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Items: disabled list items (Multiple Selection)">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        items={disabledItems}
+        closeOnSelection={false}
+        onSelect={selection => {
+          console.log('selection', selection)
+        }}
+        toggler={<SimpleButton text="Submit" />}
+        withMultipleSelection
+      />
     </div>
   </Story>
 </Canvas>

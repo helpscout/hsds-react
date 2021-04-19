@@ -188,3 +188,33 @@ export function requiredItemPropsCheck(props, propName, componentName) {
     )
   }
 }
+
+export function getEnabledItemIndex({ highlightedIndex, items, arrowKey }) {
+  let enabledItemIndex = 0
+
+  if (arrowKey === 'UP') {
+    for (let index = items.length - 1; index >= 0; index--) {
+      if (
+        (highlightedIndex === 0 && !items[index].isDisabled) ||
+        (index <= highlightedIndex && !items[index].isDisabled)
+      ) {
+        enabledItemIndex = index
+        break
+      }
+    }
+  }
+
+  if (arrowKey === 'DOWN') {
+    for (let index = 0; index < items.length; index++) {
+      if (
+        (highlightedIndex === items.length - 1 && !items[index].isDisabled) ||
+        (index >= highlightedIndex && !items[index].isDisabled)
+      ) {
+        enabledItemIndex = index
+        break
+      }
+    }
+  }
+
+  return enabledItemIndex
+}
