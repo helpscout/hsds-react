@@ -14,7 +14,7 @@ export const MessageCardUI = styled(Card)`
   background-color: white;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  padding: 20px 0 25px;
+  padding: 12px 0 10px;
   width: 300px;
   word-break: break-word;
   display: flex;
@@ -59,7 +59,6 @@ export const MessageCardUI = styled(Card)`
 export const TitleUI = styled(Heading)`
   ${fontFamily};
   line-height: 22px !important;
-  margin-top: 5px;
   padding: 0 20px;
   flex: 0 0 auto;
 `
