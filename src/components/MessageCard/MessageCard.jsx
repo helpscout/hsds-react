@@ -6,15 +6,28 @@ import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import Animate from '../Animate'
 import {
-  MessageCardUI,
-  TitleUI,
-  SubtitleUI,
-  BodyUI,
   ActionUI,
-  ImageUI,
+  BodyUI,
   ImageContainerUI,
+  ImageUI,
+  MessageCardUI,
+  SubtitleUI,
+  TitleUI,
 } from './MessageCard.css'
 import Truncate from '../Truncate'
+
+const MAX_IMAGE_SIZE = 278
+
+const sizeWithRatio = (
+  recalculatedSide,
+  otherSide,
+  defaultValue = recalculatedSide
+) =>
+  // Check if other side is smaller than max size to not recalculate unnecessarily this side as it doesn't need any scaling
+  // other condition checks that the image fits the boundaries
+  otherSide < MAX_IMAGE_SIZE
+    ? defaultValue
+    : (recalculatedSide / otherSide) * MAX_IMAGE_SIZE
 
 export class MessageCard extends React.PureComponent {
   static className = 'c-MessageCard'
@@ -86,16 +99,45 @@ export class MessageCard extends React.PureComponent {
   renderImage() {
     const { image } = this.props
 
-    return image ? (
+    if (!image) {
+      return null
+    }
+
+    const { height, width } = this.calculateSize(image)
+
+    return (
       <ImageContainerUI>
         <ImageUI
           src={image.url}
           alt={image.altText || 'Message image'}
-          width={image.width || '100%'}
-          height={image.height || 'auto'}
+          width={width || '100%'}
+          height={height || 'auto'}
         />
       </ImageContainerUI>
-    ) : null
+    )
+  }
+
+  // Calculate size of image to keep the original aspect ratio, but fit within 278x278 square for image
+  calculateSize = image => {
+    if (!image.width || !image.height) {
+      return {}
+    }
+    const width = parseInt(image.width)
+    const height = parseInt(image.height)
+
+    // Not necessary to recalculate if it fits within boundaries
+    if (width < MAX_IMAGE_SIZE && height < MAX_IMAGE_SIZE) {
+      return { width, height }
+    }
+
+    if (width > height) {
+      return { height: sizeWithRatio(height, width), width: '100%' }
+    } else {
+      return {
+        width: sizeWithRatio(width, height, '100%'),
+        height: Math.min(height, MAX_IMAGE_SIZE),
+      }
+    }
   }
 
   renderAction() {

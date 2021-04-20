@@ -271,6 +271,9 @@ export const ActionButtonUI = styled(Button)`
 
 export const ImageUI = styled(Image)`
   border-radius: 3px;
+  height: ${({ height }) => height || 'auto'};
+  width: ${({ width }) => width || '100%'};
+  max-height: 278px;
 `
 
 export const ImageContainerUI = styled('div')`
@@ -279,4 +282,5 @@ export const ImageContainerUI = styled('div')`
   width: 100%;
   margin-top: 20px;
   padding: 0 10px;
+  max-height: 278px;
 `
