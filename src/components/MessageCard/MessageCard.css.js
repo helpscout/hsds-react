@@ -271,8 +271,8 @@ export const ActionButtonUI = styled(Button)`
 
 export const ImageUI = styled(Image)`
   border-radius: 3px;
-  height: ${({ height }) => height || 'auto'};
-  width: ${({ width }) => width || '100%'};
+  height: ${({ height }) => `${height}px` || 'auto'};
+  width: ${({ width }) => `${width}px` || '100%'};
   max-height: 278px;
 `
 
