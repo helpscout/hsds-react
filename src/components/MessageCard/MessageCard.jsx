@@ -18,11 +18,7 @@ import Truncate from '../Truncate'
 
 const MAX_IMAGE_SIZE = 278
 
-const sizeWithRatio = (
-  recalculatedSide,
-  otherSide,
-  defaultValue = recalculatedSide
-) =>
+const sizeWithRatio = (recalculatedSide, otherSide, defaultValue) =>
   // Check if other side is smaller than max size to not recalculate unnecessarily this side as it doesn't need any scaling
   // other condition checks that the image fits the boundaries
   otherSide < MAX_IMAGE_SIZE
@@ -110,8 +106,8 @@ export class MessageCard extends React.PureComponent {
         <ImageUI
           src={image.url}
           alt={image.altText || 'Message image'}
-          width={width || '100%'}
-          height={height || 'auto'}
+          width={width ? `${width}px` : '100%'}
+          height={height ? `${height}px` : 'auto'}
         />
       </ImageContainerUI>
     )
@@ -131,10 +127,13 @@ export class MessageCard extends React.PureComponent {
     }
 
     if (width > height) {
-      return { height: sizeWithRatio(height, width), width: '100%' }
+      return {
+        height: sizeWithRatio(height, width, height),
+        width: Math.min(width, MAX_IMAGE_SIZE),
+      }
     } else {
       return {
-        width: sizeWithRatio(width, height, '100%'),
+        width: sizeWithRatio(width, height, MAX_IMAGE_SIZE),
         height: Math.min(height, MAX_IMAGE_SIZE),
       }
     }
