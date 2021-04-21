@@ -1,88 +1,75 @@
 import styled from 'styled-components'
-import Icon from '../Icon'
 import { getColor } from '../../styles/utilities/color'
+import { DropListWrapperUI, MenuListUI } from '../DropList/DropList.css'
 
-export const config = {
-  sizes: {
-    default: '24px',
+const SIZES = {
+  EMOJI: {
     sm: '16px',
+    md: '24px',
     lg: '32px',
+  },
+  LIST_HEIGHT: {
+    sm: '32px',
+    md: '40px',
+    lg: '48px',
+  },
+  LIST_WIDTH: {
+    sm: '200px',
+    md: '250px',
+    lg: '300px',
+  },
+  GRID_COLUMNS: {
+    sm: '32px',
+    md: '40px',
+    lg: '48px',
   },
 }
 
-export const MenuUI = styled('div')`
-  display: flex;
-  overflow: hidden;
-  padding-left: 5px;
-  padding-right: 5px;
-
-  .c-DropdownItem.is-option {
-    background: none !important;
-    padding: 0;
-    outline: none !important;
-  }
-`
-
-export const ItemWrapperUI = styled('div')`
-  align-items: center;
-  background: transparent;
-  border-radius: 9999px;
-  display: flex;
-  justify-content: center;
-  margin: 3px;
-  transform: scale(1);
-
-  .c-DropdownItem.is-focused &,
-  &:hover {
-    transform: scale(1.075);
-  }
-
-  ${({ size }) =>
-    size &&
-    `
-    height: calc(${config.sizes[size]} + 10px);
-    width: calc(${config.sizes[size]} + 10px);
-  `}
-`
-
-export const ItemUI = styled('div')`
-  ${({ size }) =>
-    size &&
-    `
-    font-size: ${config.sizes[size]};
-    padding: 0 !important;
-    height: ${config.sizes[size]};
-    width: ${config.sizes[size]};
-  `}
-
-  &.is-focused {
-    &.is-option {
-      border-radius: 50% !important;
-    }
-  }
-
-  .c-EmojiPickerView {
-    display: block;
-    line-height: 1;
-    position: relative;
-    top: 1px;
-
-    ${({ size }) =>
-      size &&
-      `
-    font-size: ${config.sizes[size]};
-    height: ${config.sizes[size]};
-    width: ${config.sizes[size]};
-  `};
-  }
-`
-
-export const TriggerUI = styled(Icon)`
+export const TogglerUI = styled('button')`
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
   color: ${getColor('grey.600')};
 
-  .c-DropdownTrigger:active &,
-  .c-DropdownTrigger:focus &,
-  .c-DropdownTrigger:hover & {
+  &:active,
+  &:focus,
+  &:hover {
     color: ${getColor('yellow.500')};
+  }
+`
+
+export const EmojiItemUI = styled('div')`
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  transform: scale(1);
+
+  .is-highlighted & {
+    transform: scale(1.075);
+  }
+`
+
+export const EmojiPickerUI = styled('div')`
+  ${DropListWrapperUI} {
+    width: ${({ emojiSize }) => SIZES.LIST_WIDTH[emojiSize]};
+    height: ${({ emojiSize }) => SIZES.LIST_HEIGHT[emojiSize]};
+    padding: 0;
+  }
+
+  ${MenuListUI} {
+    display: grid;
+    grid-template-columns: repeat(
+      6,
+      ${({ emojiSize }) => SIZES.GRID_COLUMNS[emojiSize]}
+    );
+    justify-items: center;
+    align-items: center;
+    width: 100%;
+    height: ${({ emojiSize }) => SIZES.LIST_HEIGHT[emojiSize]};
+    padding: 0 5px;
+  }
+
+  ${EmojiItemUI} {
+    font-size: ${({ emojiSize }) => SIZES.EMOJI[emojiSize]};
   }
 `

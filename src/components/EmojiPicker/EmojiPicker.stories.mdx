@@ -1,7 +1,6 @@
 import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { select } from '@storybook/addon-knobs'
-import { action } from '@storybook/addon-actions'
-import EmojiPicker from './'
+import EmojiPicker from './EmojiPicker'
 
 <Meta
   title="Components/Conversation/EmojiPicker"
@@ -17,19 +16,21 @@ import EmojiPicker from './'
 
 # EmojiPicker
 
-The EmojiPicker component contains the logic to present a set of emoji in a menu for selection.
+The EmojiPicker component contains the logic to present a set of emojis in a DropList for selection.
 
 <Canvas>
   <Story name="default">
-    <div style={{ paddingTop: '50px', marginLeft: '300px' }}>
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 0 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
       <EmojiPicker
-        size={select(
-          'Emoji Size',
-          { default: 'default', sm: 'sm', lg: 'lg' },
-          'default'
-        )}
-        shouldRefocusOnClose={() => false}
-        onSelect={action('Emoji Selected')}
+        emojiSize={select('EmojiSize', { sm: 'sm', md: 'md', lg: 'lg' }, 'md')}
       />
     </div>
   </Story>
@@ -38,12 +39,14 @@ The EmojiPicker component contains the logic to present a set of emoji in a menu
 #### Reference
 
 - **Designer**: Buzz
-- **Engineering**: Terrence
+- **Engineering**: Terrence, Juan Pablo
 - **Usage**: HSApp (ChatApp)
 
 <br />
 <br />
 
 ### Props
+
+Besides the following props, most `DropList` are valid
 
 <ArgsTable of={EmojiPicker} />

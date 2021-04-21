@@ -1,38 +1,34 @@
 import React from 'react'
 import { render, waitFor } from '@testing-library/react'
 import user from '@testing-library/user-event'
-import EmojiPicker from './index'
-import EmojiItem from './EmojiPicker.Item'
+import { SimpleButton } from '../DropList/DropList.togglers'
+import EmojiPicker from './'
 
 jest.useFakeTimers()
 
-describe('renderTrigger', () => {
-  test('Has default trigger component', () => {
+describe('Toggler', () => {
+  test('Has default toggler component', () => {
     const { container } = render(<EmojiPicker />)
-    const trigger = container.querySelector('.c-EmojiPickerTrigger')
+    const toggler = container.querySelector('.c-EmojiPickerToggler')
 
-    expect(trigger).toBeInTheDocument()
+    expect(toggler).toBeInTheDocument()
   })
 
-  test('Can render custom trigger', () => {
+  test('Can render custom toggler', () => {
     const { container } = render(
-      <EmojiPicker
-        renderTrigger={() => (
-          <span className="custom-trigger">Custom Trigger</span>
-        )}
-      />
+      <EmojiPicker toggler={<SimpleButton text="Custom" />} />
     )
-    const defaultTrigger = container.querySelector('.c-EmojiPickerTrigger')
-    const customTrigger = container.querySelector('.custom-trigger')
+    const defaultToggler = container.querySelector('.c-EmojiPickerToggler')
+    const customToggler = container.querySelector('.ButtonToggler')
 
-    expect(defaultTrigger).toBe(null)
-    expect(customTrigger).toBeInTheDocument()
+    expect(defaultToggler).toBe(null)
+    expect(customToggler).toBeInTheDocument()
   })
 })
 
 describe('Menu/Item', () => {
   test('Renders an Emoji correctly within a Menu/Item', () => {
-    const { getByRole, getAllByRole } = render(<EmojiPicker isOpen={true} />)
+    const { getByRole, getAllByRole } = render(<EmojiPicker isMenuOpen />)
 
     expect(getByRole('listbox')).toBeInTheDocument()
     expect(getAllByRole('option').length).toBeTruthy()
@@ -42,46 +38,28 @@ describe('Menu/Item', () => {
   })
 })
 
-describe('onOpen', () => {
-  it('should handle onOpen event', async () => {
-    const onOpenSpy = jest.fn()
+describe('onOpenedStateChange', () => {
+  it('should handle open/close event', async () => {
+    const onOpenedStateChangeSpy = jest.fn()
     const { container, queryByRole, getByRole } = render(
-      <EmojiPicker onOpen={onOpenSpy} />
+      <EmojiPicker onOpenedStateChange={onOpenedStateChangeSpy} />
     )
-    const trigger = container.querySelector('.c-EmojiPickerTrigger')
+    const toggler = container.querySelector('.c-EmojiPickerToggler')
 
     expect(queryByRole('listbox')).toBe(null)
 
-    user.click(trigger)
+    user.click(toggler)
 
     await waitFor(() => {
       expect(getByRole('listbox')).toBeInTheDocument()
-      expect(onOpenSpy).toHaveBeenCalled()
+      expect(onOpenedStateChangeSpy).toHaveBeenCalledWith(true)
     })
-  })
-})
 
-describe('onClose', () => {
-  it('should handle onOpen event', async () => {
-    const onCloseSpy = jest.fn()
-    const { container, queryByRole, getByRole } = render(
-      <EmojiPicker onClose={onCloseSpy} isOpen={true} />
-    )
-
-    expect(getByRole('listbox')).toBeInTheDocument()
-
-    user.type(container, '{esc}')
+    user.click(toggler)
 
     await waitFor(() => {
       expect(queryByRole('listbox')).toBe(null)
-      expect(onCloseSpy).toHaveBeenCalled()
+      expect(onOpenedStateChangeSpy).toHaveBeenCalledWith(false)
     })
-  })
-})
-
-describe('render EmojiItem', () => {
-  test('has default content', () => {
-    const { container } = render(<EmojiItem />)
-    expect(container.querySelector('.c-EmojiPickerItem')).toBeInTheDocument()
   })
 })
