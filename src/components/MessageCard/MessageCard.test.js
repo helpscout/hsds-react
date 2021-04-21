@@ -7,6 +7,7 @@ import {
   BodyUI,
   ActionUI,
   ImageUI,
+  ImageContainerUI,
 } from './MessageCard.css'
 import { Animate } from '../index'
 import { MessageCardButton as Button } from './MessageCard.Button'
@@ -191,8 +192,40 @@ describe('image', () => {
     )
     const image = wrapper.find(ImageUI)
 
-    expect(image.prop('width')).toEqual('100')
-    expect(image.prop('height')).toEqual('200')
+    expect(image.prop('width')).toEqual('100px')
+    expect(image.prop('height')).toEqual('200px')
+  })
+
+  test('Scales size of image when larger than fits and width is bigger', () => {
+    const wrapper = mount(
+      <MessageCard
+        image={{
+          url: 'https://path.to/image.png',
+          width: '800',
+          height: '300',
+        }}
+      />
+    )
+    const image = wrapper.find(ImageUI)
+
+    expect(image.prop('height')).toEqual('104.25px')
+    expect(image.prop('width')).toEqual('278px')
+  })
+
+  test('Scales size of image when larger than fits and height is bigger', () => {
+    const wrapper = mount(
+      <MessageCard
+        image={{
+          url: 'https://path.to/image.png',
+          width: '300',
+          height: '800',
+        }}
+      />
+    )
+    const image = wrapper.find(ImageUI)
+
+    expect(image.prop('height')).toEqual('278px')
+    expect(image.prop('width')).toEqual('104.25px')
   })
 
   test('Sets default size of image when not provided', () => {
