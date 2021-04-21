@@ -7,6 +7,9 @@ import Card from '../Card'
 import Button from '../Button'
 import Heading from '../Heading'
 import Image from '../Image'
+
+export const MAX_IMAGE_SIZE = 278
+
 const fontFamily = makeFontFamily('Barlow')
 
 export const MessageCardUI = styled(Card)`
@@ -272,7 +275,7 @@ export const ImageUI = styled(Image)`
   border-radius: 3px;
   height: ${({ height }) => height};
   width: ${({ width }) => width};
-  max-height: 278px;
+  max-height: ${MAX_IMAGE_SIZE}px;
 `
 
 export const ImageContainerUI = styled('div')`
@@ -281,5 +284,5 @@ export const ImageContainerUI = styled('div')`
   width: 100%;
   margin-top: 20px;
   padding: 0 10px;
-  max-height: 278px;
+  max-height: ${MAX_IMAGE_SIZE}px;
 `

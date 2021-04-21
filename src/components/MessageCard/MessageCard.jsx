@@ -10,13 +10,12 @@ import {
   BodyUI,
   ImageContainerUI,
   ImageUI,
+  MAX_IMAGE_SIZE,
   MessageCardUI,
   SubtitleUI,
   TitleUI,
 } from './MessageCard.css'
 import Truncate from '../Truncate'
-
-const MAX_IMAGE_SIZE = 278
 
 const sizeWithRatio = (recalculatedSide, otherSide, defaultValue) =>
   // Check if other side is smaller than max size to not recalculate unnecessarily this side as it doesn't need any scaling
