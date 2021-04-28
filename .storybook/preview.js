@@ -15,7 +15,9 @@ addDecorator(withHSDSScope)
 
 addParameters({
   options: {
-    showRoots: true,
+    sidebar: {
+      showRoots: false,
+    },
     storySort: {
       method: (a, b) =>
         a[1].kind === b[1].kind
