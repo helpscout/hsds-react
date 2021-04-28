@@ -181,42 +181,6 @@ export function getActiveYearRange(activeYear, isInitial) {
   return yearRange
 }
 
-export function getDayColor(
-  isSelected,
-  isDateToday,
-  isSelectedStartOrEnd,
-  isWithinHoverRange,
-  isDisabled,
-  leading,
-  trailing
-) {
-  return ({
-    selectedFirstOrLastColor,
-    normalColor,
-    selectedColor,
-    rangeHoverColor,
-    disabledColor,
-    inactiveMonthColor,
-    todayColor,
-  }) => {
-    if (isSelectedStartOrEnd) {
-      return selectedFirstOrLastColor
-    } else if (isDateToday) {
-      return todayColor
-    } else if (isSelected) {
-      return selectedColor
-    } else if (isWithinHoverRange) {
-      return rangeHoverColor
-    } else if (isDisabled) {
-      return disabledColor
-    } else if (leading || trailing) {
-      return inactiveMonthColor
-    } else {
-      return normalColor
-    }
-  }
-}
-
 export function getNavigatorButtonLabel(navigationLevel, direction) {
   switch (navigationLevel) {
     case NAVIGATION_LEVELS.MONTH_BY_MONTH:
