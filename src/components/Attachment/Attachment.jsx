@@ -44,6 +44,8 @@ export class Attachment extends React.PureComponent {
   }
 
   handleOnRemoveClick = event => {
+    // prevent from opening a link set on attachment if remove button clicked
+    event.preventDefault()
     this.props.onRemoveClick(event, this.getAttachmentProps())
   }
 
@@ -122,6 +124,7 @@ export class Attachment extends React.PureComponent {
         onClick={this.handleOnRemoveClick}
         size="tiny"
         title="Remove"
+        aria-label="Remove attachment"
       />
     ) : null
 
