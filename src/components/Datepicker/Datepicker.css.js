@@ -137,26 +137,23 @@ export const DayUI = styled('button')`
     -webkit-font-smoothing: auto;
   }
 
-  &.is-selected {
-    color: ${getColor('blue.500')};
-    background-color: ${getColor('blue.200')};
-    font-weight: 500;
-    -moz-osx-font-smoothing: auto;
-    -webkit-font-smoothing: auto;
-  }
-
   &.is-within-hover-range {
     color: ${getColor('blue.500')};
     background-color: ${getColor('blue.200')};
   }
 
+  &.is-selected,
   &.is-selected-start,
   &.is-selected-end {
     color: #ffffff;
     background-color: ${getColor('blue.500')};
+    font-weight: 500;
+    -moz-osx-font-smoothing: auto;
+    -webkit-font-smoothing: auto;
   }
 
   &.is-disabled {
+    cursor: default;
     color: #808285;
     background-color: #ffffff;
   }
@@ -176,11 +173,8 @@ export const DayUI = styled('button')`
     box-shadow: inset 0 0 0 2px ${getColor('blue.500')};
   }
 
-  &[disabled] {
-    cursor: default;
-  }
-
   &.with-range-selection {
+    &.is-selected:not(.is-selected-end):not(.is-selected-start),
     &.is-selected.is-today:not(.is-selected-end):not(.is-selected-start),
     &.is-selected.is-from-another-month:not(.is-selected-end),
     &.is-within-hover-range.is-today:not(.is-selected-end):not(.is-selected-start) {
