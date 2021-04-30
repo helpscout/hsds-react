@@ -56,21 +56,21 @@ export class ConditionField extends React.PureComponent {
               {children}
             </Flexy>
           </Flexy.Block>
-          <FieldCloseWrapperUI data-cy="ConditionFieldCloseWrapper">
-            <Tooltip
-              title={removeTitle}
-              animationDelay={tooltipDelay}
-              animationDuration={tooltipDuration}
-            >
-              {isWithRemove ? (
+          {isWithRemove ? (
+            <FieldCloseWrapperUI data-cy="ConditionFieldCloseWrapper">
+              <Tooltip
+                title={removeTitle}
+                animationDelay={tooltipDelay}
+                animationDuration={tooltipDuration}
+              >
                 <IconButton
                   data-cy="ConditionFieldRemoveButton"
                   icon={closeIcon}
                   onClick={onRemove}
                 />
-              ) : null}
-            </Tooltip>
-          </FieldCloseWrapperUI>
+              </Tooltip>
+            </FieldCloseWrapperUI>
+          ) : null}
         </Flexy>
       </div>
     )
