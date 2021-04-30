@@ -1,10 +1,8 @@
 import React, { useRef, useContext } from 'react'
 import { useDay } from '@datepicker-react/hooks'
 import { classNames } from '../../utilities/classNames'
-import { getColor } from '../../styles/utilities/color'
 import DatepickerContext from './Datepicker.Context'
 import {
-  getDayColor,
   isToday,
   isInsideRange,
   getValidDateTimeString,
@@ -45,15 +43,6 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
   })
 
   const isDateToday = isToday(date)
-  const getColorFn = getDayColor(
-    isSelected,
-    isDateToday,
-    isSelectedStartOrEnd,
-    isWithinHoverRange,
-    disabledDate,
-    leading,
-    trailing
-  )
   const dateString = getValidDateTimeString(getCorrectDateToSet(date))
   const startDateString = getValidDateTimeString(startDate)
   const endDateString = getValidDateTimeString(endDate)
@@ -126,7 +115,8 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
         'is-selected-end',
       isDateToday && 'is-today',
       enableRangeSelection && 'with-range-selection',
-      isWithinHoverRange && 'is-within-hover-range'
+      isWithinHoverRange && 'is-within-hover-range',
+      disabledDate && 'is-disabled'
     )
   }
 
@@ -142,24 +132,6 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
       onMouseEnter={onMouseEnter}
       ref={dayRef}
       tabIndex={trailing || leading ? '-1' : '0'}
-      labelColor={getColorFn({
-        selectedFirstOrLastColor: '#FFFFFF',
-        normalColor: getColor('charcoal.600'),
-        selectedColor: getColor('blue.500'),
-        rangeHoverColor: getColor('blue.500'),
-        disabledColor: '#808285',
-        inactiveMonthColor: getColor('charcoal.200'),
-        todayColor: getColor('charcoal.700'),
-      })}
-      bgColor={getColorFn({
-        selectedFirstOrLastColor: getColor('blue.500'),
-        normalColor: '#FFFFFF',
-        selectedColor: getColor('blue.200'),
-        rangeHoverColor: getColor('blue.200'),
-        disabledColor: '#FFFFFF',
-        inactiveMonthColor: '#FFFFFF',
-        todayColor: getColor('grey.300'),
-      })}
       type="button"
     >
       {shouldShowDateRangeBGHelper() ? (

@@ -17,7 +17,7 @@ export const MessageCardUI = styled(Card)`
   background-color: white;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  padding: 12px 0 10px;
+  padding: 17px 0 25px;
   width: 300px;
   word-break: break-word;
   display: flex;
@@ -285,4 +285,8 @@ export const ImageContainerUI = styled('div')`
   margin-top: 20px;
   padding: 0 10px;
   max-height: ${MAX_IMAGE_SIZE}px;
+
+  &:last-child {
+    margin-bottom: -15px;
+  }
 `

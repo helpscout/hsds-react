@@ -110,7 +110,8 @@ export const AttachmentUI = styled.a`
 
   ${bem.element('closeButton')} {
     ${cardStyles()};
-    display: none;
+    display: block;
+    clip: rect(0, 0, 0, 0);
     border-radius: 9999px !important;
     position: absolute;
     right: 0;
@@ -119,9 +120,14 @@ export const AttachmentUI = styled.a`
     z-index: 1;
   }
 
-  &:hover {
+  &:hover,
+  &:focus {
     ${bem.element('closeButton')} {
-      display: block;
+      clip: unset;
     }
+  }
+
+  ${bem.element('closeButton')}:focus {
+    clip: unset;
   }
 `

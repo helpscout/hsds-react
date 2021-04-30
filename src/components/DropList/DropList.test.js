@@ -7,14 +7,19 @@ import { SimpleButton, SelectTag, SplittedButton } from './DropList.togglers'
 import {
   itemsWithDivider,
   groupAndDividerItems,
-  regularItems,
   simpleGroupedItems,
 } from '../../utilities/specs/dropdown.specs'
 
 const beatles = ['John', 'Paul', 'Ringo', 'George']
-let dedupedRegularItems = regularItems.filter(
-  (v, i, a) => a.findIndex(t => t.label === v.label) === i
-)
+const someItems = [
+  { label: 'John' },
+  { label: 'Paul' },
+  { label: 'Ringo' },
+  { label: 'George' },
+  { label: 'Bob' },
+  { label: 'Jeff' },
+  { label: 'David' },
+]
 
 describe('Render', () => {
   test('Should render a fallback toggler if none passed', () => {
@@ -61,7 +66,7 @@ describe('Render', () => {
   test('should render a menu list with object items that include a label', async () => {
     const { getByRole, queryByText, queryByRole } = render(
       <DropList
-        items={dedupedRegularItems}
+        items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
       />
     )
@@ -74,7 +79,7 @@ describe('Render', () => {
     await waitFor(() => {
       expect(queryByRole('listbox')).toBeInTheDocument()
 
-      dedupedRegularItems.forEach(item => {
+      someItems.forEach(item => {
         expect(queryByText(item.label)).toBeInTheDocument()
       })
     })
@@ -87,8 +92,8 @@ describe('Render', () => {
   })
 
   test('should render a menu list with object items that include a value and no label', async () => {
-    const regularValueItems = dedupedRegularItems.map(item => {
-      return { value: item.value }
+    const regularValueItems = someItems.map(item => {
+      return { value: item.label }
     })
     const { getByRole, queryByText, queryByRole } = render(
       <DropList
@@ -349,7 +354,7 @@ describe('Menu', () => {
     const { queryByRole } = render(
       <DropList
         isMenuOpen
-        items={dedupedRegularItems}
+        items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
       />
     )
@@ -382,7 +387,7 @@ describe('Menu', () => {
     const { queryByRole, getByPlaceholderText } = render(
       <DropList
         isMenuOpen
-        items={dedupedRegularItems}
+        items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
         autoSetComboboxAt={3}
       />
@@ -403,7 +408,7 @@ describe('Menu', () => {
     const { queryByRole, queryByPlaceholderText } = render(
       <DropList
         isMenuOpen
-        items={dedupedRegularItems}
+        items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
         autoSetComboboxAt={16}
       />
@@ -421,7 +426,7 @@ describe('Combobox', () => {
     const { queryByRole, getByPlaceholderText } = render(
       <DropList
         isMenuOpen
-        items={dedupedRegularItems}
+        items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
         variant="combobox"
       />
@@ -442,7 +447,7 @@ describe('Combobox', () => {
     const { getByPlaceholderText } = render(
       <DropList
         isMenuOpen
-        items={dedupedRegularItems}
+        items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
         variant="combobox"
       />
@@ -672,11 +677,11 @@ describe('Selection', () => {
       <DropList
         isMenuOpen
         onSelect={onSelect}
-        items={dedupedRegularItems}
+        items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
       />
     )
-    const itemToSelect = regularItems[3]
+    const itemToSelect = someItems[3]
 
     user.click(getByText(itemToSelect.label).parentElement)
 
@@ -717,12 +722,12 @@ describe('Selection', () => {
       <DropList
         isMenuOpen
         onSelect={onSelect}
-        items={dedupedRegularItems}
+        items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
         variant="combobox"
       />
     )
-    const itemToSelect = regularItems[3]
+    const itemToSelect = someItems[3]
 
     user.click(getByText(itemToSelect.label).parentElement)
 
@@ -848,16 +853,16 @@ describe('Selection', () => {
     const { getByText } = render(
       <DropList
         onSelect={onSelect}
-        items={dedupedRegularItems}
+        items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
         isMenuOpen
-        selection={dedupedRegularItems[2]}
+        selection={someItems[2]}
       />
     )
 
     await waitFor(() => {
       expect(
-        getByText(regularItems[2].label).parentElement.classList.contains(
+        getByText(someItems[2].label).parentElement.classList.contains(
           'is-selected'
         )
       ).toBeTruthy()
@@ -869,22 +874,22 @@ describe('Selection', () => {
     const { getByText } = render(
       <DropList
         onSelect={onSelect}
-        items={dedupedRegularItems}
+        items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
         isMenuOpen
-        selection={[regularItems[0], regularItems[2]]}
+        selection={[someItems[0], someItems[2]]}
         withMultipleSelection
       />
     )
 
     await waitFor(() => {
       expect(
-        getByText(regularItems[0].label).parentElement.classList.contains(
+        getByText(someItems[0].label).parentElement.classList.contains(
           'is-selected'
         )
       ).toBeTruthy()
       expect(
-        getByText(regularItems[2].label).parentElement.classList.contains(
+        getByText(someItems[2].label).parentElement.classList.contains(
           'is-selected'
         )
       ).toBeTruthy()
@@ -892,7 +897,7 @@ describe('Selection', () => {
   })
 
   describe('disabled items', () => {
-    const items = dedupedRegularItems.map((item, index) => ({
+    const items = someItems.map((item, index) => ({
       ...item,
       isDisabled: index % 2 === 0,
     }))
@@ -908,14 +913,14 @@ describe('Selection', () => {
         />
       )
 
-      expect(getByText(regularItems[2].label).parentElement).toHaveClass(
+      expect(getByText(someItems[2].label).parentElement).toHaveClass(
         'is-disabled'
       )
-      expect(getByText(regularItems[1].label).parentElement).not.toHaveClass(
+      expect(getByText(someItems[1].label).parentElement).not.toHaveClass(
         'is-disabled'
       )
 
-      user.click(getByText(regularItems[2].label))
+      user.click(getByText(someItems[2].label))
 
       await waitFor(() => {
         expect(onSelect).not.toHaveBeenCalled()
@@ -934,11 +939,11 @@ describe('Selection', () => {
         />
       )
 
-      expect(getByText(regularItems[2].label).parentElement).toHaveClass(
+      expect(getByText(someItems[2].label).parentElement).toHaveClass(
         'is-disabled'
       )
 
-      user.click(getByText(regularItems[2].label))
+      user.click(getByText(someItems[2].label))
 
       await waitFor(() => {
         expect(onSelect).not.toHaveBeenCalled()
@@ -959,7 +964,7 @@ describe('Selection', () => {
         />
       )
 
-      const exampleItem = getByText(regularItems[2].label)
+      const exampleItem = getByText(someItems[2].label)
 
       expect(exampleItem.parentElement).toHaveClass('is-disabled')
 
@@ -984,10 +989,10 @@ describe('Selection', () => {
       user.type(getByPlaceholderText('Search'), '{arrowdown}')
 
       await waitFor(() => {
-        expect(getByText(regularItems[0].label).parentElement).not.toHaveClass(
+        expect(getByText(someItems[0].label).parentElement).not.toHaveClass(
           'is-highlighted'
         )
-        expect(getByText(regularItems[1].label).parentElement).toHaveClass(
+        expect(getByText(someItems[1].label).parentElement).toHaveClass(
           'is-highlighted'
         )
       })
@@ -995,13 +1000,13 @@ describe('Selection', () => {
       user.type(getByPlaceholderText('Search'), '{arrowdown}')
 
       await waitFor(() => {
-        expect(getByText(regularItems[1].label).parentElement).not.toHaveClass(
+        expect(getByText(someItems[1].label).parentElement).not.toHaveClass(
           'is-highlighted'
         )
-        expect(getByText(regularItems[2].label).parentElement).not.toHaveClass(
+        expect(getByText(someItems[2].label).parentElement).not.toHaveClass(
           'is-highlighted'
         )
-        expect(getByText(regularItems[3].label).parentElement).toHaveClass(
+        expect(getByText(someItems[3].label).parentElement).toHaveClass(
           'is-highlighted'
         )
       })
@@ -1020,11 +1025,11 @@ describe('Selection', () => {
       user.type(getByPlaceholderText('Search'), '{arrowup}')
 
       await waitFor(() => {
-        expect(getByText(regularItems[0].label).parentElement).not.toHaveClass(
+        expect(getByText(someItems[0].label).parentElement).not.toHaveClass(
           'is-highlighted'
         )
         expect(
-          getByText(regularItems[regularItems.length - 2].label).parentElement
+          getByText(someItems[someItems.length - 2].label).parentElement
         ).toHaveClass('is-highlighted')
       })
 
@@ -1032,13 +1037,13 @@ describe('Selection', () => {
 
       await waitFor(() => {
         expect(
-          getByText(regularItems[regularItems.length - 2].label).parentElement
+          getByText(someItems[someItems.length - 2].label).parentElement
         ).not.toHaveClass('is-highlighted')
         expect(
-          getByText(regularItems[regularItems.length - 3].label).parentElement
+          getByText(someItems[someItems.length - 3].label).parentElement
         ).not.toHaveClass('is-highlighted')
         expect(
-          getByText(regularItems[regularItems.length - 4].label).parentElement
+          getByText(someItems[someItems.length - 4].label).parentElement
         ).toHaveClass('is-highlighted')
       })
     })

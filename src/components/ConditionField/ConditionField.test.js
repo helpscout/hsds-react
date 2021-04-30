@@ -3,35 +3,6 @@ import { render, screen, waitFor, within } from '@testing-library/react'
 import user from '@testing-library/user-event'
 import ConditionField from './ConditionField'
 
-describe('onRemove', () => {
-  test('Renders a remove button', () => {
-    const { getByRole, getByTitle } = render(<ConditionField />)
-
-    expect(getByRole('button')).toBeInTheDocument()
-    expect(getByTitle('collapse')).toBeInTheDocument()
-  })
-
-  test('Does not render a remove button', () => {
-    const { queryByRole, queryByTitle } = render(
-      <ConditionField isWithRemove={false} />
-    )
-
-    expect(queryByRole('button')).toBe(null)
-    expect(queryByTitle('collapse')).toBe(null)
-  })
-
-  test('Fires onRemove callback when remove button is clicked', async () => {
-    const spy = jest.fn()
-    const { getByRole } = render(<ConditionField onRemove={spy} />)
-
-    user.click(getByRole('button'))
-
-    await waitFor(() => {
-      expect(spy).toHaveBeenCalled()
-    })
-  })
-})
-
 describe('Group', () => {
   test('Renders an AddButton by default', () => {
     const { getByRole } = render(<ConditionField.Group />)
@@ -240,4 +211,33 @@ describe('With selectable conjunction', () => {
   function getAndConjunctions(container) {
     return container.querySelectorAll('.c-ConditionOperator.is-and')
   }
+})
+
+describe('onRemove', () => {
+  test('Renders a remove button', () => {
+    const { getByRole, getByTitle } = render(<ConditionField />)
+
+    expect(getByRole('button')).toBeInTheDocument()
+    expect(getByTitle('collapse')).toBeInTheDocument()
+  })
+
+  test('Does not render a remove button', () => {
+    const { queryByRole, queryByTitle } = render(
+      <ConditionField isWithRemove={false} />
+    )
+
+    expect(queryByRole('button')).toBe(null)
+    expect(queryByTitle('collapse')).toBe(null)
+  })
+
+  test('Fires onRemove callback when remove button is clicked', async () => {
+    const spy = jest.fn()
+    const { getByRole } = render(<ConditionField onRemove={spy} />)
+
+    user.click(getByRole('button'))
+
+    await waitFor(() => {
+      expect(spy).toHaveBeenCalled()
+    })
+  })
 })
