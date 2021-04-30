@@ -28,6 +28,28 @@ export class MessageCard extends React.PureComponent {
   static className = 'c-MessageCard'
   static Button = MessageCardButton
 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      show: !(this.props.image && this.props.image.url),
+    }
+
+    this.imageRef = React.createRef()
+  }
+
+  componentDidMount() {
+    if (this.state.show) {
+      this.props.onShow()
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevState.show && this.state.show) {
+      this.props.onShow()
+    }
+  }
+
   getClassName() {
     const { align, className, isMobile, isWithBoxShadow } = this.props
     return classNames(
@@ -35,7 +57,8 @@ export class MessageCard extends React.PureComponent {
       align && `is-align-${align}`,
       className,
       isMobile && 'is-mobile',
-      isWithBoxShadow && `is-with-box-shadow`
+      isWithBoxShadow && `is-with-box-shadow`,
+      !this.state.show && 'is-not-shown'
     )
   }
 
@@ -91,6 +114,8 @@ export class MessageCard extends React.PureComponent {
     ) : null
   }
 
+  afterImageLoad = () => this.setState({ show: true })
+
   renderImage() {
     const { image } = this.props
 
@@ -107,6 +132,7 @@ export class MessageCard extends React.PureComponent {
           alt={image.altText || 'Message image'}
           width={width ? `${width}px` : '100%'}
           height={height ? `${height}px` : 'auto'}
+          onLoad={this.afterImageLoad}
         />
       </ImageContainerUI>
     )
@@ -160,24 +186,27 @@ export class MessageCard extends React.PureComponent {
 
     return (
       <Animate
-        className="c-MessageCardWrapper"
+        className={`c-MessageCardWrapper`}
+        // style={{opacity: this.state.show ? 1 : 0, transform: this.state.show ? 'translateY(0px)' : 'translateY(12px)' }}
         in={inProp}
         duration={animationDuration}
         easing={animationEasing}
         sequence={animationSequence}
       >
-        <MessageCardUI
-          {...getValidProps(rest)}
-          className={this.getClassName()}
-          ref={innerRef}
-        >
-          {this.renderTitle()}
-          {this.renderSubtitle()}
-          {this.renderBody()}
-          {this.renderImage()}
-          {children}
-          {this.renderAction()}
-        </MessageCardUI>
+        {
+          <MessageCardUI
+            {...getValidProps(rest)}
+            className={this.getClassName()}
+            ref={innerRef}
+          >
+            {this.renderTitle()}
+            {this.renderSubtitle()}
+            {this.renderBody()}
+            {this.renderImage()}
+            {children}
+            {this.renderAction()}
+          </MessageCardUI>
+        }
       </Animate>
     )
   }
@@ -192,6 +221,7 @@ MessageCard.defaultProps = {
   isMobile: false,
   isWithBoxShadow: true,
   onBodyClick: noop,
+  onShow: noop,
 }
 
 MessageCard.propTypes = {
@@ -231,6 +261,8 @@ MessageCard.propTypes = {
   }),
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
+  /** Callback invoked when the MessageCard is show to the user. */
+  onShow: PropTypes.func,
 }
 
 export default MessageCard

@@ -47,6 +47,12 @@ This component renders a Message Card Notification with (optional) Title, Subtit
 <Canvas>
   <Story name="With image">
     <MessageCard
+      in={boolean('show', true)}
+      isMobile={boolean('isMobile', false)}
+      isWithBoxShadow={boolean('isWithBoxShadow', true)}
+      animationDuration={number('animationDuration', 300)}
+      animationEasing={text('animationEasing', 'ease-in-out')}
+      animationSequence={text('animationSequence', 'fade up')}
       subtitle={text('Subtitle', 'The J&G Team is here')}
       title={text('Title', 'Need help?')}
       image={{
