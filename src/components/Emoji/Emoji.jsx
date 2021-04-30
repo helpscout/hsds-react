@@ -15,6 +15,7 @@ function Emoji({
   return (
     <span
       {...getValidProps(rest)}
+      data-cy={dataCy}
       aria-label={name}
       className={classNames('c-EmojiPickerView', className)}
       role="img"
