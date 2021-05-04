@@ -25,6 +25,7 @@ function Select({
   items = [],
   menuCSS,
   onMenuBlur = noop,
+  onMenuFocus = noop,
   renderCustomListItem = null,
   selectedItem = null,
   selectedItems,
@@ -141,8 +142,12 @@ function Select({
     >
       <A11yTogglerUI {...getToggleButtonProps()}>Toggler</A11yTogglerUI>
       <MenuListUI
+        className="DropList__MenuList"
         {...getMenuProps({
           onKeyDown: handleSidewaysKeyNavigation,
+          onFocus: e => {
+            onMenuFocus(e)
+          },
         })}
       >
         {renderListContents({
