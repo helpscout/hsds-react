@@ -247,11 +247,14 @@ export class EditableField extends React.Component {
       return
     }
 
-    // In multivalue fields, remove the empty one when there're at least 2 fields
     const removedEmptyFields = this.state.fieldValue.filter(field =>
       Boolean(field.value)
     )
+    const hasOptions = this.state.valueOptions != null
+
+    // In multivalue fields, remove the empty one when there're at least 2 fields
     const shouldDiscardEmpty =
+      !hasOptions &&
       multipleValuesEnabled &&
       removedEmptyFields.length < this.state.fieldValue.length
 
@@ -294,8 +297,6 @@ export class EditableField extends React.Component {
 
       return
     }
-
-    // tested
 
     if (!changedField.validated) {
       this.setState({
@@ -780,12 +781,13 @@ export class EditableField extends React.Component {
     let newFieldValue = []
     let changed = false
     let hasBeenValidated = ''
+    const label = typeof selection === 'string' ? selection : selection.label
 
     for (const value of fieldValue) {
       const temp = { ...value }
 
-      if (temp.id === name && temp.option !== selection) {
-        temp.option = selection
+      if (temp.id === name && temp.option !== label) {
+        temp.option = label
         changed = true
       }
 
@@ -956,7 +958,9 @@ export class EditableField extends React.Component {
         {fieldValue.map((val, index) => {
           const isActive = activeField === val.id
           const isDisabled =
-            val.disabled || this.state.disabledItem.indexOf(val.id) !== -1
+            disabled ||
+            val.disabled ||
+            this.state.disabledItem.indexOf(val.id) !== -1
           const valInfo = find(
             this.state.validationInfo,
             valItem => valItem.name === val.id

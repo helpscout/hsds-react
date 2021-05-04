@@ -15,6 +15,8 @@ import {
   TRUNCATED_CLASSNAMES,
 } from './EditableField.utils'
 
+import { DropListWrapperUI } from '../DropList/DropList.css'
+
 const {
   field,
   fieldLabel,
@@ -41,7 +43,6 @@ export const LabelTextUI = styled('span')`
 `
 
 export const FieldUI = styled('div')`
-  
   position: relative;
   height: ${field.height};
   margin-bottom: 2px;
@@ -94,6 +95,12 @@ export const FieldUI = styled('div')`
     visibility: hidden;
     width: auto;
     height: auto;
+  }
+
+  ${DropListWrapperUI} {
+    width: auto;
+    max-width: 200px;
+    min-width: 75;
   }
 `
 
@@ -345,12 +352,6 @@ export const OptionsWrapperUI = styled('div')`
     height: ${field.height.large};
   }
 
-  .${STATES_CLASSNAMES.fieldDisabled}
-    &
-    ${`.${INPUT_CLASSNAMES.dropdown}`}:hover {
-    cursor: initial;
-  }
-
   .${STATES_CLASSNAMES.isEmpty} & {
     width: 0;
     margin-right: 0;
@@ -360,16 +361,29 @@ export const OptionsWrapperUI = styled('div')`
     width: 60px;
     margin-right: 20px;
   }
-
-  .${OTHERCOMPONENTS_CLASSNAMES.dropdownTrigger},
-    ${`.${OTHERCOMPONENTS_CLASSNAMES.dropdownTrigger}`}:hover {
-    cursor: text;
-  }
 `
 
-export const TriggerUI = styled('div')`
+export const TriggerUI = styled('button')`
   position: relative;
   width: 100%;
+  min-width: 70px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  height: ${input.height.medium};
+  line-height: ${field.height.medium};
+
+  .is-active &:focus {
+    outline: 0;
+
+    .${INPUT_CLASSNAMES.focusIndicator} {
+      transform: scaleX(1);
+      background-color: ${COLOURS.focusIndicator.active};
+      height: ${focusIndicator.active};
+    }
+  }
 `
 
 export const OptionsDropdownUI = styled('div')`
@@ -406,20 +420,10 @@ export const OptionsDropdownUI = styled('div')`
     }
   }
 
-  .is-active ${`.${OTHERCOMPONENTS_CLASSNAMES.dropdownTrigger}`}:focus & {
-    outline: none;
-
-    & + .${INPUT_CLASSNAMES.focusIndicator} {
-      transform: scaleX(1);
-      background-color: ${COLOURS.focusIndicator.active};
-      height: ${focusIndicator.active};
-    }
-  }
-
-  &:focus {
-    & + .${INPUT_CLASSNAMES.focusIndicator} {
-      transform: scaleX(1);
-    }
+  &.menu-open + .${INPUT_CLASSNAMES.focusIndicator} {
+    transform: scaleX(1);
+    background-color: ${COLOURS.focusIndicator.active};
+    height: ${focusIndicator.active};
   }
 
   & .${OTHERCOMPONENTS_CLASSNAMES.icon} {
@@ -534,6 +538,7 @@ export const MaskOptionUI = styled('span')`
   .${STATES_CLASSNAMES.fieldDisabled} & {
     color: ${COLOURS.mask.disabled};
     pointer-events: all;
+    cursor: default;
   }
 
   &:focus {

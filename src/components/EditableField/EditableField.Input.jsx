@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import {
   EditableFieldInputUI,
@@ -10,7 +10,7 @@ import {
   FocusIndicatorUI,
   ValidationIconUI,
 } from './EditableField.css'
-import Dropdown from '../Dropdown'
+import DropList from '../DropList'
 import Icon from '../Icon'
 import Tooltip from '../Tooltip'
 import Truncate from '../Truncate'
@@ -31,6 +31,51 @@ import { classNames } from '../../utilities/classNames'
 import { key } from '../../constants/Keys'
 import { noop } from '../../utilities/other'
 import equal from 'fast-deep-equal'
+
+const Toggler = forwardRef(
+  (
+    {
+      disabled = false,
+      isActive = false,
+      onBlur = noop,
+      onClick = noop,
+      onFocus = noop,
+      fieldValue,
+      ...rest
+    },
+    ref
+  ) => {
+    return (
+      <TriggerUI
+        aria-label="toggle menu"
+        aria-haspopup="true"
+        aria-expanded={isActive}
+        className={INPUT_CLASSNAMES.optionsTrigger}
+        data-cy="EditableFieldOptionsTrigger"
+        disabled={disabled}
+        onClick={onClick}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        ref={ref}
+        type="button"
+        {...rest}
+      >
+        <OptionsDropdownUI
+          className={classNames(
+            INPUT_CLASSNAMES.optionsDropdown,
+            isActive && 'menu-open'
+          )}
+        >
+          <Truncate className={INPUT_CLASSNAMES.selectedOption}>
+            {fieldValue.option}
+          </Truncate>
+          <Icon name={ACTION_ICONS.valueOption} />
+        </OptionsDropdownUI>
+        <FocusIndicatorUI className={INPUT_CLASSNAMES.focusIndicator} />
+      </TriggerUI>
+    )
+  }
+)
 
 export class EditableFieldInput extends React.Component {
   static className = INPUT_CLASSNAMES.component
@@ -201,32 +246,24 @@ export class EditableFieldInput extends React.Component {
     const { disabled, fieldValue, valueOptions } = this.props
 
     return (
-      <OptionsWrapperUI
-        className={INPUT_CLASSNAMES.optionsWrapper}
-        onKeyDown={this.handleKeyDown}
-      >
-        <Dropdown
+      <OptionsWrapperUI className={INPUT_CLASSNAMES.optionsWrapper}>
+        <DropList
           className={INPUT_CLASSNAMES.dropdown}
           items={valueOptions}
-          disabled={disabled}
-          shouldRefocusOnClose={() => false}
-          minWidth={75}
-          maxWidth={200}
-          onBlur={this.handleOptionsBlur}
-          onFocus={this.handleOptionFocus}
           onSelect={this.handleDropdownSelect}
-          triggerRef={this.setOptionsDropdownNode}
-          renderTrigger={
-            <TriggerUI className={INPUT_CLASSNAMES.optionsTrigger}>
-              <OptionsDropdownUI className={INPUT_CLASSNAMES.optionsDropdown}>
-                <Truncate className={INPUT_CLASSNAMES.selectedOption}>
-                  {fieldValue.option}
-                </Truncate>
-                <Icon name={ACTION_ICONS.valueOption} />
-              </OptionsDropdownUI>
-              <FocusIndicatorUI className={INPUT_CLASSNAMES.focusIndicator} />
-            </TriggerUI>
+          toggler={
+            <Toggler
+              disabled={disabled}
+              fieldValue={fieldValue}
+              onFocus={this.handleOptionFocus}
+              onBlur={this.handleOptionsBlur}
+            />
           }
+          tippyOptions={{
+            appendTo: reference =>
+              reference.closest('.EditableField__field.has-options'),
+            offset: [0, 10],
+          }}
         />
       </OptionsWrapperUI>
     )
