@@ -374,6 +374,7 @@ export const TriggerUI = styled('button')`
   text-align: left;
   height: ${input.height.medium};
   line-height: ${field.height.medium};
+  cursor: pointer;
 
   .is-active &:focus {
     outline: 0;
