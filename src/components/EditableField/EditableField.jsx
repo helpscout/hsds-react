@@ -914,9 +914,7 @@ export class EditableField extends React.Component {
         {fieldValue.map((val, index) => {
           const isActive = activeField === val.id
           const isDisabled =
-            disabled ||
-            val.disabled ||
-            this.state.disabledItem.indexOf(val.id) !== -1
+            disabled || val.disabled || this.state.disabledItem.includes(val.id)
           const valInfo = find(
             this.state.validationInfo,
             valItem => valItem.name === val.id
