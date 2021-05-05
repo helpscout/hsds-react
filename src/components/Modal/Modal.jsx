@@ -30,6 +30,11 @@ const modalBaseZIndex = 1040
 const portalOptions = {
   id: 'Modal',
   zIndex: modalBaseZIndex,
+  preventEscActionElements: [
+    'DropList__MenuList',
+    'FieldInput__input',
+    'EditableTextarea__Textarea',
+  ],
 }
 const modalV2Animation = {
   delay: 0,

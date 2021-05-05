@@ -28,6 +28,16 @@ const defaultOptions = {
 const managerNamespace = 'HSDSPortalWrapperGlobalManager'
 const uniqueIndex = createUniqueIndexFactory(1000)
 
+function shouldPreventClosing({ preventEscActionElements, classList }) {
+  for (let index = 0; index < preventEscActionElements.length; index++) {
+    if (classList.contains(preventEscActionElements[index])) {
+      return true
+    }
+  }
+
+  return false
+}
+
 const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
   const extendedOptions = {
     ...defaultOptions,
@@ -40,6 +50,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     static defaultProps = {
       closeOnEscape: true,
       isOpen: false,
+      preventEscActionElements: extendedOptions.preventEscActionElements || [],
     }
     static contextTypes = {
       router: noop,
@@ -192,7 +203,16 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     }
 
     handleOnEsc = event => {
-      if (this.state.isOpen) {
+      const { preventEscActionElements } = this.props
+      const { target } = event
+
+      if (
+        this.state.isOpen &&
+        !shouldPreventClosing({
+          classList: target.classList,
+          preventEscActionElements,
+        })
+      ) {
         event && event.stopPropagation()
         this.handleOnClose()
       }
@@ -307,7 +327,11 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     renderEventListener() {
       const { closeOnEscape } = this.props
       return closeOnEscape ? (
-        <KeypressListener keyCode={Keys.ESCAPE} handler={this.handleOnEsc} />
+        <KeypressListener
+          keyCode={Keys.ESCAPE}
+          handler={this.handleOnEsc}
+          type="keydown"
+        />
       ) : null
     }
 
@@ -336,6 +360,7 @@ PortalWrapper.propTypes = Object.assign(Portal.propTypes, {
   isOpen: PropTypes.bool,
   trigger: PropTypes.any,
   isOpenProps: PropTypes.bool,
+  preventEscActionElements: PropTypes.arrayOf(PropTypes.string),
   wrapperClassName: PropTypes.string,
 })
 
