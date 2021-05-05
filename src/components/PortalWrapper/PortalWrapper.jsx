@@ -28,10 +28,12 @@ const defaultOptions = {
 const managerNamespace = 'HSDSPortalWrapperGlobalManager'
 const uniqueIndex = createUniqueIndexFactory(1000)
 
-function shouldPreventClosing({ preventEscActionElements, classList }) {
-  for (let index = 0; index < preventEscActionElements.length; index++) {
-    if (classList.contains(preventEscActionElements[index])) {
-      return true
+function shouldPreventClosing({ preventEscActionElements, target }) {
+  if (target) {
+    for (let index = 0; index < preventEscActionElements.length; index++) {
+      if (target.classList.contains(preventEscActionElements[index])) {
+        return true
+      }
     }
   }
 
@@ -209,7 +211,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       if (
         this.state.isOpen &&
         !shouldPreventClosing({
-          classList: target.classList,
+          target,
           preventEscActionElements,
         })
       ) {

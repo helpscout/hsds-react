@@ -110,14 +110,10 @@ export class EditableFieldComposite extends React.PureComponent {
         )
 
         Fields.forEach(field => {
-          // It is tested (composite test: "component did update" line:326)
-
           if (field && field.classList.contains(STATES_CLASSNAMES.isActive)) {
             hasActiveFields = true
           }
         })
-
-        // It is tested (composite test: "component did update" line:326)
 
         if (!hasActiveFields) {
           // Let's remove the transition from all but the first focus indicator
@@ -235,8 +231,6 @@ export class EditableFieldComposite extends React.PureComponent {
 
     const inputs = this.groupRef.querySelectorAll('input')
 
-    // It is tested
-
     if (inputs) {
       for (let index = 0; index < inputs.length; index++) {
         const element = inputs[index]
@@ -263,9 +257,7 @@ export class EditableFieldComposite extends React.PureComponent {
 
       input && input.focus()
       this.maskRef.removeAttribute('tabindex')
-    }
-    // It is tested
-    else if (isEscape) {
+    } else if (isEscape) {
       this.maskRef.removeAttribute('tabindex')
     }
   }

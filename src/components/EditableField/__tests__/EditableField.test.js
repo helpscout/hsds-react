@@ -1065,24 +1065,6 @@ describe('Events', () => {
     expect(spy).toHaveBeenCalled()
   })
 
-  test('Blur option', () => {
-    const spy = jest.fn()
-
-    const { container } = render(
-      <EditableField
-        name="company"
-        value={{ option: 'Work', value: '123456789', id: '1' }}
-        valueOptions={['Home', 'Work', 'Other']}
-        onOptionBlur={spy}
-      />
-    )
-
-    container.querySelector(`.${INPUT_CLASSNAMES.optionsTrigger}`).focus()
-    container.querySelector(`.${INPUT_CLASSNAMES.optionsTrigger}`).blur()
-
-    expect(spy).toHaveBeenCalled()
-  })
-
   test('Changing option', () => {
     const onOptionChangeSpy = jest.fn()
     const onChangeSpy = jest.fn()

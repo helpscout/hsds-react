@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import user from '@testing-library/user-event'
 import { mount } from 'enzyme'
 import { EditableFieldComposite } from '../'
@@ -9,6 +9,8 @@ import {
   EDITABLEFIELD_CLASSNAMES,
   STATES_CLASSNAMES,
 } from '../EditableField.utils'
+
+jest.useFakeTimers()
 
 describe('Children', () => {
   test('Renders as many EditableFields as passed', () => {
@@ -73,7 +75,7 @@ describe('Children', () => {
     expect(spy).toHaveBeenCalled()
   })
 
-  test('onInputBlur still gets executed if passed on an EditableField', () => {
+  test('onInputBlur still gets executed if passed on an EditableField', async () => {
     const spy = jest.fn()
 
     const { container } = render(
@@ -84,11 +86,12 @@ describe('Children', () => {
     )
 
     const input = container.querySelector('input')
-
     input.focus()
-    input.blur()
+    user.tab()
 
-    expect(spy).toHaveBeenCalled()
+    await waitFor(() => {
+      expect(spy).toHaveBeenCalled()
+    })
   })
 
   test('onChange still gets executed if passed on an EditableField', () => {
@@ -321,8 +324,6 @@ describe('Active Fields', () => {
   })
 
   test('component did update', () => {
-    jest.useFakeTimers()
-
     const wrapper = mount(
       <EditableFieldComposite>
         <EditableField name="city" />

@@ -80,17 +80,11 @@ const Toggler = forwardRef(
 export class EditableFieldInput extends React.Component {
   static className = INPUT_CLASSNAMES.component
 
-  fieldInputContentRef
-  optionsDropdownRef
   inputRef
   inputWrapperRef = React.createRef()
 
-  setFieldInputContentNode = node => {
-    this.fieldInputContentRef = node
-  }
-
-  setOptionsDropdownNode = node => {
-    this.optionsDropdownRef = node
+  state = {
+    isDropListOpen: false,
   }
 
   setInputNode = node => {
@@ -103,10 +97,8 @@ export class EditableFieldInput extends React.Component {
     this.setInputTitle()
 
     if (isActive) {
-      if (document.activeElement !== this.optionsDropdownRef) {
-        const inputNode = this.inputRef
-        inputNode && inputNode.focus()
-      }
+      const inputNode = this.inputRef
+      inputNode && inputNode.focus()
     }
   }
 
@@ -122,8 +114,6 @@ export class EditableFieldInput extends React.Component {
     if (this.props.disabled !== nextProps.disabled) {
       return true
     }
-
-    // Below is tested
 
     if (!equal(this.props.validationInfo, nextProps.validationInfo)) {
       return true
@@ -165,12 +155,17 @@ export class EditableFieldInput extends React.Component {
   }
 
   handleInputBlur = event => {
-    const { name, onInputBlur } = this.props
-    const optionsNode = this.optionsDropdownRef
+    const { name, onInputBlur, valueOptions } = this.props
 
-    if (optionsNode && optionsNode.classList.contains('is-open')) return
-
-    onInputBlur({ name, event })
+    if (valueOptions) {
+      setTimeout(() => {
+        if (!this.state.isDropListOpen) {
+          onInputBlur({ name, event })
+        }
+      }, 100)
+    } else {
+      onInputBlur({ name, event })
+    }
   }
 
   handleOptionFocus = event => {
@@ -229,17 +224,14 @@ export class EditableFieldInput extends React.Component {
     onKeyUp({ event, name })
   }
 
-  handleOptionsBlur = event => {
-    const { name, onOptionBlur } = this.props
-
-    onOptionBlur({ name, event })
-  }
-
   handleDropdownSelect = selection => {
     const { name, onOptionSelection } = this.props
 
     onOptionSelection({ name, selection })
-    this.optionsDropdownRef && this.optionsDropdownRef.focus()
+  }
+
+  handleOpenCloseDropList = isOpen => {
+    this.setState({ isDropListOpen: isOpen })
   }
 
   renderOptions = () => {
@@ -251,12 +243,12 @@ export class EditableFieldInput extends React.Component {
           className={INPUT_CLASSNAMES.dropdown}
           items={valueOptions}
           onSelect={this.handleDropdownSelect}
+          onOpenedStateChange={this.handleOpenCloseDropList}
           toggler={
             <Toggler
               disabled={disabled}
               fieldValue={fieldValue}
               onFocus={this.handleOptionFocus}
-              onBlur={this.handleOptionsBlur}
             />
           }
           tippyOptions={{
@@ -320,7 +312,6 @@ export class EditableFieldInput extends React.Component {
             name === validationInfo.name &&
             STATES_CLASSNAMES.withValidation
         )}
-        ref={this.setFieldInputContentNode}
       >
         {valueOptions ? this.renderOptions() : null}
 
