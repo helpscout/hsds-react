@@ -152,7 +152,7 @@ function makeStateFocusStyles() {
         'state',
         state,
         'borderColor'
-      )}, 0 0 0 5px ${getColor('state', state, 'backgroundColor')};
+      )}, 0 0 0 6px ${getColor('state', state, 'backgroundColor')};
     }
   `
   )
