@@ -57,10 +57,6 @@ export const MessageCardUI = styled(Card)`
       height: 65px !important;
     }
   }
-
-  &.is-not-shown {
-    visibility: hidden;
-  }
 `
 
 export const MessageCardWrapperUI = styled('div')`
