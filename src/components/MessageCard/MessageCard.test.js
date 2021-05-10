@@ -7,9 +7,8 @@ import {
   BodyUI,
   ActionUI,
   ImageUI,
-  ImageContainerUI,
+  MessageCardWrapperUI,
 } from './MessageCard.css'
-import { Animate } from '../index'
 import { MessageCardButton as Button } from './MessageCard.Button'
 
 describe('className', () => {
@@ -61,26 +60,88 @@ describe('Align', () => {
   })
 })
 
+describe('Visibility', () => {
+  jest.useFakeTimers()
+
+  test('Should be visible by default if there is no image', () => {
+    const onShowSpy = jest.fn()
+    const wrapper = mount(<MessageCard onShow={onShowSpy} />)
+
+    expect(wrapper.state('visible')).toEqual(false)
+    expect(onShowSpy).not.toHaveBeenCalled()
+
+    jest.runAllTimers()
+
+    expect(wrapper.state('visible')).toEqual(true)
+    expect(onShowSpy).toHaveBeenCalled()
+  })
+
+  test('Should not be visible by default if there is an image, but become visible when image loads', () => {
+    const onShowSpy = jest.fn()
+    const wrapper = mount(
+      <MessageCard
+        image={{ url: 'https://path.to/image.png' }}
+        onShow={onShowSpy}
+      />
+    )
+
+    expect(wrapper.state('visible')).toEqual(false)
+    expect(onShowSpy).not.toHaveBeenCalled()
+
+    jest.runAllTimers()
+
+    expect(wrapper.state('visible')).toEqual(false)
+    expect(onShowSpy).not.toHaveBeenCalled()
+
+    wrapper.find(ImageUI).simulate('load')
+
+    jest.runAllTimers()
+
+    expect(wrapper.find('img')).toHaveLength(1)
+    expect(wrapper.state('visible')).toEqual(true)
+    expect(onShowSpy).toHaveBeenCalled()
+  })
+
+  test('Should become visible without image if image fails to load', () => {
+    const onShowSpy = jest.fn()
+    const wrapper = mount(
+      <MessageCard
+        image={{ url: 'https://path.to/image.png' }}
+        onShow={onShowSpy}
+      />
+    )
+
+    expect(wrapper.state('visible')).toEqual(false)
+    expect(onShowSpy).not.toHaveBeenCalled()
+
+    jest.runAllTimers()
+
+    expect(wrapper.state('visible')).toEqual(false)
+    expect(onShowSpy).not.toHaveBeenCalled()
+
+    wrapper.find(ImageUI).simulate('error')
+
+    jest.runAllTimers()
+
+    expect(wrapper.find('img')).toHaveLength(0)
+    expect(wrapper.state('visible')).toEqual(true)
+    expect(onShowSpy).toHaveBeenCalled()
+  })
+})
+
 describe('Animation', () => {
-  test('Can customize animationSequence', () => {
-    const wrapper = mount(<MessageCard animationSequence="scale" />)
-    const o = wrapper.find(Animate)
+  test('Should have no animation by default', () => {
+    const wrapper = mount(<MessageCard />)
+    const o = wrapper.find(MessageCardWrapperUI)
 
-    expect(o.prop('sequence')).toBe('scale')
+    expect(o.prop('withAnimation')).toEqual(false)
   })
 
-  test('Can customize animationEasing', () => {
-    const wrapper = mount(<MessageCard animationEasing="linear" />)
-    const o = wrapper.find(Animate)
+  test('Should have animation if withAnimation is true', () => {
+    const wrapper = mount(<MessageCard withAnimation />)
+    const o = wrapper.find(MessageCardWrapperUI)
 
-    expect(o.prop('easing')).toBe('linear')
-  })
-
-  test('Can customize animationDuration', () => {
-    const wrapper = mount(<MessageCard animationDuration={123} />)
-    const o = wrapper.find(Animate)
-
-    expect(o.prop('duration')).toBe(123)
+    expect(o.prop('withAnimation')).toEqual(true)
   })
 })
 
