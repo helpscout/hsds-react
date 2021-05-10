@@ -139,7 +139,24 @@ export const FocusUI = styled('div')`
   &.is-stateful.is-focused {
     box-shadow: 0 0 0 ${config.focusOutlineWidth}px ${config.focusOutlineColor};
   }
+
+  ${makeStateFocusStyles()}
 `
+
+function makeStateFocusStyles() {
+  return forEach(
+    STATES,
+    state => `
+    &.is-${state} {
+      box-shadow: 0 0 0 2px ${getColor(
+        'state',
+        state,
+        'borderColor'
+      )}, 0 0 0 5px ${getColor('state', state, 'backgroundColor')};
+    }
+  `
+  )
+}
 
 function makeStateStyles() {
   return forEach(
