@@ -24,12 +24,11 @@ This component renders a Message Card Notification with (optional) Title, Subtit
 <Canvas>
   <Story name="default">
     <MessageCard
+      key="default"
       in={boolean('show', true)}
       isMobile={boolean('isMobile', false)}
       isWithBoxShadow={boolean('isWithBoxShadow', true)}
-      animationDuration={number('animationDuration', 300)}
-      animationEasing={text('animationEasing', 'ease-in-out')}
-      animationSequence={text('animationSequence', 'fade up')}
+      withAnimation={true}
       align={select('Align', { Right: 'right', Left: 'left' }, 'right')}
       subtitle={text('Subtitle', 'The J&G Team is here')}
       title={text('Title', 'Need help?')}
@@ -47,19 +46,18 @@ This component renders a Message Card Notification with (optional) Title, Subtit
 <Canvas>
   <Story name="With image">
     <MessageCard
+      key="with-image"
       in={boolean('show', true)}
       isMobile={boolean('isMobile', false)}
       isWithBoxShadow={boolean('isWithBoxShadow', true)}
-      animationDuration={number('animationDuration', 300)}
-      animationEasing={text('animationEasing', 'ease-in-out')}
-      animationSequence={text('animationSequence', 'fade up')}
+      withAnimation={true}
       subtitle={text('Subtitle', 'The J&G Team is here')}
       title={text('Title', 'Need help?')}
       image={{
-        height: '230',
-        width: '800',
+        height: '700',
+        width: '1050',
         url:
-          'http://matthewjamestaylor.com/img/illustrations/large/how-to-convert-a-liquid-layout-to-fixed-width.jpg',
+          'https://images.unsplash.com/photo-1620607812709-f7c4a88baf11?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
       }}
     />
   </Story>

@@ -63,6 +63,13 @@ export const MessageCardUI = styled(Card)`
   }
 `
 
+export const MessageCardWrapperUI = styled('div')`
+  opacity: ${({ visible }) => (visible ? '1' : '0')};
+  transform: translateY(${({ visible }) => (visible ? '0' : '12px')});
+  transition: ${({ withAnimation }) =>
+    withAnimation ? `all 300ms ease-in-out` : 'none'};
+`
+
 export const TitleUI = styled(Heading)`
   ${fontFamily};
   line-height: 22px !important;

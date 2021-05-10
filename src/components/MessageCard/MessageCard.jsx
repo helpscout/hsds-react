@@ -4,7 +4,6 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import MessageCardButton from './MessageCard.Button'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import Animate from '../Animate'
 import {
   ActionUI,
   BodyUI,
@@ -12,6 +11,7 @@ import {
   ImageUI,
   MAX_IMAGE_SIZE,
   MessageCardUI,
+  MessageCardWrapperUI,
   SubtitleUI,
   TitleUI,
 } from './MessageCard.css'
@@ -28,26 +28,35 @@ export class MessageCard extends React.PureComponent {
   static className = 'c-MessageCard'
   static Button = MessageCardButton
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      show: !(this.props.image && this.props.image.url),
-    }
-
-    this.imageRef = React.createRef()
+  state = {
+    imageError: false,
+    visible: false,
   }
 
   componentDidMount() {
-    if (this.state.show) {
-      this.props.onShow()
+    if (this.props.in && !this.hasImage()) {
+      this.makeMessageVisible()
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!prevState.show && this.state.show) {
+    if (!prevState.visible && this.state.visible) {
       this.props.onShow()
     }
+
+    if (!prevProps.in && this.props.in && !this.hasImage()) {
+      this.makeMessageVisible()
+    }
+  }
+
+  hasImage() {
+    return this.props.image && this.props.image.url
+  }
+
+  makeMessageVisible = () => {
+    setTimeout(() => {
+      this.setState({ visible: true })
+    }, 0)
   }
 
   getClassName() {
@@ -57,8 +66,7 @@ export class MessageCard extends React.PureComponent {
       align && `is-align-${align}`,
       className,
       isMobile && 'is-mobile',
-      isWithBoxShadow && `is-with-box-shadow`,
-      !this.state.show && 'is-not-shown'
+      isWithBoxShadow && `is-with-box-shadow`
     )
   }
 
@@ -114,12 +122,20 @@ export class MessageCard extends React.PureComponent {
     ) : null
   }
 
-  afterImageLoad = () => this.setState({ show: true })
+  onImageLoad = () => {
+    this.makeMessageVisible()
+  }
+
+  onImageError = () => {
+    this.setState({ imageError: true })
+    this.makeMessageVisible()
+  }
 
   renderImage() {
     const { image } = this.props
+    const { imageError } = this.state
 
-    if (!image) {
+    if (!image || imageError) {
       return null
     }
 
@@ -132,7 +148,8 @@ export class MessageCard extends React.PureComponent {
           alt={image.altText || 'Message image'}
           width={width ? `${width}px` : '100%'}
           height={height ? `${height}px` : 'auto'}
-          onLoad={this.afterImageLoad}
+          onLoad={this.onImageLoad}
+          onError={this.onImageError}
         />
       </ImageContainerUI>
     )
@@ -181,34 +198,32 @@ export class MessageCard extends React.PureComponent {
       innerRef,
       in: inProp,
       title,
+      withAnimation,
       ...rest
     } = this.props
 
-    return (
-      <Animate
-        className={`c-MessageCardWrapper`}
-        // style={{opacity: this.state.show ? 1 : 0, transform: this.state.show ? 'translateY(0px)' : 'translateY(12px)' }}
-        in={inProp}
-        duration={animationDuration}
-        easing={animationEasing}
-        sequence={animationSequence}
+    const { visible } = this.state
+
+    return inProp ? (
+      <MessageCardWrapperUI
+        className="c-MessageCardWrapper"
+        visible={visible}
+        withAnimation={withAnimation}
       >
-        {
-          <MessageCardUI
-            {...getValidProps(rest)}
-            className={this.getClassName()}
-            ref={innerRef}
-          >
-            {this.renderTitle()}
-            {this.renderSubtitle()}
-            {this.renderBody()}
-            {this.renderImage()}
-            {children}
-            {this.renderAction()}
-          </MessageCardUI>
-        }
-      </Animate>
-    )
+        <MessageCardUI
+          {...getValidProps(rest)}
+          className={this.getClassName()}
+          ref={innerRef}
+        >
+          {this.renderTitle()}
+          {this.renderSubtitle()}
+          {this.renderBody()}
+          {this.renderImage()}
+          {children}
+          {this.renderAction()}
+        </MessageCardUI>
+      </MessageCardWrapperUI>
+    ) : null
   }
 }
 
@@ -222,6 +237,7 @@ MessageCard.defaultProps = {
   isWithBoxShadow: true,
   onBodyClick: noop,
   onShow: noop,
+  withAnimation: false,
 }
 
 MessageCard.propTypes = {
@@ -263,6 +279,8 @@ MessageCard.propTypes = {
   'data-cy': PropTypes.string,
   /** Callback invoked when the MessageCard is show to the user. */
   onShow: PropTypes.func,
+  /** Enable animations when showing the Message. */
+  withAnimation: PropTypes.bool,
 }
 
 export default MessageCard
