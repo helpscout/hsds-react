@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, waitFor } from '@testing-library/react'
+import { getByLabelText, render, waitFor } from '@testing-library/react'
 import user from '@testing-library/user-event'
 import { css } from 'styled-components'
 import DropList from './DropList'
@@ -574,6 +574,31 @@ describe('Togglers', () => {
       expect(container.querySelector('.SelectTagToggler').textContent).toBe(
         'John'
       )
+    })
+  })
+
+  describe('SelectTag error state', () => {
+    test('Should show error when error provided to toggler', async () => {
+      const error = 'Some error'
+      const { getByLabelText, getByTitle } = render(
+        <DropList items={beatles} toggler={<SelectTag error={error} />} />
+      )
+
+      await waitFor(() => {
+        expect(getByTitle('alert')).toBeInTheDocument()
+      })
+      expect(getByLabelText('toggle menu')).toHaveClass('is-error')
+    })
+
+    test('Should not show error when none', async () => {
+      const { getByLabelText, queryByTitle } = render(
+        <DropList items={beatles} toggler={<SelectTag />} />
+      )
+
+      await waitFor(() => {
+        expect(getByLabelText('toggle menu')).not.toHaveClass('is-error')
+      })
+      expect(queryByTitle('alert')).not.toBeInTheDocument()
     })
   })
 

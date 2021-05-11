@@ -6,6 +6,8 @@ import { noop } from '../../utilities/other'
 import ControlGroup from '../ControlGroup'
 import HSDSButton from '../Button'
 import Icon from '../Icon'
+import { STATES } from '../../constants'
+import Tooltip from '../Tooltip'
 
 export const SimpleButton = forwardRef(
   (
@@ -196,14 +198,33 @@ const SplitButtonTogglerUI = styled(HSDSButton)`
   }
 `
 
+const ErrorTooltipIcon = ({ error }) => {
+  return (
+    <Tooltip
+      animationDelay={0}
+      animationDuration={0}
+      closeOnContentClick={true}
+      display="block"
+      placement="top-end"
+      title={error}
+    >
+      <Icon name={'alert'} size={24} state={STATES.error} tabIndex={-1} />
+    </Tooltip>
+  )
+}
+
 export const SelectTag = forwardRef(
-  ({ isActive = false, text = '', onClick = noop, ...rest }, ref) => {
+  ({ isActive = false, text = '', onClick = noop, error, ...rest }, ref) => {
+    const className = classNames(
+      'DropListToggler SelectTagToggler',
+      error && 'is-error'
+    )
     return (
       <SelectUI
         aria-label="toggle menu"
         aria-haspopup="true"
         aria-expanded={isActive}
-        className="DropListToggler SelectTagToggler"
+        className={className}
         data-cy="DropList.SelectTagToggler"
         data-testid="DropList.SelectTagToggler"
         onClick={onClick}
@@ -213,6 +234,12 @@ export const SelectTag = forwardRef(
       >
         <span>{text}</span>
         <SelectArrowsUI />
+        {error && (
+          // avoid list open/close when clicked on error icon
+          <SelectErrorTooltipIconUI onClick={e => e.stopPropagation()}>
+            <ErrorTooltipIcon error={error} />
+          </SelectErrorTooltipIconUI>
+        )}
       </SelectUI>
     )
   }
@@ -235,6 +262,11 @@ const SelectUI = styled('button')`
   font-size: 13px;
   color: ${getColor('charcoal.600')};
 
+  &.is-error {
+    box-shadow: inset 0 0 0 2px ${getColor('red.500')};
+    padding-right: 10px;
+  }
+
   &:focus {
     outline: 0;
     box-shadow: inset 0 0 0 2px ${getColor('blue.500')};
@@ -242,6 +274,7 @@ const SelectUI = styled('button')`
 `
 
 const SelectArrowsUI = styled('div')`
+  margin-left: auto;
   width: 7px;
   height: 14px;
   position: relative;
@@ -264,6 +297,10 @@ const SelectArrowsUI = styled('div')`
     border-top: 6px solid ${getColor('charcoal.700')};
     bottom: 0;
   }
+`
+
+const SelectErrorTooltipIconUI = styled('div')`
+  margin-left: 8px;
 `
 
 const KebabUI = styled('button')`
