@@ -1,3 +1,3 @@
 export default {
-  version: '3.13.0',
+  version: '3.13.1',
 }
