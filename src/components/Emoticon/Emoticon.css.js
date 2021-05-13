@@ -1,10 +1,11 @@
 import styled from 'styled-components'
+import { getColor } from '../../styles/utilities/color'
 
-// Note: colours here are not from the Help Scout palette
+// Note: some colours here are not from the Help Scout palette
 export const reactionEmoticonsColours = {
   off: {
     head: '#E5E9EC',
-    face: '#A5B2BD',
+    face: getColor('charcoal.300'),
   },
   on: {
     face: '#2E2D2E',
