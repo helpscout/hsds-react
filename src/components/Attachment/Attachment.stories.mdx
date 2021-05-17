@@ -98,3 +98,20 @@ A Provider component provides child components with props accessible as `context
     </Attachment.Provider>
   </Story>
 </Canvas>
+
+#### Preview theme with image
+
+<Canvas>
+  <Story name="Preview theme with image">
+    <div style={{ width: '86px' }}>
+      <Attachment.Provider theme="preview">
+        <Attachment
+          name={text('name', 'image.png')}
+          imageUrl={
+            'http://matthewjamestaylor.com/img/illustrations/large/how-to-convert-a-liquid-layout-to-fixed-width.jpg'
+          }
+        />
+      </Attachment.Provider>
+    </div>
+  </Story>
+</Canvas>

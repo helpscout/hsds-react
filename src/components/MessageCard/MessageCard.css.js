@@ -8,7 +8,7 @@ import Button from '../Button'
 import Heading from '../Heading'
 import Image from '../Image'
 
-export const MAX_IMAGE_SIZE = 278
+export const MAX_IMAGE_SIZE = 258
 
 const fontFamily = makeFontFamily('Barlow')
 
@@ -290,10 +290,10 @@ export const ImageContainerUI = styled('div')`
   justify-content: center;
   width: 100%;
   margin-top: 20px;
-  padding: 0 10px;
+  padding: 0 20px;
   max-height: ${MAX_IMAGE_SIZE}px;
 
   &:last-child {
-    margin-bottom: -15px;
+    margin-bottom: -5px;
   }
 `

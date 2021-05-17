@@ -73,6 +73,11 @@ export const AttachmentUI = styled.a`
       ${d400Effect}
     }
 
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px ${getColor('blue.500')};
+    }
+
     &.has-image {
       padding: 3px;
     }
@@ -111,23 +116,44 @@ export const AttachmentUI = styled.a`
   ${bem.element('closeButton')} {
     ${cardStyles()};
     display: block;
-    clip: rect(0, 0, 0, 0);
     border-radius: 9999px !important;
     position: absolute;
     right: 0;
     top: 0;
     transform: translate(50%, -50%);
     z-index: 1;
+    opacity: 0;
+
+    transition: all 200ms linear;
+    will-change: box-shadow, color, opacity;
+
+    box-shadow: inset 0 0 0 1px ${getColor('grey.700')};
+    color: ${getColor('charcoal.300')};
+
+    & .c-Icon {
+      &,
+      &:focus,
+      &:hover {
+        opacity: 1;
+      }
+    }
   }
 
   &:hover,
   &:focus {
     ${bem.element('closeButton')} {
-      clip: unset;
+      opacity: 1;
     }
   }
 
   ${bem.element('closeButton')}:focus {
-    clip: unset;
+    opacity: 1;
+    box-shadow: 0 0 0 2px ${getColor('blue.500')};
+  }
+
+  ${bem.element('closeButton')}:hover {
+    box-shadow: inset 0 0 0 1px ${getColor('red.500')};
+
+    color: ${getColor('red.500')};
   }
 `
