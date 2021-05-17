@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import MessageCardButton from './MessageCard.Button'
@@ -24,185 +24,173 @@ const sizeWithRatio = (recalculatedSide, otherSide, defaultValue) =>
     ? defaultValue
     : (recalculatedSide / otherSide) * MAX_IMAGE_SIZE
 
-export class MessageCard extends React.PureComponent {
-  static className = 'c-MessageCard'
-  static Button = MessageCardButton
+const getTruncatedText = (text, limit) => {
+  return (
+    <Truncate limit={limit} type="end">
+      {text}
+    </Truncate>
+  )
+}
 
-  state = {
-    imageError: false,
-    visible: false,
+// Calculate size of image to keep the original aspect ratio, but fit within 278x278 square for image
+const calculateSize = image => {
+  if (!image.width || !image.height) {
+    return {}
+  }
+  const width = parseInt(image.width)
+  const height = parseInt(image.height)
+
+  // Not necessary to recalculate if it fits within boundaries
+  if (width < MAX_IMAGE_SIZE && height < MAX_IMAGE_SIZE) {
+    return { width, height }
   }
 
-  componentDidMount() {
-    if (this.props.in && !this.hasImage()) {
-      this.makeMessageVisible()
+  if (width > height) {
+    return {
+      height: sizeWithRatio(height, width, height),
+      width: Math.min(width, MAX_IMAGE_SIZE),
+    }
+  } else {
+    return {
+      width: sizeWithRatio(width, height, MAX_IMAGE_SIZE),
+      height: Math.min(height, MAX_IMAGE_SIZE),
     }
   }
+}
 
-  componentDidUpdate(prevProps, prevState) {
-    if (!prevState.visible && this.state.visible) {
-      this.props.onShow()
-    }
+export const MessageCard = React.memo(
+  ({
+    onShow,
+    in: inProp,
+    image,
+    action,
+    animationDuration,
+    animationEasing,
+    animationSequence,
+    children,
+    innerRef,
+    title,
+    subtitle,
+    onBodyClick,
+    body,
+    withAnimation,
+    className,
+    align,
+    isMobile,
+    isWithBoxShadow,
+    ...rest
+  }) => {
+    const [imageError, setImageError] = useState(false)
+    const [visible, setVisible] = useState(false)
+    const isShown = useRef(false)
 
-    if (!prevProps.in && this.props.in && !this.hasImage()) {
-      this.makeMessageVisible()
-    }
-  }
+    const hasImage = useCallback(() => image && image.url, [image])
 
-  hasImage() {
-    return this.props.image && this.props.image.url
-  }
-
-  makeMessageVisible = () => {
-    setTimeout(() => {
-      this.setState({ visible: true })
-    }, 0)
-  }
-
-  getClassName() {
-    const { align, className, isMobile, isWithBoxShadow } = this.props
-    return classNames(
-      MessageCard.className,
-      align && `is-align-${align}`,
-      className,
-      isMobile && 'is-mobile',
-      isWithBoxShadow && `is-with-box-shadow`
-    )
-  }
-
-  getTruncatedText(text, limit) {
-    return (
-      <Truncate limit={limit} type="end">
-        {text}
-      </Truncate>
-    )
-  }
-
-  renderTitle() {
-    const { title } = this.props
-    return title ? (
-      <TitleUI size="h4" data-cy="beacon-message-title">
-        {this.getTruncatedText(title, 110)}
-      </TitleUI>
-    ) : null
-  }
-
-  renderSubtitle() {
-    const { subtitle } = this.props
-    return subtitle ? (
-      <SubtitleUI
-        size="h5"
-        weight={500}
-        light
-        data-cy="beacon-message-subtitle"
-      >
-        {this.getTruncatedText(subtitle, 110)}
-      </SubtitleUI>
-    ) : null
-  }
-
-  renderBody() {
-    const { onBodyClick, title, subtitle } = this.props
-    let { body } = this.props
-    const withMargin = title || subtitle
-
-    // if there is no html in the string, transform new line to paragraph
-    if (body && !/<\/?[a-z][\s\S]*>/i.test(body)) {
-      body = body.split('\n').join('<br>')
-    }
-
-    return body ? (
-      <BodyUI
-        onClick={onBodyClick}
-        withMargin={withMargin}
-        data-cy="beacon-message-body-content"
-      >
-        <div dangerouslySetInnerHTML={{ __html: body }} />
-      </BodyUI>
-    ) : null
-  }
-
-  onImageLoad = () => {
-    this.makeMessageVisible()
-  }
-
-  onImageError = () => {
-    this.setState({ imageError: true })
-    this.makeMessageVisible()
-  }
-
-  renderImage() {
-    const { image } = this.props
-    const { imageError } = this.state
-
-    if (!image || imageError) {
-      return null
-    }
-
-    const { height, width } = this.calculateSize(image)
-
-    return (
-      <ImageContainerUI>
-        <ImageUI
-          src={image.url}
-          alt={image.altText || 'Message image'}
-          width={width ? `${width}px` : '100%'}
-          height={height ? `${height}px` : 'auto'}
-          onLoad={this.onImageLoad}
-          onError={this.onImageError}
-        />
-      </ImageContainerUI>
-    )
-  }
-
-  // Calculate size of image to keep the original aspect ratio, but fit within 278x278 square for image
-  calculateSize = image => {
-    if (!image.width || !image.height) {
-      return {}
-    }
-    const width = parseInt(image.width)
-    const height = parseInt(image.height)
-
-    // Not necessary to recalculate if it fits within boundaries
-    if (width < MAX_IMAGE_SIZE && height < MAX_IMAGE_SIZE) {
-      return { width, height }
-    }
-
-    if (width > height) {
-      return {
-        height: sizeWithRatio(height, width, height),
-        width: Math.min(width, MAX_IMAGE_SIZE),
+    useEffect(() => {
+      if (inProp && !hasImage() && !isShown.current) {
+        makeMessageVisible()
       }
-    } else {
-      return {
-        width: sizeWithRatio(width, height, MAX_IMAGE_SIZE),
-        height: Math.min(height, MAX_IMAGE_SIZE),
+    }, [inProp, hasImage])
+
+    useEffect(() => {
+      if (visible && !isShown.current) {
+        onShow()
+        isShown.current = true
       }
+    }, [visible, onShow])
+
+    const makeMessageVisible = () => {
+      setTimeout(() => {
+        setVisible(true)
+      }, 0)
     }
-  }
 
-  renderAction() {
-    const { action } = this.props
-    return action ? (
-      <ActionUI data-cy="beacon-message-cta-wrapper">{action()}</ActionUI>
-    ) : null
-  }
+    const getClassName = () => {
+      return classNames(
+        MessageCard.className,
+        align && `is-align-${align}`,
+        className,
+        isMobile && 'is-mobile',
+        isWithBoxShadow && `is-with-box-shadow`
+      )
+    }
 
-  render() {
-    const {
-      action,
-      animationDuration,
-      animationEasing,
-      animationSequence,
-      children,
-      innerRef,
-      in: inProp,
-      title,
-      withAnimation,
-      ...rest
-    } = this.props
+    const renderTitle = () => {
+      return title ? (
+        <TitleUI size="h4" data-cy="beacon-message-title">
+          {getTruncatedText(title, 110)}
+        </TitleUI>
+      ) : null
+    }
 
-    const { visible } = this.state
+    const renderSubtitle = () => {
+      return subtitle ? (
+        <SubtitleUI
+          size="h5"
+          weight={500}
+          light
+          data-cy="beacon-message-subtitle"
+        >
+          {getTruncatedText(subtitle, 110)}
+        </SubtitleUI>
+      ) : null
+    }
+
+    const getBodyToRender = () => {
+      // if there is no html in the string, transform new line to paragraph
+      if (body && !/<\/?[a-z][\s\S]*>/i.test(body)) {
+        return body.split('\n').join('<br>')
+      }
+      return body
+    }
+
+    const renderBody = () => {
+      const withMargin = title || subtitle
+
+      const bodyToRender = getBodyToRender()
+
+      return bodyToRender ? (
+        <BodyUI
+          onClick={onBodyClick}
+          withMargin={withMargin}
+          data-cy="beacon-message-body-content"
+        >
+          <div dangerouslySetInnerHTML={{ __html: bodyToRender }} />
+        </BodyUI>
+      ) : null
+    }
+
+    const onImageError = () => {
+      setImageError(true)
+      makeMessageVisible()
+    }
+
+    const renderImage = () => {
+      if (!image || imageError) {
+        return null
+      }
+
+      const { height, width } = calculateSize(image)
+
+      return (
+        <ImageContainerUI>
+          <ImageUI
+            src={image.url}
+            alt={image.altText || 'Message image'}
+            width={width ? `${width}px` : '100%'}
+            height={height ? `${height}px` : 'auto'}
+            onLoad={makeMessageVisible}
+            onError={onImageError}
+          />
+        </ImageContainerUI>
+      )
+    }
+
+    const renderAction = () => {
+      return action ? (
+        <ActionUI data-cy="beacon-message-cta-wrapper">{action()}</ActionUI>
+      ) : null
+    }
 
     return inProp ? (
       <MessageCardWrapperUI
@@ -212,20 +200,20 @@ export class MessageCard extends React.PureComponent {
       >
         <MessageCardUI
           {...getValidProps(rest)}
-          className={this.getClassName()}
+          className={getClassName()}
           ref={innerRef}
         >
-          {this.renderTitle()}
-          {this.renderSubtitle()}
-          {this.renderBody()}
-          {this.renderImage()}
+          {renderTitle()}
+          {renderSubtitle()}
+          {renderBody()}
+          {renderImage()}
           {children}
-          {this.renderAction()}
+          {renderAction()}
         </MessageCardUI>
       </MessageCardWrapperUI>
     ) : null
   }
-}
+)
 
 MessageCard.defaultProps = {
   align: 'right',
@@ -282,5 +270,8 @@ MessageCard.propTypes = {
   /** Enable animations when showing the Message. */
   withAnimation: PropTypes.bool,
 }
+
+MessageCard.className = 'c-MessageCard'
+MessageCard.Button = MessageCardButton
 
 export default MessageCard

@@ -1,15 +1,15 @@
 import React from 'react'
 import { mount, render } from 'enzyme'
-import { MessageCard } from './MessageCard'
+import MessageCard from './MessageCard'
 import {
   TitleUI,
   SubtitleUI,
   BodyUI,
   ActionUI,
   ImageUI,
-  MessageCardWrapperUI,
 } from './MessageCard.css'
 import { MessageCardButton as Button } from './MessageCard.Button'
+import { act } from 'react-dom/test-utils'
 
 describe('className', () => {
   test('Has default className', () => {
@@ -67,12 +67,15 @@ describe('Visibility', () => {
     const onShowSpy = jest.fn()
     const wrapper = mount(<MessageCard onShow={onShowSpy} />)
 
-    expect(wrapper.state('visible')).toEqual(false)
+    expect(cardWrapperVisible(wrapper)).toEqual(false)
     expect(onShowSpy).not.toHaveBeenCalled()
 
-    jest.runAllTimers()
+    act(() => {
+      jest.runAllTimers()
+      wrapper.update()
+    })
 
-    expect(wrapper.state('visible')).toEqual(true)
+    expect(cardWrapperVisible(wrapper)).toEqual(true)
     expect(onShowSpy).toHaveBeenCalled()
   })
 
@@ -85,20 +88,24 @@ describe('Visibility', () => {
       />
     )
 
-    expect(wrapper.state('visible')).toEqual(false)
+    expect(cardWrapperVisible(wrapper)).toEqual(false)
     expect(onShowSpy).not.toHaveBeenCalled()
 
     jest.runAllTimers()
+    wrapper.update()
 
-    expect(wrapper.state('visible')).toEqual(false)
+    expect(cardWrapperVisible(wrapper)).toEqual(false)
     expect(onShowSpy).not.toHaveBeenCalled()
 
-    wrapper.find(ImageUI).simulate('load')
+    wrapper.find('img').simulate('load')
 
-    jest.runAllTimers()
+    act(() => {
+      jest.runAllTimers()
+      wrapper.update()
+    })
 
     expect(wrapper.find('img')).toHaveLength(1)
-    expect(wrapper.state('visible')).toEqual(true)
+    expect(cardWrapperVisible(wrapper)).toEqual(true)
     expect(onShowSpy).toHaveBeenCalled()
   })
 
@@ -111,38 +118,48 @@ describe('Visibility', () => {
       />
     )
 
-    expect(wrapper.state('visible')).toEqual(false)
+    expect(cardWrapperVisible(wrapper)).toEqual(false)
     expect(onShowSpy).not.toHaveBeenCalled()
 
     jest.runAllTimers()
+    wrapper.update()
 
-    expect(wrapper.state('visible')).toEqual(false)
+    expect(cardWrapperVisible(wrapper)).toEqual(false)
     expect(onShowSpy).not.toHaveBeenCalled()
 
-    wrapper.find(ImageUI).simulate('error')
+    wrapper.find('img').simulate('error')
 
-    jest.runAllTimers()
+    act(() => {
+      jest.runAllTimers()
+      wrapper.update()
+    })
 
     expect(wrapper.find('img')).toHaveLength(0)
-    expect(wrapper.state('visible')).toEqual(true)
+    expect(cardWrapperVisible(wrapper)).toEqual(true)
     expect(onShowSpy).toHaveBeenCalled()
   })
+
+  function cardWrapperVisible(wrapper) {
+    return wrapper.find('.c-MessageCardWrapper').at(0).prop('visible')
+  }
 })
 
 describe('Animation', () => {
   test('Should have no animation by default', () => {
     const wrapper = mount(<MessageCard />)
-    const o = wrapper.find(MessageCardWrapperUI)
 
-    expect(o.prop('withAnimation')).toEqual(false)
+    expect(cardWrapperAnimation(wrapper)).toEqual(false)
   })
 
   test('Should have animation if withAnimation is true', () => {
     const wrapper = mount(<MessageCard withAnimation />)
-    const o = wrapper.find(MessageCardWrapperUI)
 
-    expect(o.prop('withAnimation')).toEqual(true)
+    expect(cardWrapperAnimation(wrapper)).toEqual(true)
   })
+
+  function cardWrapperAnimation(wrapper) {
+    return wrapper.find('.c-MessageCardWrapper').at(0).prop('withAnimation')
+  }
 })
 
 describe('Body', () => {
