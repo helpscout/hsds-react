@@ -4,59 +4,12 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import MessageCardButton from './MessageCard.Button'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import {
-  ActionUI,
-  BodyUI,
-  ImageContainerUI,
-  ImageUI,
-  MAX_IMAGE_SIZE,
-  MessageCardUI,
-  MessageCardWrapperUI,
-  SubtitleUI,
-  TitleUI,
-} from './MessageCard.css'
-import Truncate from '../Truncate'
-
-const sizeWithRatio = (recalculatedSide, otherSide, defaultValue) =>
-  // Check if other side is smaller than max size to not recalculate unnecessarily this side as it doesn't need any scaling
-  // other condition checks that the image fits the boundaries
-  otherSide < MAX_IMAGE_SIZE
-    ? defaultValue
-    : (recalculatedSide / otherSide) * MAX_IMAGE_SIZE
-
-const getTruncatedText = (text, limit) => {
-  return (
-    <Truncate limit={limit} type="end">
-      {text}
-    </Truncate>
-  )
-}
-
-// Calculate size of image to keep the original aspect ratio, but fit within 278x278 square for image
-const calculateSize = image => {
-  if (!image.width || !image.height) {
-    return {}
-  }
-  const width = parseInt(image.width)
-  const height = parseInt(image.height)
-
-  // Not necessary to recalculate if it fits within boundaries
-  if (width < MAX_IMAGE_SIZE && height < MAX_IMAGE_SIZE) {
-    return { width, height }
-  }
-
-  if (width > height) {
-    return {
-      height: sizeWithRatio(height, width, height),
-      width: Math.min(width, MAX_IMAGE_SIZE),
-    }
-  } else {
-    return {
-      width: sizeWithRatio(width, height, MAX_IMAGE_SIZE),
-      height: Math.min(height, MAX_IMAGE_SIZE),
-    }
-  }
-}
+import { MessageCardUI, MessageCardWrapperUI } from './MessageCard.css'
+import { MessageCardTitle } from './components/MessageCard.Title'
+import { MessageCardSubtitle } from './components/MessageCard.Subtitle'
+import { MessageCardImage } from './components/MessageCard.Image'
+import { MessageCardAction } from './components/MessageCard.Action'
+import { MessageCardBody } from './components/MessageCard.Body'
 
 export const MessageCard = React.memo(
   ({
@@ -80,7 +33,6 @@ export const MessageCard = React.memo(
     isWithBoxShadow,
     ...rest
   }) => {
-    const [imageError, setImageError] = useState(false)
     const [visible, setVisible] = useState(false)
     const isShown = useRef(false)
 
@@ -115,83 +67,6 @@ export const MessageCard = React.memo(
       )
     }
 
-    const renderTitle = () => {
-      return title ? (
-        <TitleUI size="h4" data-cy="beacon-message-title">
-          {getTruncatedText(title, 110)}
-        </TitleUI>
-      ) : null
-    }
-
-    const renderSubtitle = () => {
-      return subtitle ? (
-        <SubtitleUI
-          size="h5"
-          weight={500}
-          light
-          data-cy="beacon-message-subtitle"
-        >
-          {getTruncatedText(subtitle, 110)}
-        </SubtitleUI>
-      ) : null
-    }
-
-    const getBodyToRender = () => {
-      // if there is no html in the string, transform new line to paragraph
-      if (body && !/<\/?[a-z][\s\S]*>/i.test(body)) {
-        return body.split('\n').join('<br>')
-      }
-      return body
-    }
-
-    const renderBody = () => {
-      const withMargin = title || subtitle
-
-      const bodyToRender = getBodyToRender()
-
-      return bodyToRender ? (
-        <BodyUI
-          onClick={onBodyClick}
-          withMargin={withMargin}
-          data-cy="beacon-message-body-content"
-        >
-          <div dangerouslySetInnerHTML={{ __html: bodyToRender }} />
-        </BodyUI>
-      ) : null
-    }
-
-    const onImageError = () => {
-      setImageError(true)
-      makeMessageVisible()
-    }
-
-    const renderImage = () => {
-      if (!image || imageError) {
-        return null
-      }
-
-      const { height, width } = calculateSize(image)
-
-      return (
-        <ImageContainerUI>
-          <ImageUI
-            src={image.url}
-            alt={image.altText || 'Message image'}
-            width={width ? `${width}px` : '100%'}
-            height={height ? `${height}px` : 'auto'}
-            onLoad={makeMessageVisible}
-            onError={onImageError}
-          />
-        </ImageContainerUI>
-      )
-    }
-
-    const renderAction = () => {
-      return action ? (
-        <ActionUI data-cy="beacon-message-cta-wrapper">{action()}</ActionUI>
-      ) : null
-    }
-
     return inProp ? (
       <MessageCardWrapperUI
         className="c-MessageCardWrapper"
@@ -203,12 +78,16 @@ export const MessageCard = React.memo(
           className={getClassName()}
           ref={innerRef}
         >
-          {renderTitle()}
-          {renderSubtitle()}
-          {renderBody()}
-          {renderImage()}
+          <MessageCardTitle title={title} />
+          <MessageCardSubtitle subtitle={subtitle} />
+          <MessageCardBody
+            withMargin={title || subtitle}
+            body={body}
+            onClick={onBodyClick}
+          />
+          <MessageCardImage image={image} onLoad={makeMessageVisible} />
           {children}
-          {renderAction()}
+          <MessageCardAction action={action} />
         </MessageCardUI>
       </MessageCardWrapperUI>
     ) : null
