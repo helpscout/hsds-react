@@ -10,7 +10,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import VisuallyHidden from '../VisuallyHidden'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import { ImageWrapperUI, ImageUI, TitleUI } from './Avatar.css'
+import { ImageWrapperUI, ImageUI, InitialsUI } from './Avatar.css'
 import { getAnimationProps } from './Avatar.utils'
 
 let cache = {}
@@ -184,15 +184,15 @@ export class AvatarImage extends React.PureComponent {
     }
   }
 
-  getTitleMarkup() {
-    const { light, title } = this.props
+  renderInitials() {
+    const { light, initials } = this.props
 
     const componentClassName = classNames(
-      'c-Avatar__title',
+      'c-Avatar__initials',
       light && 'is-light'
     )
 
-    return <TitleUI className={componentClassName}>{title}</TitleUI>
+    return <InitialsUI className={componentClassName}>{initials}</InitialsUI>
   }
 
   render() {
@@ -228,7 +228,7 @@ export class AvatarImage extends React.PureComponent {
         </ImageUI>
       </ImageWrapperUI>
     )
-    return hasImage ? contentMarkup : this.getTitleMarkup()
+    return hasImage ? contentMarkup : this.renderInitials()
   }
 }
 
@@ -237,12 +237,12 @@ AvatarImage.defaultProps = {
   animationDuration: 160,
   animationEasing: 'ease',
   'data-cy': 'AvatarImage',
-  src: null,
+  initials: null,
+  light: false,
+  name: null,
   onError: noop,
   onLoad: noop,
-  name: null,
-  title: null,
-  light: false,
+  src: null,
 }
 
 AvatarImage.propTypes = {
@@ -251,12 +251,12 @@ AvatarImage.propTypes = {
   animationEasing: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
-  src: PropTypes.any,
+  initials: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   light: PropTypes.bool,
   name: PropTypes.string,
   onError: PropTypes.func,
   onLoad: PropTypes.func,
-  title: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  src: PropTypes.any,
 }
 
 export default AvatarImage
