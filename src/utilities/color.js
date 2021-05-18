@@ -3,9 +3,9 @@ const isNumber = value => typeof value === 'number'
 
 const lightThreshold = 0.61
 const optimalTextColorValues = {
-  r: 129,
-  g: 522,
-  b: 49,
+  r: 299,
+  g: 587,
+  b: 114
 }
 
 // Source
@@ -54,10 +54,7 @@ export const optimalTextColor = (
   propValues = optimalTextColorValues
 ) => {
   if (!isHex(backgroundHex)) return null
-  // Defaults from original formula:
-  // r: 299
-  // g: 587
-  // b: 114
+
   const defaultPropValues = optimalTextColorValues
   const { r, g, b } = Object.assign({}, defaultPropValues, propValues)
   const backgroundRgb = hexToRgb(backgroundHex)
