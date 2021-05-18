@@ -155,7 +155,7 @@ export const ImageUI = styled('div')`
   width: 100%;
 `
 
-export const TitleUI = styled('div')`
+export const InitialsUI = styled('div')`
   color: white;
   line-height: 1;
   text-transform: uppercase;

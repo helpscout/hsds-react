@@ -114,7 +114,7 @@ export class Avatar extends React.PureComponent {
 
     const hasImage = this.src.length > 0 && !this.state.imageFailed
 
-    const title = this.getTitle()
+    const initials = this.getInitials()
     return (
       <AvatarCrop
         className={shapeClassnames}
@@ -129,7 +129,7 @@ export class Avatar extends React.PureComponent {
           className={classNames('c-Avatar__imageMainWrapper', shapeClassnames)}
           src={this.src}
           name={name}
-          title={title}
+          initials={initials}
           light={light}
           onError={this.onImageLoadedError}
           onLoad={this.onImageLoadedSuccess}
@@ -143,7 +143,7 @@ export class Avatar extends React.PureComponent {
             )}
             src={fallbackImage}
             name={name}
-            title={title}
+            initials={initials}
             light={light}
           />
         )}
@@ -182,7 +182,7 @@ export class Avatar extends React.PureComponent {
     )
   }
 
-  getTitle() {
+  getInitials() {
     const { count, initials, name } = this.props
 
     return count || initials || nameToInitials(name)
