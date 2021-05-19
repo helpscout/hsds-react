@@ -17,7 +17,7 @@ export const MessageCardUI = styled(Card)`
   background-color: white;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  padding: 17px 0 25px;
+  padding: 17px 0 20px;
   width: 300px;
   word-break: break-word;
   display: flex;
@@ -83,14 +83,23 @@ export const SubtitleUI = styled(Heading)`
 
 const editorHtmlFontSize = 14
 
+export const ContentUI = styled.div`
+  margin-top: ${({ withMargin }) => (withMargin ? '20px' : '0')};
+  overflow: auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+
+  & > * + * {
+    margin-top: 20px;
+  }
+`
+
 export const BodyUI = styled.div`
-  margin-top: ${({ withMargin }) => (withMargin ? '12px' : '0')};
   color: ${getColor('charcoal.700')};
   font-size: ${editorHtmlFontSize}px;
   line-height: 22px;
-  padding: 0 20px;
   flex: 1 1 100%;
-  overflow: auto;
 
   p {
     font-size: ${editorHtmlFontSize}px;
@@ -265,7 +274,6 @@ export const BodyUI = styled.div`
 `
 
 export const ActionUI = styled('div')`
-  margin-bottom: -5px;
   margin-top: 20px;
   padding: 0 20px;
   flex: 0 0 auto;
@@ -289,11 +297,5 @@ export const ImageContainerUI = styled('div')`
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: 20px;
-  padding: 0 20px;
   max-height: ${MAX_IMAGE_SIZE}px;
-
-  &:last-child {
-    margin-bottom: -5px;
-  }
 `

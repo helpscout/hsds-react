@@ -10,6 +10,7 @@ import { MessageCardSubtitle } from './components/MessageCard.Subtitle'
 import { MessageCardImage } from './components/MessageCard.Image'
 import { MessageCardAction } from './components/MessageCard.Action'
 import { MessageCardBody } from './components/MessageCard.Body'
+import { MessageCardContent } from './components/MessageCard.Content'
 
 export const MessageCard = React.memo(
   ({
@@ -80,13 +81,14 @@ export const MessageCard = React.memo(
         >
           <MessageCardTitle title={title} />
           <MessageCardSubtitle subtitle={subtitle} />
-          <MessageCardBody
+          <MessageCardContent
             withMargin={title || subtitle}
-            body={body}
-            onClick={onBodyClick}
-          />
-          <MessageCardImage image={image} onLoad={makeMessageVisible} />
-          {children}
+            render={body || image || children}
+          >
+            <MessageCardBody body={body} onClick={onBodyClick} />
+            <MessageCardImage image={image} onLoad={makeMessageVisible} />
+            {children}
+          </MessageCardContent>
           <MessageCardAction action={action} />
         </MessageCardUI>
       </MessageCardWrapperUI>
