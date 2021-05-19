@@ -1,187 +1,104 @@
-import React from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import MessageCardButton from './MessageCard.Button'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
-import Animate from '../Animate'
-import {
-  ActionUI,
-  BodyUI,
-  ImageContainerUI,
-  ImageUI,
-  MAX_IMAGE_SIZE,
-  MessageCardUI,
-  SubtitleUI,
-  TitleUI,
-} from './MessageCard.css'
-import Truncate from '../Truncate'
+import { MessageCardUI, MessageCardWrapperUI } from './MessageCard.css'
+import { MessageCardTitle } from './components/MessageCard.Title'
+import { MessageCardSubtitle } from './components/MessageCard.Subtitle'
+import { MessageCardImage } from './components/MessageCard.Image'
+import { MessageCardAction } from './components/MessageCard.Action'
+import { MessageCardBody } from './components/MessageCard.Body'
+import { MessageCardContent } from './components/MessageCard.Content'
 
-const sizeWithRatio = (recalculatedSide, otherSide, defaultValue) =>
-  // Check if other side is smaller than max size to not recalculate unnecessarily this side as it doesn't need any scaling
-  // other condition checks that the image fits the boundaries
-  otherSide < MAX_IMAGE_SIZE
-    ? defaultValue
-    : (recalculatedSide / otherSide) * MAX_IMAGE_SIZE
+export const MessageCard = React.memo(
+  React.forwardRef(
+    (
+      {
+        onShow,
+        in: inProp,
+        image,
+        action,
+        animationDuration,
+        animationEasing,
+        animationSequence,
+        children,
+        title,
+        subtitle,
+        onBodyClick,
+        body,
+        withAnimation,
+        className,
+        align,
+        isMobile,
+        isWithBoxShadow,
+        ...rest
+      },
+      ref
+    ) => {
+      const [visible, setVisible] = useState(false)
+      const isShown = useRef(false)
 
-export class MessageCard extends React.PureComponent {
-  static className = 'c-MessageCard'
-  static Button = MessageCardButton
+      const hasImage = useCallback(() => image && image.url, [image])
 
-  getClassName() {
-    const { align, className, isMobile, isWithBoxShadow } = this.props
-    return classNames(
-      MessageCard.className,
-      align && `is-align-${align}`,
-      className,
-      isMobile && 'is-mobile',
-      isWithBoxShadow && `is-with-box-shadow`
-    )
-  }
+      useEffect(() => {
+        if (inProp && !hasImage() && !isShown.current) {
+          makeMessageVisible()
+        }
+      }, [inProp, hasImage])
 
-  getTruncatedText(text, limit) {
-    return (
-      <Truncate limit={limit} type="end">
-        {text}
-      </Truncate>
-    )
-  }
+      useEffect(() => {
+        if (visible && !isShown.current) {
+          onShow()
+          isShown.current = true
+        }
+      }, [visible, onShow])
 
-  renderTitle() {
-    const { title } = this.props
-    return title ? (
-      <TitleUI size="h4" data-cy="beacon-message-title">
-        {this.getTruncatedText(title, 110)}
-      </TitleUI>
-    ) : null
-  }
-
-  renderSubtitle() {
-    const { subtitle } = this.props
-    return subtitle ? (
-      <SubtitleUI
-        size="h5"
-        weight={500}
-        light
-        data-cy="beacon-message-subtitle"
-      >
-        {this.getTruncatedText(subtitle, 110)}
-      </SubtitleUI>
-    ) : null
-  }
-
-  renderBody() {
-    const { onBodyClick, title, subtitle } = this.props
-    let { body } = this.props
-    const withMargin = title || subtitle
-
-    // if there is no html in the string, transform new line to paragraph
-    if (body && !/<\/?[a-z][\s\S]*>/i.test(body)) {
-      body = body.split('\n').join('<br>')
-    }
-
-    return body ? (
-      <BodyUI
-        onClick={onBodyClick}
-        withMargin={withMargin}
-        data-cy="beacon-message-body-content"
-      >
-        <div dangerouslySetInnerHTML={{ __html: body }} />
-      </BodyUI>
-    ) : null
-  }
-
-  renderImage() {
-    const { image } = this.props
-
-    if (!image) {
-      return null
-    }
-
-    const { height, width } = this.calculateSize(image)
-
-    return (
-      <ImageContainerUI>
-        <ImageUI
-          src={image.url}
-          alt={image.altText || 'Message image'}
-          width={width ? `${width}px` : '100%'}
-          height={height ? `${height}px` : 'auto'}
-        />
-      </ImageContainerUI>
-    )
-  }
-
-  // Calculate size of image to keep the original aspect ratio, but fit within 278x278 square for image
-  calculateSize = image => {
-    if (!image.width || !image.height) {
-      return {}
-    }
-    const width = parseInt(image.width)
-    const height = parseInt(image.height)
-
-    // Not necessary to recalculate if it fits within boundaries
-    if (width < MAX_IMAGE_SIZE && height < MAX_IMAGE_SIZE) {
-      return { width, height }
-    }
-
-    if (width > height) {
-      return {
-        height: sizeWithRatio(height, width, height),
-        width: Math.min(width, MAX_IMAGE_SIZE),
+      const makeMessageVisible = () => {
+        setTimeout(() => {
+          setVisible(true)
+        }, 0)
       }
-    } else {
-      return {
-        width: sizeWithRatio(width, height, MAX_IMAGE_SIZE),
-        height: Math.min(height, MAX_IMAGE_SIZE),
+
+      const getClassName = () => {
+        return classNames(
+          MessageCard.className,
+          align && `is-align-${align}`,
+          className,
+          isMobile && 'is-mobile',
+          isWithBoxShadow && `is-with-box-shadow`
+        )
       }
-    }
-  }
 
-  renderAction() {
-    const { action } = this.props
-    return action ? (
-      <ActionUI data-cy="beacon-message-cta-wrapper">{action()}</ActionUI>
-    ) : null
-  }
-
-  render() {
-    const {
-      action,
-      animationDuration,
-      animationEasing,
-      animationSequence,
-      children,
-      innerRef,
-      in: inProp,
-      title,
-      ...rest
-    } = this.props
-
-    return (
-      <Animate
-        className="c-MessageCardWrapper"
-        in={inProp}
-        duration={animationDuration}
-        easing={animationEasing}
-        sequence={animationSequence}
-      >
-        <MessageCardUI
-          {...getValidProps(rest)}
-          className={this.getClassName()}
-          ref={innerRef}
+      return inProp ? (
+        <MessageCardWrapperUI
+          className="c-MessageCardWrapper"
+          visible={visible}
+          withAnimation={withAnimation}
         >
-          {this.renderTitle()}
-          {this.renderSubtitle()}
-          {this.renderBody()}
-          {this.renderImage()}
-          {children}
-          {this.renderAction()}
-        </MessageCardUI>
-      </Animate>
-    )
-  }
-}
+          <MessageCardUI
+            {...getValidProps(rest)}
+            className={getClassName()}
+            ref={ref}
+          >
+            <MessageCardTitle title={title} />
+            <MessageCardSubtitle subtitle={subtitle} />
+            <MessageCardContent
+              withMargin={!!(title || subtitle)}
+              render={!!(body || image || children)}
+            >
+              <MessageCardBody body={body} onClick={onBodyClick} />
+              <MessageCardImage image={image} onLoad={makeMessageVisible} />
+              {children}
+            </MessageCardContent>
+            <MessageCardAction action={action} />
+          </MessageCardUI>
+        </MessageCardWrapperUI>
+      ) : null
+    }
+  )
+)
 
 MessageCard.defaultProps = {
   align: 'right',
@@ -192,6 +109,8 @@ MessageCard.defaultProps = {
   isMobile: false,
   isWithBoxShadow: true,
   onBodyClick: noop,
+  onShow: noop,
+  withAnimation: false,
 }
 
 MessageCard.propTypes = {
@@ -209,7 +128,10 @@ MessageCard.propTypes = {
   body: PropTypes.string,
   /** The className of the component. */
   className: PropTypes.string,
-  innerRef: PropTypes.func,
+  ref: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  ]),
   /** Programatically triggering the animation. */
   in: PropTypes.bool,
   /** Adds mobile styles */
@@ -231,6 +153,13 @@ MessageCard.propTypes = {
   }),
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
+  /** Callback invoked when the MessageCard is show to the user. */
+  onShow: PropTypes.func,
+  /** Enable animations when showing the Message. */
+  withAnimation: PropTypes.bool,
 }
+
+MessageCard.className = 'c-MessageCard'
+MessageCard.Button = MessageCardButton
 
 export default MessageCard
