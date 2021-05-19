@@ -169,7 +169,7 @@
     "jest-watch-typeahead": "^0.3.0",
     "jscodeshift": "^0.7.0",
     "meow": "^6.0.1",
-    "np": "6.2.3",
+    "np": "^7.5.0",
     "nyc": "^15.0.0",
     "prettier": "2.0.5",
     "pretty-quick": "^2.0.1",
