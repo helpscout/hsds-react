@@ -13,87 +13,91 @@ import { MessageCardBody } from './components/MessageCard.Body'
 import { MessageCardContent } from './components/MessageCard.Content'
 
 export const MessageCard = React.memo(
-  ({
-    onShow,
-    in: inProp,
-    image,
-    action,
-    animationDuration,
-    animationEasing,
-    animationSequence,
-    children,
-    innerRef,
-    title,
-    subtitle,
-    onBodyClick,
-    body,
-    withAnimation,
-    className,
-    align,
-    isMobile,
-    isWithBoxShadow,
-    ...rest
-  }) => {
-    const [visible, setVisible] = useState(false)
-    const isShown = useRef(false)
-
-    const hasImage = useCallback(() => image && image.url, [image])
-
-    useEffect(() => {
-      if (inProp && !hasImage() && !isShown.current) {
-        makeMessageVisible()
-      }
-    }, [inProp, hasImage])
-
-    useEffect(() => {
-      if (visible && !isShown.current) {
-        onShow()
-        isShown.current = true
-      }
-    }, [visible, onShow])
-
-    const makeMessageVisible = () => {
-      setTimeout(() => {
-        setVisible(true)
-      }, 0)
-    }
-
-    const getClassName = () => {
-      return classNames(
-        MessageCard.className,
-        align && `is-align-${align}`,
+  React.forwardRef(
+    (
+      {
+        onShow,
+        in: inProp,
+        image,
+        action,
+        animationDuration,
+        animationEasing,
+        animationSequence,
+        children,
+        title,
+        subtitle,
+        onBodyClick,
+        body,
+        withAnimation,
         className,
-        isMobile && 'is-mobile',
-        isWithBoxShadow && `is-with-box-shadow`
-      )
-    }
+        align,
+        isMobile,
+        isWithBoxShadow,
+        ...rest
+      },
+      ref
+    ) => {
+      const [visible, setVisible] = useState(false)
+      const isShown = useRef(false)
 
-    return inProp ? (
-      <MessageCardWrapperUI
-        className="c-MessageCardWrapper"
-        visible={visible}
-        withAnimation={withAnimation}
-      >
-        <MessageCardUI
-          {...getValidProps(rest)}
-          className={getClassName()}
-          ref={innerRef}
+      const hasImage = useCallback(() => image && image.url, [image])
+
+      useEffect(() => {
+        if (inProp && !hasImage() && !isShown.current) {
+          makeMessageVisible()
+        }
+      }, [inProp, hasImage])
+
+      useEffect(() => {
+        if (visible && !isShown.current) {
+          onShow()
+          isShown.current = true
+        }
+      }, [visible, onShow])
+
+      const makeMessageVisible = () => {
+        setTimeout(() => {
+          setVisible(true)
+        }, 0)
+      }
+
+      const getClassName = () => {
+        return classNames(
+          MessageCard.className,
+          align && `is-align-${align}`,
+          className,
+          isMobile && 'is-mobile',
+          isWithBoxShadow && `is-with-box-shadow`
+        )
+      }
+
+      return inProp ? (
+        <MessageCardWrapperUI
+          className="c-MessageCardWrapper"
+          visible={visible}
+          withAnimation={withAnimation}
         >
-          <MessageCardTitle title={title} />
-          <MessageCardSubtitle subtitle={subtitle} />
-          <MessageCardContent
-            withMargin={title || subtitle}
-            render={body || image || children}
+          <MessageCardUI
+            {...getValidProps(rest)}
+            className={getClassName()}
+            ref={ref}
           >
-            <MessageCardBody body={body} onClick={onBodyClick} />
-            <MessageCardImage image={image} onLoad={makeMessageVisible} />
-            {children}
-          </MessageCardContent>
-          <MessageCardAction action={action} />
-        </MessageCardUI>
-      </MessageCardWrapperUI>
-    ) : null
-  }
+            <MessageCardTitle title={title} />
+            <MessageCardSubtitle subtitle={subtitle} />
+            <MessageCardContent
+              withMargin={!!(title || subtitle)}
+              render={!!(body || image || children)}
+            >
+              <MessageCardBody body={body} onClick={onBodyClick} />
+              <MessageCardImage image={image} onLoad={makeMessageVisible} />
+              {children}
+            </MessageCardContent>
+            <MessageCardAction action={action} />
+          </MessageCardUI>
+        </MessageCardWrapperUI>
+      ) : null
+    }
+  )
 )
 
 MessageCard.defaultProps = {
@@ -124,7 +128,10 @@ MessageCard.propTypes = {
   body: PropTypes.string,
   /** The className of the component. */
   className: PropTypes.string,
-  innerRef: PropTypes.func,
+  ref: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  ]),
   /** Programatically triggering the animation. */
   in: PropTypes.bool,
   /** Adds mobile styles */

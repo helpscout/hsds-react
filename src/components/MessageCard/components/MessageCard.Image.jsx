@@ -36,8 +36,8 @@ MessageCardImage.propTypes = {
   image: PropTypes.shape({
     url: PropTypes.string.isRequired,
     altText: PropTypes.string,
-    width: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
-    height: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+    width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }),
   /** Callback when image loaded */
   onLoad: PropTypes.func,
