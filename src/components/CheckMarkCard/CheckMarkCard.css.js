@@ -4,74 +4,23 @@ import { getColor } from '../../styles/utilities/color'
 import { rgba } from '../../utilities/color'
 import styled from 'styled-components'
 
-export const CheckMarkCardUI = styled('label')`
-  box-sizing: border-box;
-  position: relative;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '100px')};
-  height: ${({ height }) => (height ? height : 'auto')};
-  min-height: 100px;
-  border-radius: 4px;
-  ${d400}
-  will-change: transform, box-shadow;
-  transition: transform 0.16s ease-in-out, box-shadow 0.16s ease-in-out;
-  cursor: pointer;
-
-  &:hover {
-    ${d400Effect}
-    transform: translateY(-2px);
-  }
-
-  &.is-checked,
-  &.is-focused,
-  &.is-focused.is-checked,
-  &:focus-within,
-  &.is-checked:focus-within {
-    box-shadow: 0px 0px 0 2px ${getColor('blue.500')};
-  }
-
-  &.is-disabled {
-    ${d400}
-    color: ${rgba(getColor('charcoal.500'), 0.85)};
-    opacity: 0.8;
-    cursor: not-allowed;
-    transition: none;
-
-    &:hover {
-      ${d400}
-      transition: none;
-      transform: translateY(0);
-    }
-  }
-
-  &.with-status {
-    cursor: default;
-    box-shadow: 0px 0px 0 2px
-      ${({ withStatus }) =>
-        Boolean(withStatus) ? withStatus.color : 'rgba(0, 0, 0, 0.1)'};
-
-    &:hover {
-      transform: translateY(0);
-    }
-  }
-`
-
 export const MarkUI = styled('div')`
   position: absolute;
-  top: -2px;
-  left: -2px;
+  top: 0;
+  left: 0;
   height: 28px;
   width: 28px;
-  border-radius: 4px 0px 5px;
-  opacity: ${({ markShown }) => (markShown ? '1' : '0')};
+  border-radius: 3px;
+  opacity: 0;
   transition: opacity 0.15s cubic-bezier(0.55, 0, 1, 0.45);
   will-change: opacity;
-  background-color: ${({ color }) => color};
+  background-color: ${getColor('blue.500')};
   z-index: 100;
+  outline: none;
+
+  &.is-visible {
+    opacity: 1;
+  }
 
   .mark-icon {
     color: white;
@@ -81,9 +30,116 @@ export const MarkUI = styled('div')`
     transform: translate(-50%, -50%);
   }
 
-  .TooltipTrigger {
-    display: block;
-    width: 100%;
-    height: 100%;
+  &:focus {
+    &:before {
+      opacity: 1;
+    }
+  }
+
+  // Focus UI
+  &:before {
+    content: '';
+    border-radius: 5px;
+    bottom: -3px;
+    box-shadow: 0px 0px 0 2px ${getColor('blue.500')};
+    left: -3px;
+    pointer-events: none;
+    position: absolute;
+    right: -3px;
+    top: -3px;
+    opacity: 0;
+    transition: opacity ease 0.2s;
+  }
+`
+
+export const CheckMarkCardContentUI = styled.div`
+  position: relative;
+  border-radius: 3px;
+  flex: 1 1 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  transition: background-color 0.15s linear;
+`
+
+export const CheckMarkCardUI = styled('label')`
+  display:flex;
+  box-sizing: border-box;
+  position: relative;
+  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '170px')};
+  height: ${({ height }) => (height ? height : 'auto')};
+  min-height: 160px;
+  border-radius: 4px;
+  will-change: transform, box-shadow;
+  transition: transform 0.16s ease-in-out, box-shadow 0.16s ease-in-out;
+  cursor: pointer;
+  padding:3px;
+  ${d400}
+
+  // Focus UI
+  &:before{
+    content: '';
+    border-radius: 5px;
+    bottom: 0px;
+    box-shadow: 0px 0px 0 2px ${getColor('blue.500')};
+    left: 0px;
+    pointer-events: none;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    opacity: 0;
+    transition: opacity ease 0.2s;
+  }
+
+
+  &:not(.is-disabled):hover {
+    ${d400Effect}  
+    transform: translateY(-2px);
+  }
+
+  &.is-focused,
+  &:focus-within,
+  &:focus-visible {
+    &:before{
+      opacity:1;
+    }
+  }
+
+  &.is-disabled {
+    ${d400}
+    color: ${rgba(getColor('charcoal.500'), 0.85)};
+    opacity: 0.8;
+    cursor: not-allowed;
+    transition: none;
+  }
+
+  &.with-status {
+    cursor: default;
+    
+    &:hover {
+      ${d400}
+      transform: translateY(0);
+    }
+  }
+
+  &.is-checked ${CheckMarkCardContentUI}{
+      background:${getColor('blue.100')};
+  }
+
+  &.is-lavender{
+    &:before{
+      opacity: 1;
+      box-shadow: 0px 0px 0 2px ${getColor('lavender.600')};
+    }
+        
+    ${MarkUI} {
+      background-color: ${getColor('lavender.600')};
+    }
+
+    ${CheckMarkCardContentUI}{
+      background:${getColor('purple.100')};
+    }
   }
 `
