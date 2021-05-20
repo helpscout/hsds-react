@@ -40,13 +40,13 @@ export const MarkUI = styled('div')`
   &:before {
     content: '';
     border-radius: 5px;
-    bottom: -3px;
+    bottom: -2px;
     box-shadow: 0px 0px 0 2px ${getColor('blue.500')};
-    left: -3px;
+    left: -2px;
     pointer-events: none;
     position: absolute;
-    right: -3px;
-    top: -3px;
+    right: -2px;
+    top: -2px;
     opacity: 0;
     transition: opacity ease 0.2s;
   }
@@ -130,8 +130,7 @@ export const CheckMarkCardUI = styled('label')`
 
   &.is-lavender{
     &:before{
-      opacity: 1;
-      box-shadow: 0px 0px 0 2px ${getColor('lavender.600')};
+      opacity: 0;
     }
         
     ${MarkUI} {
