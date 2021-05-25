@@ -80,6 +80,7 @@ describe('Tooltip', () => {
 })
 
 describe('With selectable conjunction', () => {
+  jest.setTimeout(10000)
   test('should display selectable conjunction button with AND/OR options', async () => {
     const dropdownTrigger = () =>
       screen.queryByRole('button', {
