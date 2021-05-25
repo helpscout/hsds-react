@@ -116,7 +116,6 @@ const CheckMarkCard = props => {
   }, [checked])
 
   useEffect(() => {
-    // Update the document title using the browser API
     if (isFocused) {
       checkMarkCardRef.current.classList.add('is-focused')
       inputRef.current.focus()
