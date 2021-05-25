@@ -16,7 +16,7 @@ const ui = {
   borderAnimation: '.c-Avatar__borderAnimation',
   image: '.c-Avatar__image',
   imageWrapper: '.c-Avatar__imageWrapper',
-  initials: '.c-Avatar__title',
+  initials: '.c-Avatar__initials',
   action: '.c-Avatar__action',
 }
 

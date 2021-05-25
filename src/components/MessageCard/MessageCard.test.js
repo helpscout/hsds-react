@@ -1,16 +1,15 @@
 import React from 'react'
 import { mount, render } from 'enzyme'
-import { MessageCard } from './MessageCard'
+import MessageCard from './MessageCard'
 import {
   TitleUI,
   SubtitleUI,
   BodyUI,
   ActionUI,
   ImageUI,
-  ImageContainerUI,
 } from './MessageCard.css'
-import { Animate } from '../index'
 import { MessageCardButton as Button } from './MessageCard.Button'
+import { act } from 'react-dom/test-utils'
 
 describe('className', () => {
   test('Has default className', () => {
@@ -61,27 +60,106 @@ describe('Align', () => {
   })
 })
 
+describe('Visibility', () => {
+  jest.useFakeTimers()
+
+  test('Should be visible by default if there is no image', () => {
+    const onShowSpy = jest.fn()
+    const wrapper = mount(<MessageCard onShow={onShowSpy} />)
+
+    expect(cardWrapperVisible(wrapper)).toEqual(false)
+    expect(onShowSpy).not.toHaveBeenCalled()
+
+    act(() => {
+      jest.runAllTimers()
+      wrapper.update()
+    })
+
+    expect(cardWrapperVisible(wrapper)).toEqual(true)
+    expect(onShowSpy).toHaveBeenCalled()
+  })
+
+  test('Should not be visible by default if there is an image, but become visible when image loads', () => {
+    const onShowSpy = jest.fn()
+    const wrapper = mount(
+      <MessageCard
+        image={{ url: 'https://path.to/image.png' }}
+        onShow={onShowSpy}
+      />
+    )
+
+    expect(cardWrapperVisible(wrapper)).toEqual(false)
+    expect(onShowSpy).not.toHaveBeenCalled()
+
+    jest.runAllTimers()
+    wrapper.update()
+
+    expect(cardWrapperVisible(wrapper)).toEqual(false)
+    expect(onShowSpy).not.toHaveBeenCalled()
+
+    wrapper.find('img').simulate('load')
+
+    act(() => {
+      jest.runAllTimers()
+      wrapper.update()
+    })
+
+    expect(wrapper.find('img')).toHaveLength(1)
+    expect(cardWrapperVisible(wrapper)).toEqual(true)
+    expect(onShowSpy).toHaveBeenCalled()
+  })
+
+  test('Should become visible without image if image fails to load', () => {
+    const onShowSpy = jest.fn()
+    const wrapper = mount(
+      <MessageCard
+        image={{ url: 'https://path.to/image.png' }}
+        onShow={onShowSpy}
+      />
+    )
+
+    expect(cardWrapperVisible(wrapper)).toEqual(false)
+    expect(onShowSpy).not.toHaveBeenCalled()
+
+    jest.runAllTimers()
+    wrapper.update()
+
+    expect(cardWrapperVisible(wrapper)).toEqual(false)
+    expect(onShowSpy).not.toHaveBeenCalled()
+
+    wrapper.find('img').simulate('error')
+
+    act(() => {
+      jest.runAllTimers()
+      wrapper.update()
+    })
+
+    expect(wrapper.find('img')).toHaveLength(0)
+    expect(cardWrapperVisible(wrapper)).toEqual(true)
+    expect(onShowSpy).toHaveBeenCalled()
+  })
+
+  function cardWrapperVisible(wrapper) {
+    return wrapper.find('.c-MessageCardWrapper').at(0).prop('visible')
+  }
+})
+
 describe('Animation', () => {
-  test('Can customize animationSequence', () => {
-    const wrapper = mount(<MessageCard animationSequence="scale" />)
-    const o = wrapper.find(Animate)
+  test('Should have no animation by default', () => {
+    const wrapper = mount(<MessageCard />)
 
-    expect(o.prop('sequence')).toBe('scale')
+    expect(cardWrapperAnimation(wrapper)).toEqual(false)
   })
 
-  test('Can customize animationEasing', () => {
-    const wrapper = mount(<MessageCard animationEasing="linear" />)
-    const o = wrapper.find(Animate)
+  test('Should have animation if withAnimation is true', () => {
+    const wrapper = mount(<MessageCard withAnimation />)
 
-    expect(o.prop('easing')).toBe('linear')
+    expect(cardWrapperAnimation(wrapper)).toEqual(true)
   })
 
-  test('Can customize animationDuration', () => {
-    const wrapper = mount(<MessageCard animationDuration={123} />)
-    const o = wrapper.find(Animate)
-
-    expect(o.prop('duration')).toBe(123)
-  })
+  function cardWrapperAnimation(wrapper) {
+    return wrapper.find('.c-MessageCardWrapper').at(0).prop('withAnimation')
+  }
 })
 
 describe('Body', () => {
@@ -208,8 +286,8 @@ describe('image', () => {
     )
     const image = wrapper.find(ImageUI)
 
-    expect(image.prop('height')).toEqual('104.25px')
-    expect(image.prop('width')).toEqual('278px')
+    expect(image.prop('height')).toEqual('96.75px')
+    expect(image.prop('width')).toEqual('258px')
   })
 
   test('Scales size of image when larger than fits and height is bigger', () => {
@@ -224,8 +302,8 @@ describe('image', () => {
     )
     const image = wrapper.find(ImageUI)
 
-    expect(image.prop('height')).toEqual('278px')
-    expect(image.prop('width')).toEqual('104.25px')
+    expect(image.prop('height')).toEqual('258px')
+    expect(image.prop('width')).toEqual('96.75px')
   })
 
   test('Sets default size of image when not provided', () => {

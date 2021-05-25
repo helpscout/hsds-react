@@ -711,6 +711,29 @@ The `toggler` prop accepts any React component, so you can provide your own cust
       />
     </div>
   </Story>
+  <Story name="Toggler: SelectTag with error">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 0 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        items={regularItems}
+        toggler={
+          <SelectTag
+            onClick={() => {
+              console.log('Clicked from story')
+            }}
+            error={'Some error'}
+          />
+        }
+      />
+    </div>
+  </Story>
   <Story name="Toggler: SplittedButton">
     <div
       style={{
