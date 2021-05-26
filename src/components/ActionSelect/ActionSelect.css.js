@@ -1,23 +1,30 @@
 import styled from 'styled-components'
-import InputBackdropV2 from '../Input/Input.BackdropV2'
-
 import { getColor } from '../../styles/utilities/color'
 
 export const config = {
   backgroundColor: getColor('grey.200'),
-  borderColor: getColor('grey.600'),
+  borderColor: getColor('grey.800'),
   borderRadius: '3px',
   padding: '20px',
   transition: 'height 160ms ease',
 }
 
 export const ActionSelectUI = styled('div')`
+  .c-ActionSelectDropdownWrapper {
+    width: 100%;
+    position: relative;
+  }
+
+  .DropList__Select,
+  div[id*='tippy'],
+  .SelectTagToggler {
+    width: 100%;
+  }
+
   &.is-withContent {
-    .c-ActionSelectDropdownWrapper {
-      .${InputBackdropV2.className} {
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-      }
+    .SelectTagToggler {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
     }
   }
 `

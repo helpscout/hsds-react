@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import user from '@testing-library/user-event'
 import ActionSelect from './ActionSelect'
 
@@ -18,82 +18,60 @@ const mockItems = [
 ]
 
 describe('SelectDropdown', () => {
-  test('Renders a SelectDropdown with items', () => {
-    const { getAllByRole } = render(
+  test('Renders a SelectDropdown with items', async () => {
+    const { getByRole, getAllByRole } = render(
       <ActionSelect items={mockItems} isOpen={true} />
     )
 
-    const items = getAllByRole('option')
+    const toggler = getByRole('button')
 
-    expect(items).toHaveLength(3)
-    expect(items[0].textContent).toBe('Derek')
+    user.click(toggler)
+
+    await waitFor(() => {
+      const items = getAllByRole('option')
+
+      expect(items).toHaveLength(3)
+      expect(items[0].textContent).toBe('Derek')
+    })
   })
 
-  test('Renders a SelectDropdown with a selected item', () => {
+  test('Renders a SelectDropdown with a selected item', async () => {
     const { getByRole, getAllByRole } = render(
       <ActionSelect items={mockItems} selectedItem={mockItems[1]} />
     )
 
     user.click(getByRole('button'))
 
-    const selectedItem = getAllByRole('option').filter(item =>
-      item.classList.contains('is-active')
-    )
+    await waitFor(() => {
+      const selectedItem = getAllByRole('option').filter(item =>
+        item.classList.contains('is-selected')
+      )
 
-    expect(selectedItem.length).toBeTruthy()
-    expect(selectedItem[0].textContent).toBe('Hansel')
-  })
-})
-
-describe('Focus', () => {
-  test('Can refocuses trigger on close, by default', () => {
-    const spy = jest.fn()
-    const { container, getByRole } = render(
-      <ActionSelect items={mockItems} onFocus={spy} />
-    )
-
-    user.click(getByRole('button'))
-    user.type(container, '{esc}')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-  })
-
-  test('Can not trigger on close, with custom shouldRefocusOnClose', () => {
-    const spy = jest.fn()
-    const shouldRefocusOnClose = () => false
-
-    const { container } = render(
-      <ActionSelect
-        items={mockItems}
-        isOpen={true}
-        onFocus={spy}
-        shouldRefocusOnClose={shouldRefocusOnClose}
-      />
-    )
-
-    user.type(container, '{esc}')
-
-    expect(spy).not.toHaveBeenCalled()
+      expect(selectedItem.length).toBeTruthy()
+      expect(selectedItem[0].textContent).toBe('Hansel')
+    })
   })
 })
 
 describe('Open/Close', () => {
-  test('onOpen callback works', () => {
-    const spy = jest.fn()
-    const { getByRole } = render(<ActionSelect onOpen={spy} />)
+  test('onOpen/onClose callbacks works', async () => {
+    const openSpy = jest.fn()
+    const closeSpy = jest.fn()
+    const { getByRole } = render(
+      <ActionSelect onOpen={openSpy} onClose={closeSpy} />
+    )
 
     user.click(getByRole('button'))
 
-    expect(spy).toHaveBeenCalled()
-  })
-
-  test('onClose callback works', () => {
-    const spy = jest.fn()
-    const { getByRole } = render(<ActionSelect onClose={spy} isOpen />)
+    await waitFor(() => {
+      expect(openSpy).toHaveBeenCalled()
+    })
 
     user.click(getByRole('button'))
 
-    expect(spy).toHaveBeenCalled()
+    await waitFor(() => {
+      expect(closeSpy).toHaveBeenCalled()
+    })
   })
 })
 

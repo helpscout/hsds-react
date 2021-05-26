@@ -1,58 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { getUniqueKeyFromItem } from '../Dropdown/Dropdown.utils'
-import SelectDropdown from '../SelectDropdown'
+import DropList from '../DropList'
+import { SelectTag } from '../DropList/DropList.togglers'
 import ContentResizer from './ActionSelect.ContentResizer'
 import { classNames } from '../../utilities/classNames'
 import { findFirstFocusableNode } from '../../utilities/focus'
 import { smoothScrollTo, linear } from '../../utilities/smoothScroll'
 import { noop } from '../../utilities/other'
 import { ActionSelectUI } from './ActionSelect.css'
-import { getColor } from '../../styles/utilities/color'
 
 export class ActionSelect extends React.PureComponent {
-  static propsTypes = {
-    'data-cy': PropTypes.string,
-    animationDuration: PropTypes.number,
-    animationEasing: PropTypes.string,
-    cardBorderColor: PropTypes.string,
-    enableTabNavigation: PropTypes.bool,
-    innerRef: PropTypes.func,
-    isAutoFocusNodeOnSelect: PropTypes.bool,
-    isFadeContentOnOpen: PropTypes.bool,
-    items: PropTypes.any,
-    onAnimationEnd: PropTypes.func,
-    onAnimationUpdate: PropTypes.func,
-    onClose: PropTypes.func,
-    onOpen: PropTypes.func,
-    onResize: PropTypes.func,
-    onSelect: PropTypes.func,
-    shouldRefocusOnClose: PropTypes.func,
-    shouldScrollIntoView: PropTypes.func,
-  }
-
   static className = 'c-ActionSelect'
-
-  static defaultProps = {
-    'data-cy': 'ActionSelect',
-    animationDuration: 200,
-    animationEasing: 'linear',
-    cardBorderColor: getColor('grey.700'),
-    children: null,
-    enableTabNavigation: false,
-    innerRef: noop,
-    isAutoFocusNodeOnSelect: true,
-    isFadeContentOnOpen: true,
-    items: [],
-    onAnimationEnd: null,
-    onAnimationUpdate: null,
-    onClose: noop,
-    onOpen: noop,
-    onResize: noop,
-    onSelect: noop,
-    shouldRefocusOnClose: () => true,
-    shouldScrollIntoView: () => true,
-  }
 
   state = {
     isOpen: this.props.isOpen,
@@ -99,16 +57,14 @@ export class ActionSelect extends React.PureComponent {
     })
   }
 
-  scrollIntoView = (item, props) => {
-    if (!this.props.shouldScrollIntoView(item, props)) return
+  scrollIntoView = itemValue => {
+    if (!this.props.shouldScrollIntoView(itemValue)) return
 
     const { y } = this.contentNode.getBoundingClientRect()
     const position = y
     const shouldScrollIntoView = window.scrollY < y
 
     if (!shouldScrollIntoView) return
-
-    // Ignoring since JSDOM does not have window scroll events.
 
     smoothScrollTo({
       node: window,
@@ -119,36 +75,23 @@ export class ActionSelect extends React.PureComponent {
     })
   }
 
-  handleOnSelect = (item, props) => {
-    this.props.onSelect(item, props)
+  handleOnSelect = selectedItem => {
+    this.props.onSelect(selectedItem.value, selectedItem)
     this.autoFocusChildNode()
-
     this.resizeContent()
-    this.scrollIntoView(item, props)
-
+    this.scrollIntoView(selectedItem.value)
     this.safeSetState({
-      selectedItem: props.item,
+      selectedItem,
     })
   }
 
-  handleOnOpen = () => {
+  handleOnOpenClose = isOpen => {
     this.safeSetState(
       {
-        isOpen: true,
+        isOpen,
       },
       () => {
-        this.props.onOpen()
-      }
-    )
-  }
-
-  handleOnClose = () => {
-    this.safeSetState(
-      {
-        isOpen: false,
-      },
-      () => {
-        this.props.onClose()
+        isOpen ? this.props.onOpen() : this.props.onClose()
       }
     )
   }
@@ -165,10 +108,6 @@ export class ActionSelect extends React.PureComponent {
     })
   }
 
-  handleShouldRefocusOnClose = props => {
-    return this.props.shouldRefocusOnClose(props)
-  }
-
   setContentNode = node => {
     this.contentNode = node
   }
@@ -178,15 +117,15 @@ export class ActionSelect extends React.PureComponent {
       animationDuration,
       animationEasing,
       children,
+      'data-cy': dataCy,
       innerRef,
+      items,
       onAnimationEnd,
       onAnimationUpdate,
       onResize,
-      'data-cy': dataCy,
-      ...rest
+      shouldRefocusOnClose,
     } = this.props
-
-    const { selectedItem } = this.state
+    const { isOpen, resizeCount, selectedItem } = this.state
 
     return (
       <ActionSelectUI
@@ -195,13 +134,14 @@ export class ActionSelect extends React.PureComponent {
         ref={innerRef}
       >
         <div className="c-ActionSelectDropdownWrapper">
-          <SelectDropdown
-            {...rest}
-            onOpen={this.handleOnOpen}
-            onClose={this.handleOnClose}
+          <DropList
             data-cy="ActionSelectDropdown"
+            focusTogglerOnMenuClose={shouldRefocusOnClose()}
+            items={items}
+            onOpenedStateChange={this.handleOnOpenClose}
             onSelect={this.handleOnSelect}
-            shouldRefocusOnClose={this.handleShouldRefocusOnClose}
+            toggler={<SelectTag text={getSelectTagText(selectedItem, items)} />}
+            selection={this.props.selectedItem}
           />
         </div>
         <ContentResizer
@@ -209,11 +149,11 @@ export class ActionSelect extends React.PureComponent {
           animationEasing={animationEasing}
           borderWidth={1}
           mainRef={this.setContentNode}
-          isOpen={this.state.isOpen}
+          isOpen={isOpen}
           onAnimationEnd={onAnimationEnd}
           onAnimationUpdate={onAnimationUpdate}
           onResize={onResize}
-          resizeCount={this.state.resizeCount}
+          resizeCount={resizeCount}
           selectedKey={getUniqueKeyFromItem(selectedItem)}
         >
           {children}
@@ -221,6 +161,60 @@ export class ActionSelect extends React.PureComponent {
       </ActionSelectUI>
     )
   }
+}
+
+function getUniqueKeyFromItem(item) {
+  return item && (item.id || item.value || item.label)
+}
+
+function getSelectTagText(selectedItem, items) {
+  if (selectedItem != null) return selectedItem.label
+
+  if (Array.isArray(items) && items[0]) {
+    if (items[0].label) return items[0].label
+    if (items[0].value) return items[0].value
+  }
+
+  return 'None'
+}
+
+ActionSelect.defaultProps = {
+  'data-cy': 'ActionSelect',
+  animationDuration: 200,
+  animationEasing: 'linear',
+  children: null,
+  enableTabNavigation: false,
+  innerRef: noop,
+  isAutoFocusNodeOnSelect: true,
+  isFadeContentOnOpen: true,
+  items: [],
+  onAnimationEnd: null,
+  onAnimationUpdate: null,
+  onClose: noop,
+  onOpen: noop,
+  onResize: noop,
+  onSelect: noop,
+  shouldRefocusOnClose: () => true,
+  shouldScrollIntoView: () => true,
+}
+
+ActionSelect.propTypes = {
+  'data-cy': PropTypes.string,
+  animationDuration: PropTypes.number,
+  animationEasing: PropTypes.string,
+  enableTabNavigation: PropTypes.bool,
+  innerRef: PropTypes.func,
+  isAutoFocusNodeOnSelect: PropTypes.bool,
+  isFadeContentOnOpen: PropTypes.bool,
+  items: PropTypes.any,
+  onAnimationEnd: PropTypes.func,
+  onAnimationUpdate: PropTypes.func,
+  onClose: PropTypes.func,
+  onOpen: PropTypes.func,
+  onResize: PropTypes.func,
+  onSelect: PropTypes.func,
+  shouldRefocusOnClose: PropTypes.func,
+  shouldScrollIntoView: PropTypes.func,
 }
 
 export default ActionSelect
