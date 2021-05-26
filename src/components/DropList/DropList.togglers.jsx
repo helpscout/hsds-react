@@ -217,7 +217,8 @@ export const SelectTag = forwardRef(
   ({ isActive = false, text = '', onClick = noop, error, ...rest }, ref) => {
     const className = classNames(
       'DropListToggler SelectTagToggler',
-      error && 'is-error'
+      error && 'is-error',
+      isActive && 'is-active'
     )
     return (
       <SelectUI
@@ -267,6 +268,7 @@ const SelectUI = styled('button')`
     padding-right: 10px;
   }
 
+  &.is-active,
   &:focus {
     outline: 0;
     box-shadow: inset 0 0 0 2px ${getColor('blue.500')};
