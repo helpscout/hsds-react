@@ -29,6 +29,8 @@ function Combobox({
   isOpen = false,
   items = [],
   menuCSS,
+  onMenuBlur = noop,
+  onMenuFocus = noop,
   handleSelectedItemChange = noop,
   renderCustomListItem = null,
   toggleOpenedState = noop,
@@ -77,6 +79,17 @@ function Combobox({
     },
 
     onSelectedItemChange: handleSelectedItemChange,
+
+    onStateChange({ type }) {
+      switch (type) {
+        case useCombobox.stateChangeTypes.InputBlur:
+          onMenuBlur()
+          break
+
+        default:
+          break
+      }
+    },
 
     stateReducer(state, actionAndChanges) {
       const { changes, type } = actionAndChanges
@@ -139,7 +152,15 @@ function Combobox({
       {...getComboboxProps()}
     >
       <InputSearchHolderUI show={items.length > 0}>
-        <input {...getInputProps({ ref: inputEl })} placeholder="Search" />
+        <input
+          {...getInputProps({
+            ref: inputEl,
+            onFocus: e => {
+              onMenuFocus(e)
+            },
+          })}
+          placeholder="Search"
+        />
       </InputSearchHolderUI>
       <MenuListUI className="MenuList MenuList-Combobox" {...getMenuProps()}>
         {renderListContents({

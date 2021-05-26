@@ -80,7 +80,14 @@ describe('Tooltip', () => {
 })
 
 describe('With selectable conjunction', () => {
+  jest.setTimeout(10000)
   test('should display selectable conjunction button with AND/OR options', async () => {
+    const dropdownTrigger = () =>
+      screen.queryByRole('button', {
+        name: 'toggle menu',
+      })
+
+    const conjunctionMenu = () => screen.getByRole('listbox')
     render(
       <ConditionField.Group canChangeConjunction>
         <ConditionField />
@@ -102,6 +109,11 @@ describe('With selectable conjunction', () => {
   })
 
   test('should display OR selected when no conjunction provided', async () => {
+    const dropdownTrigger = () =>
+      screen.queryByRole('button', {
+        name: 'toggle menu',
+      })
+
     render(
       <ConditionField.Group canChangeConjunction>
         <ConditionField />
@@ -116,6 +128,12 @@ describe('With selectable conjunction', () => {
   })
 
   test('should mark provided item as selected', async () => {
+    const dropdownTrigger = () =>
+      screen.queryByRole('button', {
+        name: 'toggle menu',
+      })
+
+    const conjunctionMenu = () => screen.getByRole('listbox')
     render(
       <ConditionField.Group canChangeConjunction conjunction={'and'}>
         <ConditionField />
@@ -134,6 +152,12 @@ describe('With selectable conjunction', () => {
   })
 
   test('should make a callback when conjunction changed', async () => {
+    const dropdownTrigger = () =>
+      screen.queryByRole('button', {
+        name: 'toggle menu',
+      })
+
+    const conjunctionMenu = () => screen.getByRole('listbox')
     const mock = jest.fn()
     render(
       <ConditionField.Group canChangeConjunction onConjunctionChange={mock}>
@@ -174,6 +198,11 @@ describe('With selectable conjunction', () => {
   })
 
   test('should disable button to add, but not switch', () => {
+    const dropdownTrigger = () =>
+      screen.queryByRole('button', {
+        name: 'toggle menu',
+      })
+
     render(
       <ConditionField.Group canChangeConjunction isAddEnabled={false}>
         <ConditionField />
@@ -186,6 +215,11 @@ describe('With selectable conjunction', () => {
   })
 
   test('should not display dropdown when flag is set to false', () => {
+    const dropdownTrigger = () =>
+      screen.queryByRole('button', {
+        name: 'toggle menu',
+      })
+
     render(
       <ConditionField.Group canChangeConjunction={false}>
         <ConditionField />
@@ -196,13 +230,6 @@ describe('With selectable conjunction', () => {
     expect(dropdownTrigger()).not.toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'or' })).toBeInTheDocument()
   })
-
-  const dropdownTrigger = () =>
-    screen.queryByRole('button', {
-      name: 'toggle menu',
-    })
-
-  const conjunctionMenu = () => screen.getByRole('listbox')
 
   function getOrConjunctions(container) {
     return container.querySelectorAll('.c-ConditionOperator.is-or')

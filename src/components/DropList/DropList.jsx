@@ -38,6 +38,7 @@ function DropListManager({
   items = [],
   menuCSS,
   onMenuBlur = noop,
+  onMenuFocus = noop,
   onOpenedStateChange = noop,
   onSelect = noop,
   renderCustomListItem = null,
@@ -232,6 +233,7 @@ function DropListManager({
             items={parsedItems}
             menuCSS={menuCSS}
             onMenuBlur={onMenuBlur}
+            onMenuFocus={onMenuFocus}
             renderCustomListItem={renderCustomListItem}
             selectedItem={selectedItem}
             selectedItems={selectedItems}
@@ -293,6 +295,8 @@ DropListManager.propTypes = {
   menuCSS: PropTypes.any,
   /** Callback that fires when the menu loses focus */
   onMenuBlur: PropTypes.func,
+  /** Callback that fires when the menu gets focus */
+  onMenuFocus: PropTypes.func,
   /** Callback that fires whenever the DropList opens and closes */
   onOpenedStateChange: PropTypes.func,
   /** Callback that fires whenever the selection in the DropList changes */

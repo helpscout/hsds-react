@@ -211,17 +211,9 @@ export class EditableField extends React.Component {
 
   handleInputBlur = payload => {
     const { name, event } = payload
-    const { activeField, multipleValuesEnabled } = this.state
+    const { activeField, multipleValuesEnabled, valueOptions } = this.state
     const { validate, onCommit, onDiscard, onInputBlur } = this.props
-
-    if (equal(this.state.initialFieldValue, this.state.fieldValue)) {
-      this.setState({ activeField: EMPTY_VALUE }, () => {
-        onInputBlur({ name, value: this.state.fieldValue, event })
-      })
-
-      return
-    }
-
+    const hasOptions = valueOptions != null
     const changedField =
       this.state.fieldValue.length === 1
         ? this.state.fieldValue[0]
@@ -231,7 +223,11 @@ export class EditableField extends React.Component {
         ? this.state.initialFieldValue[0]
         : find(this.state.initialFieldValue, val => val.id === event.target.id)
 
-    if (equal(initialField, changedField)) {
+    if (
+      equal(this.state.initialFieldValue, this.state.fieldValue) ||
+      equal(initialField, changedField) ||
+      this.state.disabledItem.indexOf(changedField.id) !== -1
+    ) {
       this.setState({ activeField: EMPTY_VALUE }, () => {
         onInputBlur({ name, value: this.state.fieldValue, event })
       })
@@ -239,19 +235,13 @@ export class EditableField extends React.Component {
       return
     }
 
-    if (this.state.disabledItem.indexOf(changedField.id) !== -1) {
-      this.setState({ activeField: EMPTY_VALUE }, () => {
-        onInputBlur({ name, value: this.state.fieldValue, event })
-      })
-
-      return
-    }
-
-    // In multivalue fields, remove the empty one when there're at least 2 fields
     const removedEmptyFields = this.state.fieldValue.filter(field =>
       Boolean(field.value)
     )
+
+    // In multivalue fields, remove the empty one when there're at least 2 fields
     const shouldDiscardEmpty =
+      !hasOptions &&
       multipleValuesEnabled &&
       removedEmptyFields.length < this.state.fieldValue.length
 
@@ -295,9 +285,9 @@ export class EditableField extends React.Component {
       return
     }
 
-    // tested
+    const optionChanged = initialField.option !== changedField.option
 
-    if (!changedField.validated) {
+    if (!changedField.validated || optionChanged) {
       this.setState({
         disabledItem: this.state.disabledItem.concat(changedField.id),
       })
@@ -458,24 +448,16 @@ export class EditableField extends React.Component {
             )
           }
         })
-        .catch(
-          // tested
-
-          () => {
-            // tested
-
-            this.setState(
-              {
-                // tested
-
-                disabledItem: this.state.disabledItem.filter(
-                  item => item !== name
-                ),
-              },
-              () => this.handleFieldEscapePress({ event, name })
-            )
-          }
-        )
+        .catch(() => {
+          this.setState(
+            {
+              disabledItem: this.state.disabledItem.filter(
+                item => item !== name
+              ),
+            },
+            () => this.handleFieldEscapePress({ event, name })
+          )
+        })
 
       return
     }
@@ -635,12 +617,9 @@ export class EditableField extends React.Component {
                 )
               } else {
                 updatedFieldValue = fieldValue.map(field => {
-                  // tested
-
                   if (field.id === name) {
                     return { ...field, validated: true }
                   }
-                  // tested
 
                   return field
                 })
@@ -668,24 +647,16 @@ export class EditableField extends React.Component {
                 )
               }
             })
-            .catch(
-              // tested
-
-              () => {
-                // tested
-
-                this.setState(
-                  {
-                    // tested
-
-                    disabledItem: this.state.disabledItem.filter(
-                      item => item !== name
-                    ),
-                  },
-                  () => this.handleFieldEscapePress({ event, name })
-                )
-              }
-            )
+            .catch(() => {
+              this.setState(
+                {
+                  disabledItem: this.state.disabledItem.filter(
+                    item => item !== name
+                  ),
+                },
+                () => this.handleFieldEscapePress({ event, name })
+              )
+            })
         }
       }
     })
@@ -761,31 +732,19 @@ export class EditableField extends React.Component {
     )
   }
 
-  handleOptionBlur = ({ name, event }) => {
-    const { onOptionBlur } = this.props
-
-    this.setState(
-      {
-        activeField: EMPTY_VALUE,
-      },
-      () => {
-        onOptionBlur({ name, value: this.state.fieldValue, event })
-      }
-    )
-  }
-
   handleOptionSelection = ({ name, selection }) => {
     const { onChange, onOptionChange, onCommit } = this.props
     const { fieldValue } = this.state
     let newFieldValue = []
     let changed = false
     let hasBeenValidated = ''
+    const label = typeof selection === 'string' ? selection : selection.label
 
     for (const value of fieldValue) {
       const temp = { ...value }
 
-      if (temp.id === name && temp.option !== selection) {
-        temp.option = selection
+      if (temp.id === name && temp.option !== label) {
+        temp.option = label
         changed = true
       }
 
@@ -833,7 +792,6 @@ export class EditableField extends React.Component {
       fieldValue[fieldValue.length - 1].value !== EMPTY_VALUE
 
     if (isNotSingleEmptyValue) {
-      // it is tested
       const { name } = this.props
       const newValueObject = createNewValueFieldObject(
         EMPTY_VALUE,
@@ -956,7 +914,7 @@ export class EditableField extends React.Component {
         {fieldValue.map((val, index) => {
           const isActive = activeField === val.id
           const isDisabled =
-            val.disabled || this.state.disabledItem.indexOf(val.id) !== -1
+            disabled || val.disabled || this.state.disabledItem.includes(val.id)
           const valInfo = find(
             this.state.validationInfo,
             valItem => valItem.name === val.id
@@ -986,7 +944,6 @@ export class EditableField extends React.Component {
                 onInputFocus={this.handleInputFocus}
                 onInputBlur={this.handleInputBlur}
                 onOptionFocus={this.handleOptionFocus}
-                onOptionBlur={this.handleOptionBlur}
                 onOptionSelection={this.handleOptionSelection}
                 onChange={this.handleInputChange}
                 onKeyDown={this.handleInputKeyDown}

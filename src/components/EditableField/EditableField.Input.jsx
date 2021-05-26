@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import {
   EditableFieldInputUI,
@@ -10,7 +10,7 @@ import {
   FocusIndicatorUI,
   ValidationIconUI,
 } from './EditableField.css'
-import Dropdown from '../Dropdown'
+import DropList from '../DropList'
 import Icon from '../Icon'
 import Tooltip from '../Tooltip'
 import Truncate from '../Truncate'
@@ -32,20 +32,59 @@ import { key } from '../../constants/Keys'
 import { noop } from '../../utilities/other'
 import equal from 'fast-deep-equal'
 
+const Toggler = forwardRef(
+  (
+    {
+      disabled = false,
+      isActive = false,
+      onBlur = noop,
+      onClick = noop,
+      onFocus = noop,
+      fieldValue,
+      ...rest
+    },
+    ref
+  ) => {
+    return (
+      <TriggerUI
+        aria-label="toggle menu"
+        aria-haspopup="true"
+        aria-expanded={isActive}
+        className={INPUT_CLASSNAMES.optionsTrigger}
+        data-cy="EditableFieldOptionsTrigger"
+        disabled={disabled}
+        onClick={onClick}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        ref={ref}
+        type="button"
+        {...rest}
+      >
+        <OptionsDropdownUI
+          className={classNames(
+            INPUT_CLASSNAMES.optionsDropdown,
+            isActive && 'menu-open'
+          )}
+        >
+          <Truncate className={INPUT_CLASSNAMES.selectedOption}>
+            {fieldValue.option}
+          </Truncate>
+          <Icon name={ACTION_ICONS.valueOption} />
+        </OptionsDropdownUI>
+        <FocusIndicatorUI className={INPUT_CLASSNAMES.focusIndicator} />
+      </TriggerUI>
+    )
+  }
+)
+
 export class EditableFieldInput extends React.Component {
   static className = INPUT_CLASSNAMES.component
 
-  fieldInputContentRef
-  optionsDropdownRef
   inputRef
   inputWrapperRef = React.createRef()
 
-  setFieldInputContentNode = node => {
-    this.fieldInputContentRef = node
-  }
-
-  setOptionsDropdownNode = node => {
-    this.optionsDropdownRef = node
+  state = {
+    isDropListOpen: false,
   }
 
   setInputNode = node => {
@@ -58,10 +97,8 @@ export class EditableFieldInput extends React.Component {
     this.setInputTitle()
 
     if (isActive) {
-      if (document.activeElement !== this.optionsDropdownRef) {
-        const inputNode = this.inputRef
-        inputNode && inputNode.focus()
-      }
+      const inputNode = this.inputRef
+      inputNode && inputNode.focus()
     }
   }
 
@@ -77,8 +114,6 @@ export class EditableFieldInput extends React.Component {
     if (this.props.disabled !== nextProps.disabled) {
       return true
     }
-
-    // Below is tested
 
     if (!equal(this.props.validationInfo, nextProps.validationInfo)) {
       return true
@@ -120,12 +155,17 @@ export class EditableFieldInput extends React.Component {
   }
 
   handleInputBlur = event => {
-    const { name, onInputBlur } = this.props
-    const optionsNode = this.optionsDropdownRef
+    const { name, onInputBlur, valueOptions } = this.props
 
-    if (optionsNode && optionsNode.classList.contains('is-open')) return
-
-    onInputBlur({ name, event })
+    if (valueOptions) {
+      setTimeout(() => {
+        if (!this.state.isDropListOpen) {
+          onInputBlur({ name, event })
+        }
+      }, 100)
+    } else {
+      onInputBlur({ name, event })
+    }
   }
 
   handleOptionFocus = event => {
@@ -184,49 +224,38 @@ export class EditableFieldInput extends React.Component {
     onKeyUp({ event, name })
   }
 
-  handleOptionsBlur = event => {
-    const { name, onOptionBlur } = this.props
-
-    onOptionBlur({ name, event })
-  }
-
   handleDropdownSelect = selection => {
     const { name, onOptionSelection } = this.props
 
     onOptionSelection({ name, selection })
-    this.optionsDropdownRef && this.optionsDropdownRef.focus()
+  }
+
+  handleOpenCloseDropList = isOpen => {
+    this.setState({ isDropListOpen: isOpen })
   }
 
   renderOptions = () => {
     const { disabled, fieldValue, valueOptions } = this.props
 
     return (
-      <OptionsWrapperUI
-        className={INPUT_CLASSNAMES.optionsWrapper}
-        onKeyDown={this.handleKeyDown}
-      >
-        <Dropdown
+      <OptionsWrapperUI className={INPUT_CLASSNAMES.optionsWrapper}>
+        <DropList
           className={INPUT_CLASSNAMES.dropdown}
           items={valueOptions}
-          disabled={disabled}
-          shouldRefocusOnClose={() => false}
-          minWidth={75}
-          maxWidth={200}
-          onBlur={this.handleOptionsBlur}
-          onFocus={this.handleOptionFocus}
           onSelect={this.handleDropdownSelect}
-          triggerRef={this.setOptionsDropdownNode}
-          renderTrigger={
-            <TriggerUI className={INPUT_CLASSNAMES.optionsTrigger}>
-              <OptionsDropdownUI className={INPUT_CLASSNAMES.optionsDropdown}>
-                <Truncate className={INPUT_CLASSNAMES.selectedOption}>
-                  {fieldValue.option}
-                </Truncate>
-                <Icon name={ACTION_ICONS.valueOption} />
-              </OptionsDropdownUI>
-              <FocusIndicatorUI className={INPUT_CLASSNAMES.focusIndicator} />
-            </TriggerUI>
+          onOpenedStateChange={this.handleOpenCloseDropList}
+          toggler={
+            <Toggler
+              disabled={disabled}
+              fieldValue={fieldValue}
+              onFocus={this.handleOptionFocus}
+            />
           }
+          tippyOptions={{
+            appendTo: reference =>
+              reference.closest('.EditableField__field.has-options'),
+            offset: [0, 10],
+          }}
         />
       </OptionsWrapperUI>
     )
@@ -283,7 +312,6 @@ export class EditableFieldInput extends React.Component {
             name === validationInfo.name &&
             STATES_CLASSNAMES.withValidation
         )}
-        ref={this.setFieldInputContentNode}
       >
         {valueOptions ? this.renderOptions() : null}
 

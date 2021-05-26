@@ -2,6 +2,9 @@ import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { select, text, boolean, number, array } from '@storybook/addon-knobs'
 import SpeechBubble from '@helpscout/hsds-illos/speech-bubble'
 import Modal from './'
+import { PHONE_OPTIONS } from '../EditableField/EditableField.storiesHelpers'
+import EditableTextarea from '../EditableTextarea'
+import EditableField from '../EditableField'
 
 <Meta
   title="Components/Overlay/Modal"
@@ -158,34 +161,49 @@ There are two versions of the Modal component, version 2 is the new standard (ve
   </Story>
 </Canvas>
 
-#### Version 1 (legacy)
+#### ESC handling
+
+There are components like `DropList`, `EditableField` and `EditableTextarea` that have their own ESC handler, we don't want the Modal to be closed on those cases:
 
 <Canvas>
-  <Story name="Version 1 (legacy)">
+  <Story name="ESC Handling">
     <Modal
-      trigger={
-        <button onClick={e => e.preventDefault()}>Open dis modal</button>
-      }
+      isOpen={false}
+      trigger={<button>open modal</button>}
+      title="Modal Title"
+      version={2}
     >
-      <Modal.Body>
-        <Heading>Title</Heading>
-        <p>
-          Lorem Lorem sit esse sit minim irure minim voluptate voluptate nostrud
-          aliqua. Do tempor qui ad sit amet labore magna proident adipisicing
-          nostrud. Adipisicing laborum veniam velit culpa deserunt proident
-          ipsum occaecat. Ex duis nulla tempor cillum mollit anim. Est qui
-          consectetur qui fugiat. Commodo tempor aute adipisicing dolore est.
-          Laboris do sint et reprehenderit consectetur amet cillum quis tempor
-          nulla qui ea.
-        </p>
-        <p>
-          Duis tempor deserunt qui Lorem sint exercitation voluptate duis Lorem.
-          Sunt et elit nulla consectetur labore. Proident dolore ullamco
-          excepteur enim aliqua incididunt culpa magna cupidatat magna non sit.
-          Occaecat laborum dolor nisi Lorem ex id occaecat incididunt cupidatat
-          ipsum amet nostrud.
-        </p>
+      <Modal.Body version={2}>
+        <div>
+          <EditableTextarea />
+          <EditableField
+            label="Phone"
+            name="Phone"
+            placeholder="Add phone"
+            type="tel"
+            valueOptions={PHONE_OPTIONS}
+            defaultOption={PHONE_OPTIONS[2]}
+            value={{ option: 'Work', value: '123456789' }}
+          />
+          <EditableField
+            label="Company"
+            name="company"
+            placeholder="Add a company name"
+            type="text"
+          />
+          <EditableField
+            label="Team"
+            name="team"
+            placeholder="Add a sports team name"
+            type="text"
+            value="Atlas"
+          />
+        </div>
       </Modal.Body>
+      <Modal.ActionFooter
+        primaryButtonText={'Primary'}
+        secondaryButtonText={'Secondary'}
+      />
     </Modal>
   </Story>
 </Canvas>

@@ -419,6 +419,57 @@ describe('Menu', () => {
       expect(queryByPlaceholderText('Search')).not.toBeInTheDocument()
     })
   })
+
+  test('should fire onMenuFocus and onMenuBlur (Combobox)', async () => {
+    const blurSpy = jest.fn()
+    const focusSpy = jest.fn()
+    const { queryByText } = render(
+      <DropList
+        onMenuBlur={blurSpy}
+        onMenuFocus={focusSpy}
+        items={someItems}
+        toggler={<SimpleButton text="Click" />}
+        variant="combobox"
+      />
+    )
+
+    user.click(queryByText('Click'))
+
+    await waitFor(() => {
+      expect(focusSpy).toHaveBeenCalled()
+    })
+
+    user.click(queryByText('Click'))
+
+    await waitFor(() => {
+      expect(blurSpy).toHaveBeenCalled()
+    })
+  })
+
+  test('should fire onMenuFocus and onMenuBlur (Select)', async () => {
+    const blurSpy = jest.fn()
+    const focusSpy = jest.fn()
+    const { queryByText } = render(
+      <DropList
+        onMenuBlur={blurSpy}
+        onMenuFocus={focusSpy}
+        items={someItems}
+        toggler={<SimpleButton text="Click" />}
+      />
+    )
+
+    user.click(queryByText('Click'))
+
+    await waitFor(() => {
+      expect(focusSpy).toHaveBeenCalled()
+    })
+
+    user.click(queryByText('Click'))
+
+    await waitFor(() => {
+      expect(blurSpy).toHaveBeenCalled()
+    })
+  })
 })
 
 describe('Combobox', () => {
@@ -922,6 +973,159 @@ describe('Selection', () => {
   })
 
   describe('disabled items', () => {
+    const items = someItems.map((item, index) => ({
+      ...item,
+      isDisabled: index % 2 === 0,
+    }))
+
+    test('should set an item as disabled and do not allow to select it (select)', async () => {
+      const onSelect = jest.fn()
+      const { getByText } = render(
+        <DropList
+          onSelect={onSelect}
+          items={items}
+          toggler={<SimpleButton text="Button Toggler" />}
+          isMenuOpen
+        />
+      )
+
+      expect(getByText(someItems[2].label).parentElement).toHaveClass(
+        'is-disabled'
+      )
+      expect(getByText(someItems[1].label).parentElement).not.toHaveClass(
+        'is-disabled'
+      )
+
+      user.click(getByText(someItems[2].label))
+
+      await waitFor(() => {
+        expect(onSelect).not.toHaveBeenCalled()
+      })
+    })
+
+    test('should set an item as disabled and do not allow to select it (combobox)', async () => {
+      const onSelect = jest.fn()
+      const { getByText } = render(
+        <DropList
+          onSelect={onSelect}
+          items={items}
+          toggler={<SimpleButton text="Button Toggler" />}
+          isMenuOpen
+          variant="combobox"
+        />
+      )
+
+      expect(getByText(someItems[2].label).parentElement).toHaveClass(
+        'is-disabled'
+      )
+
+      user.click(getByText(someItems[2].label))
+
+      await waitFor(() => {
+        expect(onSelect).not.toHaveBeenCalled()
+      })
+    })
+
+    test('should set an item as disabled and do not allow to select it with custom list', async () => {
+      const onSelect = jest.fn()
+      const { getByText } = render(
+        <DropList
+          onSelect={onSelect}
+          items={items}
+          toggler={<SimpleButton text="Button Toggler" />}
+          isMenuOpen
+          renderCustomListItem={({ item, isDisabled }) => (
+            <div className={isDisabled ? 'is-disabled' : ''}>{item.label}</div>
+          )}
+        />
+      )
+
+      const exampleItem = getByText(someItems[2].label)
+
+      expect(exampleItem.parentElement).toHaveClass('is-disabled')
+
+      user.click(exampleItem)
+
+      await waitFor(() => {
+        expect(onSelect).not.toHaveBeenCalled()
+        expect(exampleItem).toHaveClass('is-disabled')
+      })
+    })
+
+    test('should skip disabled items when navigating down', async () => {
+      const { getByPlaceholderText, getByText } = render(
+        <DropList
+          items={items}
+          toggler={<SimpleButton text="Button Toggler" />}
+          isMenuOpen
+          variant="combobox"
+        />
+      )
+
+      user.type(getByPlaceholderText('Search'), '{arrowdown}')
+
+      await waitFor(() => {
+        expect(getByText(someItems[0].label).parentElement).not.toHaveClass(
+          'is-highlighted'
+        )
+        expect(getByText(someItems[1].label).parentElement).toHaveClass(
+          'is-highlighted'
+        )
+      })
+
+      user.type(getByPlaceholderText('Search'), '{arrowdown}')
+
+      await waitFor(() => {
+        expect(getByText(someItems[1].label).parentElement).not.toHaveClass(
+          'is-highlighted'
+        )
+        expect(getByText(someItems[2].label).parentElement).not.toHaveClass(
+          'is-highlighted'
+        )
+        expect(getByText(someItems[3].label).parentElement).toHaveClass(
+          'is-highlighted'
+        )
+      })
+    })
+
+    test('should skip disabled items when navigating up', async () => {
+      const { getByPlaceholderText, getByText } = render(
+        <DropList
+          items={items}
+          toggler={<SimpleButton text="Button Toggler" />}
+          isMenuOpen
+          variant="combobox"
+        />
+      )
+
+      user.type(getByPlaceholderText('Search'), '{arrowup}')
+
+      await waitFor(() => {
+        expect(getByText(someItems[0].label).parentElement).not.toHaveClass(
+          'is-highlighted'
+        )
+        expect(
+          getByText(someItems[someItems.length - 2].label).parentElement
+        ).toHaveClass('is-highlighted')
+      })
+
+      user.type(getByPlaceholderText('Search'), '{arrowup}')
+
+      await waitFor(() => {
+        expect(
+          getByText(someItems[someItems.length - 2].label).parentElement
+        ).not.toHaveClass('is-highlighted')
+        expect(
+          getByText(someItems[someItems.length - 3].label).parentElement
+        ).not.toHaveClass('is-highlighted')
+        expect(
+          getByText(someItems[someItems.length - 4].label).parentElement
+        ).toHaveClass('is-highlighted')
+      })
+    })
+  })
+
+  describe('Disabled items', () => {
     const items = someItems.map((item, index) => ({
       ...item,
       isDisabled: index % 2 === 0,

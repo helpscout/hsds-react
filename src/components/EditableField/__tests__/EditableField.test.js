@@ -498,7 +498,9 @@ describe('Options', () => {
         valueOptions={['Home', 'Work', 'Other']}
       />
     )
-    const button = container.querySelector('.c-DropdownTrigger')
+    const button = container.querySelector(
+      `.${INPUT_CLASSNAMES.optionsTrigger}`
+    )
 
     expect(queryByRole('listbox')).toBe(null)
 
@@ -601,7 +603,9 @@ describe('Options', () => {
       />
     )
 
-    const button = container.querySelector('.c-DropdownTrigger')
+    const button = container.querySelector(
+      `.${INPUT_CLASSNAMES.optionsTrigger}`
+    )
 
     user.click(button)
     user.click(getAllByRole('option')[0])
@@ -739,7 +743,7 @@ describe('Static Value', () => {
       container.querySelector(`.${MASK_CLASSNAMES.option}`).textContent
     ).toBe('Work')
 
-    user.click(container.querySelector('.c-DropdownTrigger'))
+    user.click(container.querySelector(`.${INPUT_CLASSNAMES.optionsTrigger}`))
     user.click(getAllByRole('option')[0])
 
     expect(
@@ -913,7 +917,9 @@ describe('disabled', () => {
     )
 
     expect(
-      container.querySelector('.c-DropdownTrigger').getAttribute('disabled')
+      container
+        .querySelector(`.${INPUT_CLASSNAMES.optionsTrigger}`)
+        .getAttribute('disabled')
     ).toBeDefined()
   })
 })
@@ -1054,25 +1060,7 @@ describe('Events', () => {
       />
     )
 
-    container.querySelector('.c-DropdownTrigger').focus()
-
-    expect(spy).toHaveBeenCalled()
-  })
-
-  test('Blur option', () => {
-    const spy = jest.fn()
-
-    const { container } = render(
-      <EditableField
-        name="company"
-        value={{ option: 'Work', value: '123456789', id: '1' }}
-        valueOptions={['Home', 'Work', 'Other']}
-        onOptionBlur={spy}
-      />
-    )
-
-    container.querySelector('.c-DropdownTrigger').focus()
-    container.querySelector('.c-DropdownTrigger').blur()
+    container.querySelector(`.${INPUT_CLASSNAMES.optionsTrigger}`).focus()
 
     expect(spy).toHaveBeenCalled()
   })
@@ -1093,7 +1081,7 @@ describe('Events', () => {
       />
     )
 
-    user.click(container.querySelector('.c-DropdownTrigger'))
+    user.click(container.querySelector(`.${INPUT_CLASSNAMES.optionsTrigger}`))
     user.click(getAllByRole('option')[0])
 
     expect(onOptionChangeSpy).toHaveBeenCalled()
