@@ -147,8 +147,8 @@ MessageCard.propTypes = {
   /** Definition of the Message image */
   image: PropTypes.shape({
     url: PropTypes.string.isRequired,
-    width: PropTypes.string,
-    height: PropTypes.string,
+    width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     altText: PropTypes.string,
   }),
   /** Data attr for Cypress tests. */
