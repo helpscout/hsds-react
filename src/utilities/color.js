@@ -3,9 +3,9 @@ const isNumber = value => typeof value === 'number'
 
 const lightThreshold = 0.61
 const optimalTextColorValues = {
-  r: 299,
-  g: 587,
-  b: 114,
+  r: 129,
+  g: 522,
+  b: 49,
 }
 
 // Source
@@ -49,31 +49,15 @@ export const hexToHsl = hex => {
   return rgbToHsl(rgb.r, rgb.g, rgb.b)
 }
 
-// Source
-// https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-procedure
-export const luminance = rgb => {
-  const a = [rgb.r, rgb.g, rgb.b].map(function (v) {
-    v /= 255
-    return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)
-  })
-  return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722
-}
-
-export const contrast = (rgb1, rgb2) => {
-  const lum1 = luminance(rgb1)
-  const lum2 = luminance(rgb2)
-  const brightest = Math.max(lum1, lum2)
-  const darkest = Math.min(lum1, lum2)
-
-  return (brightest + 0.05) / (darkest + 0.05)
-}
-
 export const optimalTextColor = (
   backgroundHex,
   propValues = optimalTextColorValues
 ) => {
   if (!isHex(backgroundHex)) return null
-
+  // Defaults from original formula:
+  // r: 299
+  // g: 587
+  // b: 114
   const defaultPropValues = optimalTextColorValues
   const { r, g, b } = Object.assign({}, defaultPropValues, propValues)
   const backgroundRgb = hexToRgb(backgroundHex)
@@ -81,21 +65,7 @@ export const optimalTextColor = (
     (backgroundRgb.r * r + backgroundRgb.g * g + backgroundRgb.b * b) / 1000
   )
 
-  const contrastWithBlack = contrast(backgroundRgb, { r: 0, g: 0, b: 0 })
-  const contrastWithWhite = contrast(backgroundRgb, { r: 255, g: 255, b: 255 })
-
-  if (shade >= 128) {
-    // if background shade suggests black, but it does not pass
-    // text contrast accessibility guidelines, check if white feels better
-    return contrastWithBlack < 4.5 && contrastWithWhite > contrastWithBlack
-      ? 'white'
-      : 'black'
-  }
-
-  // if shade suggests white, but it does not pass, check if black is better
-  return contrastWithWhite < 4.5 && contrastWithBlack > contrastWithWhite
-    ? 'black'
-    : 'white'
+  return shade >= 128 ? 'black' : 'white'
 }
 
 export const rgbToHsl = (red, green, blue) => {
@@ -186,7 +156,7 @@ export const getColorShade = (hex, propValues = optimalTextColorValues) => {
   const l = hsl.l
   const isDarkText = optimalTextColor(hex, propValues) === 'black'
 
-  if (l >= 0.85) {
+  if (l >= 0.9) {
     return 'lightest'
   } else if (l >= lightThreshold) {
     return isDarkText ? 'light' : 'dark'
