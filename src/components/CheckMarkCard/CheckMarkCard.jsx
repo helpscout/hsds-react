@@ -11,13 +11,13 @@ import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
 
 import {
-  CheckMarkCardUI,
-  MarkUI,
-  CheckMarkCardContentUI,
-  UserNameUI,
-  RoleNameUI,
   AvatarUI,
+  CheckMarkCardContentUI,
   CheckmarkCardGridUI,
+  CheckMarkCardUI,
+  HeadingUI,
+  MarkUI,
+  SubtitleUI,
 } from './CheckMarkCard.css'
 
 const uniqueID = createUniqueIDFactory('CheckMarkCard')
@@ -69,6 +69,7 @@ const CheckMarkCard = props => {
     className,
     disabled,
     height,
+    heading,
     inputRef: inputRefProp,
     isFocused,
     label,
@@ -82,7 +83,7 @@ const CheckMarkCard = props => {
     onFocus,
     subtitle,
     status,
-    shouldDisplayLabel = true,
+    showHeading = true,
     value: valueProp,
     ...rest
   } = props
@@ -141,6 +142,8 @@ const CheckMarkCard = props => {
     withStatus: shouldShowStatus,
   }
 
+  const shouldDisplayHeading = showHeading && (heading || label)
+
   return (
     <CheckMarkCardUI
       {...rest}
@@ -153,8 +156,8 @@ const CheckMarkCard = props => {
       <CheckMarkCardContentUI>
         <Mark cardChecked={cardChecked} {...markProps} />
         {avatar && <AvatarUI size="xl" image={avatar} name={label} />}
-        {shouldDisplayLabel && <UserNameUI>{label}</UserNameUI>}
-        {subtitle && <RoleNameUI>{subtitle}</RoleNameUI>}
+        {shouldDisplayHeading && <HeadingUI>{heading || label}</HeadingUI>}
+        {subtitle && <SubtitleUI>{subtitle}</SubtitleUI>}
         {children}
       </CheckMarkCardContentUI>
       <VisuallyHidden>
@@ -198,6 +201,14 @@ CheckMarkCard.propTypes = {
   disabled: PropTypes.bool,
   /** Label that will be attached to the checkbox element. It will also be used as a heading bellow the avatar */
   label: PropTypes.string,
+  /** Text to overwrite the label inside the Heading element */
+  heading: PropTypes.string,
+  /** Set the height of the Card. */
+  height: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.func,
+  ]),
   /** Change the mark icon */
   iconName: PropTypes.string,
   /** Change the mark icon size */
@@ -208,12 +219,6 @@ CheckMarkCard.propTypes = {
   inputRef: PropTypes.func,
   /** Whether the card should be focused */
   isFocused: PropTypes.bool,
-  /** Set the height of the Card. */
-  height: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.func,
-  ]),
   /** Change the mark background color */
   markColor: PropTypes.oneOf(['blue', 'lavender']),
   /** Set the max width of the Card. */
@@ -229,7 +234,7 @@ CheckMarkCard.propTypes = {
   /** Callback when the input is focused. */
   onFocus: PropTypes.func,
   /* Flag to display or not the label as a heading bellow the avatar */
-  shouldDisplayLabel: PropTypes.bool,
+  showHeading: PropTypes.bool,
   /** Give the card special status styles, it also disables the input */
   status: PropTypes.string,
   /** Display a light text as the last children */

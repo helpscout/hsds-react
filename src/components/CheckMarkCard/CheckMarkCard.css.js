@@ -156,12 +156,12 @@ export const AvatarUI = styled(Avatar)`
   margin-bottom: 14px;
 `
 
-export const RoleNameUI = styled('div')`
+export const SubtitleUI = styled('div')`
   font-size: 13px;
   color: ${getColor('charcoal.200')};
 `
 
-export const UserNameUI = styled('div')`
+export const HeadingUI = styled('div')`
   font-size: 14px;
   margin: 0 0 4px;
   text-align: center;

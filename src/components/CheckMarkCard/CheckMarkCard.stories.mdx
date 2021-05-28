@@ -30,7 +30,7 @@ This component provides richer context to the of the default HTML `<input>` of t
         label="Hansel"
         value="hansel"
         disabled={boolean('disabled', true)}
-        shouldDisplayLabel={false}
+        showHeading={false}
       ></CheckMarkCard>
       <br />
       <CheckMarkCard
@@ -95,6 +95,7 @@ This component provides richer context to the of the default HTML `<input>` of t
       ></CheckMarkCard>
       <CheckMarkCard
         label="Matilda"
+        heading="Matilda heading"
         value="matilda"
         avatar={AvatarSpec.generate().image}
         subtitle="Charlotte"
@@ -115,6 +116,7 @@ This component provides richer context to the of the default HTML `<input>` of t
         status="locked"
         markColor="lavender"
         tooltipText="This is locked, leave it alone"
+        showHeading={false}
       ></CheckMarkCard>
       <CheckMarkCard
         label="Mark"
