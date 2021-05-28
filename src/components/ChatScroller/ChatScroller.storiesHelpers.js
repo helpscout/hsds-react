@@ -3,7 +3,7 @@ import { createSpec, faker } from '@helpscout/helix'
 import { Avatar, ChatScroller, Message, Scrollable } from '../index'
 
 const MessageSpec = createSpec({
-  id: faker.random.uuid(),
+  id: faker.datatype.uuid(),
   message: faker.lorem.sentence(),
 })
 

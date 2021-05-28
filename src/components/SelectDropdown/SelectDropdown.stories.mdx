@@ -28,7 +28,7 @@ Should be used instead of the deprecated `Select`
       disabled={boolean('disabled', false)}
       autoInput={false}
       items={createSpec({
-        id: faker.random.uuid(),
+        id: faker.datatype.uuid(),
         value: faker.name.firstName(),
       }).generate(20)}
       state={select(
