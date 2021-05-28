@@ -1,170 +1,178 @@
-import React, { useRef, useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
-
-import {
-  CheckMarkCardUI,
-  MarkUI,
-  CheckMarkCardContentUI,
-} from './CheckMarkCard.css'
+import { CheckMarkCardUI, MarkUI } from './CheckMarkCard.css'
 
 import Checkbox from '../Checkbox'
 import Icon from '../Icon'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Tooltip from '../Tooltip'
 import VisuallyHidden from '../VisuallyHidden'
 import { classNames } from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
+import { getColor } from '../../styles/utilities/color'
 import { noop } from '../../utilities/other'
 
 const uniqueID = createUniqueIDFactory('CheckMarkCard')
 
-const useCustomId = id => {
-  const customId = useRef(id || uniqueID())
-  return customId.current
-}
+export class CheckMarkCard extends React.Component {
+  constructor(props) {
+    super(props)
 
-const Mark = props => {
-  const { cardChecked, withStatus } = props
-  let iconName = 'checkmark'
-  let iconSize = '24'
-  let tooltip = null
-
-  // If the card has a status provided, it should take precedence even if the card
-  // is checked from external props for some reason
-  if (withStatus) {
-    iconName = withStatus.iconName
-    iconSize = withStatus.iconSize || '20'
-    tooltip = withStatus.tooltipText
-  }
-
-  const isVisible = cardChecked || Boolean(withStatus)
-
-  const markClassnames = classNames(
-    'c-CheckMarkCard__mark',
-    isVisible && 'is-visible'
-  )
-
-  const icon = (
-    <Icon
-      className={`${iconName}-icon mark-icon`}
-      name={iconName}
-      size={iconSize}
-    />
-  )
-
-  // ? "Render" MarkUI below even if neither withStatus or checked with opacity 0
-  // ? so we can animate the transition
-  return Boolean(tooltip) ? (
-    <Tooltip
-      title={tooltip}
-      triggerOn="mouseenter focus"
-      appendTo={document.body}
-      withTriggerWrapper={false}
-    >
-      <MarkUI className={markClassnames}>{icon}</MarkUI>
-    </Tooltip>
-  ) : (
-    <MarkUI className={markClassnames}>{icon}</MarkUI>
-  )
-}
-
-const CheckMarkCard = props => {
-  const {
-    checked,
-    children,
-    className,
-    disabled,
-    label,
-    onBlur,
-    onChange,
-    onFocus,
-    isFocused,
-    inputRef: inputRefProp,
-    maxWidth,
-    height,
-    value: valueProp,
-    withStatus,
-    ...rest
-  } = props
-
-  const checkMarkCardRef = useRef()
-  const inputRef = useRef()
-  const [cardChecked, setCardChecked] = useState(checked)
-  const id = useCustomId(rest.id)
-
-  const handleOnChange = (value, checked) => {
-    setCardChecked(checked)
-    onChange && onChange(value, checked)
-  }
-
-  const handleOnBlur = event => {
-    checkMarkCardRef.current.classList.remove('is-focused')
-    onBlur && onBlur(event)
-  }
-
-  const handleOnFocus = event => {
-    checkMarkCardRef.current.classList.add('is-focused')
-    onFocus && onFocus(event)
-  }
-
-  const setInputNodeRef = node => {
-    inputRef.current = node
-    inputRefProp && inputRefProp(node)
-  }
-
-  useEffect(() => {
-    setCardChecked(checked)
-  }, [checked])
-
-  useEffect(() => {
-    if (isFocused) {
-      checkMarkCardRef.current.classList.add('is-focused')
-      inputRef.current.focus()
+    this.state = {
+      id: props.id || uniqueID(),
+      cardChecked: props.checked,
     }
-  }, [isFocused, checkMarkCardRef, inputRef])
 
-  const shouldShowStatus = Boolean(withStatus)
-  const { status, color = 'blue' } = withStatus || {}
+    this.checkMarkCardRef = React.createRef()
+  }
 
-  const checkmarkClassnames = classNames(
-    'c-CheckMarkCard',
-    className,
-    cardChecked && !shouldShowStatus && 'is-checked',
-    disabled && 'is-disabled',
-    shouldShowStatus && 'with-status',
-    shouldShowStatus && Boolean(status) && `is-${status}`,
-    shouldShowStatus && Boolean(color) && `is-${color}`
-  )
+  componentDidMount() {
+    if (this.props.isFocused && this.inputNode) {
+      this.checkMarkCardRef.current.classList.add('is-focused')
+      this.inputNode.focus()
+    }
+  }
 
-  return (
-    <CheckMarkCardUI
-      {...rest}
-      className={checkmarkClassnames}
-      htmlFor={id}
-      maxWidth={maxWidth}
-      height={height}
-      withStatus={withStatus}
-      ref={checkMarkCardRef}
-    >
-      <CheckMarkCardContentUI>
-        <Mark cardChecked={cardChecked} withStatus={withStatus} />
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.checked !== this.props.checked) {
+      this.setState({
+        cardChecked: nextProps.checked,
+      })
+    }
+  }
+
+  getClassName() {
+    const { className, disabled, withStatus } = this.props
+    const { cardChecked } = this.state
+
+    return classNames(
+      'c-CheckMarkCard',
+      className,
+      cardChecked && !Boolean(withStatus) && 'is-checked',
+      disabled && 'is-disabled',
+      Boolean(withStatus) && 'with-status',
+      Boolean(withStatus) &&
+        Boolean(withStatus.status) &&
+        `is-${withStatus.status}`
+    )
+  }
+
+  setInputNodeRef = node => {
+    this.inputNode = node
+    this.props.inputRef(node)
+  }
+
+  handleOnChange = (value, checked) => {
+    this.setState({
+      cardChecked: checked,
+    })
+
+    this.props.onChange(value, checked)
+  }
+
+  handleOnBlur = event => {
+    this.checkMarkCardRef.current.classList.remove('is-focused')
+    this.props.onBlur(event)
+  }
+
+  handleOnFocus = event => {
+    this.checkMarkCardRef.current.classList.add('is-focused')
+    this.props.onFocus(event)
+  }
+
+  renderMark = () => {
+    const { withStatus } = this.props
+    const { cardChecked } = this.state
+    let iconName
+    let iconSize
+    let color
+    let tooltip
+
+    if (cardChecked) {
+      iconName = 'checkmark'
+      iconSize = '24'
+      color = getColor('blue.500')
+    }
+    // If the card has a status provided, it should take precedence even if the card
+    // is checked from external props for some reason
+    if (withStatus) {
+      iconName = withStatus.iconName
+      iconSize = withStatus.iconSize || '20'
+      color = withStatus.color
+      tooltip = withStatus.tooltipText
+    }
+
+    // "Render" MarkUI below even if neither withStatus or checked with opacity 0
+    // so we can animate the transition
+    return (
+      <MarkUI
+        className="c-CheckMarkCard__mark"
+        color={color}
+        markShown={Boolean(iconName)}
+      >
+        {Boolean(tooltip) ? (
+          <Tooltip
+            title={tooltip}
+            triggerOn="mouseenter focus"
+            appendTo={document.body}
+          >
+            <Icon
+              className={`${iconName}-icon mark-icon`}
+              name={iconName}
+              size={iconSize}
+            />
+          </Tooltip>
+        ) : (
+          <Icon
+            className={`${iconName}-icon mark-icon`}
+            name={iconName}
+            size={iconSize}
+          />
+        )}
+      </MarkUI>
+    )
+  }
+
+  render() {
+    const {
+      children,
+      disabled,
+      label,
+      maxWidth,
+      height,
+      value,
+      withStatus,
+      ...rest
+    } = this.props
+    const { id, cardChecked } = this.state
+
+    return (
+      <CheckMarkCardUI
+        {...rest}
+        className={this.getClassName()}
+        htmlFor={id}
+        maxWidth={maxWidth}
+        height={height}
+        withStatus={withStatus}
+        ref={this.checkMarkCardRef}
+      >
+        {this.renderMark()}
+        <VisuallyHidden>
+          <Checkbox
+            checked={cardChecked}
+            disabled={disabled || Boolean(withStatus)}
+            id={id}
+            inputRef={this.setInputNodeRef}
+            label={label || value}
+            onBlur={this.handleOnBlur}
+            onFocus={this.handleOnFocus}
+            onChange={this.handleOnChange}
+            value={value}
+          />
+        </VisuallyHidden>
         {children}
-      </CheckMarkCardContentUI>
-      <VisuallyHidden>
-        <Checkbox
-          checked={cardChecked}
-          disabled={disabled || Boolean(withStatus)}
-          id={id}
-          inputRef={setInputNodeRef}
-          label={label || valueProp}
-          onBlur={handleOnBlur}
-          onFocus={handleOnFocus}
-          onChange={handleOnChange}
-          onEnter={handleOnChange}
-          value={valueProp}
-        />
-      </VisuallyHidden>
-    </CheckMarkCardUI>
-  )
+      </CheckMarkCardUI>
+    )
+  }
 }
 
 CheckMarkCard.defaultProps = {
@@ -203,7 +211,7 @@ CheckMarkCard.propTypes = {
     status: PropTypes.string,
     iconName: PropTypes.string,
     iconSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    color: PropTypes.oneOf(['blue', 'lavender']),
+    color: PropTypes.string,
     tooltipText: PropTypes.string,
   }),
   /** Set the height of the Card. */

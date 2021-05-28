@@ -57,7 +57,7 @@ describe('Checkbox', () => {
     const wrapper = mount(<CheckMarkCard />)
     const o = wrapper.find(Checkbox)
 
-    expect(o.prop('id')).toBeTruthy()
+    expect(o.prop('id')).toBe(wrapper.state().id)
   })
 
   test('Passes id prop to Checkbox', () => {
@@ -86,13 +86,12 @@ describe('with status', () => {
     status: 'locked',
     iconName: 'lock-closed',
     iconSize: '20',
-    color: 'lavender',
+    color: getColor('lavender.600'),
   }
   test('Applies withStatus styles', () => {
     const wrapper = mount(<CheckMarkCard withStatus={withStatus} />)
 
     expect(wrapper.getDOMNode().classList.contains('with-status')).toBeTruthy()
-    expect(wrapper.getDOMNode().classList.contains('is-lavender')).toBeTruthy()
     expect(
       wrapper.getDOMNode().classList.contains(`is-${withStatus.status}`)
     ).toBeTruthy()
