@@ -1,19 +1,24 @@
 import React, { useRef, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
-import {
-  CheckMarkCardUI,
-  MarkUI,
-  CheckMarkCardContentUI,
-} from './CheckMarkCard.css'
-
 import Checkbox from '../Checkbox'
 import Icon from '../Icon'
 import Tooltip from '../Tooltip'
 import VisuallyHidden from '../VisuallyHidden'
+
 import { classNames } from '../../utilities/classNames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
+
+import {
+  AvatarUI,
+  CheckMarkCardContentUI,
+  CheckmarkCardGridUI,
+  CheckMarkCardUI,
+  HeadingUI,
+  MarkUI,
+  SubtitleUI,
+} from './CheckMarkCard.css'
 
 const uniqueID = createUniqueIDFactory('CheckMarkCard')
 
@@ -23,20 +28,9 @@ const useCustomId = id => {
 }
 
 const Mark = props => {
-  const { cardChecked, withStatus } = props
-  let iconName = 'checkmark'
-  let iconSize = '24'
-  let tooltip = null
+  const { cardChecked, withStatus, iconName, iconSize, tooltipText } = props
 
-  // If the card has a status provided, it should take precedence even if the card
-  // is checked from external props for some reason
-  if (withStatus) {
-    iconName = withStatus.iconName
-    iconSize = withStatus.iconSize || '20'
-    tooltip = withStatus.tooltipText
-  }
-
-  const isVisible = cardChecked || Boolean(withStatus)
+  const isVisible = cardChecked || withStatus
 
   const markClassnames = classNames(
     'c-CheckMarkCard__mark',
@@ -53,9 +47,9 @@ const Mark = props => {
 
   // ? "Render" MarkUI below even if neither withStatus or checked with opacity 0
   // ? so we can animate the transition
-  return Boolean(tooltip) ? (
+  return Boolean(tooltipText) ? (
     <Tooltip
-      title={tooltip}
+      title={tooltipText}
       triggerOn="mouseenter focus"
       appendTo={document.body}
       withTriggerWrapper={false}
@@ -69,20 +63,28 @@ const Mark = props => {
 
 const CheckMarkCard = props => {
   const {
+    avatar,
     checked,
     children,
     className,
     disabled,
+    height,
+    heading,
+    inputRef: inputRefProp,
+    isFocused,
     label,
+    iconName = 'checkmark',
+    iconSize = '24',
+    maxWidth,
+    markColor = 'blue',
+    tooltipText,
     onBlur,
     onChange,
     onFocus,
-    isFocused,
-    inputRef: inputRefProp,
-    maxWidth,
-    height,
+    subtitle,
+    status,
+    showHeading = true,
     value: valueProp,
-    withStatus,
     ...rest
   } = props
 
@@ -90,6 +92,7 @@ const CheckMarkCard = props => {
   const inputRef = useRef()
   const [cardChecked, setCardChecked] = useState(checked)
   const id = useCustomId(rest.id)
+  const shouldShowStatus = Boolean(status)
 
   const handleOnChange = (value, checked) => {
     setCardChecked(checked)
@@ -122,9 +125,6 @@ const CheckMarkCard = props => {
     }
   }, [isFocused, checkMarkCardRef, inputRef])
 
-  const shouldShowStatus = Boolean(withStatus)
-  const { status, color = 'blue' } = withStatus || {}
-
   const checkmarkClassnames = classNames(
     'c-CheckMarkCard',
     className,
@@ -132,8 +132,17 @@ const CheckMarkCard = props => {
     disabled && 'is-disabled',
     shouldShowStatus && 'with-status',
     shouldShowStatus && Boolean(status) && `is-${status}`,
-    shouldShowStatus && Boolean(color) && `is-${color}`
+    shouldShowStatus && Boolean(markColor) && `is-${markColor}`
   )
+
+  const markProps = {
+    tooltipText,
+    iconName,
+    iconSize,
+    withStatus: shouldShowStatus,
+  }
+
+  const shouldDisplayHeading = showHeading && (heading || label)
 
   return (
     <CheckMarkCardUI
@@ -142,17 +151,19 @@ const CheckMarkCard = props => {
       htmlFor={id}
       maxWidth={maxWidth}
       height={height}
-      withStatus={withStatus}
       ref={checkMarkCardRef}
     >
       <CheckMarkCardContentUI>
-        <Mark cardChecked={cardChecked} withStatus={withStatus} />
+        <Mark cardChecked={cardChecked} {...markProps} />
+        {avatar && <AvatarUI size="xl" image={avatar} name={label} />}
+        {shouldDisplayHeading && <HeadingUI>{heading || label}</HeadingUI>}
+        {subtitle && <SubtitleUI>{subtitle}</SubtitleUI>}
         {children}
       </CheckMarkCardContentUI>
       <VisuallyHidden>
         <Checkbox
           checked={cardChecked}
-          disabled={disabled || Boolean(withStatus)}
+          disabled={disabled || shouldShowStatus}
           id={id}
           inputRef={setInputNodeRef}
           label={label || valueProp}
@@ -178,6 +189,8 @@ CheckMarkCard.defaultProps = {
 }
 
 CheckMarkCard.propTypes = {
+  /** Image url that will be used within the Avatar component */
+  avatar: PropTypes.string,
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
   /** Determines if the card is checked. */
@@ -186,32 +199,28 @@ CheckMarkCard.propTypes = {
   'data-cy': PropTypes.string,
   /** Determines if the card is disabled. */
   disabled: PropTypes.bool,
-  /** ID for the input. */
-  id: PropTypes.string,
-  /** Callback to obtain the html `input` node. */
-  inputRef: PropTypes.func,
-  /** Whether the card should be focused */
-  isFocused: PropTypes.bool,
-  /** Give the card special status styles, it also disables the input <br>
-   * `status`: Not needed, but if provided it will add a class name of "is-YOUR_STATUS" to the component <br>
-   * `iconName`: Icon to render <br>
-   * `iconSize`: Size of the icon, default 20 <br>
-   * `color`: color of the Card (border and background of the mark) <br>
-   * `tooltipText`: If a tooltip is desired, provide the message here <br>
-   */
-  withStatus: PropTypes.shape({
-    status: PropTypes.string,
-    iconName: PropTypes.string,
-    iconSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    color: PropTypes.oneOf(['blue', 'lavender']),
-    tooltipText: PropTypes.string,
-  }),
+  /** Label that will be attached to the checkbox element. It will also be used as a heading bellow the avatar */
+  label: PropTypes.string,
+  /** Text to overwrite the label inside the Heading element */
+  heading: PropTypes.string,
   /** Set the height of the Card. */
   height: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
     PropTypes.func,
   ]),
+  /** Change the mark icon */
+  iconName: PropTypes.string,
+  /** Change the mark icon size */
+  iconSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  /** ID for the input. */
+  id: PropTypes.string,
+  /** Callback to obtain the html `input` node. */
+  inputRef: PropTypes.func,
+  /** Whether the card should be focused */
+  isFocused: PropTypes.bool,
+  /** Change the mark background color */
+  markColor: PropTypes.oneOf(['blue', 'lavender']),
   /** Set the max width of the Card. */
   maxWidth: PropTypes.oneOfType([
     PropTypes.string,
@@ -224,6 +233,14 @@ CheckMarkCard.propTypes = {
   onChange: PropTypes.func,
   /** Callback when the input is focused. */
   onFocus: PropTypes.func,
+  /* Flag to display or not the label as a heading bellow the avatar */
+  showHeading: PropTypes.bool,
+  /** Give the card special status styles, it also disables the input */
+  status: PropTypes.string,
+  /** Display a light text as the last children */
+  subtitle: PropTypes.string,
+  /** The mark tooltip text that will appear on hover/focus */
+  tooltipText: PropTypes.string,
   /** The value of the input. */
   value: PropTypes.oneOfType([
     PropTypes.string,
@@ -231,5 +248,7 @@ CheckMarkCard.propTypes = {
     PropTypes.bool,
   ]),
 }
+
+CheckMarkCard.Grid = CheckmarkCardGridUI
 
 export default CheckMarkCard

@@ -1,7 +1,7 @@
 import { createSpec, derived, faker } from '@helpscout/helix'
 
 export default createSpec({
-  id: faker.random.uuid(),
+  id: faker.datatype.uuid(),
   firstName: faker.name.firstName(),
   lastName: faker.name.lastName(),
   name: derived(({ firstName, lastName }) => `${firstName} ${lastName}`),

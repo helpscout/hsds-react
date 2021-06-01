@@ -1,7 +1,7 @@
 import { createSpec, faker } from '@helpscout/helix'
 
 export const ItemSpec = createSpec({
-  id: faker.random.uuid(),
+  id: faker.datatype.uuid(),
   label: faker.name.firstName(),
   value: faker.name.firstName(),
   // onClick: () => (value, props) => console.log('Clicked!', value),

@@ -2,7 +2,7 @@ import { createSpec, faker } from '@helpscout/helix'
 import TagSpec from './tags.specs'
 
 export default createSpec({
-  id: faker.random.uuid(),
+  id: faker.datatype.uuid(),
   isAssigned: faker.random.boolean(),
   isTyping: faker.random.boolean(),
   isViewing: faker.random.boolean(),

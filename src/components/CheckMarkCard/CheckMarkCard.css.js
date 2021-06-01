@@ -1,5 +1,8 @@
 import { d400, d400Effect } from '../../styles/mixins/depth.css'
 
+import Avatar from '../Avatar'
+import ChoiceGroup from '../ChoiceGroup'
+
 import { getColor } from '../../styles/utilities/color'
 import { rgba } from '../../utilities/color'
 import styled from 'styled-components'
@@ -68,14 +71,20 @@ export const CheckMarkCardUI = styled('label')`
   display:flex;
   box-sizing: border-box;
   position: relative;
-  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '170px')};
-  height: ${({ height }) => (height ? height : 'auto')};
-  min-height: 160px;
+
   border-radius: 4px;
   will-change: transform, box-shadow;
   transition: transform 0.16s ease-in-out, box-shadow 0.16s ease-in-out;
   cursor: pointer;
   padding:3px;
+  margin-bottom: 0;
+  
+  /* if no maxWidth are set, let's make sure the card is 170px */
+  height: ${({ height }) => (height ? height : 'auto')};
+  min-height: ${({ height }) => (!height ? '160px' : '0')};
+  width: ${({ maxWidth }) => (maxWidth ? '100%' : '170px')};
+  max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '170px')};
+
   ${d400}
 
   // Focus UI
@@ -140,5 +149,39 @@ export const CheckMarkCardUI = styled('label')`
     ${CheckMarkCardContentUI}{
       background:${getColor('purple.100')};
     }
+  }
+`
+
+export const AvatarUI = styled(Avatar)`
+  margin-bottom: 14px;
+`
+
+export const SubtitleUI = styled('div')`
+  font-size: 13px;
+  color: ${getColor('charcoal.200')};
+`
+
+export const HeadingUI = styled('div')`
+  font-size: 14px;
+  margin: 0 0 4px;
+  text-align: center;
+  overflow: hidden;
+  padding: 0 10px;
+  font-weight: 500;
+  color: ${getColor('charcoal.600')};
+  text-overflow: ellipsis;
+  width: 100%;
+  white-space: nowrap;
+`
+
+export const CheckmarkCardGridUI = styled(ChoiceGroup)`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: ${({ choiceHeight }) => `${choiceHeight}`};
+  grid-gap: 10px;
+  gap: 10px;
+
+  .c-FormGroupChoice {
+    margin: 0;
   }
 `

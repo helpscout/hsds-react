@@ -9,7 +9,7 @@ export default createSpec({
     'purple',
     'red',
   ]),
-  id: faker.random.uuid(),
+  id: faker.datatype.uuid(),
   filled: faker.random.boolean(),
   value: faker.lorem.sentence(),
   children: faker.lorem.word(),
