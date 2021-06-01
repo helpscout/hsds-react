@@ -143,7 +143,8 @@ const CheckMarkCard = props => {
   }
 
   const shouldDisplayHeading = showHeading && (heading || label)
-
+  // let the Avatar component handle nullified value
+  const shouldShowAvatar = props.hasOwnProperty('avatar')
   return (
     <CheckMarkCardUI
       {...rest}
@@ -155,7 +156,7 @@ const CheckMarkCard = props => {
     >
       <CheckMarkCardContentUI>
         <Mark cardChecked={cardChecked} {...markProps} />
-        {avatar && <AvatarUI size="xl" image={avatar} name={label} />}
+        {shouldShowAvatar && <AvatarUI size="xl" image={avatar} name={label} />}
         {shouldDisplayHeading && <HeadingUI>{heading || label}</HeadingUI>}
         {subtitle && <SubtitleUI>{subtitle}</SubtitleUI>}
         {children}
@@ -189,7 +190,7 @@ CheckMarkCard.defaultProps = {
 }
 
 CheckMarkCard.propTypes = {
-  /** Image url that will be used within the Avatar component */
+  /** Image url that will be used within the Avatar component. If the prop is declared the Avatar will be shown no matter the value */
   avatar: PropTypes.string,
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
