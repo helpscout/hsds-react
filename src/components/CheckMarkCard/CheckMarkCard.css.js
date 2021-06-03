@@ -158,7 +158,7 @@ export const AvatarUI = styled(Avatar)`
 
 export const SubtitleUI = styled('div')`
   font-size: 13px;
-  color: ${getColor('charcoal.200')};
+  color: ${getColor('charcoal.400')};
 `
 
 export const HeadingUI = styled('div')`
