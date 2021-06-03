@@ -115,6 +115,19 @@ describe('Tippy', () => {
     const pop = wrapper.find(Tippy).props()
     expect(pop.zIndex).toBe(1243)
   })
+
+  test.only("Controlled component should'nt pass down trigger and showOnCreate props ", () => {
+    const props = {
+      placement: 'bottom',
+      triggerOn: 'click',
+      title: 'Pop',
+      visible: true,
+    }
+    const wrapper = mount(<Tooltip {...props} />)
+    const pop = wrapper.find(Tippy).props()
+    expect(pop.showOnCreate).toBeFalsy()
+    expect(pop.trigger).toBeFalsy()
+  })
 })
 
 describe('Context', () => {

@@ -143,14 +143,22 @@ const Tooltip = props => {
     plugins.push(hideOnEsc)
   }
 
-  const tippyProps = {
+  const defaultTippyProps = {
     onHide,
     onShow,
     placement,
     plugins,
     render,
-    trigger: triggerOn === 'hover' ? 'mouseenter' : triggerOn,
-    showOnCreate: isOpen,
+  }
+
+  // only set those props if the component is not in a controlled way
+  if (!props.hasOwnProperty('visible')) {
+    defaultTippyProps.showOnCreate = isOpen
+    defaultTippyProps.trigger = triggerOn === 'hover' ? 'mouseenter' : triggerOn
+  }
+
+  const tippyProps = {
+    ...defaultTippyProps,
     ...rest,
     ...extraProps,
   }
@@ -163,7 +171,7 @@ const Tooltip = props => {
     ) : null
   }
 
-  let trigger
+  let triggerComponent
 
   if (
     !withTriggerWrapper &&
@@ -176,9 +184,9 @@ const Tooltip = props => {
       'data-cy': component.props['data-cy'] || dataCy,
       tabIndex: component.props['tabIndex'] || 0,
     }
-    trigger = React.cloneElement(component, triggerProps)
+    triggerComponent = React.cloneElement(component, triggerProps)
   } else {
-    trigger = (
+    triggerComponent = (
       <TooltipTriggerUI
         tabIndex="0"
         display={display}
@@ -190,7 +198,7 @@ const Tooltip = props => {
     )
   }
 
-  return <Tippy {...tippyProps}>{trigger}</Tippy>
+  return <Tippy {...tippyProps}>{triggerComponent}</Tippy>
 }
 
 Tooltip.defaultProps = {
@@ -215,6 +223,8 @@ Tooltip.propTypes = {
   className: PropTypes.string,
   /** Whether to allow closing the tooltip on pressing ESC */
   closeOnEscPress: PropTypes.bool,
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
   /** Apply custom css rule `display` */
   display: PropTypes.string,
   /** Determine if the tooltip is open via a prop */
@@ -231,8 +241,8 @@ Tooltip.propTypes = {
   title: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   /** Determines how to engage the component. */
   triggerOn: PropTypes.string,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
+  /** Set the tooltip to be controlled externally */
+  visible: PropTypes.bool,
   /** Wrap the trigger with a span */
   withTriggerWrapper: PropTypes.bool,
 }
