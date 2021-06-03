@@ -1,6 +1,10 @@
 import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import Tooltip from './'
-import { Default, CustomContent } from './Tooltip.storiesHelpers'
+import {
+  Default,
+  CustomContent,
+  ControlledTooltip,
+} from './Tooltip.storiesHelpers'
 
 <Meta
   title="Components/Overlay/Tooltip"
@@ -64,5 +68,13 @@ In some cases, we want to remove that span, the `withTriggerWrapper` will allow 
 <Canvas>
   <Story name="with custom content">
     <CustomContent />
+  </Story>
+</Canvas>
+
+#### Controlled tooltip
+
+<Canvas>
+  <Story name="controlled tooltip">
+    <ControlledTooltip />
   </Story>
 </Canvas>
