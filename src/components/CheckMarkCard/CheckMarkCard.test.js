@@ -82,47 +82,47 @@ describe('Checked', () => {
 })
 
 describe('with status', () => {
-  const withStatus = {
+  const statusProps = {
     status: 'locked',
     iconName: 'lock-closed',
     iconSize: '20',
-    color: 'lavender',
+    markColor: 'lavender',
   }
   test('Applies withStatus styles', () => {
-    const wrapper = mount(<CheckMarkCard withStatus={withStatus} />)
+    const wrapper = mount(<CheckMarkCard {...statusProps} />)
 
     expect(wrapper.getDOMNode().classList.contains('with-status')).toBeTruthy()
     expect(wrapper.getDOMNode().classList.contains('is-lavender')).toBeTruthy()
     expect(
-      wrapper.getDOMNode().classList.contains(`is-${withStatus.status}`)
+      wrapper.getDOMNode().classList.contains(`is-${statusProps.status}`)
     ).toBeTruthy()
     expect(wrapper.find(Icon).first().props().name).toBe('lock-closed')
     expect(wrapper.find(Tooltip).length).toBeFalsy()
 
-    wrapper.setProps({ withStatus: undefined })
+    wrapper.setProps({ status: undefined, markColor: undefined })
 
     expect(wrapper.getDOMNode().classList.contains('with-status')).toBeFalsy()
   })
 
   test('the input should be disabled', () => {
-    const wrapper = mount(<CheckMarkCard withStatus={withStatus} />)
+    const wrapper = mount(<CheckMarkCard {...statusProps} />)
 
     expect(wrapper.find(Checkbox).first().props().disabled).toBeTruthy()
   })
 
   test('adds tooltip to mark if provided', () => {
-    withStatus.tooltipText = 'hello'
-    const wrapper = mount(<CheckMarkCard withStatus={withStatus} />)
+    statusProps.tooltipText = 'hello'
+    const wrapper = mount(<CheckMarkCard {...statusProps} />)
 
     expect(wrapper.find(Tooltip).length).toBeTruthy()
     expect(wrapper.find(Tooltip).first().props().title).toBe('hello')
   })
 
   test('with status styles take precedent over checked', () => {
-    const wrapper = mount(<CheckMarkCard withStatus={withStatus} checked />)
+    const wrapper = mount(<CheckMarkCard {...statusProps} checked />)
 
     expect(
-      wrapper.getDOMNode().classList.contains(`is-${withStatus.status}`)
+      wrapper.getDOMNode().classList.contains(`is-${statusProps.status}`)
     ).toBeTruthy()
     expect(wrapper.getDOMNode().classList.contains('is-checked')).toBeFalsy()
     expect(wrapper.find(Icon).first().props().name).toBe('lock-closed')

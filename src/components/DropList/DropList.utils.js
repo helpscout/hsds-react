@@ -189,14 +189,26 @@ export function requiredItemPropsCheck(props, propName, componentName) {
   }
 }
 
-export function getEnabledItemIndex({ highlightedIndex, items, arrowKey }) {
+function checkIfGroupOrDividerItem(item) {
+  return isItemADivider(item) || isItemAGroup(item) || isItemAGroupLabel(item)
+}
+
+export function getEnabledItemIndex({
+  currentHighlightedIndex,
+  nextHighlightedIndex,
+  items,
+  arrowKey,
+}) {
   let enabledItemIndex = 0
 
   if (arrowKey === 'UP') {
     for (let index = items.length - 1; index >= 0; index--) {
+      const isGroupOrDividerItem = checkIfGroupOrDividerItem(items[index])
+
       if (
-        (highlightedIndex === 0 && !items[index].isDisabled) ||
-        (index <= highlightedIndex && !items[index].isDisabled)
+        !isGroupOrDividerItem &&
+        !items[index].isDisabled &&
+        (nextHighlightedIndex === 0 || index <= nextHighlightedIndex)
       ) {
         enabledItemIndex = index
         break
@@ -205,10 +217,22 @@ export function getEnabledItemIndex({ highlightedIndex, items, arrowKey }) {
   }
 
   if (arrowKey === 'DOWN') {
+    if (currentHighlightedIndex === nextHighlightedIndex) {
+      return getEnabledItemIndex({
+        currentHighlightedIndex,
+        nextHighlightedIndex: 0,
+        items,
+        arrowKey,
+      })
+    }
+
     for (let index = 0; index < items.length; index++) {
+      const isGroupOrDividerItem = checkIfGroupOrDividerItem(items[index])
+
       if (
-        (highlightedIndex === items.length - 1 && !items[index].isDisabled) ||
-        (index >= highlightedIndex && !items[index].isDisabled)
+        !isGroupOrDividerItem &&
+        !items[index].isDisabled &&
+        index >= nextHighlightedIndex
       ) {
         enabledItemIndex = index
         break
