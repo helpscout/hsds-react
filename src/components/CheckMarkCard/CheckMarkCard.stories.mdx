@@ -24,39 +24,30 @@ This component provides richer context to the of the default HTML `<input>` of t
 <Canvas>
   <Story name="default">
     <div>
-      <CheckMarkCard label="Derek" value="derek">
-        derek
-      </CheckMarkCard>
+      <CheckMarkCard label="Derek" value="derek"></CheckMarkCard>
       <br />
       <CheckMarkCard
         label="Hansel"
         value="hansel"
         disabled={boolean('disabled', true)}
-      >
-        hansel
-      </CheckMarkCard>
+        showHeading={false}
+      ></CheckMarkCard>
       <br />
       <CheckMarkCard
         label="Matilda"
         value="matilda"
         checked={boolean('checked', true)}
-      >
-        matilda
-      </CheckMarkCard>
+      ></CheckMarkCard>
       <br />
       <CheckMarkCard
         label="Mugatu"
         value="mugatu"
-        withStatus={{
-          status: 'locked',
-          iconName: 'lock-closed',
-          iconSize: '20',
-          color: getColor('lavender.600'),
-          tooltipText: 'This is locked, leave it alone',
-        }}
-      >
-        mugatu
-      </CheckMarkCard>
+        status="locked"
+        iconName="lock-closed"
+        iconSize="20"
+        markColor="lavender"
+        tooltipText="This is locked, leave it alone"
+      ></CheckMarkCard>
     </div>
   </Story>
 </Canvas>
@@ -80,8 +71,7 @@ This component provides richer context to the of the default HTML `<input>` of t
 
 <Canvas>
   <Story name="inside group">
-    <ChoiceGroup
-      align="horizontal"
+    <CheckMarkCard.Grid
       isResponsive
       value={['matilda']}
       choiceMaxWidth="170px"
@@ -91,116 +81,48 @@ This component provides richer context to the of the default HTML `<input>` of t
         console.log(`onChange(selectedValue: ${value.toString()})`)
       }}
     >
-      <CheckMarkCard label="Derek" value="derek">
-        <Avatar size="xl" image={AvatarSpec.generate().image} name="Derek" />
-        <div
-          style={{
-            fontSize: '14px',
-            color: '#314351',
-            margin: '14px 0 5px',
-          }}
-        >
-          Derek
-        </div>
-        <div
-          style={{
-            color: '#93A1B0',
-            fontSize: '13px',
-          }}
-        >
-          NYC
-        </div>
-      </CheckMarkCard>
-      <CheckMarkCard label="Hansel" value="hansel">
-        <Avatar size="xl" image={AvatarSpec.generate().image} name="Hansel" />
-        <div
-          style={{
-            fontSize: '14px',
-            color: '#314351',
-            margin: '14px 0 5px',
-          }}
-        >
-          Hansel
-        </div>
-        <div
-          style={{
-            color: '#93A1B0',
-            fontSize: '13px',
-          }}
-        >
-          Los Angeles
-        </div>
-      </CheckMarkCard>
-      <CheckMarkCard label="Matilda" value="matilda">
-        <Avatar size="xl" image={AvatarSpec.generate().image} name="Matilda" />
-        <div
-          style={{
-            fontSize: '14px',
-            color: '#314351',
-            margin: '14px 0 5px',
-          }}
-        >
-          Matilda
-        </div>
-        <div
-          style={{
-            color: '#93A1B0',
-            fontSize: '13px',
-          }}
-        >
-          Charlotte
-        </div>
-      </CheckMarkCard>
-      <CheckMarkCard label="Mugatu" value="mugatu" disabled>
-        <Avatar size="xl" image={AvatarSpec.generate().image} name="Mugatu" />
-        <div
-          style={{
-            fontSize: '14px',
-            color: '#314351',
-            margin: '14px 0 5px',
-          }}
-        >
-          Mugatu
-        </div>
-        <div
-          style={{
-            color: '#93A1B0',
-            fontSize: '13px',
-          }}
-        >
-          Tokyo
-        </div>
-      </CheckMarkCard>
       <CheckMarkCard
+        label="Derek"
+        value="derek"
+        avatar={AvatarSpec.generate().image}
+        subtitle="NYC"
+      ></CheckMarkCard>
+      <CheckMarkCard
+        label="Hansel"
+        value="hansel"
+        avatar={AvatarSpec.generate().image}
+        subtitle="Los Angeles"
+      ></CheckMarkCard>
+      <CheckMarkCard
+        label="Matilda"
+        heading="Matilda heading"
+        value="matilda"
+        avatar={AvatarSpec.generate().image}
+        subtitle="Charlotte"
+      ></CheckMarkCard>
+      <CheckMarkCard
+        label="Mugatu"
+        value="mugatu"
+        disabled
+        avatar={AvatarSpec.generate().image}
+        subtitle="Tokyo"
+      ></CheckMarkCard>
+      <CheckMarkCard
+        avatar={AvatarSpec.generate().image}
         label="Elaine"
         value="elaine"
-        withStatus={{
-          status: 'locked',
-          iconName: 'lock-closed',
-          iconSize: '20',
-          color: getColor('lavender.600'),
-          tooltipText: 'This is locked, leave it alone',
-        }}
-      >
-        <Avatar size="xl" image={AvatarSpec.generate().image} name="Elaine" />
-        <div
-          style={{
-            fontSize: '14px',
-            color: '#314351',
-            margin: '14px 0 5px',
-          }}
-        >
-          Elaine
-        </div>
-        <div
-          style={{
-            color: '#93A1B0',
-            fontSize: '13px',
-          }}
-        >
-          Queens
-        </div>
-      </CheckMarkCard>
-    </ChoiceGroup>
+        iconName="lock-closed"
+        iconSize="20"
+        status="locked"
+        markColor="lavender"
+        tooltipText="This is locked, leave it alone"
+        showHeading={false}
+      ></CheckMarkCard>
+      <CheckMarkCard
+        label="Mark"
+        value="mark"
+        subtitle="Queens"
+      ></CheckMarkCard>
+    </CheckMarkCard.Grid>
   </Story>
 </Canvas>

@@ -13,24 +13,14 @@ test('Returns white, if backgroundColor is too dark', () => {
   expect(optimalTextColor('#340000')).toEqual('white')
   expect(optimalTextColor('#340000')).toEqual('white')
   expect(optimalTextColor('#566')).toEqual('white')
+  expect(optimalTextColor('#ff6688')).toEqual('white')
 })
 
 test('Returns black, if backgroundColor is too bright', () => {
-  expect(optimalTextColor('#ff6688')).toEqual('black')
   expect(optimalTextColor('#fff')).toEqual('black')
   expect(optimalTextColor('#eee')).toEqual('black')
   expect(optimalTextColor('#d9d9dd')).toEqual('black')
   expect(optimalTextColor('#c1cbd4')).toEqual('black')
-})
-
-test('Returns black, if backgroundColor is dark, but contrast with white is poor', () => {
-  expect(optimalTextColor('#42c881')).toEqual('black')
-  expect(optimalTextColor('#eaac79')).toEqual('black')
-})
-
-test('Returns white, if backgroundColor is bright, but contrast with black is poor', () => {
-  expect(optimalTextColor('#666')).toEqual('white')
-  expect(optimalTextColor('#555')).toEqual('white')
 })
 
 test('Can provide custom RGB prop values', () => {

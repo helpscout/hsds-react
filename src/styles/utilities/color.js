@@ -95,14 +95,14 @@ export const makeBrandColors = (brandColor = defaultBrandColor) => {
     backgroundColorUIFocus = darken(brandColor, 10)
     svgPathPrimary = darken(brandColor, 30)
     svgPathSecondary = 'white'
-    textColorInactive = darken(brandColor, 35)
-    textColorInteractive = 'white'
-    textColorMuted = darken(brandColor, 10)
   }
 
   if (colorShade === 'lightest') {
-    backgroundColorInteractive = darken(brandColor, 50)
+    backgroundColorInteractive = darken(brandColor, 5)
     textColor = darken(brandColor, 70)
+    textColorInteractive = darken(brandColor, 70)
+    textColorInactive = darken(brandColor, 35)
+    textColorMuted = darken(brandColor, 10)
 
     if (isWhite) {
       textColor = '#394956'
@@ -111,8 +111,11 @@ export const makeBrandColors = (brandColor = defaultBrandColor) => {
   }
 
   if (colorShade === 'light') {
-    backgroundColorInteractive = darken(brandColor, 40)
+    backgroundColorInteractive = darken(brandColor, 8)
     textColor = darken(brandColor, 55)
+    textColorInteractive = darken(brandColor, 55)
+    textColorInactive = darken(brandColor, 35)
+    textColorMuted = darken(brandColor, 10)
   }
 
   if (colorShade === 'dark' || colorShade === 'darkest') {
@@ -126,7 +129,7 @@ export const makeBrandColors = (brandColor = defaultBrandColor) => {
   }
 
   if (colorShade === 'dark') {
-    backgroundColorInteractive = darken(brandColor, 30)
+    backgroundColorInteractive = darken(brandColor, 8)
     backgroundColorUIHover = darken(brandColor, 3)
     backgroundColorUIActive = darken(brandColor, 6)
     backgroundColorUIFocus = darken(brandColor, 10)
@@ -136,7 +139,7 @@ export const makeBrandColors = (brandColor = defaultBrandColor) => {
   }
 
   if (colorShade === 'darkest') {
-    backgroundColorInteractive = lighten(brandColor, 30)
+    backgroundColorInteractive = lighten(brandColor, 16)
     backgroundColorUIHover = lighten(brandColor, 3)
     backgroundColorUIActive = lighten(brandColor, 6)
     backgroundColorUIFocus = lighten(brandColor, 10)

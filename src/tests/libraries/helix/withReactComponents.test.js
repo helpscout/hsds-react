@@ -5,7 +5,7 @@ import { Card, Text } from '../../../index'
 
 test('Renders fixture data into Blue component', () => {
   const fixture = createSpec({
-    id: faker.random.uuid(),
+    id: faker.datatype.uuid(),
     name: faker.fake('{{name.firstName}} {{name.lastName}}'),
     text: faker.lorem.sentence(),
   }).generate()

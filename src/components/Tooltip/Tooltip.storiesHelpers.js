@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { boolean, number, select, text } from '@storybook/addon-knobs'
 import Tooltip, { TooltipContext } from '.'
 import Text from '../Text'
@@ -112,6 +112,26 @@ export const CustomContent = () => {
     <TooltipContext.Provider value={{ zIndex: 256 }}>
       <div style={{ padding: '20%', textAlign: 'center' }}>
         <Tooltip {...props}>Tooltip Trigger</Tooltip>
+      </div>
+    </TooltipContext.Provider>
+  )
+}
+
+export const ControlledTooltip = () => {
+  const [visible, setVisible] = useState(false)
+  const toggle = () => setVisible(!visible)
+
+  return (
+    <TooltipContext.Provider value={{ zIndex: 256 }}>
+      <div style={{ padding: '20%', textAlign: 'center' }}>
+        <p>
+          <Tooltip visible={visible} title="Hello">
+            Tooltip Trigger
+          </Tooltip>
+        </p>
+        <p>
+          <Button onClick={toggle}>toggle tooltip</Button>
+        </p>
       </div>
     </TooltipContext.Provider>
   )

@@ -178,7 +178,7 @@ export function createFakeCustomers({ amount, multipleEmails, longNames }) {
   }
 
   return createSpec({
-    id: faker.random.uuid(),
+    id: faker.datatype.uuid(),
     firstName: faker.name.firstName(),
     middleName: faker.name.firstName(),
     lastName: faker.name.lastName(),
@@ -202,8 +202,8 @@ export function createFakeCustomers({ amount, multipleEmails, longNames }) {
 
 export function getCurrentPageData(data, pageNumber) {
   // simulate an API call here
-  return new Promise(function(resolve, reject) {
-    setTimeout(function() {
+  return new Promise(function (resolve, reject) {
+    setTimeout(function () {
       const rowsPerPage = 10
 
       const page = data.slice(
@@ -218,8 +218,8 @@ export function getCurrentPageData(data, pageNumber) {
 
 export function sortData(data, columnKey, order) {
   // simulate an API call here
-  return new Promise(function(resolve, reject) {
-    setTimeout(function() {
+  return new Promise(function (resolve, reject) {
+    setTimeout(function () {
       const sorted = data.sort((a, b) => {
         if (a[columnKey] < b[columnKey]) {
           return order === 'descending' ? -1 : 1

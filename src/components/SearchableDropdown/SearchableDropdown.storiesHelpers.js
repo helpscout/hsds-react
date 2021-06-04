@@ -4,7 +4,7 @@ import SearchableDropdown from '.'
 import InfiniteScroller from '../InfiniteScroller'
 
 export const ItemSpec = createSpec({
-  id: faker.random.uuid(),
+  id: faker.datatype.uuid(),
   value: faker.name.firstName(),
 })
 

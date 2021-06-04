@@ -190,7 +190,7 @@ const AnimatedURLConditionField = withMotion({
 })(URLConditionField)
 
 const createUrlField = value => ({
-  id: faker.random.uuid()(),
+  id: faker.datatype.uuid()(),
   value,
 })
 class SpecificUrlCondition extends React.Component {
@@ -350,7 +350,7 @@ const AnimatedComponent = withMotion({
 })(ConditionElement)
 
 const createCondition = value => ({
-  id: faker.random.uuid()(),
+  id: faker.datatype.uuid()(),
   value,
 })
 class ConditionBuilder extends React.Component {
