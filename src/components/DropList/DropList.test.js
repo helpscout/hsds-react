@@ -1,9 +1,10 @@
 import React from 'react'
-import { getByLabelText, render, waitFor } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import user from '@testing-library/user-event'
 import { css } from 'styled-components'
 import DropList from './DropList'
 import { SimpleButton, SelectTag, SplittedButton } from './DropList.togglers'
+import { flattenListItems, getEnabledItemIndex } from './DropList.utils'
 import {
   itemsWithDivider,
   groupAndDividerItems,
@@ -1276,5 +1277,106 @@ describe('Selection', () => {
         ).toHaveClass('is-highlighted')
       })
     })
+  })
+})
+
+describe('getEnabledItemIndex', () => {
+  test('Regular Items', () => {
+    expect(
+      getEnabledItemIndex({
+        currentHighlightedIndex: -1,
+        nextHighlightedIndex: 0,
+        items: someItems,
+        arrowKey: 'DOWN',
+      })
+    ).toBe(0)
+    expect(
+      getEnabledItemIndex({
+        currentHighlightedIndex: 0,
+        nextHighlightedIndex: 1,
+        items: someItems,
+        arrowKey: 'DOWN',
+      })
+    ).toBe(1)
+    expect(
+      getEnabledItemIndex({
+        currentHighlightedIndex: 6,
+        nextHighlightedIndex: 6,
+        items: someItems,
+        arrowKey: 'DOWN',
+      })
+    ).toBe(0)
+    expect(
+      getEnabledItemIndex({
+        nextHighlightedIndex: 1,
+        items: someItems,
+        arrowKey: 'UP',
+      })
+    ).toBe(1)
+    expect(
+      getEnabledItemIndex({
+        nextHighlightedIndex: 0,
+        items: someItems,
+        arrowKey: 'UP',
+      })
+    ).toBe(6)
+  })
+
+  test('Grouped and divider Items', () => {
+    const items = flattenListItems(groupAndDividerItems)
+
+    expect(
+      getEnabledItemIndex({
+        currentHighlightedIndex: -1,
+        nextHighlightedIndex: 0,
+        items,
+        arrowKey: 'DOWN',
+      })
+    ).toBe(1)
+    expect(
+      getEnabledItemIndex({
+        currentHighlightedIndex: 2,
+        nextHighlightedIndex: 3,
+        items,
+        arrowKey: 'DOWN',
+      })
+    ).toBe(3)
+    expect(
+      getEnabledItemIndex({
+        currentHighlightedIndex: 6,
+        nextHighlightedIndex: 7,
+        items,
+        arrowKey: 'DOWN',
+      })
+    ).toBe(9)
+    expect(
+      getEnabledItemIndex({
+        currentHighlightedIndex: 13,
+        nextHighlightedIndex: 13,
+        items,
+        arrowKey: 'DOWN',
+      })
+    ).toBe(1)
+    expect(
+      getEnabledItemIndex({
+        nextHighlightedIndex: 8,
+        items,
+        arrowKey: 'UP',
+      })
+    ).toBe(6)
+    expect(
+      getEnabledItemIndex({
+        nextHighlightedIndex: 7,
+        items,
+        arrowKey: 'UP',
+      })
+    ).toBe(6)
+    expect(
+      getEnabledItemIndex({
+        nextHighlightedIndex: 0,
+        items,
+        arrowKey: 'UP',
+      })
+    ).toBe(13)
   })
 })
