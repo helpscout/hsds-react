@@ -83,6 +83,20 @@ Sometimes when portaling you might need to apply some custom css to the menu but
 
 > Note: `menuCSS` should only be used in conjuction with `tippyOptions.appendTo`, if not you will see errors in the console. Use regular styled components in any other instance.
 
+#### onSelect
+
+The `onSelect` callback passes a few useful parameters specially when multiple selection is enabled:
+
+```js
+/**
+ *
+ * @param {string | object | array} selection The current selection, if multiple selection enabledm, then it is an array
+ * @param {function} clearSelection Function that clears the current selection, useful in multiple selection cases to enable a "clear all" option
+ * @param {string | object} selectedItem The item that was clicked, useful in multiple selection cases
+ */
+function onSelect(selection, clearSelection, clickedItem) {}
+```
+
 <br />
 
 ## Example
@@ -531,8 +545,9 @@ Depending on your use case, you might want to set `closeOnSelection = false` whe
         variant="combobox"
         items={regularItems}
         closeOnSelection={false}
-        onSelect={selection => {
-          console.log('selection', selection)
+        onSelect={(selection, clearSelection, clickedItem) => {
+          console.log('🚀 ~ selection', selection)
+          console.log('🚀 ~ clickedItem', clickedItem)
         }}
         selection={select(
           'Selection',

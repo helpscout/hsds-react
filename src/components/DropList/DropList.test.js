@@ -748,7 +748,7 @@ describe('Selection', () => {
       expect(
         getByText('Paul').parentElement.classList.contains('is-selected')
       ).toBeTruthy()
-      expect(onSelect).toHaveBeenCalledWith('Paul')
+      expect(onSelect).toHaveBeenCalledWith('Paul', expect.anything(), 'Paul')
       expect(toggler.getAttribute('aria-expanded')).toBe('false')
     })
 
@@ -768,7 +768,7 @@ describe('Selection', () => {
       expect(
         getByText('Ringo').parentElement.classList.contains('is-selected')
       ).toBeTruthy()
-      expect(onSelect).toHaveBeenCalledWith('Ringo')
+      expect(onSelect).toHaveBeenCalledWith('Ringo', expect.anything(), 'Ringo')
       expect(toggler.getAttribute('aria-expanded')).toBe('false')
     })
   })
@@ -793,7 +793,11 @@ describe('Selection', () => {
           'is-selected'
         )
       ).toBeTruthy()
-      expect(onSelect).toHaveBeenCalledWith(itemToSelect)
+      expect(onSelect).toHaveBeenCalledWith(
+        itemToSelect,
+        expect.anything(),
+        itemToSelect
+      )
     })
   })
   test('should select an item when clicked (combobox string version)', async () => {
@@ -814,7 +818,7 @@ describe('Selection', () => {
       expect(
         getByText('Paul').parentElement.classList.contains('is-selected')
       ).toBeTruthy()
-      expect(onSelect).toHaveBeenCalledWith('Paul')
+      expect(onSelect).toHaveBeenCalledWith('Paul', expect.anything(), 'Paul')
     })
   })
 
@@ -839,7 +843,11 @@ describe('Selection', () => {
           'is-selected'
         )
       ).toBeTruthy()
-      expect(onSelect).toHaveBeenCalledWith(itemToSelect)
+      expect(onSelect).toHaveBeenCalledWith(
+        itemToSelect,
+        expect.anything(),
+        itemToSelect
+      )
     })
   })
 
@@ -848,7 +856,13 @@ describe('Selection', () => {
     const { getByText } = render(
       <DropList
         isMenuOpen
-        onSelect={onSelect}
+        onSelect={(selection, clearSelection, clickedItem) => {
+          onSelect(selection, clearSelection, clickedItem)
+          // Clear selection when clicking John
+          if (clickedItem === 'John') {
+            clearSelection()
+          }
+        }}
         items={beatles}
         toggler={<SimpleButton text="Button Toggler" />}
         withMultipleSelection
@@ -869,7 +883,7 @@ describe('Selection', () => {
           .getPropertyValue('opacity')
       ).toBe('1')
 
-      expect(onSelect).toHaveBeenCalledWith(['Paul'])
+      expect(onSelect).toHaveBeenCalledWith(['Paul'], expect.anything(), 'Paul')
     })
 
     user.click(getByText('Ringo').parentElement)
@@ -888,7 +902,11 @@ describe('Selection', () => {
           )
           .getPropertyValue('opacity')
       ).toBe('1')
-      expect(onSelect).toHaveBeenCalledWith(['Paul', 'Ringo'])
+      expect(onSelect).toHaveBeenCalledWith(
+        ['Paul', 'Ringo'],
+        expect.anything(),
+        'Ringo'
+      )
     })
 
     user.click(getByText('Ringo').parentElement)
@@ -907,7 +925,28 @@ describe('Selection', () => {
           )
           .getPropertyValue('opacity')
       ).toBe('0')
-      expect(onSelect).toHaveBeenCalledWith(['Paul'])
+      expect(onSelect).toHaveBeenCalledWith(['Paul'], expect.anything(), {
+        label: 'Ringo',
+        remove: true,
+      })
+    })
+
+    // Clicking John clears all selections
+    user.click(getByText('John').parentElement)
+
+    await waitFor(() => {
+      expect(
+        getByText('Paul').parentElement.classList.contains('is-selected')
+      ).toBeFalsy()
+      expect(
+        getByText('Ringo').parentElement.classList.contains('is-selected')
+      ).toBeFalsy()
+      expect(
+        getByText('George').parentElement.classList.contains('is-selected')
+      ).toBeFalsy()
+      expect(
+        getByText('John').parentElement.classList.contains('is-selected')
+      ).toBeFalsy()
     })
   })
 
@@ -927,7 +966,11 @@ describe('Selection', () => {
     user.type(getByPlaceholderText('Search'), '{enter}')
 
     await waitFor(() => {
-      expect(onSelect).toHaveBeenCalledWith('George')
+      expect(onSelect).toHaveBeenCalledWith(
+        'George',
+        expect.anything(),
+        'George'
+      )
     })
   })
 
@@ -951,10 +994,8 @@ describe('Selection', () => {
   })
 
   test('should set an initial item as selected (single object version)', async () => {
-    const onSelect = jest.fn()
     const { getByText } = render(
       <DropList
-        onSelect={onSelect}
         items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
         isMenuOpen
@@ -972,10 +1013,8 @@ describe('Selection', () => {
   })
 
   test('should set initial items as selected (multi object version)', async () => {
-    const onSelect = jest.fn()
     const { getByText } = render(
       <DropList
-        onSelect={onSelect}
         items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
         isMenuOpen

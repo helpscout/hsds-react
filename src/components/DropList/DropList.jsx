@@ -157,6 +157,7 @@ function DropListManager({
     if (selectedItem.isDisabled) {
       return
     }
+
     if (withMultipleSelection) {
       if (selectedItem) {
         const { remove } = selectedItem
@@ -182,12 +183,16 @@ function DropListManager({
         }
 
         setSelectedItems(updatedSelection)
-        onSelect(updatedSelection)
+        onSelect(updatedSelection, clearSelection, selectedItem)
       }
     } else {
       setSelectedItem(selectedItem || null)
-      onSelect(selectedItem)
+      onSelect(selectedItem, clearSelection, selectedItem)
     }
+  }
+
+  function clearSelection() {
+    setSelectedItems([])
   }
 
   function toggleOpenedState(isOpen, origin = '') {
@@ -303,7 +308,7 @@ DropListManager.propTypes = {
   onMenuFocus: PropTypes.func,
   /** Callback that fires whenever the DropList opens and closes */
   onOpenedStateChange: PropTypes.func,
-  /** Callback that fires whenever the selection in the DropList changes */
+  /** Callback that fires whenever the selection in the DropList changes, signature: `onSelect(selection, clearSelection, clickedItem)` */
   onSelect: PropTypes.func,
   /** Render prop that allows you to render a custom List Item */
   renderCustomListItem: PropTypes.func,
