@@ -5,11 +5,13 @@ import {
   getItemContentKeyName,
   isItemADivider,
   isItemAGroupLabel,
+  objectHasKey,
 } from './DropList.utils'
 import {
   DividerUI,
   GroupLabelUI,
   ListItemUI,
+  ListItemTextUI,
   SelectedBadge,
 } from './DropList.css'
 
@@ -53,7 +55,8 @@ const ListItem = forwardRef(
         isDisabled && 'is-disabled',
         highlightedIndex === index && 'is-highlighted',
         withMultipleSelection && 'with-multiple-selection',
-        isString(extraClassNames) && extraClassNames
+        isString(extraClassNames) && extraClassNames,
+        objectHasKey(item, 'className') && item.className
       )
     }
 
@@ -84,7 +87,9 @@ const ListItem = forwardRef(
         withMultipleSelection={withMultipleSelection}
         {...itemProps}
       >
-        <span>{isObject(item) ? item[contentKey] : item}</span>
+        <ListItemTextUI>
+          {isObject(item) ? item[contentKey] : item}
+        </ListItemTextUI>
         {withMultipleSelection ? (
           <SelectedBadge isSelected={isSelected} />
         ) : null}

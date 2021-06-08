@@ -25,7 +25,7 @@ export const DropListWrapperUI = styled('div')`
 export const MenuListUI = styled('ul')`
   width: 100%;
   max-height: 200px;
-  overflow-y: scroll;
+  overflow-y: auto;
   margin: 0;
   padding: 5px 0 0 0;
   list-style: none;
@@ -68,7 +68,7 @@ export const ListItemUI = styled('li')`
   align-items: center;
   height: 36px;
   margin: 0 5px 2px;
-  padding: 0 15px;
+  padding: 0 10px 0 15px;
   border-radius: 3px;
   line-height: 36px;
   color: ${getColor('charcoal.600')};
@@ -120,6 +120,13 @@ export const ListItemUI = styled('li')`
     background-color: transparent;
     cursor: default;
   }
+`
+
+export const ListItemTextUI = styled('span')`
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `
 
 export const EmptyListUI = styled('div')`

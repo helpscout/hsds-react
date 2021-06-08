@@ -253,14 +253,18 @@ function DropListManager({
 }
 
 const itemShape = PropTypes.shape({
-  label: requiredItemPropsCheck,
-  value: requiredItemPropsCheck,
+  className: PropTypes.string,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   isDisabled: PropTypes.bool,
+  label: requiredItemPropsCheck,
+  value: requiredItemPropsCheck,
+  type: PropTypes.string,
 })
+
 const dividerShape = PropTypes.shape({
   type: PropTypes.oneOf(['divider', 'Divider']).isRequired,
 })
+
 const groupShape = PropTypes.shape({
   label: requiredItemPropsCheck,
   value: requiredItemPropsCheck,

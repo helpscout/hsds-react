@@ -123,6 +123,31 @@ describe('Render', () => {
     })
   })
 
+  test('should add a classname to the list item if present in the item', async () => {
+    const { getByRole, queryByText } = render(
+      <DropList
+        items={someItems.map((item, index) => {
+          if (index === 1) {
+            return { className: 'paintItBlue', ...item }
+          }
+          return item
+        })}
+        toggler={<SimpleButton text="Button Toggler" />}
+      />
+    )
+    const toggler = getByRole('button')
+
+    user.click(toggler)
+
+    await waitFor(() => {
+      expect(
+        queryByText(someItems[1].label).parentElement.classList.contains(
+          'paintItBlue'
+        )
+      ).toBeTruthy()
+    })
+  })
+
   test('should render a menu list with dividers', async () => {
     const { container, getByRole, queryByRole } = render(
       <DropList

@@ -227,6 +227,18 @@ const itemShape = PropTypes.shape({
 })
 ```
 
+- Laser Targeting: if you need to target a specific List Item for styling (or else), you can add the property `className` to each item in the array, the value will be added to the existing css class names on the `DropListItem`:
+
+```js
+const items = [
+  { label: 'a', className: 'paintItBlue' },
+  { label: 'ab' },
+  { label: 'abc' },
+  { type: 'divider' },
+  { label: 'b', className: 'paintItBlue' },
+]
+```
+
 - Dividers: Add a `type = divider` property to an object to create a divider
 
 ```js
