@@ -127,6 +127,10 @@ export const ListItemTextUI = styled('span')`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  .with-multiple-selection & {
+    max-width: calc(100% - 30px);
+  }
 `
 
 export const EmptyListUI = styled('div')`
