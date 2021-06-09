@@ -85,16 +85,15 @@ Sometimes when portaling you might need to apply some custom css to the menu but
 
 #### onSelect
 
-The `onSelect` callback passes a few useful parameters specially when multiple selection is enabled:
+The `onSelect` callback passes two parameters (second is useful when multiple selection is enabled):
 
 ```js
 /**
  *
  * @param {string | object | array} selection The current selection, if multiple selection enabled then it is an array
- * @param {function} clearSelection Function that clears the current selection, useful in multiple selection cases to enable a "clear all" option
  * @param {string | object} clickedItem The item that was clicked, useful in multiple selection cases
  */
-function onSelect(selection, clearSelection, clickedItem) {}
+function onSelect(selection, clickedItem) {}
 ```
 
 <br />
@@ -184,6 +183,7 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
         selection={select(
           'Selection',
           {
+            clear: null,
             first: regularItems[0],
             second: regularItems[1],
             third: regularItems[2],
@@ -545,7 +545,7 @@ Depending on your use case, you might want to set `closeOnSelection = false` whe
         variant="combobox"
         items={regularItems}
         closeOnSelection={false}
-        onSelect={(selection, clearSelection, clickedItem) => {
+        onSelect={(selection, clickedItem) => {
           console.log('🚀 ~ selection', selection)
           console.log('🚀 ~ clickedItem', clickedItem)
         }}

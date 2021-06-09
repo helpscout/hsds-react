@@ -728,10 +728,10 @@ describe('Togglers', () => {
 
 describe('Selection', () => {
   test('should select an item when clicked (string version)', async () => {
-    const onSelect = jest.fn()
+    const onSelectSpy = jest.fn()
     const { getByText, getByRole } = render(
       <DropList
-        onSelect={onSelect}
+        onSelect={onSelectSpy}
         items={beatles}
         toggler={<SimpleButton text="Button Toggler" />}
       />
@@ -748,7 +748,7 @@ describe('Selection', () => {
       expect(
         getByText('Paul').parentElement.classList.contains('is-selected')
       ).toBeTruthy()
-      expect(onSelect).toHaveBeenCalledWith('Paul', expect.anything(), 'Paul')
+      expect(onSelectSpy).toHaveBeenCalledWith('Paul', 'Paul')
       expect(toggler.getAttribute('aria-expanded')).toBe('false')
     })
 
@@ -768,17 +768,17 @@ describe('Selection', () => {
       expect(
         getByText('Ringo').parentElement.classList.contains('is-selected')
       ).toBeTruthy()
-      expect(onSelect).toHaveBeenCalledWith('Ringo', expect.anything(), 'Ringo')
+      expect(onSelectSpy).toHaveBeenCalledWith('Ringo', 'Ringo')
       expect(toggler.getAttribute('aria-expanded')).toBe('false')
     })
   })
 
   test('should select an item when clicked (object version)', async () => {
-    const onSelect = jest.fn()
+    const onSelectSpy = jest.fn()
     const { getByText } = render(
       <DropList
         isMenuOpen
-        onSelect={onSelect}
+        onSelect={onSelectSpy}
         items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
       />
@@ -793,19 +793,15 @@ describe('Selection', () => {
           'is-selected'
         )
       ).toBeTruthy()
-      expect(onSelect).toHaveBeenCalledWith(
-        itemToSelect,
-        expect.anything(),
-        itemToSelect
-      )
+      expect(onSelectSpy).toHaveBeenCalledWith(itemToSelect, itemToSelect)
     })
   })
   test('should select an item when clicked (combobox string version)', async () => {
-    const onSelect = jest.fn()
+    const onSelectSpy = jest.fn()
     const { getByText } = render(
       <DropList
         isMenuOpen
-        onSelect={onSelect}
+        onSelect={onSelectSpy}
         items={beatles}
         toggler={<SimpleButton text="Button Toggler" />}
         variant="combobox"
@@ -818,7 +814,7 @@ describe('Selection', () => {
       expect(
         getByText('Paul').parentElement.classList.contains('is-selected')
       ).toBeTruthy()
-      expect(onSelect).toHaveBeenCalledWith('Paul', expect.anything(), 'Paul')
+      expect(onSelectSpy).toHaveBeenCalledWith('Paul', 'Paul')
     })
   })
 
@@ -843,26 +839,16 @@ describe('Selection', () => {
           'is-selected'
         )
       ).toBeTruthy()
-      expect(onSelect).toHaveBeenCalledWith(
-        itemToSelect,
-        expect.anything(),
-        itemToSelect
-      )
+      expect(onSelect).toHaveBeenCalledWith(itemToSelect, itemToSelect)
     })
   })
 
   test('should multi-select', async () => {
-    const onSelect = jest.fn()
+    const onSelectSpy = jest.fn()
     const { getByText } = render(
       <DropList
         isMenuOpen
-        onSelect={(selection, clearSelection, clickedItem) => {
-          onSelect(selection, clearSelection, clickedItem)
-          // Clear selection when clicking John
-          if (clickedItem === 'John') {
-            clearSelection()
-          }
-        }}
+        onSelect={onSelectSpy}
         items={beatles}
         toggler={<SimpleButton text="Button Toggler" />}
         withMultipleSelection
@@ -883,7 +869,7 @@ describe('Selection', () => {
           .getPropertyValue('opacity')
       ).toBe('1')
 
-      expect(onSelect).toHaveBeenCalledWith(['Paul'], expect.anything(), 'Paul')
+      expect(onSelectSpy).toHaveBeenCalledWith(['Paul'], 'Paul')
     })
 
     user.click(getByText('Ringo').parentElement)
@@ -902,11 +888,7 @@ describe('Selection', () => {
           )
           .getPropertyValue('opacity')
       ).toBe('1')
-      expect(onSelect).toHaveBeenCalledWith(
-        ['Paul', 'Ringo'],
-        expect.anything(),
-        'Ringo'
-      )
+      expect(onSelectSpy).toHaveBeenCalledWith(['Paul', 'Ringo'], 'Ringo')
     })
 
     user.click(getByText('Ringo').parentElement)
@@ -925,38 +907,20 @@ describe('Selection', () => {
           )
           .getPropertyValue('opacity')
       ).toBe('0')
-      expect(onSelect).toHaveBeenCalledWith(['Paul'], expect.anything(), {
+      expect(onSelectSpy).toHaveBeenCalledWith(['Paul'], {
         label: 'Ringo',
         remove: true,
       })
     })
-
-    // Clicking John clears all selections
-    user.click(getByText('John').parentElement)
-
-    await waitFor(() => {
-      expect(
-        getByText('Paul').parentElement.classList.contains('is-selected')
-      ).toBeFalsy()
-      expect(
-        getByText('Ringo').parentElement.classList.contains('is-selected')
-      ).toBeFalsy()
-      expect(
-        getByText('George').parentElement.classList.contains('is-selected')
-      ).toBeFalsy()
-      expect(
-        getByText('John').parentElement.classList.contains('is-selected')
-      ).toBeFalsy()
-    })
   })
 
   test('should select when filtering and pressing enter on combobox', async () => {
-    const onSelect = jest.fn()
+    const onSelectSpy = jest.fn()
     const { getByPlaceholderText } = render(
       <DropList
         isMenuOpen
         items={beatles}
-        onSelect={onSelect}
+        onSelect={onSelectSpy}
         toggler={<SimpleButton text="Button Toggler" />}
         variant="combobox"
       />
@@ -966,19 +930,15 @@ describe('Selection', () => {
     user.type(getByPlaceholderText('Search'), '{enter}')
 
     await waitFor(() => {
-      expect(onSelect).toHaveBeenCalledWith(
-        'George',
-        expect.anything(),
-        'George'
-      )
+      expect(onSelectSpy).toHaveBeenCalledWith('George', 'George')
     })
   })
 
   test('should set an initial item as selected (single string version)', async () => {
-    const onSelect = jest.fn()
+    const onSelectSpy = jest.fn()
     const { getByText } = render(
       <DropList
-        onSelect={onSelect}
+        onSelect={onSelectSpy}
         items={beatles}
         toggler={<SimpleButton text="Button Toggler" />}
         isMenuOpen

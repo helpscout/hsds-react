@@ -183,16 +183,12 @@ function DropListManager({
         }
 
         setSelectedItems(updatedSelection)
-        onSelect(updatedSelection, clearSelection, selectedItem)
+        onSelect(updatedSelection, selectedItem)
       }
     } else {
       setSelectedItem(selectedItem || null)
-      onSelect(selectedItem, clearSelection, selectedItem)
+      onSelect(selectedItem, selectedItem)
     }
-  }
-
-  function clearSelection() {
-    setSelectedItems([])
   }
 
   function toggleOpenedState(isOpen, origin = '') {
@@ -308,7 +304,7 @@ DropListManager.propTypes = {
   onMenuFocus: PropTypes.func,
   /** Callback that fires whenever the DropList opens and closes */
   onOpenedStateChange: PropTypes.func,
-  /** Callback that fires whenever the selection in the DropList changes, signature: `onSelect(selection, clearSelection, clickedItem)` */
+  /** Callback that fires whenever the selection in the DropList changes, signature: `onSelect(selection, clickedItem)` */
   onSelect: PropTypes.func,
   /** Render prop that allows you to render a custom List Item */
   renderCustomListItem: PropTypes.func,
