@@ -1,11 +1,11 @@
+import styled from 'styled-components'
 import { d400, d400Effect } from '../../styles/mixins/depth.css'
 
-import Avatar from '../Avatar/Avatar'
+import Avatar from '../Avatar'
 import ChoiceGroup from '../ChoiceGroup'
 
 import { getColor } from '../../styles/utilities/color'
 import { rgba } from '../../utilities/color'
-import styled from 'styled-components'
 
 export const MarkUI = styled('div')`
   position: absolute;
@@ -152,7 +152,7 @@ export const CheckMarkCardUI = styled('label')`
   }
 `
 
-export const AvatarUI = styled(Avatar)`
+export const AvatarWrapperUI = styled.div`
   margin-bottom: 14px;
 `
 
@@ -174,7 +174,7 @@ export const HeadingUI = styled('div')`
   white-space: nowrap;
 `
 
-export const CheckmarkCardGridUI = styled(ChoiceGroup)`
+export const CheckMarkCardGridUI = styled(ChoiceGroup)`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: ${({ choiceHeight }) => `${choiceHeight}`};
