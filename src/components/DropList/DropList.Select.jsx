@@ -16,6 +16,7 @@ import ListItem, { generateListItemKey } from './DropList.ListItem'
 import { VARIANTS } from './DropList.constants'
 
 function Select({
+  closeOnBlur = true,
   closeOnSelection = true,
   customEmptyList = null,
   'data-cy': dataCy = `DropList.${VARIANTS.SELECT}`,
@@ -55,6 +56,7 @@ function Select({
 
     onIsOpenChange(changes) {
       onIsOpenChangeCommon({
+        closeOnBlur,
         closeOnSelection,
         toggleOpenedState,
         type: `${VARIANTS.SELECT}.${changes.type}`,

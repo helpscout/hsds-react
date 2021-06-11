@@ -21,6 +21,7 @@ import ListItem, { generateListItemKey } from './DropList.ListItem'
 import { VARIANTS } from './DropList.constants'
 
 function Combobox({
+  closeOnBlur = true,
   closeOnSelection = true,
   customEmptyList = null,
   'data-cy': dataCy = `DropList.${VARIANTS.COMBOBOX}`,
@@ -72,6 +73,7 @@ function Combobox({
 
     onIsOpenChange(changes) {
       onIsOpenChangeCommon({
+        closeOnBlur,
         closeOnSelection,
         toggleOpenedState,
         type: `${VARIANTS.COMBOBOX}.${changes.type}`,

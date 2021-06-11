@@ -27,11 +27,11 @@ export const MenuListUI = styled('ul')`
   max-height: 200px;
   overflow-y: auto;
   margin: 0;
-  padding: 5px 0 0 0;
+  padding: 5px 0 5px 0;
   list-style: none;
 
   &.MenuList-Combobox {
-    padding: 0;
+    padding: 0 0 5px 0;
   }
 
   &:focus {
@@ -83,7 +83,7 @@ export const ListItemUI = styled('li')`
   cursor: pointer;
 
   &:last-child {
-    margin-bottom: 10px;
+    margin-bottom: 0;
   }
 
   &.is-selected,
