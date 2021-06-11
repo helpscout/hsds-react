@@ -240,6 +240,7 @@ export const Kebab = forwardRef(
       isActive = false,
       iconSize = '24',
       onClick = noop,
+      withTooltip = false,
       ...rest
     },
     ref
@@ -263,7 +264,18 @@ export const Kebab = forwardRef(
         type="button"
         {...rest}
       >
-        <Icon name="kebab" size={iconSize} />
+        {withTooltip ? (
+          <Tooltip
+            animationDelay={0}
+            animationDuration={0}
+            placement="top-end"
+            title={a11yLabel}
+          >
+            <Icon name="kebab" size={iconSize} />
+          </Tooltip>
+        ) : (
+          <Icon name="kebab" size={iconSize} />
+        )}
         {a11yLabel ? <VisuallyHidden>{a11yLabel}</VisuallyHidden> : null}
       </KebabUI>
     )
@@ -282,6 +294,7 @@ export const IconBtn = forwardRef(
       iconSize = '24',
       onClick = noop,
       withCaret = true,
+      withTooltip = false,
       ...rest
     },
     ref
@@ -304,7 +317,18 @@ export const IconBtn = forwardRef(
         type="button"
         {...rest}
       >
-        <Icon name={iconName} size={iconSize} />
+        {withTooltip ? (
+          <Tooltip
+            animationDelay={0}
+            animationDuration={0}
+            placement="top-end"
+            title={a11yLabel}
+          >
+            <Icon name={iconName} size={iconSize} />
+          </Tooltip>
+        ) : (
+          <Icon Name={iconName} Size={iconSize} />
+        )}
         {a11yLabel ? <VisuallyHidden>{a11yLabel}</VisuallyHidden> : null}
         {withCaret ? <Icon name="caret-down" size={caretSize} /> : null}
       </IconButtonUI>
