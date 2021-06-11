@@ -1,6 +1,5 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { getColor } from '../../styles/utilities/color'
 import CheckMarkCard from '../CheckMarkCard'
 import Checkbox from '../Checkbox'
 import Icon from '../Icon'
