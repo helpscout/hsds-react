@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
+import Avatar from '../Avatar'
 import Checkbox from '../Checkbox'
 import Icon from '../Icon'
 import Tooltip from '../Tooltip'
@@ -11,9 +12,9 @@ import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
 
 import {
-  AvatarUI,
+  AvatarWrapperUI,
   CheckMarkCardContentUI,
-  CheckmarkCardGridUI,
+  CheckMarkCardGridUI,
   CheckMarkCardUI,
   HeadingUI,
   MarkUI,
@@ -156,7 +157,11 @@ const CheckMarkCard = props => {
     >
       <CheckMarkCardContentUI>
         <Mark cardChecked={cardChecked} {...markProps} />
-        {shouldShowAvatar && <AvatarUI size="xl" image={avatar} name={label} />}
+        {shouldShowAvatar && (
+          <AvatarWrapperUI>
+            <Avatar size="xl" image={avatar} name={label} />
+          </AvatarWrapperUI>
+        )}
         {shouldDisplayHeading && <HeadingUI>{heading || label}</HeadingUI>}
         {subtitle && <SubtitleUI>{subtitle}</SubtitleUI>}
         {children}
@@ -250,6 +255,6 @@ CheckMarkCard.propTypes = {
   ]),
 }
 
-CheckMarkCard.Grid = CheckmarkCardGridUI
+CheckMarkCard.Grid = CheckMarkCardGridUI
 
 export default CheckMarkCard
