@@ -16,6 +16,7 @@ Make sure the pull request:
 
 - [ ] Follows the established folder/file structure
 - [ ] Adds unit tests
+- [ ] If it is a refactor or change to an existing component, have you verified it won't break existing Cypress tests or have you updated them?
 - [ ] Did you verify some accessibility (a11y) basics?
 - [ ] Adds/updates stories. [Guidelines](https://hsds.helpscout.com/?path=/docs/%F0%9F%8F%A0-welcome-4-writing-stories--page)
 - [ ] Adds/updates documentation (ie `proptypes`) [Guidelines](https://hsds.helpscout.com/?path=/docs/%F0%9F%8F%A0-welcome-3-writing-components--page)
