@@ -18,7 +18,7 @@ export class ActionSelect extends React.PureComponent {
     this.state = {
       isOpen: props.isOpen,
       resizeCount: 0,
-      selectedItem: props.selectedItem || null,
+      selection: props.selectedItem || null,
     }
   }
 
@@ -79,13 +79,13 @@ export class ActionSelect extends React.PureComponent {
     })
   }
 
-  handleOnSelect = selectedItem => {
-    this.props.onSelect(selectedItem.value, selectedItem)
+  handleOnSelect = selection => {
+    this.props.onSelect(selection.value, selection)
     this.autoFocusChildNode()
     this.resizeContent()
-    this.scrollIntoView(selectedItem.value)
+    this.scrollIntoView(selection.value)
     this.safeSetState({
-      selectedItem,
+      selection,
     })
   }
 
@@ -129,7 +129,7 @@ export class ActionSelect extends React.PureComponent {
       onResize,
       shouldRefocusOnClose,
     } = this.props
-    const { isOpen, resizeCount, selectedItem } = this.state
+    const { isOpen, resizeCount, selection } = this.state
 
     return (
       <ActionSelectUI
@@ -144,8 +144,8 @@ export class ActionSelect extends React.PureComponent {
             items={items}
             onOpenedStateChange={this.handleOnOpenClose}
             onSelect={this.handleOnSelect}
-            toggler={<SelectTag text={getSelectTagText(selectedItem, items)} />}
-            selection={selectedItem}
+            toggler={<SelectTag text={getSelectTagText(selection, items)} />}
+            selection={selection}
           />
         </div>
         <ContentResizer
@@ -158,7 +158,7 @@ export class ActionSelect extends React.PureComponent {
           onAnimationUpdate={onAnimationUpdate}
           onResize={onResize}
           resizeCount={resizeCount}
-          selectedKey={getUniqueKeyFromItem(selectedItem)}
+          selectedKey={getUniqueKeyFromItem(selection)}
         >
           {children}
         </ContentResizer>
@@ -217,6 +217,7 @@ ActionSelect.propTypes = {
   onOpen: PropTypes.func,
   onResize: PropTypes.func,
   onSelect: PropTypes.func,
+  selectedItem: PropTypes.object,
   shouldRefocusOnClose: PropTypes.func,
   shouldScrollIntoView: PropTypes.func,
 }
