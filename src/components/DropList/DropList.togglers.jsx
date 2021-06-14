@@ -116,7 +116,11 @@ export const SplittedButton = forwardRef(
   ) => {
     return (
       <ControlGroup
-        className="DropListToggler SplitButtonTogglerControlGroup"
+        className={classNames(
+          className,
+          'DropListToggler',
+          'SplitButtonTogglerControlGroup'
+        )}
         data-cy="DropList.SplitButtonTogglerControlGroup"
         {...rest}
       >
@@ -141,7 +145,6 @@ export const SplittedButton = forwardRef(
             aria-expanded={isActive}
             buttonRef={ref}
             className={classNames(
-              className,
               'DropListToggler',
               'SplitButton__Toggler',
               isActive && 'is-active'
