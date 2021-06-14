@@ -15,7 +15,7 @@ export class ActionSelect extends React.PureComponent {
   state = {
     isOpen: this.props.isOpen,
     resizeCount: 0,
-    selectedItem: null,
+    selectedItem: this.props.selectedItem || null,
   }
 
   _isMounted = false
@@ -141,7 +141,7 @@ export class ActionSelect extends React.PureComponent {
             onOpenedStateChange={this.handleOnOpenClose}
             onSelect={this.handleOnSelect}
             toggler={<SelectTag text={getSelectTagText(selectedItem, items)} />}
-            selection={this.props.selectedItem}
+            selection={selectedItem}
           />
         </div>
         <ContentResizer

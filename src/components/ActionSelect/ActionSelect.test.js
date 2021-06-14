@@ -17,8 +17,8 @@ const mockItems = [
   },
 ]
 
-describe('SelectDropdown', () => {
-  test('Renders a SelectDropdown with items', async () => {
+describe('DropList', () => {
+  test('Renders a DropList with items', async () => {
     const { getByRole, getAllByRole } = render(
       <ActionSelect items={mockItems} isOpen={true} />
     )
@@ -35,20 +35,38 @@ describe('SelectDropdown', () => {
     })
   })
 
-  test('Renders a SelectDropdown with a selected item', async () => {
-    const { getByRole, getAllByRole } = render(
-      <ActionSelect items={mockItems} selectedItem={mockItems[1]} />
+  test('DropList Selection', async () => {
+    const onSelectSpy = jest.fn()
+    const { getByRole, getAllByRole, getByTestId } = render(
+      <ActionSelect
+        items={mockItems}
+        selectedItem={mockItems[1]}
+        onSelect={onSelectSpy}
+      />
     )
 
     user.click(getByRole('button'))
 
     await waitFor(() => {
-      const selectedItem = getAllByRole('option').filter(item =>
-        item.classList.contains('is-selected')
+      expect(
+        getAllByRole('option')[1].classList.contains('is-selected')
+      ).toBeTruthy()
+      expect(getByTestId('DropList.SelectTagToggler').textContent).toBe(
+        'Hansel'
       )
 
-      expect(selectedItem.length).toBeTruthy()
-      expect(selectedItem[0].textContent).toBe('Hansel')
+      user.click(getAllByRole('option')[0])
+    })
+
+    await waitFor(() => {
+      expect(
+        getAllByRole('option')[1].classList.contains('is-selected')
+      ).toBeFalsy()
+      expect(
+        getAllByRole('option')[0].classList.contains('is-selected')
+      ).toBeTruthy()
+      expect(getByTestId('DropList.SelectTagToggler').textContent).toBe('Derek')
+      expect(onSelectSpy).toHaveBeenCalledTimes(1)
     })
   })
 })
