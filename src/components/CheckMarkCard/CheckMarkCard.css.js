@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { d400, d400Effect } from '../../styles/mixins/depth.css'
 
-import Avatar from '../Avatar'
 import ChoiceGroup from '../ChoiceGroup'
 
 import { getColor } from '../../styles/utilities/color'
