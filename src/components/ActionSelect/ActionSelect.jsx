@@ -12,10 +12,14 @@ import { ActionSelectUI } from './ActionSelect.css'
 export class ActionSelect extends React.PureComponent {
   static className = 'c-ActionSelect'
 
-  state = {
-    isOpen: this.props.isOpen,
-    resizeCount: 0,
-    selectedItem: this.props.selectedItem || null,
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      isOpen: props.isOpen,
+      resizeCount: 0,
+      selectedItem: props.selectedItem || null,
+    }
   }
 
   _isMounted = false
