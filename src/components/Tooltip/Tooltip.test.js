@@ -2,6 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import Tooltip, { TooltipContext } from './index'
 import Tippy from '@tippyjs/react/headless'
+import { act } from 'react-dom/test-utils'
 
 jest.mock('@tippyjs/react/headless', () => {
   const Tippy = ({ children }) => <div>{children}</div>
@@ -116,7 +117,7 @@ describe('Tippy', () => {
     expect(pop.zIndex).toBe(1243)
   })
 
-  test.only("Controlled component should'nt pass down trigger and showOnCreate props ", () => {
+  test("Controlled component should'nt pass down trigger and showOnCreate props ", () => {
     const props = {
       placement: 'bottom',
       triggerOn: 'click',
@@ -142,5 +143,25 @@ describe('Context', () => {
     )
     const pop = wrapper.find(Tippy).props()
     expect(pop.zIndex).toBe(1234)
+  })
+})
+
+describe('Unmounting', () => {
+  test('Should not log warning when unmounting', () => {
+    jest.useFakeTimers()
+    const consoleErrorSpy = jest.spyOn(console, 'error')
+    const props = {
+      title: 'Pop',
+    }
+    const wrapper = mount(<Tooltip {...props} />)
+    const onShow = wrapper.find(Tippy).prop('onShow')
+    onShow()
+
+    wrapper.unmount()
+    act(() => {
+      jest.runAllTimers()
+    })
+
+    expect(consoleErrorSpy).not.toHaveBeenCalled()
   })
 })

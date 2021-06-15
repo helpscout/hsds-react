@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import PropTypes from 'prop-types'
 import Tippy from '@tippyjs/react/headless'
 import { isFunction } from '../../utilities/is'
@@ -66,6 +72,13 @@ const Tooltip = props => {
   const { zIndex = zIndexProp, animationDuration: animationDurationContext } =
     useContext(TooltipContext) || {}
   const [isEntered, setEntered] = useState(animationDuration === 0)
+  const isMounted = useRef(true)
+
+  useEffect(() => {
+    return () => {
+      isMounted.current = false
+    }
+  }, [])
 
   const scope = getCurrentScope ? getCurrentScope() : null
 
@@ -121,7 +134,11 @@ const Tooltip = props => {
   }
 
   const onShow = () => {
-    setTimeout(() => setEntered(true), animationDelay)
+    setTimeout(() => {
+      if (isMounted.current) {
+        setEntered(true)
+      }
+    }, animationDelay)
   }
 
   const onHide = () => {
