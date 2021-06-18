@@ -156,6 +156,9 @@ export class EditableFieldInput extends React.Component {
 
   handleInputBlur = event => {
     const { name, onInputBlur, valueOptions } = this.props
+    // Lots of async stuff happening that need this event as is
+    // so allow references to it to be maintained
+    event && event.persist && event.persist()
 
     if (valueOptions) {
       setTimeout(() => {

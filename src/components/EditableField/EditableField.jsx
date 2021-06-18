@@ -285,7 +285,10 @@ export class EditableField extends React.Component {
       return
     }
 
-    const optionChanged = initialField.option !== changedField.option
+    let optionChanged =
+      hasOptions && initialField
+        ? initialField.option !== changedField.option
+        : false
 
     if (!changedField.validated || optionChanged) {
       this.setState({
