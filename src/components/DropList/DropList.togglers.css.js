@@ -78,6 +78,11 @@ export const SelectUI = styled('button')`
     outline: 0;
     box-shadow: inset 0 0 0 2px ${getColor('blue.500')};
   }
+
+  &[disabled] {
+    cursor: not-allowed;
+    color: ${getColor('charcoal.200')};
+  }
 `
 
 export const SelectArrowsUI = styled('div')`
