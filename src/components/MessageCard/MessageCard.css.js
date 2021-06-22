@@ -86,7 +86,9 @@ const editorHtmlFontSize = 14
 export const ContentUI = styled.div`
   margin-top: ${({ withMargin }) => (withMargin ? '20px' : '0')};
   overflow: auto;
-  padding: 0 20px;
+  // The margin right is necessary to move scrollbar a bit to the right, from the edge - it wouldn't be distinguishable to the user when no scrollbar
+  padding: 0 18px 0 20px;
+  margin-right: 2px;
   display: flex;
   flex-direction: column;
 
