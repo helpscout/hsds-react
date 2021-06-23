@@ -1,10 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import useDeepCompareEffect from 'use-deep-compare-effect'
+import classNames from 'classnames'
 import Tippy from '@tippyjs/react/headless'
 import { noop } from '../../utilities/other'
 import { GlobalContext } from '../HSDS/Provider'
-import { OPEN_ACTION_ORIGIN, VARIANTS } from './DropList.constants'
+import {
+  DROPLIST_TOGGLER,
+  OPEN_ACTION_ORIGIN,
+  VARIANTS,
+} from './DropList.constants'
 import {
   findItemInArray,
   flattenListItems,
@@ -99,8 +104,20 @@ function DropListManager({
 
   function decorateUserToggler(userToggler) {
     if (React.isValidElement(userToggler)) {
-      const { onClick } = userToggler.props
+      const { onClick, onKeyDown, className } = userToggler.props
       const togglerProps = {
+        className: classNames(DROPLIST_TOGGLER, className),
+        isActive: isOpen,
+
+        onKeyDown: e => {
+          onKeyDown && onKeyDown(e)
+
+          if (e.key === 'Enter') {
+            e.preventDefault && e.preventDefault()
+            toggleOpenedState(!isOpen)
+          }
+        },
+
         onClick: e => {
           onClick && onClick(e)
 
@@ -115,7 +132,6 @@ function DropListManager({
 
           setOpenOrigin('')
         },
-        isActive: isOpen,
       }
 
       if (userToggler.type === SelectTag) {
