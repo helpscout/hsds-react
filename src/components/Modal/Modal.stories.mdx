@@ -1,8 +1,11 @@
 import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { select, text, boolean, number, array } from '@storybook/addon-knobs'
 import SpeechBubble from '@helpscout/hsds-illos/speech-bubble'
-import Modal from './'
 import { PHONE_OPTIONS } from '../EditableField/EditableField.storiesHelpers'
+import { regularItems } from '../../utilities/specs/dropdown.specs'
+import Modal from './'
+import DropList from '../DropList'
+import { SimpleButton } from '../DropList/DropList.togglers'
 import EditableTextarea from '../EditableTextarea'
 import EditableField from '../EditableField'
 
@@ -175,6 +178,19 @@ There are components like `DropList`, `EditableField` and `EditableTextarea` tha
     >
       <Modal.Body version={2}>
         <div>
+          <DropList
+            variant="combobox"
+            items={regularItems}
+            toggler={<SimpleButton text="DropList combobox" />}
+          />
+          <br />
+          <br />
+          <DropList
+            items={regularItems}
+            toggler={<SimpleButton text="DropList select" />}
+          />
+          <br />
+          <br />
           <EditableTextarea />
           <EditableField
             label="Phone"

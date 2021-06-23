@@ -156,6 +156,7 @@ function Combobox({
       <InputSearchHolderUI show={items.length > 0}>
         <input
           {...getInputProps({
+            className: 'DropList__Combobox__input',
             ref: inputEl,
             onFocus: e => {
               onMenuFocus(e)

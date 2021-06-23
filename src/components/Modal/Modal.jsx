@@ -32,6 +32,7 @@ const portalOptions = {
   zIndex: modalBaseZIndex,
   preventEscActionElements: [
     'DropList__MenuList',
+    'DropList__Combobox__input',
     'FieldInput__input',
     'EditableTextarea__Textarea',
   ],
