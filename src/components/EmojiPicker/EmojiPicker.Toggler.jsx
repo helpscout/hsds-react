@@ -10,7 +10,6 @@ export const IconToggler = forwardRef(
         aria-label="toggle menu"
         aria-haspopup="true"
         aria-expanded={isActive}
-        className="c-EmojiPickerToggler"
         data-cy="EmojiPickerToggler"
         data-testid="EmojiPickerToggler"
         isActive={isActive}

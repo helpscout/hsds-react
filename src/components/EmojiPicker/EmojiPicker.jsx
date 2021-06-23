@@ -16,7 +16,9 @@ export function EmojiPicker({
   items = emojiSet,
   onTogglerClick = noop,
   tippyOptions = { placement: 'top-start' },
-  toggler = <IconToggler onClick={onTogglerClick} />,
+  toggler = (
+    <IconToggler className="c-EmojiPickerToggler" onClick={onTogglerClick} />
+  ),
   ...rest
 }) {
   return (

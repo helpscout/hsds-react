@@ -50,7 +50,6 @@ const Toggler = forwardRef(
         aria-label="toggle menu"
         aria-haspopup="true"
         aria-expanded={isActive}
-        className={INPUT_CLASSNAMES.optionsTrigger}
         data-cy="EditableFieldOptionsTrigger"
         disabled={disabled}
         onClick={onClick}
@@ -249,6 +248,7 @@ export class EditableFieldInput extends React.Component {
           onOpenedStateChange={this.handleOpenCloseDropList}
           toggler={
             <Toggler
+              className={INPUT_CLASSNAMES.optionsTrigger}
               disabled={disabled}
               fieldValue={fieldValue}
               onFocus={this.handleOptionFocus}

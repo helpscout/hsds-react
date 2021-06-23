@@ -12,3 +12,5 @@ export const ITEM_TYPES = {
 export const OPEN_ACTION_ORIGIN = {
   INPUT_BLUR: '__input_blur__',
 }
+
+export const DROPLIST_TOGGLER = 'DropListToggler'

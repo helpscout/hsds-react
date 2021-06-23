@@ -38,7 +38,6 @@ export const SimpleButton = forwardRef(
         buttonRef={ref}
         className={classNames(
           className,
-          'DropListToggler',
           'ButtonToggler',
           isActive && 'is-active'
         )}
@@ -80,7 +79,6 @@ export const NavLink = forwardRef(
         ref={ref}
         className={classNames(
           className,
-          'DropListToggler',
           'NavLinkToggler',
           isActive && 'is-active'
         )}
@@ -116,11 +114,7 @@ export const SplittedButton = forwardRef(
   ) => {
     return (
       <ControlGroup
-        className={classNames(
-          className,
-          'DropListToggler',
-          'SplitButtonTogglerControlGroup'
-        )}
+        className={classNames(className, 'SplitButtonTogglerControlGroup')}
         data-cy="DropList.SplitButtonTogglerControlGroup"
         {...rest}
       >
@@ -145,7 +139,6 @@ export const SplittedButton = forwardRef(
             aria-expanded={isActive}
             buttonRef={ref}
             className={classNames(
-              'DropListToggler',
               'SplitButton__Toggler',
               isActive && 'is-active'
             )}
@@ -208,7 +201,7 @@ export const SelectTag = forwardRef(
         aria-expanded={isActive}
         className={classNames(
           className,
-          'DropListToggler SelectTagToggler',
+          'SelectTagToggler',
           error && 'is-error',
           isActive && 'is-active'
         )}
@@ -255,7 +248,6 @@ export const Kebab = forwardRef(
         aria-expanded={isActive}
         className={classNames(
           className,
-          'DropListToggler',
           'KebabToggler',
           isActive && 'is-active'
         )}
@@ -292,6 +284,7 @@ export const IconBtn = forwardRef(
     {
       a11yLabel = '',
       caretSize = '14',
+      className = '',
       isActive = false,
       iconName = 'assign',
       iconSize = '24',
@@ -308,7 +301,7 @@ export const IconBtn = forwardRef(
         aria-haspopup="true"
         aria-expanded={isActive}
         className={classNames(
-          'DropListToggler',
+          className,
           'IconButtonToggler',
           isActive && 'is-active'
         )}
