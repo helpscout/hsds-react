@@ -74,15 +74,18 @@ export function stateReducerCommon({
 
     case `${COMBOBOX}.${useCombobox.stateChangeTypes.InputKeyDownArrowUp}`:
     case `${SELECT}.${useSelect.stateChangeTypes.MenuKeyDownArrowUp}`: {
+      const { highlightedIndex: currentHighlightedIndex } = state
       const { highlightedIndex: nextHighlightedIndex } = changes
+      const highlightedIndex = getEnabledItemIndex({
+        currentHighlightedIndex,
+        nextHighlightedIndex,
+        items,
+        arrowKey: 'UP',
+      })
 
       return {
         ...changes,
-        highlightedIndex: getEnabledItemIndex({
-          nextHighlightedIndex,
-          items,
-          arrowKey: 'UP',
-        }),
+        highlightedIndex,
       }
     }
 
@@ -94,8 +97,8 @@ export function stateReducerCommon({
       return {
         ...changes,
         highlightedIndex: getEnabledItemIndex({
-          nextHighlightedIndex,
           currentHighlightedIndex,
+          nextHighlightedIndex,
           items,
           arrowKey: 'DOWN',
         }),

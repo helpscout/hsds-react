@@ -2,8 +2,8 @@ import { createSpec, faker } from '@helpscout/helix'
 
 export const ItemSpec = createSpec({
   id: faker.datatype.uuid(),
-  label: faker.company.companyName(),
-  value: faker.name.firstName(),
+  value: faker.company.companyName(),
+  label: faker.name.firstName(),
   // onClick: () => (value, props) => console.log('Clicked!', value),
 })
 
@@ -52,7 +52,16 @@ export const simpleGroupedItems = [
 
 export const groupAndDividerItems = [
   {
-    items: ItemSpec.generate(3),
+    items: [
+      {
+        label: '0001',
+        value: '0001',
+      },
+      {
+        label: '0002',
+        value: '0002',
+      },
+    ],
     label: 'Group 1',
     value: 'thing',
     type: 'group',
@@ -60,12 +69,33 @@ export const groupAndDividerItems = [
   {
     type: 'divider',
   },
-  ...ItemSpec.generate(2),
+  {
+    label: '0004',
+    value: '0004',
+  },
+  {
+    label: '0005',
+    value: '0005',
+  },
   {
     type: 'divider',
   },
   {
-    items: ItemSpec.generate(5),
+    items: [
+      {
+        label: '0008',
+        value: '0008',
+      },
+      {
+        label: '0009',
+        value: '0009',
+      },
+      {
+        label: '0010 is disabled',
+        value: '0010',
+        isDisabled: true,
+      },
+    ],
     label: 'Group 2',
     type: 'group',
     value: 'thing2',

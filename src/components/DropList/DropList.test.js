@@ -1332,18 +1332,28 @@ describe('getEnabledItemIndex', () => {
     ).toBe(0)
     expect(
       getEnabledItemIndex({
-        nextHighlightedIndex: 1,
-        items: someItems,
-        arrowKey: 'UP',
-      })
-    ).toBe(1)
-    expect(
-      getEnabledItemIndex({
+        currentHighlightedIndex: 0,
         nextHighlightedIndex: 0,
         items: someItems,
         arrowKey: 'UP',
       })
     ).toBe(6)
+    expect(
+      getEnabledItemIndex({
+        currentHighlightedIndex: 1,
+        nextHighlightedIndex: 0,
+        items: someItems,
+        arrowKey: 'UP',
+      })
+    ).toBe(0)
+    expect(
+      getEnabledItemIndex({
+        currentHighlightedIndex: 5,
+        nextHighlightedIndex: 4,
+        items: someItems,
+        arrowKey: 'UP',
+      })
+    ).toBe(4)
   })
 
   test('Grouped and divider Items', () => {
@@ -1364,43 +1374,46 @@ describe('getEnabledItemIndex', () => {
         items,
         arrowKey: 'DOWN',
       })
-    ).toBe(3)
+    ).toBe(4)
     expect(
       getEnabledItemIndex({
-        currentHighlightedIndex: 6,
-        nextHighlightedIndex: 7,
+        currentHighlightedIndex: 5,
+        nextHighlightedIndex: 6,
         items,
         arrowKey: 'DOWN',
       })
-    ).toBe(9)
+    ).toBe(8)
     expect(
       getEnabledItemIndex({
-        currentHighlightedIndex: 13,
-        nextHighlightedIndex: 13,
+        currentHighlightedIndex: 9,
+        nextHighlightedIndex: 10,
         items,
         arrowKey: 'DOWN',
       })
     ).toBe(1)
     expect(
       getEnabledItemIndex({
-        nextHighlightedIndex: 8,
+        currentHighlightedIndex: 5,
+        nextHighlightedIndex: 4,
         items,
         arrowKey: 'UP',
       })
-    ).toBe(6)
+    ).toBe(4)
     expect(
       getEnabledItemIndex({
-        nextHighlightedIndex: 7,
+        currentHighlightedIndex: 4,
+        nextHighlightedIndex: 3,
         items,
         arrowKey: 'UP',
       })
-    ).toBe(6)
+    ).toBe(2)
     expect(
       getEnabledItemIndex({
+        currentHighlightedIndex: 1,
         nextHighlightedIndex: 0,
         items,
         arrowKey: 'UP',
       })
-    ).toBe(13)
+    ).toBe(9)
   })
 })

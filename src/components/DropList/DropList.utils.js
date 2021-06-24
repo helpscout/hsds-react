@@ -203,13 +203,26 @@ export function getEnabledItemIndex({
 
   if (arrowKey === 'UP') {
     for (let index = items.length - 1; index >= 0; index--) {
-      const isGroupOrDividerItem = checkIfGroupOrDividerItem(items[index])
+      const isIndexItemHighlightable =
+        !checkIfGroupOrDividerItem(items[index]) && !items[index].isDisabled
+      const isNextIndexItemHighlightable =
+        items[nextHighlightedIndex] &&
+        !checkIfGroupOrDividerItem(items[nextHighlightedIndex]) &&
+        !items[nextHighlightedIndex].isDisabled
 
       if (
-        !isGroupOrDividerItem &&
-        !items[index].isDisabled &&
-        (nextHighlightedIndex === 0 || index <= nextHighlightedIndex)
+        isIndexItemHighlightable &&
+        (index <= nextHighlightedIndex ||
+          currentHighlightedIndex === nextHighlightedIndex)
       ) {
+        enabledItemIndex = index
+        break
+      } else if (isIndexItemHighlightable && nextHighlightedIndex === 0) {
+        if (isNextIndexItemHighlightable) {
+          enabledItemIndex = nextHighlightedIndex
+          break
+        }
+
         enabledItemIndex = index
         break
       }
@@ -228,14 +241,22 @@ export function getEnabledItemIndex({
 
     for (let index = 0; index < items.length; index++) {
       const isGroupOrDividerItem = checkIfGroupOrDividerItem(items[index])
+      const isHighlightableItem =
+        !isGroupOrDividerItem && !items[index].isDisabled
 
-      if (
-        !isGroupOrDividerItem &&
-        !items[index].isDisabled &&
-        index >= nextHighlightedIndex
-      ) {
+      if (isHighlightableItem && index >= nextHighlightedIndex) {
         enabledItemIndex = index
         break
+      } else {
+        if (!isHighlightableItem && nextHighlightedIndex === items.length - 1) {
+          // Go to the top but restart the process in case index 0 should be skipped
+          return getEnabledItemIndex({
+            currentHighlightedIndex,
+            nextHighlightedIndex: 0,
+            items,
+            arrowKey,
+          })
+        }
       }
     }
   }
