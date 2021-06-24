@@ -201,64 +201,36 @@ export function getEnabledItemIndex({
 }) {
   let enabledItemIndex = 0
 
-  if (arrowKey === 'UP') {
-    for (let index = items.length - 1; index >= 0; index--) {
-      const isIndexItemHighlightable =
-        !checkIfGroupOrDividerItem(items[index]) && !items[index].isDisabled
-      const isNextIndexItemHighlightable =
-        items[nextHighlightedIndex] &&
-        !checkIfGroupOrDividerItem(items[nextHighlightedIndex]) &&
-        !items[nextHighlightedIndex].isDisabled
+  const isNextIndexItemHighlightable =
+    !checkIfGroupOrDividerItem(items[nextHighlightedIndex]) &&
+    !items[nextHighlightedIndex].isDisabled
 
-      if (
-        isIndexItemHighlightable &&
-        (index <= nextHighlightedIndex ||
-          currentHighlightedIndex === nextHighlightedIndex)
-      ) {
-        enabledItemIndex = index
-        break
-      } else if (isIndexItemHighlightable && nextHighlightedIndex === 0) {
-        if (isNextIndexItemHighlightable) {
-          enabledItemIndex = nextHighlightedIndex
-          break
-        }
+  if (
+    isNextIndexItemHighlightable &&
+    currentHighlightedIndex !== nextHighlightedIndex
+  ) {
+    enabledItemIndex = nextHighlightedIndex
+  } else {
+    let newNextHighlightedIndex
 
-        enabledItemIndex = index
-        break
-      }
-    }
-  }
-
-  if (arrowKey === 'DOWN') {
-    if (currentHighlightedIndex === nextHighlightedIndex) {
-      return getEnabledItemIndex({
-        currentHighlightedIndex,
-        nextHighlightedIndex: 0,
-        items,
-        arrowKey,
-      })
+    if (arrowKey === 'UP') {
+      newNextHighlightedIndex =
+        nextHighlightedIndex - 1 >= 0
+          ? nextHighlightedIndex - 1
+          : items.length - 1
+    } else {
+      newNextHighlightedIndex =
+        nextHighlightedIndex + 1 <= items.length - 1
+          ? nextHighlightedIndex + 1
+          : 0
     }
 
-    for (let index = 0; index < items.length; index++) {
-      const isGroupOrDividerItem = checkIfGroupOrDividerItem(items[index])
-      const isHighlightableItem =
-        !isGroupOrDividerItem && !items[index].isDisabled
-
-      if (isHighlightableItem && index >= nextHighlightedIndex) {
-        enabledItemIndex = index
-        break
-      } else {
-        if (!isHighlightableItem && nextHighlightedIndex === items.length - 1) {
-          // Go to the top but restart the process in case index 0 should be skipped
-          return getEnabledItemIndex({
-            currentHighlightedIndex,
-            nextHighlightedIndex: 0,
-            items,
-            arrowKey,
-          })
-        }
-      }
-    }
+    return getEnabledItemIndex({
+      currentHighlightedIndex,
+      nextHighlightedIndex: newNextHighlightedIndex,
+      items,
+      arrowKey,
+    })
   }
 
   return enabledItemIndex

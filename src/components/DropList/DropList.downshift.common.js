@@ -76,23 +76,22 @@ export function stateReducerCommon({
     case `${SELECT}.${useSelect.stateChangeTypes.MenuKeyDownArrowUp}`: {
       const { highlightedIndex: currentHighlightedIndex } = state
       const { highlightedIndex: nextHighlightedIndex } = changes
-      const highlightedIndex = getEnabledItemIndex({
-        currentHighlightedIndex,
-        nextHighlightedIndex,
-        items,
-        arrowKey: 'UP',
-      })
 
       return {
         ...changes,
-        highlightedIndex,
+        highlightedIndex: getEnabledItemIndex({
+          currentHighlightedIndex,
+          nextHighlightedIndex,
+          items,
+          arrowKey: 'UP',
+        }),
       }
     }
 
     case `${COMBOBOX}.${useCombobox.stateChangeTypes.InputKeyDownArrowDown}`:
     case `${SELECT}.${useSelect.stateChangeTypes.MenuKeyDownArrowDown}`: {
-      const { highlightedIndex: currentHighlightedIndex } = state
       const { highlightedIndex: nextHighlightedIndex } = changes
+      const { highlightedIndex: currentHighlightedIndex } = state
 
       return {
         ...changes,
