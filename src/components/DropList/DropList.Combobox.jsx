@@ -18,7 +18,7 @@ import {
   MenuListUI,
 } from './DropList.css'
 import ListItem, { generateListItemKey } from './DropList.ListItem'
-import { VARIANTS } from './DropList.constants'
+import { DROPLIST_MENULIST, VARIANTS } from './DropList.constants'
 
 function Combobox({
   closeOnBlur = true,
@@ -165,7 +165,10 @@ function Combobox({
           placeholder="Search"
         />
       </InputSearchHolderUI>
-      <MenuListUI className="MenuList MenuList-Combobox" {...getMenuProps()}>
+      <MenuListUI
+        className={`${DROPLIST_MENULIST} MenuList-Combobox`}
+        {...getMenuProps()}
+      >
         {renderListContents({
           customEmptyList,
           emptyList: items.length === 0,

@@ -130,7 +130,7 @@ export function onIsOpenChangeCommon({
 
     case `${COMBOBOX}.${useCombobox.stateChangeTypes.InputBlur}`:
     case `${SELECT}.${useSelect.stateChangeTypes.MenuBlur}`:
-      closeOnBlur && toggleOpenedState(false, OPEN_ACTION_ORIGIN.INPUT_BLUR)
+      closeOnBlur && toggleOpenedState(false, OPEN_ACTION_ORIGIN.DROPLIST_BLUR)
       break
 
     default:

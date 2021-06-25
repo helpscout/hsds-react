@@ -104,33 +104,35 @@ function DropListManager({
 
   function decorateUserToggler(userToggler) {
     if (React.isValidElement(userToggler)) {
-      const { onClick, onKeyDown, className } = userToggler.props
+      const { onClick, onFocus, className } = userToggler.props
       const togglerProps = {
         className: classNames(DROPLIST_TOGGLER, className),
         isActive: isOpen,
-
-        onKeyDown: e => {
-          onKeyDown && onKeyDown(e)
-
-          if (e.key === 'Enter') {
-            e.preventDefault && e.preventDefault()
-            toggleOpenedState(!isOpen)
-          }
-        },
 
         onClick: e => {
           onClick && onClick(e)
 
           /**
-           * On combobox when clicking the button a blur event happens first that closes
+           * When clicking the button the menu blur event happens first that closes
            * the DropList, here we check if the menu was closed due to the input blur and ignore the
            * click action to toggle the open state, we also always reset the "origin" to resume normal behaviour
            */
-          if (openOrigin !== OPEN_ACTION_ORIGIN.INPUT_BLUR) {
-            toggleOpenedState(!isOpen)
+          if (openOrigin !== OPEN_ACTION_ORIGIN.DROPLIST_BLUR) {
+            toggleOpenedState(!isOpen, '')
+          } else {
+            setOpenOrigin('')
           }
+        },
 
-          setOpenOrigin('')
+        onFocus: e => {
+          onFocus && onFocus(e)
+
+          /**
+           * Reset the "origin" to resume normal behaviour
+           */
+          if (!isOpen) {
+            setOpenOrigin('')
+          }
         },
       }
 
@@ -208,10 +210,10 @@ function DropListManager({
     }
   }
 
-  function toggleOpenedState(isOpen, origin = '') {
-    setOpenedState(isOpen)
+  function toggleOpenedState(shouldOpen, origin = '') {
     setOpenOrigin(origin)
-    onOpenedStateChange(isOpen)
+    setOpenedState(shouldOpen)
+    onOpenedStateChange(shouldOpen)
   }
 
   return (

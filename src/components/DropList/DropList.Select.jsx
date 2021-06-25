@@ -13,7 +13,7 @@ import {
 } from './DropList.downshift.common'
 import { A11yTogglerUI, DropListWrapperUI, MenuListUI } from './DropList.css'
 import ListItem, { generateListItemKey } from './DropList.ListItem'
-import { VARIANTS } from './DropList.constants'
+import { DROPLIST_MENULIST, VARIANTS } from './DropList.constants'
 
 function Select({
   closeOnBlur = true,
@@ -144,7 +144,7 @@ function Select({
     >
       <A11yTogglerUI {...getToggleButtonProps()}>Toggler</A11yTogglerUI>
       <MenuListUI
-        className="DropList__MenuList"
+        className={`${DROPLIST_MENULIST} MenuList-Select`}
         {...getMenuProps({
           onKeyDown: handleSidewaysKeyNavigation,
           onFocus: e => {

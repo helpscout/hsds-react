@@ -10,7 +10,8 @@ export const ITEM_TYPES = {
 }
 
 export const OPEN_ACTION_ORIGIN = {
-  INPUT_BLUR: '__input_blur__',
+  DROPLIST_BLUR: '__droplist_blur__',
 }
 
 export const DROPLIST_TOGGLER = 'DropListToggler'
+export const DROPLIST_MENULIST = 'DropList__MenuList MenuList'
