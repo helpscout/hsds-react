@@ -199,8 +199,6 @@ export function getEnabledItemIndex({
   items,
   arrowKey,
 }) {
-  let enabledItemIndex = 0
-
   const isNextIndexItemHighlightable =
     !checkIfGroupOrDividerItem(items[nextHighlightedIndex]) &&
     !items[nextHighlightedIndex].isDisabled
@@ -209,29 +207,31 @@ export function getEnabledItemIndex({
     isNextIndexItemHighlightable &&
     currentHighlightedIndex !== nextHighlightedIndex
   ) {
-    enabledItemIndex = nextHighlightedIndex
-  } else {
-    let newNextHighlightedIndex
-
-    if (arrowKey === 'UP') {
-      newNextHighlightedIndex =
-        nextHighlightedIndex - 1 >= 0
-          ? nextHighlightedIndex - 1
-          : items.length - 1
-    } else {
-      newNextHighlightedIndex =
-        nextHighlightedIndex + 1 <= items.length - 1
-          ? nextHighlightedIndex + 1
-          : 0
-    }
-
-    return getEnabledItemIndex({
-      currentHighlightedIndex,
-      nextHighlightedIndex: newNextHighlightedIndex,
-      items,
-      arrowKey,
-    })
+    return nextHighlightedIndex
   }
 
-  return enabledItemIndex
+  let newNextHighlightedIndex
+  const firstIndex = 0
+  const lastIndex = items.length - 1
+
+  if (arrowKey === 'UP') {
+    const isNextIndexAfterFirst = nextHighlightedIndex - 1 >= firstIndex
+
+    newNextHighlightedIndex = isNextIndexAfterFirst
+      ? nextHighlightedIndex - 1
+      : lastIndex
+  } else {
+    const isNextIndexBeforeLast = nextHighlightedIndex + 1 <= lastIndex
+
+    newNextHighlightedIndex = isNextIndexBeforeLast
+      ? nextHighlightedIndex + 1
+      : firstIndex
+  }
+
+  return getEnabledItemIndex({
+    currentHighlightedIndex,
+    nextHighlightedIndex: newNextHighlightedIndex,
+    items,
+    arrowKey,
+  })
 }
