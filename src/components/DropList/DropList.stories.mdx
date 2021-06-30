@@ -668,9 +668,11 @@ The `toggler` prop accepts any React component, so you can provide your own cust
         items={regularItems}
         toggler={
           <MeatButton
+            a11yLabel="Nice Kebab"
             onClick={() => {
               console.log('Clicked from story')
             }}
+            withTooltip
           />
         }
       />
@@ -688,10 +690,12 @@ The `toggler` prop accepts any React component, so you can provide your own cust
         items={regularItems}
         toggler={
           <MeatButton
+            a11yLabel="Nice Meatballs"
             meatIcon="meatball"
             onClick={() => {
               console.log('Clicked from story')
             }}
+            withTooltip
           />
         }
       />

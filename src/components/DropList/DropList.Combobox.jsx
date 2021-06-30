@@ -161,6 +161,12 @@ function Combobox({
             onFocus: e => {
               onMenuFocus(e)
             },
+            onKeyDown: e => {
+              if (e.key === 'Tab') {
+                e.preventDefault()
+                toggleOpenedState(false)
+              }
+            },
           })}
           placeholder="Search"
         />
