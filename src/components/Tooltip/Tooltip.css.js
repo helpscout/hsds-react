@@ -8,6 +8,10 @@ export const config = {
 
 export const TooltipTriggerUI = styled.span`
   display: ${({ display }) => (display ? display : 'inline-block')};
+
+  &:focus {
+    outline: 0;
+  }
 `
 
 export const ArrowUI = styled.span`

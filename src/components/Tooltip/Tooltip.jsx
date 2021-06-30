@@ -54,6 +54,7 @@ const Tooltip = props => {
     closeOnEscPress,
     display,
     'data-cy': dataCy,
+    getTippyInstance = () => {},
     innerRef,
     isOpen,
     minWidth,
@@ -141,6 +142,10 @@ const Tooltip = props => {
     }, animationDelay)
   }
 
+  const onCreate = instance => {
+    getTippyInstance && getTippyInstance(instance)
+  }
+
   const onHide = () => {
     setEntered(false)
   }
@@ -161,6 +166,7 @@ const Tooltip = props => {
   }
 
   const defaultTippyProps = {
+    onCreate,
     onHide,
     onShow,
     placement,
@@ -244,6 +250,7 @@ Tooltip.propTypes = {
   'data-cy': PropTypes.string,
   /** Apply custom css rule `display` */
   display: PropTypes.string,
+  getTippyInstance: PropTypes.any,
   /** Determine if the tooltip is open via a prop */
   isOpen: PropTypes.bool,
   /** Max width for the component. */
