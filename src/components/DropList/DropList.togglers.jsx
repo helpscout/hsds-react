@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import React, { useRef, forwardRef } from 'react'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
 import ControlGroup from '../ControlGroup'
@@ -242,6 +242,8 @@ export const MeatButton = forwardRef(
     },
     ref
   ) => {
+    const tooltipRef = useRef()
+
     return (
       <MeatButtonUI
         aria-label="toggle menu"
@@ -264,8 +266,14 @@ export const MeatButton = forwardRef(
           <Tooltip
             animationDelay={0}
             animationDuration={0}
+            getTippyInstance={instance => {
+              tooltipRef.current = instance.reference
+            }}
             placement="top-end"
             title={a11yLabel}
+            triggerTarget={
+              tooltipRef.current && tooltipRef.current.parentElement
+            }
           >
             <Icon name={meatIcon} size={iconSize} />
           </Tooltip>
@@ -296,6 +304,8 @@ export const IconBtn = forwardRef(
     },
     ref
   ) => {
+    const tooltipRef = useRef()
+
     return (
       <IconButtonUI
         aria-label="toggle menu"
@@ -318,8 +328,14 @@ export const IconBtn = forwardRef(
           <Tooltip
             animationDelay={0}
             animationDuration={0}
+            getTippyInstance={instance => {
+              tooltipRef.current = instance.reference
+            }}
             placement="top-end"
             title={a11yLabel}
+            triggerTarget={
+              tooltipRef.current && tooltipRef.current.parentElement
+            }
           >
             <Icon name={iconName} size={iconSize} />
           </Tooltip>
