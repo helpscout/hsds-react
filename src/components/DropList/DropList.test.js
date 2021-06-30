@@ -1308,6 +1308,14 @@ describe('getEnabledItemIndex', () => {
   test('Regular Items', () => {
     expect(
       getEnabledItemIndex({
+        currentHighlightedIndex: 0,
+        nextHighlightedIndex: -1,
+        items: someItems,
+        arrowKey: 'DOWN',
+      })
+    ).toBe(-1)
+    expect(
+      getEnabledItemIndex({
         currentHighlightedIndex: -1,
         nextHighlightedIndex: 0,
         items: someItems,
@@ -1354,6 +1362,14 @@ describe('getEnabledItemIndex', () => {
         arrowKey: 'UP',
       })
     ).toBe(4)
+    expect(
+      getEnabledItemIndex({
+        currentHighlightedIndex: 0,
+        nextHighlightedIndex: -1,
+        items: someItems,
+        arrowKey: 'UP',
+      })
+    ).toBe(-1)
   })
 
   test('Grouped and divider Items', () => {

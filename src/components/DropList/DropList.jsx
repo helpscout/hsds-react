@@ -338,7 +338,7 @@ DropListManager.propTypes = {
   ]),
   /** Options to configure Tippy (https://atomiks.github.io/tippyjs/v6/all-props/)*/
   tippyOptions: PropTypes.object,
-  /** A component to render as the "toggler" or "trigger", a set of built-in options are provided: Button, IconButton, Kebab, SelectTag, SplitButton */
+  /** A component to render as the "toggler" or "trigger", a set of built-in options are provided: Button, IconButton, MeatButton, SelectTag, SplitButton */
   toggler: PropTypes.element,
   /** The type of DropList, standard ("select") or searchable ("combobox") */
   variant: PropTypes.oneOf(['select', 'Select', 'combobox', 'Combobox']),

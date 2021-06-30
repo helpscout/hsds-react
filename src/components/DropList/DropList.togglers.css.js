@@ -115,13 +115,13 @@ export const SelectErrorTooltipIconUI = styled('div')`
   margin-left: 8px;
 `
 
-export const KebabUI = styled('button')`
+export const MeatButtonUI = styled('button')`
   width: 24px;
   height: 24px;
   padding: 0.5px 0px 0px 0.5px;
   border: 0;
   border-radius: 3px;
-  background-color: white;
+  background-color: transparent;
 
   &:hover {
     cursor: pointer;

@@ -199,6 +199,10 @@ export function getEnabledItemIndex({
   items,
   arrowKey,
 }) {
+  // When nextHighlightedIndex === -1 it means there are no items to be highlighted
+  // like in the case of a combobox being filtered to "no results"
+  if (nextHighlightedIndex === -1) return -1
+
   const isNextIndexItemHighlightable =
     !checkIfGroupOrDividerItem(items[nextHighlightedIndex]) &&
     !items[nextHighlightedIndex].isDisabled

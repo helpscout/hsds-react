@@ -9,7 +9,7 @@ import { STATES } from '../../constants'
 import Tooltip from '../Tooltip'
 import {
   IconButtonUI,
-  KebabUI,
+  MeatButtonUI,
   NavLinkTogglerUI,
   SelectArrowsUI,
   SelectErrorTooltipIconUI,
@@ -228,13 +228,14 @@ export const SelectTag = forwardRef(
 
 // No need to test every single toggler if they're basically the same as Button
 /* istanbul ignore next */
-export const Kebab = forwardRef(
+export const MeatButton = forwardRef(
   (
     {
       a11yLabel = '',
       className = '',
       isActive = false,
       iconSize = '24',
+      meatIcon = 'kebab',
       onClick = noop,
       withTooltip = false,
       ...rest
@@ -242,17 +243,17 @@ export const Kebab = forwardRef(
     ref
   ) => {
     return (
-      <KebabUI
+      <MeatButtonUI
         aria-label="toggle menu"
         aria-haspopup="true"
         aria-expanded={isActive}
         className={classNames(
           className,
-          'KebabToggler',
+          'MeatButtonToggler',
           isActive && 'is-active'
         )}
-        data-cy="DropList.KebabToggler"
-        data-testid="DropList.KebabToggler"
+        data-cy="DropList.MeatButtonToggler"
+        data-testid="DropList.MeatButtonToggler"
         isActive={isActive}
         onClick={onClick}
         ref={ref}
@@ -266,13 +267,13 @@ export const Kebab = forwardRef(
             placement="top-end"
             title={a11yLabel}
           >
-            <Icon name="kebab" size={iconSize} />
+            <Icon name={meatIcon} size={iconSize} />
           </Tooltip>
         ) : (
-          <Icon name="kebab" size={iconSize} />
+          <Icon name={meatIcon} size={iconSize} />
         )}
         {a11yLabel ? <VisuallyHidden>{a11yLabel}</VisuallyHidden> : null}
-      </KebabUI>
+      </MeatButtonUI>
     )
   }
 )
@@ -349,7 +350,7 @@ export function getTogglerPlacementProps(toggler, { placement, offset }) {
     }
   }
 
-  if (toggler.type === Kebab) {
+  if (toggler.type === MeatButton) {
     return {
       placement: placement || 'bottom-end',
       offset: offset || [0, 3],

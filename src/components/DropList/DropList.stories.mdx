@@ -3,7 +3,7 @@ import { boolean, number, text, select } from '@storybook/addon-knobs'
 import DropList from './DropList'
 import {
   IconBtn,
-  Kebab,
+  MeatButton,
   NavLink,
   SelectTag,
   SimpleButton,
@@ -567,12 +567,12 @@ Depending on your use case, you might want to set `closeOnSelection = false` whe
 
 ### Togglers
 
-DropList provides a set of ready-to-use "triggers" or "togglers" components that should cover most if not all of our current needs: `SimpleButton`, `IconBtn`, `Kebab`, `SelectTag` and `SplittedButton`. Import them into your project from `src/components/DropList/DropList.togglers.jsx` and feed them to the `toggler` prop.
+DropList provides a set of ready-to-use "triggers" or "togglers" components that should cover most if not all of our current needs: `SimpleButton`, `IconBtn`, `MeatButton` (meatball or kebab), `SelectTag` and `SplittedButton`. Import them into your project from `src/components/DropList/DropList.togglers.jsx` and feed them to the `toggler` prop.
 
 #### SplittedButton
 
 This toggler replaces the previous `SplittedButton` component. It's not very different from the other togglers except that it's composed of 2 HSDS Buttons, the "action" and the "toggler". The props to interact / customize them are:
-DropList provides a set of ready-to-use "triggers" or "togglers" components that should cover most if not all of our current needs: `SimpleButton`, `IconBtn`, `Kebab`, `SelectTag` and `SplittedButton`. Import them into your project from `src/components/DropList/DropList.togglers.jsx` and feed them to the `toggler` prop.
+DropList provides a set of ready-to-use "triggers" or "togglers" components that should cover most if not all of our current needs: `SimpleButton`, `IconBtn`, `MeatButton`, `SelectTag` and `SplittedButton`. Import them into your project from `src/components/DropList/DropList.togglers.jsx` and feed them to the `toggler` prop.
 
 ```
 {
@@ -654,7 +654,7 @@ The `toggler` prop accepts any React component, so you can provide your own cust
       />
     </div>
   </Story>
-  <Story name="Toggler: Kebab">
+  <Story name="Toggler: MeatButton">
     <div
       style={{
         width: '400px',
@@ -667,7 +667,28 @@ The `toggler` prop accepts any React component, so you can provide your own cust
       <DropList
         items={regularItems}
         toggler={
-          <Kebab
+          <MeatButton
+            onClick={() => {
+              console.log('Clicked from story')
+            }}
+          />
+        }
+      />
+    </div>
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 0 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        items={regularItems}
+        toggler={
+          <MeatButton
+            meatIcon="meatball"
             onClick={() => {
               console.log('Clicked from story')
             }}
