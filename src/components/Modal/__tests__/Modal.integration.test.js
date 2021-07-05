@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, waitFor } from '@testing-library/react'
+import { getByRole, render, waitFor } from '@testing-library/react'
 import user from '@testing-library/user-event'
 import Button from '../../Button'
 import Modal from '../index'
@@ -51,13 +51,13 @@ describe('Modal', () => {
 
     test('Refocuses the trigger on close', () => {
       const spy = jest.fn()
-      const { container } = render(
+      const { getByRole } = render(
         <Modal isOpen trigger={<Button onFocus={spy}>Click</Button>}>
           <div className="buddy">Santa!</div>
         </Modal>
       )
 
-      user.type(container, '{esc}')
+      user.type(getByRole('document'), '{esc}')
 
       expect(spy).toHaveBeenCalled()
     })

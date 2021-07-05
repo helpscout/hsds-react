@@ -2,7 +2,7 @@ import { createSpec, faker } from '@helpscout/helix'
 
 test('Can create and generate a spec', () => {
   const Spec = createSpec({
-    id: faker.random.number(),
+    id: faker.datatype.number(),
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),
   })
@@ -16,7 +16,7 @@ test('Can create and generate a spec', () => {
 
 test('Can seed fixture results', () => {
   const Spec = createSpec({
-    id: faker.random.number(),
+    id: faker.datatype.number(),
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),
   })

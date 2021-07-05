@@ -2,13 +2,11 @@ import { createSpec, faker } from '@helpscout/helix'
 
 test('Can generate simple computed values', () => {
   const Computed = createSpec({
-    id: faker.random.number(),
+    id: faker.datatype.number(),
     name: faker.fake('{{name.firstName}} {{name.lastName}}'),
   })
 
-  const name = Computed.seed(1)
-    .generate()
-    .name.split(' ')
+  const name = Computed.seed(1).generate().name.split(' ')
 
   expect(name.length).toBe(2)
   expect(typeof name[0]).toBe('string')
@@ -17,13 +15,11 @@ test('Can generate simple computed values', () => {
 
 test('Can generate functional computed values', () => {
   const Computed = createSpec({
-    id: faker.random.number(),
+    id: faker.datatype.number(),
     name: () => faker.fake('{{name.firstName}} {{name.lastName}}'),
   })
 
-  const name = Computed.seed(1)
-    .generate()
-    .name.split(' ')
+  const name = Computed.seed(1).generate().name.split(' ')
 
   expect(name.length).toBe(2)
   expect(typeof name[0]).toBe('string')
@@ -33,7 +29,7 @@ test('Can generate functional computed values', () => {
 test('Can generate complex computed values', () => {
   const props = { name: faker.name.firstName() }
   const Computed = createSpec({
-    id: faker.random.number(),
+    id: faker.datatype.number(),
     name: faker.computed(props)(values => {
       return `${values.name}-123`
     }),

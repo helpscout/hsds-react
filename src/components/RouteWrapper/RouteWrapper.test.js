@@ -1,112 +1,88 @@
 import React, { Component } from 'react'
-import { shallow } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import RouteWrapper from './RouteWrapper'
+import { Router } from 'react-router'
 
-// Since we now wrap Link in a HOC, we have to use `.first.shallow()` to test.
-// See https://github.com/airbnb/enzyme/issues/539#issuecomment-239497107
-const wrap = (...args) =>
-  shallow(...args)
-    .first()
-    .shallow()
+let push
+let replace
+let history
+let preventDefault
+let clickEvent
 
-const wrapperContext = {
-  context: {
-    router: {},
-  },
+beforeEach(() => {
+  push = jest.fn()
+  replace = jest.fn()
+  history = { replace, push, listen: jest.fn(), location: {} }
+  preventDefault = jest.fn()
+  clickEvent = { preventDefault }
+})
+
+class SomePig extends Component {
+  render() {
+    const { staticContext, ...props } = this.props
+    return <div {...props}>Some pig!</div>
+  }
 }
+const RouteWrappedPig = RouteWrapper(SomePig)
 
 describe('Route fetching', () => {
-  let options
-  let push
-  let replace
-  let history
-  let preventDefault
-  let clickEvent
-
-  beforeEach(() => {
-    push = jest.fn()
-    replace = jest.fn()
-    history = { replace, push }
-    options = {
-      context: {
-        router: { history },
-      },
-    }
-    preventDefault = jest.fn()
-    clickEvent = { preventDefault }
-  })
-
-  class SomePig extends Component {
-    render() {
-      return <div {...this.props}>Some pig!</div>
-    }
-  }
-  const RouteWrappedPig = RouteWrapper(SomePig)
-
-  test('Can fetch data and trigger a route asynchronously', done => {
+  test('Can fetch data and trigger a route asynchronously', async () => {
     const fetch = () => {
       return Promise.resolve()
     }
     const to = 'some/route'
-    const wrapper = wrap(<RouteWrappedPig fetch={fetch} to={to} />, options)
-    expect(wrapper.getElement().type).toBe('div')
-    wrapper.simulate('click', clickEvent)
+    const wrapper = mount(
+      <Router history={history}>
+        <RouteWrappedPig fetch={fetch} to={to} />
+      </Router>
+    )
+    const element = wrapper.find('div')
+    element.simulate('click', clickEvent)
     expect(preventDefault).toHaveBeenCalled()
-    setTimeout(() => {
-      expect(push).toHaveBeenCalledWith(to)
-      done()
-    })
+    await Promise.resolve() // Wait for fetch promise to resolve
+    expect(push).toHaveBeenCalledWith(to)
   })
 
-  test('Specifying a `to` but no `fetch()` routes correctly', done => {
+  test('Specifying a `to` but no `fetch()` routes correctly', async () => {
     const to = 'some/other/route'
-    const wrapper = wrap(<RouteWrappedPig to={to} />, options)
-    expect(wrapper.getElement().type).toBe('div')
-    wrapper.simulate('click', clickEvent)
+    const wrapper = mount(
+      <Router history={history}>
+        <RouteWrappedPig to={to} />
+      </Router>
+    )
+    const element = wrapper.find('div')
+    element.simulate('click', clickEvent)
     expect(preventDefault).toHaveBeenCalled()
-    setTimeout(() => {
-      expect(push).toHaveBeenCalledWith(to)
-      done()
-    })
+    await Promise.resolve() // Wait for fetch promise to resolve
+    expect(push).toHaveBeenCalledWith(to)
   })
 
-  test('Should default to history.push on click', done => {
-    class Composed extends React.Component {
-      render() {
-        return <div />
-      }
-    }
-    const WrappedComponent = RouteWrapper(Composed)
-    const wrapper = shallow(<WrappedComponent to="/url" />, options)
-
-    wrapper.simulate('click', clickEvent)
-
-    setTimeout(() => {
-      expect(push).toHaveBeenCalled()
-      expect(replace).not.toHaveBeenCalled()
-      done()
-    })
-  })
-
-  test('Should call history.replace on click, if specified', done => {
-    class Composed extends React.Component {
-      render() {
-        return <div />
-      }
-    }
-    const WrappedComponent = RouteWrapper(Composed)
-    const wrapper = shallow(
-      <WrappedComponent to="/url" replace={true} />,
-      options
+  test('Should default to history.push on click', async () => {
+    const wrapper = mount(
+      <Router history={history}>
+        <RouteWrappedPig to="/url" />
+      </Router>
     )
 
-    wrapper.simulate('click', clickEvent)
+    wrapper.find('div').simulate('click', clickEvent)
 
-    setTimeout(() => {
-      expect(push).not.toHaveBeenCalled()
-      expect(replace).toHaveBeenCalled()
-      done()
-    })
+    await Promise.resolve() // Wait for fetch promise to resolve
+    expect(push).toHaveBeenCalled()
+    expect(replace).not.toHaveBeenCalled()
+  })
+
+  test('Should call history.replace on click, if specified', async () => {
+    const wrapper = mount(
+      <Router history={history}>
+        <RouteWrappedPig to="/url" replace={true} />
+      </Router>
+    )
+
+    wrapper.find('div').simulate('click', clickEvent)
+
+    await Promise.resolve() // Wait for fetch promise to resolve
+    expect(push).not.toHaveBeenCalled()
+    expect(replace).toHaveBeenCalled()
   })
 })
 
@@ -175,7 +151,7 @@ describe.skip('data-bypass', () => {
       }
     }
     const WrappedComponent = RouteWrapper(Composed)
-    const wrapper = shallow(<WrappedComponent to="/" />, wrapperContext)
+    const wrapper = shallow(<WrappedComponent to="/" />)
 
     expect(wrapper.prop('data-bypass')).toBe(true)
   })
@@ -187,10 +163,7 @@ describe.skip('data-bypass', () => {
       }
     }
     const WrappedComponent = RouteWrapper(Composed)
-    const wrapper = shallow(
-      <WrappedComponent to="/" data-bypass={false} />,
-      wrapperContext
-    )
+    const wrapper = shallow(<WrappedComponent to="/" data-bypass={false} />)
 
     expect(wrapper.prop('data-bypass')).toBe(false)
   })
@@ -198,27 +171,23 @@ describe.skip('data-bypass', () => {
 
 describe('to/href', () => {
   test('Should pass "href" to component', () => {
-    class Composed extends React.Component {
-      render() {
-        return <div />
-      }
-    }
-    const WrappedComponent = RouteWrapper(Composed)
-    const wrapper = shallow(<WrappedComponent href="/abc" />)
+    const wrapper = mount(
+      <Router history={history}>
+        <RouteWrappedPig href="/abc" />
+      </Router>
+    )
 
-    expect(wrapper.prop('href')).toBe('/abc')
+    expect(wrapper.find('div').prop('href')).toBe('/abc')
   })
 
   test('Should pass "to" to component', () => {
-    class Composed extends React.Component {
-      render() {
-        return <div />
-      }
-    }
-    const WrappedComponent = RouteWrapper(Composed)
-    const wrapper = shallow(<WrappedComponent to="/abc" />)
+    const wrapper = mount(
+      <Router history={history}>
+        <RouteWrappedPig to="/abc" />
+      </Router>
+    )
 
-    expect(wrapper.prop('href')).toBe('/abc')
+    expect(wrapper.find('div').prop('href')).toBe('/abc')
   })
 })
 

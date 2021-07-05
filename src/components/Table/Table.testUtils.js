@@ -191,7 +191,7 @@ export function createFakeCustomers({ amount, multipleEmails, longNames }) {
     }),
     jobTitle: faker.name.jobTitle(),
     companyName: faker.company.companyName(),
-    days: faker.random.number(100),
+    days: faker.datatype.number(100),
     lastSeen: derived(props => {
       const { days } = props
       return `${days} days ago`

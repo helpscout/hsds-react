@@ -18,6 +18,7 @@ import { isFunction } from '../../utilities/is'
 import { noop, requestAnimationFrame } from '../../utilities/other'
 import matchPath from '../../utilities/react-router/matchPath'
 import Content from './PortalWrapper.Content'
+import WithRouterCheck from '../WithRouterCheck'
 
 const defaultOptions = {
   id: 'PortalWrapper',
@@ -53,9 +54,6 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       closeOnEscape: true,
       isOpen: false,
       preventEscActionElements: extendedOptions.preventEscActionElements || [],
-    }
-    static contextTypes = {
-      router: noop,
     }
     static childContextTypes = {
       closePortal: noop,
@@ -161,19 +159,10 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       }
     }
 
-    // Note: This will need to be refactored when using a (future) version
-    // of React Router that no longer relies/works on component.context.router
     routeMatches(path) {
-      // Context will always exist, except for Enzyme shallow/mount rendered
-      // instances.
-      if (!this.context) return false
+      const { exact, history } = this.props
 
-      const { exact } = this.props
-      const { router } = this.context
-
-      if (!router || !router.history) return false
-
-      const { history } = router
+      if (!history) return false
 
       if (path && history && history.location) {
         return matchPath(history.location.pathname, { path, exact }) !== null
@@ -348,7 +337,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     }
   }
 
-  return hoistNonReactStatics(PortalWrapper, ComposedComponent)
+  return hoistNonReactStatics(WithRouterCheck(PortalWrapper), ComposedComponent)
 }
 
 function getUniqueIndex(id, namespace) {

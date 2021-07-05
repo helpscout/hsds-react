@@ -1,5 +1,6 @@
 import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import Link from './'
+import { BrowserRouter } from 'react-router-dom'
 
 <Meta title="Components/Text/Link" component={Link} />
 
@@ -9,7 +10,9 @@ A Link component is a light-weight wrapper for the default HTML `<a>` selector. 
 
 <Canvas>
   <Story name="default">
-    <Link href="https://github.com/helpscout/hsds-react">Link somewhere</Link>
+    <BrowserRouter>
+      <Link href="https://github.com/helpscout/hsds-react">Link somewhere</Link>
+    </BrowserRouter>
   </Story>
 </Canvas>
 

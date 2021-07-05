@@ -112,7 +112,7 @@ describe('Composed', () => {
 describe('Trigger', () => {
   test('Can render', () => {
     const TestComponent = Drop()(ContentComponent)
-    const wrapper = shallow(<TestComponent isOpen trigger={trigger} />)
+    const wrapper = shallow(<TestComponent isOpen trigger={trigger} />).dive()
     const el = wrapper.find('.trigger')
 
     expect(el.exists()).toBeTruthy()
@@ -121,7 +121,7 @@ describe('Trigger', () => {
 
   test('Automatically receives click event', () => {
     const TestComponent = Drop()(ContentComponent)
-    const wrapper = shallow(<TestComponent isOpen trigger={trigger} />)
+    const wrapper = shallow(<TestComponent isOpen trigger={trigger} />).dive()
     const el = wrapper.find('.trigger')
 
     expect(el.prop('onClick')).toBeInstanceOf(Function)
