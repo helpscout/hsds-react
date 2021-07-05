@@ -21,7 +21,7 @@ function WithRouterCheck(WrappedComponent) {
     const refProps = useMemo(() => {
       const refKey = routerContext ? 'wrappedComponentRef' : 'ref'
       return ref ? { [refKey]: ref } : {}
-    }, [routerContext])
+    }, [routerContext, ref])
 
     return <Component {...refProps} {...props} />
   })
