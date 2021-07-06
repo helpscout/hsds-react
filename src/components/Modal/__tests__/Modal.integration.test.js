@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { getByRole, render, waitFor } from '@testing-library/react'
 import user from '@testing-library/user-event'
 import Button from '../../Button'
 import Modal from '../index'
+import { MemoryRouter } from 'react-router'
 
 jest.useFakeTimers()
 
@@ -181,5 +182,39 @@ describe('Modal', () => {
         expect(document.querySelector('.third')).toBe(null)
       })
     })
+  })
+
+  test('should not recreate component when re-rendering and in Router context', async () => {
+    const mountMock = jest.fn()
+    const updateMock = jest.fn()
+    const TestComponent = ({ flag }) => {
+      useEffect(() => {
+        mountMock()
+      }, [])
+      useEffect(() => {
+        updateMock()
+      }, [flag])
+
+      return <div />
+    }
+
+    const { rerender } = render(
+      <MemoryRouter>
+        <Modal isOpen>
+          <TestComponent flag={true} />
+        </Modal>
+      </MemoryRouter>
+    )
+
+    rerender(
+      <MemoryRouter>
+        <Modal isOpen>
+          <TestComponent flag={false} />
+        </Modal>
+      </MemoryRouter>
+    )
+
+    expect(mountMock).toHaveBeenCalledTimes(1)
+    expect(updateMock).toHaveBeenCalledTimes(2)
   })
 })
