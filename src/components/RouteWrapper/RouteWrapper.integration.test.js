@@ -12,7 +12,7 @@ describe('RouteWrapper', () => {
     stub.mockRestore()
   })
 
-  const BaseLink = props => <a {...props}>Link</a>
+  const BaseLink = ({ staticContext, ...props }) => <a {...props}>Link</a>
 
   test('Can create a component that can render', () => {
     const Link = RouteWrapper(BaseLink)

@@ -1,6 +1,7 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import RouteLink, { Link } from './Link'
+import { Router } from 'react-router'
 
 // Since we now wrap Link in a HOC, we have to use `.first.shallow()` to test.
 // See https://github.com/airbnb/enzyme/issues/539#issuecomment-239497107
@@ -71,7 +72,6 @@ describe('External', () => {
 })
 
 describe('RouteWrapper', () => {
-  let options
   let push
   let history
   let preventDefault
@@ -79,81 +79,72 @@ describe('RouteWrapper', () => {
 
   beforeEach(() => {
     push = jest.fn()
-    history = { push }
-    options = {
-      context: {
-        router: { history },
-      },
-    }
+    history = { push, listen: jest.fn(), location: {} }
     preventDefault = jest.fn()
     clickEvent = { preventDefault }
   })
 
-  test('Specifying a `to` sets up router navigation, overrides default click', done => {
+  test('Specifying a `to` sets up router navigation, overrides default click', async () => {
     const route = '/some/route/'
-    const wrapper = wrap(
-      <RouteLink href="/gator" to={route}>
-        Gator
-      </RouteLink>,
-      options
+    const wrapper = mount(
+      <Router history={history}>
+        <RouteLink href="/gator" to={route}>
+          Gator
+        </RouteLink>
+      </Router>
     )
-    wrapper.simulate('click', clickEvent)
+    wrapper.find('a').simulate('click', clickEvent)
+    await Promise.resolve()
     expect(preventDefault).toHaveBeenCalled()
-    setTimeout(() => {
-      expect(push).toHaveBeenCalledWith(route)
-      done()
-    })
+    expect(push).toHaveBeenCalledWith(route)
   })
 
-  test('`to` router navigation is skipped on ctrl+click', done => {
+  test('`to` router navigation is skipped on ctrl+click', async () => {
     const route = '/some/route/'
-    const wrapper = wrap(
-      <Link href="/gator" to={route}>
-        Gator
-      </Link>,
-      options
+    const wrapper = mount(
+      <Router history={history}>
+        <RouteLink href="/gator" to={route}>
+          Gator
+        </RouteLink>
+      </Router>
     )
     clickEvent.ctrlKey = true
-    wrapper.simulate('click', clickEvent)
+    wrapper.find('a').simulate('click', clickEvent)
+    await Promise.resolve()
     expect(preventDefault).not.toHaveBeenCalled()
-    setTimeout(() => {
-      expect(push).not.toHaveBeenCalled()
-      done()
-    })
+    expect(push).not.toHaveBeenCalled()
   })
 
-  test('`to` router navigation is skipped on cmd+click', done => {
+  test('`to` router navigation is skipped on cmd+click', async () => {
     const route = '/some/route/'
-    const wrapper = wrap(
-      <Link href="/gator" to={route}>
-        Gator
-      </Link>,
-      options
+    const wrapper = mount(
+      <Router history={history}>
+        <RouteLink href="/gator" to={route}>
+          Gator
+        </RouteLink>
+      </Router>
     )
     clickEvent.metaKey = true
-    wrapper.simulate('click', clickEvent)
+    wrapper.find('a').simulate('click', clickEvent)
+    await Promise.resolve()
     expect(preventDefault).not.toHaveBeenCalled()
-    setTimeout(() => {
-      expect(push).not.toHaveBeenCalled()
-      done()
-    })
+    expect(push).not.toHaveBeenCalled()
   })
 
-  test('Can fetch data and trigger a route asynchronously', done => {
+  test('Can fetch data and trigger a route asynchronously', async () => {
     const fetch = () => Promise.resolve()
     const to = 'some/route'
-    const wrapper = wrap(
-      <RouteLink fetch={fetch} to={to}>
-        Gator
-      </RouteLink>,
-      options
+    const wrapper = mount(
+      <Router history={history}>
+        <RouteLink fetch={fetch} to={to}>
+          Gator
+        </RouteLink>
+      </Router>
     )
-    wrapper.simulate('click', clickEvent)
+    wrapper.find('a').simulate('click', clickEvent)
+    await Promise.resolve()
     expect(preventDefault).toHaveBeenCalled()
-    setTimeout(() => {
-      expect(push).toHaveBeenCalledWith(to)
-      done()
-    })
+    expect(push).toHaveBeenCalledWith(to)
   })
 })
 

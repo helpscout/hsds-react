@@ -4,6 +4,7 @@ import KeypressListener from '../KeypressListener'
 import PortalWrapper from './PortalWrapper'
 import Keys from '../../constants/Keys'
 import { classNames } from '../../utilities/classNames'
+import { MemoryRouter } from 'react-router'
 
 jest.useFakeTimers()
 
@@ -36,16 +37,10 @@ const options = {
   timeout: 0,
 }
 
-const context = {
-  context: {
-    router: {},
-  },
-}
-
 describe('HOC', () => {
   test('Can create a component as a HOC', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
-    mount(<TestComponent isOpen />, context)
+    mount(<TestComponent isOpen />)
 
     const c = document.body.childNodes[0]
     expect(c.querySelector('button')).toBeTruthy()
@@ -55,7 +50,7 @@ describe('HOC', () => {
 describe('ClassName', () => {
   test('Can pass className to composed component', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
-    mount(<TestComponent className="ron" isOpen />, context)
+    mount(<TestComponent className="ron" isOpen />)
 
     const o = document.querySelector('.button')
     expect(o.classList.contains('ron')).toBeTruthy()
@@ -65,7 +60,7 @@ describe('ClassName', () => {
 describe('ID', () => {
   test('Adds default ID', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
-    const wrapper = mount(<TestComponent isOpen />, context)
+    const wrapper = mount(<TestComponent isOpen />)
 
     const comp = wrapper.find('Portal').first()
     expect(comp.props().id).toContain('PortalWrapper')
@@ -77,7 +72,7 @@ describe('ID', () => {
       timeout: 0,
     }
     const TestComponent = PortalWrapper(options)(TestButton)
-    const wrapper = mount(<TestComponent isOpen />, context)
+    const wrapper = mount(<TestComponent isOpen />)
 
     const comp = wrapper.find('Portal').first()
     expect(comp.props().id).toContain('Brick')
@@ -91,11 +86,10 @@ describe('Manager', () => {
       <div>
         <TestComponent isOpen />
         <TestComponent isOpen />
-      </div>,
-      context
+      </div>
     )
 
-    const o = wrapper.find(TestComponent).last()
+    const o = wrapper.find(TestComponent).last().children(0)
 
     o.instance().closePortal()
     expect(o.instance().state.isOpen).toBe(false)
@@ -107,10 +101,9 @@ describe('Manager', () => {
       <div>
         <TestComponent isOpen />
         <TestComponent isOpen />
-      </div>,
-      context
+      </div>
     )
-    const o = wrapper.find(TestComponent).first()
+    const o = wrapper.find(TestComponent).first().children(0)
 
     o.instance().closePortal()
     expect(o.instance().state.isOpen).toBe(true)
@@ -120,7 +113,7 @@ describe('Manager', () => {
 describe('isOpen', () => {
   test('Can open wrapped component with isOpen prop change to true', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
-    const wrapper = mount(<TestComponent />, context)
+    const wrapper = mount(<TestComponent />)
 
     const o = document.body.childNodes[0]
     expect(o).not.toBeTruthy()
@@ -133,7 +126,7 @@ describe('isOpen', () => {
 
   test('Can close wrapped component with isOpen prop change to false', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
-    const wrapper = mount(<TestComponent isOpen={false} timeout={0} />, context)
+    const wrapper = mount(<TestComponent isOpen={false} timeout={0} />)
 
     wrapper.setProps({ isOpen: true })
     expect(wrapper.find('Animate').first().props().in).toBe(true)
@@ -154,50 +147,32 @@ describe('Router', () => {
   })
 
   test('Does not render if the router shape is in valid', () => {
-    const context = {
-      context: {
-        router: {
-          history: {},
-          location: { pathname: '/different' },
-        },
-      },
-    }
     const TestComponent = PortalWrapper(options)(TestButton)
-    mount(<TestComponent path="/diff" timeout={0} />, context)
+    mount(<TestComponent path="/diff" timeout={0} />)
 
     const o = document.body.childNodes[0]
     expect(o).not.toBeTruthy()
   })
 
   test('Does not render if the route path does not match', () => {
-    const context = {
-      context: {
-        router: {
-          history: {
-            location: { pathname: '/different' },
-          },
-        },
-      },
-    }
     const TestComponent = PortalWrapper(options)(TestButton)
-    mount(<TestComponent path="/diff" timeout={0} />, context)
+    mount(
+      <MemoryRouter initialEntries={['/different']}>
+        <TestComponent path="/diff" timeout={0} />
+      </MemoryRouter>
+    )
 
     const o = document.body.childNodes[0]
     expect(o).not.toBeTruthy()
   })
 
   test('Renders if path matches router', () => {
-    const context = {
-      context: {
-        router: {
-          history: {
-            location: { pathname: '/test' },
-          },
-        },
-      },
-    }
     const TestComponent = PortalWrapper(options)(TestButton)
-    mount(<TestComponent path="/test" timeout={0} />, context)
+    mount(
+      <MemoryRouter initialEntries={['/test']}>
+        <TestComponent path="/test" timeout={0} />
+      </MemoryRouter>
+    )
 
     const o = document.body.childNodes[0]
     expect(o).toBeTruthy()
@@ -208,7 +183,7 @@ describe('Mounting', () => {
   test('Tracks mount status internally', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
     const wrapper = mount(<TestComponent timeout={0} />)
-    const o = wrapper.instance()
+    const o = wrapper.children(0).instance()
 
     expect(o._isMounted).toBe(true)
 
@@ -223,7 +198,7 @@ describe('Trigger', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
     const trigger = <button>Trigger</button>
     const wrapper = mount(<TestComponent timeout={0} trigger={trigger} />)
-    const o = wrapper.instance()
+    const o = wrapper.children(0).instance()
 
     expect(o.triggerComponent).toBeTruthy()
     expect(o.triggerNode).toBeTruthy()
@@ -233,7 +208,7 @@ describe('Trigger', () => {
     const TestComponent = PortalWrapper(options)(TestButton)
     const trigger = <button>Trigger</button>
     const wrapper = mount(<TestComponent timeout={0} trigger={trigger} />)
-    const o = wrapper.instance()
+    const o = wrapper.children(0).instance()
 
     wrapper.unmount()
 
@@ -404,13 +379,14 @@ describe('Closing', () => {
 
     const wrapper = mount(<WrappedComponent isOpen />)
 
-    expect(wrapper.state().isOpen).toBe(true)
+    const portalWrapperComponent = wrapper.children(0)
+    expect(portalWrapperComponent.state().isOpen).toBe(true)
 
-    wrapper.instance().handleOnEsc({
+    portalWrapperComponent.instance().handleOnEsc({
       stopPropagation: eventSpy,
     })
 
     expect(eventSpy).toHaveBeenCalled()
-    expect(wrapper.state().isOpen).toBe(false)
+    expect(portalWrapperComponent.state().isOpen).toBe(false)
   })
 })

@@ -309,7 +309,7 @@ describe('Link', () => {
   })
 
   test('Can render a link, if to is defined', () => {
-    const wrapper = mount(<Button to="/" />, { context: { router: {} } })
+    const wrapper = mount(<Button to="/" />)
 
     expect(wrapper.find('a').length).toBeTruthy()
     expect(wrapper.find('button').length).toBeFalsy()

@@ -1,8 +1,9 @@
-import React from 'react'
-import { render, waitFor } from '@testing-library/react'
+import React, { useEffect } from 'react'
+import { getByRole, render, waitFor } from '@testing-library/react'
 import user from '@testing-library/user-event'
 import Button from '../../Button'
 import Modal from '../index'
+import { MemoryRouter } from 'react-router'
 
 jest.useFakeTimers()
 
@@ -51,13 +52,13 @@ describe('Modal', () => {
 
     test('Refocuses the trigger on close', () => {
       const spy = jest.fn()
-      const { container } = render(
+      const { getByRole } = render(
         <Modal isOpen trigger={<Button onFocus={spy}>Click</Button>}>
           <div className="buddy">Santa!</div>
         </Modal>
       )
 
-      user.type(container, '{esc}')
+      user.type(getByRole('document'), '{esc}')
 
       expect(spy).toHaveBeenCalled()
     })
@@ -181,5 +182,39 @@ describe('Modal', () => {
         expect(document.querySelector('.third')).toBe(null)
       })
     })
+  })
+
+  test('should not recreate component when re-rendering and in Router context', async () => {
+    const mountMock = jest.fn()
+    const updateMock = jest.fn()
+    const TestComponent = ({ flag }) => {
+      useEffect(() => {
+        mountMock()
+      }, [])
+      useEffect(() => {
+        updateMock()
+      }, [flag])
+
+      return <div />
+    }
+
+    const { rerender } = render(
+      <MemoryRouter>
+        <Modal isOpen>
+          <TestComponent flag={true} />
+        </Modal>
+      </MemoryRouter>
+    )
+
+    rerender(
+      <MemoryRouter>
+        <Modal isOpen>
+          <TestComponent flag={false} />
+        </Modal>
+      </MemoryRouter>
+    )
+
+    expect(mountMock).toHaveBeenCalledTimes(1)
+    expect(updateMock).toHaveBeenCalledTimes(2)
   })
 })

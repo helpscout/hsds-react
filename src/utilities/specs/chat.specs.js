@@ -9,7 +9,7 @@ export default createSpec({
   isWaiting: faker.random.boolean(),
   message: faker.lorem.paragraph(),
   name: () => `${faker.name.firstName()()} ${faker.name.lastName()()}`,
-  newMessageCount: faker.random.number({ min: 0, max: 2 }),
+  newMessageCount: faker.datatype.number({ min: 0, max: 2 }),
   tags: () => TagSpec.generate(1, 10),
   timestamp: new Date().toISOString(),
 })
