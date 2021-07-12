@@ -47,8 +47,11 @@ export function isTogglerOfType(toggler, type) {
 
 export function itemToString(item) {
   if (item == null || checkIfGroupOrDividerItem(item)) return ''
+  // Items can be simple strings
   if (isString(item)) return item
+
   if (isObject(item)) {
+    // Object items should have 'label' or 'value', obtain which one is used per item
     const itemContentKeyName = getItemContentKeyName(item)
 
     return itemContentKeyName ? item[itemContentKeyName] : ''
