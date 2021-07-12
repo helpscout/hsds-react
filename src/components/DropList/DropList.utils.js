@@ -46,7 +46,7 @@ export function isTogglerOfType(toggler, type) {
 }
 
 export function itemToString(item) {
-  if (item == null) return ''
+  if (item == null || checkIfGroupOrDividerItem(item)) return ''
   if (isObject(item)) return item[getItemContentKeyName(item)]
   return item
 }
