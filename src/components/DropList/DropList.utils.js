@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { isDefined, isObject } from '../../utilities/is'
+import { isDefined, isObject, isString } from '../../utilities/is'
 import { ITEM_TYPES } from './DropList.constants'
 import { SelectTag } from './DropList.togglers'
 import { ListItemUI, EmptyListUI } from './DropList.css'
@@ -47,8 +47,14 @@ export function isTogglerOfType(toggler, type) {
 
 export function itemToString(item) {
   if (item == null || checkIfGroupOrDividerItem(item)) return ''
-  if (isObject(item)) return item[getItemContentKeyName(item)]
-  return item
+  if (isString(item)) return item
+  if (isObject(item)) {
+    const itemContentKeyName = getItemContentKeyName(item)
+
+    return itemContentKeyName ? item[itemContentKeyName] : ''
+  }
+
+  return ''
 }
 
 export function parseSelectionFromProps({ withMultipleSelection, selection }) {
