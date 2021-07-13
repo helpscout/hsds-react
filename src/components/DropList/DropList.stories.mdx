@@ -543,6 +543,9 @@ Sometimes is useful to clear the selected item on select.
     >
       <DropList
         clearOnSelect
+        onSelect={selection => {
+          console.log('on select called with:', selection)
+        }}
         items={regularItems}
         toggler={<SimpleButton text="Button Toggler" />}
       />
