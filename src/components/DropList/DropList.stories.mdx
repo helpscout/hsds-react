@@ -526,6 +526,30 @@ function renderCustomListItem({
   </Story>
 </Canvas>
 
+### Clear on Select
+
+Sometimes is useful to clear the selected item on select.
+
+<Canvas>
+  <Story name="Clear on select">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        clearOnSelect
+        items={regularItems}
+        toggler={<SimpleButton text="Button Toggler" />}
+      />
+    </div>
+  </Story>
+</Canvas>
+
 ### Multiple selection
 
 Depending on your use case, you might want to set `closeOnSelection = false` when multiple selection is enabled.

@@ -36,6 +36,7 @@ export function stateReducerCommon({
     case `${COMBOBOX}.${useCombobox.stateChangeTypes.InputKeyDownEnter}`:
     case `${COMBOBOX}.${useCombobox.stateChangeTypes.ItemClick}`:
     case `${SELECT}.${useSelect.stateChangeTypes.MenuKeyDownEnter}`:
+    case `${SELECT}.${useSelect.stateChangeTypes.MenuKeyDownSpaceButton}`:
     case `${SELECT}.${useSelect.stateChangeTypes.ItemClick}`:
       if (withMultipleSelection) {
         const newState = {
@@ -118,6 +119,7 @@ export function onIsOpenChangeCommon({
   switch (type) {
     case `${COMBOBOX}.${useCombobox.stateChangeTypes.InputKeyDownEnter}`:
     case `${COMBOBOX}.${useCombobox.stateChangeTypes.ItemClick}`:
+    case `${SELECT}.${useSelect.stateChangeTypes.MenuKeyDownSpaceButton}`:
     case `${SELECT}.${useSelect.stateChangeTypes.MenuKeyDownEnter}`:
     case `${SELECT}.${useSelect.stateChangeTypes.ItemClick}`:
       closeOnSelection && toggleOpenedState(false)

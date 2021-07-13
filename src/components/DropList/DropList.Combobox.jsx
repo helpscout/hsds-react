@@ -21,6 +21,7 @@ import ListItem, { generateListItemKey } from './DropList.ListItem'
 import { DROPLIST_MENULIST, VARIANTS } from './DropList.constants'
 
 function Combobox({
+  clearOnSelect = false,
   closeOnBlur = true,
   closeOnSelection = true,
   customEmptyList = null,
@@ -86,6 +87,11 @@ function Combobox({
       switch (type) {
         case useCombobox.stateChangeTypes.InputBlur:
           onMenuBlur()
+          break
+
+        case useCombobox.stateChangeTypes.InputKeyDownEnter:
+        case useCombobox.stateChangeTypes.ItemClick:
+          clearOnSelect && handleSelectedItemChange({ selectedItem: null })
           break
 
         default:

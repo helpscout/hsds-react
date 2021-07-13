@@ -16,6 +16,7 @@ import ListItem, { generateListItemKey } from './DropList.ListItem'
 import { DROPLIST_MENULIST, VARIANTS } from './DropList.constants'
 
 function Select({
+  clearOnSelect = false,
   closeOnBlur = true,
   closeOnSelection = true,
   customEmptyList = null,
@@ -69,6 +70,12 @@ function Select({
       switch (type) {
         case useSelect.stateChangeTypes.MenuBlur:
           onMenuBlur()
+          break
+
+        case useSelect.stateChangeTypes.MenuKeyDownSpaceButton:
+        case useSelect.stateChangeTypes.MenuKeyDownEnter:
+        case useSelect.stateChangeTypes.ItemClick:
+          clearOnSelect && handleSelectedItemChange({ selectedItem: null })
           break
 
         default:

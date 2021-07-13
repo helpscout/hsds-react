@@ -796,6 +796,7 @@ describe('Selection', () => {
       expect(onSelectSpy).toHaveBeenCalledWith(itemToSelect, itemToSelect)
     })
   })
+
   test('should select an item when clicked (combobox string version)', async () => {
     const onSelectSpy = jest.fn()
     const { getByText } = render(
@@ -841,6 +842,91 @@ describe('Selection', () => {
       ).toBeTruthy()
       expect(onSelect).toHaveBeenCalledWith(itemToSelect, itemToSelect)
     })
+  })
+
+  test('should clear selection if clearOnSelect is enabled (select)', async () => {
+    const onSelectSpy = jest.fn()
+    const { getByRole, getByText } = render(
+      <DropList
+        clearOnSelect
+        onSelect={onSelectSpy}
+        items={someItems}
+        toggler={<SimpleButton text="Button Toggler" />}
+      />
+    )
+
+    user.click(getByRole('button'))
+
+    const itemToSelect = someItems[3]
+
+    user.click(getByText(itemToSelect.label).parentElement)
+
+    await waitFor(() => {
+      // Item should not have the selected styles
+      expect(
+        getByText(itemToSelect.label).parentElement.classList.contains(
+          'is-selected'
+        )
+      ).toBeFalsy()
+
+      // Click it again
+      user.click(getByText(itemToSelect.label).parentElement)
+    })
+
+    // Again, item should not have the selected styles
+    expect(
+      getByText(itemToSelect.label).parentElement.classList.contains(
+        'is-selected'
+      )
+    ).toBeFalsy()
+
+    // On normal circumstances onSelect only gets called once
+    // if you select the same item, with clearOnSelect, it gets called
+    // every time (twice in this case)
+    expect(onSelectSpy).toHaveBeenCalledTimes(2)
+  })
+
+  test('should clear selection if clearOnSelect is enabled (combobox)', async () => {
+    const onSelectSpy = jest.fn()
+    const { getByRole, getByText } = render(
+      <DropList
+        variant="combobox"
+        clearOnSelect
+        onSelect={onSelectSpy}
+        items={someItems}
+        toggler={<SimpleButton text="Button Toggler" />}
+      />
+    )
+
+    user.click(getByRole('button'))
+
+    const itemToSelect = someItems[3]
+
+    user.click(getByText(itemToSelect.label).parentElement)
+
+    await waitFor(() => {
+      // Item should not have the selected styles
+      expect(
+        getByText(itemToSelect.label).parentElement.classList.contains(
+          'is-selected'
+        )
+      ).toBeFalsy()
+
+      // Click it again
+      user.click(getByText(itemToSelect.label).parentElement)
+    })
+
+    // Again, item should not have the selected styles
+    expect(
+      getByText(itemToSelect.label).parentElement.classList.contains(
+        'is-selected'
+      )
+    ).toBeFalsy()
+
+    // On normal circumstances onSelect only gets called once
+    // if you select the same item, with clearOnSelect, it gets called
+    // every time (twice in this case)
+    expect(onSelectSpy).toHaveBeenCalledTimes(2)
   })
 
   test('should multi-select', async () => {

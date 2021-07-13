@@ -33,6 +33,7 @@ import Select from './DropList.Select'
 function DropListManager({
   animateOptions = {},
   autoSetComboboxAt = 0,
+  clearOnSelect = false,
   closeOnBlur = true,
   closeOnClickOutside = true,
   closeOnSelection = true,
@@ -173,6 +174,11 @@ function DropListManager({
   }
 
   function handleSelectedItemChange({ selectedItem }) {
+    if (selectedItem == null) {
+      setSelectedItem(null)
+      return
+    }
+
     if (selectedItem.isDisabled) {
       return
     }
@@ -244,6 +250,7 @@ function DropListManager({
       render={() => (
         <Animate {...animateProps} in={isOpen}>
           <DropListVariant
+            clearOnSelect={clearOnSelect}
             closeOnBlur={closeOnBlur}
             closeOnSelection={closeOnSelection}
             customEmptyList={customEmptyList}
@@ -298,6 +305,8 @@ DropListManager.propTypes = {
   animateOptions: PropTypes.object,
   /** When the number of items is larger than this number, automatically set the variant to combobox */
   autoSetComboboxAt: PropTypes.number,
+  /** Clears selected item on select */
+  clearOnSelect: PropTypes.bool,
   /** Whether to close the DropList on blur (useful when debugging) */
   closeOnBlur: PropTypes.bool,
   /** Whether to close the DropList when clicking outside the droplist */
