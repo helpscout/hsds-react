@@ -35,6 +35,26 @@ describe('DropList', () => {
     })
   })
 
+  test('Makes droplist toggler enabled by default', async () => {
+    const { getByRole } = render(<ActionSelect items={mockItems} />)
+
+    await waitFor(() => expect(getByRole('button')).not.toBeDisabled())
+  })
+
+  test('Makes droplist toggler disabled', async () => {
+    const { getByRole } = render(<ActionSelect items={mockItems} disabled />)
+
+    await waitFor(() => expect(getByRole('button')).toBeDisabled())
+  })
+
+  test('Provides ID to the toggler', async () => {
+    const { getByRole } = render(<ActionSelect items={mockItems} id="123" />)
+
+    await waitFor(() =>
+      expect(getByRole('button')).toHaveAttribute('id', '123')
+    )
+  })
+
   test('DropList Selection', async () => {
     const onSelectSpy = jest.fn()
     const { getByRole, getAllByRole, getByTestId } = render(

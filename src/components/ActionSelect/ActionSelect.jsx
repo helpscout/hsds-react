@@ -128,6 +128,8 @@ export class ActionSelect extends React.PureComponent {
       onAnimationUpdate,
       onResize,
       shouldRefocusOnClose,
+      disabled,
+      id,
     } = this.props
     const { isOpen, resizeCount, selection } = this.state
 
@@ -144,7 +146,13 @@ export class ActionSelect extends React.PureComponent {
             items={items}
             onOpenedStateChange={this.handleOnOpenClose}
             onSelect={this.handleOnSelect}
-            toggler={<SelectTag text={getSelectTagText(selection, items)} />}
+            toggler={
+              <SelectTag
+                text={getSelectTagText(selection, items)}
+                disabled={disabled}
+                id={id}
+              />
+            }
             selection={selection}
           />
         </div>
@@ -220,6 +228,10 @@ ActionSelect.propTypes = {
   selectedItem: PropTypes.object,
   shouldRefocusOnClose: PropTypes.func,
   shouldScrollIntoView: PropTypes.func,
+  /** Indicates that ActionSelect is disabled */
+  disabled: PropTypes.bool,
+  /** Id of the trigger element */
+  id: PropTypes.string,
 }
 
 export default ActionSelect
