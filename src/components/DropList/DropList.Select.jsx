@@ -28,6 +28,7 @@ function Select({
   menuCSS,
   onMenuBlur = noop,
   onMenuFocus = noop,
+  onListItemSelectEvent = noop,
   renderCustomListItem = null,
   selectedItem = null,
   selectedItems,
@@ -116,6 +117,9 @@ function Select({
         item,
         index,
         onClick: event => {
+          event.persist()
+          onListItemSelectEvent({ listItemNode: event.target, event })
+
           if (item.isDisabled) {
             event.nativeEvent.preventDownshiftDefault = true
             return
@@ -127,7 +131,7 @@ function Select({
     return <ListItem {...itemProps} />
   }
 
-  function handleSidewaysKeyNavigation(event) {
+  function handleMenuKeyDown(event) {
     if (enableLeftRightNavigation) {
       if (event.key === 'ArrowRight') {
         if (highlightedIndex !== items.length - 1) {
@@ -141,6 +145,17 @@ function Select({
         }
       }
     }
+
+    if (event.key === 'Enter' || event.key === 'Space') {
+      // Since the event happens on the Menu and not the list item
+      // we look for the selected item and send it to onListItemSelectEvent as listItemNode
+      event.target.querySelectorAll('.DropListItem').forEach(item => {
+        if (item.classList.contains('is-highlighted')) {
+          event.persist()
+          onListItemSelectEvent({ listItemNode: item, event })
+        }
+      })
+    }
   }
 
   return (
@@ -153,7 +168,7 @@ function Select({
       <MenuListUI
         className={`${DROPLIST_MENULIST} MenuList-Select`}
         {...getMenuProps({
-          onKeyDown: handleSidewaysKeyNavigation,
+          onKeyDown: handleMenuKeyDown,
           onFocus: e => {
             onMenuFocus(e)
           },

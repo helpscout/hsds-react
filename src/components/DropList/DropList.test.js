@@ -729,9 +729,11 @@ describe('Togglers', () => {
 describe('Selection', () => {
   test('should select an item when clicked (string version)', async () => {
     const onSelectSpy = jest.fn()
+    const onListItemSelectEventSpy = jest.fn()
     const { getByText, getByRole } = render(
       <DropList
         onSelect={onSelectSpy}
+        onListItemSelectEvent={onListItemSelectEventSpy}
         items={beatles}
         toggler={<SimpleButton text="Button Toggler" />}
       />
@@ -749,6 +751,12 @@ describe('Selection', () => {
         getByText('Paul').parentElement.classList.contains('is-selected')
       ).toBeTruthy()
       expect(onSelectSpy).toHaveBeenCalledWith('Paul', 'Paul')
+      expect(onListItemSelectEventSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          event: expect.objectContaining({ type: 'click' }),
+          listItemNode: getByText('Paul').parentElement,
+        })
+      )
       expect(toggler.getAttribute('aria-expanded')).toBe('false')
     })
 
@@ -775,10 +783,12 @@ describe('Selection', () => {
 
   test('should select an item when clicked (object version)', async () => {
     const onSelectSpy = jest.fn()
+    const onListItemSelectEventSpy = jest.fn()
     const { getByText } = render(
       <DropList
         isMenuOpen
         onSelect={onSelectSpy}
+        onListItemSelectEvent={onListItemSelectEventSpy}
         items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
       />
@@ -794,15 +804,23 @@ describe('Selection', () => {
         )
       ).toBeTruthy()
       expect(onSelectSpy).toHaveBeenCalledWith(itemToSelect, itemToSelect)
+      expect(onListItemSelectEventSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          event: expect.objectContaining({ type: 'click' }),
+          listItemNode: getByText(itemToSelect.label).parentElement,
+        })
+      )
     })
   })
 
   test('should select an item when clicked (combobox string version)', async () => {
     const onSelectSpy = jest.fn()
+    const onListItemSelectEventSpy = jest.fn()
     const { getByText } = render(
       <DropList
         isMenuOpen
         onSelect={onSelectSpy}
+        onListItemSelectEvent={onListItemSelectEventSpy}
         items={beatles}
         toggler={<SimpleButton text="Button Toggler" />}
         variant="combobox"
@@ -816,15 +834,23 @@ describe('Selection', () => {
         getByText('Paul').parentElement.classList.contains('is-selected')
       ).toBeTruthy()
       expect(onSelectSpy).toHaveBeenCalledWith('Paul', 'Paul')
+      expect(onListItemSelectEventSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          event: expect.objectContaining({ type: 'click' }),
+          listItemNode: getByText('Paul').parentElement,
+        })
+      )
     })
   })
 
   test('should select an item when clicked (combobox object version)', async () => {
     const onSelect = jest.fn()
+    const onListItemSelectEventSpy = jest.fn()
     const { getByText } = render(
       <DropList
         isMenuOpen
         onSelect={onSelect}
+        onListItemSelectEvent={onListItemSelectEventSpy}
         items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
         variant="combobox"
@@ -841,6 +867,12 @@ describe('Selection', () => {
         )
       ).toBeTruthy()
       expect(onSelect).toHaveBeenCalledWith(itemToSelect, itemToSelect)
+      expect(onListItemSelectEventSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          event: expect.objectContaining({ type: 'click' }),
+          listItemNode: getByText(itemToSelect.label).parentElement,
+        })
+      )
     })
   })
 

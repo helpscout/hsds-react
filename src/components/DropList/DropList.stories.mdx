@@ -98,6 +98,29 @@ function onSelect(selection, clickedItem) {}
 
 <br />
 
+#### onListItemSelectEvent
+
+In downshift item selection other than click is not handled directly on the list item nodes, in Select the events are handled on the Menu and in Combobox they are handled from the input. Because of this there is no access to any list item "event" on selection.
+
+Most of the time you don't care _how_ the item was selected, but if you need to, you can use this callback where you'll find the `event` and get the `event.type`.
+
+For this we have added `onListItemSelectEvent` which fires on any selection event (click, keydown). This callback gives you access to the actual List Item DOM node that was selected, and the original event.
+
+The original click event will give you the actual list item, so `listItemNode === e.target`
+
+Notice that on keyboard events `e.target` will be either the Menu (Select variant) or the Input (Combobox variant)
+
+```js
+/**
+ *
+ * @param {object} event Original event
+ * @param {DOMNode} listItemNode The item that was selected
+ */
+function onListItemSelectEvent({ event, listItemNode }) {}
+```
+
+<br />
+
 ## Example
 
 <Canvas>
@@ -180,6 +203,10 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
     >
       <DropList
         isMenuOpen={boolean('Is Menu Open', false)}
+        onListItemSelectEvent={({ event, listItemNode }) => {
+          console.log('event', event)
+          console.log('listItemNode', listItemNode)
+        }}
         selection={select(
           'Selection',
           {
