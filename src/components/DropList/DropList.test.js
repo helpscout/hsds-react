@@ -813,6 +813,74 @@ describe('Selection', () => {
     })
   })
 
+  test('should select an item when enter key pressed (object version)', async () => {
+    const onSelectSpy = jest.fn()
+    const onListItemSelectEventSpy = jest.fn()
+    const { container, getByText, getByRole } = render(
+      <DropList
+        onSelect={onSelectSpy}
+        onListItemSelectEvent={onListItemSelectEventSpy}
+        items={someItems}
+        toggler={<SimpleButton text="Button Toggler" />}
+      />
+    )
+    const itemToSelect = someItems[1]
+
+    user.click(getByRole('button'))
+    user.type(container.querySelector('.MenuList'), '{arrowdown}')
+    user.type(container.querySelector('.MenuList'), '{arrowdown}')
+    user.type(container.querySelector('.MenuList'), '{enter}')
+
+    await waitFor(() => {
+      expect(
+        getByText(itemToSelect.label).parentElement.classList.contains(
+          'is-selected'
+        )
+      ).toBeTruthy()
+      expect(onSelectSpy).toHaveBeenCalledWith(itemToSelect, itemToSelect)
+      expect(onListItemSelectEventSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          event: expect.objectContaining({ type: 'keydown' }),
+          listItemNode: getByText(itemToSelect.label).parentElement,
+        })
+      )
+    })
+  })
+
+  test('should select an item when space key pressed (object version)', async () => {
+    const onSelectSpy = jest.fn()
+    const onListItemSelectEventSpy = jest.fn()
+    const { container, getByText, getByRole } = render(
+      <DropList
+        onSelect={onSelectSpy}
+        onListItemSelectEvent={onListItemSelectEventSpy}
+        items={someItems}
+        toggler={<SimpleButton text="Button Toggler" />}
+      />
+    )
+    const itemToSelect = someItems[1]
+
+    user.click(getByRole('button'))
+    user.type(container.querySelector('.MenuList'), '{arrowdown}')
+    user.type(container.querySelector('.MenuList'), '{arrowdown}')
+    user.type(container.querySelector('.MenuList'), '{space}')
+
+    await waitFor(() => {
+      expect(
+        getByText(itemToSelect.label).parentElement.classList.contains(
+          'is-selected'
+        )
+      ).toBeTruthy()
+      expect(onSelectSpy).toHaveBeenCalledWith(itemToSelect, itemToSelect)
+      expect(onListItemSelectEventSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          event: expect.objectContaining({ type: 'keydown' }),
+          listItemNode: getByText(itemToSelect.label).parentElement,
+        })
+      )
+    })
+  })
+
   test('should select an item when clicked (combobox string version)', async () => {
     const onSelectSpy = jest.fn()
     const onListItemSelectEventSpy = jest.fn()
@@ -870,6 +938,41 @@ describe('Selection', () => {
       expect(onListItemSelectEventSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           event: expect.objectContaining({ type: 'click' }),
+          listItemNode: getByText(itemToSelect.label).parentElement,
+        })
+      )
+    })
+  })
+
+  test('should select an item when enter key pressed (combobox object version)', async () => {
+    const onSelectSpy = jest.fn()
+    const onListItemSelectEventSpy = jest.fn()
+    const { container, getByText, getByRole } = render(
+      <DropList
+        variant="combobox"
+        onSelect={onSelectSpy}
+        onListItemSelectEvent={onListItemSelectEventSpy}
+        items={someItems}
+        toggler={<SimpleButton text="Button Toggler" />}
+      />
+    )
+    const itemToSelect = someItems[1]
+
+    user.click(getByRole('button'))
+    user.type(container.querySelector('input'), '{arrowdown}')
+    user.type(container.querySelector('input'), '{arrowdown}')
+    user.type(container.querySelector('input'), '{enter}')
+
+    await waitFor(() => {
+      expect(
+        getByText(itemToSelect.label).parentElement.classList.contains(
+          'is-selected'
+        )
+      ).toBeTruthy()
+      expect(onSelectSpy).toHaveBeenCalledWith(itemToSelect, itemToSelect)
+      expect(onListItemSelectEventSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          event: expect.objectContaining({ type: 'keydown' }),
           listItemNode: getByText(itemToSelect.label).parentElement,
         })
       )

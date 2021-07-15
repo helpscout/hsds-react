@@ -146,7 +146,7 @@ function Select({
       }
     }
 
-    if (event.key === 'Enter' || event.key === 'Space') {
+    if (event.key === 'Enter' || event.key === ' ') {
       // Since the event happens on the Menu and not the list item
       // we look for the selected item and send it to onListItemSelectEvent as listItemNode
       event.target.querySelectorAll('.DropListItem').forEach(item => {
