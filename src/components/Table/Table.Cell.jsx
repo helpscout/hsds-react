@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import get from 'lodash.get'
 import Truncate from '../Truncate'
 import { CellUI } from './Table.css'
 import { TABLE_CLASSNAME } from './Table'
@@ -11,7 +12,7 @@ export default class TableCell extends React.PureComponent {
     const cellData = {}
 
     for (const colKey of column.columnKey) {
-      cellData[colKey] = row[colKey]
+      cellData[colKey.replaceAll('.', '_')] = get(row, colKey)
     }
 
     return cellData
@@ -36,15 +37,16 @@ export default class TableCell extends React.PureComponent {
 
   renderSingleColumnCell = () => {
     const { column, row } = this.props
+    const cellContent = get(row, column.columnKey)
 
     return (
       <CellUI align={column.align} className={`${TABLE_CLASSNAME}__Cell`}>
         {column.renderCell ? (
           column.renderCell({
-            [column.columnKey]: row[column.columnKey],
+            [column.columnKey]: cellContent,
           })
         ) : (
-          <Truncate>{row[column.columnKey]}</Truncate>
+          <Truncate>{cellContent}</Truncate>
         )}
       </CellUI>
     )

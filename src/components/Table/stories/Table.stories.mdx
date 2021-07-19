@@ -5,6 +5,7 @@ import {
   defaultColumns,
   compoundColumns,
 } from '../Table.testUtils'
+import ConvoList from './ConvoList'
 import TableWithPagination from './TableWithPagination'
 import TableWithSorting from './TableWithSorting'
 
@@ -162,5 +163,13 @@ const purpleTheme = {
       data={createFakeCustomers({ amount: 10 })}
       maxRowsToDisplay={4}
     />
+  </Story>
+</Canvas>
+
+#### Convo List
+
+<Canvas>
+  <Story name="Convo List">
+    <ConvoList />
   </Story>
 </Canvas>
