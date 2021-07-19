@@ -1,43 +1,71 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import Condition from './Condition'
+import userEvent from '@testing-library/user-event'
 
-describe('Select', () => {
-  test('Renders a Select with options', () => {
+describe('DropList', () => {
+  test('Renders a DropList with options', async () => {
     const options = [
       { value: 'brick', label: 'Brick' },
       { value: 'ron', label: 'Ron' },
     ]
-    const { getAllByRole } = render(<Condition options={options} />)
-    const optionsNodes = getAllByRole('option')
+    render(<Condition options={options} />)
 
-    expect(optionsNodes.length).toBe(2)
-    expect(optionsNodes[0].textContent).toBe('Brick')
+    userEvent.click(
+      screen.getByRole('button', { name: 'conditions toggle menu' })
+    )
+
+    await waitFor(() => expect(screen.getAllByRole('option').length).toBe(2))
+    expect(screen.getAllByRole('option')[0].textContent).toBe('Brick')
   })
 
-  test('Can set the value of the Select', () => {
+  test('Can set the value of the DropList', () => {
     const options = [
       { value: 'brick', label: 'Brick' },
       { value: 'ron', label: 'Ron' },
     ]
-    const { container } = render(<Condition options={options} value="ron" />)
+    render(<Condition options={options} value="ron" />)
 
-    expect(container.querySelector('select').value).toBe('ron')
+    expect(
+      screen.getByRole('button', { name: 'conditions toggle menu' })
+    ).toHaveTextContent('Ron')
   })
 
-  test('Does not render select when flag provided', () => {
+  test('Can change selected value', async () => {
+    const options = [
+      { value: 'brick', label: 'Brick' },
+      { value: 'ron', label: 'Ron' },
+    ]
+    const mock = jest.fn()
+    render(<Condition options={options} value="ron" onChange={mock} />)
+    userEvent.click(
+      screen.getByRole('button', { name: 'conditions toggle menu' })
+    )
+
+    await waitFor(() => expect(screen.getAllByRole('option').length).toBe(2))
+
+    userEvent.click(screen.getByRole('option', { name: 'Brick' }))
+
+    await waitFor(() => expect(mock).toHaveBeenCalledWith('brick'))
+  })
+
+  test('Does not render DropList when flag provided', () => {
     const options = [{ value: 'brick', label: 'Brick' }]
 
     render(<Condition options={options} value="brick" noSelect={true} />)
 
-    expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('button', { name: 'conditions toggle menu' })
+    ).not.toBeInTheDocument()
   })
 
-  test('Renders select when flag is false', () => {
+  test('Renders DropList when flag is false', () => {
     const options = [{ value: 'brick', label: 'Brick' }]
 
     render(<Condition options={options} value="brick" noSelect={false} />)
 
-    expect(screen.getByRole('combobox')).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'conditions toggle menu' })
+    ).toBeInTheDocument()
   })
 })
