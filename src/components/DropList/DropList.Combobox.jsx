@@ -33,6 +33,7 @@ function Combobox({
   menuCSS,
   onMenuBlur = noop,
   onMenuFocus = noop,
+  onListItemSelectEvent = noop,
   handleSelectedItemChange = noop,
   renderCustomListItem = null,
   toggleOpenedState = noop,
@@ -140,6 +141,9 @@ function Combobox({
         item,
         index,
         onClick: event => {
+          event.persist()
+          onListItemSelectEvent({ listItemNode: event.target, event })
+
           if (item.isDisabled) {
             event.nativeEvent.preventDownshiftDefault = true
             return
@@ -164,13 +168,26 @@ function Combobox({
           {...getInputProps({
             className: 'DropList__Combobox__input',
             ref: inputEl,
-            onFocus: e => {
-              onMenuFocus(e)
+            onFocus: event => {
+              onMenuFocus(event)
             },
-            onKeyDown: e => {
-              if (e.key === 'Tab') {
-                e.preventDefault()
+            onKeyDown: event => {
+              if (event.key === 'Tab') {
+                event.preventDefault()
                 toggleOpenedState(false)
+              }
+              if (event.key === 'Enter') {
+                const droplistMenu =
+                  event.target.parentElement.nextElementSibling
+
+                // Since the event happens on the input and not the list item
+                // we look for the selected item and send it to onListItemSelectEvent as listItemNode
+                droplistMenu.querySelectorAll('.DropListItem').forEach(item => {
+                  if (item.classList.contains('is-highlighted')) {
+                    event.persist()
+                    onListItemSelectEvent({ listItemNode: item, event })
+                  }
+                })
               }
             },
           })}

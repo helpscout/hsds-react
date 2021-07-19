@@ -46,6 +46,7 @@ function DropListManager({
   menuCSS,
   onMenuBlur = noop,
   onMenuFocus = noop,
+  onListItemSelectEvent = noop,
   onOpenedStateChange = noop,
   onSelect = noop,
   renderCustomListItem = null,
@@ -262,6 +263,7 @@ function DropListManager({
             menuCSS={menuCSS}
             onMenuBlur={onMenuBlur}
             onMenuFocus={onMenuFocus}
+            onListItemSelectEvent={onListItemSelectEvent}
             renderCustomListItem={renderCustomListItem}
             selectedItem={selectedItem}
             selectedItems={selectedItems}
@@ -333,6 +335,8 @@ DropListManager.propTypes = {
   onMenuBlur: PropTypes.func,
   /** Callback that fires when the menu gets focus */
   onMenuFocus: PropTypes.func,
+  /** Downshift does not provide the event on select, this callback fires when selecting an item (clicking, keydown enter (and space on Select variant)), gives you the DOM selected item as listItemNode and the original event */
+  onListItemSelectEvent: PropTypes.func,
   /** Callback that fires whenever the DropList opens and closes */
   onOpenedStateChange: PropTypes.func,
   /** Callback that fires whenever the selection in the DropList changes, signature: `onSelect(selection, clickedItem)` */
