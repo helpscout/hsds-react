@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import { FlexyContext } from '../Flexy/Flexy'
-import Select from '../Select'
 import And from './Condition.And'
 import AddButton from './Condition.AddButton'
 import Operator from './Condition.Operator'
 import { classNames } from '../../utilities/classNames'
 import { noop } from '../../utilities/other'
+import DropList from '../DropList/DropList'
+import { SelectTag } from '../DropList/DropList.togglers'
 
 import {
   ConditionContentUI,
@@ -46,6 +47,14 @@ export class Condition extends React.PureComponent {
     return foundOption && foundOption.label
   }
 
+  getSelectedItem(options, value) {
+    return options.find(option => option.value === value)
+  }
+
+  handleConditionSelect = selection => {
+    return selection && this.props.onChange(selection.value)
+  }
+
   render() {
     const {
       children,
@@ -76,7 +85,12 @@ export class Condition extends React.PureComponent {
                   {this.getSelectedLabel(options, value)}
                 </SelectedOptionUI>
               ) : (
-                <Select onChange={onChange} options={options} value={value} />
+                <DropList
+                  onSelect={this.handleConditionSelect}
+                  items={options}
+                  selection={this.getSelectedItem(options, value)}
+                  toggler={<SelectTag aria-label="conditions toggle menu" />}
+                />
               )}
             </OptionsWrapperUI>
             <Flexy.Block data-cy="ConditionInnerContentWrapper">
@@ -105,11 +119,11 @@ Condition.propTypes = {
   innerRef: PropTypes.func,
   /** Renders the "And" operator (top). */
   isWithAnd: PropTypes.bool,
-  /** Collection of condition values, rendered by a [Select](../Select). */
+  /** Collection of condition values, rendered by a [DropList](../DropList). */
   options: PropTypes.arrayOf(PropTypes.any),
-  /** Callback when the `option` [Select](../Select) has changed. */
+  /** Callback when the `option` [DropList](../DropList) has changed. */
   onChange: PropTypes.func,
-  /** The value of the condition ([Select](../Select)). */
+  /** The value of the condition ([DropList](../DropList)). */
   value: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,

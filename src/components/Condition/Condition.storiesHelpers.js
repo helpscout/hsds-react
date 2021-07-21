@@ -6,9 +6,10 @@ import ConditionList from '../ConditionList'
 import ConditionField from '../ConditionField'
 import Flexy from '../Flexy'
 import Input from '../Input'
-import Select from '../Select'
 
 import { boolean } from '@storybook/addon-knobs'
+import DropList from '../DropList/DropList'
+import { SelectTag } from '../DropList/DropList.togglers'
 
 export default {
   component: Condition,
@@ -79,45 +80,49 @@ const fadeOutAnimation = ({ animate, node }) => {
   }).finished
 }
 
-const TimeOnPageCondition = ({ error, onRemove, value, time, ...rest }) => (
-  <Condition options={options} value="time-on-page" {...rest}>
-    <ConditionField onRemove={onRemove}>
-      <ConditionField.Item>
-        <ConditionField.Static>Show after</ConditionField.Static>
-      </ConditionField.Item>
-      <ConditionField.Block>
-        <Flexy gap="xs">
-          <Flexy.Item>
-            <Input
-              inputType="number"
-              maxLength={3}
-              autoComplete="off"
-              width={error ? 75 : 60}
-              value={value || ''}
-              state={error ? 'error' : ''}
-            />
-          </Flexy.Item>
-          <Flexy.Block>
-            <Select
-              options={[
-                {
-                  label: 'Seconds',
-                  value: 'seconds',
-                },
-                {
-                  label: 'Minutes',
-                  value: 'minutes',
-                },
-              ]}
-              width={160}
-              value={time}
-            />
-          </Flexy.Block>
-        </Flexy>
-      </ConditionField.Block>
-    </ConditionField>
-  </Condition>
-)
+const TimeOnPageCondition = ({ error, onRemove, value, time, ...rest }) => {
+  const items = [
+    {
+      label: 'Seconds',
+      value: 'seconds',
+    },
+    {
+      label: 'Minutes',
+      value: 'minutes',
+    },
+  ]
+  return (
+    <Condition options={options} value="time-on-page" {...rest}>
+      <ConditionField onRemove={onRemove}>
+        <ConditionField.Item>
+          <ConditionField.Static>Show after</ConditionField.Static>
+        </ConditionField.Item>
+        <ConditionField.Block>
+          <Flexy gap="xs">
+            <Flexy.Item>
+              <Input
+                inputType="number"
+                maxLength={3}
+                autoComplete="off"
+                width={error ? 75 : 60}
+                value={value || ''}
+                state={error ? 'error' : ''}
+              />
+            </Flexy.Item>
+            <Flexy.Block>
+              <DropList
+                items={items}
+                width={160}
+                value={items.find(item => item.value === time)}
+                toggler={<SelectTag />}
+              />
+            </Flexy.Block>
+          </Flexy>
+        </ConditionField.Block>
+      </ConditionField>
+    </Condition>
+  )
+}
 
 const PageViewCondition = ({ error, onRemove, value, ...rest }) => (
   <Condition options={options} value="page-views" {...rest}>
@@ -233,8 +238,17 @@ class SpecificUrlCondition extends React.Component {
   render() {
     const isAddEnabled = this.state.urls.length <= 2
     const removeTitle = this.state.urls.length === 1 ? 'Remove' : 'Remove URL'
+    const { singleOption } = this.props
+    const urlOptions = singleOption
+      ? [
+          {
+            label: 'Specific URL',
+            value: 'specific-url',
+          },
+        ]
+      : options
     return (
-      <Condition options={options} value="specific-url" {...this.props}>
+      <Condition options={urlOptions} {...this.props} value="specific-url">
         <ConditionField.Group
           onAdd={this.handleOnAdd}
           isAddEnabled={isAddEnabled}
@@ -303,7 +317,7 @@ class LastPageCondition extends React.Component {
     const removeTitle = this.state.urls.length === 1 ? 'Remove' : 'Remove URL'
 
     return (
-      <Condition options={options} value="last-page" {...this.props}>
+      <Condition options={options} {...this.props} value="last-page">
         <ConditionField.Group
           onAdd={this.handleOnAdd}
           isAddEnabled={isAddEnabled}
@@ -397,7 +411,7 @@ class ConditionBuilder extends React.Component {
     const { error, isAddEnabled } = this.props
     return (
       <ConditionList isAddEnabled={isAddEnabled} onAdd={this.handleOnAdd}>
-        <SpecificUrlCondition />
+        <SpecificUrlCondition singleOption />
         <LastPageCondition noSelect={true} />
         {this.state.conditions.map((condition, index) => {
           return (
