@@ -162,6 +162,9 @@ const purpleTheme = {
       columns={defaultColumns}
       data={createFakeCustomers({ amount: 10 })}
       maxRowsToDisplay={4}
+      onExpand={expanded => {
+        console.log('🚀 ~ expanded', expanded)
+      }}
     />
   </Story>
 </Canvas>

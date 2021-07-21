@@ -1,49 +1,54 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import equal from 'fast-deep-equal'
 import get from 'lodash.get'
 import Truncate from '../Truncate'
 import { CellUI } from './Table.css'
-import { TABLE_CLASSNAME } from './Table'
-import { columnShape, dataShape } from './Table.utils'
+import {
+  columnShape,
+  dataShape,
+  generateCellClassNames,
+  difference,
+} from './Table.utils'
 
-export default class TableCell extends React.PureComponent {
-  getCompoundColumnCellData = () => {
-    const { column, row } = this.props
+export function TableCell({ column, row }) {
+  const cellClassNames = generateCellClassNames(column)
+
+  function getCompoundColumnCellData() {
     const cellData = {}
 
     for (const colKey of column.columnKey) {
       cellData[colKey.replaceAll('.', '_')] = get(row, colKey)
     }
 
-    return cellData
+    return { ...cellData, row }
   }
 
-  renderCompoundColumnsCell = () => {
-    const { column } = this.props
-    const cellData = this.getCompoundColumnCellData()
+  function renderCompoundColumnsCell() {
+    const cellData = getCompoundColumnCellData()
 
     return (
-      <CellUI align={column.align} className={`${TABLE_CLASSNAME}__Cell`}>
+      <CellUI align={column.align} className={cellClassNames}>
         {column.renderCell
           ? column.renderCell(cellData)
-          : this.renderCompoundColumnCellDefaultMarkup(cellData)}
+          : renderCompoundColumnCellDefaultMarkup(cellData)}
       </CellUI>
     )
   }
 
-  renderCompoundColumnCellDefaultMarkup = cellData => {
+  function renderCompoundColumnCellDefaultMarkup(cellData) {
     return Object.values(cellData).map(d => <div key={d.slice(4)}>{d}</div>)
   }
 
-  renderSingleColumnCell = () => {
-    const { column, row } = this.props
+  function renderSingleColumnCell() {
     const cellContent = get(row, column.columnKey)
 
     return (
-      <CellUI align={column.align} className={`${TABLE_CLASSNAME}__Cell`}>
+      <CellUI align={column.align} className={cellClassNames}>
         {column.renderCell ? (
           column.renderCell({
             [column.columnKey]: cellContent,
+            row,
           })
         ) : (
           <Truncate>{cellContent}</Truncate>
@@ -52,16 +57,26 @@ export default class TableCell extends React.PureComponent {
     )
   }
 
-  render() {
-    const { column } = this.props
-
-    return Array.isArray(column.columnKey)
-      ? this.renderCompoundColumnsCell()
-      : this.renderSingleColumnCell()
-  }
+  return Array.isArray(column.columnKey)
+    ? renderCompoundColumnsCell()
+    : renderSingleColumnCell()
 }
 
 TableCell.propTypes = {
   column: PropTypes.shape(columnShape),
   row: PropTypes.shape(dataShape),
 }
+
+function areEqual(prevProps, nextProps) {
+  if (equal(prevProps, nextProps)) {
+    return true
+  }
+  console.log(
+    '🚀 ~ file: TableCell.jsx ~ line 70 ~ difference',
+    difference(prevProps, nextProps)
+  )
+
+  return false
+}
+
+export default React.memo(TableCell, areEqual)

@@ -99,6 +99,8 @@
     "downshift": "^6.1.1",
     "fast-deep-equal": "^2.0.1",
     "invariant": "2.2.4",
+    "lodash": "^4.17.21",
+    "lodash.get": "^4.4.2",
     "path-to-regexp": "2.4.0",
     "prismjs": "^1.17.1",
     "react-frame-component": "4.1.1",

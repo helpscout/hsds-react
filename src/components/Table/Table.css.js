@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { getColor } from '../../styles/utilities/color'
 
 export const TableWrapperUI = styled('div')`
   overflow-x: auto;
@@ -132,6 +133,10 @@ export const TableUI = styled('table')`
   tr:nth-child(2n) td {
     background-color: ${props => props.theme.bgAlternate};
     color: ${props => props.theme.fontColorAlternate};
+  }
+
+  tr.is-row-selected td {
+    background-color: ${getColor('yellow.400')};
   }
 
   &.with-clickable-rows {

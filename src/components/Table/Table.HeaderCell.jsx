@@ -3,11 +3,10 @@ import PropTypes from 'prop-types'
 import Icon from '../Icon'
 import { SortableCellUI, HeaderCellUI } from './Table.css'
 import { TABLE_CLASSNAME } from './Table'
-import { columnShape } from './Table.utils'
+import { columnShape, generateCellClassNames } from './Table.utils'
 
-class HeaderCell extends React.PureComponent {
-  getColumnSortStatus = () => {
-    const { column, sortedInfo } = this.props
+export default function HeaderCell({ column, columns, isLoading, sortedInfo }) {
+  function getColumnSortStatus() {
     const colKey = Array.isArray(column.columnKey)
       ? column.sortKey
       : column.columnKey
@@ -22,9 +21,7 @@ class HeaderCell extends React.PureComponent {
     return 'none'
   }
 
-  handleClick = () => {
-    const { column, isLoading } = this.props
-
+  function handleClick() {
     if (!isLoading && column.sorter != null) {
       Array.isArray(column.columnKey)
         ? column.sorter(column.sortKey)
@@ -32,21 +29,19 @@ class HeaderCell extends React.PureComponent {
     }
   }
 
-  renderCellContents = () => {
-    const { column, sortedInfo } = this.props
-
+  function renderCellContents() {
     if (column.renderHeaderCell) {
       return column.renderHeaderCell(column, sortedInfo)
     }
 
     if (column.sorter) {
-      const columnSortStatus = this.getColumnSortStatus()
+      const columnSortStatus = getColumnSortStatus()
 
       return (
         <SortableCellUI
           align={column.align}
           className={`${TABLE_CLASSNAME}__SortableHeaderCell`}
-          onClick={this.handleClick}
+          onClick={handleClick}
         >
           <span className={`${TABLE_CLASSNAME}__SortableHeaderCell__title`}>
             {column.title}
@@ -65,24 +60,22 @@ class HeaderCell extends React.PureComponent {
     return column.title
   }
 
-  render() {
-    const { column } = this.props
-
-    return (
-      <HeaderCellUI
-        className={`${TABLE_CLASSNAME}__HeaderCell`}
-        align={column.align}
-        cellWidth={column.width}
-        aria-sort={this.getColumnSortStatus()}
-      >
-        {this.renderCellContents()}
-      </HeaderCellUI>
-    )
-  }
+  return (
+    <HeaderCellUI
+      className={generateCellClassNames(column, 'Header')}
+      align={column.align}
+      cellWidth={column.width}
+      aria-sort={getColumnSortStatus()}
+    >
+      {renderCellContents()}
+    </HeaderCellUI>
+  )
 }
 
 HeaderCell.propTypes = {
-  /** List of columns */
+  /** The column */
+  column: PropTypes.shape(columnShape),
+  /** List of all columns */
   columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
   /** Whether tha table is in the loading state */
   isLoading: PropTypes.bool,
@@ -92,5 +85,3 @@ HeaderCell.propTypes = {
     order: PropTypes.string,
   }),
 }
-
-export default HeaderCell
