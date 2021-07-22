@@ -17,6 +17,7 @@ export function TableRow({
   withSelectableRows,
 }) {
   function handleRowClick(e) {
+    e.persist()
     onRowClick && onRowClick(e, row)
   }
 

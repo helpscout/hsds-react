@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import equal from 'fast-deep-equal'
 import get from 'lodash.get'
+import { isObject } from '../../utilities/is'
 import Truncate from '../Truncate'
 import { CellUI } from './Table.css'
 import {
@@ -18,7 +19,7 @@ export function TableCell({ column, row }) {
     const cellData = {}
 
     for (const colKey of column.columnKey) {
-      cellData[colKey.replaceAll('.', '_')] = get(row, colKey)
+      cellData[colKey.replace(/\./g, '_')] = get(row, colKey)
     }
 
     return { ...cellData, row }
@@ -37,7 +38,13 @@ export function TableCell({ column, row }) {
   }
 
   function renderCompoundColumnCellDefaultMarkup(cellData) {
-    return Object.values(cellData).map(d => <div key={d.slice(4)}>{d}</div>)
+    const { row, ...rest } = cellData
+
+    return Object.values(rest).map(d => (
+      <div key={isObject(d) ? Object.values(d)[0].slice(4) : d.slice(4)}>
+        {d}
+      </div>
+    ))
   }
 
   function renderSingleColumnCell() {

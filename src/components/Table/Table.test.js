@@ -1,8 +1,8 @@
 import React from 'react'
-import { mount, render } from 'enzyme'
+import { mount, render as enzymeRender } from 'enzyme'
+import { render } from '@testing-library/react'
+import user from '@testing-library/user-event'
 import { Table, TABLE_CLASSNAME } from './Table'
-import Body from './Table.Body'
-import Head from './Table.Head'
 import { defaultSkin, alternativeSkin, chooseSkin } from './Table.skins'
 
 import {
@@ -13,27 +13,27 @@ import {
 
 describe('ClassName', () => {
   test('Wrapper has default className', () => {
-    const wrapper = render(<Table />)
+    const wrapper = enzymeRender(<Table />)
 
     expect(wrapper.hasClass(`${TABLE_CLASSNAME}__Wrapper`)).toBeTruthy()
   })
 
   test('Applies custom className to wrapper if specified', () => {
     const className = 'channel-4'
-    const wrapper = render(<Table className={className} />)
+    const wrapper = enzymeRender(<Table className={className} />)
 
     expect(wrapper.hasClass(className)).toBeTruthy()
   })
 
   test('Table has default className', () => {
-    const wrapper = render(<Table />)
+    const wrapper = enzymeRender(<Table />)
 
     expect(wrapper.find('table').hasClass(TABLE_CLASSNAME)).toBeTruthy()
   })
 
   test('Applies custom className to table if specified', () => {
     const className = 'channel-4'
-    const wrapper = render(<Table tableClassName={className} />)
+    const wrapper = enzymeRender(<Table tableClassName={className} />)
 
     expect(wrapper.find('table').hasClass(className)).toBeTruthy()
   })
@@ -138,18 +138,8 @@ describe('Table Body', () => {
     const rows = tbody.find('tr')
     const cellsInRow = rows.first().find('td')
 
-    expect(
-      cellsInRow
-        .first()
-        .find('.name')
-        .exists()
-    ).toBeTruthy()
-    expect(
-      cellsInRow
-        .first()
-        .find('.companyName')
-        .exists()
-    ).toBeTruthy()
+    expect(cellsInRow.first().find('.name').exists()).toBeTruthy()
+    expect(cellsInRow.first().find('.companyName').exists()).toBeTruthy()
   })
 })
 
@@ -206,7 +196,7 @@ describe('Skin', () => {
 
 describe('Is loading state', () => {
   test('Displays LoadingUI', () => {
-    const wrapper = render(<Table isLoading />)
+    const wrapper = enzymeRender(<Table isLoading />)
 
     expect(wrapper.find(`.${TABLE_CLASSNAME}__Loading`).length).toBeTruthy()
   })
@@ -216,18 +206,15 @@ describe('Clickable Rows', () => {
   test('Fires onRowClick when row is clicked', () => {
     const customers = createFakeCustomers({ amount: 5 })
     const spy = jest.fn()
-    const wrapper = mount(
+    const { container } = render(
       <Table columns={defaultColumns} data={customers} onRowClick={spy} />
     )
-    const tbody = wrapper.find('tbody')
-    const firstRow = tbody.childAt(0)
-    const o = firstRow.instance()
-    const event = undefined
+    const row = container.querySelector('tbody > tr')
 
-    o.handleRowClick()
+    user.click(row)
 
     expect(spy).toHaveBeenCalled()
-    expect(spy).toHaveBeenCalledWith(event, customers[0])
+    expect(spy).toHaveBeenCalledWith(expect.any(Object), customers[0])
   })
 })
 
@@ -252,7 +239,7 @@ describe('Sortable', () => {
         sorter: compoundColumnSpy,
       },
     ]
-    const wrapper = mount(
+    const { container, rerender } = render(
       <Table
         columns={columns}
         data={customers}
@@ -264,57 +251,58 @@ describe('Sortable', () => {
     )
 
     // Regular column sorting, should be called with 'columnKey'
-    let nameHeaderCell = wrapper.find(`thead th`).first()
-    expect(nameHeaderCell.instance().getAttribute('aria-sort')).toBe('none')
+    expect(container.querySelector(`thead th`).getAttribute('aria-sort')).toBe(
+      'none'
+    )
 
-    nameHeaderCell
-      .find('div')
-      .first()
-      .simulate('click')
+    rerender(
+      <Table
+        columns={columns}
+        data={customers}
+        sortedInfo={{
+          columnKey: 'name',
+          order: 'ascending',
+        }}
+      />
+    )
 
-    wrapper.setProps({
-      sortedInfo: {
-        columnKey: 'name',
-        order: 'ascending',
-      },
-    })
-
-    nameHeaderCell = wrapper.find(`thead th`).first()
-    expect(nameHeaderCell.instance().getAttribute('aria-sort')).toBe(
+    expect(container.querySelector('thead th').getAttribute('aria-sort')).toBe(
       'ascending'
     )
+
+    user.click(container.querySelector('thead th div'))
+
     expect(regularColumnSpy).toHaveBeenCalled()
     expect(regularColumnSpy).toHaveBeenCalledWith(columns[0].columnKey)
-    expect(
-      nameHeaderCell.find(`.${TABLE_CLASSNAME}__SortableHeaderCell`).exists()
-    ).toBeTruthy()
 
     expect(
-      nameHeaderCell
-        .find(`.${TABLE_CLASSNAME}__SortableHeaderCell__title`)
-        .exists()
-    ).toBeTruthy()
+      container.querySelector(`.${TABLE_CLASSNAME}__SortableHeaderCell`)
+    ).toBeInTheDocument()
+
+    expect(
+      container.querySelector(`.${TABLE_CLASSNAME}__SortableHeaderCell__title`)
+    ).toBeInTheDocument()
 
     // Compound column sorting, should be called with 'sortKey'
-    const customerHeaderCell = wrapper.find(`thead th`).at(1)
+    const customerHeaderCell = container.querySelectorAll('thead th')[1]
 
-    customerHeaderCell
-      .find('div')
-      .first()
-      .simulate('click')
+    user.click(customerHeaderCell.querySelector('div'))
 
     expect(compoundColumnSpy).toHaveBeenCalled()
     expect(compoundColumnSpy).toHaveBeenCalledWith(columns[1].sortKey)
 
-    wrapper.setProps({
-      sortedInfo: {
-        columnKey: 'name',
-        order: 'descending',
-      },
-    })
+    rerender(
+      <Table
+        columns={columns}
+        data={customers}
+        sortedInfo={{
+          columnKey: 'name',
+          order: 'descending',
+        }}
+      />
+    )
 
-    nameHeaderCell = wrapper.find(`thead th`).first()
-    expect(nameHeaderCell.instance().getAttribute('aria-sort')).toBe(
+    expect(container.querySelector('thead th').getAttribute('aria-sort')).toBe(
       'descending'
     )
   })
@@ -322,44 +310,38 @@ describe('Sortable', () => {
 
 describe('Expandable', () => {
   test('Table is collapsed on initial state to the value of maxRowsToDisplay', () => {
-    const wrapper = mount(
+    const { container } = render(
       <Table
         columns={defaultColumns}
         data={createFakeCustomers({ amount: 10 })}
         maxRowsToDisplay={4}
       />
     )
-    const tbody = wrapper.find('tbody')
-    const rows = tbody.find('tr')
 
-    expect(wrapper.state('isTableCollapsed')).toBeTruthy()
-    expect(rows.length).toBe(4)
+    expect(container.querySelectorAll('tbody tr').length).toBe(4)
   })
 
   test('Table expands/collapses on click of Expander', () => {
-    const wrapper = mount(
+    const { container, getByRole } = render(
       <Table
         columns={defaultColumns}
         data={createFakeCustomers({ amount: 10 })}
         maxRowsToDisplay={4}
       />
     )
-    const expander = wrapper.find(`.${TABLE_CLASSNAME}__Expander`).first()
-    expander.simulate('click')
-    const tbody = wrapper.find('tbody')
-    const rows = tbody.find('tr')
 
-    expect(wrapper.state('isTableCollapsed')).toBeFalsy()
-    expect(rows.length).toBe(10)
-    expect(expander.text()).toBe('View All')
+    expect(container.querySelectorAll('tbody tr').length).toBe(4)
+    expect(getByRole('button').textContent).toBe('View All')
 
-    const expander2 = wrapper.find(`.${TABLE_CLASSNAME}__Expander`).first()
-    expander2.simulate('click')
-    const rows2 = wrapper.find('tbody').find('tr')
+    user.click(getByRole('button'))
 
-    expect(wrapper.state('isTableCollapsed')).toBeTruthy()
-    expect(rows2.length).toBe(4)
-    expect(expander2.text()).toBe('Collapse')
+    expect(container.querySelectorAll('tbody tr').length).toBe(10)
+    expect(getByRole('button').textContent).toBe('Collapse')
+
+    user.click(getByRole('button'))
+
+    expect(container.querySelectorAll('tbody tr').length).toBe(4)
+    expect(getByRole('button').textContent).toBe('View All')
   })
 
   test('Table expands/collapses on click of Expander (custom text)', () => {
@@ -387,7 +369,7 @@ describe('Expandable', () => {
 
   test('Table fires onExpand on click of Expander', () => {
     const spy = jest.fn()
-    const wrapper = mount(
+    const { getByRole } = render(
       <Table
         columns={defaultColumns}
         data={createFakeCustomers({ amount: 10 })}
@@ -395,93 +377,9 @@ describe('Expandable', () => {
         onExpand={spy}
       />
     )
-    const expander = wrapper.find(`.${TABLE_CLASSNAME}__Expander`).first()
 
-    expander.simulate('click')
+    user.click(getByRole('button'))
 
     expect(spy).toHaveBeenCalled()
-    expect(spy).toHaveBeenCalledWith(wrapper.state('isTableCollapsed'))
-  })
-})
-
-describe('Table', () => {
-  test('Table should update only if col really changed', () => {
-    const columns = defaultColumns
-    const data = createFakeCustomers({ amount: 10 })
-    const wrapper = mount(<Table columns={columns} data={data} />)
-
-    const actualProps = wrapper.props()
-
-    expect(
-      wrapper
-        .instance()
-        .shouldComponentUpdate({ ...actualProps, columns, data })
-    ).toBeFalsy()
-
-    expect(
-      wrapper
-        .instance()
-        .shouldComponentUpdate({ ...actualProps, columns, data: [] })
-    ).toBeTruthy()
-
-    expect(
-      wrapper
-        .instance()
-        .shouldComponentUpdate({ ...actualProps, columns: [], data })
-    ).toBeTruthy()
-
-    expect(
-      wrapper.instance().shouldComponentUpdate({
-        ...actualProps,
-        isLoading: true,
-        columns,
-        data,
-      })
-    ).toBeTruthy()
-  })
-})
-
-describe('Table.Body', () => {
-  test('Body should update only if props really changed', () => {
-    const columns = defaultColumns
-    const rows = createFakeCustomers({ amount: 10 })
-    const wrapper = mount(
-      <table>
-        <Body columns={columns} rows={rows} />
-      </table>
-    ).find(Body)
-
-    expect(
-      wrapper.instance().shouldComponentUpdate({ columns }, { rows })
-    ).toBeFalsy()
-
-    expect(
-      wrapper.instance().shouldComponentUpdate({ columns }, { rows: [] })
-    ).toBeTruthy()
-
-    expect(
-      wrapper.instance().shouldComponentUpdate({ columns: [] }, { rows })
-    ).toBeTruthy()
-  })
-
-  test('Body getRows should return an empty array if no rows props specified', () => {
-    expect(Body.getRows()).toEqual([])
-  })
-})
-
-describe('Table.Head', () => {
-  test('Head should update only if columns were updated', () => {
-    const columns = defaultColumns
-    const wrapper = mount(
-      <table>
-        <Head columns={columns} />
-      </table>
-    ).find(Head)
-
-    expect(wrapper.instance().shouldComponentUpdate({ columns })).toBeFalsy()
-
-    expect(
-      wrapper.instance().shouldComponentUpdate({ columns: [] })
-    ).toBeTruthy()
   })
 })

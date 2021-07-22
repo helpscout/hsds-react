@@ -40,8 +40,8 @@ export function generateCellClassNames(column, cellType = 'Cell') {
       column.title
         ? column.title.replace(/[ .]/g, '')
         : Array.isArray(column.columnKey)
-        ? column.columnKey.join('_').replaceAll('.', '_')
-        : column.columnKey.replaceAll('.', '_')
+        ? column.columnKey.join('_').replace(/\./g, '_')
+        : column.columnKey.replace(/\./g, '_')
     }`,
     column.className || ''
   )

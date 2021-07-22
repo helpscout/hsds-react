@@ -82,4 +82,4 @@ function areEqual(prevProps, nextProps) {
   return false
 }
 
-export default React.memo(TableHead, areEqual)
+export default TableHead

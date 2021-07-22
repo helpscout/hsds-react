@@ -57,7 +57,7 @@ const ConversationCellMemo = React.memo(ConversationCell, areEqual)
 
 export default function ConvoList() {
   const [pager, setPager] = useState(page1.pager)
-  const [results, setResults] = useState(page1.results)
+  const [results, setResults] = useState(page1.results.slice(5))
   const [isLoading, setIsLoading] = useState(false)
   const [activeRow, setActiveRow] = useState(null)
   const tableWidth = { min: '700px' }
