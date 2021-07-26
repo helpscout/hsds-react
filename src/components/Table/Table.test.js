@@ -3,13 +3,14 @@ import { mount, render as enzymeRender } from 'enzyme'
 import { render } from '@testing-library/react'
 import user from '@testing-library/user-event'
 import { Table, TABLE_CLASSNAME } from './Table'
+import { reducer } from './Table.reducer'
 import { defaultSkin, alternativeSkin, chooseSkin } from './Table.skins'
-
 import {
   createFakeCustomers,
   defaultColumns,
   defaultColumnsCustomContent,
 } from './Table.testUtils'
+import { page1 } from './stories/convoData'
 
 describe('ClassName', () => {
   test('Wrapper has default className', () => {
@@ -36,6 +37,22 @@ describe('ClassName', () => {
     const wrapper = enzymeRender(<Table tableClassName={className} />)
 
     expect(wrapper.find('table').hasClass(className)).toBeTruthy()
+  })
+})
+
+describe('Render', () => {
+  test('updates table data', () => {
+    const data = page1.results.slice(0, 10)
+    const data2 = page1.results.slice(10, 15)
+    const { container, rerender } = render(
+      <Table columns={defaultColumns} data={data} />
+    )
+
+    expect(container.querySelectorAll('tbody > tr').length).toBe(10)
+
+    rerender(<Table data={data2} />)
+
+    expect(container.querySelectorAll('tbody > tr').length).toBe(5)
   })
 })
 
@@ -381,5 +398,281 @@ describe('Expandable', () => {
     user.click(getByRole('button'))
 
     expect(spy).toHaveBeenCalled()
+  })
+})
+
+describe('Selectable rows', () => {
+  test('should render a column with checkboxes for selection', () => {
+    const { container } = render(
+      <Table
+        columns={defaultColumns}
+        data={page1.results.slice(10)}
+        withSelectableRows
+      />
+    )
+
+    // Header row
+    expect(
+      container.querySelector('thead .Column_Selector')
+    ).toBeInTheDocument()
+    expect(
+      container.querySelector('thead .Column_Selector .c-Checkbox')
+    ).toBeInTheDocument()
+
+    // Body rows
+    const rows = container.querySelectorAll('tbody tr')
+
+    rows.forEach(row => {
+      expect(
+        row.querySelector('td').classList.contains('Column_Selector')
+      ).toBe(true)
+      expect(row.querySelector('.c-Checkbox')).toBeInTheDocument()
+    })
+  })
+
+  test('should select/unselect a row', () => {
+    const onSelectRowSpy = jest.fn()
+    const data = page1.results.slice(10)
+    const { container } = render(
+      <Table
+        columns={defaultColumns}
+        data={data}
+        withSelectableRows
+        onSelectRow={onSelectRowSpy}
+      />
+    )
+
+    const rows = container.querySelectorAll('tbody tr')
+
+    user.click(rows[0].querySelector('input[type="checkbox"]'))
+
+    expect(onSelectRowSpy).toHaveBeenCalledWith([data[0].id])
+
+    user.click(rows[1].querySelector('input[type="checkbox"]'))
+
+    expect(onSelectRowSpy).toHaveBeenCalledWith([data[0].id, data[1].id])
+    expect(rows[0].classList.contains('is-row-selected')).toBe(true)
+    expect(rows[1].classList.contains('is-row-selected')).toBe(true)
+
+    user.click(rows[0].querySelector('input[type="checkbox"]'))
+    expect(onSelectRowSpy).toHaveBeenCalledWith([data[1].id])
+
+    expect(rows[0].classList.contains('is-row-selected')).toBe(false)
+    expect(rows[1].classList.contains('is-row-selected')).toBe(true)
+  })
+
+  test('should select/unselect all with header row', () => {
+    const onSelectRowSpy = jest.fn()
+    const data = page1.results.slice(10)
+    const { container } = render(
+      <Table
+        columns={defaultColumns}
+        data={data}
+        withSelectableRows
+        onSelectRow={onSelectRowSpy}
+      />
+    )
+
+    const rows = container.querySelectorAll('tbody tr')
+
+    user.click(container.querySelector('thead input[type="checkbox"]'))
+
+    expect(onSelectRowSpy).toHaveBeenCalledWith(data.map(d => d.id))
+
+    rows.forEach(row => {
+      expect(row.classList.contains('is-row-selected')).toBe(true)
+    })
+
+    user.click(container.querySelector('thead input[type="checkbox"]'))
+
+    expect(onSelectRowSpy).toHaveBeenCalledWith([])
+
+    rows.forEach(row => {
+      expect(row.classList.contains('is-row-selected')).toBe(false)
+    })
+  })
+})
+
+describe('Reducer', () => {
+  test('updated data', () => {
+    const data = page1.results.slice(0, 10)
+    const data2 = page1.results.slice(10, 15)
+    const initialState = {
+      selectedRows: [],
+      currentTableData: data,
+    }
+    const action = {
+      type: 'updated-data',
+      payload: {
+        data: data2,
+        rowsToDisplay: undefined,
+      },
+    }
+    const resultingState = {
+      selectedRows: [],
+      currentTableData: data2,
+    }
+
+    expect(reducer(initialState, action)).toStrictEqual(resultingState)
+  })
+
+  test('expand/collapse', () => {
+    const data = page1.results.slice(0, 10)
+    const initialState = {
+      selectedRows: [],
+      currentTableData: data,
+    }
+    const expandAction = {
+      type: 'expand',
+      payload: {
+        data: data,
+        rowsToDisplay: 10,
+      },
+    }
+    const resultingStateOfExpand = {
+      selectedRows: [],
+      currentTableData: data,
+    }
+
+    expect(reducer(initialState, expandAction)).toStrictEqual(
+      resultingStateOfExpand
+    )
+
+    const data2 = page1.results.slice(0, 4)
+    const collapseAction = {
+      type: 'collapse',
+      payload: {
+        data: data,
+        rowsToDisplay: 4,
+      },
+    }
+    const resultingStateOfCollapse = {
+      selectedRows: [],
+      currentTableData: data2,
+    }
+
+    expect(reducer(initialState, collapseAction)).toStrictEqual(
+      resultingStateOfCollapse
+    )
+  })
+
+  test('select/deselect all', () => {
+    const data = page1.results.slice(0, 10)
+    const initialState = {
+      selectedRows: [],
+      currentTableData: data,
+    }
+    const selectAllAction = {
+      type: 'select-all',
+      payload: {
+        data: data,
+        rowsToDisplay: undefined,
+      },
+    }
+    const resultingStateOfSelectAll = {
+      selectedRows: data.map(d => d.id),
+      currentTableData: data,
+    }
+
+    expect(reducer(initialState, selectAllAction)).toStrictEqual(
+      resultingStateOfSelectAll
+    )
+
+    const deselectAllAction = {
+      type: 'deselect-all',
+      payload: {
+        data: data,
+        rowsToDisplay: undefined,
+      },
+    }
+    const resultingStateOfDeselectAll = {
+      selectedRows: [],
+      currentTableData: data,
+    }
+
+    expect(reducer(initialState, deselectAllAction)).toStrictEqual(
+      resultingStateOfDeselectAll
+    )
+  })
+
+  test('select/deselect row', () => {
+    const data = page1.results.slice(0, 10)
+    const initialState = {
+      selectedRows: [],
+      currentTableData: data,
+    }
+    const selectAction = {
+      type: 'select-row',
+      payload: {
+        data: data,
+        value: data[3].id,
+        rowsToDisplay: undefined,
+      },
+    }
+    const resultingStateOfSelect = {
+      selectedRows: [data[3].id],
+      currentTableData: data,
+    }
+
+    expect(reducer(initialState, selectAction)).toStrictEqual(
+      resultingStateOfSelect
+    )
+
+    const initialState2 = {
+      selectedRows: [data[2].id],
+      currentTableData: data,
+    }
+
+    const selectAction2 = {
+      type: 'select-row',
+      payload: {
+        data: data,
+        value: data[3].id,
+        rowsToDisplay: undefined,
+      },
+    }
+
+    const resultingStateOfSelect2 = {
+      selectedRows: [data[2].id, data[3].id],
+      currentTableData: data,
+    }
+
+    expect(reducer(initialState2, selectAction2)).toStrictEqual(
+      resultingStateOfSelect2
+    )
+
+    const deselectAction = {
+      type: 'deselect-row',
+      payload: {
+        data: data,
+        value: data[3].id,
+        rowsToDisplay: undefined,
+      },
+    }
+    const resultingStateOfDeselect = {
+      selectedRows: [data[2].id],
+      currentTableData: data,
+    }
+
+    expect(reducer(initialState2, deselectAction)).toStrictEqual(
+      resultingStateOfDeselect
+    )
+
+    const deselectAction2 = {
+      type: 'deselect-row',
+      payload: {
+        data: data,
+        value: data[2].id,
+        rowsToDisplay: undefined,
+      },
+    }
+    const resultingStateOfDeselect2 = {
+      selectedRows: [],
+      currentTableData: data,
+    }
+
+    expect(reducer(initialState2, deselectAction2)).toStrictEqual(
+      resultingStateOfDeselect2
+    )
   })
 })

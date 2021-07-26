@@ -32,7 +32,7 @@ export function TableRow({
       onClick={handleRowClick}
     >
       {withSelectableRows ? (
-        <CellUI>
+        <CellUI className="c-Table__Cell Column_Selector">
           <Checkbox
             checked={selected}
             onChange={(value, checked) => {

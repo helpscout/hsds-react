@@ -5,12 +5,7 @@ import get from 'lodash.get'
 import { isObject } from '../../utilities/is'
 import Truncate from '../Truncate'
 import { CellUI } from './Table.css'
-import {
-  columnShape,
-  dataShape,
-  generateCellClassNames,
-  difference,
-} from './Table.utils'
+import { columnShape, dataShape, generateCellClassNames } from './Table.utils'
 
 export function TableCell({ column, row }) {
   const cellClassNames = generateCellClassNames(column)
@@ -78,10 +73,6 @@ function areEqual(prevProps, nextProps) {
   if (equal(prevProps, nextProps)) {
     return true
   }
-  console.log(
-    '🚀 ~ file: TableCell.jsx ~ line 70 ~ difference',
-    difference(prevProps, nextProps)
-  )
 
   return false
 }

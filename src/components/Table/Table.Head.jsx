@@ -21,7 +21,10 @@ function TableHead({
     <thead data-cy={dataCy}>
       <tr className={`${TABLE_CLASSNAME}__HeaderRow`}>
         {withSelectableRows ? (
-          <HeaderCellUI cellWidth="43px">
+          <HeaderCellUI
+            className="c-Table__Header Column_Selector"
+            cellWidth="43px"
+          >
             <Checkbox
               checked={selected}
               onChange={(value, checked) => {
@@ -66,20 +69,6 @@ TableHead.propTypes = {
     columnKey: PropTypes.string,
     order: PropTypes.string,
   }),
-}
-
-function areEqual(prevProps, nextProps) {
-  const { columns, sortedInfo } = prevProps
-
-  if (
-    equal(sortedInfo, nextProps.sortedInfo) &&
-    equal(columns, nextProps.columns) &&
-    prevProps.selected === nextProps.selected
-  ) {
-    return true
-  }
-
-  return false
 }
 
 export default TableHead

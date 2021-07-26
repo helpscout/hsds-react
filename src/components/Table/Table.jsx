@@ -8,12 +8,8 @@ import Button from '../Button'
 import Scrollable from '../Scrollable'
 import { TableWrapperUI, TableUI, LoadingUI } from './Table.css'
 import { defaultSkin, chooseSkin } from './Table.skins'
-import {
-  columnShape,
-  dataShape,
-  reducer,
-  getDisplayTableData,
-} from './Table.utils'
+import { columnShape, dataShape, getDisplayTableData } from './Table.utils'
+import { reducer } from './Table.reducer'
 import TableBody from './Table.Body'
 import TableHead from './Table.Head'
 
