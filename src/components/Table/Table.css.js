@@ -26,6 +26,10 @@ export const TableUI = styled('table')`
   line-height: 16px;
   border-collapse: separate;
 
+  tr {
+    transition: background-color 100ms ease-in-out;
+  }
+
   th,
   td {
     /* Borders: Rows */
@@ -126,26 +130,24 @@ export const TableUI = styled('table')`
     background-color: ${props => props.theme.bgHeader};
   }
 
-  tr:nth-child(2n + 1) td {
+  tr:nth-child(2n + 1) {
     background-color: ${props => props.theme.bgColor};
   }
 
-  tr:nth-child(2n) td {
+  tr:nth-child(2n) {
     background-color: ${props => props.theme.bgAlternate};
     color: ${props => props.theme.fontColorAlternate};
   }
 
-  tr.is-row-selected td {
-    background-color: ${getColor('yellow.400')};
+  tr.is-row-selected {
+    background-color: ${getColor('yellow.100')};
   }
 
   &.with-clickable-rows {
     tr {
       &:hover {
-        td {
-          background-color: ${props => props.theme.bgColorHover};
-          cursor: pointer;
-        }
+        background-color: ${props => props.theme.bgColorHover};
+        cursor: pointer;
       }
     }
   }

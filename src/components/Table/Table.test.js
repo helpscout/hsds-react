@@ -567,6 +567,7 @@ describe('Reducer', () => {
       payload: {
         data: data,
         rowsToDisplay: undefined,
+        selectKey: 'id',
       },
     }
     const resultingStateOfSelectAll = {

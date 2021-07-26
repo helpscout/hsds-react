@@ -9,6 +9,7 @@ export function TableBody({
   dispatch,
   onRowClick,
   rows,
+  selectKey,
   selectedRows,
   withSelectableRows,
 }) {
@@ -22,6 +23,7 @@ export function TableBody({
           dispatch={dispatch}
           onRowClick={onRowClick}
           selected={selectedRows && selectedRows.includes(row.id)}
+          selectKey={selectKey}
           withSelectableRows={withSelectableRows}
         />
       ))}

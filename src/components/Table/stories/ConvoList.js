@@ -55,14 +55,27 @@ function areEqual(prevProps, nextProps) {
 
 const ConversationCellMemo = React.memo(ConversationCell, areEqual)
 
+const skin = {
+  fontColorHeader: getColor('charcoal.500'),
+  fontColorBody: getColor('charcoal.500'),
+  fontColorAlternate: getColor('charcoal.500'),
+  bgColor: 'white',
+  bgAlternate: 'white',
+  bgHeader: 'white',
+  bgColorHover: getColor('grey.300'),
+  borderTableBody: `1px solid ${getColor('grey.500')}`,
+  borderTableHeader: `1px solid ${getColor('grey.500')}`,
+  borderRows: `1px solid ${getColor('grey.500')}`,
+  borderColumns: 'none',
+}
+
 export default function ConvoList() {
   const [pager, setPager] = useState(page1.pager)
   const [results, setResults] = useState(page1.results.slice(5))
   const [isLoading, setIsLoading] = useState(false)
-  const [activeRow, setActiveRow] = useState(null)
   const tableWidth = { min: '700px' }
   const containerWidth = '100%'
-  const [columns, setColumns] = useState([
+  const columns = [
     {
       title: 'Customer',
       columnKey: ['customer.fullName', 'customer.email'],
@@ -104,7 +117,7 @@ export default function ConvoList() {
         )
       },
     },
-  ])
+  ]
 
   function handlePageChange(nextPage) {
     setIsLoading(true)
@@ -130,6 +143,7 @@ export default function ConvoList() {
             selection
           )
         }}
+        skin={skin}
         withTallRows
         withSelectableRows
       />
@@ -163,5 +177,10 @@ export const ConvoListUI = styled('div')`
     height: 100%;
     width: 100%;
     background-color: ${getColor('blue.500')};
+  }
+
+  .c-Table__Header {
+    color: ${getColor('charcoal.300')};
+    font-weight: 400;
   }
 `

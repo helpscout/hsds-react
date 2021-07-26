@@ -13,6 +13,7 @@ function TableHead({
   dispatch,
   rows,
   selected,
+  selectKey,
   sortedInfo,
   withSelectableRows,
 }) {
@@ -26,16 +27,15 @@ function TableHead({
           >
             <Checkbox
               checked={selected}
-              onChange={(value, checked) => {
+              onChange={(_, checked) => {
                 if (checked) {
                   dispatch({
                     type: 'select-all',
-                    payload: { value, checked, data: rows },
+                    payload: { data: rows, selectKey },
                   })
                 } else {
                   dispatch({
                     type: 'deselect-all',
-                    payload: { value, checked },
                   })
                 }
               }}

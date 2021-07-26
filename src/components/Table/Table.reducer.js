@@ -20,7 +20,7 @@ export function reducer(state, action) {
     case 'select-all':
       return {
         ...state,
-        selectedRows: payload.data.map(d => d.id),
+        selectedRows: payload.data.map(d => d[payload.selectKey]),
       }
 
     case 'deselect-all':

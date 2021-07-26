@@ -14,6 +14,7 @@ export function TableRow({
   row,
   onRowClick,
   selected,
+  selectKey,
   withSelectableRows,
 }) {
   function handleRowClick(e) {
@@ -48,7 +49,7 @@ export function TableRow({
                 })
               }
             }}
-            value={row.id}
+            value={row[selectKey]}
           />
         </CellUI>
       ) : null}

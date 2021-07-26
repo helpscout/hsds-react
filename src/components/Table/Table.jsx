@@ -28,6 +28,7 @@ export function Table({
   onExpand = noop,
   onSelectRow = noop,
   onRowClick = null,
+  selectKey = 'id',
   skin = defaultSkin,
   sortedInfo = {
     columnKey: null,
@@ -90,6 +91,7 @@ export function Table({
               isLoading={isLoading}
               dispatch={dispatch}
               rows={state.currentTableData}
+              selectKey={selectKey}
               selected={
                 state.selectedRows.length === state.currentTableData.length
               }
@@ -103,6 +105,7 @@ export function Table({
               onRowClick={onRowClick}
               onSelectRow={onSelectRow}
               rows={state.currentTableData}
+              selectKey={selectKey}
               selectedRows={state.selectedRows}
               withSelectableRows={withSelectableRows}
             />
@@ -200,10 +203,8 @@ Table.propTypes = {
   }),
   /** Callback function when a row is clicked. Arguments are the event and the row clicked. */
   onRowClick: PropTypes.func,
-  /** Retrieves the `<table>` node. */
-  tableRef: PropTypes.func,
-  /** Retrieves the table wrapper node. */
-  wrapperRef: PropTypes.func,
+  /** Customize which key from your data should be used for selection */
+  selectKey: PropTypes.string,
   /** Callback when expending/collapsing the table */
   onExpand: PropTypes.func,
   /** Callback when selecting a row if enabled */
