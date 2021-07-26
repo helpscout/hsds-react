@@ -67,7 +67,7 @@ Full list of acceptable fields 👇:
 - `width`: Column width, ideally the sum of all the columns should be 100%
 - `align`: Horizontal cell alignment for this column, one of "left" (default), "center" or "right"
 - `renderHeaderCell`: To customize how to render the column header. A function that takes the column object and returns a React Component/Element
-- `renderCell`: To customize how each cell renders it corresponding data on this column. A function that takes the corresponding data and returns a React Component/Element, its arguments are the data provided by `columnKey` above, if using nested data, access it by replaceing the dot (`.`) with a slash (`_`), for example: `customer.email` in `columnKey` becomes `customer_email` in `renderCell` (see code example below).
+- `renderCell`: To customize how each cell renders it corresponding data on this column. A function that takes the corresponding data and returns a React Component/Element, its arguments are the data provided by `columnKey` above, if using nested data, access it by replaceing the dot (`.`) with an underscore (`_`), for example: `customer.email` in `columnKey` becomes `customer_email` in `renderCell` (see code example below). It also gives you access to the `row`
 - `sorter`: A function that instructs how to sort the data based on this column
 - `sortKey`: If this column contains more than one columnKey, sorting will be based on this value which should exist in the list of Column Keys for this column.
 
@@ -90,7 +90,7 @@ const columns = [
     columnKey: ['customer.name', 'customer.email'], // nested
     width: '50%',
     align: 'left',
-    renderCell: ({ customer_name, customer_email }) => ( // replace . with _
+    renderCell: ({ customer_name, customer_email, row }) => ( // replace . with _
         <div>
           <strong>{customer_name}</strong>
           <br />
@@ -175,6 +175,12 @@ const purpleTheme = {
 </Canvas>
 
 #### Selecting rows
+
+To enable selection you have these props available to you:
+
+- `withSelectableRows`: Enable the feature
+- `selectKey`: A unique key from your data to identify selection, defaults to `id`
+- `onSelectRow`: Callback that gives you an array of selected items (by the key provided in `selectKey` which by default is `id`)
 
 <Canvas>
   <Story name="Selecting Rows">
