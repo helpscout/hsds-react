@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import equal from 'fast-deep-equal'
 import { generateCellKey, columnShape } from './Table.utils'
 import { TABLE_CLASSNAME } from './Table'
 import Checkbox from '../Checkbox'
