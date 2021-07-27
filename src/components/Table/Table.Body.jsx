@@ -9,26 +9,33 @@ export function TableBody({
   dispatch,
   onRowClick,
   rows,
+  rowClassName,
+  rowWrapper,
   selectKey,
   selectedRows,
   withSelectableRows,
+  withFocusableRows,
 }) {
-  return (
-    <tbody data-cy={dataCy}>
-      {rows.map(row => (
-        <Row
-          row={row}
-          columns={columns}
-          key={`row_${row.id}`}
-          dispatch={dispatch}
-          onRowClick={onRowClick}
-          selected={selectedRows && selectedRows.includes(row.id)}
-          selectKey={selectKey}
-          withSelectableRows={withSelectableRows}
-        />
-      ))}
-    </tbody>
-  )
+  function renderRow(row) {
+    return (
+      <Row
+        columns={columns}
+        dispatch={dispatch}
+        key={`row_${row.id}`}
+        onRowClick={onRowClick}
+        row={row}
+        rowClassName={rowClassName}
+        rowWrapper={rowWrapper}
+        selected={selectedRows && selectedRows.includes(row.id)}
+        selectKey={selectKey}
+        withSelectableRows={withSelectableRows}
+        withFocusableRows={withFocusableRows}
+      />
+    )
+  }
+
+  // {rowWrapper ? rowWrapper(renderRows()) : renderRows()}
+  return <tbody data-cy={dataCy}>{rows.map(renderRow)}</tbody>
 }
 
 TableBody.propTypes = {

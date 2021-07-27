@@ -30,6 +30,12 @@ export const TableUI = styled('table')`
     transition: background-color 100ms ease-in-out;
   }
 
+  tbody tr:focus {
+    background-color: ${props => props.theme.bgFocus};
+    box-shadow: inset 5px 0 ${props => props.theme.bgFocusIndicator};
+    outline: 0;
+  }
+
   th,
   td {
     /* Borders: Rows */
@@ -140,15 +146,13 @@ export const TableUI = styled('table')`
   }
 
   tr.is-row-selected {
-    background-color: ${getColor('yellow.100')};
+    background-color: ${props => props.theme.bgSelected};
   }
 
   &.with-clickable-rows {
-    tr {
-      &:hover {
-        background-color: ${props => props.theme.bgColorHover};
-        cursor: pointer;
-      }
+    tbody tr:hover {
+      background-color: ${props => props.theme.bgColorHover};
+      cursor: pointer;
     }
   }
 `

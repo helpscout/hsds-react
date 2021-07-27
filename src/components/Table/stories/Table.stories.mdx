@@ -164,7 +164,7 @@ const purpleTheme = {
       columns={defaultColumns}
       data={createFakeCustomers({ amount: 10 })}
       maxRowsToDisplay={4}
-      onRowClick={row => {
+      onRowClick={(e, row) => {
         console.log(row)
       }}
       onExpand={expanded => {

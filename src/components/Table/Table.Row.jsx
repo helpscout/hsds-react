@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import equal from 'fast-deep-equal'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { generateCellKey, columnShape, dataShape } from './Table.utils'
 import { TABLE_CLASSNAME } from './Table'
 import TableCell from './Table.Cell'
@@ -12,56 +12,86 @@ export function TableRow({
   columns,
   dispatch,
   row,
+  rowClassName,
+  rowWrapper,
   onRowClick,
   selected,
   selectKey,
   withSelectableRows,
+  withFocusableRows,
 }) {
   function handleRowClick(e) {
-    e.persist()
-    onRowClick && onRowClick(e, row)
+    // Avoid firing when selecting a row
+    const wasSelectorClicked = Boolean(e.target.closest('.Selector_Checkbox'))
+
+    if (!wasSelectorClicked) {
+      e.persist()
+      onRowClick && onRowClick(e, row)
+    }
   }
 
-  return (
-    <tr
-      className={classNames(
-        `${TABLE_CLASSNAME}__Row`,
-        row.className,
-        row.id && `row_id_${row.id}`,
-        selected && 'is-row-selected'
-      )}
-      onClick={handleRowClick}
-    >
-      {withSelectableRows ? (
-        <CellUI className="c-Table__Cell Column_Selector">
-          <Checkbox
-            checked={selected}
-            onChange={(value, checked) => {
-              if (checked) {
-                dispatch({
-                  type: 'select-row',
-                  payload: { value, checked },
-                })
-              } else {
-                dispatch({
-                  type: 'deselect-row',
-                  payload: { value, checked },
-                })
-              }
-            }}
-            value={row[selectKey]}
+  function handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      const wasSelectorClicked = Boolean(e.target.closest('.Selector_Checkbox'))
+
+      if (!wasSelectorClicked) {
+        e.persist()
+        onRowClick && onRowClick(e, row)
+      }
+    }
+  }
+
+  function handleChange(value, checked) {
+    if (checked) {
+      dispatch({
+        type: 'select-row',
+        payload: { value, checked },
+      })
+    } else {
+      dispatch({
+        type: 'deselect-row',
+        payload: { value, checked },
+      })
+    }
+  }
+
+  function renderRow() {
+    return (
+      <tr
+        className={classNames(
+          `${TABLE_CLASSNAME}__Row`,
+          row.className,
+          row.id && `row_id_${row.id}`,
+          selected && 'is-row-selected',
+          rowClassName(row)
+        )}
+        onClick={handleRowClick}
+        onKeyDown={handleKeyDown}
+        tabIndex={withFocusableRows ? '0' : '-1'}
+      >
+        {withSelectableRows ? (
+          <CellUI className="c-Table__Cell Column_Selector">
+            <Checkbox
+              className="Selector_Checkbox"
+              checked={selected}
+              onEnter={handleChange}
+              onChange={handleChange}
+              value={row[selectKey]}
+            />
+          </CellUI>
+        ) : null}
+        {columns.map(column => (
+          <TableCell
+            column={column}
+            row={row}
+            key={generateCellKey('cell', column)}
           />
-        </CellUI>
-      ) : null}
-      {columns.map(column => (
-        <TableCell
-          column={column}
-          row={row}
-          key={generateCellKey('cell', column)}
-        />
-      ))}
-    </tr>
-  )
+        ))}
+      </tr>
+    )
+  }
+
+  return rowWrapper ? rowWrapper(renderRow(), row) : renderRow()
 }
 
 TableRow.propTypes = {

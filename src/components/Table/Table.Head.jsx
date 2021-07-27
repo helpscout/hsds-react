@@ -17,6 +17,19 @@ function TableHead({
   sortedInfo,
   withSelectableRows,
 }) {
+  function handleChange(_, checked) {
+    if (checked) {
+      dispatch({
+        type: 'select-all',
+        payload: { data: rows, selectKey },
+      })
+    } else {
+      dispatch({
+        type: 'deselect-all',
+      })
+    }
+  }
+
   return (
     <thead data-cy={dataCy}>
       <tr className={`${TABLE_CLASSNAME}__HeaderRow`}>
@@ -27,18 +40,8 @@ function TableHead({
           >
             <Checkbox
               checked={selected}
-              onChange={(_, checked) => {
-                if (checked) {
-                  dispatch({
-                    type: 'select-all',
-                    payload: { data: rows, selectKey },
-                  })
-                } else {
-                  dispatch({
-                    type: 'deselect-all',
-                  })
-                }
-              }}
+              onChange={handleChange}
+              onEnter={handleChange}
               value="all"
             />
           </HeaderCellUI>

@@ -1,8 +1,8 @@
-import React, { useReducer } from 'react'
+import React, { useMemo, useReducer } from 'react'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 import PropTypes from 'prop-types'
 import { ThemeProvider } from 'styled-components'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import Button from '../Button'
 import Scrollable from '../Scrollable'
@@ -28,23 +28,31 @@ export function Table({
   onExpand = noop,
   onSelectRow = noop,
   onRowClick = null,
+  rowWrapper = null,
   selectKey = 'id',
   skin = defaultSkin,
   sortedInfo = {
     columnKey: null,
     order: null,
   },
+  rowClassName = noop,
   tableClassName,
   tableWidth = { min: '700px' },
   withSelectableRows = false,
   withTallRows = false,
+  withFocusableRows = false,
 }) {
+  const initialDisplayTableData = useMemo(
+    () =>
+      getDisplayTableData({
+        data,
+        rowsToDisplay: maxRowsToDisplay,
+      }),
+    [data, maxRowsToDisplay]
+  )
   const [state, dispatch] = useReducer(reducer, {
     selectedRows: [],
-    currentTableData: getDisplayTableData({
-      data,
-      rowsToDisplay: maxRowsToDisplay,
-    }),
+    currentTableData: initialDisplayTableData,
   })
   const isTableCollapsable = maxRowsToDisplay != null
   const isCollapsed = data.length !== state.currentTableData.length
@@ -105,9 +113,12 @@ export function Table({
               onRowClick={onRowClick}
               onSelectRow={onSelectRow}
               rows={state.currentTableData}
+              rowClassName={rowClassName}
               selectKey={selectKey}
               selectedRows={state.selectedRows}
               withSelectableRows={withSelectableRows}
+              withFocusableRows={withFocusableRows}
+              rowWrapper={rowWrapper}
             />
           </TableUI>
         </Scrollable>
@@ -163,12 +174,15 @@ Table.propTypes = {
   className: PropTypes.string,
   /** Custom class names to be added to the `<table>` element. */
   tableClassName: PropTypes.string,
+  /** Custom class names to be added to the each row based on a condition. */
+  rowClassName: PropTypes.func,
   /** List of columns */
   columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
   /** List of Rows, which are objects */
   data: PropTypes.arrayOf(PropTypes.shape(dataShape)),
   /** The text for the "expander" button when table is either collapsed or expanded */
   expanderText: PropTypes.any,
+  withFocusableRows: PropTypes.bool,
   /** When provided the Table will only show this number of rows and and expander to see the rest */
   maxRowsToDisplay: PropTypes.number,
   /** The table wrapper width (if `tableWidth` is larger, the component scrolls horizontally) */

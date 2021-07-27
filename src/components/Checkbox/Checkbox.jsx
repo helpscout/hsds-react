@@ -6,7 +6,7 @@ import classNames from 'classnames'
 class Checkbox extends React.PureComponent {
   render() {
     const { className, ...rest } = this.props
-    const componentClassName = classNames('c-Checkbox')
+    const componentClassName = classNames('c-Checkbox', className)
 
     return (
       <Choice

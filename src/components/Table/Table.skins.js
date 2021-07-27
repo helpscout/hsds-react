@@ -12,6 +12,9 @@ export const defaultSkin = {
   borderTableHeader: 'none',
   borderRows: `1px solid ${getColor('grey.500')}`,
   borderColumns: 'none',
+  bgFocus: getColor('blue.100'),
+  bgFocusIndicator: getColor('blue.500'),
+  bgSelected: getColor('yellow.100'),
 }
 
 export const alternativeSkin = {
