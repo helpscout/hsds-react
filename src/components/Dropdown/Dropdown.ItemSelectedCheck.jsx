@@ -1,6 +1,6 @@
 import React from 'react'
 import Icon from '../Icon'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import { isSelectedItemEmpty } from './Dropdown.utils'
 import { ItemSelectedCheckUI, SelectedCheckmarkUI } from './Dropdown.css'

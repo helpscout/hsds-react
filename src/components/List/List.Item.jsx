@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { ItemUI } from './List.css'
 import { ListContext } from './List'
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Animate from '../Animate'
 import BaseOverlay from '../Overlay'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 
 class ModalOverlay extends React.PureComponent {

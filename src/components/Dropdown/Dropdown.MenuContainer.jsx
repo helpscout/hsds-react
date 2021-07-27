@@ -24,7 +24,7 @@ import {
   clearSelection,
 } from './Dropdown.actions'
 import { MenuContainerUI } from './Dropdown.css.js'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { renderRenderPropComponent } from '../../utilities/component'
 import { noop } from '../../utilities/other'
 import { isBrowserEnv } from '../../utilities/env'

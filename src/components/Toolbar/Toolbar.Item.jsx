@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 
 export class ToolbarItem extends React.PureComponent {
   static className = 'c-ToolbarItem'

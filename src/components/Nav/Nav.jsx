@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import NavItem from './Nav.Item'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import { NavUI, ListUI } from './Nav.css'
 

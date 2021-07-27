@@ -1,6 +1,6 @@
 import React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { FlexyBlockUI } from './Flexy.css'
 
 export const FlexyBlock = ({ children, className = '', ...rest }) => (

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import SortableDragHandle from './Sortable.DragHandle'
 import SortableItem from './Sortable.Item'
 import SortableList from './Sortable.List'

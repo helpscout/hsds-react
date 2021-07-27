@@ -7,7 +7,7 @@ import compose from '@helpscout/react-utils/dist/compose'
 import TypingDots from '../TypingDots'
 import Icon from '../Icon'
 import Text from '../Text'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import {
   convertLinksToHTML,
   isWord,

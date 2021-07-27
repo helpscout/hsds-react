@@ -3,7 +3,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 
 function Emoji({
   'data-cy': dataCy = 'EmojiPickerEmoji',

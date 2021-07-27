@@ -7,7 +7,7 @@ import Text from '../Text'
 import Truncate from '../Truncate'
 import Timer from './Notification.Timer'
 import { NotificationUI, TextUI } from './Notification.css'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import { stripUrlPrefix } from '../../utilities/strings'
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Block from './Card.Block'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import { CardUI } from './Card.css'
 

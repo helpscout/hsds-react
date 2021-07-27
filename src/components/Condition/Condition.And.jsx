@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Operator from './Condition.Operator'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { AndWrapperUI } from './Condition.css'
 
 export const And = props => {

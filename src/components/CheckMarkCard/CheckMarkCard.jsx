@@ -7,7 +7,7 @@ import Icon from '../Icon'
 import Tooltip from '../Tooltip'
 import VisuallyHidden from '../VisuallyHidden'
 
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
 

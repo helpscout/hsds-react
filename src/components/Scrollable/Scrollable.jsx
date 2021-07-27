@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import EventListener from '../EventListener'
 import ScrollLock from '../ScrollLock'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import {
   getFadeTopStyles,
   getFadeBottomStyles,

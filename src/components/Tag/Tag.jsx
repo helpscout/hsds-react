@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import Truncate from '../Truncate'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop, promiseNoop } from '../../utilities/other'
 import { TagListContext } from '../TagList/TagList'
 import {

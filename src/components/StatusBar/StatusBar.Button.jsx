@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Icon from '../Icon'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { StatusBarButtonUI } from './StatusBar.css'
 
 const StatusBarButton = props => {

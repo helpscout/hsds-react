@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Nav from '../Nav'
 import Toolbar from '../Toolbar'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import { TabBarUI, SecContentUI, ToolbarUI } from './TabBar.css'
 

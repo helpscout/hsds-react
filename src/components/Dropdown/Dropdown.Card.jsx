@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import EventListener from '../EventListener'
 import { connect } from '@helpscout/wedux'
 import { CardUI } from './Dropdown.css'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import { isDefined, isNumber } from '../../utilities/is'
 

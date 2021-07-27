@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Avatar from '../Avatar'
 import Animate from '../Animate'
 import { ItemUI, AvatarListUI, AvatarListWrapperUI } from './AvatarList.css'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { getComponentKey } from '../../utilities/component'
 import { isOdd, getMiddleIndex } from '../../utilities/number'
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { ContainerUI } from './Grid.Container.css'
 
 class GridContainer extends React.PureComponent {

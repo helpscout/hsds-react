@@ -5,7 +5,7 @@ import PageCard from './Page.Card'
 import PageContent from './Page.Content'
 import PageHeader from './Page.Header'
 import PageSection from './Page.Section'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { PageUI } from './Page.css'
 
 export const PageContext = React.createContext({})

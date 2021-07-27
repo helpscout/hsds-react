@@ -6,7 +6,7 @@ import { initialState } from '../Dropdown/Dropdown.store'
 import Keys from '../../constants/Keys'
 import Text from '../Text'
 import { noop } from '../../utilities/other'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { renderRenderPropComponent } from '../../utilities/component'
 import {
   HeaderUI,

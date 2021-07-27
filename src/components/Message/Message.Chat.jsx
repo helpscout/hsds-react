@@ -5,7 +5,7 @@ import MessageBubble from './Message.Bubble'
 import MessageCaption from './Message.Caption'
 import Flexy from '../Flexy'
 import Spinner from '../Spinner'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import { ChatBlockUI } from './Message.Chat.css'
 

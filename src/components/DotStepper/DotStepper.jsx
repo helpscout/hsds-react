@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Tooltip from '../Tooltip'
 import { DotStepperUI, BulletUI, ProgressBulletUI } from './DotStepper.css'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 
 class DotStepper extends React.Component {
   getClassName() {

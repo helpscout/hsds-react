@@ -2,7 +2,7 @@ import React from 'react'
 import { PropTypes } from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { BlockUI } from './Dropdown.css'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 
 export class DropdownBlock extends React.PureComponent {

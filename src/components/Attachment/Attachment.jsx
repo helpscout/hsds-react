@@ -6,7 +6,7 @@ import CloseButton from '../CloseButton'
 import Image from '../Image'
 import Text from '../Text'
 import Truncate from '../Truncate'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import { AttachmentUI, ErrorBorderUI } from './Attachment.css'
 

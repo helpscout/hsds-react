@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Centralize from '../Centralize'
 import Icon from '../Icon'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { StatusDotUI } from './StatusDot.css'
 
 class StatusDot extends React.PureComponent {

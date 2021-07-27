@@ -6,7 +6,7 @@
  */
 import React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { SelectArrowsUI } from './Select.css'
 
 export class SelectArrows extends React.PureComponent {

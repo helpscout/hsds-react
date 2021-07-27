@@ -9,7 +9,7 @@ import PropTypes from 'prop-types'
 import Tippy from '@tippyjs/react/headless'
 import { isFunction } from '../../utilities/is'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import {
   ArrowUI,
   TooltipAnimationUI,

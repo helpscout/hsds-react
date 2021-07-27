@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Text from '../Text'
 import Truncate from '../Truncate'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { isString } from '../../utilities/is'
 import {
   ArticleCardUI,

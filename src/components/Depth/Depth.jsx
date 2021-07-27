@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import React from 'react'
 import PropTypes from 'prop-types'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { DepthUI } from './Depth.css'
 
 const Depth = ({

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { ActionsUI, ActionsBlockUI, ActionsItemUI } from './Form.Actions.css'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 
 export class FormActions extends React.PureComponent {
   static className = 'c-FormActions'

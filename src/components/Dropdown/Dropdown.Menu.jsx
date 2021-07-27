@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { connect } from '@helpscout/wedux'
 import { MenuWrapperUI, MenuUI } from './Dropdown.css.js'
 import ScrollLock from '../ScrollLock'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 
 export class DropdownMenu extends React.PureComponent {

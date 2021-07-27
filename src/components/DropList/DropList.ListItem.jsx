@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { isFunction, isObject, isString } from '../../utilities/is'
 import {
   getItemContentKeyName,

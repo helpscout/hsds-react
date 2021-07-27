@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { SectionUI } from './Accordion.css'
 import { AccordionContext } from './Accordion'
 import { createUniqueIDFactory } from '../../utilities/id'

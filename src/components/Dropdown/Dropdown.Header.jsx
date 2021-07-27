@@ -3,7 +3,7 @@ import { PropTypes } from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { HeaderUI } from './Dropdown.css'
 import Heading from '../Heading'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 
 export class DropdownHeader extends React.PureComponent {

@@ -7,7 +7,7 @@ import Select from '../Select'
 import And from './Condition.And'
 import AddButton from './Condition.AddButton'
 import Operator from './Condition.Operator'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 
 import {

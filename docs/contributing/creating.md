@@ -68,7 +68,7 @@ Add the starting React component boilerplate for `Strong.jsx`:
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { StrongUI } from './Strong.css.js'
 
 class Strong extends React.PureComponent {

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import GridContainer from './Grid.Container'
 import GridRow from './Grid.Row'
 import GridCol from './Grid.Col'
