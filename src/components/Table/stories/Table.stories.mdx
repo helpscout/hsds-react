@@ -5,7 +5,7 @@ import {
   defaultColumns,
   compoundColumns,
 } from '../Table.testUtils'
-import ConvoList from './ConvoList'
+import ConvoList from './ConvoList/ConvoList'
 import TableWithPagination from './TableWithPagination'
 import TableWithSorting from './TableWithSorting'
 
@@ -179,8 +179,8 @@ const purpleTheme = {
 To enable selection you have these props available to you:
 
 - `withSelectableRows`: Enable the feature
-- `selectKey`: A unique key from your data to identify selection, defaults to `id`
-- `onSelectRow`: Callback that gives you an array of selected items (by the key provided in `selectKey` which by default is `id`)
+- `selectionKey`: A unique key from your data to identify selection, defaults to `id`
+- `onSelectRow`: Callback that gives you an array of selected items (by the key provided in `selectionKey` which by default is `id`)
 
 <Canvas>
   <Story name="Selecting Rows">
