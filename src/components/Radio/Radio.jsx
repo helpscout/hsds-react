@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Choice from '../Choice'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 
 export const RadioContext = React.createContext({})
 

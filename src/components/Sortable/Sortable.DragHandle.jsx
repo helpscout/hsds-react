@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { SortableHandle } from 'react-sortable-hoc'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Icon from '../Icon'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 
 import { DragHandleUI } from './Sortable.css'

@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import PortalWrapper from '../PortalWrapper'
 import DropPositioner from './Drop.Positioner'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 
 const popoverWrapperBaseZIndex = 1020
 const defaultOptions = {

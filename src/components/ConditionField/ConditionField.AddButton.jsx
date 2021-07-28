@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { withMotion } from '../Motion'
 import Condition from '../Condition'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { AddButtonContentUI } from './ConditionField.css'
 import { noop } from '../../utilities/other'
 

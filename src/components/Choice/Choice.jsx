@@ -7,7 +7,7 @@ import HelpText from '../HelpText'
 import Text from '../Text'
 import VisuallyHidden from '../VisuallyHidden'
 import ChoiceGroupContext from '../ChoiceGroup/ChoiceGroup.Context'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { noop } from '../../utilities/other'
 import {

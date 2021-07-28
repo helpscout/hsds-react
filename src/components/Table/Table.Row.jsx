@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { generateCellKey, columnShape, dataShape } from './Table.utils'
 import { TABLE_CLASSNAME } from './Table'
 import TableCell from './Table.Cell'

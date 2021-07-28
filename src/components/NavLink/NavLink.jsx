@@ -3,7 +3,7 @@
 
 import React from 'react'
 import Link from '../Link'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { Route } from 'react-router-dom'
 
 export const NavLink = ({

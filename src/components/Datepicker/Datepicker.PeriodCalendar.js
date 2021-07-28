@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { noop } from '../../utilities/other'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { getActiveYearRange } from './Datepicker.utils'
 import Navigator from './Datepicker.Navigator'
 import { PeriodUI, PeriodButtonUI } from './Datepicker.css'

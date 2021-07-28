@@ -8,7 +8,7 @@ import MenuContainer from './Dropdown.MenuContainer'
 import Trigger from './Dropdown.Trigger'
 import VisuallyHidden from '../VisuallyHidden'
 import { DropdownUI } from './Dropdown.css.js'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import { renderRenderPropComponent } from '../../utilities/component'
 

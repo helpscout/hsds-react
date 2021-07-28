@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { SortableElement } from 'react-sortable-hoc'
 import DragHandle from './Sortable.DragHandle'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 
 const SortableItem = SortableElement(props => {
   const {

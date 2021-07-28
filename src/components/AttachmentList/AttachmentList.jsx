@@ -5,7 +5,7 @@ import Attachment from '../Attachment'
 import Icon from '../Icon'
 import Inline from '../Inline'
 import Overflow from '../Overflow'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import { AttachmentListUI } from './AttachmentList.css'
 

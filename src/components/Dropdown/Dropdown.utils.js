@@ -1,6 +1,6 @@
 import { initialState } from './Dropdown.store'
 import { getComponentKey } from '../../utilities/component'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { isObject, isDefined, isArray, isString } from '../../utilities/is'
 
 export const DELIMETER = '.'

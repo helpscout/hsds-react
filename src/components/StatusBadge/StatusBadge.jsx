@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Animate from '../Animate'
 import Badge from '../Badge'
 import StatusDot from '../StatusDot'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { StatusBadgeUI, StatusDotUI } from './StatusBadge.css'
 
 const StatusBadge = props => {

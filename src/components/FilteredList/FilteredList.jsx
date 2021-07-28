@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { isString, isObject } from '../../utilities/is'
 import Text from '../Text'
 import Tooltip from '../Tooltip'

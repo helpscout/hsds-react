@@ -5,7 +5,7 @@ import { connect } from '@helpscout/wedux'
 import { toggleOpen, openDropdown, closeDropdown } from './Dropdown.actions'
 import { TriggerUI } from './Dropdown.css.js'
 import Keys from '../../constants/Keys'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import { renderRenderPropComponent } from '../../utilities/component'
 

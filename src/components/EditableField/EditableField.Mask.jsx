@@ -9,7 +9,7 @@ import {
 import EditableFieldTruncated from './EditableField.Truncated'
 import Truncate from '../Truncate'
 import { MASK_CLASSNAMES, STATES_CLASSNAMES } from './EditableField.utils'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import equal from 'fast-deep-equal'
 import { noop } from '../../utilities/other'
 

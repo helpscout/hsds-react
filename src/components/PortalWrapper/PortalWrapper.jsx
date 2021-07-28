@@ -13,7 +13,7 @@ import {
   createUniqueIndexFactory,
 } from '../../utilities/id'
 import { setupManager } from '../../utilities/globalManager'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { isFunction } from '../../utilities/is'
 import { noop, requestAnimationFrame } from '../../utilities/other'
 import matchPath from '../../utilities/react-router/matchPath'

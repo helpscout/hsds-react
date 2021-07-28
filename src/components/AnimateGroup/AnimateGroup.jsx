@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { TransitionGroup } from 'react-transition-group'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { getComponentKey } from '../../utilities/component'
 
 export const AnimateGroupContext = React.createContext({})

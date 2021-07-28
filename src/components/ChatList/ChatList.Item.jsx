@@ -14,7 +14,7 @@ import Tag from '../Tag'
 import Text from '../Text'
 import Timestamp from '../Timestamp'
 import Truncate from '../Truncate'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import {
   ItemUI,
   BlockUI,

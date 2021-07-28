@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Inline from '../Inline'
 import Overflow from '../Overflow'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop, promiseNoop } from '../../utilities/other'
 import { TagListUI, ClearAllUI } from './TagList.css'
 

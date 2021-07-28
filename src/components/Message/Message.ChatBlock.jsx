@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import MessageBubble from './Message.Bubble'
 import Timestamp from '../Timestamp'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import { ChatBlockUI } from './Message.ChatBlock.css'
 

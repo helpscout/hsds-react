@@ -1,7 +1,7 @@
 import React, { createContext } from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import ListItem from './List.Item'
 import { ListUI } from './List.css'
 

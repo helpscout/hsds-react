@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Collapsible from '../Collapsible'
 import StatusBarButton from './StatusBar.Button'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import { StatusBarUI } from './StatusBar.css'
 

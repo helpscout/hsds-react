@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import ControlGroupItem from './ControlGroup.Item'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 
 class ControlGroupBlock extends React.PureComponent {
   render() {

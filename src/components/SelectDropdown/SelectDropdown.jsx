@@ -8,7 +8,7 @@ import Tooltip from '../Tooltip'
 import { initialState } from '../Dropdown/Dropdown.store'
 import { itemIsActive } from '../Dropdown/Dropdown.utils'
 import { find } from '../../utilities/arrays'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import {
   SelectDropdownUI,

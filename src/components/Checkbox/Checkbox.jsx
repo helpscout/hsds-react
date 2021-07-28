@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Choice from '../Choice'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 
 class Checkbox extends React.PureComponent {
   render() {

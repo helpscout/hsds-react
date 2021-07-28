@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { ThemeProvider } from 'styled-components'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import equal from 'fast-deep-equal'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'

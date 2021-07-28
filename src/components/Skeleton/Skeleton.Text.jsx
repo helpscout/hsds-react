@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { TextUI } from './Skeleton.Text.css'
 
 class SkeletonText extends React.PureComponent {

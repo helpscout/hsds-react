@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import PreviewCardContext from '../PreviewCard/PreviewCard.Context'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { ContentUI } from './Message.Content.css'
 
 const MessageContent = props => {

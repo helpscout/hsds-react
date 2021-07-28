@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import LoadingDots from '../LoadingDots'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { EmbedUI } from './Message.Embed.css'
 
 class MessageEmbed extends React.Component {

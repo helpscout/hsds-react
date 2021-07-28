@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import FormGroupChoice from './FromGroup.Choice'
 import FormGroupGrid from './FromGroup.Grid'
 import { FormGroupUI } from './FormGroup.css'

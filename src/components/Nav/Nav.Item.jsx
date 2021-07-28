@@ -5,7 +5,7 @@ import Flexy from '../Flexy'
 import Icon from '../Icon'
 import Tooltip from '../Tooltip'
 import NavLink from '../NavLink'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import {
   ItemUI,

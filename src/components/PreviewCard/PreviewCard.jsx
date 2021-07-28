@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Context from './PreviewCard.Context'
 import Heading from '../Heading'
 import Text from '../Text'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { PreviewCardUI } from './PreviewCard.css'
 
 const PreviewCard = props => {

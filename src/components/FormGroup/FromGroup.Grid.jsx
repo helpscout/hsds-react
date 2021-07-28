@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import GridComponent from '../Grid'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 
 class FormGroupGrid extends React.PureComponent {
   render() {

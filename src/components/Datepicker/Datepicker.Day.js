@@ -1,6 +1,6 @@
 import React, { useRef, useContext } from 'react'
 import { useDay } from '@datepicker-react/hooks'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import DatepickerContext from './Datepicker.Context'
 import {
   isToday,

@@ -11,7 +11,7 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import ReactDOM from 'react-dom'
 import EventListener from '../EventListener'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { applyStylesToNode, isNodeElement } from '../../utilities/node'
 import {
   getViewportPosition,

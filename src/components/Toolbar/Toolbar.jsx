@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Block from './Toolbar.Block'
 import Item from './Toolbar.Item'
 import Shadow from './Toolbar.Shadow'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { WrapperUI, ToolbarUI } from './Toolbar.css'
 
 export class Toolbar extends React.PureComponent {

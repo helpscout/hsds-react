@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import Timestamp from '../Timestamp'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { TimelineItemUI } from './Timeline.css'
 
 class TimelineItem extends React.PureComponent {

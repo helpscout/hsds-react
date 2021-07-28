@@ -1,5 +1,5 @@
 import React, { useRef, forwardRef } from 'react'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import ControlGroup from '../ControlGroup'
 import HSDSButton from '../Button'

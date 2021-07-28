@@ -27,7 +27,7 @@ import {
   TRUNCATED_CLASSNAMES,
   STATES_CLASSNAMES,
 } from './EditableField.utils'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { key } from '../../constants/Keys'
 import { noop } from '../../utilities/other'
 import equal from 'fast-deep-equal'

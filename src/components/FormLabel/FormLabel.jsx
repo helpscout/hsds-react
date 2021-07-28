@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Context from './Context'
 import HelpText from '../HelpText'
 import Label from '../Label'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { FormLabelUI, FormLabelHelpTextUI } from './FormLabel.css'
 

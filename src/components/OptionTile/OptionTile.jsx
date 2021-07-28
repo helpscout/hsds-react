@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FluffyCardContainer from './OptionTile.Container'
 import Centralize from '../Centralize'
 import Text from '../Text'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { OptionTileUI, HeaderUI, ContentUI, TitleUI } from './OptionTile.css'
 import OptionIcon from './OptionIcon'
 

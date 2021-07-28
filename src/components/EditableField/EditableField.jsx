@@ -19,7 +19,7 @@ import { EditableFieldMask as Mask } from './EditableField.Mask'
 import { EditableFieldActions as Actions } from './EditableField.Actions'
 import Icon from '../Icon'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import {
   createNewValueFieldObject,
   generateFieldActions,

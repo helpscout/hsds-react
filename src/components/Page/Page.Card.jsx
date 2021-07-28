@@ -1,6 +1,6 @@
 import React from 'react'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { CardUI } from './Page.css'
 
 export const PageCard = ({ children, className, ...rest }) => (

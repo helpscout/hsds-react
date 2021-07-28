@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Item from './Timeline.Item'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 
 class Timeline extends React.PureComponent {
   static Item = Item

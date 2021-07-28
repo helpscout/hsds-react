@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import equal from 'fast-deep-equal'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { key } from '../../constants/Keys'
 import { EditableFieldCompositeUI, ComposedMaskUI } from './EditableField.css'
 import {

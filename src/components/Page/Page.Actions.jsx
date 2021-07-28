@@ -9,7 +9,7 @@ import {
   StickyActionsWrapperUI,
 } from './Page.css'
 import PageStickyActions from './Page.StickyActions'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 
 const ActionContent = props => {

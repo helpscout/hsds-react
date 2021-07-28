@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { key } from '../../constants/Keys'
 import InputBackdropV2 from '../Input/Input.BackdropV2'
 import Icon from '../Icon'
-import { classNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import {
   InputUI,
