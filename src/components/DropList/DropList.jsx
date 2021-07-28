@@ -80,7 +80,9 @@ function DropListManager({
     unmountOnExit: false,
   }
   const tippyProps = {
+    trigger: 'click',
     ...tippyOptions,
+    // These shouldn't be overriden
     interactive: true,
   }
   const Toggler = decorateUserToggler(toggler)
@@ -226,7 +228,7 @@ function DropListManager({
   return (
     <Tippy
       {...tippyProps}
-      visible={isOpen}
+      showOnCreate={isOpen}
       onClickOutside={(instance, { target }) => {
         if (
           target.dataset.ignoreToggling &&

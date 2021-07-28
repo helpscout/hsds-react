@@ -28,6 +28,10 @@ export const ConditionContentUI = styled(Flexy)`
 
 export const OptionsWrapperUI = styled(Flexy.Item)`
   width: ${config.optionsWidth};
+
+  .SelectTagToggler {
+    width: 100%;
+  }
 `
 
 export const SelectedOptionUI = styled(Flexy)`

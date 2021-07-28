@@ -67,6 +67,7 @@ export class ConditionField extends React.PureComponent {
                   data-cy="ConditionFieldRemoveButton"
                   icon={closeIcon}
                   onClick={onRemove}
+                  aria-label="Remove condition"
                 />
               </Tooltip>
             </FieldCloseWrapperUI>

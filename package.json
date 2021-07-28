@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/hsds-react",
-  "version": "3.16.4",
+  "version": "3.17.0",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -23,7 +23,8 @@
     "Juan Pablo Lomeli Diaz <juanpablo@thetinkertrain.codes>",
     "Terrence L. Jones <terrenceljones805@gmail.com>",
     "Ryan Mulrooney",
-    "Alisdair McDiarmid"
+    "Alisdair McDiarmid",
+    "Jakub Janczyk"
   ],
   "scripts": {
     "prestart": "prestart && npm run colorway",
