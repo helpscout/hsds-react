@@ -1,44 +1,65 @@
 import { getDisplayTableData } from './Table.utils'
+import {
+  UPDATE_TABLE_DATA,
+  EXPAND_TABLE,
+  COLLAPSE_TABLE,
+  SELECT_ALL_ROWS,
+  DESELECT_ALL_ROWS,
+  SELECT_ROW,
+  DESELECT_ROW,
+} from './Table.actionTypes'
 
-export function reducer(state, action) {
-  const { type, payload } = action
-
+export default function reducer(state, { type, payload, opts = {} }) {
   switch (type) {
-    case 'updated-data':
+    case UPDATE_TABLE_DATA:
       return {
         ...state,
         currentTableData: getDisplayTableData(payload),
       }
 
-    case 'expand':
-    case 'collapse':
+    case EXPAND_TABLE:
+    case COLLAPSE_TABLE:
       return {
         ...state,
         currentTableData: getDisplayTableData(payload),
       }
 
-    case 'select-all':
+    case SELECT_ALL_ROWS:
+      const allRows = payload.data.map(d => d[payload.selectionKey])
+      opts.sideEffect && opts.sideEffect(allRows)
+
       return {
         ...state,
-        selectedRows: payload.data.map(d => d[payload.selectKey]),
+        selectedRows: allRows,
       }
 
-    case 'deselect-all':
+    case DESELECT_ALL_ROWS:
+      const noRows = []
+      opts.sideEffect && opts.sideEffect(noRows)
+
       return {
         ...state,
-        selectedRows: [],
+        selectedRows: noRows,
       }
 
-    case 'select-row':
+    case SELECT_ROW:
+      const addedToSelection = state.selectedRows.concat(payload.value)
+      opts.sideEffect && opts.sideEffect(addedToSelection)
+
       return {
         ...state,
-        selectedRows: state.selectedRows.concat(payload.value),
+        selectedRows: addedToSelection,
       }
 
-    case 'deselect-row':
+    case DESELECT_ROW:
+      const removedFromSelection = state.selectedRows.filter(
+        row => row !== payload.value
+      )
+      opts.sideEffect && opts.sideEffect(removedFromSelection)
+
       return {
         ...state,
-        selectedRows: state.selectedRows.filter(row => row !== payload.value),
+        selectedRows: removedFromSelection,
       }
 
     default:

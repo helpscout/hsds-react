@@ -1,4 +1,4 @@
-import React, { useMemo, useReducer } from 'react'
+import React from 'react'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 import PropTypes from 'prop-types'
 import { ThemeProvider } from 'styled-components'
@@ -8,8 +8,8 @@ import Button from '../Button'
 import Scrollable from '../Scrollable'
 import { TableWrapperUI, TableUI, LoadingUI } from './Table.css'
 import { defaultSkin, chooseSkin } from './Table.skins'
-import { columnShape, dataShape, getDisplayTableData } from './Table.utils'
-import { reducer } from './Table.reducer'
+import { columnShape, dataShape } from './Table.utils'
+import { useTable } from './Table.hooks'
 import TableBody from './Table.Body'
 import TableHead from './Table.Head'
 
@@ -30,7 +30,7 @@ export function Table({
   onSelectRow = noop,
   rowClassName = noop,
   rowWrapper = null,
-  selectKey = 'id',
+  selectionKey = 'id',
   skin = defaultSkin,
   sortedInfo = {
     columnKey: null,
@@ -42,31 +42,22 @@ export function Table({
   withSelectableRows = false,
   withTallRows = false,
 }) {
-  const initialDisplayTableData = useMemo(
-    () =>
-      getDisplayTableData({
-        data,
-        rowsToDisplay: maxRowsToDisplay,
-      }),
-    [data, maxRowsToDisplay]
-  )
-  const [state, dispatch] = useReducer(reducer, {
-    selectedRows: [],
-    currentTableData: initialDisplayTableData,
-  })
+  const [state, actions] = useTable(data, maxRowsToDisplay)
+  const {
+    updateTableData,
+    expandTable,
+    collapseTable,
+    selectAllRows,
+    deselectAllRows,
+    selectRow,
+    deselectRow,
+  } = actions
   const isTableCollapsable = maxRowsToDisplay != null
   const isCollapsed = data.length !== state.currentTableData.length
 
   useDeepCompareEffect(() => {
-    dispatch({
-      type: 'updated-data',
-      payload: { data, rowsToDisplay: maxRowsToDisplay },
-    })
+    updateTableData(data, maxRowsToDisplay)
   }, [data, maxRowsToDisplay, sortedInfo])
-
-  useDeepCompareEffect(() => {
-    withSelectableRows && onSelectRow(state.selectedRows)
-  }, [withSelectableRows, state.selectedRows])
 
   return (
     <ThemeProvider theme={chooseSkin(skin)}>
@@ -96,10 +87,12 @@ export function Table({
           >
             <TableHead
               columns={columns}
+              deselectAllRows={deselectAllRows}
               isLoading={isLoading}
-              dispatch={dispatch}
               rows={state.currentTableData}
-              selectKey={selectKey}
+              onSelectRow={onSelectRow}
+              selectAllRows={selectAllRows}
+              selectionKey={selectionKey}
               selected={
                 state.selectedRows.length === state.currentTableData.length
               }
@@ -108,17 +101,18 @@ export function Table({
             />
             <TableBody
               columns={columns}
-              dispatch={dispatch}
+              deselectRow={deselectRow}
               maxRowsToDisplay={maxRowsToDisplay}
               onRowClick={onRowClick}
               onSelectRow={onSelectRow}
               rows={state.currentTableData}
               rowClassName={rowClassName}
-              selectKey={selectKey}
+              rowWrapper={rowWrapper}
+              selectionKey={selectionKey}
               selectedRows={state.selectedRows}
+              selectRow={selectRow}
               withSelectableRows={withSelectableRows}
               withFocusableRows={withFocusableRows}
-              rowWrapper={rowWrapper}
             />
           </TableUI>
         </Scrollable>
@@ -130,13 +124,7 @@ export function Table({
             className={`${TABLE_CLASSNAME}__Expander`}
             kind="link"
             onClick={() => {
-              dispatch({
-                type: 'expand',
-                payload: {
-                  data,
-                  rowsToDisplay: data.length,
-                },
-              })
+              expandTable(data)
               onExpand({ collapsed: false })
             }}
             style={{ marginLeft: '14px' }}
@@ -150,13 +138,7 @@ export function Table({
             className={`${TABLE_CLASSNAME}__Expander`}
             kind="link"
             onClick={() => {
-              dispatch({
-                type: 'collapse',
-                payload: {
-                  data,
-                  rowsToDisplay: maxRowsToDisplay,
-                },
-              })
+              collapseTable(data, maxRowsToDisplay)
               onExpand({ collapsed: true })
             }}
             style={{ marginLeft: '14px' }}
@@ -220,7 +202,7 @@ Table.propTypes = {
     }),
   ]),
   /** Customize which key from your data should be used for selection */
-  selectKey: PropTypes.string,
+  selectionKey: PropTypes.string,
   /** When sortable, indicates which column tha table is sorted by, and in which order (ascending or descending) */
   sortedInfo: PropTypes.shape({
     columnKey: PropTypes.string,

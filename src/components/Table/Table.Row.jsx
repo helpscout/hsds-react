@@ -10,13 +10,15 @@ import Checkbox from '../Checkbox'
 
 export function TableRow({
   columns,
-  dispatch,
+  deselectRow,
+  onRowClick,
+  onSelectRow,
   row,
   rowClassName,
   rowWrapper,
-  onRowClick,
   selected,
-  selectKey,
+  selectRow,
+  selectionKey,
   withSelectableRows,
   withFocusableRows,
 }) {
@@ -43,15 +45,9 @@ export function TableRow({
 
   function handleChange(value, checked) {
     if (checked) {
-      dispatch({
-        type: 'select-row',
-        payload: { value, checked },
-      })
+      selectRow(value, onSelectRow)
     } else {
-      dispatch({
-        type: 'deselect-row',
-        payload: { value, checked },
-      })
+      deselectRow(value, onSelectRow)
     }
   }
 
@@ -76,7 +72,7 @@ export function TableRow({
               checked={selected}
               onEnter={handleChange}
               onChange={handleChange}
-              value={row[selectKey]}
+              value={row[selectionKey]}
             />
           </CellUI>
         ) : null}
@@ -102,15 +98,24 @@ TableRow.propTypes = {
   /** Callback function when the row is clicked. Arguments are the event and the row clicked. */
   onRowClick: PropTypes.func,
   onSelectRow: PropTypes.func,
+  deselectRow: PropTypes.func,
+  /** Custom class names to be added to the each row based on a condition. */
+  rowClassName: PropTypes.func,
+  /** Gives you the ability to wrap rows based on conditions */
+  rowWrapper: PropTypes.func,
+  selected: PropTypes.bool,
+  selectRow: PropTypes.func,
+  /** Customize which key from your data should be used for selection */
+  selectionKey: PropTypes.string,
+  /** Adds tabindex=0 to each row*/
+  withFocusableRows: PropTypes.bool,
+  /** Adds a column with a checkbox for row selection */
+  withSelectableRows: PropTypes.bool,
 }
 
 function areEqual(prevProps, nextProps) {
-  const { dispatch, onRowClick, ...rest } = prevProps
-  const {
-    dispatch: dispatchNext,
-    onRowClick: onRowClickNext,
-    ...restNext
-  } = nextProps
+  const { onRowClick, ...rest } = prevProps
+  const { onRowClick: onRowClickNext, ...restNext } = nextProps
 
   if (equal(rest, restNext)) {
     return true

@@ -3,7 +3,16 @@ import { mount, render as enzymeRender } from 'enzyme'
 import { render } from '@testing-library/react'
 import user from '@testing-library/user-event'
 import { Table, TABLE_CLASSNAME } from './Table'
-import { reducer } from './Table.reducer'
+import reducer from './Table.reducer'
+import {
+  UPDATE_TABLE_DATA,
+  EXPAND_TABLE,
+  COLLAPSE_TABLE,
+  SELECT_ALL_ROWS,
+  DESELECT_ALL_ROWS,
+  SELECT_ROW,
+  DESELECT_ROW,
+} from './Table.actionTypes'
 import { defaultSkin, alternativeSkin, chooseSkin } from './Table.skins'
 import {
   createFakeCustomers,
@@ -502,7 +511,7 @@ describe('Reducer', () => {
       currentTableData: data,
     }
     const action = {
-      type: 'updated-data',
+      type: UPDATE_TABLE_DATA,
       payload: {
         data: data2,
         rowsToDisplay: undefined,
@@ -523,7 +532,7 @@ describe('Reducer', () => {
       currentTableData: data,
     }
     const expandAction = {
-      type: 'expand',
+      type: EXPAND_TABLE,
       payload: {
         data: data,
         rowsToDisplay: 10,
@@ -540,7 +549,7 @@ describe('Reducer', () => {
 
     const data2 = page1.results.slice(0, 4)
     const collapseAction = {
-      type: 'collapse',
+      type: COLLAPSE_TABLE,
       payload: {
         data: data,
         rowsToDisplay: 4,
@@ -563,11 +572,11 @@ describe('Reducer', () => {
       currentTableData: data,
     }
     const selectAllAction = {
-      type: 'select-all',
+      type: SELECT_ALL_ROWS,
       payload: {
         data: data,
         rowsToDisplay: undefined,
-        selectKey: 'id',
+        selectionKey: 'id',
       },
     }
     const resultingStateOfSelectAll = {
@@ -580,7 +589,7 @@ describe('Reducer', () => {
     )
 
     const deselectAllAction = {
-      type: 'deselect-all',
+      type: DESELECT_ALL_ROWS,
       payload: {
         data: data,
         rowsToDisplay: undefined,
@@ -603,7 +612,7 @@ describe('Reducer', () => {
       currentTableData: data,
     }
     const selectAction = {
-      type: 'select-row',
+      type: SELECT_ROW,
       payload: {
         data: data,
         value: data[3].id,
@@ -625,7 +634,7 @@ describe('Reducer', () => {
     }
 
     const selectAction2 = {
-      type: 'select-row',
+      type: SELECT_ROW,
       payload: {
         data: data,
         value: data[3].id,
@@ -643,7 +652,7 @@ describe('Reducer', () => {
     )
 
     const deselectAction = {
-      type: 'deselect-row',
+      type: DESELECT_ROW,
       payload: {
         data: data,
         value: data[3].id,
@@ -660,7 +669,7 @@ describe('Reducer', () => {
     )
 
     const deselectAction2 = {
-      type: 'deselect-row',
+      type: DESELECT_ROW,
       payload: {
         data: data,
         value: data[2].id,

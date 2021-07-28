@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { generateCellKey, columnShape } from './Table.utils'
+import { generateCellKey, columnShape, dataShape } from './Table.utils'
 import { TABLE_CLASSNAME } from './Table'
 import Checkbox from '../Checkbox'
 import HeaderCell from './Table.HeaderCell'
@@ -10,23 +10,20 @@ function TableHead({
   columns,
   'data-cy': dataCy = 'TableHead',
   isLoading,
-  dispatch,
+  selectAllRows,
+  deselectAllRows,
+  onSelectRow,
   rows,
   selected,
-  selectKey,
+  selectionKey,
   sortedInfo,
   withSelectableRows,
 }) {
   function handleChange(_, checked) {
     if (checked) {
-      dispatch({
-        type: 'select-all',
-        payload: { data: rows, selectKey },
-      })
+      selectAllRows(rows, selectionKey, onSelectRow)
     } else {
-      dispatch({
-        type: 'deselect-all',
-      })
+      deselectAllRows(onSelectRow)
     }
   }
 
@@ -64,13 +61,21 @@ TableHead.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
   /** Whether tha table is in the loading state */
   isLoading: PropTypes.bool,
-  dispatch: PropTypes.func,
-  withSelectableRows: PropTypes.bool,
+  selectAllRows: PropTypes.func,
+  deselectAllRows: PropTypes.func,
+  onSelectRow: PropTypes.func,
+  /** List of Rows (data), which are objects */
+  rows: PropTypes.arrayOf(PropTypes.shape(dataShape)),
+  selected: PropTypes.bool,
+  /** Customize which key from your data should be used for selection */
+  selectionKey: PropTypes.string,
   /** When sortable, indicates which column tha table is sorted by, and in which order (ascending or descending) */
   sortedInfo: PropTypes.shape({
     columnKey: PropTypes.string,
     order: PropTypes.string,
   }),
+  /** Adds a column with a checkbox for row selection */
+  withSelectableRows: PropTypes.bool,
 }
 
 export default TableHead
