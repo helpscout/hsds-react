@@ -187,3 +187,43 @@ To enable selection you have these props available to you:
     <ConvoList />
   </Story>
 </Canvas>
+
+### Wrapping rows
+
+Sometimes you might need to wrap a row or add attributes to it based on certain conditions, for this we have added the prop `rowWrapper`. Works like this:
+
+```jsx
+
+// children: the "row" react component (Table.Row)
+// The row for this particular row
+rowWrapper={(children, row) => {
+  if (row.id === 281796231) {
+	// Wrap with a `Popover`
+    return (
+      <Popover
+        triggerOn="mouseenter"
+        appendTo={() => document.body}
+        withTriggerWrapper={false}
+        placement="left"
+        renderContent={() => (
+          <Avatar
+            size="xs"
+            name={AvatarSpec.generate().name}
+            image={AvatarSpec.generate().image}
+          />
+        )}
+      >
+        {
+			// Add a `title` attribute on the row
+			React.cloneElement(children, {
+	          title: 'Someone is replying',
+    	    })
+		}
+      </Popover>
+    )
+  }
+  return children
+}}
+```
+
+Note that while you can technically wrap the Row with any element, you are dealing with a `<tr />` and generally they don't like to be inside other stuff (like a span for example).

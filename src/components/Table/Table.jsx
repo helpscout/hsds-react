@@ -26,8 +26,9 @@ export function Table({
   isScrollLocked = true,
   maxRowsToDisplay,
   onExpand = noop,
-  onSelectRow = noop,
   onRowClick = null,
+  onSelectRow = noop,
+  rowClassName = noop,
   rowWrapper = null,
   selectKey = 'id',
   skin = defaultSkin,
@@ -35,12 +36,11 @@ export function Table({
     columnKey: null,
     order: null,
   },
-  rowClassName = noop,
   tableClassName,
   tableWidth = { min: '700px' },
+  withFocusableRows = false,
   withSelectableRows = false,
   withTallRows = false,
-  withFocusableRows = false,
 }) {
   const initialDisplayTableData = useMemo(
     () =>
@@ -172,21 +172,34 @@ export function Table({
 Table.propTypes = {
   /** Custom class names to be added to the component top level element. */
   className: PropTypes.string,
-  /** Custom class names to be added to the `<table>` element. */
-  tableClassName: PropTypes.string,
-  /** Custom class names to be added to the each row based on a condition. */
-  rowClassName: PropTypes.func,
   /** List of columns */
   columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
-  /** List of Rows, which are objects */
-  data: PropTypes.arrayOf(PropTypes.shape(dataShape)),
-  /** The text for the "expander" button when table is either collapsed or expanded */
-  expanderText: PropTypes.any,
-  withFocusableRows: PropTypes.bool,
-  /** When provided the Table will only show this number of rows and and expander to see the rest */
-  maxRowsToDisplay: PropTypes.number,
   /** The table wrapper width (if `tableWidth` is larger, the component scrolls horizontally) */
   containerWidth: PropTypes.string,
+  /** List of Rows, which are objects */
+  data: PropTypes.arrayOf(PropTypes.shape(dataShape)),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  /** The text for the "expander" button when table is either collapsed or expanded */
+  expanderText: PropTypes.any,
+  /** Adds the 'is-loading' class to the component */
+  isLoading: PropTypes.bool,
+  /** Whether to use `ScrollLock` with `direction="x"` on the Table. */
+  isScrollLocked: PropTypes.bool,
+  /** When provided the Table will only show this number of rows and and expander to see the rest */
+  maxRowsToDisplay: PropTypes.number,
+  /** Callback when expending/collapsing the table */
+  onExpand: PropTypes.func,
+  /** Callback function when a row is clicked. Arguments are the event and the row clicked. */
+  onRowClick: PropTypes.func,
+  /** Callback when selecting a row if enabled */
+  onSelectRow: PropTypes.func,
+  /** Custom class names to be added to the each row based on a condition. */
+  rowClassName: PropTypes.func,
+  /** Gives you the ability to wrap rows based on conditions */
+  rowWrapper: PropTypes.func,
+  /** Custom class names to be added to the `<table>` element. */
+  tableClassName: PropTypes.string,
   /** The `<table>` width */
   tableWidth: PropTypes.shape({ min: PropTypes.string, max: PropTypes.string }),
   /** An object to customize the visual appearance of the table. See [Skins.md](/src/components/Table/docs/Skins.md) */
@@ -206,29 +219,19 @@ Table.propTypes = {
       borderColumns: PropTypes.string,
     }),
   ]),
-  /** Adds the 'is-loading' class to the component */
-  isLoading: PropTypes.bool,
-  /** Whether to use `ScrollLock` with `direction="x"` on the Table. */
-  isScrollLocked: PropTypes.bool,
+  /** Customize which key from your data should be used for selection */
+  selectKey: PropTypes.string,
   /** When sortable, indicates which column tha table is sorted by, and in which order (ascending or descending) */
   sortedInfo: PropTypes.shape({
     columnKey: PropTypes.string,
     order: PropTypes.string,
   }),
-  /** Callback function when a row is clicked. Arguments are the event and the row clicked. */
-  onRowClick: PropTypes.func,
-  /** Customize which key from your data should be used for selection */
-  selectKey: PropTypes.string,
-  /** Callback when expending/collapsing the table */
-  onExpand: PropTypes.func,
-  /** Callback when selecting a row if enabled */
-  onSelectRow: PropTypes.func,
+  /** Adds tabindex=0 to each row*/
+  withFocusableRows: PropTypes.bool,
   /** Adds a column with a checkbox for row selection */
   withSelectableRows: PropTypes.bool,
   /** Makes the rows 60px tall */
   withTallRows: PropTypes.bool,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
 }
 
 export default Table
