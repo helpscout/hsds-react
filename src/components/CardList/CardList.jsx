@@ -3,7 +3,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Animate from '../Animate'
 import AnimateGroup from '../AnimateGroup'
 import { getComponentKey } from '../../utilities/component'
-import classNames from '../../utilities/classNames'
+import classNames from 'classnames'
 import PropTypes from 'prop-types'
 
 export class CardList extends React.PureComponent {
