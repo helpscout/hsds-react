@@ -106,6 +106,10 @@ function DropListManager({
 
   useEffect(() => {
     setOpenedState(isMenuOpen)
+    toggleTippy(tippyInstance, isMenuOpen)
+
+    // We only care when isMenuOpen changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMenuOpen])
 
   function decorateUserToggler(userToggler) {
@@ -220,16 +224,21 @@ function DropListManager({
     }
   }
 
+  function toggleTippy(instance, visible) {
+    if (instance == null) return
+
+    if (visible) {
+      instance.show()
+    } else {
+      instance.hide()
+    }
+  }
+
   function toggleOpenedState(shouldOpen, origin = '') {
     setOpenOrigin(origin)
     setOpenedState(shouldOpen)
     onOpenedStateChange(shouldOpen)
-
-    if (tippyInstance && shouldOpen) {
-      tippyInstance.show()
-    } else {
-      tippyInstance.hide()
-    }
+    toggleTippy(tippyInstance, shouldOpen)
   }
 
   return (
