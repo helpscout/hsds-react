@@ -5,7 +5,7 @@ import {
   getEnabledItemIndex,
   getItemContentKeyName,
 } from './DropList.utils'
-import { OPEN_ACTION_ORIGIN, VARIANTS } from './DropList.constants'
+import { VARIANTS } from './DropList.constants'
 
 const { SELECT, COMBOBOX } = VARIANTS
 
@@ -132,7 +132,7 @@ export function onIsOpenChangeCommon({
 
     case `${COMBOBOX}.${useCombobox.stateChangeTypes.InputBlur}`:
     case `${SELECT}.${useSelect.stateChangeTypes.MenuBlur}`:
-      closeOnBlur && toggleOpenedState(false, OPEN_ACTION_ORIGIN.DROPLIST_BLUR)
+      closeOnBlur && toggleOpenedState(false)
       break
 
     default:

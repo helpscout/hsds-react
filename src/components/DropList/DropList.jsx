@@ -5,11 +5,7 @@ import classNames from 'classnames'
 import Tippy from '@tippyjs/react/headless'
 import { noop } from '../../utilities/other'
 import { GlobalContext } from '../HSDS/Provider'
-import {
-  DROPLIST_TOGGLER,
-  OPEN_ACTION_ORIGIN,
-  VARIANTS,
-} from './DropList.constants'
+import { DROPLIST_TOGGLER, VARIANTS } from './DropList.constants'
 import {
   findItemInArray,
   flattenListItems,
@@ -58,7 +54,7 @@ function DropListManager({
   withMultipleSelection = false,
 }) {
   const [isOpen, setOpenedState] = useState(isMenuOpen)
-  const [openOrigin, setOpenOrigin] = useState('')
+  const [menuBlurred, setMenuBlurred] = useState(false)
   const parsedSelection = parseSelectionFromProps({
     withMultipleSelection,
     selection,
@@ -114,7 +110,7 @@ function DropListManager({
 
   function decorateUserToggler(userToggler) {
     if (React.isValidElement(userToggler)) {
-      const { onClick, onFocus, className } = userToggler.props
+      const { onClick, className } = userToggler.props
       const togglerProps = {
         className: classNames(DROPLIST_TOGGLER, className),
         isActive: isOpen,
@@ -122,25 +118,17 @@ function DropListManager({
         onClick: e => {
           onClick && onClick(e)
           /**
-           * When clicking the button the menu blur event happens first that closes
-           * the DropList, here we check if the menu was closed due to the input blur and ignore the
-           * click action to toggle the open state, we also always reset the "origin" to resume normal behaviour
+           * When clicking the button to close the DropList, the menu blur event happens too and so there's
+           * a race condition between that and the click, here check if the menu was closed by blurring
            */
-          if (openOrigin !== OPEN_ACTION_ORIGIN.DROPLIST_BLUR) {
-            toggleOpenedState(!isOpen, '')
+          if (menuBlurred) {
+            setMenuBlurred(false)
+
+            if (!isOpen) {
+              toggleOpenedState(true)
+            }
           } else {
-            setOpenOrigin('')
-          }
-        },
-
-        onFocus: e => {
-          onFocus && onFocus(e)
-
-          /**
-           * Reset the "origin" to resume normal behaviour
-           */
-          if (!isOpen) {
-            setOpenOrigin('')
+            toggleOpenedState(true)
           }
         },
       }
@@ -225,7 +213,7 @@ function DropListManager({
   }
 
   function toggleTippy(instance, visible) {
-    if (instance == null) return
+    if (instance == null || instance.state.isDestroyed) return
 
     if (visible) {
       instance.show()
@@ -234,8 +222,7 @@ function DropListManager({
     }
   }
 
-  function toggleOpenedState(shouldOpen, origin = '') {
-    setOpenOrigin(origin)
+  function toggleOpenedState(shouldOpen) {
     setOpenedState(shouldOpen)
     onOpenedStateChange(shouldOpen)
     toggleTippy(tippyInstance, shouldOpen)
@@ -247,6 +234,9 @@ function DropListManager({
       onCreate={instance => {
         setTippyInstance(instance)
         getTippyInstance(instance)
+      }}
+      onDestroy={instance => {
+        setTippyInstance(null)
       }}
       showOnCreate={isOpen}
       onClickOutside={(instance, { target }) => {
@@ -289,6 +279,7 @@ function DropListManager({
             renderCustomListItem={renderCustomListItem}
             selectedItem={selectedItem}
             selectedItems={selectedItems}
+            setMenuBlurred={setMenuBlurred}
             toggleOpenedState={toggleOpenedState}
             withMultipleSelection={
               isTogglerOfType(toggler, SelectTag)
@@ -338,7 +329,7 @@ DropListManager.propTypes = {
   /** Whether to close the DropList when an item is selected */
   closeOnSelection: PropTypes.bool,
   /** Pass a React Element to render a custom message or style when the List is empty */
-  customEmptyList: PropTypes.element,
+  customEmptyList: PropTypes.any,
   /** Data attr applied to the DropList for Cypress tests. By default one of 'DropList.Select' or 'DropList.Combobox' depending on the variant used */
   'data-cy': PropTypes.string,
   /** Enable navigation with Right and Left arrows (useful for horizontally rendered lists) */

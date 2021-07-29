@@ -36,6 +36,7 @@ function Combobox({
   onListItemSelectEvent = noop,
   handleSelectedItemChange = noop,
   renderCustomListItem = null,
+  setMenuBlurred,
   toggleOpenedState = noop,
   withMultipleSelection = false,
 }) {
@@ -168,6 +169,9 @@ function Combobox({
           {...getInputProps({
             className: 'DropList__Combobox__input',
             ref: inputEl,
+            onBlur: () => {
+              setMenuBlurred(true)
+            },
             onFocus: event => {
               onMenuFocus(event)
             },

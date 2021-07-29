@@ -33,6 +33,7 @@ function Select({
   selectedItem = null,
   selectedItems,
   toggleOpenedState = noop,
+  setMenuBlurred,
   withMultipleSelection = false,
 }) {
   const {
@@ -171,6 +172,9 @@ function Select({
           onKeyDown: handleMenuKeyDown,
           onFocus: e => {
             onMenuFocus(e)
+          },
+          onBlur: () => {
+            setMenuBlurred(true)
           },
         })}
       >
