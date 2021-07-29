@@ -221,6 +221,64 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
         toggler={<SimpleButton text="This is a select" />}
       />
     </div>
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        isMenuOpen={boolean('Is Menu Open', false)}
+        onListItemSelectEvent={({ event, listItemNode }) => {
+          console.log('event', event)
+          console.log('listItemNode', listItemNode)
+        }}
+        selection={select(
+          'Selection',
+          {
+            clear: null,
+            first: regularItems[0],
+            second: regularItems[1],
+            third: regularItems[2],
+          },
+          regularItems[1]
+        )}
+        items={regularItems}
+        toggler={<SimpleButton text="This is a select" />}
+      />
+    </div>
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        isMenuOpen={boolean('Is Menu Open', false)}
+        onListItemSelectEvent={({ event, listItemNode }) => {
+          console.log('event', event)
+          console.log('listItemNode', listItemNode)
+        }}
+        selection={select(
+          'Selection',
+          {
+            clear: null,
+            first: regularItems[0],
+            second: regularItems[1],
+            third: regularItems[2],
+          },
+          regularItems[1]
+        )}
+        items={regularItems}
+        toggler={<SimpleButton text="This is a select" />}
+      />
+    </div>
   </Story>
 </Canvas>
 
@@ -466,7 +524,12 @@ function renderCustomListItem({
         toggler={<SimpleButton text="Click" />}
         renderCustomListItem={({ item, isSelected }) => (
           <div
-            style={{ padding: '5px 10px', fontSize: '14px', color: '#404996' }}
+            style={{
+              padding: '5px 10px',
+              fontSize: '14px',
+              color: '#404996',
+              cursor: 'pointer',
+            }}
           >
             {isSelected ? (
               <strong style={{ color: 'white', backgroundColor: '#404996' }}>

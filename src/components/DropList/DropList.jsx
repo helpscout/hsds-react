@@ -41,6 +41,7 @@ function DropListManager({
   'data-cy': dataCy,
   enableLeftRightNavigation = false,
   focusTogglerOnMenuClose = true,
+  getTippyInstance = noop,
   isMenuOpen = false,
   items = [],
   menuCSS,
@@ -87,7 +88,7 @@ function DropListManager({
   }
   const Toggler = decorateUserToggler(toggler)
   const DropListVariant = getDropListVariant()
-
+  const [tippyInstance, setTippyInstance] = useState(null)
   useWarnings({ toggler, withMultipleSelection, menuCSS, tippyOptions })
 
   useDeepCompareEffect(() => {
@@ -115,7 +116,6 @@ function DropListManager({
 
         onClick: e => {
           onClick && onClick(e)
-
           /**
            * When clicking the button the menu blur event happens first that closes
            * the DropList, here we check if the menu was closed due to the input blur and ignore the
@@ -223,11 +223,21 @@ function DropListManager({
     setOpenOrigin(origin)
     setOpenedState(shouldOpen)
     onOpenedStateChange(shouldOpen)
+
+    if (tippyInstance && shouldOpen) {
+      tippyInstance.show()
+    } else {
+      tippyInstance.hide()
+    }
   }
 
   return (
     <Tippy
       {...tippyProps}
+      onCreate={instance => {
+        setTippyInstance(instance)
+        getTippyInstance(instance)
+      }}
       showOnCreate={isOpen}
       onClickOutside={(instance, { target }) => {
         if (
@@ -325,6 +335,8 @@ DropListManager.propTypes = {
   enableLeftRightNavigation: PropTypes.bool,
   /** Automatically moves the focus back to the toggler when the DropList is closed */
   focusTogglerOnMenuClose: PropTypes.bool,
+  /** Retrieves the tippy instance */
+  getTippyInstance: PropTypes.any,
   /** Open/close the DropList externally */
   isMenuOpen: PropTypes.bool,
   /** Items to populate the list with */
