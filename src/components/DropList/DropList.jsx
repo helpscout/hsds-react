@@ -89,6 +89,7 @@ function DropListManager({
   const Toggler = decorateUserToggler(toggler)
   const DropListVariant = getDropListVariant()
   const [tippyInstance, setTippyInstance] = useState(null)
+
   useWarnings({ toggler, withMultipleSelection, menuCSS, tippyOptions })
 
   useDeepCompareEffect(() => {
