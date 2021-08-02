@@ -187,7 +187,7 @@ function Select({
                 ) {
                   toggleOpenedState(false)
                 }
-              }, 100)
+              }, 50)
             }
             onMenuBlur(e)
           },
