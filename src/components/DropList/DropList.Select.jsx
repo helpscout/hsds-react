@@ -58,7 +58,6 @@ function Select({
 
     onIsOpenChange(changes) {
       onIsOpenChangeCommon({
-        closeOnBlur,
         closeOnSelection,
         toggleOpenedState,
         type: `${VARIANTS.SELECT}.${changes.type}`,
@@ -169,7 +168,25 @@ function Select({
           onFocus: e => {
             onMenuFocus(e)
           },
-          onBlur: () => {
+          onBlur: e => {
+            /**
+             * Closing on blur
+             *
+             * When clicking on the toggler, this event gets fired _before_
+             * so it sets the isOpen flag to false, and then the click event happens
+             * and sets isOpen to true, making the DropList never close on cliking
+             * the toggler.
+             *
+             * Here we wait a little bit to see if the next element gathering focus
+             * is indeed the toggler, and only close the DropList if it isn't
+             */
+            setTimeout(() => {
+              if (
+                !document.activeElement.classList.contains('DropListToggler')
+              ) {
+                closeOnBlur && toggleOpenedState(false)
+              }
+            }, 100)
             onMenuBlur()
           },
         })}

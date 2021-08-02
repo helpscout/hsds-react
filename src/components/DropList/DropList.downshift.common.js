@@ -111,7 +111,6 @@ export function stateReducerCommon({
 }
 
 export function onIsOpenChangeCommon({
-  closeOnBlur,
   closeOnSelection,
   toggleOpenedState,
   type,
@@ -128,11 +127,6 @@ export function onIsOpenChangeCommon({
     case `${COMBOBOX}.${useCombobox.stateChangeTypes.InputKeyDownEscape}`:
     case `${SELECT}.${useSelect.stateChangeTypes.MenuKeyDownEscape}`:
       toggleOpenedState(false)
-      break
-
-    case `${COMBOBOX}.${useCombobox.stateChangeTypes.InputBlur}`:
-    case `${SELECT}.${useSelect.stateChangeTypes.MenuBlur}`:
-      closeOnBlur && toggleOpenedState(false)
       break
 
     default:

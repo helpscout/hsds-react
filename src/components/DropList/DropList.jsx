@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import useDeepCompareEffect from 'use-deep-compare-effect'
-import debounce from 'lodash.debounce'
 import classNames from 'classnames'
 import Tippy from '@tippyjs/react/headless'
 import { noop } from '../../utilities/other'
@@ -26,8 +25,6 @@ import {
   getTogglerPlacementProps,
 } from './DropList.togglers'
 import Animate from '../Animate'
-
-const DEBOUNCE_TIME = process.env.NODE_ENV !== 'test' ? 10 : 0
 
 function DropListManager({
   animateOptions = {},
@@ -101,14 +98,27 @@ function DropListManager({
 
   function decorateUserToggler(userToggler) {
     if (React.isValidElement(userToggler)) {
-      const { onClick, className } = userToggler.props
+      const { className, onClick, onFocus } = userToggler.props
       const togglerProps = {
         className: classNames(DROPLIST_TOGGLER, className),
         isActive: isOpen,
 
         onClick: e => {
           onClick && onClick(e)
-          debouncedTogglerFn(!isOpen)
+          e.preventDefault()
+          toggleOpenedState(!isOpen)
+        },
+        onFocus: e => {
+          onFocus && onFocus(e)
+          const { relatedTarget } = e
+
+          if (
+            isOpen &&
+            relatedTarget &&
+            relatedTarget.classList.contains('MenuList-Select')
+          ) {
+            toggleOpenedState(false)
+          }
         },
       }
 
@@ -134,10 +144,10 @@ function DropListManager({
     return <SimpleButton text="Fallback Toggler" />
   }
 
-  const debouncedTogglerFn = debounce(function toggleOpenedState(shouldOpen) {
+  function toggleOpenedState(shouldOpen) {
     setOpenedState(shouldOpen)
     onOpenedStateChange(shouldOpen)
-  }, DEBOUNCE_TIME)
+  }
 
   function handleSelectedItemChange({ selectedItem }) {
     if (selectedItem == null) {
@@ -206,7 +216,7 @@ function DropListManager({
           return
         }
 
-        debouncedTogglerFn(false)
+        toggleOpenedState(false)
       }}
       render={() => (
         <Animate
@@ -258,7 +268,7 @@ function DropListManager({
             renderCustomListItem={renderCustomListItem}
             selectedItem={selectedItem}
             selectedItems={selectedItems}
-            toggleOpenedState={debouncedTogglerFn}
+            toggleOpenedState={toggleOpenedState}
             withMultipleSelection={
               isTogglerOfType(toggler, SelectTag)
                 ? false

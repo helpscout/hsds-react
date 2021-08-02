@@ -165,8 +165,8 @@ function Combobox({
           {...getInputProps({
             className: 'DropList__Combobox__input',
             ref: inputEl,
-            onBlur: () => {
-              onMenuBlur()
+            onBlur: e => {
+              onMenuBlur(e)
             },
             onFocus: event => {
               onMenuFocus(event)

@@ -11,6 +11,8 @@ import {
   simpleGroupedItems,
 } from '../../utilities/specs/dropdown.specs'
 
+jest.useFakeTimers()
+
 const beatles = ['John', 'Paul', 'Ringo', 'George']
 const someItems = [
   { label: 'John' },
