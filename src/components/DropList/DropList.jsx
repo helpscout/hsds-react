@@ -1,14 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import useDeepCompareEffect from 'use-deep-compare-effect'
+import debounce from 'lodash.debounce'
 import classNames from 'classnames'
 import Tippy from '@tippyjs/react/headless'
 import { noop } from '../../utilities/other'
 import { GlobalContext } from '../HSDS/Provider'
 import { DROPLIST_TOGGLER, VARIANTS } from './DropList.constants'
+import { getAnimateProps, getTippyProps } from './DropList.config'
 import {
   findItemInArray,
   flattenListItems,
+  getDropListVariant,
   getItemContentKeyName,
   isTogglerOfType,
   itemToString,
@@ -23,8 +26,8 @@ import {
   getTogglerPlacementProps,
 } from './DropList.togglers'
 import Animate from '../Animate'
-import Combobox from './DropList.Combobox'
-import Select from './DropList.Select'
+
+const DEBOUNCE_TIME = process.env.NODE_ENV !== 'test' ? 10 : 0
 
 function DropListManager({
   animateOptions = {},
@@ -53,8 +56,8 @@ function DropListManager({
   variant = VARIANTS.SELECT,
   withMultipleSelection = false,
 }) {
-  const [isOpen, setOpenedState] = useState(isMenuOpen)
-  const [menuBlurred, setMenuBlurred] = useState(false)
+  const [isOpen, setOpenedState] = useState(false)
+  const tippyInstanceRef = useRef(null)
   const parsedSelection = parseSelectionFromProps({
     withMultipleSelection,
     selection,
@@ -64,27 +67,19 @@ function DropListManager({
     withMultipleSelection ? parsedSelection : []
   )
   const [parsedItems, setParsedItems] = useState(flattenListItems(items))
+
   const { getCurrentScope } = useContext(GlobalContext) || {}
   const scope = getCurrentScope ? getCurrentScope() : null
-  const animateProps = {
-    duration: 200,
-    easing: 'ease-in-out',
-    sequence: 'fade down',
-    ...animateOptions,
-    // These shouldn't be overriden
-    animateOnMount: true,
-    mountOnEnter: false,
-    unmountOnExit: false,
-  }
-  const tippyProps = {
-    trigger: 'click',
-    ...tippyOptions,
-    // These shouldn't be overriden
-    interactive: true,
-  }
+
+  const animateProps = getAnimateProps(animateOptions)
+  const tippyProps = getTippyProps(tippyOptions)
+
   const Toggler = decorateUserToggler(toggler)
-  const DropListVariant = getDropListVariant()
-  const [tippyInstance, setTippyInstance] = useState(null)
+  const DropListVariant = getDropListVariant({
+    autoSetComboboxAt,
+    numberOfItems: parsedItems.length,
+    variant,
+  })
 
   useWarnings({ toggler, withMultipleSelection, menuCSS, tippyOptions })
 
@@ -102,10 +97,6 @@ function DropListManager({
 
   useEffect(() => {
     setOpenedState(isMenuOpen)
-    toggleTippy(tippyInstance, isMenuOpen)
-
-    // We only care when isMenuOpen changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMenuOpen])
 
   function decorateUserToggler(userToggler) {
@@ -117,19 +108,7 @@ function DropListManager({
 
         onClick: e => {
           onClick && onClick(e)
-          /**
-           * When clicking the button to close the DropList, the menu blur event happens too and so there's
-           * a race condition between that and the click, here check if the menu was closed by blurring
-           */
-          if (menuBlurred) {
-            setMenuBlurred(false)
-
-            if (!isOpen) {
-              toggleOpenedState(true)
-            }
-          } else {
-            toggleOpenedState(true)
-          }
+          debouncedTogglerFn(!isOpen)
         },
       }
 
@@ -152,22 +131,13 @@ function DropListManager({
       return React.cloneElement(userToggler, togglerProps)
     }
 
-    return (
-      <SimpleButton
-        onClick={() => {
-          toggleOpenedState(!isOpen)
-        }}
-        text="Fallback Toggler"
-      />
-    )
+    return <SimpleButton text="Fallback Toggler" />
   }
 
-  function getDropListVariant() {
-    return variant.toLowerCase() === VARIANTS.COMBOBOX ||
-      (autoSetComboboxAt > 0 && parsedItems.length >= autoSetComboboxAt)
-      ? Combobox
-      : Select
-  }
+  const debouncedTogglerFn = debounce(function toggleOpenedState(shouldOpen) {
+    setOpenedState(shouldOpen)
+    onOpenedStateChange(shouldOpen)
+  }, DEBOUNCE_TIME)
 
   function handleSelectedItemChange({ selectedItem }) {
     if (selectedItem == null) {
@@ -212,33 +182,18 @@ function DropListManager({
     }
   }
 
-  function toggleTippy(instance, visible) {
-    if (instance == null || instance.state.isDestroyed) return
-
-    if (visible) {
-      instance.show()
-    } else {
-      instance.hide()
-    }
-  }
-
-  function toggleOpenedState(shouldOpen) {
-    setOpenedState(shouldOpen)
-    onOpenedStateChange(shouldOpen)
-    toggleTippy(tippyInstance, shouldOpen)
-  }
-
   return (
     <Tippy
       {...tippyProps}
       onCreate={instance => {
-        setTippyInstance(instance)
+        tippyInstanceRef.current = instance
+        instance.popper && instance.popper.classList.add('DropList-Tippy')
         getTippyInstance(instance)
       }}
-      onDestroy={instance => {
-        setTippyInstance(null)
+      onDestroy={() => {
+        tippyInstanceRef.current = null
       }}
-      showOnCreate={isOpen}
+      showOnCreate={isMenuOpen}
       onClickOutside={(instance, { target }) => {
         if (
           target.dataset.ignoreToggling &&
@@ -246,22 +201,46 @@ function DropListManager({
         ) {
           return
         }
+
         if (!closeOnClickOutside) {
           return
         }
 
-        toggleOpenedState(false)
-      }}
-      onShow={({ popper }) => {
-        if (tippyOptions.appendTo) {
-          popper.classList.add(scope ? scope : 'hsds-react')
-        }
-      }}
-      onHidden={({ reference }) => {
-        focusTogglerOnMenuClose && reference.focus()
+        debouncedTogglerFn(false)
       }}
       render={() => (
-        <Animate {...animateProps} in={isOpen}>
+        <Animate
+          {...animateProps}
+          in={isOpen}
+          onEnter={e => {
+            if (tippyInstanceRef.current) {
+              tippyInstanceRef.current.show()
+
+              if (tippyOptions.appendTo) {
+                tippyInstanceRef.current.popper.classList.add(
+                  scope ? scope : 'hsds-react'
+                )
+              }
+            }
+          }}
+          onEntered={element => {
+            const dropListEventDriverNode = element.querySelector(
+              '[data-event-driver]'
+            )
+            dropListEventDriverNode && dropListEventDriverNode.focus()
+          }}
+          onExiting={() => {
+            if (tippyInstanceRef.current) {
+              focusTogglerOnMenuClose &&
+                tippyInstanceRef.current.reference.focus()
+            }
+          }}
+          onExited={() => {
+            if (tippyInstanceRef.current) {
+              tippyInstanceRef.current.hide()
+            }
+          }}
+        >
           <DropListVariant
             clearOnSelect={clearOnSelect}
             closeOnBlur={closeOnBlur}
@@ -279,8 +258,7 @@ function DropListManager({
             renderCustomListItem={renderCustomListItem}
             selectedItem={selectedItem}
             selectedItems={selectedItems}
-            setMenuBlurred={setMenuBlurred}
-            toggleOpenedState={toggleOpenedState}
+            toggleOpenedState={debouncedTogglerFn}
             withMultipleSelection={
               isTogglerOfType(toggler, SelectTag)
                 ? false

@@ -33,7 +33,6 @@ function Select({
   selectedItem = null,
   selectedItems,
   toggleOpenedState = noop,
-  setMenuBlurred,
   withMultipleSelection = false,
 }) {
   const {
@@ -70,10 +69,6 @@ function Select({
 
     onStateChange({ type }) {
       switch (type) {
-        case useSelect.stateChangeTypes.MenuBlur:
-          onMenuBlur()
-          break
-
         case useSelect.stateChangeTypes.MenuKeyDownSpaceButton:
         case useSelect.stateChangeTypes.MenuKeyDownEnter:
         case useSelect.stateChangeTypes.ItemClick:
@@ -167,6 +162,7 @@ function Select({
     >
       <A11yTogglerUI {...getToggleButtonProps()}>Toggler</A11yTogglerUI>
       <MenuListUI
+        data-event-driver
         className={`${DROPLIST_MENULIST} MenuList-Select`}
         {...getMenuProps({
           onKeyDown: handleMenuKeyDown,
@@ -174,7 +170,7 @@ function Select({
             onMenuFocus(e)
           },
           onBlur: () => {
-            setMenuBlurred(true)
+            onMenuBlur()
           },
         })}
       >

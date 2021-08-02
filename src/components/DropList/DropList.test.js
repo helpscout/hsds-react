@@ -56,6 +56,12 @@ describe('Render', () => {
         expect(queryByText(beatle)).toBeInTheDocument()
       })
     })
+
+    user.click(toggler)
+
+    await waitFor(() => {
+      expect(queryByRole('listbox')).not.toBeInTheDocument()
+    })
   })
 
   test('should render a menu list with string items', async () => {
@@ -77,6 +83,12 @@ describe('Render', () => {
       beatles.forEach(beatle => {
         expect(queryByText(beatle)).toBeInTheDocument()
       })
+    })
+
+    user.click(toggler)
+
+    await waitFor(() => {
+      expect(queryByRole('listbox')).not.toBeInTheDocument()
     })
   })
 
@@ -463,7 +475,7 @@ describe('Menu', () => {
       expect(focusSpy).toHaveBeenCalled()
     })
 
-    user.click(queryByText('Click'))
+    user.tab()
 
     await waitFor(() => {
       expect(blurSpy).toHaveBeenCalled()
@@ -488,7 +500,7 @@ describe('Menu', () => {
       expect(focusSpy).toHaveBeenCalled()
     })
 
-    user.click(queryByText('Click'))
+    user.tab()
 
     await waitFor(() => {
       expect(blurSpy).toHaveBeenCalled()
@@ -734,7 +746,9 @@ describe('Selection', () => {
 
     user.click(toggler)
 
-    expect(toggler.getAttribute('aria-expanded')).toBe('true')
+    await waitFor(() => {
+      expect(toggler.getAttribute('aria-expanded')).toBe('true')
+    })
 
     user.click(getByText('Paul').parentElement)
 
@@ -801,17 +815,17 @@ describe('Selection', () => {
   test('should select an item when enter key pressed (object version)', async () => {
     const onSelectSpy = jest.fn()
     const onListItemSelectEventSpy = jest.fn()
-    const { container, getByText, getByRole } = render(
+    const { container, getByText } = render(
       <DropList
         onSelect={onSelectSpy}
         onListItemSelectEvent={onListItemSelectEventSpy}
         items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
+        isMenuOpen
       />
     )
     const itemToSelect = someItems[1]
 
-    user.click(getByRole('button'))
     user.type(container.querySelector('.MenuList'), '{arrowdown}')
     user.type(container.querySelector('.MenuList'), '{arrowdown}')
     user.type(container.querySelector('.MenuList'), '{enter}')
@@ -835,17 +849,17 @@ describe('Selection', () => {
   test('should select an item when space key pressed (object version)', async () => {
     const onSelectSpy = jest.fn()
     const onListItemSelectEventSpy = jest.fn()
-    const { container, getByText, getByRole } = render(
+    const { container, getByText } = render(
       <DropList
         onSelect={onSelectSpy}
         onListItemSelectEvent={onListItemSelectEventSpy}
         items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
+        isMenuOpen
       />
     )
     const itemToSelect = someItems[1]
 
-    user.click(getByRole('button'))
     user.type(container.querySelector('.MenuList'), '{arrowdown}')
     user.type(container.querySelector('.MenuList'), '{arrowdown}')
     user.type(container.querySelector('.MenuList'), '{space}')
@@ -932,18 +946,18 @@ describe('Selection', () => {
   test('should select an item when enter key pressed (combobox object version)', async () => {
     const onSelectSpy = jest.fn()
     const onListItemSelectEventSpy = jest.fn()
-    const { container, getByText, getByRole } = render(
+    const { container, getByText } = render(
       <DropList
         variant="combobox"
         onSelect={onSelectSpy}
         onListItemSelectEvent={onListItemSelectEventSpy}
         items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
+        isMenuOpen
       />
     )
     const itemToSelect = someItems[1]
 
-    user.click(getByRole('button'))
     user.type(container.querySelector('input'), '{arrowdown}')
     user.type(container.querySelector('input'), '{arrowdown}')
     user.type(container.querySelector('input'), '{enter}')
@@ -966,16 +980,15 @@ describe('Selection', () => {
 
   test('should clear selection if clearOnSelect is enabled (select)', async () => {
     const onSelectSpy = jest.fn()
-    const { getByRole, getByText } = render(
+    const { getByText } = render(
       <DropList
         clearOnSelect
         onSelect={onSelectSpy}
         items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
+        isMenuOpen
       />
     )
-
-    user.click(getByRole('button'))
 
     const itemToSelect = someItems[3]
 
@@ -1008,17 +1021,16 @@ describe('Selection', () => {
 
   test('should clear selection if clearOnSelect is enabled (combobox)', async () => {
     const onSelectSpy = jest.fn()
-    const { getByRole, getByText } = render(
+    const { getByText } = render(
       <DropList
         variant="combobox"
         clearOnSelect
         onSelect={onSelectSpy}
         items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
+        isMenuOpen
       />
     )
-
-    user.click(getByRole('button'))
 
     const itemToSelect = someItems[3]
 

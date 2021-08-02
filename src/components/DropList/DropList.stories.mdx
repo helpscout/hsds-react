@@ -203,6 +203,9 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
     >
       <DropList
         isMenuOpen={boolean('Is Menu Open', false)}
+        onOpenedStateChange={isOpen => {
+          console.log('onOpenedStateChange', isOpen)
+        }}
         onListItemSelectEvent={({ event, listItemNode }) => {
           console.log('event', event)
           console.log('listItemNode', listItemNode)
