@@ -1,18 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 import classNames from 'classnames'
 import Tippy from '@tippyjs/react/headless'
 import { noop } from '../../utilities/other'
 import { GlobalContext } from '../HSDS/Provider'
-import {
-  DROPLIST_TOGGLER,
-  OPEN_ACTION_ORIGIN,
-  VARIANTS,
-} from './DropList.constants'
+import { DROPLIST_TOGGLER, VARIANTS } from './DropList.constants'
+import { getAnimateProps, getTippyProps } from './DropList.config'
 import {
   findItemInArray,
   flattenListItems,
+  getDropListVariant,
   getItemContentKeyName,
   isTogglerOfType,
   itemToString,
@@ -27,8 +25,6 @@ import {
   getTogglerPlacementProps,
 } from './DropList.togglers'
 import Animate from '../Animate'
-import Combobox from './DropList.Combobox'
-import Select from './DropList.Select'
 
 function DropListManager({
   animateOptions = {},
@@ -41,6 +37,7 @@ function DropListManager({
   'data-cy': dataCy,
   enableLeftRightNavigation = false,
   focusTogglerOnMenuClose = true,
+  getTippyInstance = noop,
   isMenuOpen = false,
   items = [],
   menuCSS,
@@ -56,8 +53,8 @@ function DropListManager({
   variant = VARIANTS.SELECT,
   withMultipleSelection = false,
 }) {
-  const [isOpen, setOpenedState] = useState(isMenuOpen)
-  const [openOrigin, setOpenOrigin] = useState('')
+  const [isOpen, setOpenedState] = useState(false)
+  const tippyInstanceRef = useRef(null)
   const parsedSelection = parseSelectionFromProps({
     withMultipleSelection,
     selection,
@@ -67,26 +64,19 @@ function DropListManager({
     withMultipleSelection ? parsedSelection : []
   )
   const [parsedItems, setParsedItems] = useState(flattenListItems(items))
+
   const { getCurrentScope } = useContext(GlobalContext) || {}
   const scope = getCurrentScope ? getCurrentScope() : null
-  const animateProps = {
-    duration: 200,
-    easing: 'ease-in-out',
-    sequence: 'fade down',
-    ...animateOptions,
-    // These shouldn't be overriden
-    animateOnMount: true,
-    mountOnEnter: false,
-    unmountOnExit: false,
-  }
-  const tippyProps = {
-    trigger: 'click',
-    ...tippyOptions,
-    // These shouldn't be overriden
-    interactive: true,
-  }
+
+  const animateProps = getAnimateProps(animateOptions)
+  const tippyProps = getTippyProps(tippyOptions)
+
   const Toggler = decorateUserToggler(toggler)
-  const DropListVariant = getDropListVariant()
+  const DropListVariant = getDropListVariant({
+    autoSetComboboxAt,
+    numberOfItems: parsedItems.length,
+    variant,
+  })
 
   useWarnings({ toggler, withMultipleSelection, menuCSS, tippyOptions })
 
@@ -108,34 +98,26 @@ function DropListManager({
 
   function decorateUserToggler(userToggler) {
     if (React.isValidElement(userToggler)) {
-      const { onClick, onFocus, className } = userToggler.props
+      const { className, onClick, onFocus } = userToggler.props
       const togglerProps = {
         className: classNames(DROPLIST_TOGGLER, className),
         isActive: isOpen,
 
         onClick: e => {
           onClick && onClick(e)
-
-          /**
-           * When clicking the button the menu blur event happens first that closes
-           * the DropList, here we check if the menu was closed due to the input blur and ignore the
-           * click action to toggle the open state, we also always reset the "origin" to resume normal behaviour
-           */
-          if (openOrigin !== OPEN_ACTION_ORIGIN.DROPLIST_BLUR) {
-            toggleOpenedState(!isOpen, '')
-          } else {
-            setOpenOrigin('')
-          }
+          e.preventDefault()
+          toggleOpenedState(!isOpen)
         },
-
         onFocus: e => {
           onFocus && onFocus(e)
+          const { relatedTarget } = e
 
-          /**
-           * Reset the "origin" to resume normal behaviour
-           */
-          if (!isOpen) {
-            setOpenOrigin('')
+          if (
+            isOpen &&
+            relatedTarget &&
+            relatedTarget.classList.contains('MenuList-Select')
+          ) {
+            toggleOpenedState(false)
           }
         },
       }
@@ -159,21 +141,12 @@ function DropListManager({
       return React.cloneElement(userToggler, togglerProps)
     }
 
-    return (
-      <SimpleButton
-        onClick={() => {
-          toggleOpenedState(!isOpen)
-        }}
-        text="Fallback Toggler"
-      />
-    )
+    return <SimpleButton text="Fallback Toggler" />
   }
 
-  function getDropListVariant() {
-    return variant.toLowerCase() === VARIANTS.COMBOBOX ||
-      (autoSetComboboxAt > 0 && parsedItems.length >= autoSetComboboxAt)
-      ? Combobox
-      : Select
+  function toggleOpenedState(shouldOpen) {
+    setOpenedState(shouldOpen)
+    onOpenedStateChange(shouldOpen)
   }
 
   function handleSelectedItemChange({ selectedItem }) {
@@ -219,16 +192,18 @@ function DropListManager({
     }
   }
 
-  function toggleOpenedState(shouldOpen, origin = '') {
-    setOpenOrigin(origin)
-    setOpenedState(shouldOpen)
-    onOpenedStateChange(shouldOpen)
-  }
-
   return (
     <Tippy
       {...tippyProps}
-      showOnCreate={isOpen}
+      onCreate={instance => {
+        tippyInstanceRef.current = instance
+        instance.popper && instance.popper.classList.add('DropList-Tippy')
+        getTippyInstance(instance)
+      }}
+      onDestroy={() => {
+        tippyInstanceRef.current = null
+      }}
+      showOnCreate={isMenuOpen}
       onClickOutside={(instance, { target }) => {
         if (
           target.dataset.ignoreToggling &&
@@ -236,22 +211,46 @@ function DropListManager({
         ) {
           return
         }
+
         if (!closeOnClickOutside) {
           return
         }
 
         toggleOpenedState(false)
       }}
-      onShow={({ popper }) => {
-        if (tippyOptions.appendTo) {
-          popper.classList.add(scope ? scope : 'hsds-react')
-        }
-      }}
-      onHidden={({ reference }) => {
-        focusTogglerOnMenuClose && reference.focus()
-      }}
       render={() => (
-        <Animate {...animateProps} in={isOpen}>
+        <Animate
+          {...animateProps}
+          in={isOpen}
+          onEnter={e => {
+            if (tippyInstanceRef.current) {
+              tippyInstanceRef.current.show()
+
+              if (tippyOptions.appendTo) {
+                tippyInstanceRef.current.popper.classList.add(
+                  scope ? scope : 'hsds-react'
+                )
+              }
+            }
+          }}
+          onEntered={element => {
+            const dropListEventDriverNode = element.querySelector(
+              '[data-event-driver]'
+            )
+            dropListEventDriverNode && dropListEventDriverNode.focus()
+          }}
+          onExiting={() => {
+            if (tippyInstanceRef.current) {
+              focusTogglerOnMenuClose &&
+                tippyInstanceRef.current.reference.focus()
+            }
+          }}
+          onExited={() => {
+            if (tippyInstanceRef.current) {
+              tippyInstanceRef.current.hide()
+            }
+          }}
+        >
           <DropListVariant
             clearOnSelect={clearOnSelect}
             closeOnBlur={closeOnBlur}
@@ -318,13 +317,15 @@ DropListManager.propTypes = {
   /** Whether to close the DropList when an item is selected */
   closeOnSelection: PropTypes.bool,
   /** Pass a React Element to render a custom message or style when the List is empty */
-  customEmptyList: PropTypes.element,
+  customEmptyList: PropTypes.any,
   /** Data attr applied to the DropList for Cypress tests. By default one of 'DropList.Select' or 'DropList.Combobox' depending on the variant used */
   'data-cy': PropTypes.string,
   /** Enable navigation with Right and Left arrows (useful for horizontally rendered lists) */
   enableLeftRightNavigation: PropTypes.bool,
   /** Automatically moves the focus back to the toggler when the DropList is closed */
   focusTogglerOnMenuClose: PropTypes.bool,
+  /** Retrieves the tippy instance */
+  getTippyInstance: PropTypes.any,
   /** Open/close the DropList externally */
   isMenuOpen: PropTypes.bool,
   /** Items to populate the list with */
