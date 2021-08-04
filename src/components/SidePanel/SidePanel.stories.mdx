@@ -1,0 +1,40 @@
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
+import { boolean, number, text, select } from '@storybook/addon-knobs'
+import SidePanel from './SidePanel'
+
+<Meta
+  title="Components/Overlay/SidePanel"
+  component={SidePanel}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/v8ReousbOpHN2g9n5n6StX/Standalone-Messages---2.0?node-id=342%3A2552',
+    },
+  }}
+/>
+
+# SidePanel
+
+<br />
+
+## Example
+
+<Canvas>
+  <Story name="default">
+    <SidePanel></SidePanel>
+  </Story>
+</Canvas>
+
+#### Reference
+
+- **Designer**: Alex Estrada
+- **Engineering**: Juan Pablo
+- **Usage**: Standalone Messages
+
+<br />
+<br />
+
+### Props
+
+<ArgsTable of={SidePanel} />
