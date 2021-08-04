@@ -58,7 +58,6 @@ function Select({
 
     onIsOpenChange(changes) {
       onIsOpenChangeCommon({
-        closeOnBlur,
         closeOnSelection,
         toggleOpenedState,
         type: `${VARIANTS.SELECT}.${changes.type}`,
@@ -69,10 +68,6 @@ function Select({
 
     onStateChange({ type }) {
       switch (type) {
-        case useSelect.stateChangeTypes.MenuBlur:
-          onMenuBlur()
-          break
-
         case useSelect.stateChangeTypes.MenuKeyDownSpaceButton:
         case useSelect.stateChangeTypes.MenuKeyDownEnter:
         case useSelect.stateChangeTypes.ItemClick:
@@ -166,11 +161,35 @@ function Select({
     >
       <A11yTogglerUI {...getToggleButtonProps()}>Toggler</A11yTogglerUI>
       <MenuListUI
+        data-event-driver
         className={`${DROPLIST_MENULIST} MenuList-Select`}
         {...getMenuProps({
           onKeyDown: handleMenuKeyDown,
           onFocus: e => {
             onMenuFocus(e)
+          },
+          onBlur: e => {
+            if (closeOnBlur) {
+              /**
+               * Closing on blur
+               *
+               * When clicking on the toggler, this event gets fired _before_
+               * so it sets the isOpen flag to false, and then the click event happens
+               * and sets isOpen to true, making the DropList never close on cliking
+               * the toggler.
+               *
+               * Here we wait a little bit to see if the next element gathering focus
+               * is indeed the toggler, and only close the DropList if it isn't
+               */
+              setTimeout(() => {
+                if (
+                  !document.activeElement.classList.contains('DropListToggler')
+                ) {
+                  toggleOpenedState(false)
+                }
+              }, 50)
+            }
+            onMenuBlur(e)
           },
         })}
       >

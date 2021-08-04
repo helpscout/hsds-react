@@ -1,8 +1,21 @@
 import React, { useEffect } from 'react'
 import { isDefined, isObject, isString } from '../../utilities/is'
-import { ITEM_TYPES } from './DropList.constants'
+import { ITEM_TYPES, VARIANTS } from './DropList.constants'
 import { SelectTag } from './DropList.togglers'
 import { ListItemUI, EmptyListUI } from './DropList.css'
+import Combobox from './DropList.Combobox'
+import Select from './DropList.Select'
+
+export function getDropListVariant({
+  variant,
+  autoSetComboboxAt,
+  numberOfItems,
+}) {
+  return variant.toLowerCase() === VARIANTS.COMBOBOX ||
+    (autoSetComboboxAt > 0 && numberOfItems >= autoSetComboboxAt)
+    ? Combobox
+    : Select
+}
 
 // No need to test this helper
 /* istanbul ignore next */

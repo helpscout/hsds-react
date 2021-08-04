@@ -203,6 +203,9 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
     >
       <DropList
         isMenuOpen={boolean('Is Menu Open', false)}
+        onOpenedStateChange={isOpen => {
+          console.log('onOpenedStateChange', isOpen)
+        }}
         onListItemSelectEvent={({ event, listItemNode }) => {
           console.log('event', event)
           console.log('listItemNode', listItemNode)
@@ -466,7 +469,13 @@ function renderCustomListItem({
         toggler={<SimpleButton text="Click" />}
         renderCustomListItem={({ item, isSelected }) => (
           <div
-            style={{ padding: '5px 10px', fontSize: '14px', color: '#404996' }}
+            isMenuOpen={boolean('is menu open', true)}
+            style={{
+              padding: '5px 10px',
+              fontSize: '14px',
+              color: '#404996',
+              cursor: 'pointer',
+            }}
           >
             {isSelected ? (
               <strong style={{ color: 'white', backgroundColor: '#404996' }}>

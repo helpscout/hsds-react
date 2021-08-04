@@ -86,10 +86,6 @@ function Combobox({
 
     onStateChange({ type }) {
       switch (type) {
-        case useCombobox.stateChangeTypes.InputBlur:
-          onMenuBlur()
-          break
-
         case useCombobox.stateChangeTypes.InputKeyDownEnter:
         case useCombobox.stateChangeTypes.ItemClick:
           clearOnSelect && handleSelectedItemChange({ selectedItem: null })
@@ -165,9 +161,13 @@ function Combobox({
     >
       <InputSearchHolderUI show={items.length > 0}>
         <input
+          data-event-driver
           {...getInputProps({
             className: 'DropList__Combobox__input',
             ref: inputEl,
+            onBlur: e => {
+              onMenuBlur(e)
+            },
             onFocus: event => {
               onMenuFocus(event)
             },

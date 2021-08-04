@@ -11,6 +11,8 @@ import {
   simpleGroupedItems,
 } from '../../utilities/specs/dropdown.specs'
 
+jest.useFakeTimers()
+
 const beatles = ['John', 'Paul', 'Ringo', 'George']
 const someItems = [
   { label: 'John' },
@@ -37,13 +39,41 @@ describe('Render', () => {
   })
 
   test('should render a menu list with string items', async () => {
-    const { getByRole, queryByText, queryByRole } = render(
+    const { getByTestId, queryByText, queryByRole } = render(
       <DropList
         items={beatles}
         toggler={<SimpleButton text="Button Toggler" />}
       />
     )
-    const toggler = getByRole('button')
+    const toggler = getByTestId('DropList.ButtonToggler')
+
+    expect(queryByRole('listbox')).not.toBeInTheDocument()
+
+    user.click(toggler)
+
+    await waitFor(() => {
+      expect(queryByRole('listbox')).toBeInTheDocument()
+
+      beatles.forEach(beatle => {
+        expect(queryByText(beatle)).toBeInTheDocument()
+      })
+    })
+
+    user.click(toggler)
+
+    await waitFor(() => {
+      expect(queryByRole('listbox')).not.toBeInTheDocument()
+    })
+  })
+
+  test('should render a menu list with string items', async () => {
+    const { getByTestId, queryByText, queryByRole } = render(
+      <DropList
+        items={beatles}
+        toggler={<SimpleButton text="Button Toggler" />}
+      />
+    )
+    const toggler = getByTestId('DropList.ButtonToggler')
 
     expect(queryByRole('listbox')).not.toBeInTheDocument()
 
@@ -65,13 +95,13 @@ describe('Render', () => {
   })
 
   test('should render a menu list with object items that include a label', async () => {
-    const { getByRole, queryByText, queryByRole } = render(
+    const { getByTestId, queryByText, queryByRole } = render(
       <DropList
         items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
       />
     )
-    const toggler = getByRole('button')
+    const toggler = getByTestId('DropList.ButtonToggler')
 
     expect(queryByRole('listbox')).not.toBeInTheDocument()
 
@@ -84,25 +114,19 @@ describe('Render', () => {
         expect(queryByText(item.label)).toBeInTheDocument()
       })
     })
-
-    user.click(toggler)
-
-    await waitFor(() => {
-      expect(queryByRole('listbox')).not.toBeInTheDocument()
-    })
   })
 
   test('should render a menu list with object items that include a value and no label', async () => {
     const regularValueItems = someItems.map(item => {
       return { value: item.label }
     })
-    const { getByRole, queryByText, queryByRole } = render(
+    const { getByTestId, queryByText, queryByRole } = render(
       <DropList
         items={regularValueItems}
         toggler={<SimpleButton text="Button Toggler" />}
       />
     )
-    const toggler = getByRole('button')
+    const toggler = getByTestId('DropList.ButtonToggler')
 
     expect(queryByRole('listbox')).not.toBeInTheDocument()
 
@@ -115,16 +139,10 @@ describe('Render', () => {
         expect(queryByText(item.value)).toBeInTheDocument()
       })
     })
-
-    user.click(toggler)
-
-    await waitFor(() => {
-      expect(queryByRole('listbox')).not.toBeInTheDocument()
-    })
   })
 
   test('should add a classname to the list item if present in the item', async () => {
-    const { getByRole, queryByText } = render(
+    const { getByTestId, queryByText } = render(
       <DropList
         items={someItems.map((item, index) => {
           if (index === 1) {
@@ -135,7 +153,7 @@ describe('Render', () => {
         toggler={<SimpleButton text="Button Toggler" />}
       />
     )
-    const toggler = getByRole('button')
+    const toggler = getByTestId('DropList.ButtonToggler')
 
     user.click(toggler)
 
@@ -149,13 +167,13 @@ describe('Render', () => {
   })
 
   test('should render a menu list with dividers', async () => {
-    const { container, getByRole, queryByRole } = render(
+    const { container, getByTestId, queryByRole } = render(
       <DropList
         items={itemsWithDivider}
         toggler={<SimpleButton text="Button Toggler" />}
       />
     )
-    const toggler = getByRole('button')
+    const toggler = getByTestId('DropList.ButtonToggler')
 
     user.click(toggler)
 
@@ -166,13 +184,13 @@ describe('Render', () => {
   })
 
   test('should render a menu list with groups', async () => {
-    const { container, getByRole, queryByRole } = render(
+    const { container, getByTestId, queryByRole } = render(
       <DropList
         items={simpleGroupedItems}
         toggler={<SimpleButton text="Button Toggler" />}
       />
     )
-    const toggler = getByRole('button')
+    const toggler = getByTestId('DropList.ButtonToggler')
 
     user.click(toggler)
 
@@ -183,13 +201,13 @@ describe('Render', () => {
   })
 
   test('should render a menu list with groups and dividers', async () => {
-    const { container, getByRole, queryByRole } = render(
+    const { container, getByTestId, queryByRole } = render(
       <DropList
         items={groupAndDividerItems}
         toggler={<SimpleButton text="Button Toggler" />}
       />
     )
-    const toggler = getByRole('button')
+    const toggler = getByTestId('DropList.ButtonToggler')
 
     user.click(toggler)
 
@@ -201,10 +219,10 @@ describe('Render', () => {
   })
 
   test('should render an empty menu list if no items in the array', async () => {
-    const { getByRole, queryByText, queryByRole } = render(
+    const { getByTestId, queryByText, queryByRole } = render(
       <DropList items={[]} toggler={<SimpleButton text="Button Toggler" />} />
     )
-    const toggler = getByRole('button')
+    const toggler = getByTestId('DropList.ButtonToggler')
     expect(toggler.getAttribute('aria-expanded')).toBe('false')
     expect(queryByRole('listbox')).not.toBeInTheDocument()
 
@@ -214,12 +232,6 @@ describe('Render', () => {
       expect(toggler.getAttribute('aria-expanded')).toBe('true')
       expect(queryByRole('listbox')).toBeInTheDocument()
       expect(queryByText('No items')).toBeInTheDocument()
-    })
-
-    user.click(toggler)
-
-    await waitFor(() => {
-      expect(queryByRole('listbox')).not.toBeInTheDocument()
     })
   })
 
@@ -465,7 +477,7 @@ describe('Menu', () => {
       expect(focusSpy).toHaveBeenCalled()
     })
 
-    user.click(queryByText('Click'))
+    user.tab()
 
     await waitFor(() => {
       expect(blurSpy).toHaveBeenCalled()
@@ -490,7 +502,7 @@ describe('Menu', () => {
       expect(focusSpy).toHaveBeenCalled()
     })
 
-    user.click(queryByText('Click'))
+    user.tab()
 
     await waitFor(() => {
       expect(blurSpy).toHaveBeenCalled()
@@ -602,13 +614,13 @@ describe('Combobox', () => {
 describe('Togglers', () => {
   test('Should run custom onclick callback', async () => {
     const onClick = jest.fn()
-    const { getByRole } = render(
+    const { getByTestId } = render(
       <DropList
         items={[]}
         toggler={<SimpleButton onClick={onClick} text="Button Toggler" />}
       />
     )
-    const toggler = getByRole('button')
+    const toggler = getByTestId('DropList.ButtonToggler')
 
     user.click(toggler)
 
@@ -618,21 +630,15 @@ describe('Togglers', () => {
   })
 
   test('Should pass the open/closed state to the toggler', async () => {
-    const { getByRole } = render(
+    const { getByTestId } = render(
       <DropList items={[]} toggler={<SimpleButton text="Button Toggler" />} />
     )
-    const toggler = getByRole('button')
+    const toggler = getByTestId('DropList.ButtonToggler')
 
     user.click(toggler)
 
     await waitFor(() => {
       expect(toggler.classList.contains('is-active')).toBeTruthy()
-    })
-
-    user.click(toggler)
-
-    await waitFor(() => {
-      expect(toggler.classList.contains('is-active')).toBeFalsy()
     })
   })
 
@@ -730,7 +736,7 @@ describe('Selection', () => {
   test('should select an item when clicked (string version)', async () => {
     const onSelectSpy = jest.fn()
     const onListItemSelectEventSpy = jest.fn()
-    const { getByText, getByRole } = render(
+    const { getByText, getByTestId } = render(
       <DropList
         onSelect={onSelectSpy}
         onListItemSelectEvent={onListItemSelectEventSpy}
@@ -738,11 +744,13 @@ describe('Selection', () => {
         toggler={<SimpleButton text="Button Toggler" />}
       />
     )
-    const toggler = getByRole('button')
+    const toggler = getByTestId('DropList.ButtonToggler')
 
     user.click(toggler)
 
-    expect(toggler.getAttribute('aria-expanded')).toBe('true')
+    await waitFor(() => {
+      expect(toggler.getAttribute('aria-expanded')).toBe('true')
+    })
 
     user.click(getByText('Paul').parentElement)
 
@@ -760,14 +768,7 @@ describe('Selection', () => {
       expect(toggler.getAttribute('aria-expanded')).toBe('false')
     })
 
-    // click another one should deselect the previous and select new one
-    user.click(toggler)
-
-    await waitFor(() => {
-      expect(toggler.getAttribute('aria-expanded')).toBe('true')
-      user.click(getByText('Ringo').parentElement)
-      user.click(getByText('Ringo').parentElement)
-    })
+    user.click(getByText('Ringo').parentElement)
 
     await waitFor(() => {
       expect(
@@ -816,17 +817,17 @@ describe('Selection', () => {
   test('should select an item when enter key pressed (object version)', async () => {
     const onSelectSpy = jest.fn()
     const onListItemSelectEventSpy = jest.fn()
-    const { container, getByText, getByRole } = render(
+    const { container, getByText } = render(
       <DropList
         onSelect={onSelectSpy}
         onListItemSelectEvent={onListItemSelectEventSpy}
         items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
+        isMenuOpen
       />
     )
     const itemToSelect = someItems[1]
 
-    user.click(getByRole('button'))
     user.type(container.querySelector('.MenuList'), '{arrowdown}')
     user.type(container.querySelector('.MenuList'), '{arrowdown}')
     user.type(container.querySelector('.MenuList'), '{enter}')
@@ -850,17 +851,17 @@ describe('Selection', () => {
   test('should select an item when space key pressed (object version)', async () => {
     const onSelectSpy = jest.fn()
     const onListItemSelectEventSpy = jest.fn()
-    const { container, getByText, getByRole } = render(
+    const { container, getByText } = render(
       <DropList
         onSelect={onSelectSpy}
         onListItemSelectEvent={onListItemSelectEventSpy}
         items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
+        isMenuOpen
       />
     )
     const itemToSelect = someItems[1]
 
-    user.click(getByRole('button'))
     user.type(container.querySelector('.MenuList'), '{arrowdown}')
     user.type(container.querySelector('.MenuList'), '{arrowdown}')
     user.type(container.querySelector('.MenuList'), '{space}')
@@ -947,18 +948,18 @@ describe('Selection', () => {
   test('should select an item when enter key pressed (combobox object version)', async () => {
     const onSelectSpy = jest.fn()
     const onListItemSelectEventSpy = jest.fn()
-    const { container, getByText, getByRole } = render(
+    const { container, getByText } = render(
       <DropList
         variant="combobox"
         onSelect={onSelectSpy}
         onListItemSelectEvent={onListItemSelectEventSpy}
         items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
+        isMenuOpen
       />
     )
     const itemToSelect = someItems[1]
 
-    user.click(getByRole('button'))
     user.type(container.querySelector('input'), '{arrowdown}')
     user.type(container.querySelector('input'), '{arrowdown}')
     user.type(container.querySelector('input'), '{enter}')
@@ -981,16 +982,15 @@ describe('Selection', () => {
 
   test('should clear selection if clearOnSelect is enabled (select)', async () => {
     const onSelectSpy = jest.fn()
-    const { getByRole, getByText } = render(
+    const { getByText } = render(
       <DropList
         clearOnSelect
         onSelect={onSelectSpy}
         items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
+        isMenuOpen
       />
     )
-
-    user.click(getByRole('button'))
 
     const itemToSelect = someItems[3]
 
@@ -1023,17 +1023,16 @@ describe('Selection', () => {
 
   test('should clear selection if clearOnSelect is enabled (combobox)', async () => {
     const onSelectSpy = jest.fn()
-    const { getByRole, getByText } = render(
+    const { getByText } = render(
       <DropList
         variant="combobox"
         clearOnSelect
         onSelect={onSelectSpy}
         items={someItems}
         toggler={<SimpleButton text="Button Toggler" />}
+        isMenuOpen
       />
     )
-
-    user.click(getByRole('button'))
 
     const itemToSelect = someItems[3]
 
