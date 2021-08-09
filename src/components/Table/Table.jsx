@@ -41,6 +41,7 @@ export function Table({
   withFocusableRows = false,
   withSelectableRows = false,
   withTallRows = false,
+  ...rest
 }) {
   const [state, actions] = useTable(data, maxRowsToDisplay)
   const {
@@ -69,6 +70,7 @@ export function Table({
         )}
         containerWidth={containerWidth}
         dataCy={dataCy}
+        {...rest}
       >
         <Scrollable
           fadeLeft

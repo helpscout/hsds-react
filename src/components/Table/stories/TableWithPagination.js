@@ -53,6 +53,7 @@ export default class TableWithPagination extends Component {
         <Table
           columns={columns}
           data={paginatedData}
+          data-testid="Table"
           isLoading={isLoading}
           tableWidth={tableWidth}
           containerWidth={containerWidth}

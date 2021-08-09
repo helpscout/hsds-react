@@ -62,7 +62,7 @@ export default function HeaderCell({ column, columns, isLoading, sortedInfo }) {
 
   return (
     <HeaderCellUI
-      className={generateCellClassNames(column, 'Header')}
+      className={generateCellClassNames(column, 'HeaderCell')}
       align={column.align}
       cellWidth={column.width}
       aria-sort={getColumnSortStatus()}
