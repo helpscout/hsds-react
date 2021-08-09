@@ -19,7 +19,7 @@ import {
   defaultColumns,
   defaultColumnsCustomContent,
 } from './Table.testUtils'
-import { page1 } from './stories/convoData'
+import { page1 } from './stories/ConvoList/convoData'
 
 describe('ClassName', () => {
   test('Wrapper has default className', () => {
