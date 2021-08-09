@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import { createUniqueIDFactory } from '../../utilities/id'
+import { TABLE_CLASSNAME } from './Table'
 
 const uniqueCellKeyFactory = createUniqueIDFactory('Cell')
 
@@ -28,4 +30,26 @@ export function generateCellKey(element, column) {
         column.sortKey
       }_${column.columnKey.join('_')}`
     : `${uniqueCellKeyFactory(element)}_${column.columnKey}`
+}
+
+export function generateCellClassNames(column, cellType = 'Cell') {
+  return classNames(
+    `${TABLE_CLASSNAME}__${cellType}`,
+    `Column_${
+      column.title
+        ? column.title.replace(/[ .]/g, '')
+        : Array.isArray(column.columnKey)
+        ? column.columnKey.join('_').replace(/\./g, '_')
+        : column.columnKey.replace(/\./g, '_')
+    }`,
+    column.className || ''
+  )
+}
+
+export function getDisplayTableData({ data, rowsToDisplay }) {
+  if (rowsToDisplay != null && rowsToDisplay < data.length) {
+    return data.slice(0, rowsToDisplay)
+  }
+
+  return data
 }

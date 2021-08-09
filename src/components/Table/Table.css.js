@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { getColor } from '../../styles/utilities/color'
 
 export const TableWrapperUI = styled('div')`
   overflow-x: auto;
@@ -24,6 +25,16 @@ export const TableUI = styled('table')`
   table-layout: fixed;
   line-height: 16px;
   border-collapse: separate;
+
+  tr {
+    transition: background-color 100ms ease-in-out;
+  }
+
+  tbody tr:focus {
+    background-color: ${props => props.theme.bgFocus};
+    box-shadow: inset 5px 0 ${props => props.theme.bgFocusIndicator};
+    outline: 0;
+  }
 
   th,
   td {
@@ -125,23 +136,23 @@ export const TableUI = styled('table')`
     background-color: ${props => props.theme.bgHeader};
   }
 
-  tr:nth-child(2n + 1) td {
+  tr:nth-child(2n + 1) {
     background-color: ${props => props.theme.bgColor};
   }
 
-  tr:nth-child(2n) td {
+  tr:nth-child(2n) {
     background-color: ${props => props.theme.bgAlternate};
     color: ${props => props.theme.fontColorAlternate};
   }
 
+  tr.is-row-selected {
+    background-color: ${props => props.theme.bgSelected};
+  }
+
   &.with-clickable-rows {
-    tr {
-      &:hover {
-        td {
-          background-color: ${props => props.theme.bgColorHover};
-          cursor: pointer;
-        }
-      }
+    tbody tr:hover {
+      background-color: ${props => props.theme.bgColorHover};
+      cursor: pointer;
     }
   }
 `

@@ -1,0 +1,7 @@
+export const UPDATE_TABLE_DATA = 'updated-data'
+export const EXPAND_TABLE = 'expand'
+export const COLLAPSE_TABLE = 'collapse'
+export const SELECT_ALL_ROWS = 'select-all'
+export const DESELECT_ALL_ROWS = 'deselect-all'
+export const SELECT_ROW = 'select-row'
+export const DESELECT_ROW = 'deselect-row'

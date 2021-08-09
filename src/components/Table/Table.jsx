@@ -1,220 +1,189 @@
 import React from 'react'
+import useDeepCompareEffect from 'use-deep-compare-effect'
 import PropTypes from 'prop-types'
 import { ThemeProvider } from 'styled-components'
 import classNames from 'classnames'
 import { noop } from '../../utilities/other'
-import equal from 'fast-deep-equal'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Button from '../Button'
 import Scrollable from '../Scrollable'
 import { TableWrapperUI, TableUI, LoadingUI } from './Table.css'
 import { defaultSkin, chooseSkin } from './Table.skins'
 import { columnShape, dataShape } from './Table.utils'
+import { useTable } from './Table.hooks'
 import TableBody from './Table.Body'
 import TableHead from './Table.Head'
 
 export const TABLE_CLASSNAME = 'c-Table'
 
-export class Table extends React.Component {
-  constructor(props) {
-    super(props)
-
-    const { maxRowsToDisplay, data } = this.props
-
-    this.state = {
-      isTableCollapsed:
-        maxRowsToDisplay != null && maxRowsToDisplay < data.length,
-    }
-  }
-
-  setWrapperNode = node => {
-    this.wrapperNode = node
-    this.props.wrapperRef(node)
-  }
-
-  setTableNode = node => {
-    this.tableNode = node
-    this.props.tableRef(node)
-  }
-
-  getComponentClassNames = () => {
-    const { className, tableClassName, onRowClick } = this.props
-    const { isTableCollapsed } = this.state
-
-    const tableWrapperClassNames = classNames(
-      `${TABLE_CLASSNAME}__Wrapper`,
-      isTableCollapsed && 'is-collapsed',
-      className
-    )
-    const tableClassNames = classNames(
-      TABLE_CLASSNAME,
-      Boolean(onRowClick) && 'with-clickable-rows',
-      tableClassName
-    )
-
-    return { tableWrapperClassNames, tableClassNames }
-  }
-
-  handleExpanderClick = () => {
-    this.setState(
-      {
-        isTableCollapsed: !this.state.isTableCollapsed,
-      },
-      () => {
-        this.props.onExpand(!!this.state.isTableCollapsed)
-      }
-    )
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (
-      nextState &&
-      nextState.isTableCollapsed !== this.state.isTableCollapsed
-    ) {
-      return true
-    }
-
-    const { columns, data, ...rest } = this.props
-    const { columns: columnsNext, data: dataNext, ...restNext } = nextProps
-    if (!equal(rest, restNext)) {
-      return true
-    }
-    if (!equal(columnsNext, columns)) {
-      return true
-    }
-
-    if (!equal(dataNext, data)) {
-      return true
-    }
-
-    return false
-  }
-
-  render() {
-    const {
-      className,
-      tableClassName,
-      columns,
-      data,
-      expanderText,
-      maxRowsToDisplay,
-      tableWidth,
-      containerWidth,
-      sortedInfo,
-      isLoading,
-      isScrollLocked,
-      withTallRows,
-      onRowClick,
-      skin,
-      ...rest
-    } = this.props
-
-    const { isTableCollapsed } = this.state
-
-    const {
-      tableWrapperClassNames,
-      tableClassNames,
-    } = this.getComponentClassNames()
-
-    return (
-      <ThemeProvider theme={chooseSkin(skin)}>
-        <TableWrapperUI
-          {...getValidProps(rest)}
-          className={tableWrapperClassNames}
-          ref={this.setWrapperNode}
-          containerWidth={containerWidth}
-        >
-          <Scrollable
-            fadeLeft
-            fadeRight
-            scrollLockDirection="x"
-            isScrollLocked={isScrollLocked}
-          >
-            <TableUI
-              tableWidth={tableWidth}
-              withTallRows={withTallRows}
-              className={tableClassNames}
-              ref={this.setTableNode}
-            >
-              <TableHead
-                columns={columns}
-                isLoading={isLoading}
-                sortedInfo={sortedInfo}
-              />
-
-              <TableBody
-                rows={data}
-                columns={columns}
-                isTableCollapsed={isTableCollapsed}
-                maxRowsToDisplay={maxRowsToDisplay}
-                onRowClick={onRowClick}
-              />
-            </TableUI>
-          </Scrollable>
-
-          {isLoading && <LoadingUI className={`${TABLE_CLASSNAME}__Loading`} />}
-
-          {maxRowsToDisplay && isTableCollapsed ? (
-            <Button
-              style={{ marginLeft: '14px' }}
-              kind="link"
-              className={`${TABLE_CLASSNAME}__Expander`}
-              onClick={this.handleExpanderClick}
-            >
-              {expanderText ? expanderText.collapsed : 'View All'}
-            </Button>
-          ) : null}
-
-          {maxRowsToDisplay && !isTableCollapsed ? (
-            <Button
-              style={{ marginLeft: '14px' }}
-              kind="link"
-              className={`${TABLE_CLASSNAME}__Expander`}
-              onClick={this.handleExpanderClick}
-            >
-              {expanderText ? expanderText.expanded : 'Collapse'}
-            </Button>
-          ) : null}
-        </TableWrapperUI>
-      </ThemeProvider>
-    )
-  }
-}
-Table.defaultProps = {
-  columns: [],
-  data: [],
-  'data-cy': 'Table',
-  skin: defaultSkin,
-  tableWidth: { min: '700px' },
-  containerWidth: '100%',
-  sortedInfo: {
+export function Table({
+  className,
+  columns = [],
+  containerWidth = '100%',
+  data = [],
+  'data-cy': dataCy = 'Table',
+  expanderText,
+  isLoading = false,
+  isScrollLocked = true,
+  maxRowsToDisplay,
+  onExpand = noop,
+  onRowClick = null,
+  onSelectRow = noop,
+  rowClassName = noop,
+  rowWrapper = null,
+  selectionKey = 'id',
+  skin = defaultSkin,
+  sortedInfo = {
     columnKey: null,
     order: null,
   },
-  isLoading: false,
-  isScrollLocked: true,
-  onRowClick: null,
-  wrapperRef: noop,
-  tableRef: noop,
-  onExpand: noop,
-  withTallRows: false,
+  tableClassName,
+  tableWidth = { min: '700px' },
+  withFocusableRows = false,
+  withSelectableRows = false,
+  withTallRows = false,
+  ...rest
+}) {
+  const [state, actions] = useTable(data, maxRowsToDisplay)
+  const {
+    updateTableData,
+    expandTable,
+    collapseTable,
+    selectAllRows,
+    deselectAllRows,
+    selectRow,
+    deselectRow,
+  } = actions
+  const isTableCollapsable = maxRowsToDisplay != null
+  const isCollapsed = data.length !== state.currentTableData.length
+
+  useDeepCompareEffect(() => {
+    updateTableData(data, maxRowsToDisplay)
+  }, [data, maxRowsToDisplay, sortedInfo])
+
+  return (
+    <ThemeProvider theme={chooseSkin(skin)}>
+      <TableWrapperUI
+        className={classNames(
+          `${TABLE_CLASSNAME}__Wrapper`,
+          isCollapsed && 'is-collapsed',
+          className
+        )}
+        containerWidth={containerWidth}
+        dataCy={dataCy}
+        {...rest}
+      >
+        <Scrollable
+          fadeLeft
+          fadeRight
+          isScrollLocked={isScrollLocked}
+          scrollLockDirection="x"
+        >
+          <TableUI
+            className={classNames(
+              TABLE_CLASSNAME,
+              Boolean(onRowClick) && 'with-clickable-rows',
+              tableClassName
+            )}
+            tableWidth={tableWidth}
+            withTallRows={withTallRows}
+          >
+            <TableHead
+              columns={columns}
+              deselectAllRows={deselectAllRows}
+              isLoading={isLoading}
+              rows={state.currentTableData}
+              onSelectRow={onSelectRow}
+              selectAllRows={selectAllRows}
+              selectionKey={selectionKey}
+              selected={
+                state.selectedRows.length === state.currentTableData.length
+              }
+              sortedInfo={sortedInfo}
+              withSelectableRows={withSelectableRows}
+            />
+            <TableBody
+              columns={columns}
+              deselectRow={deselectRow}
+              maxRowsToDisplay={maxRowsToDisplay}
+              onRowClick={onRowClick}
+              onSelectRow={onSelectRow}
+              rows={state.currentTableData}
+              rowClassName={rowClassName}
+              rowWrapper={rowWrapper}
+              selectionKey={selectionKey}
+              selectedRows={state.selectedRows}
+              selectRow={selectRow}
+              withSelectableRows={withSelectableRows}
+              withFocusableRows={withFocusableRows}
+            />
+          </TableUI>
+        </Scrollable>
+
+        {isLoading && <LoadingUI className={`${TABLE_CLASSNAME}__Loading`} />}
+
+        {isTableCollapsable && isCollapsed ? (
+          <Button
+            className={`${TABLE_CLASSNAME}__Expander`}
+            kind="link"
+            onClick={() => {
+              expandTable(data)
+              onExpand({ collapsed: false })
+            }}
+            style={{ marginLeft: '14px' }}
+          >
+            {expanderText ? expanderText.collapsed : 'View All'}
+          </Button>
+        ) : null}
+
+        {isTableCollapsable && !isCollapsed ? (
+          <Button
+            className={`${TABLE_CLASSNAME}__Expander`}
+            kind="link"
+            onClick={() => {
+              collapseTable(data, maxRowsToDisplay)
+              onExpand({ collapsed: true })
+            }}
+            style={{ marginLeft: '14px' }}
+          >
+            {expanderText ? expanderText.expanded : 'Collapse'}
+          </Button>
+        ) : null}
+      </TableWrapperUI>
+    </ThemeProvider>
+  )
 }
 
 Table.propTypes = {
   /** Custom class names to be added to the component top level element. */
   className: PropTypes.string,
-  /** Custom class names to be added to the `<table>` element. */
-  tableClassName: PropTypes.string,
   /** List of columns */
   columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
-  /** List of Rows, which are objects */
-  data: PropTypes.arrayOf(PropTypes.shape(dataShape)),
-  /** The text for the "expander" button when table is either collapsed or expanded */
-  expanderText: PropTypes.any,
-  /** When provided the Table will only show this number of rows and and expander to see the rest */
-  maxRowsToDisplay: PropTypes.number,
   /** The table wrapper width (if `tableWidth` is larger, the component scrolls horizontally) */
   containerWidth: PropTypes.string,
+  /** List of Rows, which are objects */
+  data: PropTypes.arrayOf(PropTypes.shape(dataShape)),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  /** The text for the "expander" button when table is either collapsed or expanded */
+  expanderText: PropTypes.any,
+  /** Adds the 'is-loading' class to the component */
+  isLoading: PropTypes.bool,
+  /** Whether to use `ScrollLock` with `direction="x"` on the Table. */
+  isScrollLocked: PropTypes.bool,
+  /** When provided the Table will only show this number of rows and and expander to see the rest */
+  maxRowsToDisplay: PropTypes.number,
+  /** Callback when expending/collapsing the table */
+  onExpand: PropTypes.func,
+  /** Callback function when a row is clicked. Arguments are the event and the row clicked. */
+  onRowClick: PropTypes.func,
+  /** Callback when selecting a row if enabled */
+  onSelectRow: PropTypes.func,
+  /** Custom class names to be added to the each row based on a condition. */
+  rowClassName: PropTypes.func,
+  /** Gives you the ability to wrap rows based on conditions */
+  rowWrapper: PropTypes.func,
+  /** Custom class names to be added to the `<table>` element. */
+  tableClassName: PropTypes.string,
   /** The `<table>` width */
   tableWidth: PropTypes.shape({ min: PropTypes.string, max: PropTypes.string }),
   /** An object to customize the visual appearance of the table. See [Skins.md](/src/components/Table/docs/Skins.md) */
@@ -234,27 +203,19 @@ Table.propTypes = {
       borderColumns: PropTypes.string,
     }),
   ]),
-  /** Adds the 'is-loading' class to the component */
-  isLoading: PropTypes.bool,
-  /** Whether to use `ScrollLock` with `direction="x"` on the Table. */
-  isScrollLocked: PropTypes.bool,
+  /** Customize which key from your data should be used for selection */
+  selectionKey: PropTypes.string,
   /** When sortable, indicates which column tha table is sorted by, and in which order (ascending or descending) */
   sortedInfo: PropTypes.shape({
     columnKey: PropTypes.string,
     order: PropTypes.string,
   }),
-  /** Callback function when a row is clicked. Arguments are the event and the row clicked. */
-  onRowClick: PropTypes.func,
-  /** Retrieves the `<table>` node. */
-  tableRef: PropTypes.func,
-  /** Retrieves the table wrapper node. */
-  wrapperRef: PropTypes.func,
-  /** Callback when expending/collapsing the table */
-  onExpand: PropTypes.func,
+  /** Adds tabindex=0 to each row*/
+  withFocusableRows: PropTypes.bool,
+  /** Adds a column with a checkbox for row selection */
+  withSelectableRows: PropTypes.bool,
   /** Makes the rows 60px tall */
   withTallRows: PropTypes.bool,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
 }
 
 export default Table

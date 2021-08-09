@@ -5,6 +5,7 @@ import {
   defaultColumns,
   compoundColumns,
 } from '../Table.testUtils'
+import ConvoList from './ConvoList/ConvoList'
 import TableWithPagination from './TableWithPagination'
 import TableWithSorting from './TableWithSorting'
 
@@ -61,12 +62,12 @@ Columns is a list of objects that configure each column, here you can customize 
 
 Full list of acceptable fields 👇:
 
-- `columnKey`: This value ties to corresponding data field(s), can be a string for a single data field, or a list (array) to get multiple data fields
+- `columnKey`: This value ties to corresponding data field(s), can be a string for a single data field, or a list (array) to get multiple data fields. If you have nested data you'd like to access, use a "dot notation", for example `customer.email`
 - `title`: The string that renders by default in the header for this column
 - `width`: Column width, ideally the sum of all the columns should be 100%
 - `align`: Horizontal cell alignment for this column, one of "left" (default), "center" or "right"
 - `renderHeaderCell`: To customize how to render the column header. A function that takes the column object and returns a React Component/Element
-- `renderCell`: To customize how each cell renders it corresponding data on this column. A function that takes the corresponding data and returns a React Component/Element
+- `renderCell`: To customize how each cell renders it corresponding data on this column. A function that takes the corresponding data and returns a React Component/Element, its arguments are the data provided by `columnKey` above, if using nested data, access it by replaceing the dot (`.`) with an underscore (`_`), for example: `customer.email` in `columnKey` becomes `customer_email` in `renderCell` (see code example below). It also gives you access to the `row`
 - `sorter`: A function that instructs how to sort the data based on this column
 - `sortKey`: If this column contains more than one columnKey, sorting will be based on this value which should exist in the list of Column Keys for this column.
 
@@ -86,14 +87,14 @@ const columns = [
   },
   {
     title: 'Customer',
-    columnKey: ['name', 'email'],
+    columnKey: ['customer.name', 'customer.email'], // nested
     width: '50%',
     align: 'left',
-    renderCell: ({ name, email }) => (
+    renderCell: ({ customer_name, customer_email, row }) => ( // replace . with _
         <div>
-          <strong>{name}</strong>
+          <strong>{customer_name}</strong>
           <br />
-          <span>{email}</span>
+          <span>{customer_email}</span>
         </div>
       ),
     sorter: function sortByName() {/*...*/},
@@ -103,9 +104,11 @@ const columns = [
 
 const data = [{
   id: 0,
-  name: 'Walter White',
+  customer: {
+    name: 'Walter White',
+    email: 'walt@babyblue.net',
+  },
   companyName: 'Heisenberg Inc',
-  email: 'walt@babyblue.net',
   className: 'criminal' // Note: classNames on row objects can be used to target row specific styling
 }, {}, {}]
 ```
@@ -161,6 +164,66 @@ const purpleTheme = {
       columns={defaultColumns}
       data={createFakeCustomers({ amount: 10 })}
       maxRowsToDisplay={4}
+      onRowClick={(e, row) => {
+        console.log(row)
+      }}
+      onExpand={expanded => {
+        console.log('🚀 ~ expanded', expanded)
+      }}
     />
   </Story>
 </Canvas>
+
+#### Selecting rows
+
+To enable selection you have these props available to you:
+
+- `withSelectableRows`: Enable the feature
+- `selectionKey`: A unique key from your data to identify selection, defaults to `id`
+- `onSelectRow`: Callback that gives you an array of selected items (by the key provided in `selectionKey` which by default is `id`)
+
+<Canvas>
+  <Story name="Selecting Rows">
+    <ConvoList />
+  </Story>
+</Canvas>
+
+### Wrapping rows
+
+Sometimes you might need to wrap a row or add attributes to it based on certain conditions, for this we have added the prop `rowWrapper`. Works like this:
+
+```jsx
+
+// children: the "row" react component (Table.Row)
+// The row for this particular row
+rowWrapper={(children, row) => {
+  if (row.id === 281796231) {
+	// Wrap with a `Popover`
+    return (
+      <Popover
+        triggerOn="mouseenter"
+        appendTo={() => document.body}
+        withTriggerWrapper={false}
+        placement="left"
+        renderContent={() => (
+          <Avatar
+            size="xs"
+            name={AvatarSpec.generate().name}
+            image={AvatarSpec.generate().image}
+          />
+        )}
+      >
+        {
+			// Add a `title` attribute on the row
+			React.cloneElement(children, {
+	          title: 'Someone is replying',
+    	    })
+		}
+      </Popover>
+    )
+  }
+  return children
+}}
+```
+
+Note that while you can technically wrap the Row with any element, you are dealing with a `<tr />` and generally they don't like to be inside other stuff (like a span for example).

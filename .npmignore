@@ -27,6 +27,5 @@ yarn-error.log*
 .vscode
 config
 scripts
-stories
 todos
 __tests__

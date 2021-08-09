@@ -1,41 +1,67 @@
 import React from 'react'
-import { mount, render } from 'enzyme'
+import { mount, render as enzymeRender } from 'enzyme'
+import { render } from '@testing-library/react'
+import user from '@testing-library/user-event'
 import { Table, TABLE_CLASSNAME } from './Table'
-import Body from './Table.Body'
-import Head from './Table.Head'
+import reducer from './Table.reducer'
+import {
+  UPDATE_TABLE_DATA,
+  EXPAND_TABLE,
+  COLLAPSE_TABLE,
+  SELECT_ALL_ROWS,
+  DESELECT_ALL_ROWS,
+  SELECT_ROW,
+  DESELECT_ROW,
+} from './Table.actionTypes'
 import { defaultSkin, alternativeSkin, chooseSkin } from './Table.skins'
-
 import {
   createFakeCustomers,
   defaultColumns,
   defaultColumnsCustomContent,
 } from './Table.testUtils'
+import { page1 } from './stories/ConvoList/convoData'
 
 describe('ClassName', () => {
   test('Wrapper has default className', () => {
-    const wrapper = render(<Table />)
+    const wrapper = enzymeRender(<Table />)
 
     expect(wrapper.hasClass(`${TABLE_CLASSNAME}__Wrapper`)).toBeTruthy()
   })
 
   test('Applies custom className to wrapper if specified', () => {
     const className = 'channel-4'
-    const wrapper = render(<Table className={className} />)
+    const wrapper = enzymeRender(<Table className={className} />)
 
     expect(wrapper.hasClass(className)).toBeTruthy()
   })
 
   test('Table has default className', () => {
-    const wrapper = render(<Table />)
+    const wrapper = enzymeRender(<Table />)
 
     expect(wrapper.find('table').hasClass(TABLE_CLASSNAME)).toBeTruthy()
   })
 
   test('Applies custom className to table if specified', () => {
     const className = 'channel-4'
-    const wrapper = render(<Table tableClassName={className} />)
+    const wrapper = enzymeRender(<Table tableClassName={className} />)
 
     expect(wrapper.find('table').hasClass(className)).toBeTruthy()
+  })
+})
+
+describe('Render', () => {
+  test('updates table data', () => {
+    const data = page1.results.slice(0, 10)
+    const data2 = page1.results.slice(10, 15)
+    const { container, rerender } = render(
+      <Table columns={defaultColumns} data={data} />
+    )
+
+    expect(container.querySelectorAll('tbody > tr').length).toBe(10)
+
+    rerender(<Table data={data2} />)
+
+    expect(container.querySelectorAll('tbody > tr').length).toBe(5)
   })
 })
 
@@ -138,18 +164,8 @@ describe('Table Body', () => {
     const rows = tbody.find('tr')
     const cellsInRow = rows.first().find('td')
 
-    expect(
-      cellsInRow
-        .first()
-        .find('.name')
-        .exists()
-    ).toBeTruthy()
-    expect(
-      cellsInRow
-        .first()
-        .find('.companyName')
-        .exists()
-    ).toBeTruthy()
+    expect(cellsInRow.first().find('.name').exists()).toBeTruthy()
+    expect(cellsInRow.first().find('.companyName').exists()).toBeTruthy()
   })
 })
 
@@ -206,7 +222,7 @@ describe('Skin', () => {
 
 describe('Is loading state', () => {
   test('Displays LoadingUI', () => {
-    const wrapper = render(<Table isLoading />)
+    const wrapper = enzymeRender(<Table isLoading />)
 
     expect(wrapper.find(`.${TABLE_CLASSNAME}__Loading`).length).toBeTruthy()
   })
@@ -216,18 +232,15 @@ describe('Clickable Rows', () => {
   test('Fires onRowClick when row is clicked', () => {
     const customers = createFakeCustomers({ amount: 5 })
     const spy = jest.fn()
-    const wrapper = mount(
+    const { container } = render(
       <Table columns={defaultColumns} data={customers} onRowClick={spy} />
     )
-    const tbody = wrapper.find('tbody')
-    const firstRow = tbody.childAt(0)
-    const o = firstRow.instance()
-    const event = undefined
+    const row = container.querySelector('tbody > tr')
 
-    o.handleRowClick()
+    user.click(row)
 
     expect(spy).toHaveBeenCalled()
-    expect(spy).toHaveBeenCalledWith(event, customers[0])
+    expect(spy).toHaveBeenCalledWith(expect.any(Object), customers[0])
   })
 })
 
@@ -252,7 +265,7 @@ describe('Sortable', () => {
         sorter: compoundColumnSpy,
       },
     ]
-    const wrapper = mount(
+    const { container, rerender } = render(
       <Table
         columns={columns}
         data={customers}
@@ -264,57 +277,58 @@ describe('Sortable', () => {
     )
 
     // Regular column sorting, should be called with 'columnKey'
-    let nameHeaderCell = wrapper.find(`thead th`).first()
-    expect(nameHeaderCell.instance().getAttribute('aria-sort')).toBe('none')
+    expect(container.querySelector(`thead th`).getAttribute('aria-sort')).toBe(
+      'none'
+    )
 
-    nameHeaderCell
-      .find('div')
-      .first()
-      .simulate('click')
+    rerender(
+      <Table
+        columns={columns}
+        data={customers}
+        sortedInfo={{
+          columnKey: 'name',
+          order: 'ascending',
+        }}
+      />
+    )
 
-    wrapper.setProps({
-      sortedInfo: {
-        columnKey: 'name',
-        order: 'ascending',
-      },
-    })
-
-    nameHeaderCell = wrapper.find(`thead th`).first()
-    expect(nameHeaderCell.instance().getAttribute('aria-sort')).toBe(
+    expect(container.querySelector('thead th').getAttribute('aria-sort')).toBe(
       'ascending'
     )
+
+    user.click(container.querySelector('thead th div'))
+
     expect(regularColumnSpy).toHaveBeenCalled()
     expect(regularColumnSpy).toHaveBeenCalledWith(columns[0].columnKey)
-    expect(
-      nameHeaderCell.find(`.${TABLE_CLASSNAME}__SortableHeaderCell`).exists()
-    ).toBeTruthy()
 
     expect(
-      nameHeaderCell
-        .find(`.${TABLE_CLASSNAME}__SortableHeaderCell__title`)
-        .exists()
-    ).toBeTruthy()
+      container.querySelector(`.${TABLE_CLASSNAME}__SortableHeaderCell`)
+    ).toBeInTheDocument()
+
+    expect(
+      container.querySelector(`.${TABLE_CLASSNAME}__SortableHeaderCell__title`)
+    ).toBeInTheDocument()
 
     // Compound column sorting, should be called with 'sortKey'
-    const customerHeaderCell = wrapper.find(`thead th`).at(1)
+    const customerHeaderCell = container.querySelectorAll('thead th')[1]
 
-    customerHeaderCell
-      .find('div')
-      .first()
-      .simulate('click')
+    user.click(customerHeaderCell.querySelector('div'))
 
     expect(compoundColumnSpy).toHaveBeenCalled()
     expect(compoundColumnSpy).toHaveBeenCalledWith(columns[1].sortKey)
 
-    wrapper.setProps({
-      sortedInfo: {
-        columnKey: 'name',
-        order: 'descending',
-      },
-    })
+    rerender(
+      <Table
+        columns={columns}
+        data={customers}
+        sortedInfo={{
+          columnKey: 'name',
+          order: 'descending',
+        }}
+      />
+    )
 
-    nameHeaderCell = wrapper.find(`thead th`).first()
-    expect(nameHeaderCell.instance().getAttribute('aria-sort')).toBe(
+    expect(container.querySelector('thead th').getAttribute('aria-sort')).toBe(
       'descending'
     )
   })
@@ -322,44 +336,38 @@ describe('Sortable', () => {
 
 describe('Expandable', () => {
   test('Table is collapsed on initial state to the value of maxRowsToDisplay', () => {
-    const wrapper = mount(
+    const { container } = render(
       <Table
         columns={defaultColumns}
         data={createFakeCustomers({ amount: 10 })}
         maxRowsToDisplay={4}
       />
     )
-    const tbody = wrapper.find('tbody')
-    const rows = tbody.find('tr')
 
-    expect(wrapper.state('isTableCollapsed')).toBeTruthy()
-    expect(rows.length).toBe(4)
+    expect(container.querySelectorAll('tbody tr').length).toBe(4)
   })
 
   test('Table expands/collapses on click of Expander', () => {
-    const wrapper = mount(
+    const { container, getByRole } = render(
       <Table
         columns={defaultColumns}
         data={createFakeCustomers({ amount: 10 })}
         maxRowsToDisplay={4}
       />
     )
-    const expander = wrapper.find(`.${TABLE_CLASSNAME}__Expander`).first()
-    expander.simulate('click')
-    const tbody = wrapper.find('tbody')
-    const rows = tbody.find('tr')
 
-    expect(wrapper.state('isTableCollapsed')).toBeFalsy()
-    expect(rows.length).toBe(10)
-    expect(expander.text()).toBe('View All')
+    expect(container.querySelectorAll('tbody tr').length).toBe(4)
+    expect(getByRole('button').textContent).toBe('View All')
 
-    const expander2 = wrapper.find(`.${TABLE_CLASSNAME}__Expander`).first()
-    expander2.simulate('click')
-    const rows2 = wrapper.find('tbody').find('tr')
+    user.click(getByRole('button'))
 
-    expect(wrapper.state('isTableCollapsed')).toBeTruthy()
-    expect(rows2.length).toBe(4)
-    expect(expander2.text()).toBe('Collapse')
+    expect(container.querySelectorAll('tbody tr').length).toBe(10)
+    expect(getByRole('button').textContent).toBe('Collapse')
+
+    user.click(getByRole('button'))
+
+    expect(container.querySelectorAll('tbody tr').length).toBe(4)
+    expect(getByRole('button').textContent).toBe('View All')
   })
 
   test('Table expands/collapses on click of Expander (custom text)', () => {
@@ -387,7 +395,7 @@ describe('Expandable', () => {
 
   test('Table fires onExpand on click of Expander', () => {
     const spy = jest.fn()
-    const wrapper = mount(
+    const { getByRole } = render(
       <Table
         columns={defaultColumns}
         data={createFakeCustomers({ amount: 10 })}
@@ -395,93 +403,286 @@ describe('Expandable', () => {
         onExpand={spy}
       />
     )
-    const expander = wrapper.find(`.${TABLE_CLASSNAME}__Expander`).first()
 
-    expander.simulate('click')
+    user.click(getByRole('button'))
 
     expect(spy).toHaveBeenCalled()
-    expect(spy).toHaveBeenCalledWith(wrapper.state('isTableCollapsed'))
   })
 })
 
-describe('Table', () => {
-  test('Table should update only if col really changed', () => {
-    const columns = defaultColumns
-    const data = createFakeCustomers({ amount: 10 })
-    const wrapper = mount(<Table columns={columns} data={data} />)
+describe('Selectable rows', () => {
+  test('should render a column with checkboxes for selection', () => {
+    const { container } = render(
+      <Table
+        columns={defaultColumns}
+        data={page1.results.slice(10)}
+        withSelectableRows
+      />
+    )
 
-    const actualProps = wrapper.props()
-
+    // Header row
     expect(
-      wrapper
-        .instance()
-        .shouldComponentUpdate({ ...actualProps, columns, data })
-    ).toBeFalsy()
-
+      container.querySelector('thead .Column_Selector')
+    ).toBeInTheDocument()
     expect(
-      wrapper
-        .instance()
-        .shouldComponentUpdate({ ...actualProps, columns, data: [] })
-    ).toBeTruthy()
+      container.querySelector('thead .Column_Selector .c-Checkbox')
+    ).toBeInTheDocument()
 
-    expect(
-      wrapper
-        .instance()
-        .shouldComponentUpdate({ ...actualProps, columns: [], data })
-    ).toBeTruthy()
+    // Body rows
+    const rows = container.querySelectorAll('tbody tr')
 
-    expect(
-      wrapper.instance().shouldComponentUpdate({
-        ...actualProps,
-        isLoading: true,
-        columns,
-        data,
-      })
-    ).toBeTruthy()
+    rows.forEach(row => {
+      expect(
+        row.querySelector('td').classList.contains('Column_Selector')
+      ).toBe(true)
+      expect(row.querySelector('.c-Checkbox')).toBeInTheDocument()
+    })
+  })
+
+  test('should select/unselect a row', () => {
+    const onSelectRowSpy = jest.fn()
+    const data = page1.results.slice(10)
+    const { container } = render(
+      <Table
+        columns={defaultColumns}
+        data={data}
+        withSelectableRows
+        onSelectRow={onSelectRowSpy}
+      />
+    )
+
+    const rows = container.querySelectorAll('tbody tr')
+
+    user.click(rows[0].querySelector('input[type="checkbox"]'))
+
+    expect(onSelectRowSpy).toHaveBeenCalledWith([data[0].id])
+
+    user.click(rows[1].querySelector('input[type="checkbox"]'))
+
+    expect(onSelectRowSpy).toHaveBeenCalledWith([data[0].id, data[1].id])
+    expect(rows[0].classList.contains('is-row-selected')).toBe(true)
+    expect(rows[1].classList.contains('is-row-selected')).toBe(true)
+
+    user.click(rows[0].querySelector('input[type="checkbox"]'))
+    expect(onSelectRowSpy).toHaveBeenCalledWith([data[1].id])
+
+    expect(rows[0].classList.contains('is-row-selected')).toBe(false)
+    expect(rows[1].classList.contains('is-row-selected')).toBe(true)
+  })
+
+  test('should select/unselect all with header row', () => {
+    const onSelectRowSpy = jest.fn()
+    const data = page1.results.slice(10)
+    const { container } = render(
+      <Table
+        columns={defaultColumns}
+        data={data}
+        withSelectableRows
+        onSelectRow={onSelectRowSpy}
+      />
+    )
+
+    const rows = container.querySelectorAll('tbody tr')
+
+    user.click(container.querySelector('thead input[type="checkbox"]'))
+
+    expect(onSelectRowSpy).toHaveBeenCalledWith(data.map(d => d.id))
+
+    rows.forEach(row => {
+      expect(row.classList.contains('is-row-selected')).toBe(true)
+    })
+
+    user.click(container.querySelector('thead input[type="checkbox"]'))
+
+    expect(onSelectRowSpy).toHaveBeenCalledWith([])
+
+    rows.forEach(row => {
+      expect(row.classList.contains('is-row-selected')).toBe(false)
+    })
   })
 })
 
-describe('Table.Body', () => {
-  test('Body should update only if props really changed', () => {
-    const columns = defaultColumns
-    const rows = createFakeCustomers({ amount: 10 })
-    const wrapper = mount(
-      <table>
-        <Body columns={columns} rows={rows} />
-      </table>
-    ).find(Body)
+describe('Reducer', () => {
+  test('updated data', () => {
+    const data = page1.results.slice(0, 10)
+    const data2 = page1.results.slice(10, 15)
+    const initialState = {
+      selectedRows: [],
+      currentTableData: data,
+    }
+    const action = {
+      type: UPDATE_TABLE_DATA,
+      payload: {
+        data: data2,
+        rowsToDisplay: undefined,
+      },
+    }
+    const resultingState = {
+      selectedRows: [],
+      currentTableData: data2,
+    }
 
-    expect(
-      wrapper.instance().shouldComponentUpdate({ columns }, { rows })
-    ).toBeFalsy()
-
-    expect(
-      wrapper.instance().shouldComponentUpdate({ columns }, { rows: [] })
-    ).toBeTruthy()
-
-    expect(
-      wrapper.instance().shouldComponentUpdate({ columns: [] }, { rows })
-    ).toBeTruthy()
+    expect(reducer(initialState, action)).toStrictEqual(resultingState)
   })
 
-  test('Body getRows should return an empty array if no rows props specified', () => {
-    expect(Body.getRows()).toEqual([])
+  test('expand/collapse', () => {
+    const data = page1.results.slice(0, 10)
+    const initialState = {
+      selectedRows: [],
+      currentTableData: data,
+    }
+    const expandAction = {
+      type: EXPAND_TABLE,
+      payload: {
+        data: data,
+        rowsToDisplay: 10,
+      },
+    }
+    const resultingStateOfExpand = {
+      selectedRows: [],
+      currentTableData: data,
+    }
+
+    expect(reducer(initialState, expandAction)).toStrictEqual(
+      resultingStateOfExpand
+    )
+
+    const data2 = page1.results.slice(0, 4)
+    const collapseAction = {
+      type: COLLAPSE_TABLE,
+      payload: {
+        data: data,
+        rowsToDisplay: 4,
+      },
+    }
+    const resultingStateOfCollapse = {
+      selectedRows: [],
+      currentTableData: data2,
+    }
+
+    expect(reducer(initialState, collapseAction)).toStrictEqual(
+      resultingStateOfCollapse
+    )
   })
-})
 
-describe('Table.Head', () => {
-  test('Head should update only if columns were updated', () => {
-    const columns = defaultColumns
-    const wrapper = mount(
-      <table>
-        <Head columns={columns} />
-      </table>
-    ).find(Head)
+  test('select/deselect all', () => {
+    const data = page1.results.slice(0, 10)
+    const initialState = {
+      selectedRows: [],
+      currentTableData: data,
+    }
+    const selectAllAction = {
+      type: SELECT_ALL_ROWS,
+      payload: {
+        data: data,
+        rowsToDisplay: undefined,
+        selectionKey: 'id',
+      },
+    }
+    const resultingStateOfSelectAll = {
+      selectedRows: data.map(d => d.id),
+      currentTableData: data,
+    }
 
-    expect(wrapper.instance().shouldComponentUpdate({ columns })).toBeFalsy()
+    expect(reducer(initialState, selectAllAction)).toStrictEqual(
+      resultingStateOfSelectAll
+    )
 
-    expect(
-      wrapper.instance().shouldComponentUpdate({ columns: [] })
-    ).toBeTruthy()
+    const deselectAllAction = {
+      type: DESELECT_ALL_ROWS,
+      payload: {
+        data: data,
+        rowsToDisplay: undefined,
+      },
+    }
+    const resultingStateOfDeselectAll = {
+      selectedRows: [],
+      currentTableData: data,
+    }
+
+    expect(reducer(initialState, deselectAllAction)).toStrictEqual(
+      resultingStateOfDeselectAll
+    )
+  })
+
+  test('select/deselect row', () => {
+    const data = page1.results.slice(0, 10)
+    const initialState = {
+      selectedRows: [],
+      currentTableData: data,
+    }
+    const selectAction = {
+      type: SELECT_ROW,
+      payload: {
+        data: data,
+        value: data[3].id,
+        rowsToDisplay: undefined,
+      },
+    }
+    const resultingStateOfSelect = {
+      selectedRows: [data[3].id],
+      currentTableData: data,
+    }
+
+    expect(reducer(initialState, selectAction)).toStrictEqual(
+      resultingStateOfSelect
+    )
+
+    const initialState2 = {
+      selectedRows: [data[2].id],
+      currentTableData: data,
+    }
+
+    const selectAction2 = {
+      type: SELECT_ROW,
+      payload: {
+        data: data,
+        value: data[3].id,
+        rowsToDisplay: undefined,
+      },
+    }
+
+    const resultingStateOfSelect2 = {
+      selectedRows: [data[2].id, data[3].id],
+      currentTableData: data,
+    }
+
+    expect(reducer(initialState2, selectAction2)).toStrictEqual(
+      resultingStateOfSelect2
+    )
+
+    const deselectAction = {
+      type: DESELECT_ROW,
+      payload: {
+        data: data,
+        value: data[3].id,
+        rowsToDisplay: undefined,
+      },
+    }
+    const resultingStateOfDeselect = {
+      selectedRows: [data[2].id],
+      currentTableData: data,
+    }
+
+    expect(reducer(initialState2, deselectAction)).toStrictEqual(
+      resultingStateOfDeselect
+    )
+
+    const deselectAction2 = {
+      type: DESELECT_ROW,
+      payload: {
+        data: data,
+        value: data[2].id,
+        rowsToDisplay: undefined,
+      },
+    }
+    const resultingStateOfDeselect2 = {
+      selectedRows: [],
+      currentTableData: data,
+    }
+
+    expect(reducer(initialState2, deselectAction2)).toStrictEqual(
+      resultingStateOfDeselect2
+    )
   })
 })

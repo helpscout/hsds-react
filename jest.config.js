@@ -7,6 +7,7 @@ module.exports = {
     '!src/**/?(*.)labs.{js,jsx}',
     '!src/**/?(*.)stories.{js,jsx}',
     '!src/**/stories/*.{js,jsx}',
+    '!src/**/stories/**/*.{js,jsx}',
     '!src/**/?(*.)hsappstories.{js,jsx}',
     '!src/**/?(*.)storiesHelpers.{js,jsx}',
     '!src/utilities/specs/**/*.{js,jsx}',
