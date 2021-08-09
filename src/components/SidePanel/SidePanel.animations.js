@@ -1,7 +1,7 @@
 export const overlayDefaultAnimation = `
 animation: fadeOut 0.3s;
 
-&.sidepanel-in {
+&.element-in {
   animation: fadeIn 0.3s;
 }
 
@@ -26,12 +26,11 @@ animation: fadeOut 0.3s;
 
 export const sidePanelDefaultAnimation = `
 animation: slideOut 0.3s;
-animation-delay: 1s;
 
-.sidepanel-in.right & {
+.element-in.right & {
   animation: slideRightIn 0.3s;
 }
-.sidepanel-in.left & {
+.element-in.left & {
   animation: slideLeftIn 0.3s;
 }
 
