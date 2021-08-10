@@ -74,25 +74,29 @@ function SidePanel({
         role="dialog"
         tabIndex="0"
       >
-        <ClosePanelButtonUI onClick={onClose}>
+        <ClosePanelButtonUI
+          className="SidePanel__CloseButton"
+          onClick={onClose}
+        >
           <Icon size={24} name="cross" />
         </ClosePanelButtonUI>
         {withHeader ? (
-          <HeaderUI>
+          <HeaderUI className="SidePanel__Header">
             <h1 id="sidepanel-header-heading" className="SidePanel__Heading">
               {panelHeading}
             </h1>
             <p className="SidePanel__Subheading">{panelSubHeading}</p>
           </HeaderUI>
         ) : null}
-        <BodyUI>{children}</BodyUI>
+        <BodyUI className="SidePanel__Body">{children}</BodyUI>
         {withFooter ? (
-          <FooterUI>
+          <FooterUI className="SidePanel__Footer">
             <Button
+              className="SidePanel__MainAction"
               disabled={mainActionDisabled}
               kind="primary"
-              size="xl"
               onClick={onMainActionClick}
+              size="xl"
             >
               {mainActionButtonText}
             </Button>
@@ -104,18 +108,33 @@ function SidePanel({
 }
 
 SidePanel.propTypes = {
+  /** Content to be rendered inside the panel body */
   children: PropTypes.any,
+  /** Custom classname on this component */
   className: PropTypes.string,
+  /** If the default footer is present, this is the label text for the button */
   mainActionButtonText: PropTypes.string,
+  /** If the default footer is present, this disables the button */
+  mainActionDisabled: PropTypes.bool,
+  /** Function that gets called when clicking the `x` button and when pressing `esc`, use this to close the panel in your app */
   onClose: PropTypes.func,
+  /** If the default footer is present, this is the callback for the button */
   onMainActionClick: PropTypes.func,
+  /** If the default Header included, this is the Heading */
   panelHeading: PropTypes.string,
+  /** If the default Header included, this is the Subheading */
   panelSubHeading: PropTypes.string,
+  /** How wide the panel should be */
   panelWidth: PropTypes.string,
+  /** Control whether the panel is open or close */
   show: PropTypes.bool,
+  /** Which side of the screen to render the panel in */
   side: PropTypes.oneOf(['left', 'right']),
+  /** Enable a default footer that includes a big CTA button */
   withFooter: PropTypes.bool,
+  /** In case you don't want the "overlay" */
   withOverlay: PropTypes.bool,
+  /** Customize the z-index */
   zIndex: PropTypes.number,
 }
 

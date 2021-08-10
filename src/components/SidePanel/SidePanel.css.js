@@ -87,7 +87,7 @@ export const HeaderUI = styled('header')`
   padding: 30px;
   background-color: #fff;
 
-  h1.SidePanel__Heading {
+  .SidePanel__Heading {
     margin: 10px 0 4px 0;
     font-weight: 500;
     font-size: 18px;
@@ -95,7 +95,7 @@ export const HeaderUI = styled('header')`
     color: ${getColor('charcoal.700')};
   }
 
-  p.SidePanel__Subheading {
+  .SidePanel__Subheading {
     margin: 0;
     font-size: 13px;
     line-height: 19px;
