@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import useAnimatedRender from '../../hooks/useAnimatedRender'
 import { noop } from '../../utilities/other'
+import { manageTrappedFocus } from '../../utilities/focus'
 import {
   BodyUI,
   ClosePanelButtonUI,
@@ -26,6 +27,7 @@ function SidePanel({
   panelWidth = '400px',
   show = false,
   side = 'right',
+  trapFocus = false,
   withHeader = true,
   withFooter = true,
   withOverlay = true,
@@ -43,6 +45,8 @@ function SidePanel({
     if (shouldRender && e.key === 'Escape') {
       e.stopPropagation()
       onClose()
+    } else if (e.key === 'Tab' && trapFocus && panelRef.current) {
+      manageTrappedFocus(panelRef.current, e)
     }
   }
 
@@ -130,6 +134,8 @@ SidePanel.propTypes = {
   show: PropTypes.bool,
   /** Which side of the screen to render the panel in */
   side: PropTypes.oneOf(['left', 'right']),
+  /** Whether to restrict focus to elements inside the modal */
+  trapFocus: PropTypes.bool,
   /** Enable a default footer that includes a big CTA button */
   withFooter: PropTypes.bool,
   /** In case you don't want the "overlay" */

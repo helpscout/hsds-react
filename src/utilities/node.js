@@ -244,11 +244,3 @@ export const isNodeWithinViewport = options => {
 
   return position < viewportPosition
 }
-
-export function getClosestFocusableParent(element) {
-  return (
-    element.closest(
-      'a, button, input, textarea, select, details, [tabindex]:not([tabindex="-1"]), :not([disabled])'
-    ) || document.body
-  )
-}

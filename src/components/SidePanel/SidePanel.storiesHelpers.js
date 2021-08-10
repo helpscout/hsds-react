@@ -157,6 +157,12 @@ export default function SidePanelApp() {
             onClose={() => setShowModal(false)}
           >
             <HuzzahBird size={200} />
+            <br />
+            <br />
+            <button>Action!</button>
+            <br />
+            <br />
+            <button>More Action!</button>
           </SimpleModal>
         </SidePanel>
       </FakeMainUI>

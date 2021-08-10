@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getClosestFocusableParent } from '../utilities/node'
+import { getClosestFocusableParent } from '../utilities/focus'
 
 export default function useAnimatedRender(show, overlayRef, contentRef) {
   const [shouldRender, setRender] = useState(show)

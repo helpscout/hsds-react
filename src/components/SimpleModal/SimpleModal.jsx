@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import useAnimatedRender from '../../hooks/useAnimatedRender'
 import { noop } from '../../utilities/other'
+import { manageTrappedFocus } from '../../utilities/focus'
 import {
   CloseModalButtonUI,
   SimpleModalOverlayUI,
@@ -12,10 +13,11 @@ import Icon from '../Icon'
 
 function SimpleModal({
   ariaLabelledBy = '',
-  show = false,
   children,
   className,
   onClose = noop,
+  show = false,
+  trapFocus = true,
   withCloseButton = true,
   zIndex = 999,
 }) {
@@ -31,6 +33,8 @@ function SimpleModal({
     if (shouldRender && e.key === 'Escape') {
       e.stopPropagation()
       onClose()
+    } else if (e.key === 'Tab' && trapFocus && modalRef.current) {
+      manageTrappedFocus(modalRef.current, e)
     }
   }
 
@@ -79,6 +83,8 @@ SimpleModal.propTypes = {
   onClose: PropTypes.func,
   /** Control whether the modal is open or close */
   show: PropTypes.bool,
+  /** Whether to restrict focus to elements inside the modal */
+  trapFocus: PropTypes.bool,
   /** Whether to include a close button */
   withCloseButton: PropTypes.bool,
   /** Customize the z-index */
