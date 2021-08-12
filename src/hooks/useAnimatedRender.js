@@ -4,12 +4,12 @@ import { getClosestFocusableParent } from '../utilities/focus'
 /**
  *
  * @param {boolean} show Whether the target component should be shown or not
- * @param {HTMLElement} nodeToAnimate The Node to animate out
- * @param {HTMLElement} nodeToFocus If provided, the node to focus
+ * @param {Object} toAnimateRef The ref to the node to animate out
+ * @param {Object} toFocusRef If provided, the ref to the node to focus
  *
  * @returns {Array} whether to render and onAnimationEnd callback
  */
-export default function useAnimatedRender(show, nodeToAnimate, nodeToFocus) {
+export default function useAnimatedRender(show, toAnimateRef, toFocusRef) {
   const [shouldRender, setRender] = useState(show)
 
   useEffect(() => {
@@ -19,16 +19,18 @@ export default function useAnimatedRender(show, nodeToAnimate, nodeToFocus) {
   }, [show])
 
   function onAnimationEnd(e) {
-    if (e.target === nodeToAnimate) {
+    if (e.target === toAnimateRef.current) {
       if (!show) {
         setRender(false)
 
-        if (nodeToAnimate) {
-          const focusableParent = getClosestFocusableParent(nodeToAnimate)
+        if (toAnimateRef.current) {
+          const focusableParent = getClosestFocusableParent(
+            toAnimateRef.current
+          )
           focusableParent.focus()
         }
       } else {
-        nodeToFocus && nodeToFocus.focus()
+        toFocusRef.current && toFocusRef.current.focus()
       }
     }
   }

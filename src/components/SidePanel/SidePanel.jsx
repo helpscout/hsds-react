@@ -38,8 +38,8 @@ function SidePanel({
   const overlayRef = useRef(null)
   const [shouldRender, onAnimationEnd] = useAnimatedRender(
     show,
-    overlayRef.current,
-    focusPanelOnShow ? panelRef.current : undefined
+    overlayRef,
+    focusPanelOnShow && panelRef
   )
 
   function handleOverlayKeyDown(e) {
@@ -76,6 +76,9 @@ function SidePanel({
         id="sidepanel"
         panelWidth={panelWidth}
         ref={panelRef}
+        onFocus={e => {
+          console.log('FOCUSED')
+        }}
         role="dialog"
         tabIndex="0"
       >

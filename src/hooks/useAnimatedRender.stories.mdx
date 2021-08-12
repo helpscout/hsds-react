@@ -58,8 +58,8 @@ const OverlayUI = styled('div')`
 function SomeOverlayComponent({ show, focusPanelOnShow = true }) {
   const [shouldRender, onAnimationEnd] = useAnimatedRender(
     show,
-    overlayRef.current, // Animate this out before unmount please
-    contentRef.current // Focus this on show please
+    overlayRef, // Animate this out before unmount please
+    contentRef // Focus this on show please, ommit if you don't want to focus on anything
   )
 
   return shouldRender ? (

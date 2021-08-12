@@ -26,8 +26,8 @@ function SimpleModal({
   const overlayRef = useRef(null)
   const [shouldRender, onAnimationEnd] = useAnimatedRender(
     show,
-    overlayRef.current,
-    focusModalOnShow ? modalRef.current : undefined
+    overlayRef,
+    focusModalOnShow && modalRef
   )
 
   function handleOverlayKeyDown(e) {
