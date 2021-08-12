@@ -1,0 +1,80 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Hooks/useAnimatedRender" />
+
+# useAnimatedRender
+
+Sometimes you need to animate an exit and _then_ unmount a component. Think Modals.
+
+A simple fading animation is provided as default (`defaultAnimation`), you need to add this or you own to your animated component.
+
+Usage:
+
+```js
+import useAnimatedRender, { defaultAnimation } from '../../hooks/useAnimatedRender'
+
+/**
+ * For reference this is the provided animation, nice and simple
+ * but you can take it as far as you want!
+*/
+
+const defaultAnimation = `
+animation: fadeOut 0.3s;
+
+&.element-in {
+  animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+`
+
+const OverlayUI = styled('div')`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 500;
+
+  ${defaultAnimation} // <--- animate it!
+`
+
+function SomeOverlayComponent({ show, focusPanelOnShow = true }) {
+  const [shouldRender, onAnimationEnd] = useAnimatedRender(
+    show,
+    overlayRef.current, // Animate this out before unmount please
+    contentRef.current // Focus this on show please
+  )
+
+  return shouldRender ? (
+    <OverlayUI
+      className={classNames(
+        'Overlay',
+        show && 'element-in', // Use this as cue for when to apply the animations
+      )}
+      onAnimationEnd={onAnimationEnd}
+      ref={overlayRef}
+    >
+      <div className="content" ref={contentRef} tabIndex="0">
+        <em>Some content</em>
+      </div>
+    </OverlayUI>
+  )
+}
+```

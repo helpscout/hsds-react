@@ -15,6 +15,7 @@ function SimpleModal({
   ariaLabelledBy = '',
   children,
   className,
+  focusModalOnShow = true,
   onClose = noop,
   show = false,
   trapFocus = true,
@@ -25,8 +26,8 @@ function SimpleModal({
   const overlayRef = useRef(null)
   const [shouldRender, onAnimationEnd] = useAnimatedRender(
     show,
-    overlayRef,
-    modalRef
+    overlayRef.current,
+    focusModalOnShow ? modalRef.current : undefined
   )
 
   function handleOverlayKeyDown(e) {
@@ -45,10 +46,11 @@ function SimpleModal({
         show && 'element-in',
         className
       )}
+      data-testid="simple-modal-overlay"
       onAnimationEnd={onAnimationEnd}
       onKeyDown={handleOverlayKeyDown}
-      zIndex={zIndex}
       ref={overlayRef}
+      zIndex={zIndex}
     >
       <SimpleModalUI
         aria-modal="true"
@@ -62,7 +64,10 @@ function SimpleModal({
         tabIndex="0"
       >
         {withCloseButton ? (
-          <CloseModalButtonUI onClick={onClose}>
+          <CloseModalButtonUI
+            className="SimpleModal__CloseButton"
+            onClick={onClose}
+          >
             <Icon size={18} name="cross" />
           </CloseModalButtonUI>
         ) : null}
@@ -79,6 +84,8 @@ SimpleModal.propTypes = {
   children: PropTypes.any,
   /** Custom classname on this component */
   className: PropTypes.string,
+  /** If you don't want the focus to be moved to the Modal when it enters */
+  focusModalOnShow: PropTypes.bool,
   /** Function that gets called when clicking the `x` button and when pressing `esc`, use this to close the modal in your app */
   onClose: PropTypes.func,
   /** Control whether the modal is open or close */

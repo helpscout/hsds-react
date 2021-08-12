@@ -18,6 +18,7 @@ import Icon from '../Icon'
 function SidePanel({
   children,
   className,
+  focusPanelOnShow = true,
   mainActionButtonText = 'Start',
   onMainActionClick = noop,
   mainActionDisabled = false,
@@ -37,8 +38,8 @@ function SidePanel({
   const overlayRef = useRef(null)
   const [shouldRender, onAnimationEnd] = useAnimatedRender(
     show,
-    overlayRef,
-    panelRef
+    overlayRef.current,
+    focusPanelOnShow ? panelRef.current : undefined
   )
 
   function handleOverlayKeyDown(e) {
@@ -116,6 +117,8 @@ SidePanel.propTypes = {
   children: PropTypes.any,
   /** Custom classname on this component */
   className: PropTypes.string,
+  /** If you don't want the focus to be moved to the Panel when it enters */
+  focusPanelOnShow: PropTypes.bool,
   /** If the default footer is present, this is the label text for the button */
   mainActionButtonText: PropTypes.string,
   /** If the default footer is present, this disables the button */

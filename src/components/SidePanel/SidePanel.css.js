@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import { rgba } from '../../utilities/color'
-import { overlayDefaultAnimation } from '../../hooks/useAnimatedRender'
+import { defaultAnimation as overlayAnimation } from '../../hooks/useAnimatedRender'
 
 const sidePanelDefaultAnimation = `
 animation: slideOut 0.3s;
@@ -57,7 +57,7 @@ export const OverlayUI = styled('div')`
     flex-direction: row;
   }
 
-  ${overlayDefaultAnimation}
+  ${overlayAnimation}
 `
 
 export const SidePanelUI = styled('aside')`

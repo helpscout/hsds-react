@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import { rgba } from '../../utilities/color'
-import { overlayDefaultAnimation } from '../../hooks/useAnimatedRender'
+import { defaultAnimation as overlayAnimation } from '../../hooks/useAnimatedRender'
 
 export const CloseModalButtonUI = styled('button')`
   position: absolute;
@@ -41,7 +41,7 @@ export const SimpleModalOverlayUI = styled('div')`
   left: 0;
   background-color: ${rgba(getColor('blue.800'), 0.7)};
   z-index: ${({ zIndex }) => zIndex};
-  ${overlayDefaultAnimation}
+  ${overlayAnimation}
 `
 
 export const SimpleModalUI = styled('div')`

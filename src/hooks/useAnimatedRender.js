@@ -1,7 +1,15 @@
 import { useEffect, useState } from 'react'
 import { getClosestFocusableParent } from '../utilities/focus'
 
-export default function useAnimatedRender(show, overlayRef, contentRef) {
+/**
+ *
+ * @param {boolean} show Whether the target component should be shown or not
+ * @param {HTMLElement} nodeToAnimate The Node to animate out
+ * @param {HTMLElement} nodeToFocus If provided, the node to focus
+ *
+ * @returns {Array} whether to render and onAnimationEnd callback
+ */
+export default function useAnimatedRender(show, nodeToAnimate, nodeToFocus) {
   const [shouldRender, setRender] = useState(show)
 
   useEffect(() => {
@@ -11,16 +19,16 @@ export default function useAnimatedRender(show, overlayRef, contentRef) {
   }, [show])
 
   function onAnimationEnd(e) {
-    if (e.target === overlayRef.current) {
+    if (e.target === nodeToAnimate) {
       if (!show) {
         setRender(false)
 
-        if (overlayRef.current) {
-          const focusableParent = getClosestFocusableParent(overlayRef.current)
+        if (nodeToAnimate) {
+          const focusableParent = getClosestFocusableParent(nodeToAnimate)
           focusableParent.focus()
         }
       } else {
-        contentRef.current && contentRef.current.focus()
+        nodeToFocus && nodeToFocus.focus()
       }
     }
   }
@@ -28,7 +36,7 @@ export default function useAnimatedRender(show, overlayRef, contentRef) {
   return [shouldRender, onAnimationEnd]
 }
 
-export const overlayDefaultAnimation = `
+export const defaultAnimation = `
 animation: fadeOut 0.3s;
 
 &.element-in {

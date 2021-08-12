@@ -4,8 +4,6 @@ import { GlobalContext } from '../../components/HSDS/Provider'
 import { createRootElement, addRootElement } from './usePortal.utils'
 
 /**
- * Based on https://www.jayfreestone.com/writing/react-portals-with-hooks/, tweaked a little for our needs
- *
  * Automatically handles creating and tearing-down the root elements (no SRR
  * makes this trivial), so there is no need to ensure the parent target already
  * exists.

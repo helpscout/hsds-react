@@ -17,13 +17,41 @@ import SidePanelApp from './SidePanel.storiesHelpers'
 
 # SidePanel
 
+Component that brings a Panel from either side of the screen, it includes a default Header and Footer (both can be turned off via their respective props if you need to fully customize the panel's contents). The footer contains a CTA button.
+
+This component is fully controlled via the `show` prop, meaning it doesn't hold any internal state about whether is open or not, it's in your hands to manage this. The panel will fire the close action (`onClose` callback prop) with the &times; close button and via pressing the <kbd>esc</kbd> key.
+
+The panel is contained within the closest parent with a `relative` position. This allows you to have a UI where the panel's overlay covers all but a navigation for example. Look at the "Full Example" story below to see this in action (also notice how the "default" story is setup by wrapping the SidePanel with a `div` with a set height and position).
+
+## Rendering it somewhere else in the DOM Tree (Portals)
+
+If you need to render the panel somewhere else you can use our component `<Portal>` or the recently added `usePortal` hook, this hook includes a `<Portal>` component for convenience or as an example of how you can use it, for SidePanel, here's a code example:
+
+```jsx
+import { Portal } from '../../hooks/usePortal'
+import SidePanel from './SidePanel'
+
+function SommeApp() {
+  // Leave the `selector` prop out if you want document.body
+  return (
+    <Portal selector="#some-id">
+      <SidePanel>Some content</SidePanel>
+    </Portal>
+  )
+}
+```
+
 <br />
 
 ## Example
 
 <Canvas>
   <Story name="default">
-    <SidePanelApp />
+    <div style={{ position: 'relative', height: '600px' }}>
+      <SidePanel show focusPanelOnShow={false}>
+        <em>Some content here</em>
+      </SidePanel>
+    </div>
   </Story>
 </Canvas>
 
@@ -39,3 +67,19 @@ import SidePanelApp from './SidePanel.storiesHelpers'
 ### Props
 
 <ArgsTable of={SidePanel} />
+
+## Stories
+
+### Full example
+
+The example includes a contained `<SimpleModal>`:
+
+1. Open the Panel
+2. Click on the three boxes
+3. Click on Start
+
+<Canvas>
+  <Story name="Full Example">
+    <SidePanelApp />
+  </Story>
+</Canvas>
