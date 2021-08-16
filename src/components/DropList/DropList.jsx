@@ -45,6 +45,7 @@ function DropListManager({
   onMenuFocus = noop,
   onListItemSelectEvent = noop,
   onOpenedStateChange = noop,
+  onReset = noop,
   onSelect = noop,
   renderCustomListItem = null,
   selection = null,
@@ -52,6 +53,7 @@ function DropListManager({
   toggler = {},
   variant = VARIANTS.SELECT,
   withMultipleSelection = false,
+  withResetSelectionItem,
 }) {
   const [isOpen, setOpenedState] = useState(false)
   const tippyInstanceRef = useRef(null)
@@ -63,7 +65,9 @@ function DropListManager({
   const [selectedItems, setSelectedItems] = useState(
     withMultipleSelection ? parsedSelection : []
   )
-  const [parsedItems, setParsedItems] = useState(flattenListItems(items))
+  const [parsedItems, setParsedItems] = useState(
+    flattenListItems(items, withMultipleSelection && withResetSelectionItem)
+  )
 
   const { getCurrentScope } = useContext(GlobalContext) || {}
   const scope = getCurrentScope ? getCurrentScope() : null
@@ -89,8 +93,10 @@ function DropListManager({
   }, [{ state: parsedSelection }, withMultipleSelection])
 
   useDeepCompareEffect(() => {
-    setParsedItems(flattenListItems(items))
-  }, [items])
+    setParsedItems(
+      flattenListItems(items, withMultipleSelection && withResetSelectionItem)
+    )
+  }, [items, withMultipleSelection, withResetSelectionItem])
 
   useEffect(() => {
     setOpenedState(isMenuOpen)
@@ -265,6 +271,7 @@ function DropListManager({
             onMenuBlur={onMenuBlur}
             onMenuFocus={onMenuFocus}
             onListItemSelectEvent={onListItemSelectEvent}
+            onReset={onReset}
             renderCustomListItem={renderCustomListItem}
             selectedItem={selectedItem}
             selectedItems={selectedItems}
@@ -342,6 +349,8 @@ DropListManager.propTypes = {
   onListItemSelectEvent: PropTypes.func,
   /** Callback that fires whenever the DropList opens and closes */
   onOpenedStateChange: PropTypes.func,
+  /** If `withResetSelectionItem` enabled, this callback that fires on click of the reset item, signature: `onSelect(selection, clickedItem)` */
+  onReset: PropTypes.func,
   /** Callback that fires whenever the selection in the DropList changes, signature: `onSelect(selection, clickedItem)` */
   onSelect: PropTypes.func,
   /** Render prop that allows you to render a custom List Item */
@@ -360,6 +369,10 @@ DropListManager.propTypes = {
   variant: PropTypes.oneOf(['select', 'Select', 'combobox', 'Combobox']),
   /** Enable multiple selection of items */
   withMultipleSelection: PropTypes.bool,
+  withResetSelectionItem: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool,
+  ]),
 }
 
 export default DropListManager

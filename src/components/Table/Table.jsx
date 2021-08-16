@@ -1,17 +1,18 @@
 import React from 'react'
-import useDeepCompareEffect from 'use-deep-compare-effect'
 import PropTypes from 'prop-types'
+import useDeepCompareEffect from 'use-deep-compare-effect'
 import { ThemeProvider } from 'styled-components'
 import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import Button from '../Button'
 import Scrollable from '../Scrollable'
-import { TableWrapperUI, TableUI, LoadingUI } from './Table.css'
+import { HeaderUI, TableWrapperUI, TableUI, LoadingUI } from './Table.css'
 import { defaultSkin, chooseSkin } from './Table.skins'
-import { columnShape, dataShape } from './Table.utils'
+import { columnShape, columnChooseShape, dataShape } from './Table.utils'
 import { useTable } from './Table.hooks'
 import TableBody from './Table.Body'
 import TableHead from './Table.Head'
+import ColumnChooser from './Table.ColumnChooser'
 
 export const TABLE_CLASSNAME = 'c-Table'
 
@@ -38,12 +39,21 @@ export function Table({
   },
   tableClassName,
   tableWidth = { min: '700px' },
+  withColumnChooser = false,
   withFocusableRows = false,
   withSelectableRows = false,
   withTallRows = false,
   ...rest
 }) {
-  const [state, actions] = useTable(data, maxRowsToDisplay)
+  const defaultColumns = columns.map(col => {
+    if (col.show == null) {
+      col.show = true
+    }
+
+    return col
+  })
+  console.log('🚀 ~ file: Table.jsx ~ line 55 ~ defaultColumns', defaultColumns)
+  const [state, actions] = useTable(data, maxRowsToDisplay, defaultColumns)
   const {
     updateTableData,
     expandTable,
@@ -52,6 +62,7 @@ export function Table({
     deselectAllRows,
     selectRow,
     deselectRow,
+    updateColumns,
   } = actions
   const isTableCollapsable = maxRowsToDisplay != null
   const isCollapsed = data.length !== state.currentTableData.length
@@ -72,6 +83,16 @@ export function Table({
         dataCy={dataCy}
         {...rest}
       >
+        {withColumnChooser ? (
+          <HeaderUI>
+            <ColumnChooser
+              defaultColumns={defaultColumns}
+              columns={state.columns}
+              updateColumns={updateColumns}
+            />
+          </HeaderUI>
+        ) : null}
+
         <Scrollable
           fadeLeft
           fadeRight
@@ -88,7 +109,7 @@ export function Table({
             withTallRows={withTallRows}
           >
             <TableHead
-              columns={columns}
+              columns={state.columns}
               deselectAllRows={deselectAllRows}
               isLoading={isLoading}
               rows={state.currentTableData}
@@ -102,7 +123,7 @@ export function Table({
               withSelectableRows={withSelectableRows}
             />
             <TableBody
-              columns={columns}
+              columns={state.columns}
               deselectRow={deselectRow}
               maxRowsToDisplay={maxRowsToDisplay}
               onRowClick={onRowClick}
@@ -158,6 +179,9 @@ Table.propTypes = {
   className: PropTypes.string,
   /** List of columns */
   columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
+  /** If passed the column chooser will be enabled, contains an array of all the possible columns and whether they are checked and enabled */
+  withColumnChooser: PropTypes.bool,
+  columnChooserList: PropTypes.arrayOf(PropTypes.shape(columnChooseShape)),
   /** The table wrapper width (if `tableWidth` is larger, the component scrolls horizontally) */
   containerWidth: PropTypes.string,
   /** List of Rows, which are objects */

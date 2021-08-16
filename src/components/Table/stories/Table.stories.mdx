@@ -1,9 +1,10 @@
 import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import Table from '../'
 import {
+  columnsChooser,
+  compoundColumns,
   createFakeCustomers,
   defaultColumns,
-  compoundColumns,
 } from '../Table.testUtils'
 import ConvoList from './ConvoList/ConvoList'
 import TableWithPagination from './TableWithPagination'
@@ -144,6 +145,18 @@ const purpleTheme = {
     <Table
       columns={compoundColumns}
       data={createFakeCustomers({ amount: 10 })}
+    />
+  </Story>
+</Canvas>
+
+#### With column chooser
+
+<Canvas>
+  <Story name="with column chooser">
+    <Table
+      columns={columnsChooser}
+      data={createFakeCustomers({ amount: 10 })}
+      withColumnChooser
     />
   </Story>
 </Canvas>

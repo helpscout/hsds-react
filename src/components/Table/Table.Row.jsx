@@ -76,13 +76,15 @@ export function TableRow({
             />
           </CellUI>
         ) : null}
-        {columns.map(column => (
-          <TableCell
-            column={column}
-            row={row}
-            key={generateCellKey('cell', column)}
-          />
-        ))}
+        {columns
+          .filter(column => column.show)
+          .map(column => (
+            <TableCell
+              column={column}
+              row={row}
+              key={generateCellKey('cell', column)}
+            />
+          ))}
       </tr>
     )
   }
@@ -124,4 +126,5 @@ function areEqual(prevProps, nextProps) {
   return false
 }
 
-export default React.memo(TableRow, areEqual)
+// export default React.memo(TableRow, areEqual)
+export default TableRow

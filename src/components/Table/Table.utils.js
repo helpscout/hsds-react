@@ -17,11 +17,19 @@ export const columnShape = {
   renderHeaderCell: PropTypes.func,
   sortKey: PropTypes.string,
   sorter: PropTypes.func,
+  show: PropTypes.bool,
+  default: PropTypes.bool,
 }
 
 export const dataShape = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   key: PropTypes.any,
+}
+
+export const columnChooseShape = {
+  name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  enabled: PropTypes.boolean,
+  checked: PropTypes.boolean,
 }
 
 export function generateCellKey(element, column) {
@@ -52,4 +60,37 @@ export function getDisplayTableData({ data, rowsToDisplay }) {
   }
 
   return data
+}
+
+export function createColumnChooserListItems(columns) {
+  const items = columns.reduce((acc, currentCol) => {
+    const group = currentCol.group || 'Other'
+    currentCol.label = currentCol.title
+
+    if (!acc.length) {
+      acc.push({
+        items: [currentCol],
+        label: group,
+        type: 'group',
+      })
+    } else {
+      const idx = acc.findIndex(val => val.label === group)
+
+      if (idx !== -1) {
+        acc[idx].items.push(currentCol)
+      } else {
+        acc.push({
+          type: 'divider',
+        })
+        acc.push({
+          items: [currentCol],
+          label: group,
+          type: 'group',
+        })
+      }
+    }
+    return acc
+  }, [])
+
+  return items
 }

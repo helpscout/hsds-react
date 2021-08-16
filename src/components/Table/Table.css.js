@@ -1,11 +1,41 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 
+export const HeaderUI = styled('header')`
+  display: flex;
+  justify-content: flex-end;
+
+  .DropListToggler {
+    width: 40px;
+    height: 40px;
+    color: ${getColor('ash.600')};
+    border-radius: 50%;
+
+    &:hover {
+      background-color: ${getColor('ash.200')};
+      color: ${getColor('charcoal.300')};
+    }
+
+    &.is-active {
+      color: ${getColor('blue.500')};
+      background-color: ${getColor('blue.100')};
+    }
+  }
+`
+
 export const TableWrapperUI = styled('div')`
   overflow-x: auto;
   transition: opacity 0.15s ease-in-out;
   width: ${props => props.containerWidth || '100%'};
   position: relative;
+
+  .DropList {
+    width: 300px;
+  }
+
+  .DropList__MenuList {
+    max-height: 100vh;
+  }
 `
 
 export const LoadingUI = styled('div')`

@@ -551,6 +551,7 @@ function renderCustomListItem({
     >
       <DropList
         items={disabledItems}
+        selection={[disabledItems[0]]}
         closeOnSelection={false}
         onSelect={selection => {
           console.log('selection', selection)

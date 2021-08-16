@@ -1,10 +1,12 @@
 import React, { forwardRef } from 'react'
 import classNames from 'classnames'
 import { isFunction, isObject, isString } from '../../utilities/is'
+import { noop } from '../../utilities/other'
 import {
   getItemContentKeyName,
   isItemADivider,
   isItemAGroupLabel,
+  isItemReset,
   objectHasKey,
 } from './DropList.utils'
 import {
@@ -25,6 +27,7 @@ const ListItem = forwardRef(
       isSelected,
       renderCustomListItem,
       isDisabled,
+      onReset = noop,
       ...itemProps
     },
     ref
@@ -53,6 +56,7 @@ const ListItem = forwardRef(
         'DropListItem',
         isSelected && 'is-selected',
         isDisabled && 'is-disabled',
+        isItemReset(item) && 'is-reset-item',
         highlightedIndex === index && 'is-highlighted',
         withMultipleSelection && 'with-multiple-selection',
         isString(extraClassNames) && extraClassNames,
@@ -90,7 +94,7 @@ const ListItem = forwardRef(
         <ListItemTextUI>
           {isObject(item) ? item[contentKey] : item}
         </ListItemTextUI>
-        {withMultipleSelection ? (
+        {withMultipleSelection && !isItemReset(item) ? (
           <SelectedBadge isSelected={isSelected} />
         ) : null}
       </ListItemUI>

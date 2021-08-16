@@ -26,6 +26,37 @@ export const defaultColumns = [
   },
 ]
 
+export const columnsChooser = [
+  {
+    title: 'Name',
+    columnKey: 'name',
+    width: '25%',
+    group: 'Customer',
+    show: true,
+    isDisabled: true,
+  },
+  {
+    title: 'Company',
+    columnKey: 'companyName',
+    width: '25%',
+    group: 'Customer',
+    show: true,
+  },
+  {
+    title: 'Email',
+    columnKey: 'emails',
+    width: '25%',
+    group: 'Properties',
+    show: true,
+  },
+  {
+    title: 'Last Seen',
+    columnKey: 'lastSeen',
+    width: '25%',
+    show: false,
+  },
+]
+
 export const defaultColumnsCustomContent = [
   {
     title: 'Name',
