@@ -19,16 +19,8 @@ function ColumnChooser({
 
   return (
     <DropList
-      isMenuOpen
+      autoSetComboboxAt={10}
       items={items}
-      toggler={
-        <IconBtn
-          a11yLabel="Choose columns to show or hide"
-          iconName="column-check"
-          iconSize={24}
-          withCaret={false}
-        />
-      }
       onSelect={(selection, clickedItem) => {
         if (clickedItem.type === 'reset_droplist') {
           if (!equal(columns, defaultColumns)) {
@@ -41,6 +33,14 @@ function ColumnChooser({
         }
       }}
       selection={columns.filter(shouldColumnShow)}
+      toggler={
+        <IconBtn
+          a11yLabel="Choose columns to show or hide"
+          iconName="column-check"
+          iconSize={24}
+          withCaret={false}
+        />
+      }
       withMultipleSelection
       withResetSelectionItem="Reset to defaults"
     />

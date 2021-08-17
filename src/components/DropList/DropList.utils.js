@@ -157,6 +157,15 @@ export function isItemReset(item) {
   return objectHasKey(item, 'type') && item.type === ITEM_TYPES.RESET_DROPLIST
 }
 
+export function isItemRegular(item) {
+  return (
+    !isItemADivider(item) &&
+    !isItemAGroup(item) &&
+    !isItemAGroupLabel(item) &&
+    !isItemReset(item)
+  )
+}
+
 export function flattenListItems(listItems, withResetItem) {
   const items = listItems.reduce((accumulator, listItem) => {
     const contentKey = getItemContentKeyName(listItem)

@@ -13,6 +13,7 @@ import {
   getDropListVariant,
   getItemContentKeyName,
   isItemReset,
+  isItemRegular,
   isTogglerOfType,
   itemToString,
   parseSelectionFromProps,
@@ -78,7 +79,7 @@ function DropListManager({
   const Toggler = decorateUserToggler(toggler)
   const DropListVariant = getDropListVariant({
     autoSetComboboxAt,
-    numberOfItems: parsedItems.length,
+    numberOfItems: parsedItems.filter(isItemRegular).length,
     variant,
   })
 
