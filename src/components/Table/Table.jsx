@@ -19,6 +19,7 @@ export const TABLE_CLASSNAME = 'c-Table'
 export function Table({
   className,
   columns = [],
+  columnChooserResetLabel,
   containerWidth = '100%',
   data = [],
   'data-cy': dataCy = 'Table',
@@ -89,6 +90,7 @@ export function Table({
           <HeaderUI>
             <ColumnChooser
               columns={state.columns}
+              columnChooserResetLabel={columnChooserResetLabel}
               defaultColumns={defaultColumns}
               onColumnChoose={onColumnChoose}
               resetColumns={resetColumns}
@@ -184,6 +186,8 @@ Table.propTypes = {
   className: PropTypes.string,
   /** List of columns */
   columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
+  /** If the column chooser is enabled, customize the text of the reset option */
+  columnChooserResetLabel: PropTypes.string,
   /** The table wrapper width (if `tableWidth` is larger, the component scrolls horizontally) */
   containerWidth: PropTypes.string,
   /** List of Rows, which are objects */

@@ -11,6 +11,7 @@ const shouldColumnShow = column => !!column.show
 function ColumnChooser({
   columns,
   defaultColumns,
+  columnChooserResetLabel = 'Reset to defaults',
   onColumnChoose = noop,
   resetColumns = noop,
   updateColumns = noop,
@@ -42,7 +43,7 @@ function ColumnChooser({
         />
       }
       withMultipleSelection
-      withResetSelectionItem="Reset to defaults"
+      withResetSelectionItem={columnChooserResetLabel}
     />
   )
 }
