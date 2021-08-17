@@ -8,7 +8,7 @@ import Button from '../Button'
 import Scrollable from '../Scrollable'
 import { HeaderUI, TableWrapperUI, TableUI, LoadingUI } from './Table.css'
 import { defaultSkin, chooseSkin } from './Table.skins'
-import { columnShape, columnChooseShape, dataShape } from './Table.utils'
+import { columnShape, dataShape } from './Table.utils'
 import { useTable } from './Table.hooks'
 import TableBody from './Table.Body'
 import TableHead from './Table.Head'
@@ -26,6 +26,7 @@ export function Table({
   isLoading = false,
   isScrollLocked = true,
   maxRowsToDisplay,
+  onColumnChoose = noop,
   onExpand = noop,
   onRowClick = null,
   onSelectRow = noop,
@@ -38,6 +39,7 @@ export function Table({
     order: null,
   },
   tableClassName,
+  tableDescription,
   tableWidth = { min: '700px' },
   withColumnChooser = false,
   withFocusableRows = false,
@@ -52,7 +54,6 @@ export function Table({
 
     return col
   })
-  console.log('🚀 ~ file: Table.jsx ~ line 55 ~ defaultColumns', defaultColumns)
   const [state, actions] = useTable(data, maxRowsToDisplay, defaultColumns)
   const {
     updateTableData,
@@ -63,6 +64,7 @@ export function Table({
     selectRow,
     deselectRow,
     updateColumns,
+    resetColumns,
   } = actions
   const isTableCollapsable = maxRowsToDisplay != null
   const isCollapsed = data.length !== state.currentTableData.length
@@ -86,8 +88,10 @@ export function Table({
         {withColumnChooser ? (
           <HeaderUI>
             <ColumnChooser
-              defaultColumns={defaultColumns}
               columns={state.columns}
+              defaultColumns={defaultColumns}
+              onColumnChoose={onColumnChoose}
+              resetColumns={resetColumns}
               updateColumns={updateColumns}
             />
           </HeaderUI>
@@ -100,6 +104,7 @@ export function Table({
           scrollLockDirection="x"
         >
           <TableUI
+            ariaLabel={tableDescription}
             className={classNames(
               TABLE_CLASSNAME,
               Boolean(onRowClick) && 'with-clickable-rows',
@@ -179,9 +184,6 @@ Table.propTypes = {
   className: PropTypes.string,
   /** List of columns */
   columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
-  /** If passed the column chooser will be enabled, contains an array of all the possible columns and whether they are checked and enabled */
-  withColumnChooser: PropTypes.bool,
-  columnChooserList: PropTypes.arrayOf(PropTypes.shape(columnChooseShape)),
   /** The table wrapper width (if `tableWidth` is larger, the component scrolls horizontally) */
   containerWidth: PropTypes.string,
   /** List of Rows, which are objects */
@@ -196,6 +198,8 @@ Table.propTypes = {
   isScrollLocked: PropTypes.bool,
   /** When provided the Table will only show this number of rows and and expander to see the rest */
   maxRowsToDisplay: PropTypes.number,
+  /** Callback when choosing a column to show/hide if `withColumnChooser` is enabled*/
+  onColumnChoose: PropTypes.func,
   /** Callback when expending/collapsing the table */
   onExpand: PropTypes.func,
   /** Callback function when a row is clicked. Arguments are the event and the row clicked. */
@@ -208,6 +212,8 @@ Table.propTypes = {
   rowWrapper: PropTypes.func,
   /** Custom class names to be added to the `<table>` element. */
   tableClassName: PropTypes.string,
+  /** Description of the table contents for accessibility */
+  tableDescription: PropTypes.string.isRequired,
   /** The `<table>` width */
   tableWidth: PropTypes.shape({ min: PropTypes.string, max: PropTypes.string }),
   /** An object to customize the visual appearance of the table. See [Skins.md](/src/components/Table/docs/Skins.md) */
@@ -234,6 +240,8 @@ Table.propTypes = {
     columnKey: PropTypes.string,
     order: PropTypes.string,
   }),
+  /** If passed the column chooser will be enabled, contains an array of all the possible columns and whether they are checked and enabled */
+  withColumnChooser: PropTypes.bool,
   /** Adds tabindex=0 to each row*/
   withFocusableRows: PropTypes.bool,
   /** Adds a column with a checkbox for row selection */

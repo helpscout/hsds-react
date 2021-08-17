@@ -103,7 +103,9 @@ export const ListItemUI = styled('li')`
       background-color: ${getColor('blue.100')};
     }
 
-    &.is-selected {
+    &.is-selected,
+    &.is-disabled.is-selected,
+    &.is-highlighted.is-disabled.is-selected {
       color: ${getColor('blue.600')};
       background-color: white;
     }
@@ -198,9 +200,9 @@ export const SelectedBadge = ({ isSelected }) => {
 }
 
 export const DividerUI = styled('div')`
-  width: 100%;
+  width: calc(100% - 10px);
   height: 1px;
-  margin: 9px 0;
+  margin: 9px 5px;
   background-color: ${getColor('grey.500')};
 `
 

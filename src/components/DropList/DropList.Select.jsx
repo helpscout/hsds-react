@@ -29,7 +29,6 @@ function Select({
   onMenuBlur = noop,
   onMenuFocus = noop,
   onListItemSelectEvent = noop,
-  onReset = noop,
   renderCustomListItem = null,
   selectedItem = null,
   selectedItems,
@@ -109,7 +108,6 @@ function Select({
       withMultipleSelection,
       renderCustomListItem,
       isDisabled: item.isDisabled,
-      onReset,
       ...getItemProps({
         item,
         index,

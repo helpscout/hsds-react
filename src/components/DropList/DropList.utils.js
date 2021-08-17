@@ -188,6 +188,7 @@ export function flattenListItems(listItems, withResetItem) {
         {
           type: ITEM_TYPES.RESET_DROPLIST,
           label: isString(withResetItem) ? withResetItem : 'Reset',
+          remove: true,
         },
       ])
     : items

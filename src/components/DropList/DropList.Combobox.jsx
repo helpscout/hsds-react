@@ -34,7 +34,6 @@ function Combobox({
   onMenuBlur = noop,
   onMenuFocus = noop,
   onListItemSelectEvent = noop,
-  onReset = noop,
   handleSelectedItemChange = noop,
   renderCustomListItem = null,
   toggleOpenedState = noop,
@@ -134,7 +133,6 @@ function Combobox({
       withMultipleSelection,
       renderCustomListItem,
       isDisabled: item.isDisabled,
-      onReset,
       ...getItemProps({
         item,
         index,

@@ -56,9 +56,22 @@ export function useTable(data = [], maxRowsToDisplay = null, columns = []) {
   )
 
   const updateColumns = useCallback(
-    columns => {
+    (columns, clickedColumn) => {
       dispatch({
         type: UPDATE_COLUMNS,
+        payload: {
+          columns,
+          clickedColumn,
+        },
+      })
+    },
+    [dispatch]
+  )
+
+  const resetColumns = useCallback(
+    columns => {
+      dispatch({
+        type: RESET_COLUMNS,
         payload: {
           columns,
         },
@@ -140,6 +153,7 @@ export function useTable(data = [], maxRowsToDisplay = null, columns = []) {
       selectRow,
       deselectRow,
       updateColumns,
+      resetColumns,
     }
   }, [
     updateTableData,
@@ -150,6 +164,7 @@ export function useTable(data = [], maxRowsToDisplay = null, columns = []) {
     selectRow,
     deselectRow,
     updateColumns,
+    resetColumns,
   ])
 
   return [state, actions]

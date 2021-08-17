@@ -95,6 +95,7 @@ export default function ConvoList() {
           containerWidth={containerWidth}
           data={results}
           isLoading={isLoading}
+          tableDescription="Example table mimicking the ConvoList"
           tableWidth={tableWidth}
           rowClassName={row => {
             return {

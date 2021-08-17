@@ -26,12 +26,6 @@ export const dataShape = {
   key: PropTypes.any,
 }
 
-export const columnChooseShape = {
-  name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  enabled: PropTypes.boolean,
-  checked: PropTypes.boolean,
-}
-
 export function generateCellKey(element, column) {
   return Array.isArray(column.columnKey)
     ? `${uniqueCellKeyFactory(element)}_${
@@ -66,6 +60,10 @@ export function createColumnChooserListItems(columns) {
   const items = columns.reduce((acc, currentCol) => {
     const group = currentCol.group || 'Other'
     currentCol.label = currentCol.title
+
+    if (currentCol.disabledForChoosing) {
+      currentCol.isDisabled = true
+    }
 
     if (!acc.length) {
       acc.push({

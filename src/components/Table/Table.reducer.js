@@ -65,11 +65,21 @@ export default function reducer(state, { type, payload, opts = {} }) {
       }
 
     case UPDATE_COLUMNS:
-      return { ...state, columns: payload.columns }
+      return {
+        ...state,
+        columns: payload.columns.map(column => {
+          const newColumn = { ...column }
+
+          if (newColumn.title === payload.clickedColumn.label) {
+            newColumn.show = !payload.clickedColumn.remove
+          }
+
+          return newColumn
+        }),
+      }
 
     case RESET_COLUMNS:
-      console.log(payload)
-      return { ...state }
+      return { ...state, columns: payload.columns }
 
     default:
       return state

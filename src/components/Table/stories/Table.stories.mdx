@@ -31,7 +31,7 @@ It has some special powers though.
 At it simplest:
 
 ```jsx
-<Table columns={columns} data={data} />
+<Table tableDescription="Example table" columns={columns} data={data} />
 ```
 
 `columns` is a list (array) of objects that describe each column to render.
@@ -156,6 +156,13 @@ const purpleTheme = {
     <Table
       columns={columnsChooser}
       data={createFakeCustomers({ amount: 10 })}
+      tableDescription="Example table"
+      onColumnChoose={(clickedItem, currentSelection) => {
+        {
+          console.log('🚀 ~ clickedItem', clickedItem)
+          console.log('🚀 ~ currentSelection', currentSelection)
+        }
+      }}
       withColumnChooser
     />
   </Story>
@@ -177,6 +184,7 @@ const purpleTheme = {
       columns={defaultColumns}
       data={createFakeCustomers({ amount: 10 })}
       maxRowsToDisplay={4}
+      tableDescription="Example table"
       onRowClick={(e, row) => {
         console.log(row)
       }}

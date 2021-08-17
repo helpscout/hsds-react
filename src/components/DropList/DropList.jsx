@@ -12,6 +12,7 @@ import {
   flattenListItems,
   getDropListVariant,
   getItemContentKeyName,
+  isItemReset,
   isTogglerOfType,
   itemToString,
   parseSelectionFromProps,
@@ -45,7 +46,6 @@ function DropListManager({
   onMenuFocus = noop,
   onListItemSelectEvent = noop,
   onOpenedStateChange = noop,
-  onReset = noop,
   onSelect = noop,
   renderCustomListItem = null,
   selection = null,
@@ -186,6 +186,8 @@ function DropListManager({
               item: itemToRemove,
               key: contentKey,
             })
+          } else if (isItemReset(selectedItem)) {
+            updatedSelection = selectedItems
           }
         }
 
@@ -271,7 +273,6 @@ function DropListManager({
             onMenuBlur={onMenuBlur}
             onMenuFocus={onMenuFocus}
             onListItemSelectEvent={onListItemSelectEvent}
-            onReset={onReset}
             renderCustomListItem={renderCustomListItem}
             selectedItem={selectedItem}
             selectedItems={selectedItems}
@@ -349,8 +350,6 @@ DropListManager.propTypes = {
   onListItemSelectEvent: PropTypes.func,
   /** Callback that fires whenever the DropList opens and closes */
   onOpenedStateChange: PropTypes.func,
-  /** If `withResetSelectionItem` enabled, this callback that fires on click of the reset item, signature: `onSelect(selection, clickedItem)` */
-  onReset: PropTypes.func,
   /** Callback that fires whenever the selection in the DropList changes, signature: `onSelect(selection, clickedItem)` */
   onSelect: PropTypes.func,
   /** Render prop that allows you to render a custom List Item */

@@ -33,7 +33,7 @@ export const columnsChooser = [
     width: '25%',
     group: 'Customer',
     show: true,
-    isDisabled: true,
+    disabledForChoosing: true,
   },
   {
     title: 'Company',

@@ -6,19 +6,16 @@ export const HeaderUI = styled('header')`
   justify-content: flex-end;
 
   .DropListToggler {
-    width: 40px;
-    height: 40px;
-    color: ${getColor('ash.600')};
+    color: ${getColor('charcoal.300')};
     border-radius: 50%;
+    width: 34px;
 
     &:hover {
-      background-color: ${getColor('ash.200')};
-      color: ${getColor('charcoal.300')};
+      color: ${getColor('charcoal.500')};
     }
 
     &.is-active {
-      color: ${getColor('blue.500')};
-      background-color: ${getColor('blue.100')};
+      color: ${getColor('charcoal.500')};
     }
   }
 `
@@ -31,10 +28,11 @@ export const TableWrapperUI = styled('div')`
 
   .DropList {
     width: 300px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
   }
 
   .DropList__MenuList {
-    max-height: 100vh;
+    max-height: 400px;
   }
 `
 
