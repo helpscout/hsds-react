@@ -80,6 +80,13 @@ export function HeaderAndFooter({
 }
 
 function handleShadows(scrollableRef) {
+  if (!scrollableRef.current) {
+    return {
+      isTopScrolled: false,
+      isBottomScrolled: false,
+    }
+  }
+
   const scrollable = scrollableRef.current
   const style = window.getComputedStyle(scrollable)
   const scrollableScrollHeight = scrollable.scrollHeight
@@ -89,23 +96,11 @@ function handleShadows(scrollableRef) {
   const scrollablePaddingBottom =
     Number.parseInt(style.paddingBottom.replace('px', ''), 10) + 10
 
-  let isTopScrolled = false
-  let isBottomScrolled = false
-
-  if (scrollable.scrollTop - scrollablePaddingTop > 0) {
-    isTopScrolled = true
-  }
-
-  if (
-    scrollable.scrollTop + scrollableHeight + scrollablePaddingBottom <
-    scrollableScrollHeight
-  ) {
-    isBottomScrolled = true
-  }
-
   return {
-    isTopScrolled,
-    isBottomScrolled,
+    isTopScrolled: scrollable.scrollTop - scrollablePaddingTop > 0,
+    isBottomScrolled:
+      scrollable.scrollTop + scrollableHeight + scrollablePaddingBottom <
+      scrollableScrollHeight,
   }
 }
 
