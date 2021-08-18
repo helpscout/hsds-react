@@ -15,12 +15,14 @@ function SimpleModal({
   ariaLabelledBy = '',
   children,
   className,
+  'data-cy': dataCy = 'SimpleModal',
   focusModalOnShow = true,
   onClose = noop,
   show = false,
   trapFocus = true,
   withCloseButton = true,
   zIndex = 999,
+  ...rest
 }) {
   const modalRef = useRef(null)
   const overlayRef = useRef(null)
@@ -56,12 +58,13 @@ function SimpleModal({
         aria-modal="true"
         aria-labelledby={ariaLabelledBy}
         className="SimpleModal"
-        data-cy="simple-modal"
+        dataCy={dataCy}
         data-testid="simple-modal"
         id="simple-modal"
         role="dialog"
         ref={modalRef}
         tabIndex="0"
+        {...rest}
       >
         {withCloseButton ? (
           <CloseModalButtonUI
@@ -78,12 +81,14 @@ function SimpleModal({
 }
 
 SimpleModal.propTypes = {
-  /** If you include a Heading in the modal, give it the same ID as the value you put here */
+  /** If you include a Heading in the modal, give it the same ID as the value you put here. Otherwise add a `aria-label` with a description */
   ariaLabelledBy: PropTypes.string,
   /** Content to be rendered inside the modal */
   children: PropTypes.any,
   /** Custom classname on this component */
   className: PropTypes.string,
+  /** Data attr applied for Cypress tests */
+  'data-cy': PropTypes.string,
   /** If you don't want the focus to be moved to the Modal when it enters */
   focusModalOnShow: PropTypes.bool,
   /** Function that gets called when clicking the `x` button and when pressing `esc`, use this to close the modal in your app */

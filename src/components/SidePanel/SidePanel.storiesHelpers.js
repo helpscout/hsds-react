@@ -9,6 +9,7 @@ import Radio from '../Radio'
 import HuzzahBird from '@helpscout/hsds-illos/huzzah-bird'
 import SidePanel from './SidePanel'
 import SimpleModal from '../SimpleModal'
+import { HeaderAndFooter } from './SidePanel.layouts'
 
 const AppContainerUI = styled('div')`
   width: 100%;
@@ -54,8 +55,8 @@ const FakeCardUI = styled('div')`
 
   &.in-panel {
     width: 100%;
-    height: 60px;
-    margin: 0 0 15px 0;
+    height: 100px;
+    margin: 0 0 45px 0;
     box-shadow: 0 0 0 2px white, 0 0 0 4px ${getColor('yellow.400')};
 
     &.checked {
@@ -121,49 +122,52 @@ export default function SidePanelApp() {
           show={showPanel}
           onClose={handleToggle}
           side={panelDirection}
-          onMainActionClick={() => setShowModal(true)}
-          mainActionDisabled={!step1Checked || !step2Checked || !step3Checked}
         >
-          <FakeCardUI
-            className={classNames('in-panel', step1Checked && 'checked')}
-            onClick={() => {
-              setStep1Checked(!step1Checked)
-            }}
-            tabIndex="0"
+          <HeaderAndFooter
+            onMainActionClick={() => setShowModal(true)}
+            mainActionDisabled={!step1Checked || !step2Checked || !step3Checked}
           >
-            Step 1
-          </FakeCardUI>
-          <FakeCardUI
-            className={classNames('in-panel', step2Checked && 'checked')}
-            onClick={() => {
-              setStep2Checked(!step2Checked)
-            }}
-            tabIndex="0"
-          >
-            Step 2
-          </FakeCardUI>
-          <FakeCardUI
-            className={classNames('in-panel', step3Checked && 'checked')}
-            onClick={() => {
-              setStep3Checked(!step3Checked)
-            }}
-            tabIndex="0"
-          >
-            Step 3
-          </FakeCardUI>
-          <SimpleModal
-            show={showModal}
-            zIndex={1000}
-            onClose={() => setShowModal(false)}
-          >
-            <HuzzahBird size={200} />
-            <br />
-            <br />
-            <button>Action!</button>
-            <br />
-            <br />
-            <button>More Action!</button>
-          </SimpleModal>
+            <FakeCardUI
+              className={classNames('in-panel', step1Checked && 'checked')}
+              onClick={() => {
+                setStep1Checked(!step1Checked)
+              }}
+              tabIndex="0"
+            >
+              Step 1
+            </FakeCardUI>
+            <FakeCardUI
+              className={classNames('in-panel', step2Checked && 'checked')}
+              onClick={() => {
+                setStep2Checked(!step2Checked)
+              }}
+              tabIndex="0"
+            >
+              Step 2
+            </FakeCardUI>
+            <FakeCardUI
+              className={classNames('in-panel', step3Checked && 'checked')}
+              onClick={() => {
+                setStep3Checked(!step3Checked)
+              }}
+              tabIndex="0"
+            >
+              Step 3
+            </FakeCardUI>
+            <SimpleModal
+              show={showModal}
+              zIndex={1000}
+              onClose={() => setShowModal(false)}
+            >
+              <HuzzahBird size={200} />
+              <br />
+              <br />
+              <button>Action!</button>
+              <br />
+              <br />
+              <button>More Action!</button>
+            </SimpleModal>
+          </HeaderAndFooter>
         </SidePanel>
       </FakeMainUI>
     </AppContainerUI>

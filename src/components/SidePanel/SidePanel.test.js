@@ -33,29 +33,12 @@ describe('Show / no show', () => {
 })
 
 describe('Contents', () => {
-  test('Header', () => {
-    const { container } = render(<SidePanel show />)
-    const header = container.querySelector('.SidePanel__Header')
-
-    expect(header).toBeInTheDocument()
-    expect(header.tagName).toBe('HEADER')
-
-    const heading = header.querySelector('h1')
-
-    expect(heading).toBeInTheDocument()
-    expect(heading.getAttribute('id')).toBe('sidepanel-header-heading')
-    expect(heading.textContent).toBe('Review and Start')
-  })
-
   test('SideBar', () => {
     const { container } = render(<SidePanel show />)
 
     const sidePanel = container.querySelector('.SidePanel')
     expect(sidePanel).toBeInTheDocument()
     expect(sidePanel.tagName).toBe('ASIDE')
-    expect(sidePanel.getAttribute('aria-labelledby')).toBe(
-      'sidepanel-header-heading'
-    )
   })
 
   test('Body', () => {
@@ -65,65 +48,10 @@ describe('Contents', () => {
       </SidePanel>
     )
 
-    const body = container.querySelector('.SidePanel__Body')
+    const body = container.querySelector('.SidePanel__Content')
 
     expect(body).toBeInTheDocument()
     expect(body.querySelector('div.something')).toBeInTheDocument()
-  })
-
-  describe('Footer', () => {
-    test('should render', () => {
-      const { container } = render(<SidePanel show />)
-
-      const footer = container.querySelector('.SidePanel__Footer')
-
-      expect(footer).toBeInTheDocument()
-      expect(footer.tagName).toBe('FOOTER')
-    })
-
-    test('main action', () => {
-      const spy = jest.fn()
-      const { container, rerender } = render(
-        <SidePanel show onMainActionClick={spy} />
-      )
-      const mainAction = container.querySelector('.SidePanel__MainAction')
-
-      expect(mainAction).toBeInTheDocument()
-      expect(mainAction.textContent).toBe('Start')
-      expect(mainAction.getAttribute('disabled')).toBe(null)
-
-      user.click(mainAction)
-
-      rerender(
-        <SidePanel
-          show
-          mainActionDisabled
-          mainActionButtonText="Go"
-          onMainActionClick={spy}
-        />
-      )
-
-      expect(mainAction.getAttribute('disabled')).toBe('')
-      expect(mainAction.textContent).toBe('Go')
-
-      user.click(mainAction)
-
-      expect(spy).toHaveBeenCalledTimes(1)
-    })
-  })
-
-  test('Does not renders header and footer if set', () => {
-    const { container } = render(
-      <SidePanel show withHeader={false} withFooter={false} />
-    )
-
-    const header = container.querySelector('.SidePanel__Header')
-
-    expect(header).not.toBeInTheDocument()
-
-    const footer = container.querySelector('.SidePanel__Footer')
-
-    expect(footer).not.toBeInTheDocument()
   })
 })
 

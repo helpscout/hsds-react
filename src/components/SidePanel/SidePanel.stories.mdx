@@ -17,7 +17,7 @@ import SidePanelApp from './SidePanel.storiesHelpers'
 
 # SidePanel
 
-Component that brings a Panel from either side of the screen, it includes a default Header and Footer (both can be turned off via their respective props if you need to fully customize the panel's contents). The footer contains a CTA button.
+Component that brings a Panel from either side of the screen.
 
 This component is fully controlled via the `show` prop, meaning it doesn't hold any internal state about whether is open or not, it's in your hands to manage this. The panel will fire the close action (`onClose` callback prop) with the &times; close button and via pressing the <kbd>esc</kbd> key.
 
@@ -37,6 +37,38 @@ function SommeApp() {
     <Portal selector="#some-id">
       <SidePanel>Some content</SidePanel>
     </Portal>
+  )
+}
+```
+
+## SidePanel Layouts
+
+We have some layouts that are going to be commonly used, in order to avoid duplication we include what we call "layouts" which are simple components that you can drop in the `<SidePanel>` and forget about styling. They live inside `SidePanel.layouts.jsx`.
+
+### HeaderAndFooter layout
+
+Includes:
+
+- Header with a heading and a sub-heading
+- Scrollable body (`children` get rendered here). Shadows get added to header and footer depending on the scroll state of the body.
+- footer with a CTA.
+
+```jsx
+import { HeaderAndFooter } from './SidePanel.layouts'
+
+function YourApp() {
+  return (
+    <SidePanel>
+      <HeaderAndFooter
+        mainActionButtonText="Customize this"
+        panelHeading="Customize this"
+        panelSubHeading="Customize this"
+        onMainActionClick={handleClick}
+        mainActionDisabled={!isDisabled}
+      >
+        <div>Your content here</div>
+      </HeaderAndFooter>
+    </SidePanel>
   )
 }
 ```
@@ -72,7 +104,7 @@ function SommeApp() {
 
 ### Full example
 
-The example includes a contained `<SimpleModal>`:
+The example includes a contained `<SimpleModal>` and the "HeaderAndFooter" layout:
 
 1. Open the Panel
 2. Click on the three boxes

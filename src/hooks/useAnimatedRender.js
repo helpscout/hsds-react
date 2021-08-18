@@ -23,12 +23,8 @@ export default function useAnimatedRender(show, toAnimateRef, toFocusRef) {
       if (!show) {
         setRender(false)
 
-        if (toAnimateRef.current) {
-          const focusableParent = getClosestFocusableParent(
-            toAnimateRef.current
-          )
-          focusableParent.focus()
-        }
+        const focusableParent = getClosestFocusableParent(toAnimateRef.current)
+        focusableParent.focus()
       } else {
         toFocusRef.current && toFocusRef.current.focus()
       }

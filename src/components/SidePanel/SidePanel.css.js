@@ -4,12 +4,10 @@ import { rgba } from '../../utilities/color'
 import { defaultAnimation as overlayAnimation } from '../../hooks/useAnimatedRender'
 
 const sidePanelDefaultAnimation = `
-animation: slideOut 0.3s;
-
-.element-in.right & {
+.right &.element-in {
   animation: slideRightIn 0.3s;
 }
-.element-in.left & {
+.left &.element-in {
   animation: slideLeftIn 0.3s;
 }
 
@@ -45,6 +43,7 @@ export const OverlayUI = styled('div')`
   right: 0;
   bottom: 0;
   left: 0;
+  overflow-x: hidden;
   z-index: ${({ zIndex }) => zIndex};
   background-color: ${rgba(getColor('blue.800'), 0.3)};
 
@@ -62,11 +61,15 @@ export const OverlayUI = styled('div')`
 
 export const SidePanelUI = styled('aside')`
   position: relative;
-  display: flex;
   flex-direction: column;
   background-color: ${getColor('grey.300')};
   width: ${({ panelWidth }) => panelWidth};
   pointer-events: all;
+  display: none;
+
+  &.element-in {
+    display: flex;
+  }
 
   .no-overlay & {
     pointer-events: all;
@@ -81,46 +84,11 @@ export const SidePanelUI = styled('aside')`
   }
 `
 
-export const HeaderUI = styled('header')`
-  width: 100%;
-  height: 125px;
-  padding: 30px;
-  background-color: #fff;
-
-  .SidePanel__Heading {
-    margin: 10px 0 4px 0;
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 22px;
-    color: ${getColor('charcoal.700')};
-  }
-
-  .SidePanel__Subheading {
-    margin: 0;
-    font-size: 13px;
-    line-height: 19px;
-    color: ${getColor('charcoal.300')};
-  }
-`
-
-export const BodyUI = styled('div')`
-  width: 100%;
-  background-color: transparent;
+export const ContentUI = styled('div')`
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
-  padding: 18px;
-`
-
-export const FooterUI = styled('footer')`
-  width: 100%;
-  height: 90px;
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: 0 -1px 0 0 ${getColor('ash.500')},
-    0 -5px 0 0 ${getColor('ash.400')};
-
-  .c-Button {
-    width: 100%;
-  }
+  overflow: hidden;
 `
 
 export const ClosePanelButtonUI = styled('button')`
