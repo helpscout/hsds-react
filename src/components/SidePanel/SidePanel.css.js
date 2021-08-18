@@ -100,6 +100,7 @@ export const ClosePanelButtonUI = styled('button')`
   color: ${getColor('charcoal.400')};
   top: 20px;
   right: 20px;
+  z-index: 5;
 
   &:hover {
     color: ${getColor('charcoal.600')};
