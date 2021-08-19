@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import useAnimatedRender from '../../hooks/useAnimatedRender'
+import useClickOutside from '../../hooks/useClickOutside'
 import { noop } from '../../utilities/other'
 import { manageTrappedFocus } from '../../utilities/focus'
 import {
@@ -15,6 +16,7 @@ function SimpleModal({
   ariaLabelledBy = '',
   children,
   className,
+  closeOnClickOutside = false,
   'data-cy': dataCy = 'SimpleModal',
   focusModalOnShow = true,
   onClose = noop,
@@ -31,6 +33,21 @@ function SimpleModal({
     overlayRef,
     focusModalOnShow && modalRef
   )
+
+  useClickOutside(getClickOutsideRef(), () => {
+    onClose()
+  })
+
+  function getClickOutsideRef() {
+    if (closeOnClickOutside === 'modal') {
+      return modalRef
+    }
+    if (closeOnClickOutside === 'overlay') {
+      return overlayRef
+    }
+
+    return null
+  }
 
   function handleOverlayKeyDown(e) {
     if (shouldRender && e.key === 'Escape') {
@@ -68,6 +85,7 @@ function SimpleModal({
       >
         {withCloseButton ? (
           <CloseModalButtonUI
+            aria-label="close modal button"
             className="SimpleModal__CloseButton"
             onClick={onClose}
           >
@@ -87,6 +105,8 @@ SimpleModal.propTypes = {
   children: PropTypes.any,
   /** Custom classname on this component */
   className: PropTypes.string,
+  /** Whether to close the Modal when clicking outside, pass a string with value "modal" if clicking ouside the Modal, or "overlay" if clicking outside the overlay should close it (in case of "contained modals") */
+  closeOnClickOutside: PropTypes.oneOf([null, undefined, 'modal', 'overlay']),
   /** Data attr applied for Cypress tests */
   'data-cy': PropTypes.string,
   /** If you don't want the focus to be moved to the Modal when it enters */

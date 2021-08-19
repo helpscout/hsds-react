@@ -18,7 +18,11 @@ import SimpleModal from './SimpleModal'
 
 As the name implies this is a verty simple implementation of a Modal.
 
-This component is fully controlled via the `show` prop, meaning it doesn't hold any internal state about whether is open or not, it's in your hands to manage this. The panel will fire the close action (`onClose` callback prop) with the &times; close button and via pressing the <kbd>esc</kbd> key.
+This component is fully controlled via the `show` prop, meaning it doesn't hold any internal state about whether is open or not, it's in your hands to manage this. The panel will fire the close action (`onClose` callback prop) with:
+
+- The &times; close button
+- Pressing the <kbd>esc</kbd> key
+- If `closeOnClickOutside` is either set to "modal" (clicking the overlay would close the modal, this would be the most common) or "overlay" (in the case that the modal is "contained" inside another element and the overlay doesn't cover the whole window).
 
 The modal is contained within the closest parent with a `relative` position. This allows you to have a UI where the modal is contained to a specific section. Look at the "Full Example" in the [SidePanel stories](/docs/components-overlay-sidepanel--full-example) to see this in action (also notice how the "default" story here is setup by wrapping the SimpleModal with a `div` with a set height and position).
 

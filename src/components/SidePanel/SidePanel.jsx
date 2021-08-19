@@ -83,6 +83,7 @@ function SidePanel({
         {...rest}
       >
         <ClosePanelButtonUI
+          aria-label="close side panel button"
           className="SidePanel__CloseButton"
           onClick={onClose}
         >

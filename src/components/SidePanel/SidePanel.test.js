@@ -38,7 +38,6 @@ describe('Contents', () => {
 
     const sidePanel = container.querySelector('.SidePanel')
     expect(sidePanel).toBeInTheDocument()
-    expect(sidePanel.tagName).toBe('ASIDE')
   })
 
   test('Body', () => {

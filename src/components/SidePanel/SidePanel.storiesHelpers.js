@@ -119,11 +119,13 @@ export default function SidePanelApp() {
           <FakeCardUI>Card 2</FakeCardUI>
         </div>
         <SidePanel
+          ariaLabelledBy="sidepanel-descriptor"
           show={showPanel}
           onClose={handleToggle}
           side={panelDirection}
         >
           <HeaderAndFooter
+            panelHeadingId="sidepanel-descriptor"
             onMainActionClick={() => setShowModal(true)}
             mainActionDisabled={!step1Checked || !step2Checked || !step3Checked}
           >

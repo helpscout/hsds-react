@@ -4,9 +4,6 @@ import throttle from 'lodash.throttle'
 import { noop } from '../../utilities/other'
 import Button from '../Button/'
 import { BodyUI, FooterUI, HeaderUI } from './SidePanel.layouts.css'
-import { createUniqueIDFactory } from '../../utilities/id'
-
-const sidePanelHeaderUuid = createUniqueIDFactory('sidepanel-header-heading-')
 
 export function HeaderAndFooter({
   children,
@@ -14,9 +11,9 @@ export function HeaderAndFooter({
   onMainActionClick = noop,
   mainActionDisabled = false,
   panelHeading = 'Review and Start',
+  panelHeadingId = '',
   panelSubHeading = 'Complete the required details before going live',
 }) {
-  const sidePanelHeaderId = sidePanelHeaderUuid()
   const headerRef = useRef(null)
   const bodyRef = useRef(null)
   const footerRef = useRef(null)
@@ -50,7 +47,7 @@ export function HeaderAndFooter({
   return (
     <>
       <HeaderUI className="SidePanel__Header" ref={headerRef}>
-        <h1 id={sidePanelHeaderId} className="SidePanel__Heading">
+        <h1 id={panelHeadingId} className="SidePanel__Heading">
           {panelHeading}
         </h1>
         <p className="SidePanel__Subheading">{panelSubHeading}</p>
@@ -113,6 +110,8 @@ HeaderAndFooter.propTypes = {
   mainActionDisabled: PropTypes.bool,
   /** If the default Header included, this is the Heading */
   panelHeading: PropTypes.string,
+  /** ID for the H1, make sure it matches the ariaLabelledBy from the SidePanel */
+  panelHeadingId: PropTypes.string,
   /** If the default Header included, this is the Subheading */
   panelSubHeading: PropTypes.string,
   /** If the default footer is present, this is the callback for the button */

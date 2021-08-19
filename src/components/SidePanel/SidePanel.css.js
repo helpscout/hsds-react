@@ -59,7 +59,7 @@ export const OverlayUI = styled('div')`
   ${overlayAnimation}
 `
 
-export const SidePanelUI = styled('aside')`
+export const SidePanelUI = styled('div')`
   position: relative;
   flex-direction: column;
   background-color: ${getColor('grey.300')};

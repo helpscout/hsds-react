@@ -80,4 +80,49 @@ describe('Closing', () => {
 
     expect(spy).toHaveBeenCalled()
   })
+
+  test('should call onClose on clicking outside modal if set', () => {
+    const spy = jest.fn()
+    const { container } = render(
+      <div className="app">
+        <SimpleModal closeOnClickOutside="modal" show onClose={spy} />
+      </div>
+    )
+    const app = container.querySelector('.app')
+
+    user.click(app)
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('should call onClose on clicking outside overlay if set', () => {
+    const spy = jest.fn()
+    const { container } = render(
+      <div className="app">
+        <section>Something</section>
+        <div className="modal-container">
+          <SimpleModal closeOnClickOutside="overlay" show onClose={spy} />
+        </div>
+      </div>
+    )
+    const section = container.querySelector('section')
+
+    user.click(section)
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('should not call onClose on clicking outside if not set', () => {
+    const spy = jest.fn()
+    const { container } = render(
+      <div className="app">
+        <SimpleModal show onClose={spy} />
+      </div>
+    )
+    const app = container.querySelector('.app')
+
+    user.click(app)
+
+    expect(spy).not.toHaveBeenCalled()
+  })
 })
