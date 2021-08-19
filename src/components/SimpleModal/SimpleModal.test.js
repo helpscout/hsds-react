@@ -15,9 +15,7 @@ describe('Show / no show', () => {
     fireEvent.animationEnd(queryByTestId('simple-modal-overlay'))
 
     expect(queryByTestId('simple-modal-overlay')).toBeInTheDocument()
-    expect(
-      queryByTestId('simple-modal-overlay').classList.contains('element-in')
-    ).toBe(true)
+    expect(queryByTestId('simple-modal-overlay')).toHaveClass('element-in')
     expect(
       queryByTestId('simple-modal-overlay').querySelector('.SimpleModal')
     ).toBeInTheDocument()

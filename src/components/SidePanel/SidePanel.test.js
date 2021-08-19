@@ -15,9 +15,7 @@ describe('Show / no show', () => {
     fireEvent.animationEnd(queryByTestId('sidepanel-overlay'))
 
     expect(queryByTestId('sidepanel-overlay')).toBeInTheDocument()
-    expect(
-      queryByTestId('sidepanel-overlay').classList.contains('element-in')
-    ).toBe(true)
+    expect(queryByTestId('sidepanel-overlay')).toHaveClass('element-in')
     expect(
       queryByTestId('sidepanel-overlay').querySelector('.SidePanel')
     ).toBeInTheDocument()
@@ -66,9 +64,7 @@ describe('Overlay', () => {
       container.querySelector('.SidePanel')
     )
 
-    expect(
-      queryByTestId('sidepanel-overlay').classList.contains('no-overlay')
-    ).toBe(true)
+    expect(queryByTestId('sidepanel-overlay')).toHaveClass('no-overlay')
     expect(overlayStyles.getPropertyValue('pointer-events')).toBe('none')
     expect(overlayStyles.getPropertyValue('background-color')).toBe(
       'transparent'
@@ -88,13 +84,13 @@ describe('Overlay', () => {
     const overlay = queryByTestId('sidepanel-overlay')
     let styles = window.getComputedStyle(overlay)
 
-    expect(overlay.classList.contains('right')).toBe(true)
+    expect(overlay).toHaveClass('right')
     expect(styles.getPropertyValue('flex-direction')).toBe('row-reverse')
 
     rerender(<SidePanel side="left" />)
     styles = window.getComputedStyle(overlay)
 
-    expect(overlay.classList.contains('left')).toBe(true)
+    expect(overlay).toHaveClass('left')
     expect(styles.getPropertyValue('flex-direction')).toBe('row')
   })
 })
