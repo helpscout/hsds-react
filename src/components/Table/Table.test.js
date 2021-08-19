@@ -15,35 +15,41 @@ import {
 } from './Table.actionTypes'
 import { defaultSkin, alternativeSkin, chooseSkin } from './Table.skins'
 import {
+  columnsChooser,
   createFakeCustomers,
   defaultColumns,
   defaultColumnsCustomContent,
 } from './Table.testUtils'
 import { page1 } from './stories/ConvoList/convoData'
+import { createColumnChooserListItems } from './Table.utils'
 
 describe('ClassName', () => {
   test('Wrapper has default className', () => {
-    const wrapper = enzymeRender(<Table />)
+    const wrapper = enzymeRender(<Table tableDescription="test-table" />)
 
     expect(wrapper.hasClass(`${TABLE_CLASSNAME}__Wrapper`)).toBeTruthy()
   })
 
   test('Applies custom className to wrapper if specified', () => {
     const className = 'channel-4'
-    const wrapper = enzymeRender(<Table className={className} />)
+    const wrapper = enzymeRender(
+      <Table tableDescription="test-table" className={className} />
+    )
 
     expect(wrapper.hasClass(className)).toBeTruthy()
   })
 
   test('Table has default className', () => {
-    const wrapper = enzymeRender(<Table />)
+    const wrapper = enzymeRender(<Table tableDescription="test-table" />)
 
     expect(wrapper.find('table').hasClass(TABLE_CLASSNAME)).toBeTruthy()
   })
 
   test('Applies custom className to table if specified', () => {
     const className = 'channel-4'
-    const wrapper = enzymeRender(<Table tableClassName={className} />)
+    const wrapper = enzymeRender(
+      <Table tableDescription="test-table" tableClassName={className} />
+    )
 
     expect(wrapper.find('table').hasClass(className)).toBeTruthy()
   })
@@ -54,12 +60,16 @@ describe('Render', () => {
     const data = page1.results.slice(0, 10)
     const data2 = page1.results.slice(10, 15)
     const { container, rerender } = render(
-      <Table columns={defaultColumns} data={data} />
+      <Table
+        tableDescription="test-table"
+        columns={defaultColumns}
+        data={data}
+      />
     )
 
     expect(container.querySelectorAll('tbody > tr').length).toBe(10)
 
-    rerender(<Table data={data2} />)
+    rerender(<Table tableDescription="test-table" data={data2} />)
 
     expect(container.querySelectorAll('tbody > tr').length).toBe(5)
   })
@@ -69,6 +79,7 @@ describe('Table Header', () => {
   test('Renders rows and cells', () => {
     const wrapper = mount(
       <Table
+        tableDescription="test-table"
         columns={defaultColumns}
         data={createFakeCustomers({ amount: 5 })}
       />
@@ -85,6 +96,7 @@ describe('Table Header', () => {
   test('Custom cells', () => {
     const wrapper = mount(
       <Table
+        tableDescription="test-table"
         columns={defaultColumnsCustomContent}
         data={createFakeCustomers({ amount: 5 })}
       />
@@ -100,7 +112,13 @@ describe('Table Header', () => {
 describe('Table Body', () => {
   test('Renders rows and cells', () => {
     const customers = createFakeCustomers({ amount: 10 })
-    const wrapper = mount(<Table columns={defaultColumns} data={customers} />)
+    const wrapper = mount(
+      <Table
+        tableDescription="test-table"
+        columns={defaultColumns}
+        data={customers}
+      />
+    )
     const tbody = wrapper.find('tbody')
     const rows = tbody.find('tr')
     const firstRow = rows.first()
@@ -125,7 +143,13 @@ describe('Table Body', () => {
       return { ...info, ...{ className } }
     })
 
-    const wrapper = mount(<Table columns={defaultColumns} data={customers} />)
+    const wrapper = mount(
+      <Table
+        tableDescription="test-table"
+        columns={defaultColumns}
+        data={customers}
+      />
+    )
     const tbody = wrapper.find('tbody')
     const rows = tbody.find('tr')
 
@@ -158,7 +182,11 @@ describe('Table Body', () => {
     ]
 
     const wrapper = mount(
-      <Table columns={columns} data={createFakeCustomers({ amount: 5 })} />
+      <Table
+        tableDescription="test-table"
+        columns={columns}
+        data={createFakeCustomers({ amount: 5 })}
+      />
     )
     const tbody = wrapper.find('tbody')
     const rows = tbody.find('tr')
@@ -172,7 +200,13 @@ describe('Table Body', () => {
 describe('Skin', () => {
   test('Renders default without specifying skin', () => {
     const customers = createFakeCustomers({ amount: 10 })
-    const wrapper = mount(<Table columns={defaultColumns} data={customers} />)
+    const wrapper = mount(
+      <Table
+        tableDescription="test-table"
+        columns={defaultColumns}
+        data={customers}
+      />
+    )
 
     expect(chooseSkin(wrapper.prop('skin'))).toEqual(defaultSkin)
   })
@@ -180,7 +214,12 @@ describe('Skin', () => {
   test('Renders default skin', () => {
     const customers = createFakeCustomers({ amount: 10 })
     const wrapper = mount(
-      <Table columns={defaultColumns} data={customers} skin="default" />
+      <Table
+        tableDescription="test-table"
+        columns={defaultColumns}
+        data={customers}
+        skin="default"
+      />
     )
 
     expect(chooseSkin(wrapper.prop('skin'))).toEqual(defaultSkin)
@@ -189,7 +228,12 @@ describe('Skin', () => {
   test('Renders alternative skin', () => {
     const customers = createFakeCustomers({ amount: 10 })
     const wrapper = mount(
-      <Table columns={defaultColumns} data={customers} skin="alternative" />
+      <Table
+        tableDescription="test-table"
+        columns={defaultColumns}
+        data={customers}
+        skin="alternative"
+      />
     )
 
     expect(chooseSkin(wrapper.prop('skin'))).toEqual(alternativeSkin)
@@ -210,7 +254,12 @@ describe('Skin', () => {
       borderColumns: '1px solid blueviolet',
     }
     const wrapper = mount(
-      <Table columns={defaultColumns} data={customers} skin={purpleSkin} />
+      <Table
+        tableDescription="test-table"
+        columns={defaultColumns}
+        data={customers}
+        skin={purpleSkin}
+      />
     )
 
     expect(chooseSkin(wrapper.prop('skin'))).toEqual({
@@ -222,7 +271,9 @@ describe('Skin', () => {
 
 describe('Is loading state', () => {
   test('Displays LoadingUI', () => {
-    const wrapper = enzymeRender(<Table isLoading />)
+    const wrapper = enzymeRender(
+      <Table tableDescription="test-table" isLoading />
+    )
 
     expect(wrapper.find(`.${TABLE_CLASSNAME}__Loading`).length).toBeTruthy()
   })
@@ -233,7 +284,12 @@ describe('Clickable Rows', () => {
     const customers = createFakeCustomers({ amount: 5 })
     const spy = jest.fn()
     const { container } = render(
-      <Table columns={defaultColumns} data={customers} onRowClick={spy} />
+      <Table
+        tableDescription="test-table"
+        columns={defaultColumns}
+        data={customers}
+        onRowClick={spy}
+      />
     )
     const row = container.querySelector('tbody > tr')
 
@@ -267,6 +323,7 @@ describe('Sortable', () => {
     ]
     const { container, rerender } = render(
       <Table
+        tableDescription="test-table"
         columns={columns}
         data={customers}
         sortedInfo={{
@@ -283,6 +340,7 @@ describe('Sortable', () => {
 
     rerender(
       <Table
+        tableDescription="test-table"
         columns={columns}
         data={customers}
         sortedInfo={{
@@ -319,6 +377,7 @@ describe('Sortable', () => {
 
     rerender(
       <Table
+        tableDescription="test-table"
         columns={columns}
         data={customers}
         sortedInfo={{
@@ -338,6 +397,7 @@ describe('Expandable', () => {
   test('Table is collapsed on initial state to the value of maxRowsToDisplay', () => {
     const { container } = render(
       <Table
+        tableDescription="test-table"
         columns={defaultColumns}
         data={createFakeCustomers({ amount: 10 })}
         maxRowsToDisplay={4}
@@ -350,6 +410,7 @@ describe('Expandable', () => {
   test('Table expands/collapses on click of Expander', () => {
     const { container, getByRole } = render(
       <Table
+        tableDescription="test-table"
         columns={defaultColumns}
         data={createFakeCustomers({ amount: 10 })}
         maxRowsToDisplay={4}
@@ -373,6 +434,7 @@ describe('Expandable', () => {
   test('Table expands/collapses on click of Expander (custom text)', () => {
     const wrapper = mount(
       <Table
+        tableDescription="test-table"
         columns={defaultColumns}
         data={createFakeCustomers({ amount: 10 })}
         maxRowsToDisplay={4}
@@ -397,6 +459,7 @@ describe('Expandable', () => {
     const spy = jest.fn()
     const { getByRole } = render(
       <Table
+        tableDescription="test-table"
         columns={defaultColumns}
         data={createFakeCustomers({ amount: 10 })}
         maxRowsToDisplay={4}
@@ -414,6 +477,7 @@ describe('Selectable rows', () => {
   test('should render a column with checkboxes for selection', () => {
     const { container } = render(
       <Table
+        tableDescription="test-table"
         columns={defaultColumns}
         data={page1.results.slice(10)}
         withSelectableRows
@@ -444,6 +508,7 @@ describe('Selectable rows', () => {
     const data = page1.results.slice(10)
     const { container } = render(
       <Table
+        tableDescription="test-table"
         columns={defaultColumns}
         data={data}
         withSelectableRows
@@ -475,6 +540,7 @@ describe('Selectable rows', () => {
     const data = page1.results.slice(10)
     const { container } = render(
       <Table
+        tableDescription="test-table"
         columns={defaultColumns}
         data={data}
         withSelectableRows
@@ -684,5 +750,164 @@ describe('Reducer', () => {
     expect(reducer(initialState2, deselectAction2)).toStrictEqual(
       resultingStateOfDeselect2
     )
+  })
+})
+
+describe('Column Chooser', () => {
+  const COLUMNS_PARSED = [
+    {
+      items: [
+        {
+          columnKey: 'name',
+          disabledForChoosing: true,
+          group: 'Customer',
+          isDisabled: true,
+          label: 'Name',
+          show: true,
+          title: 'Name',
+          width: '25%',
+        },
+        {
+          columnKey: 'companyName',
+          group: 'Customer',
+          label: 'Company',
+          show: true,
+          title: 'Company',
+          width: '25%',
+        },
+      ],
+      label: 'Customer',
+      type: 'group',
+    },
+    { type: 'divider' },
+    {
+      items: [
+        {
+          columnKey: 'emails',
+          group: 'Properties',
+          label: 'Email',
+          show: true,
+          title: 'Email',
+          width: '25%',
+        },
+      ],
+      label: 'Properties',
+      type: 'group',
+    },
+    { type: 'divider' },
+    {
+      items: [
+        {
+          columnKey: 'lastSeen',
+          label: 'Last Seen',
+          show: false,
+          title: 'Last Seen',
+          width: '25%',
+        },
+      ],
+      label: 'Other',
+      type: 'group',
+    },
+  ]
+
+  const plain_columns = COLUMNS_PARSED.reduce((acc, current) => {
+    if (current.items) {
+      return acc.concat(current.items)
+    }
+    return acc
+  }, [])
+
+  test('it works', () => {
+    const spy = jest.fn()
+    const { getByRole, container } = render(
+      <Table
+        columns={columnsChooser}
+        data={createFakeCustomers({ amount: 10 })}
+        tableDescription="Example table"
+        onColumnChoose={spy}
+        withColumnChooser
+      />
+    )
+
+    const parsedColumns = createColumnChooserListItems(columnsChooser)
+
+    expect(parsedColumns).toStrictEqual(COLUMNS_PARSED)
+
+    const button = getByRole('button')
+
+    expect(
+      button.querySelectorAll('span.c-VisuallyHidden')[1]
+    ).toHaveTextContent('Choose columns to show or hide')
+
+    // Starts with 3 columns
+    expect(container.querySelectorAll('th').length).toBe(3)
+    expect(
+      container.querySelector('.c-Table__Row').querySelectorAll('td').length
+    ).toBe(3)
+
+    // open the column chooser
+    user.click(button)
+
+    // Should group columns
+    expect(container.querySelectorAll('.DropListItem--groupLabel').length).toBe(
+      3
+    )
+    expect(container.querySelectorAll('.DropListItem').length).toBe(5)
+
+    // Should add the reset item
+    expect(container.querySelectorAll('.is-reset-item').length).toBe(1)
+    expect(container.querySelector('.is-reset-item')).toHaveTextContent(
+      'Reset to defaults'
+    )
+
+    container.querySelectorAll('.DropListItem').forEach((item, index) => {
+      if (
+        !item.classList.contains('is-reset-item') &&
+        plain_columns[index].show
+      ) {
+        // If show is set to true in the columns, the item in the list should be selected
+        expect(item).toHaveClass('is-selected')
+
+        if (plain_columns[index].disabledForChoosing) {
+          // If disabledForChoosing is set to true in the columns, the item in the list should be disabled
+          expect(item).toHaveClass('is-disabled')
+        }
+      }
+    })
+
+    // click the disabled option, things stand the same
+    user.click(container.querySelectorAll('.DropListItem')[0])
+
+    expect(
+      container.querySelector('.c-Table__Row').querySelectorAll('td').length
+    ).toBe(3)
+
+    // click the 2nd item which is currently enabled, removes it
+    user.click(container.querySelectorAll('.DropListItem')[1])
+
+    expect(
+      container.querySelector('.c-Table__Row').querySelectorAll('td').length
+    ).toBe(2)
+
+    // click the 3rd item which is currently enabled, removes it
+    user.click(container.querySelectorAll('.DropListItem')[2])
+
+    expect(
+      container.querySelector('.c-Table__Row').querySelectorAll('td').length
+    ).toBe(1)
+
+    // click the 4th item which is currently disabled, adds it
+    user.click(container.querySelectorAll('.DropListItem')[3])
+
+    expect(
+      container.querySelector('.c-Table__Row').querySelectorAll('td').length
+    ).toBe(2)
+
+    // click the reset item, brings it back to the initial state
+    user.click(container.querySelector('.is-reset-item'))
+
+    expect(
+      container.querySelector('.c-Table__Row').querySelectorAll('td').length
+    ).toBe(3)
   })
 })

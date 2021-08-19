@@ -151,6 +151,38 @@ const purpleTheme = {
 
 #### With column chooser
 
+Enable by setting `withColumnChooser` to `true`.
+
+When setting your columns:
+
+- Add a `show: true` to each column you want to show by default
+- Add a `group: 'Something'` to group columns in the Dropdown, if skipped, they will be grouped under 'Other'
+- If you need a column to always be there, add `disabledForChoosing: true`, this way the option will be disabled for the user.
+
+Example:
+
+```js
+const columns = [
+  {
+    title: 'Name',
+    columnKey: 'name',
+    width: '25%',
+    group: 'Customer',
+    show: true,
+    disabledForChoosing: true,
+  },
+  {
+    title: 'Company',
+    columnKey: 'companyName',
+    width: '25%',
+    group: 'Customer',
+    show: false,
+  },
+]
+```
+
+Use `columnChooserResetLabel` to customize the reset item label
+
 <Canvas>
   <Story name="with column chooser">
     <Table

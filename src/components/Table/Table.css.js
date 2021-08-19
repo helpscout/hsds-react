@@ -14,6 +14,11 @@ export const HeaderUI = styled('header')`
       color: ${getColor('charcoal.500')};
     }
 
+    &:focus {
+      box-shadow: none;
+      background-color: ${getColor('ash.200')};
+    }
+
     &.is-active {
       color: ${getColor('charcoal.500')};
     }

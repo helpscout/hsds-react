@@ -103,10 +103,14 @@ export const ListItemUI = styled('li')`
       background-color: ${getColor('blue.100')};
     }
 
-    &.is-selected,
+    &.is-selected {
+      color: ${getColor('blue.600')};
+      background-color: white;
+    }
+
     &.is-disabled.is-selected,
     &.is-highlighted.is-disabled.is-selected {
-      color: ${getColor('blue.600')};
+      color: ${getColor('charcoal.400')};
       background-color: white;
     }
 
