@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
+import { KeyboardBadgeUI } from '../KeyboardBadge/KeyboardBadge.css'
 
 export const config = {
   background: getColor('charcoal.700'),
@@ -82,6 +83,10 @@ export const TooltipUI = styled.div`
     ${ArrowUI} {
       left: calc((${({ arrowSize }) => arrowSize}px / 2) * -1);
     }
+  }
+
+  ${KeyboardBadgeUI} {
+    margin-left: 8px;
   }
 `
 

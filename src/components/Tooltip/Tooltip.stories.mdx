@@ -1,5 +1,6 @@
 import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import Tooltip from './'
+import KeyboardBadge from '../KeyboardBadge'
 import {
   Default,
   CustomContent,
@@ -68,6 +69,27 @@ In some cases, we want to remove that span, the `withTriggerWrapper` will allow 
 <Canvas>
   <Story name="with custom content">
     <CustomContent />
+  </Story>
+</Canvas>
+
+#### With keyboard badge
+
+<Canvas>
+  <Story name="with keyboard badge">
+    <div style={{ padding: '20%', textAlign: 'center' }}>
+      <Tooltip
+        visible={true}
+        title={
+          <>
+            Hello
+            <KeyboardBadge value="mod+A" />
+          </>
+        }
+        withTriggerWrapper={false}
+      >
+        <button>No wrapping span Trigger</button>
+      </Tooltip>
+    </div>
   </Story>
 </Canvas>
 
