@@ -1,0 +1,76 @@
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
+import { boolean, number, text, select } from '@storybook/addon-knobs'
+import SimpleModal from './SimpleModal'
+
+<Meta
+  title="Components/Overlay/SimpleModal"
+  component={SimpleModal}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/v8ReousbOpHN2g9n5n6StX/Standalone-Messages---2.0?node-id=342%3A2552',
+    },
+  }}
+/>
+
+# SimpleModal
+
+As the name implies this is a verty simple implementation of a Modal.
+
+This component is fully controlled via the `show` prop, meaning it doesn't hold any internal state about whether is open or not, it's in your hands to manage this. The panel will fire the close action (`onClose` callback prop) with:
+
+- The &times; close button
+- Pressing the <kbd>esc</kbd> key
+- If `closeOnClickOutside` is either set to "modal" (clicking the overlay would close the modal, this would be the most common) or "overlay" (in the case that the modal is "contained" inside another element and the overlay doesn't cover the whole window).
+
+The modal is contained within the closest parent with a `relative` position. This allows you to have a UI where the modal is contained to a specific section. Look at the "Full Example" in the [SidePanel stories](/docs/components-overlay-sidepanel--full-example) to see this in action (also notice how the "default" story here is setup by wrapping the SimpleModal with a `div` with a set height and position).
+
+All styles (like width and height) are easily overridable with styled components, so there are no prescriptions nor a million props to deal with.
+
+> Note: If we decide to start using this instead of our current "main" Modal, we might provide different layouts so you don't have to code them every time, sort of how DropList includes the most used "togglers".
+
+## Rendering it somewhere else in the DOM Tree (Portals)
+
+If you need to render the panel somewhere else you can use our component `<Portal>` or the recently added `usePortal` hook, this hook includes a `<Portal>` component for convenience or as an example of how you can use it, for SimpleModal, here's a code example:
+
+```jsx
+import { Portal } from '../../hooks/usePortal'
+import SimpleModal from './SimpleModal'
+
+function SommeApp() {
+  // Leave the `selector` prop out if you want document.body
+  return (
+    <Portal selector="#some-id">
+      <SimpleModal>Some content</SimpleModal>
+    </Portal>
+  )
+}
+```
+
+<br />
+
+## Example
+
+<Canvas>
+  <Story name="default">
+    <div style={{ position: 'relative', height: '450px' }}>
+      <SimpleModal show focusModalOnShow={false}>
+        <em>Some content here</em>
+      </SimpleModal>
+    </div>
+  </Story>
+</Canvas>
+
+#### Reference
+
+- **Designer**: Alex Estrada
+- **Engineering**: Juan Pablo
+- **Usage**: Standalone Messages
+
+<br />
+<br />
+
+### Props
+
+<ArgsTable of={SimpleModal} />
