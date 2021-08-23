@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { useContext, useRef, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { GlobalContext } from '../../components/HSDS/Provider'

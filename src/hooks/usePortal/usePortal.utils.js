@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 /**
  * Creates DOM element to be used as React root.
  * @param {String} selector A valid selector for the target container, e.g '#modal' or '.spotlight'

@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import React, { useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import throttle from 'lodash.throttle'
