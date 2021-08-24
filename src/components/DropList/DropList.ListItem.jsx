@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react'
 import classNames from 'classnames'
 import { isFunction, isObject, isString } from '../../utilities/is'
-import { noop } from '../../utilities/other'
 import {
   getItemContentKeyName,
   isItemADivider,
@@ -27,7 +26,6 @@ const ListItem = forwardRef(
       isSelected,
       renderCustomListItem,
       isDisabled,
-      onReset = noop,
       ...itemProps
     },
     ref
