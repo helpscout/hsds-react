@@ -370,6 +370,7 @@ DropListManager.propTypes = {
   variant: PropTypes.oneOf(['select', 'Select', 'combobox', 'Combobox']),
   /** Enable multiple selection of items */
   withMultipleSelection: PropTypes.bool,
+  /** Adds an "inert" item at the end of the list with a type of `reset_droplist`, use it to implement a "Clear Selection" or "Reset to defaults" type of option */
   withResetSelectionItem: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool,
