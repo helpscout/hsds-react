@@ -9,8 +9,9 @@ import { BodyUI, FooterUI, HeaderUI } from './SidePanel.layouts.css'
 export function HeaderAndFooter({
   children,
   mainActionButtonText = 'Start',
-  onMainActionClick = noop,
   mainActionDisabled = false,
+  mainActionNode = noop,
+  onMainActionClick = noop,
   panelHeading = 'Review and Start',
   panelHeadingId = '',
   panelSubHeading = 'Complete the required details before going live',
@@ -69,6 +70,7 @@ export function HeaderAndFooter({
           kind="primary"
           onClick={onMainActionClick}
           size="xl"
+          innerRef={mainActionNode}
         >
           {mainActionButtonText}
         </Button>
@@ -109,6 +111,8 @@ HeaderAndFooter.propTypes = {
   mainActionButtonText: PropTypes.string,
   /** If the default footer is present, this disables the button */
   mainActionDisabled: PropTypes.bool,
+  /** Retrieve the Main Action button node */
+  mainActionNode: PropTypes.func,
   /** If the default Header included, this is the Heading */
   panelHeading: PropTypes.string,
   /** ID for the H1, make sure it matches the ariaLabelledBy from the SidePanel */

@@ -128,6 +128,12 @@ export default function SidePanelApp() {
             panelHeadingId="sidepanel-descriptor"
             onMainActionClick={() => setShowModal(true)}
             mainActionDisabled={!step1Checked || !step2Checked || !step3Checked}
+            mainActionNode={node => {
+              console.log(
+                '🚀 ~ file: SidePanel.storiesHelpers.js ~ line 132 ~ p',
+                node
+              )
+            }}
           >
             <FakeCardUI
               className={classNames('in-panel', step1Checked && 'checked')}
