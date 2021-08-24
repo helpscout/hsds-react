@@ -24,6 +24,7 @@ export function Table({
   data = [],
   'data-cy': dataCy = 'Table',
   expanderText,
+  headerContent,
   isLoading = false,
   isScrollLocked = true,
   maxRowsToDisplay,
@@ -74,6 +75,36 @@ export function Table({
     updateTableData(data, maxRowsToDisplay)
   }, [data, maxRowsToDisplay, sortedInfo])
 
+  function renderHeader() {
+    if (!headerContent && !withColumnChooser) {
+      return null
+    }
+
+    const withHeaderContent = React.isValidElement(headerContent)
+
+    return (
+      <HeaderUI
+        className={classNames(
+          'c-Table__Header',
+          withHeaderContent && 'with-header-content',
+          withColumnChooser && 'with-column-chooser'
+        )}
+      >
+        {withHeaderContent ? headerContent : null}
+        {withColumnChooser ? (
+          <ColumnChooser
+            columns={state.columns}
+            columnChooserResetLabel={columnChooserResetLabel}
+            defaultColumns={defaultColumns}
+            onColumnChoose={onColumnChoose}
+            resetColumns={resetColumns}
+            updateColumns={updateColumns}
+          />
+        ) : null}
+      </HeaderUI>
+    )
+  }
+
   return (
     <ThemeProvider theme={chooseSkin(skin)}>
       <TableWrapperUI
@@ -86,18 +117,7 @@ export function Table({
         dataCy={dataCy}
         {...rest}
       >
-        {withColumnChooser ? (
-          <HeaderUI>
-            <ColumnChooser
-              columns={state.columns}
-              columnChooserResetLabel={columnChooserResetLabel}
-              defaultColumns={defaultColumns}
-              onColumnChoose={onColumnChoose}
-              resetColumns={resetColumns}
-              updateColumns={updateColumns}
-            />
-          </HeaderUI>
-        ) : null}
+        {renderHeader()}
 
         <Scrollable
           fadeLeft
@@ -196,6 +216,8 @@ Table.propTypes = {
   'data-cy': PropTypes.string,
   /** The text for the "expander" button when table is either collapsed or expanded */
   expanderText: PropTypes.any,
+  /** Content to render inside the header tag just above the table (together with the column chooser if enabled) */
+  headerContent: PropTypes.element,
   /** Adds the 'is-loading' class to the component */
   isLoading: PropTypes.bool,
   /** Whether to use `ScrollLock` with `direction="x"` on the Table. */

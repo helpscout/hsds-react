@@ -56,6 +56,19 @@ describe('ClassName', () => {
 })
 
 describe('Render', () => {
+  test('should render header content if provided', () => {
+    const { queryByText } = render(
+      <Table
+        tableDescription="test-table"
+        columns={defaultColumns}
+        data={createFakeCustomers({ amount: 10 })}
+        headerContent={<h1>My Heading</h1>}
+      />
+    )
+
+    expect(queryByText('My Heading')).toBeInTheDocument()
+  })
+
   test('updates table data', () => {
     const data = page1.results.slice(0, 10)
     const data2 = page1.results.slice(10, 15)

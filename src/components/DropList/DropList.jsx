@@ -193,6 +193,7 @@ function DropListManager({
         }
 
         setSelectedItems(updatedSelection)
+        setSelectedItem(updatedSelection.length ? selectedItem : null)
         onSelect(updatedSelection, selectedItem)
       }
     } else {

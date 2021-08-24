@@ -3,7 +3,11 @@ import { getColor } from '../../styles/utilities/color'
 
 export const HeaderUI = styled('header')`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+
+  &.with-column-chooser:not(.with-header-content) {
+    justify-content: flex-end;
+  }
 
   .DropListToggler {
     color: ${getColor('charcoal.300')};

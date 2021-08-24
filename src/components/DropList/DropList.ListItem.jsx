@@ -39,6 +39,7 @@ const ListItem = forwardRef(
     }
 
     const contentKey = getItemContentKeyName(item)
+    const isReset = isItemReset(item)
 
     if (isItemAGroupLabel(item)) {
       return (
@@ -56,7 +57,7 @@ const ListItem = forwardRef(
         'DropListItem',
         isSelected && 'is-selected',
         isDisabled && 'is-disabled',
-        isItemReset(item) && 'is-reset-item',
+        isReset && 'is-reset-item',
         highlightedIndex === index && 'is-highlighted',
         withMultipleSelection && 'with-multiple-selection',
         isString(extraClassNames) && extraClassNames,
@@ -94,7 +95,7 @@ const ListItem = forwardRef(
         <ListItemTextUI>
           {isObject(item) ? item[contentKey] : item}
         </ListItemTextUI>
-        {withMultipleSelection && !isItemReset(item) ? (
+        {withMultipleSelection && !isReset ? (
           <SelectedBadge isSelected={isSelected} />
         ) : null}
       </ListItemUI>

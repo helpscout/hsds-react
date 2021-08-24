@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import styled from 'styled-components'
 import { getColor } from '../../../../styles/utilities/color'
 
@@ -49,6 +48,7 @@ export const AsideUI = styled('aside')`
   background-image: radial-gradient(#444cf7 0.5px, #e5e5f7 0.5px);
   background-size: 10px 10px;
 `
+
 export const TagUI = styled('div')`
   display: inline-block;
   width: auto;
@@ -60,6 +60,17 @@ export const TagUI = styled('div')`
   background-color: ${({ color }) => color};
   border-radius: 3px;
   margin-right: 3px;
+`
+
+export const H1UI = styled('span')`
+  height: 60px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 23.04px;
+  padding-top: 16px;
+  padding-bottom: 19px;
+  padding-left: 15px;
+  color: ${getColor('charcoal.800')};
 `
 
 export const SubjectUI = styled('span')`
