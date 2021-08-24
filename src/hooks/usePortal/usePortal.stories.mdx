@@ -1,0 +1,30 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Hooks/usePortal" />
+
+# usePortal
+
+You are probably aware we have a `Portal` component, here we have a different implementation using hooks.
+
+Usage is very simple:
+
+```js
+import { createPortal } from 'react-dom'
+import { Portal } from '../../hooks/usePortal'
+
+export const Portal = ({ selector, children }) => {
+  const target = usePortal(selector)
+
+  return createPortal(children, target)
+}
+```
+
+As a matter of fact that component above is provided for convenience in `usePortal`.
+
+Some features:
+
+- Use the hook directly into your component if that makes sense or you have a different scenario.
+- Automatically handles creating and tearing-down the root elements, so there is no need to ensure the parent target already exists.
+- Evaluates DOM nodes creation lazily
+- Adds the scope from GlobalContext for you
+- Super simple

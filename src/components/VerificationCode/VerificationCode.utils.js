@@ -2,6 +2,7 @@ export const CLASSNAMES = {
   hidden: 'hidden',
 }
 
+/* istanbul ignore next */
 export function selectAll(digitInputNodes, digitMaskNodes) {
   let selection = window.getSelection()
 
@@ -36,10 +37,7 @@ export function showInputDigits(digitInputNodes, digitMaskNodes) {
 }
 
 export function getCleanSelectedText() {
-  return window
-    .getSelection()
-    .toString()
-    .replace(/\s/g, '')
+  return window.getSelection().toString().replace(/\s/g, '')
 }
 
 export function getCurrentCodeValue(digitInputNodes) {

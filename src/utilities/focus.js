@@ -72,6 +72,45 @@ export const focusPreviousFocusableNode = (currentNode, nodeScope) => {
   return node
 }
 
+/**
+ * Method that will find the closest parent that can is focusable
+ * @param {HTMLElement} element The element that we are traversing up to find a focusable parent
+ * @returns HTMLElement
+ */
+export function getClosestFocusableParent(element) {
+  return element.closest(FOCUSABLE_SELECTOR) || document.body
+}
+
+/**
+ * Method that will ensure tabbing will cycle between focusable nodes inside a given container
+ * @param {HTMLElement} container The Element where the focus should be trapped in
+ * @param {Event} e The tab keyboard event
+ */
+export function manageTrappedFocus(container, e) {
+  const focusedNode = e.target
+
+  if (focusedNode !== container) {
+    const focusableNodes = findFocusableNodes(container)
+
+    if (focusableNodes != null) {
+      const focusedNodeIndex = Array.prototype.indexOf.call(
+        focusableNodes,
+        focusedNode
+      )
+      const isFirstNode = focusedNodeIndex === 0
+      const isLastNode = focusedNodeIndex === focusableNodes.length - 1
+
+      if (!e.shiftKey && isLastNode) {
+        e.preventDefault()
+        focusableNodes[0].focus()
+      } else if (e.shiftKey && isFirstNode) {
+        e.preventDefault()
+        focusableNodes[focusableNodes.length - 1].focus()
+      }
+    }
+  }
+}
+
 export const incrementFocusIndex = options => {
   if (!options || typeof options !== 'object') return false
 

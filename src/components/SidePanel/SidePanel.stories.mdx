@@ -1,0 +1,117 @@
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
+import { boolean, number, text, select } from '@storybook/addon-knobs'
+import SidePanel from './SidePanel'
+import SidePanelApp from './SidePanel.storiesHelpers'
+
+<Meta
+  title="Components/Overlay/SidePanel"
+  component={SidePanel}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/v8ReousbOpHN2g9n5n6StX/Standalone-Messages---2.0?node-id=342%3A2552',
+    },
+  }}
+/>
+
+# SidePanel
+
+Component that brings a Panel from either side of the screen.
+
+This component is fully controlled via the `show` prop, meaning it doesn't hold any internal state about whether is open or not, it's in your hands to manage this. The panel will fire the close action (`onClose` callback prop) with the &times; close button and via pressing the <kbd>esc</kbd> key.
+
+The panel is contained within the closest parent with a `relative` position. This allows you to have a UI where the panel's overlay covers all but a navigation for example. Look at the "Full Example" story below to see this in action (also notice how the "default" story is setup by wrapping the SidePanel with a `div` with a set height and position).
+
+## Rendering it somewhere else in the DOM Tree (Portals)
+
+If you need to render the panel somewhere else you can use our component `<Portal>` or the recently added `usePortal` hook, this hook includes a `<Portal>` component for convenience or as an example of how you can use it, for SidePanel, here's a code example:
+
+```jsx
+import { Portal } from '../../hooks/usePortal'
+import SidePanel from './SidePanel'
+
+function SommeApp() {
+  // Leave the `selector` prop out if you want document.body
+  return (
+    <Portal selector="#some-id">
+      <SidePanel>Some content</SidePanel>
+    </Portal>
+  )
+}
+```
+
+## SidePanel Layouts
+
+We have some layouts that are going to be commonly used, in order to avoid duplication we include what we call "layouts" which are simple components that you can drop in the `<SidePanel>` and forget about styling. They live inside `SidePanel.layouts.jsx`.
+
+### HeaderAndFooter layout
+
+Includes:
+
+- Header with a heading and a sub-heading
+- Scrollable body (`children` get rendered here). Shadows get added to header and footer depending on the scroll state of the body.
+- footer with a CTA.
+
+```jsx
+import { HeaderAndFooter } from './SidePanel.layouts'
+
+function YourApp() {
+  return (
+    <SidePanel>
+      <HeaderAndFooter
+        mainActionButtonText="Customize this"
+        panelHeading="Customize this"
+        panelSubHeading="Customize this"
+        onMainActionClick={handleClick}
+        mainActionDisabled={!isDisabled}
+      >
+        <div>Your content here</div>
+      </HeaderAndFooter>
+    </SidePanel>
+  )
+}
+```
+
+<br />
+
+## Example
+
+<Canvas>
+  <Story name="default">
+    <div style={{ position: 'relative', height: '600px' }}>
+      <SidePanel show focusPanelOnShow={false}>
+        <em>Some content here</em>
+      </SidePanel>
+    </div>
+  </Story>
+</Canvas>
+
+#### Reference
+
+- **Designer**: Alex Estrada
+- **Engineering**: Juan Pablo
+- **Usage**: Standalone Messages
+
+<br />
+<br />
+
+### Props
+
+<ArgsTable of={SidePanel} />
+
+## Stories
+
+### Full example
+
+The example includes a contained `<SimpleModal>` and the "HeaderAndFooter" layout:
+
+1. Open the Panel
+2. Click on the three boxes
+3. Click on Start
+
+<Canvas>
+  <Story name="Full Example">
+    <SidePanelApp />
+  </Story>
+</Canvas>

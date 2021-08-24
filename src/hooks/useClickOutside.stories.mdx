@@ -1,0 +1,33 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Hooks/useClickOutside" />
+
+# useClickOutside
+
+Custom hook that adds a click event listener on the document that gets executed when clicking outside a given DOM Node passed as a ref.
+
+Usage:
+
+```jsx
+import React, { useRef } from 'react'
+
+import useOutsideClick from './useOutsideClick'
+
+function MyComponent() {
+  const ref = useRef()
+
+  useClickOutside(ref, () => {
+    alert('You clicked outside the Menu')
+  })
+
+  return (
+    <div className="App">
+      <div className="Menu" ref={ref}>
+        <h4>This is a menu</h4>
+        <p>This is another content</p>
+      </div>
+      <div>This is a content outside the menu</div>
+    </div>
+  )
+}
+```
