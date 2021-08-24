@@ -69,7 +69,7 @@ export const TableUI = styled('table')`
 
   tbody tr:focus {
     background-color: ${props => props.theme.bgFocus};
-    box-shadow: inset 5px 0 ${props => props.theme.bgFocusIndicator};
+    box-shadow: inset 3px 0 ${props => props.theme.bgFocusIndicator};
     outline: 0;
   }
 
