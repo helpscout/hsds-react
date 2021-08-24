@@ -75,6 +75,34 @@ describe('Subject', () => {
 
     expect(s.text().trim()).toBe(pluralizedSubject)
   })
+
+  test('should render custom content', () => {
+    const subject = 'customer'
+    const totalItems = 100
+    const wrapper = mount(
+      <Pagination
+        subject={subject}
+        totalItems={totalItems}
+        renderCustomContent={({
+          startRange,
+          endRange,
+          numberOfPages,
+          currentPage,
+          pluralizedSubject,
+        }) => {
+          return (
+            <div className="custom-content">
+              {totalItems} total {pluralizedSubject} • 26 active
+            </div>
+          )
+        }}
+      />
+    )
+
+    const s = wrapper.find('.custom-content')
+
+    expect(s.text().trim()).toBe(`100 total customers • 26 active`)
+  })
 })
 
 describe('Navigation', () => {
@@ -334,10 +362,7 @@ describe('Clicks', () => {
         onChange={changeWatcher}
       />
     )
-    wrapper
-      .find('Button.c-Pagination__nextButton')
-      .first()
-      .simulate('click')
+    wrapper.find('Button.c-Pagination__nextButton').first().simulate('click')
     expect(changeWatcher).toHaveBeenCalledWith(2)
   })
 
@@ -355,10 +380,7 @@ describe('Clicks', () => {
         onChange={changeWatcher}
       />
     )
-    wrapper
-      .find('Button.c-Pagination__lastButton')
-      .first()
-      .simulate('click')
+    wrapper.find('Button.c-Pagination__lastButton').first().simulate('click')
     expect(changeWatcher).toHaveBeenCalledWith(4)
   })
 
@@ -376,10 +398,7 @@ describe('Clicks', () => {
         onChange={changeWatcher}
       />
     )
-    wrapper
-      .find('Button.c-Pagination__firstButton')
-      .first()
-      .simulate('click')
+    wrapper.find('Button.c-Pagination__firstButton').first().simulate('click')
     expect(changeWatcher).toHaveBeenCalledWith(1)
   })
 
@@ -397,10 +416,7 @@ describe('Clicks', () => {
         onChange={changeWatcher}
       />
     )
-    wrapper
-      .find('Button.c-Pagination__prevButton')
-      .first()
-      .simulate('click')
+    wrapper.find('Button.c-Pagination__prevButton').first().simulate('click')
     expect(changeWatcher).toHaveBeenCalledWith(3)
   })
 
