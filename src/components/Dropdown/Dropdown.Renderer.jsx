@@ -1,3 +1,4 @@
+// Deprecated
 /* istanbul ignore file */
 import React from 'react'
 import { connect } from '@helpscout/wedux'

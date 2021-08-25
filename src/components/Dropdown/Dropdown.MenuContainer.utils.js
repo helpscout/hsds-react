@@ -1,3 +1,5 @@
+// Deprecated
+/* istanbul ignore file */
 export const getComputedClientRect = (node, contentWindow) => {
   const defaultRect = {
     height: 0,

@@ -1,3 +1,5 @@
+// Deprecated
+/* istanbul ignore file */
 import PortalWrapper from '../PortalWrapper'
 
 export const MenuPortal = ({ children }) => children

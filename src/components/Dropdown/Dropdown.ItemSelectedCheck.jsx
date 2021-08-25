@@ -1,3 +1,5 @@
+// Deprecated
+/* istanbul ignore file */
 import React from 'react'
 import Icon from '../Icon'
 import classNames from 'classnames'

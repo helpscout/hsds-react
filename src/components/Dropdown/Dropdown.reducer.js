@@ -1,3 +1,5 @@
+// Deprecated
+/* istanbul ignore file */
 import actionTypes from './Dropdown.actionTypes'
 import { initialState } from './Dropdown.store'
 import { isFunction } from '../../utilities/is'
