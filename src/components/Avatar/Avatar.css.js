@@ -25,8 +25,8 @@ export const config = {
       fontSize: 13,
     },
     smmd: {
-      size: 35,
-      fontSize: 12,
+      size: 38,
+      fontSize: 15,
     },
     sm: {
       size: 30,
@@ -162,7 +162,7 @@ export const InitialsUI = styled('div')`
   user-select: none;
 
   &.is-light {
-    color: ${getColor('text.muted')};
+    color: ${getColor('charcoal.400')};
   }
 `
 
@@ -333,7 +333,7 @@ export const AvatarUI = styled('div')`
   ${props => getColorStyles(props)}
 
   &.is-light {
-    color: ${getColor('grey.400')};
+    color: ${getColor('grey.500')};
   }
 
   ${getSizeStyles()};
@@ -383,7 +383,7 @@ export const AvatarButtonUI = styled('button')`
   background: transparent;
 
   ${props => getColorStyles(props)} &.is-light {
-    color: ${getColor('grey.400')};
+    color: ${getColor('grey.500')};
   }
 
   ${getSizeStyles()};

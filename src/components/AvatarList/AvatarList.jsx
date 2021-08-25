@@ -1,8 +1,8 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Avatar from '../Avatar'
 import Animate from '../Animate'
+import Avatar from '../Avatar'
 import { ItemUI, AvatarListUI, AvatarListWrapperUI } from './AvatarList.css'
 import classNames from 'classnames'
 import { getComponentKey } from '../../utilities/component'
@@ -22,13 +22,18 @@ const wrapAvatar = (props, avatar, index) => {
 
   let zIndex = max - index
 
-  if (stack && count > 2 && isOdd(`${count}`)) {
-    if (isOdd(index)) {
-      zIndex = zIndex + 1
+  if (stack === 'horizontal') {
+    if (count > 2 && isOdd(count)) {
+      if (isOdd(index)) {
+        zIndex = zIndex + 1
+      }
+
+      if (index === getMiddleIndex(count)) {
+        zIndex = zIndex + 2
+      }
     }
-    if (index === getMiddleIndex(`${count}`)) {
-      zIndex = zIndex + 2
-    }
+  } else if (stack === 'vertical') {
+    zIndex = index + 1
   }
 
   return (
@@ -50,7 +55,7 @@ const getCurrentCount = ({ count, max }) => (count < max ? count : max)
 export const getAvatarSize = ({ size: sizeProp, stack, ...rest }) => {
   const currentCount = getCurrentCount(rest)
 
-  if (!stack) return sizeProp
+  if (stack !== 'horizontal') return sizeProp
 
   let size = 'md'
 
@@ -65,7 +70,16 @@ export const getAvatarSize = ({ size: sizeProp, stack, ...rest }) => {
 }
 
 export const AvatarList = props => {
-  const { children, max, className, center, stack, grid, ...rest } = props
+  const {
+    children,
+    max,
+    className,
+    center,
+    stack,
+    grid,
+    extraTooltipProps,
+    ...rest
+  } = props
   const avatars = React.Children.toArray(children)
   const avatarList =
     max && avatars.length > max ? avatars.slice(0, max - 1) : avatars
@@ -84,10 +98,16 @@ export const AvatarList = props => {
 
   if (shouldShowExtra) {
     const extraLabel = `+${extraAvatarCount}`
+
     avatarComponents.push(
       wrapAvatar(
         propsWithCount,
-        <Avatar count={extraLabel} light name={extraLabel} />,
+        <Avatar
+          count={extraLabel}
+          light
+          name={extraLabel}
+          tooltipProps={extraTooltipProps}
+        />,
         avatarList.length
       )
     )
@@ -96,6 +116,8 @@ export const AvatarList = props => {
   const componentClassName = classNames(
     'c-AvatarList',
     stack && 'is-withLayerStack',
+    stack === 'horizontal' && 'horizontally-stacked',
+    stack === 'vertical' && 'vertically-stacked',
     grid && 'is-grid',
     className
   )
@@ -124,7 +146,6 @@ AvatarList.defaultProps = {
   center: false,
   showStatusBorderColor: false,
   size: 'sm',
-  stack: false,
 }
 
 AvatarList.propTypes = {
@@ -138,12 +159,14 @@ AvatarList.propTypes = {
   animationSequence: PropTypes.string,
   /** Custom className to pass to `Avatars`. */
   avatarsClassName: PropTypes.string,
-  /** Center Avatars */
-  center: PropTypes.bool,
   /** Color for the Avatar border. */
   borderColor: PropTypes.string,
+  /** Center Avatars */
+  center: PropTypes.bool,
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
+  /** To add a Tooltip to the "extra" avatar, accepts all Tooltip props */
+  extraTooltipProps: PropTypes.object,
   /** Display as grid (previously AvatarGrid) */
   grid: PropTypes.bool,
   /** Number of avatars to display before truncating. */
@@ -157,7 +180,7 @@ AvatarList.propTypes = {
   /** Size of the avatars. */
   size: PropTypes.string,
   /** Display as stack (previously AvatarStack) */
-  stack: PropTypes.bool,
+  stack: PropTypes.oneOf(['horizontal', 'vertical']),
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
 }
