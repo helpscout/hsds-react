@@ -66,7 +66,7 @@ export const IconWrapperUI = styled('div')`
 
   &.is-checked {
     opacity: 1;
-    color: ${getColor('charcoal.500')};
+    color: ${getColor('charcoal.600')};
   }
 `
 
@@ -82,6 +82,10 @@ export const ContentUI = styled(Text)`
   margin-bottom: 10px;
   color: ${getColor('charcoal.200')};
   text-align: center;
+
+  .is-checked & {
+    color: ${getColor('charcoal.600')};
+  }
 `
 
 export default RadioCardUI

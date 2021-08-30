@@ -214,7 +214,7 @@ RadioCard.propTypes = {
     PropTypes.func,
   ]),
   /** Size to render the `Icon` */
-  iconSize: PropTypes.number,
+  iconSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   /** ID for the input. */
   id: PropTypes.string,
   /** Callback to obtain the <input> node. */
