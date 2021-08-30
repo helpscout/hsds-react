@@ -1,5 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import { render, waitFor, screen, fireEvent } from '@testing-library/react'
+
 import Tooltip, { TooltipContext } from './index'
 import Tippy from '@tippyjs/react/headless'
 import { act } from 'react-dom/test-utils'
@@ -163,5 +165,26 @@ describe('Unmounting', () => {
     })
 
     expect(consoleErrorSpy).not.toHaveBeenCalled()
+  })
+})
+
+describe.skip('KeyboardBadge', () => {
+  test('Should render a KeyboardBadge when badge prop exists', async () => {
+    const props = {
+      title: 'Pop',
+      badge: 'alt + a',
+      visible: true,
+      triggerOn: 'click',
+    }
+    const { queryByTestId, getByText, container } = render(
+      <Tooltip {...props}>trigger</Tooltip>
+    )
+
+    fireEvent.click(container.querySelector('.TooltipTrigger'))
+
+    await waitFor(() => {
+      expect(queryByTestId('KeyboardBadge')).toBeInTheDocument()
+      expect(getByText('alt + a')).toBeTruthy()
+    })
   })
 })

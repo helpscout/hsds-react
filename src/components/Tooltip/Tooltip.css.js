@@ -2,11 +2,6 @@ import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import { KeyboardBadgeUI } from '../KeyboardBadge/KeyboardBadge.css'
 
-export const config = {
-  background: getColor('charcoal.700'),
-  text: 'white',
-}
-
 export const TooltipTriggerUI = styled.span`
   display: ${({ display }) => (display ? display : 'inline-block')};
 
@@ -23,7 +18,7 @@ export const ArrowUI = styled.span`
 
   &:before {
     content: '';
-    background: ${config.background};
+    background-color: var(--TooltipBgColor);
     position: absolute;
     transform: rotate(45deg);
     height: calc(${({ arrowSize }) => arrowSize}px - 4px);
@@ -38,13 +33,14 @@ export const ArrowUI = styled.span`
 `
 
 export const TooltipUI = styled.div`
+  --TooltipBgColor: ${getColor('charcoal.700')};
   /* in case scoping is not working */
   box-sizing: border-box;
   font-family: var(--HSDSGlobalFontFamily);
   width: max-content;
-  background-color: ${config.background};
+  background-color: var(--TooltipBgColor);
   border-radius: 3px;
-  color: ${config.text};
+  color: white;
   display: block;
   font-size: 12px;
   max-width: 300px;
@@ -85,8 +81,21 @@ export const TooltipUI = styled.div`
     }
   }
 
-  ${KeyboardBadgeUI} {
-    margin-left: 8px;
+  &.with-badge {
+    --TooltipBgColor: ${getColor('charcoal.800')};
+    font-size: 13px;
+    border-radius: 4px;
+    padding-left: 10px;
+    padding-right: 6px;
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    text-align: left;
+
+    ${KeyboardBadgeUI} {
+      margin-left: 8px;
+      flex: 0 0 auto;
+    }
   }
 `
 

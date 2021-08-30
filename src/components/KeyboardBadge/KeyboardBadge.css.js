@@ -17,6 +17,7 @@ export const KeyboardBadgeUI = styled.div`
   line-height: 1;
   height: 19px;
   padding: 0 6px;
+  white-space: nowrap;
 
   & + & {
     margin-left: 8px;
