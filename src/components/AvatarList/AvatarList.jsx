@@ -85,13 +85,9 @@ export const AvatarList = props => {
     max && avatars.length > max ? avatars.slice(0, max - 1) : avatars
   const extraAvatarCount = avatars.length - avatarList.length
   const shouldShowExtra = extraAvatarCount > 0
-
   const propsWithCount = { ...props, count: avatars.length }
-
   const size = getAvatarSize(propsWithCount)
-
   const contextValue = { size }
-
   const avatarComponents = avatarList.map((avatar, index) => {
     return wrapAvatar(propsWithCount, avatar, index)
   })

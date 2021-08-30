@@ -25,7 +25,7 @@ export const config = {
       fontSize: 13,
     },
     smmd: {
-      size: 38,
+      size: 35,
       fontSize: 15,
     },
     sm: {
