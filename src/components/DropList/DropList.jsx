@@ -38,6 +38,7 @@ function DropListManager({
   enableLeftRightNavigation = false,
   focusTogglerOnMenuClose = true,
   getTippyInstance = noop,
+  inputPlaceholder = 'Search',
   isMenuOpen = false,
   items = [],
   menuCSS,
@@ -259,6 +260,7 @@ function DropListManager({
             data-cy={dataCy}
             enableLeftRightNavigation={enableLeftRightNavigation}
             handleSelectedItemChange={handleSelectedItemChange}
+            inputPlaceholder={inputPlaceholder}
             isOpen={isOpen}
             items={parsedItems}
             menuCSS={menuCSS}
@@ -326,6 +328,8 @@ DropListManager.propTypes = {
   focusTogglerOnMenuClose: PropTypes.bool,
   /** Retrieves the tippy instance */
   getTippyInstance: PropTypes.any,
+  /** Customize the placeholder text on the combobox input */
+  inputPlaceholder: PropTypes.string,
   /** Open/close the DropList externally */
   isMenuOpen: PropTypes.bool,
   /** Items to populate the list with */
