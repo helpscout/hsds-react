@@ -101,41 +101,7 @@ describe('Remove', () => {
 
   test('Fires callback on remove click', () => {
     const spy = jest.fn()
-    const mockOnBeforeRemovePromise = () => ({ then: cb => cb() })
-    const wrapper = mount(
-      <Tag
-        onBeforeRemove={mockOnBeforeRemovePromise}
-        isRemovable
-        onRemove={spy}
-        id={1}
-        value="Ron"
-      />
-    )
-
-    const icon = wrapper.find(Icon)
-    icon.simulate('click')
-
-    jest.runAllTimers()
-
-    expect(spy).toHaveBeenCalled()
-    expect(spy.mock.calls[0][0].id).toBe(1)
-    expect(spy.mock.calls[0][0].value).toBe('Ron')
-  })
-
-  test('Provides onBeforeRemove with id and value', () => {
-    const spy = jest.fn()
-    const mockOnBeforeRemovePromise = props => {
-      spy(props)
-      return { then: cb => cb() }
-    }
-    const wrapper = mount(
-      <Tag
-        isRemovable
-        onBeforeRemove={mockOnBeforeRemovePromise}
-        id={1}
-        value="Ron"
-      />
-    )
+    const wrapper = mount(<Tag isRemovable onRemove={spy} id={1} value="Ron" />)
 
     const icon = wrapper.find(Icon)
     icon.simulate('click')

@@ -1,33 +1,27 @@
-import React, { useContext, useState, useCallback, useEffect } from 'react'
+import React, {
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+} from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Flexy from '../Flexy'
-import Truncate from '../Truncate'
 import classNames from 'classnames'
-import { noop, promiseNoop } from '../../utilities/other'
+import { noop } from '../../utilities/other'
 import { TagListContext } from '../TagList/TagList'
-import {
-  AnimateUI,
-  TagWrapperUI,
-  TagUI,
-  BodyUI,
-  SpinnerUI,
-  IconUI,
-  IconWrapperUI,
-  TextUI,
-} from './Tag.css'
+import { TagUI, RemoveIconUI, IconWrapperUI, TruncateUI } from './Tag.css'
 
 export const tagClassName = 'c-Tag'
 
-const getFontSize = ({ allCaps, defaultFontsize = 12 }) =>
-  `${allCaps ? defaultFontsize - 1 : defaultFontsize}`
+const useExtendPropsWithContext = (nextProps, context) => {
+  const contextValue = useContext(context) || {}
+  return { ...nextProps, ...contextValue }
+}
 
-export const Tag = props => {
-  const contextValue = useContext(TagListContext)
-  const newProps = { ...props, ...contextValue }
+export const Tag = nextProps => {
   const {
     allCaps,
-    animationDuration,
     children,
     className,
     color,
@@ -36,106 +30,93 @@ export const Tag = props => {
     id,
     isRemovable,
     onRemove,
-    onBeforeRemove,
-    pulsing,
+    isRemoving: isRemovingProp,
     showTooltipOnTruncate,
     size,
     value,
+    onClick,
+    href,
     ...rest
-  } = newProps
+  } = useExtendPropsWithContext(nextProps, TagListContext)
 
-  const [isRemoving, setRemoving] = useState(newProps.isRemoving)
-  const [transitionIn, setTransitionIn] = useState(true)
+  const tagRef = useRef()
 
-  const handleOnRemove = useCallback(() => {
-    setRemoving(true)
+  const [isRemoving, setRemoving] = useState(isRemovingProp)
+  const [shouldRender, setRender] = useState(true)
 
-    onBeforeRemove({ id, value }).then(() => {
-      setTransitionIn(false)
-      setTimeout(() => {
-        onRemove({ id, value })
-      }, animationDuration)
-    })
-  }, [animationDuration, value, id])
+  const hideTag = useCallback(() => {
+    onRemove({ id, value })
+    setRender(false)
+  }, [onRemove, id, value])
+
+  const handleTransitionEnd = useCallback(
+    e => {
+      if (e.target === tagRef.current && isRemoving) {
+        hideTag()
+      }
+    },
+    [hideTag, isRemoving]
+  )
+
+  const handleClick = useCallback(
+    e => {
+      onClick && onClick(e, { id, value })
+      if (isRemovable) setRemoving(true)
+    },
+    [onClick, isRemovable, id, value]
+  )
+
+  const isClickable = Boolean(onClick) || Boolean(href) || isRemovable
 
   useEffect(() => {
-    setRemoving(newProps.isRemoving)
-  }, [newProps.isRemoving])
+    if (isRemovingProp && tagRef.current) {
+      hideTag()
+    }
+  }, [isRemovingProp, hideTag])
 
-  const wrapperClassNames = classNames(
-    'c-TagWrapper',
-    display && `is-display-${display}`
-  )
-  const spinnerAndIconClassNames = classNames(
-    filled && 'is-filled',
-    `is-${size}`
-  )
   const componentClassNames = classNames(
     tagClassName,
+    display && `is-display-${display}`,
     color && `is-${color}`,
+    isClickable && 'is-clickable',
     filled && 'is-filled',
-    pulsing && 'is-pulsing',
     isRemovable && 'is-removable',
+    !isRemoving && 'element-in',
+    allCaps && 'is-all-caps',
     size && `is-${size}`,
     className
   )
 
-  const removeIconComponent = isRemovable ? (
-    <Flexy.Item className="c-Tag__iconWrapper">
-      <IconWrapperUI className={spinnerAndIconClassNames}>
-        {isRemoving && (
-          <SpinnerUI className={spinnerAndIconClassNames} size="xs" />
-        )}
-        {!isRemoving && (
-          <IconUI
-            name="cross-small"
-            size={size === 'sm' ? '18' : '24'}
-            clickable
-            onClick={handleOnRemove}
-            title="Remove"
-            className={spinnerAndIconClassNames}
-          />
-        )}
-      </IconWrapperUI>
-    </Flexy.Item>
-  ) : null
-
-  return (
-    <TagWrapperUI className={wrapperClassNames}>
-      <AnimateUI
-        className="c-TagWrapper__animate"
-        duration={animationDuration}
-        in={transitionIn}
-        unmountOnExit
+  return shouldRender ? (
+    <TagUI
+      {...getValidProps(rest)}
+      className={componentClassNames}
+      as={isClickable ? 'button' : 'div'}
+      ref={tagRef}
+      onTransitionEnd={handleTransitionEnd}
+      onClick={handleClick}
+    >
+      <TruncateUI
+        className="c-Tag__textWrapper"
+        showTooltipOnTruncate={showTooltipOnTruncate}
       >
-        <TagUI {...getValidProps(rest)} className={componentClassNames}>
-          <BodyUI className="c-Tag__body" gap="none">
-            <Flexy.Block className="c-Tag__contentWrapper">
-              <TextUI allCaps={allCaps} block size={getFontSize(newProps)}>
-                <Truncate
-                  className="c-Tag__textWrapper"
-                  showTooltipOnTruncate={showTooltipOnTruncate}
-                >
-                  {value || children || null}
-                </Truncate>
-              </TextUI>
-            </Flexy.Block>
-            {removeIconComponent}
-          </BodyUI>
-        </TagUI>
-      </AnimateUI>
-    </TagWrapperUI>
-  )
+        {value || children || null}
+      </TruncateUI>
+      {isRemovable && (
+        <IconWrapperUI>
+          <RemoveIconUI name="cross-small" size={18} title="Remove" />
+        </IconWrapperUI>
+      )}
+    </TagUI>
+  ) : null
 }
 
 Tag.defaultProps = {
-  animationDuration: 100,
   color: 'grey',
   'data-cy': 'Tag',
-  display: 'inlineBlock',
+  display: 'inline',
   isRemovable: false,
   isRemoving: false,
-  onBeforeRemove: promiseNoop,
   onRemove: noop,
   showTooltipOnTruncate: true,
   value: '',
@@ -143,7 +124,6 @@ Tag.defaultProps = {
 }
 
 Tag.propTypes = {
-  animationDuration: PropTypes.number,
   /** Renders text in Uppercase */
   allCaps: PropTypes.bool,
   /** Custom class names to be added to the component. */
@@ -151,17 +131,17 @@ Tag.propTypes = {
   /** Determines the color of the component. */
   color: PropTypes.oneOf([
     'blue',
-    'lightBlue',
     'green',
     'grey',
-    'gray',
     'orange',
+    'pink',
     'purple',
     'red',
+    'teal',
     'yellow',
   ]),
   /** Determines the CSS `display` of the component. Default `inlineBlock`. */
-  display: PropTypes.oneOf(['block', 'inlineBlock']),
+  display: PropTypes.oneOf(['block', 'inline']),
   /** Applies a filled in color style to the component. */
   filled: PropTypes.bool,
   /** ID of the component. */
@@ -172,10 +152,6 @@ Tag.propTypes = {
   isRemoving: PropTypes.bool,
   /** Apply a different size to the component */
   size: PropTypes.oneOf(['sm', 'md']),
-  /** Applies a pulsing animation. */
-  pulsing: PropTypes.bool,
-  /** Function that returns a promise to resolve before removing. */
-  onBeforeRemove: PropTypes.func,
   /** Callback function when component is removed and unmounted. */
   onRemove: PropTypes.func,
   /** Renders a `Tooltip` if content is truncated. */
