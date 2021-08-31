@@ -192,6 +192,12 @@ export const TableUI = styled('table')`
       cursor: pointer;
     }
   }
+  &.selection-enabled {
+    tbody tr:hover {
+      background-color: ${props => props.theme.bgSelectedHover};
+      cursor: pointer;
+    }
+  }
 `
 
 export const HeaderCellUI = styled('th')`

@@ -8,7 +8,7 @@ export const GridUI = styled('div')`
 
 export const ConvoListUI = styled('div')`
   margin-bottom: 40px;
-  font-size: 14px;
+  font-size: 13px;
 
   .c-Table__Header {
     color: ${getColor('charcoal.300')};
@@ -17,6 +17,10 @@ export const ConvoListUI = styled('div')`
 
   .convo-active td {
     font-weight: 700;
+  }
+
+  .c-Table__Cell.Column_Customer {
+    font-size: 14px;
   }
 
   .replying td:first-child,
@@ -107,7 +111,7 @@ export const ConversationCellUI = styled('div')`
   }
 
   tr.is-row-selected &::after {
-    box-shadow: inset -7px 0px 7px ${getColor('yellow.100')};
+    box-shadow: inset -7px 0px 7px ${getColor('blue.100')};
   }
 
   tr.c-Table__Row:focus &::after {
@@ -115,6 +119,6 @@ export const ConversationCellUI = styled('div')`
   }
 
   tr.c-Table__Row:hover &::after {
-    box-shadow: inset -7px 0px 7px ${getColor('grey.300')};
+    box-shadow: inset -7px 0px 7px ${getColor('blue.100')};
   }
 `

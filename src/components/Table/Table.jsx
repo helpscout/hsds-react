@@ -130,6 +130,7 @@ export function Table({
             className={classNames(
               TABLE_CLASSNAME,
               Boolean(onRowClick) && 'with-clickable-rows',
+              withSelectableRows && 'selection-enabled',
               tableClassName
             )}
             tableWidth={tableWidth}
