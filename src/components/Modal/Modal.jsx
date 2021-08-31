@@ -399,6 +399,7 @@ Modal.defaultProps = {
   containTabKeyPress: true,
   'data-cy': 'Modal',
   description: null,
+  focusModalOnShow: true,
   icon: null,
   iconSize: '24',
   illo: null,
