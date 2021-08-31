@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Inline from '../Inline'
 import Overflow from '../Overflow'
 import classNames from 'classnames'
-import { noop, promiseNoop } from '../../utilities/other'
+import { noop } from '../../utilities/other'
 import { TagListUI, ClearAllUI } from './TagList.css'
 
 export const tagListClassName = 'c-TagList'
@@ -14,7 +14,6 @@ export const TagList = props => {
     overflowFade,
     onRemove,
     onRemoveAll,
-    onBeforeRemove,
     children,
     isRemovable,
     clearAll,
@@ -51,7 +50,7 @@ export const TagList = props => {
   })
 
   const componentMarkup = <Inline size={size}>{childrenMarkup}</Inline>
-  const contextValue = { onBeforeRemove, isRemovable, onRemove: handleOnRemove }
+  const contextValue = { isRemovable, onRemove: handleOnRemove }
 
   return (
     <TagListUI {...getValidProps(rest)} className={componentClassNames}>
@@ -68,7 +67,6 @@ export const TagList = props => {
 
 TagList.defaultProps = {
   'data-cy': 'TagList',
-  onBeforeRemove: promiseNoop,
   onRemove: noop,
   onRemoveAll: noop,
   overflowFade: false,
@@ -83,8 +81,6 @@ TagList.propTypes = {
   className: PropTypes.string,
   /** Enables the ability to remove child `Tag` components. */
   isRemovable: PropTypes.bool,
-  /** Function that returns a promise to resolve before removing. */
-  onBeforeRemove: PropTypes.func,
   /** Callback function when a child `Tag` is removed and unmounted. */
   onRemove: PropTypes.func,
   /** Callback function when a the clear all button was clicked */

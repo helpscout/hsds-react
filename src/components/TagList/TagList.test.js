@@ -75,14 +75,9 @@ describe('isRemovable', () => {
 describe('onRemove', () => {
   test('Fires callback from tag, if specified', () => {
     const spy = jest.fn()
-    const mockOnBeforeRemovePromise = () => ({ then: cb => cb() })
 
     const wrapper = mount(
-      <TagList
-        onBeforeRemove={mockOnBeforeRemovePromise}
-        onRemove={spy}
-        isRemovable
-      >
+      <TagList onRemove={spy} isRemovable>
         <Tag id={1} />
         <Tag id={2} />
       </TagList>

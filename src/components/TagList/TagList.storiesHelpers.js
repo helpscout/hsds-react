@@ -10,14 +10,6 @@ export class TagListExample extends Component {
     }
   }
 
-  onBeforeRemove({ id }) {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        resolve()
-      }, 500)
-    })
-  }
-
   handleOnRemove = ({ id }) => {
     this.setState({
       tags: this.state.tags.filter(tag => tag.id !== id),
@@ -42,7 +34,6 @@ export class TagListExample extends Component {
 
     return (
       <TagList
-        onBeforeRemove={this.onBeforeRemove}
         onRemove={this.handleOnRemove}
         onRemoveAll={this.handleOnRemoveAll}
         {...this.props}
