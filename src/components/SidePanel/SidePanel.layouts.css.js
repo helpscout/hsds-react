@@ -33,7 +33,7 @@ export const BodyUI = styled('div')`
   width: 100%;
   background-color: transparent;
   flex-grow: 1;
-  padding: 18px;
+  padding: 20px;
   overflow: auto;
 `
 
