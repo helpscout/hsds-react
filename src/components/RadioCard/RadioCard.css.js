@@ -62,7 +62,10 @@ export const IconWrapperUI = styled('div')`
   min-height: ${({ iconSize }) => (iconSize ? `${iconSize}px` : '52px')};
   margin-bottom: ${({ withHeading }) => (withHeading ? '0' : '10px')};
   color: ${getColor('charcoal.200')};
-  opacity: 0.5;
+
+  .has-selected-value &:not(.is-checked) {
+    opacity: 0.5;
+  }
 
   &.is-checked {
     opacity: 1;
@@ -80,11 +83,17 @@ export const HeadingUI = styled(Heading)`
 export const ContentUI = styled(Text)`
   font-size: 13px;
   margin-bottom: 10px;
-  color: ${getColor('charcoal.200')};
+  color: ${getColor('charcoal.500')};
   text-align: center;
 
-  .is-checked & {
+  .has-selected-value &,
+  .with-heading & {
+    color: ${getColor('charcoal.200')};
+  }
+
+  .is-checked:not(.with-heading) & {
     color: ${getColor('charcoal.600')};
+    font-weight: 500;
   }
 `
 
