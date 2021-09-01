@@ -197,6 +197,7 @@ export class Pagination extends React.PureComponent {
       className,
       innerRef,
       onChange,
+      renderCustomContent,
       separator,
       showNavigation,
       subject,
@@ -212,14 +213,24 @@ export class Pagination extends React.PureComponent {
         className={componentClassName}
         ref={innerRef}
       >
-        <InformationUI>
-          <Text size={13}>
-            {this.renderRange()}
-            {subject && (
-              <span className="c-Pagination__subject">{` ${this.getSubject()}`}</span>
-            )}
-          </Text>
-        </InformationUI>
+        {renderCustomContent ? (
+          renderCustomContent({
+            currentPage: this.getCurrentPage(),
+            endRange: formatNumber(this.getEndRange()),
+            numberOfPages: this.getNumberOfPages(),
+            startRange: formatNumber(this.getStartRange()),
+            pluralizedSubject: this.getSubject(),
+          })
+        ) : (
+          <InformationUI>
+            <Text size={13}>
+              {this.renderRange()}
+              {subject && (
+                <span className="c-Pagination__subject">{` ${this.getSubject()}`}</span>
+              )}
+            </Text>
+          </InformationUI>
+        )}
         {this.shouldShowNavigation() && this.renderNavigation()}
       </PaginationUI>
     )
@@ -249,14 +260,16 @@ Pagination.propTypes = {
   isLoading: PropTypes.bool,
   /** Callback when current page is changed. */
   onChange: PropTypes.func,
+  /** Pluralize subject. If empty subject will be automaticaly pluralize */
+  pluralizedSubject: PropTypes.string,
+  /** Render prop that allows you to render your own custom content, gives you access to `{starRange, endRange, numberOfPages, currentPage, pluralizedSubject}` */
+  renderCustomContent: PropTypes.func,
   /** Number of items per page */
   rangePerPage: PropTypes.number,
   /** Add a navigation to the component */
   showNavigation: PropTypes.bool,
   /** Pagination label after the range */
   subject: PropTypes.string,
-  /** Pluralize subject. If empty subject will be automaticaly pluralize */
-  pluralizedSubject: PropTypes.string,
   /** Total of items */
   totalItems: PropTypes.number,
   separator: PropTypes.string,

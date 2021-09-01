@@ -108,6 +108,12 @@ export const ListItemUI = styled('li')`
       background-color: white;
     }
 
+    &.is-disabled.is-selected,
+    &.is-highlighted.is-disabled.is-selected {
+      color: ${getColor('charcoal.400')};
+      background-color: white;
+    }
+
     &.is-highlighted {
       color: ${getColor('charcoal.800')};
       background-color: ${getColor('blue.100')};
@@ -115,10 +121,28 @@ export const ListItemUI = styled('li')`
   }
 
   &.is-disabled,
+  &.is-highlighted.is-disabled,
+  &.with-multiple-selection.is-highlighted.is-disabled,
   &.with-multiple-selection.is-disabled {
     color: ${getColor('charcoal.200')};
     background-color: transparent;
     cursor: default;
+  }
+
+  &.is-reset-item {
+    height: 50px;
+    margin: 0 5px;
+    padding: 0 15px;
+    line-height: 50px;
+    color: ${getColor('charcoal.300')};
+
+    &.is-highlighted,
+    &:hover {
+      color: ${getColor('charcoal.300')};
+      text-decoration: underline;
+      cursor: pointer;
+      background-color: transparent;
+    }
   }
 `
 
@@ -158,6 +182,13 @@ const SelectedBadgeUI = styled('div')`
     background-color: ${getColor('blue.500')};
   }
 
+  .is-disabled &,
+  .DropListItem.is-disabled:hover & {
+    opacity: 1;
+    color: white;
+    background-color: ${getColor('grey.600')};
+  }
+
   .DropListItem:hover & {
     opacity: 1;
     background-color: white;
@@ -173,9 +204,9 @@ export const SelectedBadge = ({ isSelected }) => {
 }
 
 export const DividerUI = styled('div')`
-  width: 100%;
+  width: calc(100% - 10px);
   height: 1px;
-  margin: 9px 0;
+  margin: 9px 5px;
   background-color: ${getColor('grey.500')};
 `
 

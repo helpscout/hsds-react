@@ -85,3 +85,29 @@ A Pagination component listing the current items visible for a given range. It c
     />
   </Story>
 </Canvas>
+
+#### Custom Content
+
+<Canvas>
+  <Story name="custom content">
+    <Pagination
+      totalItems={number('totalItems', 255)}
+      rangePerPage={number('rangePerPage', 30)}
+      subject={text('subject', 'conversation')}
+      activePage={number('activePage', 5)}
+      renderCustomContent={({
+        startRange,
+        endRange,
+        numberOfPages,
+        currentPage,
+        pluralizedSubject,
+      }) => {
+        return (
+          <div style={{ fontFamily: 'monospace' }}>
+            {number('totalItems', 255)} total {pluralizedSubject} • 26 active
+          </div>
+        )
+      }}
+    />
+  </Story>
+</Canvas>

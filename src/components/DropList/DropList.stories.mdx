@@ -552,6 +552,7 @@ function renderCustomListItem({
     >
       <DropList
         items={disabledItems}
+        selection={[disabledItems[0]]}
         closeOnSelection={false}
         onSelect={selection => {
           console.log('selection', selection)
@@ -628,6 +629,56 @@ Depending on your use case, you might want to set `closeOnSelection = false` whe
     </div>
   </Story>
 </Canvas>
+
+### With Reset Selection Item
+
+Use `withResetSelectionItem` to add an extra item to the end of the list that will have a type of `reset_droplist` so you can assign a different action when clicked, this normally only makes sense in multiple selection DropLists.
+
+Pass a string to customize the text, by default is "Reset".
+
+Example:
+
+```jsx
+<DropList
+  items={items}
+  onSelect={(selection, clickedItem) => {
+    if (clickedItem.type === 'reset_droplist') {
+      clearSelection()
+    }
+  }}
+  selection={columns.filter(shouldColumnShow)}
+  withMultipleSelection
+  withResetSelectionItem="Clear selection"
+/>
+```
+
+<Canvas>
+  <Story name="With Reset Item">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        items={regularItems.slice(0, 3)}
+        onSelect={(selection, clickedItem) => {
+          if (clickedItem.type === 'reset_droplist') {
+            console.log('RESET CLICKED')
+          }
+        }}
+        toggler={<SimpleButton text="Click" />}
+        withMultipleSelection
+        withResetSelectionItem="Clear selection"
+      />
+    </div>
+  </Story>
+</Canvas>
+
+See [Table > Column Chooser](href="/?path=/docs/components-structural-table--with-column-chooser") for an implementation.
 
 ### Togglers
 

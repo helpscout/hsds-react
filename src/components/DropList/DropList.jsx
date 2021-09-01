@@ -12,6 +12,8 @@ import {
   flattenListItems,
   getDropListVariant,
   getItemContentKeyName,
+  isItemReset,
+  isItemRegular,
   isTogglerOfType,
   itemToString,
   parseSelectionFromProps,
@@ -53,6 +55,7 @@ function DropListManager({
   toggler = {},
   variant = VARIANTS.SELECT,
   withMultipleSelection = false,
+  withResetSelectionItem,
 }) {
   const [isOpen, setOpenedState] = useState(false)
   const tippyInstanceRef = useRef(null)
@@ -64,7 +67,9 @@ function DropListManager({
   const [selectedItems, setSelectedItems] = useState(
     withMultipleSelection ? parsedSelection : []
   )
-  const [parsedItems, setParsedItems] = useState(flattenListItems(items))
+  const [parsedItems, setParsedItems] = useState(
+    flattenListItems(items, withMultipleSelection && withResetSelectionItem)
+  )
 
   const { getCurrentScope } = useContext(GlobalContext) || {}
   const scope = getCurrentScope ? getCurrentScope() : null
@@ -75,7 +80,7 @@ function DropListManager({
   const Toggler = decorateUserToggler(toggler)
   const DropListVariant = getDropListVariant({
     autoSetComboboxAt,
-    numberOfItems: parsedItems.length,
+    numberOfItems: parsedItems.filter(isItemRegular).length,
     variant,
   })
 
@@ -90,8 +95,10 @@ function DropListManager({
   }, [{ state: parsedSelection }, withMultipleSelection])
 
   useDeepCompareEffect(() => {
-    setParsedItems(flattenListItems(items))
-  }, [items])
+    setParsedItems(
+      flattenListItems(items, withMultipleSelection && withResetSelectionItem)
+    )
+  }, [items, withMultipleSelection, withResetSelectionItem])
 
   useEffect(() => {
     setOpenedState(isMenuOpen)
@@ -181,10 +188,13 @@ function DropListManager({
               item: itemToRemove,
               key: contentKey,
             })
+          } else if (isItemReset(selectedItem)) {
+            updatedSelection = selectedItems
           }
         }
 
         setSelectedItems(updatedSelection)
+        setSelectedItem(updatedSelection.length ? selectedItem : null)
         onSelect(updatedSelection, selectedItem)
       }
     } else {
@@ -364,6 +374,11 @@ DropListManager.propTypes = {
   variant: PropTypes.oneOf(['select', 'Select', 'combobox', 'Combobox']),
   /** Enable multiple selection of items */
   withMultipleSelection: PropTypes.bool,
+  /** Adds an "inert" item at the end of the list with a type of `reset_droplist`, use it to implement a "Clear Selection" or "Reset to defaults" type of option */
+  withResetSelectionItem: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool,
+  ]),
 }
 
 export default DropListManager
