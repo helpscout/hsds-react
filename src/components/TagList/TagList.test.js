@@ -1,50 +1,26 @@
 import React from 'react'
 import { mount } from 'enzyme'
+
+import { render } from '@testing-library/react'
+
 import TagList from './TagList'
-import { Icon, Inline, Overflow, Tag } from '../index'
+import { Icon, Overflow, Tag } from '../index'
 import { ClearAllUI, TagListUI } from './TagList.css'
 
 jest.useFakeTimers()
 
-describe('ClassName', () => {
+describe.only('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = mount(<TagList />)
+    const { getByTestId } = render(<TagList />)
 
-    expect(wrapper.getDOMNode().classList.contains('c-TagList')).toBeTruthy()
+    expect(getByTestId('TagList')).toHaveClass('c-TagList')
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = mount(<TagList className={customClass} />)
+    const { getByTestId } = render(<TagList className={customClass} />)
 
-    expect(wrapper.prop('className')).toContain(customClass)
-  })
-})
-
-describe('Inline', () => {
-  test('Renders content within Inline', () => {
-    const wrapper = mount(
-      <TagList>
-        <Tag />
-      </TagList>
-    )
-    const inline = wrapper.find(Inline)
-    const inlineItem = wrapper.find(Inline.Item)
-    const tag = inlineItem.find(Tag)
-
-    expect(inline.length).toBe(1)
-    expect(inlineItem.length).toBe(1)
-    expect(tag.length).toBe(1)
-  })
-
-  test('Does set the size prop on the Inline component', () => {
-    const wrapper = mount(
-      <TagList size="md">
-        <Tag id={1} />
-      </TagList>
-    )
-    const inline = wrapper.find(Inline)
-    expect(inline.props().size).toBe('md')
+    expect(getByTestId('TagList')).toHaveClass(customClass)
   })
 })
 

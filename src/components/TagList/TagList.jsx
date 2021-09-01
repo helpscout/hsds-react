@@ -54,7 +54,11 @@ export const TagList = props => {
 
   return (
     <TagListContext.Provider value={contextValue}>
-      <TagListUI {...getValidProps(rest)} className={componentClassNames}>
+      <TagListUI
+        {...getValidProps(rest)}
+        className={componentClassNames}
+        data-testid="TagList"
+      >
         {overflowFade ? (
           <Overflow>{componentMarkup}</Overflow>
         ) : (
