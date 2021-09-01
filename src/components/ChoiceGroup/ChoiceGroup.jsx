@@ -193,7 +193,7 @@ function hasSelectedValue(value) {
   if (Array.isArray(value)) {
     return value.length > 0
   }
-  if (value !== null) {
+  if (value != null) {
     return true
   }
   return false
