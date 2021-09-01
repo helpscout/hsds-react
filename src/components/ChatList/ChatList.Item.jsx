@@ -28,6 +28,7 @@ import {
   TagListWrapperUI,
   AvatarListWrapperUI,
   DividerWrapperUI,
+  PulsingTagUI,
 } from './ChatList.css'
 
 class Item extends React.Component {
@@ -95,9 +96,9 @@ class Item extends React.Component {
     const waitingMarkup = isWaiting ? (
       <Flexy.Item className="c-ChatListItem__waiting">
         <Animate sequence="fade scale" delay={100} duration={200}>
-          <Tag color="red" pulsing allCaps display="block">
+          <PulsingTagUI color="red" pulsing allCaps display="block">
             Waiting
-          </Tag>
+          </PulsingTagUI>
         </Animate>
       </Flexy.Item>
     ) : null
