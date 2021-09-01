@@ -29,6 +29,19 @@ export const IconWrapperUI = styled('div')`
   overflow: hidden;
 `
 
+export const CountUI = styled('div')`
+  min-width: 18px;
+  height: 18px;
+  padding: 2px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${getColor('charcoal.600')};
+  background-color: var(--tagColor);
+  border-radius: 100px;
+  margin-left: 4px;
+`
+
 export const TruncateUI = styled(Truncate)`
   &.is-auto {
     flex: 1 1 auto;
@@ -66,6 +79,7 @@ export const TagUI = styled('div')`
   opacity: 0;
   transition: 0.3s ease-out opacity;
   line-height: 1;
+  outline: none;
 
   &.is-all-caps {
     text-transform: uppercase;
@@ -125,6 +139,10 @@ export const TagUI = styled('div')`
 
   &.is-filled {
     background-color: var(--tagColor);
+
+    ${CountUI} {
+      background-color: white;
+    }
   }
 
   &.is-clickable {

@@ -10,7 +10,13 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import { TagListContext } from '../TagList/TagList'
-import { TagUI, RemoveIconUI, IconWrapperUI, TruncateUI } from './Tag.css'
+import {
+  TagUI,
+  RemoveIconUI,
+  IconWrapperUI,
+  TruncateUI,
+  CountUI,
+} from './Tag.css'
 
 export const tagClassName = 'c-Tag'
 
@@ -25,6 +31,7 @@ export const Tag = nextProps => {
     children,
     className,
     color,
+    count,
     display,
     filled,
     id,
@@ -67,6 +74,7 @@ export const Tag = nextProps => {
   )
 
   const isClickable = Boolean(onClick) || Boolean(href) || isRemovable
+  const shouldShowCount = Number.isInteger(count) && size === 'md'
 
   useEffect(() => {
     if (isRemovingProp && tagRef.current) {
@@ -84,6 +92,7 @@ export const Tag = nextProps => {
     !isRemoving && 'element-in',
     allCaps && 'is-all-caps',
     size && `is-${size}`,
+    shouldShowCount && 'has-count',
     className
   )
 
@@ -102,6 +111,7 @@ export const Tag = nextProps => {
       >
         {value || children || null}
       </TruncateUI>
+      {shouldShowCount && <CountUI>{count}</CountUI>}
       {isRemovable && (
         <IconWrapperUI>
           <RemoveIconUI name="cross-small" size={18} title="Remove" />
@@ -140,6 +150,8 @@ Tag.propTypes = {
     'teal',
     'yellow',
   ]),
+  /** Renders a badge within a medium tag */
+  count: PropTypes.number,
   /** Determines the CSS `display` of the component. Default `inlineBlock`. */
   display: PropTypes.oneOf(['block', 'inline']),
   /** Applies a filled in color style to the component. */
