@@ -14,7 +14,8 @@ export const defaultSkin = {
   borderColumns: 'none',
   bgFocus: getColor('blue.100'),
   bgFocusIndicator: getColor('blue.500'),
-  bgSelected: getColor('yellow.100'),
+  bgSelected: getColor('blue.100'),
+  bgSelectedHover: getColor('blue.100'),
 }
 
 export const alternativeSkin = {

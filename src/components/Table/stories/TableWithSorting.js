@@ -66,8 +66,9 @@ export default class TablePlayground extends Component {
         <Table
           columns={columns}
           data={data}
-          sortedInfo={sortedInfo}
           isLoading={isLoading}
+          sortedInfo={sortedInfo}
+          tableDescription="Example table with sorting"
         />
       </div>
     )

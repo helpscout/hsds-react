@@ -340,7 +340,7 @@ export const IconBtn = forwardRef(
             <Icon name={iconName} size={iconSize} />
           </Tooltip>
         ) : (
-          <Icon Name={iconName} Size={iconSize} />
+          <Icon name={iconName} size={iconSize} />
         )}
         {a11yLabel ? <VisuallyHidden>{a11yLabel}</VisuallyHidden> : null}
         {withCaret ? <Icon name="caret-down" size={caretSize} /> : null}

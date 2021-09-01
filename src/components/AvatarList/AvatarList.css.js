@@ -19,7 +19,8 @@ export const AvatarListUI = styled('div')`
   display: inline-flex;
   position: relative;
 
-  &.is-withLayerStack {
+  &.horizontally-stacked {
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     margin: auto;
@@ -27,7 +28,6 @@ export const AvatarListUI = styled('div')`
     min-height: 64px;
     width: 100%;
     min-width: 0;
-
     padding-left: ${config.borderWidth * 3}px;
 
     ${ItemUI} {
@@ -36,6 +36,33 @@ export const AvatarListUI = styled('div')`
 
       &:first-child {
         margin-left: 0;
+      }
+    }
+  }
+
+  &.vertically-stacked {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 64px;
+    margin: auto;
+    padding-top: ${config.borderWidth * 3}px;
+
+    ${ItemUI} {
+      margin-top: -9px;
+      padding-top: 0;
+
+      &:first-child {
+        margin-top: 0;
+      }
+
+      .c-Avatar__cropBorder {
+        top: -1px;
+        bottom: -1px;
+        left: -1px;
+        right: -1px;
+        border-width: 1px;
       }
     }
   }
@@ -54,12 +81,9 @@ export const AvatarListUI = styled('div')`
   }
 `
 
-export const AvatarListWrapperUI = styled.div`
-  &.is-center{
+export const AvatarListWrapperUI = styled('div')`
+  &.is-center {
     justify-content: center;
     text-align: center;
   }
-  /* &.is-center ${AvatarListUI} {
-    justify-content: center;
-  } */
 `
