@@ -8,7 +8,7 @@ import EditableTextarea from '.'
 export const ValidationApp = () => (
   <ContainerUI>
     <NoteUI>
-      <p>Type:</p>
+      <p>Type anywhere in the textarea (for multiple lines testing):</p>
       <ul>
         <li>
           <strong>"off"</strong> to get the error style
@@ -33,17 +33,18 @@ export const ValidationApp = () => (
 )
 
 function validateFieldValue(payload) {
-  console.log('validating')
-
   const { name, value } = payload
-  let isValid = value !== 'off' && value !== 'other' && value !== 'warn'
+  let isValid =
+    !value.includes('off') &&
+    !value.includes('other') &&
+    !value.includes('warn')
 
   return new Promise(resolve => {
     setTimeout(function () {
       if (isValid) {
         resolve({ isValid, name, value })
       } else {
-        if (value === 'off') {
+        if (value.includes('off')) {
           resolve({
             isValid,
             name,
@@ -51,7 +52,7 @@ function validateFieldValue(payload) {
             type: 'error',
             message: 'That is definitely not right',
           })
-        } else if (value === 'warn') {
+        } else if (value.includes('warn')) {
           resolve({
             isValid,
             name,
@@ -59,7 +60,7 @@ function validateFieldValue(payload) {
             type: 'warning',
             message: "That's it, you have been warned",
           })
-        } else if (value === 'other') {
+        } else if (value.includes('other')) {
           resolve({
             isValid,
             name,

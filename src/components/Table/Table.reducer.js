@@ -7,6 +7,8 @@ import {
   DESELECT_ALL_ROWS,
   SELECT_ROW,
   DESELECT_ROW,
+  UPDATE_COLUMNS,
+  RESET_COLUMNS,
 } from './Table.actionTypes'
 
 export default function reducer(state, { type, payload, opts = {} }) {
@@ -61,6 +63,23 @@ export default function reducer(state, { type, payload, opts = {} }) {
         ...state,
         selectedRows: removedFromSelection,
       }
+
+    case UPDATE_COLUMNS:
+      return {
+        ...state,
+        columns: payload.columns.map(column => {
+          const newColumn = { ...column }
+
+          if (newColumn.title === payload.clickedColumn.label) {
+            newColumn.show = !payload.clickedColumn.remove
+          }
+
+          return newColumn
+        }),
+      }
+
+    case RESET_COLUMNS:
+      return { ...state, columns: payload.columns }
 
     default:
       return state

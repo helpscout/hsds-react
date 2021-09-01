@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import AvatarList, { getAvatarSize } from './AvatarList'
-import { Animate, Avatar } from '../index'
+import { Animate, Avatar, Tooltip } from '../index'
 
 describe('ClassName', () => {
   test('Has default className', () => {
@@ -19,9 +19,16 @@ describe('ClassName', () => {
     expect(el.length).toBeTruthy()
   })
 
-  test('Adds stack class when appropriate', () => {
-    const wrapper = mount(<AvatarList stack />)
-    const el = wrapper.find('.is-withLayerStack')
+  test('Adds horizontal stack class when appropriate', () => {
+    const wrapper = mount(<AvatarList stack="horizontal" />)
+    const el = wrapper.find('.horizontally-stacked')
+
+    expect(el.length).toBeTruthy()
+  })
+
+  test('Adds vertical stack class when appropriate', () => {
+    const wrapper = mount(<AvatarList stack="vertical" />)
+    const el = wrapper.find('.vertically-stacked')
 
     expect(el.length).toBeTruthy()
   })
@@ -42,10 +49,10 @@ describe('ClassName', () => {
 })
 
 describe('AvatarList', () => {
-  test('get correct avatar size ', () => {
-    expect(getAvatarSize({ stack: true, count: 3, max: 2 })).toBe('lg')
-    expect(getAvatarSize({ stack: true, count: 3, max: 3 })).toBe('md')
-    expect(getAvatarSize({ stack: true, count: 1, max: 2 })).toBe('xl')
+  test('get correct avatar size when horizontally stacked', () => {
+    expect(getAvatarSize({ stack: 'horizontal', count: 3, max: 2 })).toBe('lg')
+    expect(getAvatarSize({ stack: 'horizontal', count: 3, max: 3 })).toBe('md')
+    expect(getAvatarSize({ stack: 'horizontal', count: 1, max: 2 })).toBe('xl')
   })
 })
 
@@ -96,5 +103,27 @@ describe('Limit', () => {
 
     expect(avatar.length).toBe(4)
     expect(additionalCounter.text()).not.toBe('+2')
+  })
+
+  test('should add a tooltip to the extra avatar', () => {
+    const max = 2
+    const wrapper = mount(
+      <AvatarList
+        stack="vertical"
+        max={max}
+        extraTooltipProps={{
+          title: ['John', 'Paul', 'Ringo'].join('\n'),
+          placement: 'bottom',
+        }}
+      >
+        <Avatar />
+        <Avatar />
+        <Avatar />
+        <Avatar />
+      </AvatarList>
+    )
+    const tooltip = wrapper.find(Tooltip)
+
+    expect(tooltip.length).toBe(1)
   })
 })
