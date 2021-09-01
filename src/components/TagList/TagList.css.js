@@ -7,9 +7,32 @@ export const TagListUI = styled('div')`
   overflow: hidden;
   will-change: contents;
 
+  &.is-sm {
+    max-height: 24px;
+  }
+  &.is-md {
+    max-height: 30px;
+  }
+
   &.is-showingAll {
     max-height: none;
   }
+`
+
+export const ListUI = styled.ul`
+  display: block;
+  margin: 0 0 4px 0;
+  padding: 0;
+  max-width: 100%;
+`
+
+export const ItemUI = styled.li`
+  display: inline-flex;
+  margin: 0 4px 4px 0;
+  max-width: 100%;
+  padding: 0;
+  align-items: center;
+  list-style: none;
 `
 
 export const ClearAllUI = styled('button')`

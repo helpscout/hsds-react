@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Inline from '../Inline'
 import Overflow from '../Overflow'
 import classNames from 'classnames'
 import { noop } from '../../utilities/other'
-import { TagListUI, ClearAllUI } from './TagList.css'
+import { TagListUI, ClearAllUI, ListUI, ItemUI } from './TagList.css'
 
 export const tagListClassName = 'c-TagList'
 export const TagListContext = React.createContext()
@@ -26,6 +25,7 @@ export const TagList = props => {
   const componentClassNames = classNames(
     tagListClassName,
     showAll ? 'is-showingAll' : '',
+    size && `is-${size}`,
     className
   )
 
@@ -38,30 +38,30 @@ export const TagList = props => {
       childrenLength - 1 === index && clearAll && childrenLength > 1
 
     return (
-      <Inline.Item>
+      <ItemUI>
         {React.cloneElement(child)}
         {isLastChildWithClearAll && (
           <ClearAllUI key="clearAllButton" onClick={handleOnRemoveAll}>
             Clear all
           </ClearAllUI>
         )}
-      </Inline.Item>
+      </ItemUI>
     )
   })
 
-  const componentMarkup = <Inline size={size}>{childrenMarkup}</Inline>
-  const contextValue = { isRemovable, onRemove: handleOnRemove }
+  const componentMarkup = <ListUI>{childrenMarkup}</ListUI>
+  const contextValue = { isRemovable, size, onRemove: handleOnRemove }
 
   return (
-    <TagListUI {...getValidProps(rest)} className={componentClassNames}>
-      <TagListContext.Provider value={contextValue}>
+    <TagListContext.Provider value={contextValue}>
+      <TagListUI {...getValidProps(rest)} className={componentClassNames}>
         {overflowFade ? (
           <Overflow>{componentMarkup}</Overflow>
         ) : (
           componentMarkup
         )}
-      </TagListContext.Provider>
-    </TagListUI>
+      </TagListUI>
+    </TagListContext.Provider>
   )
 }
 
@@ -73,7 +73,7 @@ TagList.defaultProps = {
   isRemovable: false,
   clearAll: false,
   showAll: false,
-  size: 'xs',
+  size: 'sm',
 }
 
 TagList.propTypes = {
@@ -91,8 +91,8 @@ TagList.propTypes = {
   clearAll: PropTypes.bool,
   /** Display all tag lines */
   showAll: PropTypes.bool,
-  /** Size of the spacing between each tag */
-  size: PropTypes.oneOf(['lg', 'md', 'sm', 'xs']),
+  /** Size of all tag */
+  size: PropTypes.oneOf(['md', 'sm']),
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
 }
