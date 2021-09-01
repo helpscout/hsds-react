@@ -587,6 +587,22 @@ describe('Action', () => {
     expect(avatar.querySelector(`${ui.focusBorder}`)).toBeInTheDocument()
   })
 
+  test('Renders a with a Tooltip', () => {
+    const { container } = render(
+      <Avatar
+        name="Buddy the Elf"
+        image="buddy.jpg"
+        shape="rounded"
+        tooltipProps={{
+          title: 'Ringo',
+          placement: 'bottom',
+        }}
+      />
+    )
+
+    expect(container.querySelector('.TooltipTrigger')).toBeInTheDocument()
+  })
+
   test('Renders an animate svg', () => {
     const { getByTitle } = render(
       <Avatar

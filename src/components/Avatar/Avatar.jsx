@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import StatusDot from '../StatusDot'
-import Icon from '../Icon'
-import { getEasingTiming } from '../../utilities/easing'
 import classNames from 'classnames'
+import { getEasingTiming } from '../../utilities/easing'
 import { nameToInitials } from '../../utilities/strings'
 import { noop } from '../../utilities/other'
+import Icon from '../Icon'
+import StatusDot from '../StatusDot'
+import Tooltip from '../Tooltip'
 import AvatarCrop from './Avatar.Crop'
 import AvatarImage from './Avatar.Image'
 import { getImageSrc } from './Avatar.utils'
@@ -285,6 +286,7 @@ export class Avatar extends React.PureComponent {
       withShadow,
       fallbackImage,
       onActionClick,
+      tooltipProps,
       ...rest
     } = this.props
 
@@ -301,18 +303,16 @@ export class Avatar extends React.PureComponent {
       this.getShapeClassNames(),
       className
     )
-
     const Component = actionable ? AvatarButtonUI : AvatarUI
-
     const extraProps = actionable ? { onClick: onActionClick } : {}
-
-    return (
+    const withTooltip = Boolean(tooltipProps)
+    const AvatarComponent = (
       <Component
         {...getValidProps(rest)}
         data-cy="Avatar"
         className={componentClassName}
         style={this.getStyles()}
-        title={name}
+        title={!withTooltip ? name : null}
         {...extraProps}
       >
         {this.renderCrop()}
@@ -322,16 +322,26 @@ export class Avatar extends React.PureComponent {
         {actionable && this.renderFocusBorder()}
       </Component>
     )
+
+    return !withTooltip ? (
+      AvatarComponent
+    ) : (
+      <Tooltip withTriggerWrapper={false} {...tooltipProps}>
+        {AvatarComponent}
+      </Tooltip>
+    )
   }
 }
 
 const AvatarConsumer = props => {
   const contextValue = React.useContext(AvatarListContext)
+
   if (contextValue) {
     const newProps = { ...props, ...contextValue }
     newProps.className = classNames(props.className, contextValue.className)
     return <Avatar {...newProps} />
   }
+
   return <Avatar {...props} />
 }
 
@@ -359,6 +369,10 @@ Avatar.defaultProps = {
 }
 
 const avatarPropTypes = {
+  active: PropTypes.bool,
+  animation: PropTypes.bool,
+  animationDuration: PropTypes.number,
+  animationEasing: PropTypes.string,
   /** Activate the action overlay that will appear on hover */
   actionable: PropTypes.bool,
   /** Name of the [Icon](../Icon) to render into the action overlay */
@@ -371,6 +385,9 @@ const avatarPropTypes = {
   className: PropTypes.string,
   /** Used to display an additional avatar count. */
   count: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Data attr for Cypress tests. */
+  'data-cy': PropTypes.string,
+  fallbackImage: PropTypes.string,
   /** URL of the image to display. */
   image: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   /** Custom initials to display. */
@@ -397,20 +414,15 @@ const avatarPropTypes = {
   showStatusBorderColor: PropTypes.bool,
   /** Size of the avatar. */
   size: PropTypes.oneOf(['xl', 'lg', 'md', 'smmd', 'sm', 'xs', 'xxs']),
-  /** Text for the image `alt` and `title` attributes. */
-  title: PropTypes.string,
   /** Renders a `StatusDot` with the status type. */
   status: PropTypes.string,
   /** Name of the `Icon` to render into the `StatusDot`. */
   statusIcon: PropTypes.string,
-  active: PropTypes.bool,
-  animation: PropTypes.bool,
-  animationDuration: PropTypes.number,
-  animationEasing: PropTypes.string,
-  fallbackImage: PropTypes.string,
+  /** Text for the image `alt` and `title` attributes. */
+  title: PropTypes.string,
+  /** Wrap the avatar with a Tooltip, accepts all Tooltip props */
+  tooltipProps: PropTypes.object,
   withShadow: PropTypes.bool,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
 }
 
 Avatar.propTypes = avatarPropTypes

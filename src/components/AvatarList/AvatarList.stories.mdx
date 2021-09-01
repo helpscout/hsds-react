@@ -62,13 +62,13 @@ An AvatarList component displays an array of `Avatars`. This component has a max
 
 ### Stories
 
-#### use as AvatarStack replacement
+#### Stacked
 
 <Canvas>
-  <Story name="use as AvatarStack replacement">
+  <Story name="Horizontal Stack">
     <div style={{ background: '#eee', padding: 10 }}>
-      <AvatarList max={number('max', 14)} center stack size="md">
-        {AvatarSpec.generate(20).map(avatar => {
+      <AvatarList max={number('max', 14)} center stack="horizontal" size="md">
+        {AvatarSpec.generate(19).map(avatar => {
           const { name, image, status } = avatar
           return (
             <Avatar
@@ -77,6 +77,42 @@ An AvatarList component displays an array of `Avatars`. This component has a max
               name={name}
               status={status}
               withShadow={boolean('withShadow', true)}
+            />
+          )
+        })}
+      </AvatarList>
+    </div>
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Vertical Stack">
+    <div
+      style={{
+        background: '#f9fafa',
+        padding: 10,
+        margin: 'auto',
+        width: '100px',
+      }}
+    >
+      <AvatarList
+        max={number('max', 6)}
+        center
+        stack="vertical"
+        size="smmd"
+        extraTooltipProps={{
+          title: ['John', 'Paul', 'Ringo'].join('\n'),
+          placement: 'bottom',
+        }}
+      >
+        {AvatarSpec.generate(8).map(avatar => {
+          const { name, image, status } = avatar
+          return (
+            <Avatar
+              borderColor="#f9fafa"
+              image={image}
+              key={name}
+              name={name}
             />
           )
         })}
