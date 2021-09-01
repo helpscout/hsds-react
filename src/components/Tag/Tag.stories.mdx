@@ -53,6 +53,7 @@ A Tag component is a UI element that provide contextual labels for categories/ta
         filled={boolean('filled', false)}
         isRemovable={boolean('isRemovable', false)}
         size={select('Size', { md: 'md', sm: 'sm' }, 'sm')}
+        onClick={() => console.log('tag onClick')}
       >
         My tag
       </Tag>

@@ -20,16 +20,67 @@ export const config = {
   },
 }
 
-export const IconWrapperUI = styled('div')`
-  width: 18px;
-  height: 100%;
+export const RemoveTagUI = styled.button`
+  width: 16px;
+  height: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  opacity: 0.5;
+  position: relative;
+  outline: none;
+  cursor: pointer;
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  margin-top: -8px;
+  border: none;
+  background: transparent;
+  padding: 0;
+
+  // focus border
+  &:before {
+    content: '';
+    border-radius: 4px;
+    bottom: 0;
+    box-shadow: 0 0 0 2px ${getColor('blue.500')};
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    background: transparent;
+    z-index: 3;
+  }
+
+  &:focus {
+    opacity: 1;
+
+    &:before {
+      opacity: 1;
+    }
+  }
+
+  &:focus:not(:focus-visible) {
+    &:before {
+      opacity: 0;
+    }
+  }
+
+  &:focus-visible {
+    &:before {
+      opacity: 1 !important;
+      transition: opacity ease 0.2s;
+    }
+  }
+
+  &:hover {
+    opacity: 1;
+  }
 `
 
-export const CountUI = styled('div')`
+export const CountUI = styled.span`
   min-width: 18px;
   height: 18px;
   padding: 2px 5px;
@@ -39,7 +90,7 @@ export const CountUI = styled('div')`
   color: ${getColor('charcoal.600')};
   background-color: var(--tagColor);
   border-radius: 100px;
-  margin-left: 4px;
+  margin-left: 8px;
 `
 
 export const TruncateUI = styled(Truncate)`
@@ -69,35 +120,21 @@ export const TagUI = styled('div')`
   border-radius: 3px;
   border: 1px solid var(--tagColor);
   color: ${getColor('charcoal.600')};
-  display: inline-flex;
+  display: flex;
+  flex: 1 1 100%;
   align-items: center;
   padding: 0 5px;
   height: 18px;
   max-width: 100%;
   position: relative;
   font-size: 12px;
-  opacity: 0;
-  transition: 0.3s ease-out opacity;
   line-height: 1;
   outline: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 
   &.is-all-caps {
     text-transform: uppercase;
-  }
-
-  &.element-in {
-    opacity: 1;
-  }
-
-  & + & {
-    margin-left: 8px;
-  }
-
-  &.is-display-block {
-    display: flex;
-  }
-  &.is-display-inline {
-    display: inline-flex;
   }
 
   // focus border
@@ -159,46 +196,44 @@ export const TagUI = styled('div')`
   &.is-md {
     padding: 0 8px;
     height: 28px;
+
+    ${RemoveTagUI} {
+      margin-top: -9px;
+      width: 18px;
+      height: 18px;
+    }
   }
 
   &.is-removable {
-    padding-right: 0;
+    padding-right: 16px;
 
     &.is-md {
-      padding-right: 2px;
+      padding-right: 20px;
     }
   }
 `
-/*
-&.is-pulsing {
-    animation: Tag_Blink 2s infinite both;
-    backface-visibility: hidden;
-    filter: blur(0);
-    -webkit-filter: blur(0);
+
+export const TagGroupUI = styled.div`
+  position: relative;
+  display: inline-flex;
+  opacity: 0;
+  transition: 0.3s ease-out opacity;
+
+  &.element-in {
+    opacity: 1;
   }
 
-  @keyframes Tag_Blink {
-    0%,
-    50%,
-    100% {
-      opacity: 1;
-    }
-    25% {
-      opacity: 0.4;
-    }
+  & + & {
+    margin-left: 8px;
   }
-  @keyframes Tag_Blink {
-    0% {
-      opacity: 0.2;
-    }
-    20% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0.2;
-    }
+
+  &.is-display-block {
+    display: flex;
   }
-*/
+  &.is-display-inline {
+    display: inline-flex;
+  }
+`
 
 function makeColorStyles() {
   return forEach(

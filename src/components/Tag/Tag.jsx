@@ -13,9 +13,10 @@ import { TagListContext } from '../TagList/TagList'
 import {
   TagUI,
   RemoveIconUI,
-  IconWrapperUI,
+  RemoveTagUI,
   TruncateUI,
   CountUI,
+  TagGroupUI,
 } from './Tag.css'
 
 export const tagClassName = 'c-Tag'
@@ -68,12 +69,17 @@ export const Tag = nextProps => {
   const handleClick = useCallback(
     e => {
       onClick && onClick(e, { id, value })
-      if (isRemovable) setRemoving(true)
     },
-    [onClick, isRemovable, id, value]
+    [onClick, id, value]
   )
 
-  const isClickable = Boolean(onClick) || Boolean(href) || isRemovable
+  const handleRemove = useCallback(e => {
+    e.preventDefault()
+    e.stopPropagation()
+    setRemoving(true)
+  }, [])
+
+  const isClickable = Boolean(onClick) || Boolean(href)
   const shouldShowCount = Number.isInteger(count) && size === 'md'
 
   useEffect(() => {
@@ -84,40 +90,53 @@ export const Tag = nextProps => {
 
   const componentClassNames = classNames(
     tagClassName,
-    display && `is-display-${display}`,
+
     color && `is-${color}`,
     isClickable && 'is-clickable',
     filled && 'is-filled',
     isRemovable && 'is-removable',
-    !isRemoving && 'element-in',
     allCaps && 'is-all-caps',
     size && `is-${size}`,
     shouldShowCount && 'has-count',
     className
   )
+  const groupClassNames = classNames(
+    display && `is-display-${display}`,
+    !isRemoving && 'element-in'
+  )
 
   return shouldRender ? (
-    <TagUI
-      {...getValidProps(rest)}
-      className={componentClassNames}
-      as={isClickable ? 'button' : 'div'}
-      ref={tagRef}
+    <TagGroupUI
+      className={groupClassNames}
       onTransitionEnd={handleTransitionEnd}
-      onClick={handleClick}
+      ref={tagRef}
+      data-testid="TagGroup"
     >
-      <TruncateUI
-        className="c-Tag__textWrapper"
-        showTooltipOnTruncate={showTooltipOnTruncate}
+      <TagUI
+        {...getValidProps(rest)}
+        className={componentClassNames}
+        as={isClickable ? 'button' : 'div'}
+        onClick={handleClick}
+        data-testid="Tag"
       >
-        {value || children || null}
-      </TruncateUI>
-      {shouldShowCount && <CountUI>{count}</CountUI>}
+        <TruncateUI
+          className="c-Tag__textWrapper"
+          showTooltipOnTruncate={showTooltipOnTruncate}
+        >
+          {value || children || null}
+        </TruncateUI>
+        {shouldShowCount && <CountUI>{count}</CountUI>}
+      </TagUI>
       {isRemovable && (
-        <IconWrapperUI>
+        <RemoveTagUI
+          aria-label="Remove tag"
+          data-testid="RemoveTag"
+          onClick={handleRemove}
+        >
           <RemoveIconUI name="cross-small" size={18} title="Remove" />
-        </IconWrapperUI>
+        </RemoveTagUI>
       )}
-    </TagUI>
+    </TagGroupUI>
   ) : null
 }
 
@@ -150,9 +169,9 @@ Tag.propTypes = {
     'teal',
     'yellow',
   ]),
-  /** Renders a badge within a medium tag */
+  /** Renders a badge within a medium sized tag */
   count: PropTypes.number,
-  /** Determines the CSS `display` of the component. Default `inlineBlock`. */
+  /** Determines the CSS `display` of the component. Default `inline`. */
   display: PropTypes.oneOf(['block', 'inline']),
   /** Applies a filled in color style to the component. */
   filled: PropTypes.bool,
