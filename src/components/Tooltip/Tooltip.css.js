@@ -1,10 +1,6 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
-
-export const config = {
-  background: getColor('charcoal.700'),
-  text: 'white',
-}
+import { KeyboardBadgeUI } from '../KeyboardBadge/KeyboardBadge.css'
 
 export const TooltipTriggerUI = styled.span`
   display: ${({ display }) => (display ? display : 'inline-block')};
@@ -22,7 +18,7 @@ export const ArrowUI = styled.span`
 
   &:before {
     content: '';
-    background: ${config.background};
+    background-color: var(--TooltipBgColor);
     position: absolute;
     transform: rotate(45deg);
     height: calc(${({ arrowSize }) => arrowSize}px - 4px);
@@ -37,21 +33,23 @@ export const ArrowUI = styled.span`
 `
 
 export const TooltipUI = styled.div`
+  --TooltipBgColor: ${getColor('charcoal.800')};
   /* in case scoping is not working */
   box-sizing: border-box;
   font-family: var(--HSDSGlobalFontFamily);
   width: max-content;
-  background-color: ${config.background};
-  border-radius: 3px;
-  color: ${config.text};
+  background-color: var(--TooltipBgColor);
+  border-radius: 4px;
+  color: white;
   display: block;
-  font-size: 12px;
+  font-size: 13px;
   max-width: 300px;
   padding: 6px 8px;
   transition-property: transform, visibility, opacity;
   transition-duration: ${({ animationDuration }) => animationDuration}ms;
   transition-timing-function: ease-in-out;
   opacity: 0;
+  line-height: 1;
   word-break: break-word;
   white-space: pre-wrap;
   overflow-wrap: break-word;
@@ -81,6 +79,19 @@ export const TooltipUI = styled.div`
   &[data-placement^='right'] {
     ${ArrowUI} {
       left: calc((${({ arrowSize }) => arrowSize}px / 2) * -1);
+    }
+  }
+
+  &.with-badge {
+    padding-left: 10px;
+    padding-right: 6px;
+    display: flex;
+    align-items: center;
+    text-align: left;
+
+    ${KeyboardBadgeUI} {
+      margin-left: 8px;
+      flex: 0 0 auto;
     }
   }
 `

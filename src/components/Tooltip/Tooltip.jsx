@@ -17,6 +17,7 @@ import {
   TooltipUI,
 } from './Tooltip.css'
 import { GlobalContext } from '../HSDS/Provider'
+import KeyboardBadge from '../KeyboardBadge'
 
 export const TooltipContext = createContext({})
 
@@ -48,6 +49,7 @@ const Tooltip = props => {
     animationDelay,
     animationDuration,
     arrowSize,
+    badge,
     children,
     className,
     closeOnContentClick,
@@ -86,6 +88,7 @@ const Tooltip = props => {
   const hasRenderContent = renderContent && isFunction(renderContent)
   const hasRender = renderProp && isFunction(renderProp)
   const shouldRenderTooltip = title || hasRenderContent || hasRender
+  const hasKeyboardBadge = badge && !hasRender
 
   const duration = animationDurationContext
     ? animationDurationContext
@@ -103,7 +106,7 @@ const Tooltip = props => {
     tabIndex: '-1',
   }
 
-  const renderTooltip = ({ scope, ...props }) => {
+  const renderTooltip = ({ scope, className, ...props }) => {
     let titleContent = null
 
     if (typeof title === 'string') {
@@ -112,10 +115,16 @@ const Tooltip = props => {
       titleContent = title
     }
 
+    const tooltipClassnames = classNames(
+      className,
+      hasKeyboardBadge && 'with-badge'
+    )
+
     const toolTipComponent = (
       <TooltipAnimationUI>
-        <TooltipUI {...props}>
+        <TooltipUI className={tooltipClassnames} {...props}>
           {renderContent ? renderContent() : titleContent}
+          {hasKeyboardBadge ? <KeyboardBadge value={badge} /> : null}
           <ArrowUI
             className="c-Tooltip_ArrowUI"
             arrowSize={arrowSize}
@@ -242,6 +251,8 @@ Tooltip.propTypes = {
   animationDuration: PropTypes.number,
   /** Size of the Arrow in pixels */
   arrowSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Render the value within a KeyboardBadge component after the title. Will be render only when using the title prop */
+  badge: PropTypes.string,
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
   /** Whether to allow closing the tooltip on pressing ESC */

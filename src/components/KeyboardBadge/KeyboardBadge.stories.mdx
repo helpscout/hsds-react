@@ -1,0 +1,35 @@
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
+import KeyboardBadge from './'
+
+<Meta
+  title="Components/Badges/KeyboardBadge"
+  component={KeyboardBadge}
+  parameters={{
+    design: {},
+  }}
+/>
+
+# KeyboardBadge
+
+A KeyboardBadge component is a UI element that helps indicate a keyboard shortcut.
+
+<Canvas>
+  <Story name="default">
+    <KeyboardBadge value="A" />
+    <KeyboardBadge value="mod+A" />
+    <KeyboardBadge value="A B C" />
+  </Story>
+</Canvas>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: PL Babin
+- **Usage**: HSApp
+
+<br />
+<br />
+
+### Props
+
+<ArgsTable of={KeyboardBadge} />
