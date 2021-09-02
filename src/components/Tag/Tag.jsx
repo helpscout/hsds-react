@@ -105,6 +105,18 @@ export const Tag = nextProps => {
     !isRemoving && 'element-in'
   )
 
+  let as = 'div'
+  if (isClickable) {
+    as = Boolean(href) ? 'a' : 'button'
+  }
+
+  const tagProps = {
+    className: componentClassNames,
+    as,
+    onClick: handleClick,
+  }
+  if (href) tagProps.href = href
+
   return shouldRender ? (
     <TagGroupUI
       className={groupClassNames}
@@ -112,20 +124,14 @@ export const Tag = nextProps => {
       ref={tagRef}
       data-testid="TagGroup"
     >
-      <TagUI
-        {...getValidProps(rest)}
-        className={componentClassNames}
-        as={isClickable ? 'button' : 'div'}
-        onClick={handleClick}
-        data-testid="Tag"
-      >
+      <TagUI {...getValidProps(rest)} {...tagProps} data-testid="Tag">
         <TruncateUI
           className="c-Tag__textWrapper"
           showTooltipOnTruncate={showTooltipOnTruncate}
         >
           {value || children || null}
         </TruncateUI>
-        {shouldShowCount && <CountUI>{count}</CountUI>}
+        {shouldShowCount && <CountUI data-testid="Tag.Count">{count}</CountUI>}
       </TagUI>
       {isRemovable && (
         <RemoveTagUI
