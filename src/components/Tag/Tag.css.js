@@ -132,6 +132,7 @@ export const TagUI = styled('div')`
   outline: none;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
     sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  text-decoration: none;
 
   &.is-all-caps {
     text-transform: uppercase;
