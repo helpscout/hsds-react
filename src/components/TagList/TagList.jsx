@@ -41,7 +41,12 @@ export const TagList = props => {
       <ItemUI>
         {React.cloneElement(child)}
         {isLastChildWithClearAll && (
-          <ClearAllUI key="clearAllButton" onClick={handleOnRemoveAll}>
+          <ClearAllUI
+            key="clearAllButton"
+            onClick={handleOnRemoveAll}
+            data-testid="TagList.ClearAll"
+            data-cy="TagList.ClearAll"
+          >
             Clear all
           </ClearAllUI>
         )}
