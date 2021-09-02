@@ -460,7 +460,7 @@ export const ValidationIconUI = styled('div')`
   position: absolute;
   width: 24px;
   height: 24px;
-  top: 0;
+  bottom: -1px;
   right: 0;
   z-index: 10;
   pointer-events: all;

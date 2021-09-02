@@ -26,16 +26,17 @@ function Combobox({
   closeOnSelection = true,
   customEmptyList = null,
   'data-cy': dataCy = `DropList.${VARIANTS.COMBOBOX}`,
-  selectedItem = null,
-  selectedItems,
-  isOpen = false,
+  handleSelectedItemChange = noop,
+  inputPlaceholder = 'Search',
   items = [],
+  isOpen = false,
   menuCSS,
   onMenuBlur = noop,
   onMenuFocus = noop,
   onListItemSelectEvent = noop,
-  handleSelectedItemChange = noop,
   renderCustomListItem = null,
+  selectedItem = null,
+  selectedItems,
   toggleOpenedState = noop,
   withMultipleSelection = false,
 }) {
@@ -191,7 +192,7 @@ function Combobox({
               }
             },
           })}
-          placeholder="Search"
+          placeholder={inputPlaceholder}
         />
       </InputSearchHolderUI>
       <MenuListUI

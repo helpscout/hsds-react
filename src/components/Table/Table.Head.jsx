@@ -43,14 +43,16 @@ function TableHead({
             />
           </HeaderCellUI>
         ) : null}
-        {columns.map(column => (
-          <HeaderCell
-            key={generateCellKey('headercell', column)}
-            column={column}
-            isLoading={isLoading}
-            sortedInfo={sortedInfo}
-          />
-        ))}
+        {columns
+          .filter(column => column.show)
+          .map(column => (
+            <HeaderCell
+              key={generateCellKey('headercell', column)}
+              column={column}
+              isLoading={isLoading}
+              sortedInfo={sortedInfo}
+            />
+          ))}
       </tr>
     </thead>
   )

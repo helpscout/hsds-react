@@ -8,10 +8,12 @@ import {
   DESELECT_ALL_ROWS,
   SELECT_ROW,
   DESELECT_ROW,
+  UPDATE_COLUMNS,
+  RESET_COLUMNS,
 } from './Table.actionTypes'
 import reducer from './Table.reducer'
 
-export function useTable(data = [], maxRowsToDisplay = null) {
+export function useTable(data = [], maxRowsToDisplay = null, columns = []) {
   const initialDisplayTableData = useMemo(
     () =>
       getDisplayTableData({
@@ -24,6 +26,7 @@ export function useTable(data = [], maxRowsToDisplay = null) {
   const [state, dispatch] = useReducer(reducer, {
     selectedRows: [],
     currentTableData: initialDisplayTableData,
+    columns: [...columns],
   })
 
   const updateTableData = useCallback(
@@ -46,6 +49,31 @@ export function useTable(data = [], maxRowsToDisplay = null) {
         payload: {
           data,
           rowsToDisplay: data.length,
+        },
+      })
+    },
+    [dispatch]
+  )
+
+  const updateColumns = useCallback(
+    (columns, clickedColumn) => {
+      dispatch({
+        type: UPDATE_COLUMNS,
+        payload: {
+          columns,
+          clickedColumn,
+        },
+      })
+    },
+    [dispatch]
+  )
+
+  const resetColumns = useCallback(
+    columns => {
+      dispatch({
+        type: RESET_COLUMNS,
+        payload: {
+          columns,
         },
       })
     },
@@ -124,6 +152,8 @@ export function useTable(data = [], maxRowsToDisplay = null) {
       deselectAllRows,
       selectRow,
       deselectRow,
+      updateColumns,
+      resetColumns,
     }
   }, [
     updateTableData,
@@ -133,6 +163,8 @@ export function useTable(data = [], maxRowsToDisplay = null) {
     deselectAllRows,
     selectRow,
     deselectRow,
+    updateColumns,
+    resetColumns,
   ])
 
   return [state, actions]

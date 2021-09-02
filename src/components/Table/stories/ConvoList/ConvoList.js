@@ -12,7 +12,7 @@ import Pagination from '../../../Pagination'
 import Truncate from '../../../Truncate'
 import Table from '../../'
 import { ConversationCell } from './ConvoList.customCells'
-import { ConvoListUI, GridUI, AsideUI } from './ConvoList.css'
+import { ConvoListUI, GridUI, AsideUI, H1UI } from './ConvoList.css'
 
 export default function ConvoList() {
   const [pager, setPager] = useState(page1.pager)
@@ -94,7 +94,9 @@ export default function ConvoList() {
           columns={columns}
           containerWidth={containerWidth}
           data={results}
+          headerContent={<H1UI>Such a cool table</H1UI>}
           isLoading={isLoading}
+          tableDescription="Example table mimicking the ConvoList"
           tableWidth={tableWidth}
           rowClassName={row => {
             return {

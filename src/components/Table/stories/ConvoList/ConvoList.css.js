@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import styled from 'styled-components'
 import { getColor } from '../../../../styles/utilities/color'
 
@@ -9,7 +8,7 @@ export const GridUI = styled('div')`
 
 export const ConvoListUI = styled('div')`
   margin-bottom: 40px;
-  font-size: 14px;
+  font-size: 13px;
 
   .c-Table__Header {
     color: ${getColor('charcoal.300')};
@@ -18,6 +17,10 @@ export const ConvoListUI = styled('div')`
 
   .convo-active td {
     font-weight: 700;
+  }
+
+  .c-Table__Cell.Column_Customer {
+    font-size: 14px;
   }
 
   .replying td:first-child,
@@ -49,6 +52,7 @@ export const AsideUI = styled('aside')`
   background-image: radial-gradient(#444cf7 0.5px, #e5e5f7 0.5px);
   background-size: 10px 10px;
 `
+
 export const TagUI = styled('div')`
   display: inline-block;
   width: auto;
@@ -60,6 +64,17 @@ export const TagUI = styled('div')`
   background-color: ${({ color }) => color};
   border-radius: 3px;
   margin-right: 3px;
+`
+
+export const H1UI = styled('span')`
+  height: 60px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 23.04px;
+  padding-top: 16px;
+  padding-bottom: 19px;
+  padding-left: 15px;
+  color: ${getColor('charcoal.800')};
 `
 
 export const SubjectUI = styled('span')`
@@ -96,7 +111,7 @@ export const ConversationCellUI = styled('div')`
   }
 
   tr.is-row-selected &::after {
-    box-shadow: inset -7px 0px 7px ${getColor('yellow.100')};
+    box-shadow: inset -7px 0px 7px ${getColor('blue.100')};
   }
 
   tr.c-Table__Row:focus &::after {
@@ -104,6 +119,6 @@ export const ConversationCellUI = styled('div')`
   }
 
   tr.c-Table__Row:hover &::after {
-    box-shadow: inset -7px 0px 7px ${getColor('grey.300')};
+    box-shadow: inset -7px 0px 7px ${getColor('blue.100')};
   }
 `

@@ -159,13 +159,14 @@ class ChoiceGroup extends React.Component {
       name,
       ...rest
     } = this.props
-    const { limitReached } = this.state
+    const { limitReached, selectedValue } = this.state
     const componentClassName = classNames(
       'c-ChoiceGroup',
       align && `is-align-${align}`,
       multiSelect && 'is-multi-select',
       isResponsive && 'is-responsive',
       limitReached && 'limit-reached',
+      hasSelectedValue(selectedValue) && 'has-selected-value',
       className
     )
     const childrenMarkup = this.getChildrenMarkup()
@@ -186,6 +187,16 @@ class ChoiceGroup extends React.Component {
       </FormLabelContext.Consumer>
     )
   }
+}
+
+function hasSelectedValue(value) {
+  if (Array.isArray(value)) {
+    return value.length > 0
+  }
+  if (value != null) {
+    return true
+  }
+  return false
 }
 
 ChoiceGroup.defaultProps = {

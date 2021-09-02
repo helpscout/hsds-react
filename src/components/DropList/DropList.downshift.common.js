@@ -157,7 +157,7 @@ export function getA11ySelectionMessageCommon({
     key: contentKey,
   })
 
-  if (!Boolean(foundItem)) {
+  if (Boolean(foundItem)) {
     return `${msg} was selected`
   }
 
