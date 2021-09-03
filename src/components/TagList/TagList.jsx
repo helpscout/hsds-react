@@ -30,7 +30,6 @@ export const TagList = props => {
     onRemove,
     onRemoveAll,
     overflowFade,
-    showAll,
     size,
     ...rest
   } = props
@@ -39,7 +38,6 @@ export const TagList = props => {
 
   const componentClassNames = classNames(
     tagListClassName,
-    showAll ? 'is-showingAll' : '',
     size && `is-${size}`,
     className
   )
@@ -117,13 +115,14 @@ TagList.defaultProps = {
   overflowFade: false,
   isRemovable: false,
   clearAll: false,
-  showAll: false,
   size: 'sm',
 }
 
 TagList.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
+  /** Limit the number of items displayed within TagList */
+  limit: PropTypes.number,
   /** Enables the ability to remove child `Tag` components. */
   isRemovable: PropTypes.bool,
   /** Callback function when a child `Tag` is removed and unmounted. */
@@ -134,8 +133,6 @@ TagList.propTypes = {
   overflowFade: PropTypes.bool,
   /** Display a Clear all button at the end of the list */
   clearAll: PropTypes.bool,
-  /** Display all tag lines */
-  showAll: PropTypes.bool,
   /** Size of all tag */
   size: PropTypes.oneOf(['md', 'sm']),
   /** Data attr for Cypress tests. */

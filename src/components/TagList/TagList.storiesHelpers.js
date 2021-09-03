@@ -90,7 +90,6 @@ export const SelectingTags = () => {
       onRemove={handleOnRemove}
       onRemoveAll={handleOnRemoveAll}
       clearAll={true}
-      showAll={true}
       isRemovable={true}
       size="md"
     >

@@ -106,15 +106,6 @@ describe('Overflow', () => {
     expect(container.querySelector('.c-Overflow')).toBeFalsy()
   })
 
-  test('Does add a className to show all tags', () => {
-    const { getByTestId } = render(
-      <TagList showAll>
-        <Tag />
-      </TagList>
-    )
-    expect(getByTestId('TagList')).toHaveClass('is-showingAll')
-  })
-
   test('Wraps content in Overflow, if specified', () => {
     const { container } = render(
       <TagList overflowFade>
