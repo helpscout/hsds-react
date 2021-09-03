@@ -100,6 +100,20 @@ export const TagListUI = styled('div')`
       min-width: 18px;
     }
   }
+
+  &.is-md {
+    ${ListUI} {
+      margin: 0 0 8px 0;
+    }
+    ${ItemUI} {
+      margin: 0 4px 4px 0;
+    }
+
+    ${ShowAllButtonUI} {
+      height: 22px;
+      min-width: 22px;
+    }
+  }
 `
 
 export const ClearAllUI = styled('button')`

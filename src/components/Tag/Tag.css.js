@@ -141,9 +141,17 @@ export const TagUI = styled('div')`
   }
 
   &.is-md {
+    padding: 0 6px;
+    height: 22px;
+  }
+
+  &.is-lg {
     padding: 0 8px;
     height: 28px;
+  }
 
+  &.is-md,
+  &.is-sm {
     ${RemoveTagUI} {
       margin-top: -9px;
       width: 18px;

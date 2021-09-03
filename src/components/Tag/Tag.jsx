@@ -80,7 +80,7 @@ export const Tag = nextProps => {
   }, [])
 
   const isClickable = Boolean(onClick) || Boolean(href)
-  const shouldShowCount = Number.isInteger(count) && size === 'md'
+  const shouldShowCount = Number.isInteger(count) && size === 'lg'
 
   useEffect(() => {
     if (isRemovingProp && tagRef.current) {
@@ -188,7 +188,7 @@ Tag.propTypes = {
   /** Renders the `Spinner` and replaces the `x` `Icon` */
   isRemoving: PropTypes.bool,
   /** Apply a different size to the component */
-  size: PropTypes.oneOf(['sm', 'md']),
+  size: PropTypes.oneOf(['sm', 'md', 'lg']),
   /** Callback function when component is removed and unmounted. */
   onRemove: PropTypes.func,
   /** Renders a `Tooltip` if content is truncated. */

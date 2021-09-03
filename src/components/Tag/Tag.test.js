@@ -113,11 +113,15 @@ describe('Styles', () => {
 
 describe('count', () => {
   test('Keeps count hidden if size if sm', () => {
-    const { queryByTestId } = render(<Tag count={125} />)
+    const { queryByTestId } = render(<Tag count={125} size="sm" />)
     expect(queryByTestId('Tag.Count')).toBeFalsy()
   })
-  test('Renders a count element if size if md', () => {
-    const { queryByTestId, getByText } = render(<Tag count={125} size="md" />)
+  test('Keeps count hidden if size if md', () => {
+    const { queryByTestId } = render(<Tag count={125} size="md" />)
+    expect(queryByTestId('Tag.Count')).toBeFalsy()
+  })
+  test('Renders a count element if size if lg', () => {
+    const { queryByTestId, getByText } = render(<Tag count={125} size="lg" />)
     expect(queryByTestId('Tag.Count')).toBeTruthy()
     expect(getByText('125')).toBeTruthy()
   })

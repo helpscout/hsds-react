@@ -15,7 +15,7 @@ A TagList component is a UI element that contains `Tag` components.
       clearAll={boolean('clearAll', true)}
       isRemovable={boolean('isRemovable', true)}
       overflowFade={boolean('overflowFade', false)}
-      size={select('Size', { md: 'md', sm: 'sm' }, 'sm')}
+      size={select('Size', ['sm', 'md', 'lg'], 'sm')}
       limit={number('limit', 0)}
     />
   </Story>
