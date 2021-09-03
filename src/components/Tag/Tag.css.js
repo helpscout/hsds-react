@@ -29,7 +29,7 @@ export const RemoveTagUI = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.5;
+  opacity: 0.61;
   position: relative;
   cursor: pointer;
   position: absolute;
@@ -99,8 +99,10 @@ export const TagUI = styled('div')`
   padding: 0 5px;
   height: 18px;
   max-width: 100%;
-  font-size: 12px;
-  line-height: 1;
+  font-weight: 500;
+  letter-spacing: -0.1px;
+  line-height: 12px;
+  font-size: 11.5px;
 
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
     sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
@@ -150,15 +152,6 @@ export const TagUI = styled('div')`
     height: 28px;
   }
 
-  &.is-md,
-  &.is-sm {
-    ${RemoveTagUI} {
-      margin-top: -9px;
-      width: 18px;
-      height: 18px;
-    }
-  }
-
   &.is-removable {
     padding-right: 16px;
 
@@ -187,6 +180,21 @@ export const TagGroupUI = styled.div`
   }
   &.is-display-inline {
     display: inline-flex;
+  }
+
+  &.is-md,
+  &.is-sm {
+    ${RemoveTagUI} {
+      margin-top: -9px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &.is-sm {
+    ${RemoveTagUI} {
+      right: 0;
+    }
   }
 `
 

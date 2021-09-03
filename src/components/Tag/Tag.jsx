@@ -102,6 +102,7 @@ export const Tag = nextProps => {
   )
   const groupClassNames = classNames(
     display && `is-display-${display}`,
+    size && `is-${size}`,
     !isRemoving && 'element-in'
   )
 
