@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import { setFontSize } from '../../styles/utilities/font'
 import { darken } from '../../utilities/color'
+import { focusRing } from '../../styles/mixins/focusRing'
 
 export const ShowAllButtonUI = styled.button`
   margin-left: 8px;
@@ -102,51 +103,16 @@ export const TagListUI = styled('div')`
 `
 
 export const ClearAllUI = styled('button')`
+  ${focusRing}
   border: none;
   background: none;
   cursor: pointer;
   padding: 0 4px;
-  height: 100%;
+  height: 16px;
+  line-height: 1;
   margin-left: 8px;
   color: ${getColor('charcoal.200')};
-  position: relative;
-  outline: none;
   ${setFontSize(12)};
-
-  // focus border
-  &:before {
-    content: '';
-    border-radius: 4px;
-    bottom: -2px;
-    box-shadow: 0 0 0 2px ${getColor('blue.500')};
-    left: -2px;
-    pointer-events: none;
-    position: absolute;
-    right: -2px;
-    top: -2px;
-    opacity: 0;
-    background: transparent;
-    z-index: 3;
-  }
-
-  &:focus {
-    &:before {
-      opacity: 1;
-    }
-  }
-
-  &:focus:not(:focus-visible) {
-    &:before {
-      opacity: 0;
-    }
-  }
-
-  &:focus-visible {
-    &:before {
-      opacity: 1 !important;
-      transition: opacity ease 0.2s;
-    }
-  }
 
   &:hover {
     color: ${getColor('charcoal.400')};
