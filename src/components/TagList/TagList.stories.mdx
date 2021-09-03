@@ -1,5 +1,5 @@
 import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
-import { boolean, select } from '@storybook/addon-knobs'
+import { boolean, select, number } from '@storybook/addon-knobs'
 import TagList from './'
 import { TagListExample, SelectingTags } from './TagList.storiesHelpers'
 
@@ -17,6 +17,7 @@ A TagList component is a UI element that contains `Tag` components.
       isRemovable={boolean('isRemovable', true)}
       overflowFade={boolean('overflowFade', false)}
       size={select('Size', { md: 'md', sm: 'sm' }, 'sm')}
+      limit={number('limit', 0)}
     />
   </Story>
 </Canvas>

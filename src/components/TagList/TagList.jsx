@@ -1,26 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Overflow from '../Overflow'
 import classNames from 'classnames'
+
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getComponentKey } from '../../utilities/component'
+
+import Overflow from '../Overflow'
+import Tooltip from '../Tooltip'
 import { noop } from '../../utilities/other'
-import { TagListUI, ClearAllUI, ListUI, ItemUI } from './TagList.css'
+
+import {
+  TagListUI,
+  ClearAllUI,
+  ListUI,
+  ItemUI,
+  ShowAllButtonUI,
+} from './TagList.css'
 
 export const tagListClassName = 'c-TagList'
 export const TagListContext = React.createContext()
+
 export const TagList = props => {
   const {
-    overflowFade,
+    children,
+    className,
+    clearAll,
+    limit,
+    isRemovable,
     onRemove,
     onRemoveAll,
-    children,
-    isRemovable,
-    clearAll,
-    size,
+    overflowFade,
     showAll,
-    className,
+    size,
     ...rest
   } = props
+
+  const [isNoLimit, setNoLimit] = useState(false)
 
   const componentClassNames = classNames(
     tagListClassName,
@@ -30,31 +45,52 @@ export const TagList = props => {
   )
 
   const handleOnRemove = value => onRemove(value)
-  const handleOnRemoveAll = () => onRemoveAll()
 
-  const childrenLength = React.Children.count(children)
-  const childrenMarkup = React.Children.map(children, (child, index) => {
-    const isLastChildWithClearAll =
-      childrenLength - 1 === index && clearAll && childrenLength > 1
+  const tags = React.Children.toArray(children)
+  const total = tags.length
+
+  const shouldFilterTags =
+    limit > 0 && !overflowFade && tags.length > limit && !isNoLimit
+
+  const tagList = shouldFilterTags ? tags.slice(0, limit) : tags
+
+  const tagsComponents = tagList.map((tag, index) => {
+    const isLastWithClearAll =
+      !limit && total - 1 === index && clearAll && tags.length > 1
+
+    const shoudShowAllButton = shouldFilterTags && tagList.length - 1 === index
+
+    const clearAllComponent = isLastWithClearAll ? (
+      <ClearAllUI
+        key="clearAllButton"
+        onClick={onRemoveAll}
+        data-testid="TagList.ClearAll"
+        data-cy="TagList.ClearAll"
+      >
+        Clear all
+      </ClearAllUI>
+    ) : null
+
+    const badgeComponent = shoudShowAllButton ? (
+      <Tooltip closeOnContentClick={true} title="Show hidden tags">
+        <ShowAllButtonUI
+          aria-label="Show hidden tags"
+          onClick={() => setNoLimit(true)}
+        >
+          +{total - limit}
+        </ShowAllButtonUI>
+      </Tooltip>
+    ) : null
 
     return (
-      <ItemUI>
-        {React.cloneElement(child)}
-        {isLastChildWithClearAll && (
-          <ClearAllUI
-            key="clearAllButton"
-            onClick={handleOnRemoveAll}
-            data-testid="TagList.ClearAll"
-            data-cy="TagList.ClearAll"
-          >
-            Clear all
-          </ClearAllUI>
-        )}
+      <ItemUI key={getComponentKey(tag, index)}>
+        {tag}
+        {clearAllComponent}
+        {badgeComponent}
       </ItemUI>
     )
   })
-
-  const componentMarkup = <ListUI>{childrenMarkup}</ListUI>
+  const componentMarkup = <ListUI>{tagsComponents}</ListUI>
   const contextValue = { isRemovable, size, onRemove: handleOnRemove }
 
   return (

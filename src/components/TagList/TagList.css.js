@@ -1,6 +1,37 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import { setFontSize } from '../../styles/utilities/font'
+import { darken } from '../../utilities/color'
+
+export const ShowAllButtonUI = styled.button`
+  margin-left: 8px;
+
+  border-radius: 3px;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+  height: 28px;
+  min-width: 28px;
+  border: 1px solid ${getColor('grey.400')};
+  color: ${getColor('charcoal.600')};
+  background-color: ${getColor('grey.400')};
+  box-shadow: none;
+  font-size: 12px;
+  line-height: 1;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+
+  &:hover {
+    cursor: pointer;
+    border-color: ${darken(getColor('grey.400'), 30)};
+  }
+`
+
+export const BadgeItemUI = styled('div')`
+  margin-bottom: 2px;
+`
 
 export const ListUI = styled.ul`
   display: block;
@@ -32,6 +63,11 @@ export const TagListUI = styled('div')`
     }
     ${ItemUI} {
       margin: 0 4px 4px 0;
+    }
+
+    ${ShowAllButtonUI} {
+      height: 18px;
+      min-width: 18px;
     }
   }
 
