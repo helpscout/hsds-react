@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent, act, waitFor } from '@testing-library/react'
 import user from '@testing-library/user-event'
 
 import TagList from './TagList'
@@ -114,5 +114,85 @@ describe('Overflow', () => {
     )
 
     expect(container.querySelector('.c-Overflow')).toBeTruthy()
+  })
+})
+
+describe.only('Limit', () => {
+  test('Display all tags if there is no limit', () => {
+    const { queryAllByTestId } = render(
+      <TagList>
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+      </TagList>
+    )
+
+    expect(queryAllByTestId('Tag').length).toBe(4)
+  })
+
+  test('Limits the number of tag displayed', () => {
+    const { queryAllByTestId } = render(
+      <TagList limit={2}>
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+      </TagList>
+    )
+
+    expect(queryAllByTestId('Tag').length).toBe(2)
+  })
+
+  test('Shows a +X button with the hidden items length', () => {
+    const { getByText } = render(
+      <TagList limit={2}>
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+      </TagList>
+    )
+
+    expect(getByText('+4')).toBeTruthy()
+  })
+
+  test('ClearAll is not active when there is a limit', () => {
+    const { queryByTestId } = render(
+      <TagList limit={2} clearAll>
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+      </TagList>
+    )
+
+    expect(queryByTestId('TagList.ClearAll')).toBeFalsy()
+  })
+
+  test('Clicking on the +X button will display all tags', async () => {
+    const { queryAllByTestId, findByText } = render(
+      <TagList limit={2}>
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+      </TagList>
+    )
+
+    const plusbutton = await findByText('+4')
+    user.click(plusbutton)
+
+    await waitFor(() => {
+      expect(queryAllByTestId('Tag').length).toBe(6)
+    })
   })
 })

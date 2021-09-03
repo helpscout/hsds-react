@@ -70,7 +70,7 @@ export const TagList = props => {
     ) : null
 
     const badgeComponent = shoudShowAllButton ? (
-      <Tooltip withTriggerWrapper={false} title="Show hidden tags">
+      <Tooltip withTriggerWrapper={false} title="Show hidden tags" delay={10}>
         <ShowAllButtonUI
           aria-label="Show hidden tags"
           onClick={() => setNoLimit(true)}
