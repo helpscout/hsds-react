@@ -5,7 +5,7 @@ import { darken } from '../../utilities/color'
 
 export const ShowAllButtonUI = styled.button`
   margin-left: 8px;
-
+  position: relative;
   border-radius: 3px;
   display: flex;
   flex: 0 0 auto;
@@ -20,8 +20,44 @@ export const ShowAllButtonUI = styled.button`
   box-shadow: none;
   font-size: 12px;
   line-height: 1;
+  outline: none;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
     sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+
+  // focus border
+  &:before {
+    content: '';
+    border-radius: 4px;
+    bottom: -2px;
+    box-shadow: 0 0 0 2px ${getColor('blue.500')};
+    left: -2px;
+    pointer-events: none;
+    position: absolute;
+    right: -2px;
+    top: -2px;
+    opacity: 0;
+    background: transparent;
+    z-index: 3;
+  }
+
+  &:focus {
+    &:before {
+      opacity: 1;
+    }
+  }
+
+  &:focus:not(:focus-visible) {
+    &:before {
+      opacity: 0;
+    }
+  }
+
+  &:focus-visible {
+    &:before {
+      opacity: 1 !important;
+      transition: opacity ease 0.2s;
+    }
+  }
 
   &:hover {
     cursor: pointer;
