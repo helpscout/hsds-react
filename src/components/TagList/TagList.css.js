@@ -86,14 +86,7 @@ export const ItemUI = styled.li`
 `
 
 export const TagListUI = styled('div')`
-  max-height: 40px;
-  overflow: hidden;
-  will-change: contents;
-  padding: 4px;
-  margin: -4px;
-
   &.is-sm {
-    max-height: 34px;
     ${ListUI} {
       margin: 0 0 4px 0;
     }
@@ -106,10 +99,6 @@ export const TagListUI = styled('div')`
       min-width: 18px;
     }
   }
-
-  &.is-showingAll {
-    max-height: none;
-  }
 `
 
 export const ClearAllUI = styled('button')`
@@ -120,7 +109,44 @@ export const ClearAllUI = styled('button')`
   height: 100%;
   margin-left: 8px;
   color: ${getColor('charcoal.200')};
+  position: relative;
+  outline: none;
   ${setFontSize(12)};
+
+  // focus border
+  &:before {
+    content: '';
+    border-radius: 4px;
+    bottom: -2px;
+    box-shadow: 0 0 0 2px ${getColor('blue.500')};
+    left: -2px;
+    pointer-events: none;
+    position: absolute;
+    right: -2px;
+    top: -2px;
+    opacity: 0;
+    background: transparent;
+    z-index: 3;
+  }
+
+  &:focus {
+    &:before {
+      opacity: 1;
+    }
+  }
+
+  &:focus:not(:focus-visible) {
+    &:before {
+      opacity: 0;
+    }
+  }
+
+  &:focus-visible {
+    &:before {
+      opacity: 1 !important;
+      transition: opacity ease 0.2s;
+    }
+  }
 
   &:hover {
     color: ${getColor('charcoal.400')};
