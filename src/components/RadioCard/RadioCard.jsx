@@ -35,9 +35,14 @@ class RadioCard extends React.PureComponent {
   }
 
   getClassName() {
-    const { className, checked } = this.props
+    const { className, checked, heading } = this.props
 
-    return classNames('c-RadioCard', checked && 'is-checked', className)
+    return classNames(
+      'c-RadioCard',
+      checked && 'is-checked',
+      heading && 'with-heading',
+      className
+    )
   }
 
   handleOnChange = (value, checked) => {
@@ -214,7 +219,7 @@ RadioCard.propTypes = {
     PropTypes.func,
   ]),
   /** Size to render the `Icon` */
-  iconSize: PropTypes.number,
+  iconSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   /** ID for the input. */
   id: PropTypes.string,
   /** Callback to obtain the <input> node. */

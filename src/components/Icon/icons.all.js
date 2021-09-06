@@ -64,6 +64,7 @@ import closed from '../../icons/closed.svg'
 import cloud from '../../icons/cloud.svg'
 import cog from '../../icons/cog.svg'
 import compose from '../../icons/compose.svg'
+import columnCheck from '../../icons/cols-check.svg'
 import connection from '../../icons/connection.svg'
 import copy from '../../icons/copy.svg'
 import copySmall from '../../icons/copy-small.svg'
@@ -289,6 +290,7 @@ const ICONS = {
   cloud,
   cog,
   collapse: minus,
+  'column-check': columnCheck,
   compose,
   connection,
   'copy-small': copySmall,

@@ -55,6 +55,7 @@ export default class TableWithPagination extends Component {
           data={paginatedData}
           data-testid="Table"
           isLoading={isLoading}
+          tableDescription="Example table with pagination"
           tableWidth={tableWidth}
           containerWidth={containerWidth}
           withTallRows={boolean('withTallRows', false)}

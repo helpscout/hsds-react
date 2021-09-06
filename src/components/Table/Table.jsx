@@ -1,30 +1,34 @@
 import React from 'react'
-import useDeepCompareEffect from 'use-deep-compare-effect'
 import PropTypes from 'prop-types'
+import useDeepCompareEffect from 'use-deep-compare-effect'
 import { ThemeProvider } from 'styled-components'
 import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import Button from '../Button'
 import Scrollable from '../Scrollable'
-import { TableWrapperUI, TableUI, LoadingUI } from './Table.css'
+import { HeaderUI, TableWrapperUI, TableUI, LoadingUI } from './Table.css'
 import { defaultSkin, chooseSkin } from './Table.skins'
 import { columnShape, dataShape } from './Table.utils'
 import { useTable } from './Table.hooks'
 import TableBody from './Table.Body'
 import TableHead from './Table.Head'
+import ColumnChooser from './Table.ColumnChooser'
 
 export const TABLE_CLASSNAME = 'c-Table'
 
 export function Table({
   className,
   columns = [],
+  columnChooserResetLabel,
   containerWidth = '100%',
   data = [],
   'data-cy': dataCy = 'Table',
   expanderText,
+  headerContent,
   isLoading = false,
   isScrollLocked = true,
   maxRowsToDisplay,
+  onColumnChoose = noop,
   onExpand = noop,
   onRowClick = null,
   onSelectRow = noop,
@@ -37,13 +41,22 @@ export function Table({
     order: null,
   },
   tableClassName,
+  tableDescription,
   tableWidth = { min: '700px' },
+  withColumnChooser = false,
   withFocusableRows = false,
   withSelectableRows = false,
   withTallRows = false,
   ...rest
 }) {
-  const [state, actions] = useTable(data, maxRowsToDisplay)
+  const defaultColumns = columns.map(col => {
+    if (col.show == null) {
+      col.show = true
+    }
+
+    return col
+  })
+  const [state, actions] = useTable(data, maxRowsToDisplay, defaultColumns)
   const {
     updateTableData,
     expandTable,
@@ -52,6 +65,8 @@ export function Table({
     deselectAllRows,
     selectRow,
     deselectRow,
+    updateColumns,
+    resetColumns,
   } = actions
   const isTableCollapsable = maxRowsToDisplay != null
   const isCollapsed = data.length !== state.currentTableData.length
@@ -59,6 +74,36 @@ export function Table({
   useDeepCompareEffect(() => {
     updateTableData(data, maxRowsToDisplay)
   }, [data, maxRowsToDisplay, sortedInfo])
+
+  function renderHeader() {
+    if (!headerContent && !withColumnChooser) {
+      return null
+    }
+
+    const withHeaderContent = React.isValidElement(headerContent)
+
+    return (
+      <HeaderUI
+        className={classNames(
+          'c-Table__Header',
+          withHeaderContent && 'with-header-content',
+          withColumnChooser && 'with-column-chooser'
+        )}
+      >
+        {withHeaderContent ? headerContent : null}
+        {withColumnChooser ? (
+          <ColumnChooser
+            columns={state.columns}
+            columnChooserResetLabel={columnChooserResetLabel}
+            defaultColumns={defaultColumns}
+            onColumnChoose={onColumnChoose}
+            resetColumns={resetColumns}
+            updateColumns={updateColumns}
+          />
+        ) : null}
+      </HeaderUI>
+    )
+  }
 
   return (
     <ThemeProvider theme={chooseSkin(skin)}>
@@ -72,6 +117,8 @@ export function Table({
         dataCy={dataCy}
         {...rest}
       >
+        {renderHeader()}
+
         <Scrollable
           fadeLeft
           fadeRight
@@ -79,16 +126,18 @@ export function Table({
           scrollLockDirection="x"
         >
           <TableUI
+            ariaLabel={tableDescription}
             className={classNames(
               TABLE_CLASSNAME,
               Boolean(onRowClick) && 'with-clickable-rows',
+              withSelectableRows && 'selection-enabled',
               tableClassName
             )}
             tableWidth={tableWidth}
             withTallRows={withTallRows}
           >
             <TableHead
-              columns={columns}
+              columns={state.columns}
               deselectAllRows={deselectAllRows}
               isLoading={isLoading}
               rows={state.currentTableData}
@@ -102,7 +151,7 @@ export function Table({
               withSelectableRows={withSelectableRows}
             />
             <TableBody
-              columns={columns}
+              columns={state.columns}
               deselectRow={deselectRow}
               maxRowsToDisplay={maxRowsToDisplay}
               onRowClick={onRowClick}
@@ -158,6 +207,8 @@ Table.propTypes = {
   className: PropTypes.string,
   /** List of columns */
   columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
+  /** If the column chooser is enabled, customize the text of the reset option */
+  columnChooserResetLabel: PropTypes.string,
   /** The table wrapper width (if `tableWidth` is larger, the component scrolls horizontally) */
   containerWidth: PropTypes.string,
   /** List of Rows, which are objects */
@@ -166,12 +217,16 @@ Table.propTypes = {
   'data-cy': PropTypes.string,
   /** The text for the "expander" button when table is either collapsed or expanded */
   expanderText: PropTypes.any,
+  /** Content to render inside the header tag just above the table (together with the column chooser if enabled) */
+  headerContent: PropTypes.element,
   /** Adds the 'is-loading' class to the component */
   isLoading: PropTypes.bool,
   /** Whether to use `ScrollLock` with `direction="x"` on the Table. */
   isScrollLocked: PropTypes.bool,
   /** When provided the Table will only show this number of rows and and expander to see the rest */
   maxRowsToDisplay: PropTypes.number,
+  /** Callback when choosing a column to show/hide if `withColumnChooser` is enabled*/
+  onColumnChoose: PropTypes.func,
   /** Callback when expending/collapsing the table */
   onExpand: PropTypes.func,
   /** Callback function when a row is clicked. Arguments are the event and the row clicked. */
@@ -184,6 +239,8 @@ Table.propTypes = {
   rowWrapper: PropTypes.func,
   /** Custom class names to be added to the `<table>` element. */
   tableClassName: PropTypes.string,
+  /** Description of the table contents for accessibility */
+  tableDescription: PropTypes.string.isRequired,
   /** The `<table>` width */
   tableWidth: PropTypes.shape({ min: PropTypes.string, max: PropTypes.string }),
   /** An object to customize the visual appearance of the table. See [Skins.md](/src/components/Table/docs/Skins.md) */
@@ -210,6 +267,8 @@ Table.propTypes = {
     columnKey: PropTypes.string,
     order: PropTypes.string,
   }),
+  /** If passed the column chooser will be enabled, contains an array of all the possible columns and whether they are checked and enabled */
+  withColumnChooser: PropTypes.bool,
   /** Adds tabindex=0 to each row*/
   withFocusableRows: PropTypes.bool,
   /** Adds a column with a checkbox for row selection */
