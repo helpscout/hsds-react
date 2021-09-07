@@ -91,7 +91,7 @@ function Combobox({
           return item
         })
 
-        filtered = filtered.concat(processed)
+        filtered = processed
       }
 
       setHighlightedIndex(filtered.findIndex(isItemHighlightable))
