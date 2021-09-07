@@ -128,6 +128,13 @@ export const ListItemUI = styled('li')`
     background-color: transparent;
     cursor: default;
   }
+
+  &.is-type-inert,
+  &.is-highlighted.is-type-inert,
+  &.with-multiple-selection.is-highlighted.is-type-inert {
+    background-color: transparent;
+    cursor: default;
+  }
 `
 
 export const ListItemTextUI = styled('span')`

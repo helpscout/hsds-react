@@ -90,8 +90,10 @@ function Combobox({
 
           return item
         })
+
         filtered = filtered.concat(processed)
       }
+
       setHighlightedIndex(filtered.findIndex(isItemHighlightable))
       setInputItems(filtered)
     },
