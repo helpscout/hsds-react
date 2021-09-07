@@ -9,7 +9,6 @@ export const ITEM_TYPES = {
   GROUP: 'group',
   GROUP_LABEL: 'group_label',
   INERT: 'inert',
-  RESET_DROPLIST: 'reset_droplist',
 }
 
 export const DROPLIST_TOGGLER = 'DropListToggler'

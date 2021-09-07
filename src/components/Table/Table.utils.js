@@ -90,5 +90,14 @@ export function createColumnChooserListItems(columns) {
     return acc
   }, [])
 
-  return items
+  return items.concat([
+    {
+      type: 'divider',
+    },
+    {
+      label: 'Reset to defaults',
+      type: 'action',
+      action: 'RESET',
+    },
+  ])
 }

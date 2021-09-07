@@ -128,22 +128,6 @@ export const ListItemUI = styled('li')`
     background-color: transparent;
     cursor: default;
   }
-
-  &.is-reset-item {
-    height: 50px;
-    margin: 0 5px;
-    padding: 0 15px;
-    line-height: 50px;
-    color: ${getColor('charcoal.300')};
-
-    &.is-highlighted,
-    &:hover {
-      color: ${getColor('charcoal.300')};
-      text-decoration: underline;
-      cursor: pointer;
-      background-color: transparent;
-    }
-  }
 `
 
 export const ListItemTextUI = styled('span')`

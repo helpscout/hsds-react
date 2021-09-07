@@ -153,10 +153,6 @@ export function isItemAGroupLabel(item) {
   return objectHasKey(item, 'type') && item.type === ITEM_TYPES.GROUP_LABEL
 }
 
-export function isItemReset(item) {
-  return objectHasKey(item, 'type') && item.type === ITEM_TYPES.RESET_DROPLIST
-}
-
 export function isItemInert(item) {
   return objectHasKey(item, 'type') && item.type === ITEM_TYPES.INERT
 }
@@ -167,15 +163,12 @@ export function isItemAction(item) {
 
 export function isItemRegular(item) {
   return (
-    !isItemADivider(item) &&
-    !isItemAGroup(item) &&
-    !isItemAGroupLabel(item) &&
-    !isItemReset(item)
+    !isItemADivider(item) && !isItemAGroup(item) && !isItemAGroupLabel(item)
   )
 }
 
-export function flattenListItems(listItems, withResetItem) {
-  const items = listItems.reduce((accumulator, listItem) => {
+export function flattenListItems(listItems) {
+  return listItems.reduce((accumulator, listItem) => {
     const contentKey = getItemContentKeyName(listItem)
 
     if (isItemAGroup(listItem)) {
@@ -196,19 +189,6 @@ export function flattenListItems(listItems, withResetItem) {
 
     return accumulator.concat(listItem)
   }, [])
-
-  return withResetItem
-    ? items.concat([
-        {
-          type: 'divider',
-        },
-        {
-          type: ITEM_TYPES.RESET_DROPLIST,
-          label: isString(withResetItem) ? withResetItem : 'Reset',
-          remove: true,
-        },
-      ])
-    : items
 }
 
 export function renderListContents({

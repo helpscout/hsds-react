@@ -20,10 +20,12 @@ function ColumnChooser({
 
   return (
     <DropList
+      isMenuOpen
+      closeOnBlur={false}
       autoSetComboboxAt={10}
       items={items}
       onSelect={(selection, clickedItem) => {
-        if (clickedItem.type === 'reset_droplist') {
+        if (clickedItem.type === 'action' && clickedItem.action === 'RESET') {
           if (!equal(columns, defaultColumns)) {
             resetColumns(defaultColumns)
           }
@@ -43,7 +45,6 @@ function ColumnChooser({
         />
       }
       withMultipleSelection
-      withResetSelectionItem={columnChooserResetLabel}
     />
   )
 }
