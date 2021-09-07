@@ -15,6 +15,7 @@ import {
   SelectErrorTooltipIconUI,
   SelectUI,
   SplitButtonTogglerUI,
+  SplitButtonUI,
 } from './DropList.togglers.css'
 
 export const SimpleButton = forwardRef(
@@ -119,7 +120,7 @@ export const SplittedButton = forwardRef(
         {...rest}
       >
         <ControlGroup.Item>
-          <HSDSButton
+          <SplitButtonUI
             className="SplitButton__Action"
             data-cy="DropList.SplitButtonAction"
             data-testid="DropList.SplitButtonAction"
@@ -130,7 +131,7 @@ export const SplittedButton = forwardRef(
             {...actionButtonProps}
           >
             {text}
-          </HSDSButton>
+          </SplitButtonUI>
         </ControlGroup.Item>
         <ControlGroup.Item>
           <SplitButtonTogglerUI

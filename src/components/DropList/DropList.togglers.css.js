@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import HSDSButton from '../Button'
+import { FocusUI } from '../Button/Button.css'
+import config from '../Button/Button.config'
 
 export const NavLinkTogglerUI = styled('button')`
   display: flex;
@@ -24,6 +26,16 @@ export const NavLinkTogglerUI = styled('button')`
   }
 `
 
+export const SplitButtonUI = styled(HSDSButton)`
+  &.is-primary {
+    margin-right: 0;
+    ${FocusUI} {
+      box-shadow: 0 0 0 ${config.focusOutlineWidth}px ${getColor('blue.600')},
+        inset 0 0 0 2px white;
+    }
+  }
+`
+
 export const SplitButtonTogglerUI = styled(HSDSButton)`
   &.SplitButton__Toggler {
     min-width: 30px !important;
@@ -32,6 +44,11 @@ export const SplitButtonTogglerUI = styled(HSDSButton)`
 
     &.is-primary {
       box-shadow: -1px 0 0 ${getColor('blue.600')};
+
+      ${FocusUI} {
+        box-shadow: 0 0 0 ${config.focusOutlineWidth}px ${getColor('blue.600')},
+          inset 0 0 0 2px white;
+      }
 
       &.is-success {
         box-shadow: -1px 0 0 ${getColor('green.600')};
