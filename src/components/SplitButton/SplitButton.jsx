@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import SearchableDropdown from '../SearchableDropdown'
+import Button from '../Button'
 import ControlGroup from '../ControlGroup'
 import Icon from '../Icon'
-import { OptionsTriggerButtonUI, SplitButtonUI } from './SplitButton.css'
+import { OptionsTriggerButtonUI } from './SplitButton.css'
 
 const defaultDropdownProps = {
   className: 'c-SplitButton__dropdown',
@@ -19,7 +20,7 @@ export class SplitButton extends React.PureComponent {
   renderButton() {
     const { dropdownProps, ...rest } = this.props
 
-    return <SplitButtonUI {...rest} className="c-SplitButton__button" />
+    return <Button {...rest} className="c-SplitButton__button" />
   }
 
   renderDropdownTrigger() {
