@@ -20,8 +20,6 @@ function ColumnChooser({
 
   return (
     <DropList
-      isMenuOpen
-      closeOnBlur={false}
       autoSetComboboxAt={10}
       items={items}
       onSelect={(selection, clickedItem) => {
