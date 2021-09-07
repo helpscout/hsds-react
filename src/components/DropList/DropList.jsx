@@ -12,14 +12,16 @@ import {
   flattenListItems,
   getDropListVariant,
   getItemContentKeyName,
-  isItemReset,
+  isItemAction,
   isItemRegular,
+  isItemReset,
   isTogglerOfType,
   itemToString,
   parseSelectionFromProps,
   removeItemFromArray,
   requiredItemPropsCheck,
   useWarnings,
+  isItemInert,
 } from './DropList.utils'
 import {
   SimpleButton,
@@ -36,6 +38,7 @@ function DropListManager({
   closeOnClickOutside = true,
   closeOnSelection = true,
   customEmptyList = null,
+  customEmptyListItems,
   'data-cy': dataCy,
   enableLeftRightNavigation = false,
   focusTogglerOnMenuClose = true,
@@ -163,7 +166,12 @@ function DropListManager({
       return
     }
 
-    if (selectedItem.isDisabled) {
+    if (selectedItem.isDisabled || isItemInert(selectedItem)) {
+      return
+    }
+
+    if (isItemAction(selectedItem)) {
+      onSelect(null, selectedItem)
       return
     }
 
@@ -267,6 +275,7 @@ function DropListManager({
             closeOnBlur={closeOnBlur}
             closeOnSelection={closeOnSelection}
             customEmptyList={customEmptyList}
+            customEmptyListItems={customEmptyListItems}
             data-cy={dataCy}
             enableLeftRightNavigation={enableLeftRightNavigation}
             handleSelectedItemChange={handleSelectedItemChange}
@@ -328,8 +337,12 @@ DropListManager.propTypes = {
   closeOnClickOutside: PropTypes.bool,
   /** Whether to close the DropList when an item is selected */
   closeOnSelection: PropTypes.bool,
-  /** Pass a React Element to render a custom message or style when the List is empty */
+  /** Pass an Element to render a custom message or style when the List is empty */
   customEmptyList: PropTypes.any,
+  /** To render "extra" items when the list is empty, as opposed to just customizind the rendering like `customEmptyList` does */
+  customEmptyListItems: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.string, itemShape, dividerShape, groupShape])
+  ),
   /** Data attr applied to the DropList for Cypress tests. By default one of 'DropList.Select' or 'DropList.Combobox' depending on the variant used */
   'data-cy': PropTypes.string,
   /** Enable navigation with Right and Left arrows (useful for horizontally rendered lists) */

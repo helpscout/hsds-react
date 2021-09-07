@@ -254,6 +254,67 @@ describe('Render', () => {
     })
   })
 
+  test('should render empty menu list items if no items in the array and customEmptyListItems present (select)', async () => {
+    const { container } = render(
+      <DropList
+        items={[]}
+        customEmptyListItems={[
+          {
+            label: 'No tags found',
+            type: 'inert',
+          },
+          {
+            type: 'divider',
+          },
+          {
+            label: 'Create tag',
+            type: 'action',
+          },
+        ]}
+        isMenuOpen
+        toggler={<SimpleButton text="Button Toggler" />}
+      />
+    )
+
+    await waitFor(() => {
+      expect(container.querySelectorAll('.DropListItem--divider').length).toBe(
+        1
+      )
+      expect(container.querySelectorAll('.DropListItem').length).toBe(2)
+    })
+  })
+
+  test('should render empty menu list items if no items in the array and customEmptyListItems present (combobox)', async () => {
+    const { container } = render(
+      <DropList
+        variant="combobox"
+        items={[]}
+        customEmptyListItems={[
+          {
+            label: 'No tags found',
+            type: 'inert',
+          },
+          {
+            type: 'divider',
+          },
+          {
+            label: 'Create tag',
+            type: 'action',
+          },
+        ]}
+        isMenuOpen
+        toggler={<SimpleButton text="Button Toggler" />}
+      />
+    )
+
+    await waitFor(() => {
+      expect(container.querySelectorAll('.DropListItem--divider').length).toBe(
+        1
+      )
+      expect(container.querySelectorAll('.DropListItem').length).toBe(2)
+    })
+  })
+
   test('should render a the empty menu list if no items in the array (invalid custom element)', async () => {
     const { queryByText } = render(
       <DropList
@@ -811,6 +872,35 @@ describe('Selection', () => {
           listItemNode: getByText(itemToSelect.label).parentElement,
         })
       )
+    })
+  })
+
+  test('should not select an action item when clicked but fire onSelect', async () => {
+    const onSelectSpy = jest.fn()
+    const items = [
+      {
+        label: 'something',
+        type: 'action',
+      },
+    ].concat(someItems)
+    const { getByText } = render(
+      <DropList
+        isMenuOpen
+        onSelect={onSelectSpy}
+        items={items}
+        toggler={<SimpleButton text="Button Toggler" />}
+      />
+    )
+    const itemToSelect = items[0]
+    user.click(getByText(itemToSelect.label).parentElement)
+
+    await waitFor(() => {
+      expect(
+        getByText(itemToSelect.label).parentElement.classList.contains(
+          'is-selected'
+        )
+      ).toBeFalsy()
+      expect(onSelectSpy).toHaveBeenCalledWith(null, itemToSelect)
     })
   })
 
@@ -1651,5 +1741,93 @@ describe('getEnabledItemIndex', () => {
         arrowKey: 'UP',
       })
     ).toBe(9)
+  })
+
+  test('Inert items', () => {
+    const items = [
+      {
+        label: '0004',
+        value: '0004',
+      },
+      {
+        label: '0005',
+        value: '0005',
+        type: 'inert',
+      },
+      {
+        type: 'divider',
+      },
+      {
+        label: '0005',
+        value: '0005',
+      },
+    ]
+
+    expect(
+      getEnabledItemIndex({
+        currentHighlightedIndex: -1,
+        nextHighlightedIndex: 0,
+        items,
+        arrowKey: 'DOWN',
+      })
+    ).toBe(0)
+    expect(
+      getEnabledItemIndex({
+        currentHighlightedIndex: 1,
+        nextHighlightedIndex: 2,
+        items,
+        arrowKey: 'DOWN',
+      })
+    ).toBe(3)
+    expect(
+      getEnabledItemIndex({
+        currentHighlightedIndex: 3,
+        nextHighlightedIndex: 2,
+        items,
+        arrowKey: 'UP',
+      })
+    ).toBe(0)
+  })
+
+  test('One highlightable item', () => {
+    const items = [
+      {
+        label: '0005',
+        value: '0005',
+        type: 'inert',
+      },
+      {
+        type: 'divider',
+      },
+      {
+        label: '0005',
+        value: '0005',
+      },
+    ]
+
+    expect(
+      getEnabledItemIndex({
+        currentHighlightedIndex: -1,
+        nextHighlightedIndex: 0,
+        items,
+        arrowKey: 'DOWN',
+      })
+    ).toBe(2)
+    expect(
+      getEnabledItemIndex({
+        currentHighlightedIndex: 2,
+        nextHighlightedIndex: 0,
+        items,
+        arrowKey: 'DOWN',
+      })
+    ).toBe(2)
+    expect(
+      getEnabledItemIndex({
+        currentHighlightedIndex: 2,
+        nextHighlightedIndex: 0,
+        items,
+        arrowKey: 'UP',
+      })
+    ).toBe(2)
   })
 })

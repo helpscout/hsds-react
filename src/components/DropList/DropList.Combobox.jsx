@@ -2,10 +2,12 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useCombobox } from 'downshift'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 import { noop } from '../../utilities/other'
+import { isFunction } from '../../utilities/is'
 import {
   itemToString,
   isItemSelected,
   renderListContents,
+  isItemHighlightable,
 } from './DropList.utils'
 import {
   getA11ySelectionMessageCommon,
@@ -25,6 +27,7 @@ function Combobox({
   closeOnBlur = true,
   closeOnSelection = true,
   customEmptyList = null,
+  customEmptyListItems,
   'data-cy': dataCy = `DropList.${VARIANTS.COMBOBOX}`,
   handleSelectedItemChange = noop,
   inputPlaceholder = 'Search',
@@ -41,6 +44,11 @@ function Combobox({
   withMultipleSelection = false,
 }) {
   const [inputItems, setInputItems] = useState(items)
+  const isListEmpty = items.length === 0
+  const allItems =
+    isListEmpty && Array.isArray(customEmptyListItems)
+      ? customEmptyListItems
+      : inputItems
   const inputEl = useRef(null)
 
   const {
@@ -50,11 +58,12 @@ function Combobox({
     getMenuProps,
     highlightedIndex,
     inputValue,
+    setHighlightedIndex,
   } = useCombobox({
     initialInputValue: '',
     initialIsOpen: isOpen,
     isOpen,
-    items: inputItems,
+    items: allItems,
     itemToString,
     selectedItem,
 
@@ -67,11 +76,24 @@ function Combobox({
     },
 
     onInputValueChange({ inputValue }) {
-      setInputItems(
-        items.filter(item =>
-          itemToString(item).toLowerCase().startsWith(inputValue.toLowerCase())
-        )
+      let filtered = items.filter(item =>
+        itemToString(item).toLowerCase().startsWith(inputValue.toLowerCase())
       )
+      const isListEmpty = filtered.length === 0
+
+      if (isListEmpty && Array.isArray(customEmptyListItems)) {
+        const processed = customEmptyListItems.map(item => {
+          if (isFunction(item.customizeLabel)) {
+            item.label = item.customizeLabel(inputValue)
+            item.inputValue = inputValue
+          }
+
+          return item
+        })
+        filtered = filtered.concat(processed)
+      }
+      setHighlightedIndex(filtered.findIndex(isItemHighlightable))
+      setInputItems(filtered)
     },
 
     onIsOpenChange(changes) {
@@ -103,7 +125,7 @@ function Combobox({
       return stateReducerCommon({
         changes,
         closeOnSelection,
-        items,
+        items: allItems,
         selectedItems,
         state,
         type: `${VARIANTS.COMBOBOX}.${type}`,
@@ -160,7 +182,7 @@ function Combobox({
       menuCSS={menuCSS}
       {...getComboboxProps()}
     >
-      <InputSearchHolderUI show={items.length > 0}>
+      <InputSearchHolderUI show={allItems.length > 0}>
         <input
           data-event-driver
           {...getInputProps({
@@ -201,9 +223,8 @@ function Combobox({
       >
         {renderListContents({
           customEmptyList,
-          emptyList: items.length === 0,
           inputValue,
-          items: inputItems,
+          items: allItems,
           renderListItem,
         })}
       </MenuListUI>

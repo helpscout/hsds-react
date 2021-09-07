@@ -22,7 +22,6 @@ export function stateReducerCommon({
     case `${COMBOBOX}.${useCombobox.stateChangeTypes.InputChange}`:
       return {
         ...changes,
-        highlightedIndex: 0,
       }
 
     case `${COMBOBOX}.${useCombobox.stateChangeTypes.InputBlur}`:
