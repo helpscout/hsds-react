@@ -11,12 +11,12 @@ const shouldColumnShow = column => !!column.show
 function ColumnChooser({
   columns,
   defaultColumns,
-  columnChooserResetLabel = 'Reset to defaults',
+  columnChooserResetLabel,
   onColumnChoose = noop,
   resetColumns = noop,
   updateColumns = noop,
 }) {
-  const items = createColumnChooserListItems(columns)
+  const items = createColumnChooserListItems(columns, columnChooserResetLabel)
 
   return (
     <DropList

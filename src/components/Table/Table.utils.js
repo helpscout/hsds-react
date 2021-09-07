@@ -56,7 +56,7 @@ export function getDisplayTableData({ data, rowsToDisplay }) {
   return data
 }
 
-export function createColumnChooserListItems(columns) {
+export function createColumnChooserListItems(columns, columnChooserResetLabel) {
   const items = columns.reduce((acc, currentCol) => {
     const group = currentCol.group || 'Other'
     currentCol.label = currentCol.title
@@ -95,7 +95,7 @@ export function createColumnChooserListItems(columns) {
       type: 'divider',
     },
     {
-      label: 'Reset to defaults',
+      label: columnChooserResetLabel || 'Reset to defaults',
       type: 'action',
       action: 'RESET',
     },
