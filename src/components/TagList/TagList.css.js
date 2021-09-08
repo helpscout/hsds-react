@@ -30,10 +30,6 @@ export const ShowAllButtonUI = styled.button`
   }
 `
 
-export const BadgeItemUI = styled('div')`
-  margin-bottom: 2px;
-`
-
 export const ListUI = styled.ul`
   display: block;
   margin: 0 0 8px 0;
