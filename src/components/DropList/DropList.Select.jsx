@@ -5,6 +5,7 @@ import {
   itemToString,
   isItemSelected,
   renderListContents,
+  checkNextElementFocusedAndThenRun,
 } from './DropList.utils'
 import {
   getA11ySelectionMessageCommon,
@@ -27,6 +28,8 @@ function Select({
   isOpen = false,
   items = [],
   menuCSS,
+  focusToggler = noop,
+  onDropListLeave = noop,
   onMenuBlur = noop,
   onMenuFocus = noop,
   onListItemSelectEvent = noop,
@@ -146,8 +149,9 @@ function Select({
         }
       }
     }
-
-    if (event.key === 'Enter' || event.key === ' ') {
+    if (event.key === 'Escape') {
+      focusToggler()
+    } else if (event.key === 'Enter' || event.key === ' ') {
       // Since the event happens on the Menu and not the list item
       // we look for the selected item and send it to onListItemSelectEvent as listItemNode
       event.target.querySelectorAll('.DropListItem').forEach(item => {
@@ -187,13 +191,10 @@ function Select({
                * Here we wait a little bit to see if the next element gathering focus
                * is indeed the toggler, and only close the DropList if it isn't
                */
-              setTimeout(() => {
-                if (
-                  !document.activeElement.classList.contains('DropListToggler')
-                ) {
-                  toggleOpenedState(false)
-                }
-              }, 50)
+              checkNextElementFocusedAndThenRun(['DropListToggler'], () => {
+                isOpen && toggleOpenedState(false)
+                onDropListLeave()
+              })
             }
             onMenuBlur(e)
           },

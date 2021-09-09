@@ -21,6 +21,7 @@ import {
   requiredItemPropsCheck,
   useWarnings,
   isItemInert,
+  checkNextElementFocusedAndThenRun,
 } from './DropList.utils'
 import {
   SimpleButton,
@@ -46,6 +47,7 @@ function DropListManager({
   isMenuOpen = false,
   items = [],
   menuCSS,
+  onDropListLeave = noop,
   onMenuBlur = noop,
   onMenuFocus = noop,
   onListItemSelectEvent = noop,
@@ -105,11 +107,18 @@ function DropListManager({
 
   function decorateUserToggler(userToggler) {
     if (React.isValidElement(userToggler)) {
-      const { className, onClick, onFocus } = userToggler.props
+      const { className, onClick, onFocus, onBlur } = userToggler.props
       const togglerProps = {
         className: classNames(DROPLIST_TOGGLER, className),
         isActive: isOpen,
 
+        onBlur: e => {
+          onBlur && onBlur(e)
+          checkNextElementFocusedAndThenRun(
+            ['MenuList', 'DropList__Combobox__input'],
+            onDropListLeave
+          )
+        },
         onClick: e => {
           onClick && onClick(e)
           e.preventDefault()
@@ -168,6 +177,7 @@ function DropListManager({
 
     if (isItemAction(selectedItem)) {
       onSelect(null, selectedItem)
+      closeOnSelection && focusToggler()
       return
     }
 
@@ -203,6 +213,11 @@ function DropListManager({
       setSelectedItem(selectedItem || null)
       onSelect(selectedItem, selectedItem)
     }
+    closeOnSelection && focusToggler()
+  }
+
+  function focusToggler() {
+    tippyInstanceRef.current && tippyInstanceRef.current.reference.focus()
   }
 
   return (
@@ -224,11 +239,11 @@ function DropListManager({
         ) {
           return
         }
-
         if (!closeOnClickOutside) {
           return
         }
 
+        onDropListLeave()
         toggleOpenedState(false)
       }}
       render={() => (
@@ -253,15 +268,10 @@ function DropListManager({
             dropListEventDriverNode && dropListEventDriverNode.focus()
           }}
           onExiting={() => {
-            if (tippyInstanceRef.current) {
-              focusTogglerOnMenuClose &&
-                tippyInstanceRef.current.reference.focus()
-            }
+            focusTogglerOnMenuClose && focusToggler()
           }}
           onExited={() => {
-            if (tippyInstanceRef.current) {
-              tippyInstanceRef.current.hide()
-            }
+            tippyInstanceRef.current && tippyInstanceRef.current.hide()
           }}
         >
           <DropListVariant
@@ -272,11 +282,13 @@ function DropListManager({
             customEmptyListItems={customEmptyListItems}
             data-cy={dataCy}
             enableLeftRightNavigation={enableLeftRightNavigation}
+            focusToggler={focusToggler}
             handleSelectedItemChange={handleSelectedItemChange}
             inputPlaceholder={inputPlaceholder}
             isOpen={isOpen}
             items={parsedItems}
             menuCSS={menuCSS}
+            onDropListLeave={onDropListLeave}
             onMenuBlur={onMenuBlur}
             onMenuFocus={onMenuFocus}
             onListItemSelectEvent={onListItemSelectEvent}

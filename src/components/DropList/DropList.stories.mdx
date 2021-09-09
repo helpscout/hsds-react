@@ -204,6 +204,10 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
     >
       <DropList
         isMenuOpen={boolean('Is Menu Open', false)}
+        focusTogglerOnMenuClose={boolean('focusTogglerOnMenuClose', true)}
+        onDropListLeave={() => {
+          console.log('DropList Left')
+        }}
         onOpenedStateChange={isOpen => {
           console.log('onOpenedStateChange', isOpen)
         }}
@@ -242,6 +246,10 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
       <DropList
         variant="combobox"
         inputPlaceholder={text('inputPlaceholder', 'Search')}
+        focusTogglerOnMenuClose={boolean('focusTogglerOnMenuClose', true)}
+        onDropListLeave={() => {
+          console.log('DropLit left')
+        }}
         items={select(
           'Items',
           {
@@ -801,6 +809,7 @@ Depending on your use case, you might want to set `closeOnSelection = false` whe
       }}
     >
       <DropList
+        focusTogglerOnMenuClose={false}
         items={regularItems.slice(0, 3).concat([
           {
             type: 'divider',

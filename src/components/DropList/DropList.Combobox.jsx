@@ -8,6 +8,7 @@ import {
   isItemSelected,
   renderListContents,
   isItemHighlightable,
+  checkNextElementFocusedAndThenRun,
 } from './DropList.utils'
 import {
   getA11ySelectionMessageCommon,
@@ -29,11 +30,13 @@ function Combobox({
   customEmptyList = null,
   customEmptyListItems,
   'data-cy': dataCy = `DropList.${VARIANTS.COMBOBOX}`,
+  focusToggler = noop,
   handleSelectedItemChange = noop,
   inputPlaceholder = 'Search',
   items = [],
   isOpen = false,
   menuCSS,
+  onDropListLeave = noop,
   onMenuBlur = noop,
   onMenuFocus = noop,
   onListItemSelectEvent = noop,
@@ -190,18 +193,22 @@ function Combobox({
           {...getInputProps({
             className: 'DropList__Combobox__input',
             ref: inputEl,
-            onBlur: e => {
-              onMenuBlur(e)
+            onBlur: event => {
+              onMenuBlur(event)
+              checkNextElementFocusedAndThenRun(
+                ['DropListToggler'],
+                onDropListLeave
+              )
             },
             onFocus: event => {
               onMenuFocus(event)
             },
             onKeyDown: event => {
               if (event.key === 'Tab') {
-                event.preventDefault()
                 toggleOpenedState(false)
-              }
-              if (event.key === 'Enter') {
+              } else if (event.key === 'Escape') {
+                focusToggler()
+              } else if (event.key === 'Enter') {
                 const droplistMenu =
                   event.target.parentElement.nextElementSibling
 

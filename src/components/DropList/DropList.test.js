@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import user from '@testing-library/user-event'
 import { css } from 'styled-components'
 import DropList from './DropList'
@@ -1829,5 +1829,157 @@ describe('getEnabledItemIndex', () => {
         arrowKey: 'UP',
       })
     ).toBe(2)
+  })
+})
+
+describe('More open close behaviours', () => {
+  test('selecting an item does not focus the toggler when closeOnSelection false', () => {
+    const { getByTestId, getByText } = render(
+      <DropList
+        closeOnSelection={false}
+        items={someItems}
+        isMenuOpen
+        toggler={<SimpleButton text="This is a select" />}
+      />
+    )
+
+    user.click(getByText('Paul').parentElement)
+
+    expect(getByTestId('DropList.ButtonToggler')).not.toHaveFocus()
+  })
+
+  test('selecting an item refocuses the toggler when closeOnSelection true and focusTogglerOnMenuClose is false', () => {
+    const { getByTestId, getByText } = render(
+      <DropList
+        focusTogglerOnMenuClose={false}
+        items={someItems}
+        isMenuOpen
+        toggler={<SimpleButton text="This is a select" />}
+      />
+    )
+
+    user.click(getByText('Paul').parentElement)
+
+    expect(getByTestId('DropList.ButtonToggler')).toHaveFocus()
+  })
+
+  test('pressing escape refocuses the toggler even if focusTogglerOnMenuClose is false', () => {
+    const { getByTestId, queryByText, queryByRole } = render(
+      <DropList
+        focusTogglerOnMenuClose={false}
+        items={someItems}
+        toggler={<SimpleButton text="This is a select" />}
+      />
+    )
+
+    const toggler = queryByText('This is a select')
+
+    // open the droplist
+    user.click(toggler)
+    // click outside
+    user.type(queryByRole('listbox'), '{esc}')
+
+    expect(getByTestId('DropList.ButtonToggler')).toHaveFocus()
+  })
+
+  test('onDropListLeave: click outside', () => {
+    const onDropListLeaveSpy = jest.fn()
+    const { queryByText } = render(
+      <DropList
+        onDropListLeave={onDropListLeaveSpy}
+        focusTogglerOnMenuClose={false}
+        items={someItems}
+        toggler={<SimpleButton text="This is a select" />}
+      />
+    )
+
+    const toggler = queryByText('This is a select')
+
+    // open the droplist
+    user.click(toggler)
+    // click outside
+    user.click(document.body)
+
+    expect(onDropListLeaveSpy).toHaveBeenCalled()
+  })
+
+  test('onDropListLeave: tab out of toggler (menu closed)', async () => {
+    const onDropListLeaveSpy = jest.fn()
+
+    render(
+      <div>
+        <DropList
+          onDropListLeave={onDropListLeaveSpy}
+          focusTogglerOnMenuClose={false}
+          items={someItems}
+          toggler={<SimpleButton text="This is a select" />}
+        />
+        <button>Demo</button>
+      </div>
+    )
+
+    // focus the toggler
+    user.tab()
+    // leave the toggler
+    user.tab()
+
+    await waitFor(() => {
+      expect(onDropListLeaveSpy).toHaveBeenCalled()
+    })
+  })
+
+  test('onDropListLeave: tab out of toggler (menu open)', () => {
+    const onDropListLeaveSpy = jest.fn()
+    const onBlurSpy = jest.fn()
+    const { queryByText } = render(
+      <div>
+        <DropList
+          onDropListLeave={onDropListLeaveSpy}
+          focusTogglerOnMenuClose={false}
+          items={someItems}
+          tippyOptions={{
+            appendTo: document.body,
+          }}
+          toggler={<SimpleButton onBlur={onBlurSpy} text="This is a select" />}
+        />
+        <button>Demo</button>
+      </div>
+    )
+    const toggler = queryByText('This is a select')
+
+    user.click(toggler)
+
+    // Focus passes to the menu when we open it
+    expect(onDropListLeaveSpy).not.toHaveBeenCalled()
+    expect(onBlurSpy).toHaveBeenCalled()
+  })
+
+  test('onDropListLeave: blur out of menu', async () => {
+    const onDropListLeaveSpy = jest.fn()
+    const { queryByText, queryByRole } = render(
+      <div>
+        <DropList
+          onDropListLeave={onDropListLeaveSpy}
+          focusTogglerOnMenuClose={false}
+          items={someItems}
+          tippyOptions={{
+            appendTo: document.body,
+          }}
+          toggler={<SimpleButton text="This is a select" />}
+        />
+        <button>Demo</button>
+      </div>
+    )
+    const toggler = queryByText('This is a select')
+
+    user.click(toggler)
+
+    expect(queryByRole('listbox')).toHaveFocus()
+
+    user.tab()
+
+    await waitFor(() => {
+      expect(onDropListLeaveSpy).toHaveBeenCalled()
+    })
   })
 })
