@@ -130,6 +130,8 @@ export class ActionSelect extends React.PureComponent {
       shouldRefocusOnClose,
       disabled,
       id,
+      ariaLabel,
+      error,
     } = this.props
     const { isOpen, resizeCount, selection } = this.state
 
@@ -151,6 +153,8 @@ export class ActionSelect extends React.PureComponent {
                 text={getSelectTagText(selection, items)}
                 disabled={disabled}
                 id={id}
+                aria-label={ariaLabel || 'action toggle menu'}
+                error={error}
               />
             }
             selection={selection}
@@ -232,6 +236,10 @@ ActionSelect.propTypes = {
   disabled: PropTypes.bool,
   /** Id of the trigger element */
   id: PropTypes.string,
+  /** Aria Label of the Toggler */
+  ariaLabel: PropTypes.string,
+  /** Error message */
+  error: PropTypes.string,
 }
 
 export default ActionSelect
