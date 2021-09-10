@@ -117,6 +117,7 @@ function Combobox({
         case useCombobox.stateChangeTypes.InputKeyDownEnter:
         case useCombobox.stateChangeTypes.ItemClick:
           clearOnSelect && handleSelectedItemChange({ selectedItem: null })
+          closeOnSelection && focusToggler()
           break
 
         default:

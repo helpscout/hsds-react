@@ -81,6 +81,7 @@ function Select({
         case useSelect.stateChangeTypes.MenuKeyDownEnter:
         case useSelect.stateChangeTypes.ItemClick:
           clearOnSelect && handleSelectedItemChange({ selectedItem: null })
+          closeOnSelection && focusToggler()
           break
 
         default:

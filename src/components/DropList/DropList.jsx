@@ -177,7 +177,6 @@ function DropListManager({
 
     if (isItemAction(selectedItem)) {
       onSelect(null, selectedItem)
-      closeOnSelection && focusToggler()
       return
     }
 
@@ -213,7 +212,6 @@ function DropListManager({
       setSelectedItem(selectedItem || null)
       onSelect(selectedItem, selectedItem)
     }
-    closeOnSelection && focusToggler()
   }
 
   function focusToggler() {
