@@ -1,4 +1,5 @@
-// Couldn't figure out how to make this play nicely with Jest.
+// Deprecated
+/* istanbul ignore file */
 import unistoreCreateStore from '@helpscout/wedux'
 import reducer from './Dropdown.reducer'
 import { noop } from '../../utilities/other'

@@ -1,3 +1,5 @@
+// Deprecated
+/* istanbul ignore file */
 import { SELECTORS } from './Dropdown.utils'
 import styled from 'styled-components'
 import Card from '../Card'
