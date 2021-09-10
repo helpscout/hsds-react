@@ -238,6 +238,7 @@ export const MeatButton = forwardRef(
       meatIcon = 'kebab',
       onClick = noop,
       withTooltip = false,
+      tooltipProps,
       ...rest
     },
     ref
@@ -274,6 +275,7 @@ export const MeatButton = forwardRef(
             triggerTarget={
               tooltipRef.current && tooltipRef.current.parentElement
             }
+            {...tooltipProps}
           >
             <Icon name={meatIcon} size={iconSize} />
           </Tooltip>
@@ -300,6 +302,7 @@ export const IconBtn = forwardRef(
       onClick = noop,
       withCaret = true,
       withTooltip = false,
+      tooltipProps,
       ...rest
     },
     ref
@@ -336,6 +339,7 @@ export const IconBtn = forwardRef(
             triggerTarget={
               tooltipRef.current && tooltipRef.current.parentElement
             }
+            {...tooltipProps}
           >
             <Icon name={iconName} size={iconSize} />
           </Tooltip>

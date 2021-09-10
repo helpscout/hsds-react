@@ -20,6 +20,7 @@ function Select({
   closeOnBlur = true,
   closeOnSelection = true,
   customEmptyList = null,
+  customEmptyListItems,
   'data-cy': dataCy = `DropList.${VARIANTS.SELECT}`,
   enableLeftRightNavigation = false,
   handleSelectedItemChange = noop,
@@ -35,6 +36,11 @@ function Select({
   toggleOpenedState = noop,
   withMultipleSelection = false,
 }) {
+  const isListEmpty = items.length === 0
+  const allItems =
+    isListEmpty && Array.isArray(customEmptyListItems)
+      ? customEmptyListItems
+      : items
   const {
     highlightedIndex,
     getItemProps,
@@ -44,7 +50,7 @@ function Select({
   } = useSelect({
     initialIsOpen: isOpen,
     isOpen,
-    items,
+    items: allItems,
     itemToString,
     selectedItem,
 
@@ -85,7 +91,7 @@ function Select({
       return stateReducerCommon({
         changes,
         closeOnSelection,
-        items,
+        items: allItems,
         selectedItems,
         state,
         type: `${VARIANTS.SELECT}.${type}`,
@@ -129,7 +135,7 @@ function Select({
   function handleMenuKeyDown(event) {
     if (enableLeftRightNavigation) {
       if (event.key === 'ArrowRight') {
-        if (highlightedIndex !== items.length - 1) {
+        if (highlightedIndex !== allItems.length - 1) {
           setHighlightedIndex(highlightedIndex + 1)
         }
       } else if (event.key === 'ArrowLeft') {
@@ -195,8 +201,7 @@ function Select({
       >
         {renderListContents({
           customEmptyList,
-          emptyList: items.length === 0,
-          items,
+          items: allItems,
           renderListItem,
         })}
       </MenuListUI>

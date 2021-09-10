@@ -1,13 +1,11 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import { render, waitFor } from '@testing-library/react'
+import user from '@testing-library/user-event'
+
 import Tooltip, { TooltipContext } from './index'
 import Tippy from '@tippyjs/react/headless'
 import { act } from 'react-dom/test-utils'
-
-jest.mock('@tippyjs/react/headless', () => {
-  const Tippy = ({ children }) => <div>{children}</div>
-  return Tippy
-})
 
 describe('classNames', () => {
   test('Can accept custom className', () => {
@@ -163,5 +161,26 @@ describe('Unmounting', () => {
     })
 
     expect(consoleErrorSpy).not.toHaveBeenCalled()
+  })
+})
+
+describe('KeyboardBadge', () => {
+  test('Should render a KeyboardBadge when badge prop exists', async () => {
+    const props = {
+      title: 'Pop',
+      badge: 'alt + a',
+      visible: true,
+      triggerOn: 'click',
+    }
+    const { queryByTestId, getByText, container } = render(
+      <Tooltip {...props}>trigger</Tooltip>
+    )
+
+    user.click(container.querySelector('.TooltipTrigger'))
+
+    await waitFor(() => {
+      expect(queryByTestId('KeyboardBadge')).toBeInTheDocument()
+      expect(getByText('Alt + a')).toBeTruthy()
+    })
   })
 })

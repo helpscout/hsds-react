@@ -153,21 +153,22 @@ export function isItemAGroupLabel(item) {
   return objectHasKey(item, 'type') && item.type === ITEM_TYPES.GROUP_LABEL
 }
 
-export function isItemReset(item) {
-  return objectHasKey(item, 'type') && item.type === ITEM_TYPES.RESET_DROPLIST
+export function isItemInert(item) {
+  return objectHasKey(item, 'type') && item.type === ITEM_TYPES.INERT
+}
+
+export function isItemAction(item) {
+  return objectHasKey(item, 'type') && item.type === ITEM_TYPES.ACTION
 }
 
 export function isItemRegular(item) {
   return (
-    !isItemADivider(item) &&
-    !isItemAGroup(item) &&
-    !isItemAGroupLabel(item) &&
-    !isItemReset(item)
+    !isItemADivider(item) && !isItemAGroup(item) && !isItemAGroupLabel(item)
   )
 }
 
-export function flattenListItems(listItems, withResetItem) {
-  const items = listItems.reduce((accumulator, listItem) => {
+export function flattenListItems(listItems) {
+  return listItems.reduce((accumulator, listItem) => {
     const contentKey = getItemContentKeyName(listItem)
 
     if (isItemAGroup(listItem)) {
@@ -188,31 +189,21 @@ export function flattenListItems(listItems, withResetItem) {
 
     return accumulator.concat(listItem)
   }, [])
-
-  return withResetItem
-    ? items.concat([
-        {
-          type: 'divider',
-        },
-        {
-          type: ITEM_TYPES.RESET_DROPLIST,
-          label: isString(withResetItem) ? withResetItem : 'Reset',
-          remove: true,
-        },
-      ])
-    : items
 }
 
 export function renderListContents({
   customEmptyList,
-  emptyList,
   inputValue,
   items,
   renderListItem,
 }) {
-  if (emptyList && !customEmptyList) return <EmptyListUI>No items</EmptyListUI>
+  const isEmptyList = items.length === 0
 
-  if (emptyList && customEmptyList) {
+  if (!isEmptyList) {
+    return items.map(renderListItem)
+  }
+
+  if (isEmptyList && customEmptyList) {
     return React.isValidElement(customEmptyList) ? (
       React.cloneElement(customEmptyList)
     ) : (
@@ -220,8 +211,8 @@ export function renderListContents({
     )
   }
 
-  if (items.length > 0) {
-    return items.map(renderListItem)
+  if (isEmptyList && !customEmptyList && inputValue == null) {
+    return <EmptyListUI>No items</EmptyListUI>
   }
 
   return <ListItemUI>No results for {inputValue}</ListItemUI>
@@ -237,8 +228,14 @@ export function requiredItemPropsCheck(props, propName, componentName) {
   }
 }
 
-function checkIfGroupOrDividerItem(item) {
+export function checkIfGroupOrDividerItem(item) {
   return isItemADivider(item) || isItemAGroup(item) || isItemAGroupLabel(item)
+}
+
+export function isItemHighlightable(item) {
+  return (
+    !checkIfGroupOrDividerItem(item) && !item.isDisabled && !isItemInert(item)
+  )
 }
 
 export function getEnabledItemIndex({
@@ -251,15 +248,25 @@ export function getEnabledItemIndex({
   // like in the case of a combobox being filtered to "no results"
   if (nextHighlightedIndex === -1) return -1
 
-  const isNextIndexItemHighlightable =
-    !checkIfGroupOrDividerItem(items[nextHighlightedIndex]) &&
-    !items[nextHighlightedIndex].isDisabled
+  const isNextIndexItemHighlightable = isItemHighlightable(
+    items[nextHighlightedIndex]
+  )
 
   if (
     isNextIndexItemHighlightable &&
     currentHighlightedIndex !== nextHighlightedIndex
   ) {
     return nextHighlightedIndex
+  }
+
+  const highlightableItems = items.filter(item => {
+    return (
+      !checkIfGroupOrDividerItem(item) && !item.isDisabled && !isItemInert(item)
+    )
+  })
+
+  if (highlightableItems.length === 1) {
+    return items.findIndex(isItemHighlightable)
   }
 
   let newNextHighlightedIndex

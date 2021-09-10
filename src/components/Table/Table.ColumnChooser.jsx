@@ -11,19 +11,19 @@ const shouldColumnShow = column => !!column.show
 function ColumnChooser({
   columns,
   defaultColumns,
-  columnChooserResetLabel = 'Reset to defaults',
+  columnChooserResetLabel,
   onColumnChoose = noop,
   resetColumns = noop,
   updateColumns = noop,
 }) {
-  const items = createColumnChooserListItems(columns)
+  const items = createColumnChooserListItems(columns, columnChooserResetLabel)
 
   return (
     <DropList
       autoSetComboboxAt={10}
       items={items}
       onSelect={(selection, clickedItem) => {
-        if (clickedItem.type === 'reset_droplist') {
+        if (clickedItem.type === 'action' && clickedItem.action === 'RESET') {
           if (!equal(columns, defaultColumns)) {
             resetColumns(defaultColumns)
           }
@@ -43,7 +43,6 @@ function ColumnChooser({
         />
       }
       withMultipleSelection
-      withResetSelectionItem={columnChooserResetLabel}
     />
   )
 }

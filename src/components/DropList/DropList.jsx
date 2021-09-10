@@ -12,7 +12,7 @@ import {
   flattenListItems,
   getDropListVariant,
   getItemContentKeyName,
-  isItemReset,
+  isItemAction,
   isItemRegular,
   isTogglerOfType,
   itemToString,
@@ -20,6 +20,7 @@ import {
   removeItemFromArray,
   requiredItemPropsCheck,
   useWarnings,
+  isItemInert,
 } from './DropList.utils'
 import {
   SimpleButton,
@@ -36,6 +37,7 @@ function DropListManager({
   closeOnClickOutside = true,
   closeOnSelection = true,
   customEmptyList = null,
+  customEmptyListItems,
   'data-cy': dataCy,
   enableLeftRightNavigation = false,
   focusTogglerOnMenuClose = true,
@@ -55,7 +57,6 @@ function DropListManager({
   toggler = {},
   variant = VARIANTS.SELECT,
   withMultipleSelection = false,
-  withResetSelectionItem,
 }) {
   const [isOpen, setOpenedState] = useState(false)
   const tippyInstanceRef = useRef(null)
@@ -68,7 +69,7 @@ function DropListManager({
     withMultipleSelection ? parsedSelection : []
   )
   const [parsedItems, setParsedItems] = useState(
-    flattenListItems(items, withMultipleSelection && withResetSelectionItem)
+    flattenListItems(items, withMultipleSelection)
   )
 
   const { getCurrentScope } = useContext(GlobalContext) || {}
@@ -95,10 +96,8 @@ function DropListManager({
   }, [{ state: parsedSelection }, withMultipleSelection])
 
   useDeepCompareEffect(() => {
-    setParsedItems(
-      flattenListItems(items, withMultipleSelection && withResetSelectionItem)
-    )
-  }, [items, withMultipleSelection, withResetSelectionItem])
+    setParsedItems(flattenListItems(items, withMultipleSelection))
+  }, [items, withMultipleSelection])
 
   useEffect(() => {
     setOpenedState(isMenuOpen)
@@ -163,7 +162,12 @@ function DropListManager({
       return
     }
 
-    if (selectedItem.isDisabled) {
+    if (selectedItem.isDisabled || isItemInert(selectedItem)) {
+      return
+    }
+
+    if (isItemAction(selectedItem)) {
+      onSelect(null, selectedItem)
       return
     }
 
@@ -188,8 +192,6 @@ function DropListManager({
               item: itemToRemove,
               key: contentKey,
             })
-          } else if (isItemReset(selectedItem)) {
-            updatedSelection = selectedItems
           }
         }
 
@@ -267,6 +269,7 @@ function DropListManager({
             closeOnBlur={closeOnBlur}
             closeOnSelection={closeOnSelection}
             customEmptyList={customEmptyList}
+            customEmptyListItems={customEmptyListItems}
             data-cy={dataCy}
             enableLeftRightNavigation={enableLeftRightNavigation}
             handleSelectedItemChange={handleSelectedItemChange}
@@ -328,8 +331,12 @@ DropListManager.propTypes = {
   closeOnClickOutside: PropTypes.bool,
   /** Whether to close the DropList when an item is selected */
   closeOnSelection: PropTypes.bool,
-  /** Pass a React Element to render a custom message or style when the List is empty */
+  /** Pass an Element to render a custom message or style when the List is empty */
   customEmptyList: PropTypes.any,
+  /** To render "extra" items when the list is empty, as opposed to just customizind the rendering like `customEmptyList` does */
+  customEmptyListItems: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.string, itemShape, dividerShape, groupShape])
+  ),
   /** Data attr applied to the DropList for Cypress tests. By default one of 'DropList.Select' or 'DropList.Combobox' depending on the variant used */
   'data-cy': PropTypes.string,
   /** Enable navigation with Right and Left arrows (useful for horizontally rendered lists) */
@@ -374,11 +381,6 @@ DropListManager.propTypes = {
   variant: PropTypes.oneOf(['select', 'Select', 'combobox', 'Combobox']),
   /** Enable multiple selection of items */
   withMultipleSelection: PropTypes.bool,
-  /** Adds an "inert" item at the end of the list with a type of `reset_droplist`, use it to implement a "Clear Selection" or "Reset to defaults" type of option */
-  withResetSelectionItem: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool,
-  ]),
 }
 
 export default DropListManager
