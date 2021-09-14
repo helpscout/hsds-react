@@ -1,0 +1,141 @@
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
+import { boolean, number, text, select } from '@storybook/addon-knobs'
+import AvatarRow from './AvatarRow'
+import { generateAvatarList } from '../../utilities/specs/avatar.specs'
+import { Resizable } from 're-resizable'
+
+<Meta
+  title="Components/Structural/AvatarRow"
+  component={AvatarRow}
+  parameters={{
+    design: {
+      type: 'figma',
+      url: '',
+    },
+  }}
+/>
+
+# AvatarRow
+
+Component useful when you need to display a bunch of Avatars one after the other in a uniform manner and with the optional ability to adapt display the number of said avatars depending on the container width where it lives.
+
+## Avatars
+
+### Individual props
+
+In contrast with `AvatarList`, this component doesn't take `children` to render individual `Avatar` instead it takes an array of objects, each one with the individual properties for each `Avatar`:
+
+```js
+avatars = [
+  {
+    id: '001',
+    image: 'some_image_path',
+    name: 'McNulty',
+  },
+]
+```
+
+Any prop that `Avatar` takes, you can put in there, but...
+
+### Group props
+
+The purpose of this component is to create a row of uniform `Avatars`, for example the size should be the same for all, among other characteristics.
+
+You can pass any `Avatar` prop directly on the component, and in turn this will be passed to each `Avatar`:
+
+```jsx
+<AvatarRow
+  avatars={[
+    {
+      id: '001',
+      image: 'some_image_path',
+      name: 'McNulty',
+    },
+    {
+      id: '002',
+      image: 'some_image_path',
+      name: 'Bunk',
+      tooltipProps: { title: 'Bunk' },
+    },
+  ]}
+  size="lg"
+/>
+```
+
+If something should apply to all, put that avatar prop on `AvatarRow`, if it's individual, put on the `avatar` array.
+
+Example: Any avatar prop works, so if you want tooltips... go for it, since you most likely want different content on the tooltip of each element, you'll have to put it in each item of the array so you can have access to a specific field (like "name") putting it directly on `AvatarRow` will apply the same tooltip content on the avatars.
+
+> Props on `AvatarRow` beat props on the individual avatar.
+
+Yes, you can make a bit of a mess if you wanted to (why would you though? why?), but in order to keep the component simple and avoid having to list and unlist which props are "allowed" on which scenario, we decided it was better to trust your sense.
+
+## Adaptable
+
+### ResizeObserver
+
+By default the component will use a [ResizeObserver](https://caniuse.com/resizeobserver) to calculate how many avatars to display and when. This works in all scenarios, whether the change in available width is due to resizing the window or anything else.
+
+The issue is that IE doesn't support, so if you need that IE compatibility...
+
+### Window resize event
+
+Turning `ieCompatible` on, will use a resize event listener on the `window` instead of the observer, what it means is that the adaptability of `AvatarRow` will only be triggered on the resize of the browser window, which is what you need most of the time anyways.
+
+<Canvas>
+  <Story name="default">
+    <span>
+      Resize the window or the purple box dragging from its right border
+    </span>
+    <br />
+    <br />
+    <Resizable
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        outline: 'solid 1px #444cf770',
+        backgroundColor: '#e5e5f730',
+        backgroundImage: 'radial-gradient(#444cf770 0.5px, #e5e5f730 0.5px)',
+        backgroundSize: '10px 10px',
+      }}
+      defaultSize={{
+        width: '50%',
+        height: 200,
+      }}
+    >
+      <AvatarRow avatars={generateAvatarList(6)} />
+    </Resizable>
+  </Story>
+</Canvas>
+
+#### Reference
+
+- **Designer**:
+- **Engineering**:
+- **Usage**:
+
+<br />
+<br />
+
+### Props
+
+<ArgsTable of={AvatarRow} />
+
+## Stories
+
+#### With content
+
+<Canvas>
+  <Story name="IE compatible">
+    <span>Resize the window</span>
+    <br />
+    <br />
+    <AvatarRow
+      ieCompatible
+      size="lg"
+      gap={10}
+      avatars={generateAvatarList(10, true)}
+    />
+  </Story>
+</Canvas>
