@@ -62,11 +62,11 @@ You can pass any `Avatar` prop directly on the component, and in turn this will 
 />
 ```
 
-If something should apply to all, put that avatar prop on `AvatarRow`, if it's individual, put on the `avatar` array.
+If something should apply to every avatar, put that avatar prop directly on `AvatarRow`, if it's an individual prop, put it on each avatar item in the array.
 
-Example: Any avatar prop works, so if you want tooltips... go for it, since you most likely want different content on the tooltip of each element, you'll have to put it in each item of the array so you can have access to a specific field (like "name") putting it directly on `AvatarRow` will apply the same tooltip content on the avatars.
+Example: Any avatar prop works, so if you want tooltips... go for it, since you most likely want different content on the tooltip of each element, put it in each item of the array so you can have access to a specific field (like "name"), putting it directly on `AvatarRow` would apply the same tooltip content on all the avatars, as you'd expect.
 
-> Props on `AvatarRow` beat props on the individual avatar.
+> Props directly on `AvatarRow` beat props on the individual avatar.
 
 Yes, you can make a bit of a mess if you wanted to (why would you though? why?), but in order to keep the component simple and avoid having to list and unlist which props are "allowed" on which scenario, we decided it was better to trust your sense.
 
@@ -124,7 +124,7 @@ Turning `ieCompatible` on, will use a resize event listener on the `window` inst
 
 ## Stories
 
-#### With content
+#### IE compatibility
 
 <Canvas>
   <Story name="IE compatible">
