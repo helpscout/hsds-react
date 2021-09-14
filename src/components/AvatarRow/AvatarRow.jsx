@@ -8,6 +8,7 @@ import Avatar from '../Avatar'
 import Tooltip from '../Tooltip'
 import { config } from '../Avatar/Avatar.css'
 import { setupObserver, splitAvatarsArray } from './AvatarRow.utils'
+import { number } from '@storybook/addon-knobs'
 
 const { size: avatarConfigSizes } = config
 
@@ -154,8 +155,8 @@ AvatarRow.propTypes = {
   'data-cy': PropTypes.string,
   /** If you want to throttle the onResize function */
   throttleOnResize: PropTypes.bool,
-  /** Customize the throttle wait */
-  throttleWait: PropTypes.func,
+  /** Customize the throttle wait in ms */
+  throttleWait: PropTypes.number,
   /** Use a window resize event instead of Resize Observer */
   ieCompatible: PropTypes.bool,
   /** Gap in pixels between Avatars */
