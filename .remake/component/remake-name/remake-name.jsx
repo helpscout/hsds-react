@@ -1,42 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import { <%= name %>UI } from './<%= name %>.css'
 
-export class <%= name %> extends React.Component {
-  constructor(props) {
-    super(props)
+function <%= name %>({
+  className,
+  'data-cy': dataCy = '<%= name %>',
+  onClick = noop,
+}) {
+  const [] = useState()
 
-    this.<%= name %>Ref = React.createRef()
-  }
-
-  getClassName() {
-    const { className } = this.props
-    
-    return classNames(
-      'c-<%= name %>',
-      className
-    )
-  }
-
-  render() {
-    const { children, ref, ...rest } = this.props
-
-    return (
-      <<%= name %>UI
-        {...rest}
-        className={this.getClassName()}
-        ref={this.<%= name %>Ref}
-      >
-        {children}
-      </<%= name %>UI>
-    )
-  }
-}
-
-<%= name %>.defaultProps = {
-  'data-cy': '<%= name %>',
+  return (
+    <<%= name %>UI
+      className={classNames('<%= name %>', className)}
+      data-cy={dataCy}
+      onClick={onClick}
+    />
+  )
 }
 
 <%= name %>.propTypes = {
@@ -44,6 +25,8 @@ export class <%= name %> extends React.Component {
   className: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
+  /** Callback when clicking */
+  onClick: PropTypes.func,
 }
 
 export default <%= name %>
