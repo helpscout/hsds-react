@@ -13,7 +13,7 @@ function <%= name %>({
 
   return (
     <<%= name %>UI
-      className={classNames('<%= name %>', className)}
+      className={classNames('c-<%= name %>', className)}
       data-cy={dataCy}
       onClick={onClick}
     />

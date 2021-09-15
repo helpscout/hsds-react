@@ -8,7 +8,6 @@ import Avatar from '../Avatar'
 import Tooltip from '../Tooltip'
 import { config } from '../Avatar/Avatar.css'
 import { setupObserver, splitAvatarsArray } from './AvatarRow.utils'
-import { number } from '@storybook/addon-knobs'
 
 const { size: avatarConfigSizes } = config
 
@@ -93,6 +92,11 @@ function AvatarRow({
       return
     }
 
+    /** The total space for the avatars is comprised of:
+     * Avatar space: Number of avatars * the size of the avatar
+     * +
+     * Margin space: gap between avatars * the number of gaps. For example, for 3 avatars, there are 2 gaps => [AV]gap[AV]gap[AV]
+     */
     const spaceForAllAvatars =
       avatarSize * avatars.length + (avatars.length - 1) * gap
 
