@@ -30,6 +30,7 @@ export const CounterAvatarUI = styled('div')`
   height: ${({ $size }) => `${$size}px`};
   border-radius: 50%;
   background-color: ${getColor('ash.400')};
-  color: ${getColor('charcoal.400')};
+  color: ${getColor('charcoal.500')};
   font-size: ${({ $fontSize }) => `${$fontSize}px`};
+  font-weight: 500;
 `
