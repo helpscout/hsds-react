@@ -18,6 +18,7 @@ import {
   simpleGroupedItems,
   disabledItems,
 } from '../../utilities/specs/dropdown.specs'
+import Flexy from '../Flexy'
 
 <Meta
   title="Components/Dropdowns/DropList"
@@ -899,28 +900,66 @@ The `toggler` prop accepts any React component, so you can provide your own cust
     </div>
   </Story>
   <Story name="Toggler: IconBtn">
-    <div
+    <Flexy
+      baseSize={5}
       style={{
-        width: '400px',
-        margin: '50px 100px 0 150px',
-        border: '1px dashed silver',
-        borderRadius: '5px',
-        padding: '20px',
+        padding: '4px',
+        background: 'white',
+        border: '1px solid #D5DCE1',
+        borderRadius: '100px',
+        width: '150px',
+        marginTop: '100px',
       }}
     >
       <DropList
         items={regularItems}
+        tippyOptions={{ offset: [0, 10], placement: 'bottom-end' }}
         toggler={
           <IconBtn
+            iconName="tag"
+            withCaret={false}
             withTooltip
-            a11yLabel="Accessibility Wins The Day"
-            onClick={() => {
-              console.log('Clicked from story')
+            tooltipProps={{
+              title: 'Add Tag',
+              badge: 'T',
+              placement: 'top',
             }}
           />
         }
       />
-    </div>
+      <DropList
+        items={regularItems}
+        tippyOptions={{ offset: [0, 10], placement: 'bottom-end' }}
+        toggler={
+          <IconBtn
+            iconName="workflow"
+            withCaret={false}
+            withTooltip
+            tooltipProps={{
+              title: 'Run Workflow',
+              badge: 'W',
+              placement: 'top',
+            }}
+          />
+        }
+      />
+      <DropList
+        items={regularItems}
+        tippyOptions={{ offset: [0, 10], placement: 'bottom-end' }}
+        toggler={
+          <IconBtn
+            iconName="kebab"
+            withCaret={false}
+            withTooltip
+            tooltipProps={{
+              title: 'More Actions',
+              badge: 'M',
+              placement: 'top',
+            }}
+          />
+        }
+      />
+    </Flexy>
   </Story>
   <Story name="Toggler: MeatButton">
     <div

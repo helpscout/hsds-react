@@ -137,15 +137,16 @@ export const IconButtonUI = styled('button')`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 45px;
-  height: 34px;
-  padding: 5px;
+  width: 36px;
+  height: 36px;
+  padding: 0px;
   border: 0;
-  border-radius: 3px;
+  border-radius: 50%;
   background-color: white;
 
   &:hover {
     cursor: pointer;
+    background-color: #d5dce1;
   }
 
   &:focus {
