@@ -48,15 +48,16 @@ const PopoverHeader = ({ header, renderHeader }) => {
 
 export const Popover = props => {
   const {
-    arrowSize,
-    innerRef,
+    arrowSize = 14,
+    innerRef = noop,
     header,
     renderHeader,
     content,
     renderContent,
     className,
     placement,
-    triggerOn,
+    triggerOn = 'click',
+    withArrow = true,
     ...rest
   } = props
   const render = ({ scope, ...tooltipProps }) => {
@@ -65,11 +66,13 @@ export const Popover = props => {
         <PopoverUI {...tooltipProps} data-cy="PopoverContent">
           <PopoverHeader header={header} renderHeader={renderHeader} />
           <PopoverContent content={content} renderContent={renderContent} />
-          <ArrowPopoverUI
-            className="ArrowPopoverUI"
-            arrowSize={arrowSize}
-            data-popper-arrow
-          />
+          {withArrow && (
+            <ArrowPopoverUI
+              className="ArrowPopoverUI"
+              arrowSize={arrowSize}
+              data-popper-arrow
+            />
+          )}
         </PopoverUI>
       </TooltipAnimationUI>
     )
@@ -89,13 +92,6 @@ export const Popover = props => {
   )
 }
 
-Popover.defaultProps = {
-  arrowSize: 14,
-  'data-cy': 'Popover',
-  innerRef: noop,
-  triggerOn: 'click',
-}
-
 Popover.propTypes = {
   /** Size of the "arrow" or "tip" for the popover */
   arrowSize: PropTypes.number,
@@ -103,6 +99,7 @@ Popover.propTypes = {
   className: PropTypes.string,
   /** Body content to render within the component. */
   content: PropTypes.any,
+  innerRef: PropTypes.func,
   /** Title content to render within the component. */
   header: PropTypes.any,
   /** Where to place the Tooltip. */
@@ -113,9 +110,8 @@ Popover.propTypes = {
   renderHeader: PropTypes.any,
   /** Determines how to engage the component. */
   triggerOn: PropTypes.string,
-  innerRef: PropTypes.func,
-  /** Data attr for Cypress tests. */
-  'data-cy': PropTypes.string,
+  /** Whether to render the arrow */
+  withArrow: PropTypes.bool,
 }
 
 export default Popover

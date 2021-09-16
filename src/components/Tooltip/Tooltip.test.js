@@ -6,6 +6,7 @@ import user from '@testing-library/user-event'
 import Tooltip, { TooltipContext } from './index'
 import Tippy from '@tippyjs/react/headless'
 import { act } from 'react-dom/test-utils'
+import { ArrowUI } from './Tooltip.css'
 
 describe('classNames', () => {
   test('Can accept custom className', () => {
@@ -126,6 +127,18 @@ describe('Tippy', () => {
     const pop = wrapper.find(Tippy).props()
     expect(pop.showOnCreate).toBeFalsy()
     expect(pop.trigger).toBeFalsy()
+  })
+
+  test('Renders arrow', () => {
+    const wrapper = mount(<Tooltip visible title="Hello" />)
+
+    expect(wrapper.find(ArrowUI).length).toBeTruthy()
+  })
+
+  test('Does not render arrow', () => {
+    const wrapper = mount(<Tooltip visible title="Hello" withArrow={false} />)
+
+    expect(wrapper.find(ArrowUI).length).toBeFalsy()
   })
 })
 

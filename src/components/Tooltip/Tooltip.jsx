@@ -67,6 +67,7 @@ const Tooltip = props => {
     title,
     triggerOn,
     withTriggerWrapper,
+    withArrow = true,
     zIndex: zIndexProp,
     ...rest
   } = props
@@ -125,11 +126,13 @@ const Tooltip = props => {
         <TooltipUI className={tooltipClassnames} {...props}>
           {renderContent ? renderContent() : titleContent}
           {hasKeyboardBadge ? <KeyboardBadge value={badge} /> : null}
-          <ArrowUI
-            className="c-Tooltip_ArrowUI"
-            arrowSize={arrowSize}
-            data-popper-arrow
-          />
+          {withArrow && (
+            <ArrowUI
+              className="c-Tooltip_ArrowUI"
+              arrowSize={arrowSize}
+              data-popper-arrow
+            />
+          )}
         </TooltipUI>
       </TooltipAnimationUI>
     )
@@ -280,6 +283,8 @@ Tooltip.propTypes = {
   visible: PropTypes.bool,
   /** Wrap the trigger with a span */
   withTriggerWrapper: PropTypes.bool,
+  /** Whether to render the arrow */
+  withArrow: PropTypes.bool,
 }
 
 export default Tooltip
