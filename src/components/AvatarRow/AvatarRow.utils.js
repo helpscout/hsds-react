@@ -13,6 +13,7 @@ export function splitAvatarsArray(avatars, itemsDisplayed) {
   return { shownAvatars, hiddenAvatars }
 }
 
+// TODO: Move this to the general utils library that is coming some time in the winter
 export function setupObserver(callback) {
   return new ResizeObserver(entries => {
     for (let entry of entries) {
