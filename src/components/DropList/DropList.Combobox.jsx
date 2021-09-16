@@ -36,6 +36,7 @@ function Combobox({
   items = [],
   isOpen = false,
   menuCSS,
+  menuWidth,
   onDropListLeave = noop,
   onMenuBlur = noop,
   onMenuFocus = noop,
@@ -184,8 +185,8 @@ function Combobox({
     <DropListWrapperUI
       className="DropList DropList__Combobox"
       data-cy={dataCy}
-      variant="combobox"
       menuCSS={menuCSS}
+      menuWidth={menuWidth}
       {...getComboboxProps()}
     >
       <InputSearchHolderUI show={allItems.length > 0}>

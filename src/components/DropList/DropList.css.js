@@ -5,7 +5,7 @@ import Icon from '../Icon'
 
 export const DropListWrapperUI = styled('div')`
   box-sizing: border-box;
-  width: ${({ variant }) => (variant === 'combobox' ? '220px' : '200px')};
+  width: ${({ menuWidth }) => menuWidth};
   padding: 0;
   background-color: white;
   border: 1px solid ${getColor('grey.600')};

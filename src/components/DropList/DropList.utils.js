@@ -319,3 +319,9 @@ export function checkNextElementFocusedAndThenRun(
     }
   }, timeout)
 }
+
+export function getMenuWidth(variant, menuWidth) {
+  if (menuWidth != null) return menuWidth
+
+  return variant.toLowerCase() === 'combobox' ? '220px' : '200px'
+}
