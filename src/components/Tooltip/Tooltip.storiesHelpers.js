@@ -45,6 +45,7 @@ export const Default = () => {
     title: text('title', '"Hello"'),
     minWidth: number('minWidth', ''),
     maxWidth: number('maxWidth', ''),
+    withArrow: boolean('withArrow', true),
   }
 
   return (

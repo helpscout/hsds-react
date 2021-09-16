@@ -28,6 +28,7 @@ function Select({
   isOpen = false,
   items = [],
   menuCSS,
+  menuWidth,
   focusToggler = noop,
   onDropListLeave = noop,
   onMenuBlur = noop,
@@ -169,6 +170,7 @@ function Select({
       className="DropList DropList__Select"
       data-cy={dataCy}
       menuCSS={menuCSS}
+      menuWidth={menuWidth}
     >
       <A11yTogglerUI {...getToggleButtonProps()}>Toggler</A11yTogglerUI>
       <MenuListUI

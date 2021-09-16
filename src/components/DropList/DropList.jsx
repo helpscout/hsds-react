@@ -12,6 +12,7 @@ import {
   flattenListItems,
   getDropListVariant,
   getItemContentKeyName,
+  getMenuWidth,
   isItemAction,
   isItemRegular,
   isTogglerOfType,
@@ -47,6 +48,7 @@ function DropListManager({
   isMenuOpen = false,
   items = [],
   menuCSS,
+  menuWidth,
   onDropListLeave = noop,
   onMenuBlur = noop,
   onMenuFocus = noop,
@@ -286,6 +288,7 @@ function DropListManager({
             isOpen={isOpen}
             items={parsedItems}
             menuCSS={menuCSS}
+            menuWidth={getMenuWidth(DropListVariant.name, menuWidth)}
             onDropListLeave={onDropListLeave}
             onMenuBlur={onMenuBlur}
             onMenuFocus={onMenuFocus}
@@ -365,6 +368,8 @@ DropListManager.propTypes = {
   ),
   /** Custom css for the Menu */
   menuCSS: PropTypes.any,
+  /** Custom width for the Menu */
+  menuWidth: PropTypes.any,
   /** Callback that fires when the menu loses focus */
   onMenuBlur: PropTypes.func,
   /** Callback that fires when the menu gets focus */

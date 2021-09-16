@@ -4,7 +4,11 @@ import user from '@testing-library/user-event'
 import { css } from 'styled-components'
 import DropList from './DropList'
 import { SimpleButton, SelectTag, SplittedButton } from './DropList.togglers'
-import { flattenListItems, getEnabledItemIndex } from './DropList.utils'
+import {
+  flattenListItems,
+  getEnabledItemIndex,
+  getMenuWidth,
+} from './DropList.utils'
 import {
   itemsWithDivider,
   groupAndDividerItems,
@@ -1676,5 +1680,19 @@ describe('More open close behaviours', () => {
     await waitFor(() => {
       expect(onDropListLeaveSpy).toHaveBeenCalled()
     })
+  })
+})
+
+describe('getMenuWidth', () => {
+  test('should return select default width', () => {
+    expect(getMenuWidth('Select')).toBe('200px')
+  })
+
+  test('should return select default width', () => {
+    expect(getMenuWidth('Combobox')).toBe('220px')
+  })
+
+  test('should return custom width if provided', () => {
+    expect(getMenuWidth('Combobox', '400px')).toBe('400px')
   })
 })

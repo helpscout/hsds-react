@@ -29,6 +29,12 @@ describe('Tooltip', () => {
 
     expect(wrapper.find(ArrowPopoverUI).length).toBeTruthy()
   })
+
+  test('Does not render arrow', () => {
+    const wrapper = mount(<Popover content="Hello" withArrow={false} />)
+
+    expect(wrapper.find(ArrowPopoverUI).length).toBeFalsy()
+  })
 })
 
 describe('renderContent', () => {
