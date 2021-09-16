@@ -44,34 +44,32 @@ const hideOnEsc = {
   },
 }
 
-const Tooltip = props => {
-  const {
-    animationDelay,
-    animationDuration,
-    arrowSize,
-    badge,
-    children,
-    className,
-    closeOnContentClick,
-    closeOnEscPress,
-    display,
-    'data-cy': dataCy,
-    getTippyInstance = () => {},
-    innerRef,
-    isOpen,
-    minWidth,
-    maxWidth,
-    placement,
-    render: renderProp,
-    renderContent,
-    title,
-    triggerOn,
-    withTriggerWrapper,
-    withArrow = true,
-    zIndex: zIndexProp,
-    ...rest
-  } = props
-
+const Tooltip = ({
+  animationDelay,
+  animationDuration,
+  arrowSize,
+  badge,
+  children,
+  className,
+  closeOnContentClick,
+  closeOnEscPress,
+  display,
+  'data-cy': dataCy,
+  getTippyInstance = () => {},
+  innerRef,
+  isOpen,
+  minWidth,
+  maxWidth,
+  placement,
+  render: renderProp,
+  renderContent,
+  title,
+  triggerOn,
+  withTriggerWrapper,
+  withArrow = true,
+  zIndex: zIndexProp,
+  ...rest
+}) => {
   const { getCurrentScope } = useContext(GlobalContext) || {}
   const { zIndex = zIndexProp, animationDuration: animationDurationContext } =
     useContext(TooltipContext) || {}
@@ -187,7 +185,7 @@ const Tooltip = props => {
   }
 
   // only set those props if the component is not in a controlled way
-  if (!props.hasOwnProperty('visible')) {
+  if (!rest.hasOwnProperty('visible')) {
     defaultTippyProps.showOnCreate = isOpen
     defaultTippyProps.trigger = triggerOn === 'hover' ? 'mouseenter' : triggerOn
   }

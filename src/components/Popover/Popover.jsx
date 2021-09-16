@@ -46,20 +46,19 @@ const PopoverHeader = ({ header, renderHeader }) => {
   return null
 }
 
-export const Popover = props => {
-  const {
-    arrowSize = 14,
-    innerRef = noop,
-    header,
-    renderHeader,
-    content,
-    renderContent,
-    className,
-    placement,
-    triggerOn = 'click',
-    withArrow = true,
-    ...rest
-  } = props
+export const Popover = ({
+  arrowSize = 14,
+  innerRef = noop,
+  header,
+  renderHeader,
+  content,
+  renderContent,
+  className,
+  placement,
+  triggerOn = 'click',
+  withArrow = true,
+  ...rest
+}) => {
   const render = ({ scope, ...tooltipProps }) => {
     const toolTipComponent = (
       <TooltipAnimationUI>
