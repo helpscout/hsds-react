@@ -117,6 +117,7 @@ import info from '../../icons/info.svg'
 import information from '../../icons/information.svg'
 import italic from '../../icons/italic.svg'
 import kebab from '../../icons/kebab.svg'
+import kebabLarge from '../../icons/kebab-large.svg'
 import key from '../../icons/key.svg'
 import keyboard from '../../icons/keyboard.svg'
 import largeDoubleArrowLeft from '../../icons/large-double-arrow-left.svg'
@@ -349,6 +350,7 @@ const ICONS = {
   information,
   italic,
   kebab,
+  'kebab-large': kebabLarge,
   key,
   keyboard,
   'large-double-arrow-left': largeDoubleArrowLeft,
