@@ -52,6 +52,7 @@ function DropListManager({
   onDropListLeave = noop,
   onMenuBlur = noop,
   onMenuFocus = noop,
+  onComboboxInputChange = noop,
   onListItemSelectEvent = noop,
   onOpenedStateChange = noop,
   onSelect = noop,
@@ -293,6 +294,7 @@ function DropListManager({
             onMenuBlur={onMenuBlur}
             onMenuFocus={onMenuFocus}
             onListItemSelectEvent={onListItemSelectEvent}
+            onComboboxInputChange={onComboboxInputChange}
             renderCustomListItem={renderCustomListItem}
             selectedItem={selectedItem}
             selectedItems={selectedItems}
@@ -370,6 +372,8 @@ DropListManager.propTypes = {
   menuCSS: PropTypes.any,
   /** Custom width for the Menu */
   menuWidth: PropTypes.any,
+  /** Callback that fires when combobox search input changes */
+  onComboboxInputChange: PropTypes.func,
   /** Callback that fires when the menu loses focus */
   onMenuBlur: PropTypes.func,
   /** Callback that fires when the menu gets focus */

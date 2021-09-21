@@ -527,6 +527,42 @@ const groupedItems = [
   </Story>
 </Canvas>
 
+- If you need to have custom behavior based on combobox input, pass a callback to the `onComboboxInputChange` prop to receive changes
+
+<Canvas>
+  <Story name="Callback for keyboard events">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        variant="combobox"
+        onComboboxInputChange={input => console.log(input)}
+        items={[]}
+        customEmptyListItems={[
+          {
+            label: 'No tags found',
+            type: 'inert',
+          },
+          {
+            type: 'divider',
+          },
+          {
+            label: 'Create tag',
+            type: 'action',
+          },
+        ]}
+        toggler={<SimpleButton text="This is a select" />}
+      />
+    </div>
+  </Story>
+</Canvas>
+
 - On a combobox, you can customize the label of your items with the value of the input by adding a `customizeLabel` function on the item:
 
 ```js

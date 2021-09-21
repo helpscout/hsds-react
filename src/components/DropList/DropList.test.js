@@ -528,6 +528,23 @@ describe('Combobox', () => {
     expect(getByPlaceholderText('Search')).toHaveFocus()
   })
 
+  test('should return input to onComboboxInputChange', () => {
+    const onComboboxInputChangeSpy = jest.fn()
+    const { getByPlaceholderText } = render(
+      <DropList
+        isMenuOpen
+        items={someItems}
+        toggler={<SimpleButton text="Button Toggler" />}
+        variant="combobox"
+        onComboboxInputChange={onComboboxInputChangeSpy}
+      />
+    )
+
+    user.type(getByPlaceholderText('Search'), 'Aoki')
+
+    expect(onComboboxInputChangeSpy).toHaveBeenCalledWith('Aoki')
+  })
+
   test('should hide the search input on combobox if list empty', () => {
     const { queryByRole, getByPlaceholderText } = render(
       <DropList
