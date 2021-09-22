@@ -312,10 +312,10 @@ const ICONS = {
   'drag-handle': dragHandle,
   drag: dragHandle,
   duplicate,
+  ellipsis,
   'ellipsis-small': ellipsisSmall,
   'ellipsis-vertical': kebab,
   'ellipsis-vertical-large': kebabLarge,
-  ellipsis
   emoji,
   'envelope-large': envelopeLarge,
   'envelope-open': envelopeOpen,
