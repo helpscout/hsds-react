@@ -34,6 +34,10 @@ export const MenuListUI = styled('ul')`
     padding: 0 0 5px 0;
   }
 
+  &.MenuList-Combobox.hideCustomListIfEmptyInput {
+    padding: 0 0 0 0;
+  }
+
   &:focus {
     outline: 0;
   }

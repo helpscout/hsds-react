@@ -586,6 +586,56 @@ const groupedItems = [
   </Story>
 </Canvas>
 
+- Sometimes on a combobox you might want to not render the list if there's no input value. You can use the `hideCustomListIfEmptyInput` prop for this.
+
+<Canvas>
+  <Story name="Hide list if no input value (Combobox)">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        hideCustomListIfEmptyInput={true}
+        variant="combobox"
+        items={select(
+          'Items',
+          {
+            empty: [],
+            full: regularItems,
+          },
+          regularItems
+        )}
+        customEmptyListItems={[
+          {
+            label: 'No tags found',
+            type: 'inert',
+          },
+          {
+            type: 'divider',
+          },
+          {
+            label: 'Create tag',
+            customizeLabel(inputValue) {
+              return `Create ${inputValue} tag`
+            },
+            type: 'action',
+          },
+        ]}
+        onSelect={(selection, clickedItem) => {
+          console.log('🚀 ~ selection', selection)
+          console.log('🚀 ~ clickedItem', clickedItem)
+        }}
+        toggler={<SimpleButton text="This is a combobox" />}
+      />
+    </div>
+  </Story>
+</Canvas>
+
 #### Custom List Items
 
 Sometimes you might need to render the list items in a different manner, for that you can use the render prop `renderCustomListItem`.

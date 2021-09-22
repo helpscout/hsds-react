@@ -193,11 +193,16 @@ export function flattenListItems(listItems) {
 
 export function renderListContents({
   customEmptyList,
+  hideCustomListIfEmptyInput,
   inputValue,
   items,
   renderListItem,
 }) {
   const isEmptyList = items.length === 0
+
+  if (hideCustomListIfEmptyInput && !inputValue) {
+    return null
+  }
 
   if (!isEmptyList) {
     return items.map(renderListItem)

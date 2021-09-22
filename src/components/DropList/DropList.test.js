@@ -267,6 +267,37 @@ describe('Render', () => {
     expect(container.querySelectorAll('.DropListItem').length).toBe(2)
   })
 
+  test('should not render custom list if hideCustomListIfEmptyInput is true and there is no input value', () => {
+    const { queryByText, getByPlaceholderText } = render(
+      <DropList
+        variant="combobox"
+        items={[]}
+        hideCustomListIfEmptyInput={true}
+        customEmptyListItems={[
+          {
+            label: 'No tags found',
+            type: 'inert',
+          },
+          {
+            type: 'divider',
+          },
+          {
+            label: 'Create tag',
+            type: 'action',
+          },
+        ]}
+        isMenuOpen
+        toggler={<SimpleButton text="Button Toggler" />}
+      />
+    )
+
+    expect(queryByText('No tags found')).not.toBeInTheDocument()
+
+    user.type(getByPlaceholderText('Search'), 'Z')
+
+    expect(queryByText('No tags found')).toBeInTheDocument()
+  })
+
   test('should render a the empty menu list if no items in the array (invalid custom element)', () => {
     const { queryByText } = render(
       <DropList

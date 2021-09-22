@@ -44,6 +44,7 @@ function DropListManager({
   enableLeftRightNavigation = false,
   focusTogglerOnMenuClose = true,
   getTippyInstance = noop,
+  hideCustomListIfEmptyInput = false,
   inputPlaceholder = 'Search',
   isMenuOpen = false,
   items = [],
@@ -284,6 +285,7 @@ function DropListManager({
             enableLeftRightNavigation={enableLeftRightNavigation}
             focusToggler={focusToggler}
             handleSelectedItemChange={handleSelectedItemChange}
+            hideCustomListIfEmptyInput={hideCustomListIfEmptyInput}
             inputPlaceholder={inputPlaceholder}
             isOpen={isOpen}
             items={parsedItems}
@@ -358,6 +360,8 @@ DropListManager.propTypes = {
   focusTogglerOnMenuClose: PropTypes.bool,
   /** Retrieves the tippy instance */
   getTippyInstance: PropTypes.any,
+  /** Don't render the list if using combobox variant and there's no input value*/
+  hideCustomListIfEmptyInput: PropTypes.bool,
   /** Customize the placeholder text on the combobox input */
   inputPlaceholder: PropTypes.string,
   /** Open/close the DropList externally */

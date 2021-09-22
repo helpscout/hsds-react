@@ -22,6 +22,7 @@ import {
 } from './DropList.css'
 import ListItem, { generateListItemKey } from './DropList.ListItem'
 import { DROPLIST_MENULIST, VARIANTS } from './DropList.constants'
+import classNames from 'classnames'
 
 function Combobox({
   clearOnSelect = false,
@@ -32,6 +33,7 @@ function Combobox({
   'data-cy': dataCy = `DropList.${VARIANTS.COMBOBOX}`,
   focusToggler = noop,
   handleSelectedItemChange = noop,
+  hideCustomListIfEmptyInput = false,
   inputPlaceholder = 'Search',
   items = [],
   isOpen = false,
@@ -229,11 +231,15 @@ function Combobox({
         />
       </InputSearchHolderUI>
       <MenuListUI
-        className={`${DROPLIST_MENULIST} MenuList-Combobox`}
+        className={classNames(
+          `${DROPLIST_MENULIST} MenuList-Combobox`,
+          hideCustomListIfEmptyInput && 'hideCustomListIfEmptyInput'
+        )}
         {...getMenuProps()}
       >
         {renderListContents({
           customEmptyList,
+          hideCustomListIfEmptyInput,
           inputValue,
           items: allItems,
           renderListItem,
