@@ -233,7 +233,9 @@ function Combobox({
       <MenuListUI
         className={classNames(
           `${DROPLIST_MENULIST} MenuList-Combobox`,
-          hideCustomListIfEmptyInput && 'hideCustomListIfEmptyInput'
+          hideCustomListIfEmptyInput &&
+            !inputValue &&
+            'hideCustomListIfEmptyInput'
         )}
         {...getMenuProps()}
       >
