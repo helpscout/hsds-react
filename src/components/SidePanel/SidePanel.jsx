@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import useAnimatedRender from '../../hooks/useAnimatedRender'
+import useClickOutside from '../../hooks/useClickOutside'
 import { noop } from '../../utilities/other'
 import { manageTrappedFocus } from '../../utilities/focus'
 import {
@@ -16,6 +17,7 @@ function SidePanel({
   ariaLabelledBy = '',
   children,
   className,
+  closeOnClickOutside = false,
   'data-cy': dataCy = 'SidePanel',
   focusPanelOnShow = true,
   onClose = noop,
@@ -36,6 +38,21 @@ function SidePanel({
     overlayRef,
     focusPanelOnShow && panelRef
   )
+
+  useClickOutside(getClickOutsideRef(), () => {
+    onClose()
+  })
+
+  function getClickOutsideRef() {
+    if (closeOnClickOutside === 'panel') {
+      return panelRef
+    }
+    if (closeOnClickOutside === 'overlay') {
+      return overlayRef
+    }
+
+    return null
+  }
 
   function handleOverlayKeyDown(e) {
     if (shouldRender && e.key === 'Escape') {
@@ -102,6 +119,8 @@ SidePanel.propTypes = {
   children: PropTypes.any,
   /** Custom classname on this component */
   className: PropTypes.string,
+  /** Whether to close the Panel when clicking outside of it, pass a string with value "panel" if clicking ouside the actual Panel, or "overlay" if clicking outside the overlay should close it (in case of "contained panels") */
+  closeOnClickOutside: PropTypes.oneOf([null, undefined, 'panel', 'overlay']),
   /** Data attr applied for Cypress tests */
   'data-cy': PropTypes.string,
   /** If you don't want the focus to be moved to the Panel when it enters */
