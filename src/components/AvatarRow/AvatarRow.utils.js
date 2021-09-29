@@ -1,3 +1,7 @@
+import React from 'react'
+import AvatarRow from './AvatarRow'
+import { generateAvatarList } from '../../utilities/specs/avatar.specs'
+
 export const MARGIN_LEFT = 2
 
 export function splitAvatarsArray(avatars, itemsDisplayed) {
@@ -28,4 +32,19 @@ export function setupObserver(callback) {
       }
     }
   })
+}
+
+export const AvatarRowPlayground = () => {
+  const [avatars, setAvatars] = React.useState(generateAvatarList(1, true))
+
+  const handleClick = () => {
+    setAvatars([...avatars, ...generateAvatarList(1, true)])
+  }
+
+  return (
+    <div>
+      <AvatarRow size="lg" gap={10} avatars={avatars} />
+      <button onClick={handleClick}>increase avatar count</button>
+    </div>
+  )
 }

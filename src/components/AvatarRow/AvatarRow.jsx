@@ -1,4 +1,6 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useCallback, useRef, useState, useEffect, useMemo } from 'react'
+import { useCallbackDebugger } from 'use-debugger-hooks'
+
 import PropTypes from 'prop-types'
 import throttle from 'lodash.throttle'
 import classNames from 'classnames'
@@ -11,18 +13,20 @@ import { setupObserver, splitAvatarsArray } from './AvatarRow.utils'
 
 const { size: avatarConfigSizes } = config
 
-function AvatarRow({
-  adaptable = true,
-  avatars = [],
-  className,
-  'data-cy': dataCy = 'AvatarRow',
-  extraTooltipProps = {},
-  gap = 2,
-  ieCompatible = false,
-  throttleOnResize = true,
-  throttleWait = 200,
-  ...avatarProps
-}) {
+function AvatarRow(props) {
+  const {
+    adaptable = true,
+    avatars = [],
+    className,
+    'data-cy': dataCy = 'AvatarRow',
+    extraTooltipProps = {},
+    gap = 2,
+    ieCompatible = false,
+    throttleOnResize = true,
+    throttleWait = 200,
+    ...avatarProps
+  } = props
+
   const { size: avatarSize, fontSize: avatarFontSize } = avatarConfigSizes[
     avatarProps.size || 'md'
   ]
@@ -31,20 +35,54 @@ function AvatarRow({
     avatars.length
   )
 
-  const throttledOnResize = !ieCompatible
-    ? throttle(onResize, throttleWait)
-    : noop
-  const throttledHandleWindowResize = ieCompatible
-    ? throttle(handleWindowResize, throttleWait)
-    : noop
+  const numberOfAvatars = avatars.length
+
+  const onResize = useCallbackDebugger(
+    ({ width: containerWidth }) => {
+      /** Only act if we have more than 1 avatar */
+      if (!containerWidth || numberOfAvatars <= 1) {
+        return
+      }
+
+      /** The total space for the avatars is comprised of:
+       * Avatar space: Number of avatars * the size of the avatar
+       * +
+       * Margin space: gap between avatars * the number of gaps. For example, for 3 avatars, there are 2 gaps => [AV]gap[AV]gap[AV]
+       */
+      const spaceForAllAvatars =
+        avatarSize * numberOfAvatars + (numberOfAvatars - 1) * gap
+
+      if (containerWidth >= spaceForAllAvatars) {
+        setNumberOfItemsOnDisplay(numberOfAvatars)
+      } else {
+        const numberOfGaps = numberOfItemsOnDisplay - 1
+        const itemsThatFit = Math.floor(
+          (containerWidth - numberOfGaps * gap) / avatarSize
+        )
+
+        setNumberOfItemsOnDisplay(itemsThatFit > 0 ? itemsThatFit : 1)
+      }
+    },
+    [numberOfAvatars, avatarSize, gap, numberOfItemsOnDisplay]
+  )
+
+  const handleWindowResize = useCallback(() => {
+    if (avatarRowRef.current != null) {
+      const measures = avatarRowRef.current.getBoundingClientRect()
+
+      onResize(measures)
+    }
+  }, [onResize])
 
   useEffect(() => {
     if (!adaptable || ieCompatible || avatarRowRef.current == null) return
 
+    const handler = throttleOnResize
+      ? throttle(onResize, throttleWait)
+      : onResize
+
     const avatarRowEl = avatarRowRef.current
-    const resizeObserver = setupObserver(
-      throttleOnResize ? throttledOnResize : onResize
-    )
+    const resizeObserver = setupObserver(handler)
 
     resizeObserver.observe(avatarRowEl)
 
@@ -53,69 +91,31 @@ function AvatarRow({
 
       resizeObserver.unobserve(avatarRowEl)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [adaptable, ieCompatible, onResize, throttleWait, throttleOnResize])
 
   useEffect(() => {
-    if (ieCompatible && adaptable) {
-      window.addEventListener(
-        'resize',
-        throttleOnResize ? throttledHandleWindowResize : handleWindowResize
-      )
+    const handler = throttleOnResize
+      ? throttle(handleWindowResize, throttleWait)
+      : handleWindowResize
 
-      const measures = avatarRowRef.current.getBoundingClientRect()
-      onResize(measures)
+    if (ieCompatible && adaptable) {
+      window.addEventListener('resize', handler)
     }
 
     return () => {
-      ieCompatible &&
-        adaptable &&
-        window.addEventListener(
-          'resize',
-          throttleOnResize ? throttledHandleWindowResize : handleWindowResize
-        )
+      ieCompatible && adaptable && window.removeEventListener('resize', handler)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [
+    ieCompatible,
+    adaptable,
+    throttleOnResize,
+    handleWindowResize,
+    throttleWait,
+  ])
 
-  function handleWindowResize() {
-    if (avatarRowRef.current != null) {
-      const measures = avatarRowRef.current.getBoundingClientRect()
-
-      onResize(measures)
-    }
-  }
-
-  function onResize({ width: containerWidth }) {
-    /** Only act if we have more than 1 avatar */
-    if (!containerWidth || avatars.length <= 1) {
-      return
-    }
-
-    /** The total space for the avatars is comprised of:
-     * Avatar space: Number of avatars * the size of the avatar
-     * +
-     * Margin space: gap between avatars * the number of gaps. For example, for 3 avatars, there are 2 gaps => [AV]gap[AV]gap[AV]
-     */
-    const spaceForAllAvatars =
-      avatarSize * avatars.length + (avatars.length - 1) * gap
-
-    if (containerWidth >= spaceForAllAvatars) {
-      setNumberOfItemsOnDisplay(avatars.length)
-    } else {
-      const numberOfGaps = numberOfItemsOnDisplay - 1
-      const itemsThatFit = Math.floor(
-        (containerWidth - numberOfGaps * gap) / avatarSize
-      )
-
-      setNumberOfItemsOnDisplay(itemsThatFit > 0 ? itemsThatFit : 1)
-    }
-  }
-
-  const { shownAvatars, hiddenAvatars } = splitAvatarsArray(
-    avatars,
-    numberOfItemsOnDisplay
-  )
+  const { shownAvatars, hiddenAvatars } = useMemo(() => {
+    return splitAvatarsArray(avatars, numberOfItemsOnDisplay)
+  }, [avatars, numberOfItemsOnDisplay])
 
   return (
     <AvatarRowUI
