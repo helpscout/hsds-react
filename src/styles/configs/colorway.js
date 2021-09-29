@@ -1,4 +1,4 @@
-// Generated with @helpscout/colorway (v0.9.6)
+// Generated with @helpscout/colorway (v0.9.7)
 //
 // This file was automatically generated with @helpscout/colorway
 // Please don't modify this file. Your changes will be overwritten.
@@ -58,8 +58,8 @@ const palette = {
     '400': '#87DBAE',
     '500': '#56C288',
     '600': '#39AC6E',
-    '650': '#248451',
     '700': '#268C55',
+    '750': '#248451',
     '800': '#106236',
     '900': '#003C1C',
     default: '#56C288',
