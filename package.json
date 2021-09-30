@@ -120,7 +120,7 @@
     "@babel/plugin-transform-runtime": "^7.4.3",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
-    "@helpscout/colorway": "0.9.5",
+    "@helpscout/colorway": "0.9.7",
     "@helpscout/helix": "0.2.0",
     "@helpscout/prestart": "^0.0.9",
     "@storybook/addon-a11y": "6.3.4",
