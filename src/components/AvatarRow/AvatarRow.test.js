@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import AvatarRow from '../AvatarRow'
-import { splitAvatarsArray } from './AvatarRow.utils'
+import { getNumberOfItemsToDisplay, splitAvatarsArray } from './AvatarRow.utils'
 
 const avatars = [
   {
@@ -36,7 +36,7 @@ const avatars = [
   },
 ]
 
-describe('Modes', () => {
+describe('ResizeObserver', () => {
   beforeEach(() => {
     window.ResizeObserver = jest.fn().mockImplementation(() => ({
       observe: jest.fn(),
@@ -54,90 +54,94 @@ describe('Modes', () => {
     expect(ResizeObserver).toHaveBeenCalled()
   })
 
-  test('Should not use ResizeObserver in ie compat mode', () => {
-    render(<AvatarRow ieCompatible avatars={avatars} />)
-
-    expect(ResizeObserver).not.toHaveBeenCalled()
-  })
-
-  test('Should not use resize window event by default', () => {
-    const spy = jest.spyOn(window, 'addEventListener')
-    render(<AvatarRow avatars={avatars} />)
-
-    expect(spy).not.toHaveBeenLastCalledWith('resize', expect.anything())
-  })
-
-  test('Should use resize window event in ie compat mode', () => {
-    const spy = jest.spyOn(global, 'addEventListener')
-    render(<AvatarRow ieCompatible avatars={avatars} />)
-
-    expect(spy).toHaveBeenLastCalledWith('resize', expect.anything())
-  })
-
   test('Should not use ResizeObserver if adaptable off', () => {
     render(<AvatarRow adaptable={false} avatars={avatars} />)
 
     expect(ResizeObserver).not.toHaveBeenCalled()
   })
-
-  test('Should not use resize window event if adaptable off', () => {
-    const spy = jest.spyOn(global, 'addEventListener')
-    render(<AvatarRow ieCompatible adaptable={false} avatars={avatars} />)
-
-    expect(spy).not.toHaveBeenLastCalledWith('resize', expect.anything())
-  })
 })
 
-describe('Resize', () => {
+describe('Space calculations (getNumberOfItemsToDisplay)', () => {
   test('should render all avatars if space is enough', async () => {
     const avatarSize = 46
     const margin = 2
     const gaps = 5
     const spaceNeededForAll = avatarSize * avatars.length + margin * gaps
 
-    Element.prototype.getBoundingClientRect = jest.fn(() => {
-      return {
-        width: spaceNeededForAll,
-      }
-    })
-    const { container } = render(<AvatarRow ieCompatible avatars={avatars} />)
-
-    expect(container.querySelectorAll('.c-Avatar').length).toBe(avatars.length)
-    expect(container.querySelector('.AvatarOverflowed')).not.toBeInTheDocument()
+    expect(
+      getNumberOfItemsToDisplay({
+        avatarSize,
+        containerWidth: spaceNeededForAll,
+        gap: 2,
+        numberOfAvatars: avatars.length,
+        numberOfItemsOnDisplay: avatars.length,
+      })
+    ).toBe(6)
   })
 
-  test('should render the counter if space is not enough', async () => {
+  test('should reduce the number of items to display if space is not enough', async () => {
     const avatarSize = 46
     const margin = 2
     const gaps = 5
-    const spaceNeededFor5 = avatarSize * (avatars.length - 1) + margin * gaps
+    const spaceNeededForAll = avatarSize * avatars.length + margin * gaps
 
-    Element.prototype.getBoundingClientRect = jest.fn(() => {
-      return {
-        width: spaceNeededFor5,
-      }
-    })
-    const { container } = render(<AvatarRow ieCompatible avatars={avatars} />)
+    expect(
+      getNumberOfItemsToDisplay({
+        avatarSize,
+        containerWidth: spaceNeededForAll - 10,
+        gap: 2,
+        numberOfAvatars: avatars.length,
+        numberOfItemsOnDisplay: avatars.length,
+      })
+    ).toBe(5)
 
-    expect(container.querySelectorAll('.c-Avatar').length).toBe(
-      avatars.length - 2
-    )
-    expect(container.querySelector('.AvatarOverflowed')).toBeInTheDocument()
-    expect(container.querySelector('.TooltipTrigger')).toBeInTheDocument()
-    expect(container.querySelector('.AvatarOverflowed').textContent).toBe('2')
+    expect(
+      getNumberOfItemsToDisplay({
+        avatarSize,
+        containerWidth: spaceNeededForAll - 50,
+        gap: 2,
+        numberOfAvatars: avatars.length,
+        numberOfItemsOnDisplay: avatars.length,
+      })
+    ).toBe(4)
   })
 
-  test('should always render 1 item even if space is not enough', async () => {
-    Element.prototype.getBoundingClientRect = jest.fn(() => {
-      return {
-        width: 10,
-      }
-    })
-    const { container } = render(<AvatarRow ieCompatible avatars={avatars} />)
+  test('should always return 1 item even if space is not enough', () => {
+    const avatarSize = 46
 
-    expect(container.querySelectorAll('.c-Avatar').length).toBe(0)
-    expect(container.querySelector('.AvatarOverflowed')).toBeInTheDocument()
-    expect(container.querySelector('.AvatarOverflowed').textContent).toBe('6')
+    expect(
+      getNumberOfItemsToDisplay({
+        avatarSize,
+        containerWidth: avatarSize - 5,
+        gap: 2,
+        numberOfAvatars: avatars.length,
+        numberOfItemsOnDisplay: avatars.length,
+      })
+    ).toBe(1)
+  })
+
+  test('should return undefined item even if no width provided or just one avatar', () => {
+    const avatarSize = 46
+
+    expect(
+      getNumberOfItemsToDisplay({
+        avatarSize,
+        containerWidth: undefined,
+        gap: 2,
+        numberOfAvatars: avatars.length,
+        numberOfItemsOnDisplay: avatars.length,
+      })
+    ).toBe(undefined)
+
+    expect(
+      getNumberOfItemsToDisplay({
+        avatarSize,
+        containerWidth: 500,
+        gap: 2,
+        numberOfAvatars: 1,
+        numberOfItemsOnDisplay: avatars.length,
+      })
+    ).toBe(undefined)
   })
 })
 

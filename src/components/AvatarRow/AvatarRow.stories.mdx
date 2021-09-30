@@ -3,7 +3,7 @@ import { boolean, number, text, select } from '@storybook/addon-knobs'
 import AvatarRow from './AvatarRow'
 import { generateAvatarList } from '../../utilities/specs/avatar.specs'
 import { Resizable } from 're-resizable'
-import { AvatarRowPlayground } from './AvatarRow.utils'
+import { AvatarRowPlayground } from './AvatarRow.storiesHelpers'
 
 <Meta
   title="Components/Structural/AvatarRow"
@@ -77,12 +77,6 @@ Yes, you can make a bit of a mess if you wanted to (why would you though? why?),
 
 By default the component will use a [ResizeObserver](https://caniuse.com/resizeobserver) to calculate how many avatars to display and when. This works in all scenarios, whether the change in available width is due to resizing the window or anything else.
 
-The issue is that IE doesn't support, so if you need that IE compatibility...
-
-### Window resize event
-
-Turning `ieCompatible` on, will use a resize event listener on the `window` instead of the observer, what it means is that the adaptability of `AvatarRow` will only be triggered on the resize of the browser window, which is what you need most of the time anyways.
-
 <Canvas>
   <Story name="default">
     <span>
@@ -125,24 +119,10 @@ Turning `ieCompatible` on, will use a resize event listener on the `window` inst
 
 ## Stories
 
-#### IE compatibility
+#### Dynamic number of avatars
 
 <Canvas>
-  <Story name="IE compatible">
-    <span>Resize the window</span>
-    <br />
-    <br />
-    <AvatarRow
-      ieCompatible
-      size="lg"
-      gap={10}
-      avatars={generateAvatarList(10, true)}
-    />
-  </Story>
-</Canvas>
-
-<Canvas>
-  <Story name="playground">
+  <Story name="Dynamic number of avatars">
     <span>Resize the window</span>
     <br />
     <br />

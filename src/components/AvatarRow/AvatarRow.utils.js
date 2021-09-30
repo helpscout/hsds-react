@@ -1,7 +1,3 @@
-import React from 'react'
-import AvatarRow from './AvatarRow'
-import { generateAvatarList } from '../../utilities/specs/avatar.specs'
-import { Resizable } from 're-resizable'
 export const MARGIN_LEFT = 2
 
 export function splitAvatarsArray(avatars, itemsDisplayed) {
@@ -34,33 +30,34 @@ export function setupObserver(callback) {
   })
 }
 
-export const AvatarRowPlayground = () => {
-  const [avatars, setAvatars] = React.useState(generateAvatarList(3, true))
-
-  const handleClick = () => {
-    setAvatars([...avatars, ...generateAvatarList(1, true)])
+export function getNumberOfItemsToDisplay({
+  avatarSize,
+  containerWidth,
+  gap,
+  numberOfAvatars,
+  numberOfItemsOnDisplay,
+}) {
+  /** Only act if we have more than 1 avatar */
+  if (!containerWidth || numberOfAvatars <= 1) {
+    return
   }
 
-  return (
-    <>
-      <Resizable
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          outline: 'solid 1px #444cf770',
-          backgroundColor: '#e5e5f730',
-          backgroundImage: 'radial-gradient(#444cf770 0.5px, #e5e5f730 0.5px)',
-          backgroundSize: '10px 10px',
-        }}
-        defaultSize={{
-          width: '50%',
-          height: 200,
-        }}
-      >
-        <AvatarRow size="lg" gap={10} avatars={avatars} />
-      </Resizable>
-      <button onClick={handleClick}>increase avatar count</button>
-    </>
-  )
+  /** The total space for the avatars is comprised of:
+   * Avatar space: Number of avatars * the size of the avatar
+   * +
+   * Margin space: gap between avatars * the number of gaps. For example, for 3 avatars, there are 2 gaps => [AV]gap[AV]gap[AV]
+   */
+  const spaceForAllAvatars =
+    avatarSize * numberOfAvatars + (numberOfAvatars - 1) * gap
+
+  if (containerWidth >= spaceForAllAvatars) {
+    return numberOfAvatars
+  } else {
+    const numberOfGaps = numberOfItemsOnDisplay - 1
+    const itemsThatFit = Math.floor(
+      (containerWidth - numberOfGaps * gap) / avatarSize
+    )
+
+    return itemsThatFit > 0 ? itemsThatFit : 1
+  }
 }

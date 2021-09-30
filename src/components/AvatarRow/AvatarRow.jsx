@@ -2,12 +2,15 @@ import React, { useRef, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import throttle from 'lodash.throttle'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { AvatarRowUI, CounterAvatarUI } from './AvatarRow.css'
 import Avatar from '../Avatar'
 import Tooltip from '../Tooltip'
 import { config } from '../Avatar/Avatar.css'
-import { setupObserver, splitAvatarsArray } from './AvatarRow.utils'
+import {
+  setupObserver,
+  splitAvatarsArray,
+  getNumberOfItemsToDisplay,
+} from './AvatarRow.utils'
 
 const { size: avatarConfigSizes } = config
 
@@ -18,7 +21,6 @@ function AvatarRow({
   'data-cy': dataCy = 'AvatarRow',
   extraTooltipProps = {},
   gap = 2,
-  ieCompatible = false,
   throttleOnResize = true,
   throttleWait = 200,
   ...avatarProps
@@ -28,24 +30,21 @@ function AvatarRow({
   ]
   const avatarRowRef = useRef(null)
   const observerRef = useRef(null)
-  const windowResizeRef = useRef(null)
   const numberOfAvatars = avatars.length
   const [numberOfItemsOnDisplay, setNumberOfItemsOnDisplay] = useState(
     numberOfAvatars
   )
 
-  const throttledOnResize = !ieCompatible
-    ? throttle(onResize, throttleWait)
-    : noop
-  const throttledHandleWindowResize = ieCompatible
-    ? throttle(handleWindowResize, throttleWait)
-    : noop
+  const throttledOnResize = throttle(onResize, throttleWait)
 
   useEffect(() => {
-    if (!adaptable || ieCompatible || avatarRowRef.current == null) return
+    if (!adaptable || avatarRowRef.current == null) return
 
     // Avoid adding multiple observers
-    if (observerRef.current instanceof ResizeObserver) {
+    if (
+      observerRef.current != null &&
+      observerRef.current instanceof ResizeObserver
+    ) {
       observerRef.current.disconnect()
     }
 
@@ -59,75 +58,23 @@ function AvatarRow({
     resizeObserver.observe(avatarRowEl)
 
     return () => {
-      if (!adaptable || ieCompatible || avatarRowEl == null) return
+      if (!adaptable || avatarRowEl == null) return
 
       resizeObserver.disconnect()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numberOfAvatars])
 
-  useEffect(() => {
-    if (ieCompatible && adaptable) {
-      // Avoid adding multiple resize events
-      if (typeof windowResizeRef.current === 'function') {
-        window.removeEventListener('resize', windowResizeRef.current)
-      }
-
-      const handler = throttleOnResize
-        ? throttledHandleWindowResize
-        : handleWindowResize
-      windowResizeRef.current = handler
-
-      window.addEventListener('resize', handler)
-
-      const measures = avatarRowRef.current.getBoundingClientRect()
-      onResize(measures)
-    }
-
-    return () => {
-      if (ieCompatible && adaptable) {
-        const handler = throttleOnResize
-          ? throttledHandleWindowResize
-          : handleWindowResize
-
-        window.removeEventListener('resize', handler)
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [numberOfAvatars])
-
-  function handleWindowResize() {
-    if (avatarRowRef.current != null) {
-      const measures = avatarRowRef.current.getBoundingClientRect()
-
-      onResize(measures)
-    }
-  }
-
   function onResize({ width: containerWidth }) {
-    /** Only act if we have more than 1 avatar */
-    if (!containerWidth || numberOfAvatars <= 1) {
-      return
-    }
-
-    /** The total space for the avatars is comprised of:
-     * Avatar space: Number of avatars * the size of the avatar
-     * +
-     * Margin space: gap between avatars * the number of gaps. For example, for 3 avatars, there are 2 gaps => [AV]gap[AV]gap[AV]
-     */
-    const spaceForAllAvatars =
-      avatarSize * numberOfAvatars + (numberOfAvatars - 1) * gap
-
-    if (containerWidth >= spaceForAllAvatars) {
-      setNumberOfItemsOnDisplay(numberOfAvatars)
-    } else {
-      const numberOfGaps = numberOfItemsOnDisplay - 1
-      const itemsThatFit = Math.floor(
-        (containerWidth - numberOfGaps * gap) / avatarSize
-      )
-
-      setNumberOfItemsOnDisplay(itemsThatFit > 0 ? itemsThatFit : 1)
-    }
+    setNumberOfItemsOnDisplay(
+      getNumberOfItemsToDisplay({
+        avatarSize,
+        containerWidth,
+        gap,
+        numberOfAvatars,
+        numberOfItemsOnDisplay,
+      })
+    )
   }
 
   const { shownAvatars, hiddenAvatars } = splitAvatarsArray(
@@ -179,8 +126,6 @@ AvatarRow.propTypes = {
   throttleOnResize: PropTypes.bool,
   /** Customize the throttle wait in ms */
   throttleWait: PropTypes.number,
-  /** Use a window resize event instead of Resize Observer */
-  ieCompatible: PropTypes.bool,
   /** Gap in pixels between Avatars */
   gap: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   /** Customize the Tooltip on the "overflow" avatar by passing valid options */
