@@ -61,7 +61,7 @@ function AvatarRow({
     return () => {
       if (!adaptable || ieCompatible || avatarRowEl == null) return
 
-      resizeObserver.unobserve(avatarRowEl)
+      resizeObserver.disconnect()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numberOfAvatars])
