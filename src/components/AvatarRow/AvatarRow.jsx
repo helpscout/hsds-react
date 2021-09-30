@@ -27,8 +27,9 @@ function AvatarRow({
     avatarProps.size || 'md'
   ]
   const avatarRowRef = useRef(null)
+  const numberOfAvatars = avatars.length
   const [numberOfItemsOnDisplay, setNumberOfItemsOnDisplay] = useState(
-    avatars.length
+    numberOfAvatars
   )
 
   const throttledOnResize = !ieCompatible
@@ -54,7 +55,7 @@ function AvatarRow({
       resizeObserver.unobserve(avatarRowEl)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [numberOfAvatars])
 
   useEffect(() => {
     if (ieCompatible && adaptable) {
@@ -76,7 +77,7 @@ function AvatarRow({
         )
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [numberOfAvatars])
 
   function handleWindowResize() {
     if (avatarRowRef.current != null) {
@@ -88,7 +89,7 @@ function AvatarRow({
 
   function onResize({ width: containerWidth }) {
     /** Only act if we have more than 1 avatar */
-    if (!containerWidth || avatars.length <= 1) {
+    if (!containerWidth || numberOfAvatars <= 1) {
       return
     }
 
@@ -98,10 +99,10 @@ function AvatarRow({
      * Margin space: gap between avatars * the number of gaps. For example, for 3 avatars, there are 2 gaps => [AV]gap[AV]gap[AV]
      */
     const spaceForAllAvatars =
-      avatarSize * avatars.length + (avatars.length - 1) * gap
+      avatarSize * numberOfAvatars + (numberOfAvatars - 1) * gap
 
     if (containerWidth >= spaceForAllAvatars) {
-      setNumberOfItemsOnDisplay(avatars.length)
+      setNumberOfItemsOnDisplay(numberOfAvatars)
     } else {
       const numberOfGaps = numberOfItemsOnDisplay - 1
       const itemsThatFit = Math.floor(
