@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState, useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import throttle from 'lodash.throttle'
 import classNames from 'classnames'
@@ -27,6 +27,8 @@ function AvatarRow({
     avatarProps.size || 'md'
   ]
   const avatarRowRef = useRef(null)
+  const observerRef = useRef(null)
+  const windowResizeRef = useRef(null)
   const numberOfAvatars = avatars.length
   const [numberOfItemsOnDisplay, setNumberOfItemsOnDisplay] = useState(
     numberOfAvatars
@@ -42,10 +44,17 @@ function AvatarRow({
   useEffect(() => {
     if (!adaptable || ieCompatible || avatarRowRef.current == null) return
 
+    // Avoid adding multiple observers
+    if (observerRef.current instanceof ResizeObserver) {
+      observerRef.current.disconnect()
+    }
+
     const avatarRowEl = avatarRowRef.current
     const resizeObserver = setupObserver(
       throttleOnResize ? throttledOnResize : onResize
     )
+
+    observerRef.current = resizeObserver
 
     resizeObserver.observe(avatarRowEl)
 
@@ -59,22 +68,34 @@ function AvatarRow({
 
   useEffect(() => {
     if (ieCompatible && adaptable) {
-      window.addEventListener(
-        'resize',
-        throttleOnResize ? throttledHandleWindowResize : handleWindowResize
-      )
+      // Avoid adding multiple resize events
+      if (typeof windowResizeRef.current === 'function') {
+        console.log(
+          '🚀 ~ file: AvatarRow.jsx ~ line 73 ~ windowResizeRef.current',
+          windowResizeRef.current
+        )
+        window.removeEventListener('resize', windowResizeRef.current)
+      }
+
+      const handler = throttleOnResize
+        ? throttledHandleWindowResize
+        : handleWindowResize
+      windowResizeRef.current = handler
+
+      window.addEventListener('resize', handler)
 
       const measures = avatarRowRef.current.getBoundingClientRect()
       onResize(measures)
     }
 
     return () => {
-      ieCompatible &&
-        adaptable &&
-        window.addEventListener(
-          'resize',
-          throttleOnResize ? throttledHandleWindowResize : handleWindowResize
-        )
+      if (ieCompatible && adaptable) {
+        const handler = throttleOnResize
+          ? throttledHandleWindowResize
+          : handleWindowResize
+
+        window.removeEventListener('resize', handler)
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numberOfAvatars])
