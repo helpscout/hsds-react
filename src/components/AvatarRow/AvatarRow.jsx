@@ -70,10 +70,6 @@ function AvatarRow({
     if (ieCompatible && adaptable) {
       // Avoid adding multiple resize events
       if (typeof windowResizeRef.current === 'function') {
-        console.log(
-          '🚀 ~ file: AvatarRow.jsx ~ line 73 ~ windowResizeRef.current',
-          windowResizeRef.current
-        )
         window.removeEventListener('resize', windowResizeRef.current)
       }
 
