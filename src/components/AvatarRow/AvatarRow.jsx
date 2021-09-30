@@ -35,8 +35,6 @@ function AvatarRow({
     numberOfAvatars
   )
 
-  const throttledOnResize = throttle(onResize, throttleWait)
-
   useEffect(() => {
     if (!adaptable || avatarRowRef.current == null) return
 
@@ -50,7 +48,7 @@ function AvatarRow({
 
     const avatarRowEl = avatarRowRef.current
     const resizeObserver = setupObserver(
-      throttleOnResize ? throttledOnResize : onResize
+      throttleOnResize ? throttle(onResize, throttleWait) : onResize
     )
 
     observerRef.current = resizeObserver
