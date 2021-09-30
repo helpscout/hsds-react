@@ -29,6 +29,8 @@ export const AvatarRowPlayground = () => {
       >
         <AvatarRow size="lg" gap={10} avatars={avatars} />
       </Resizable>
+      <br />
+      <br />
       <button onClick={handleClick}>increase avatar count</button>
     </>
   )
