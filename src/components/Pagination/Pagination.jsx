@@ -209,7 +209,8 @@ export class Pagination extends React.PureComponent {
     return (
       <PaginationUI
         {...getValidProps(rest)}
-        aria-label="Pagination"
+        role="navigation"
+        aria-label="Pagination Navigation"
         className={componentClassName}
         ref={innerRef}
       >
