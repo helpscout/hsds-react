@@ -34,8 +34,8 @@ export const RangeUI = styled('span')`
 export const ButtonIconUI = styled(Button)`
   ${focusRing}
   &.is-default {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
   }
   &.is-default:focus,
   &.is-default.is-focused {
