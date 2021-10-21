@@ -1,85 +1,82 @@
 import React from 'react'
-import { mount } from 'enzyme'
-import { Pagination } from './Pagination'
-import { NavigationUI, RangeUI, InformationUI } from './Pagination.css'
-import { hasClass } from '../../tests/helpers/enzyme'
+import { render } from '@testing-library/react'
+import { renderHook } from '@testing-library/react-hooks'
+import user from '@testing-library/user-event'
+
+import Pagination, { usePaginationData } from './Pagination'
 import { simulateKeyPress } from '../KeypressListener/KeypressListener.test'
 import Keys from '../../constants/Keys'
 
 describe('className', () => {
   test('Has a default className', () => {
-    const wrapper = mount(<Pagination />)
-
-    expect(hasClass(wrapper, 'c-Pagination')).toBe(true)
+    const { getByTestId } = render(<Pagination />)
+    expect(getByTestId('Pagination')).toHaveClass('c-Pagination')
   })
   test('Add custom className', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = mount(<Pagination className={customClass} />)
+    const { getByTestId } = render(<Pagination className={customClass} />)
 
-    expect(hasClass(wrapper, customClass)).toBe(true)
+    expect(getByTestId('Pagination')).toHaveClass(customClass)
   })
 })
 describe('Subject', () => {
   test('Does not render a subject by default', () => {
-    const wrapper = mount(<Pagination />)
-    const s = wrapper.find('.c-Pagination__subject')
+    const { container } = render(<Pagination />)
+    const s = container.querySelector('.c-Pagination__subject')
 
-    expect(s.length).not.toBeTruthy()
+    expect(s).toBeFalsy()
   })
 
   test('Renders a subject, if defined', () => {
     const subject = 'Customer'
-    const wrapper = mount(<Pagination subject={subject} />)
-    const s = wrapper.find('.c-Pagination__subject')
+    const { container, queryByText } = render(<Pagination subject={subject} />)
+    const s = container.querySelector('.c-Pagination__subject')
 
-    expect(s.length).toBeTruthy()
-    expect(s.text().trim()).toBe(subject)
+    expect(s).toBeTruthy()
+    expect(queryByText(subject)).toBeTruthy()
   })
 
   test('Renders a space before the subject, if defined', () => {
     const subject = 'Customer'
-    const wrapper = mount(<Pagination subject={subject} />)
-    const s = wrapper.find('.c-Pagination__subject')
-
-    expect(s.text().indexOf(' ')).toBe(0)
+    const { container } = render(<Pagination subject={subject} />)
+    const s = container.querySelector('.c-Pagination__subject')
+    expect(s.textContent.indexOf(' ')).toBe(0)
   })
 
   test('Renders a default subject if no totalItems is provided', () => {
     const subject = 'Customer'
-    const wrapper = mount(<Pagination subject={subject} />)
-    const s = wrapper.find('.c-Pagination__subject')
+    const { queryByText } = render(<Pagination subject={subject} />)
 
-    expect(s.text().trim()).toBe(subject)
+    expect(queryByText(subject)).toBeTruthy()
   })
 
   test('Renders a pluralize subject', () => {
     const subject = 'Customer'
-    const wrapper = mount(<Pagination subject={subject} totalItems={100} />)
-    const s = wrapper.find('.c-Pagination__subject')
+    const { queryByText } = render(
+      <Pagination subject={subject} totalItems={100} />
+    )
 
-    expect(s.text().trim()).toBe('Customers')
+    expect(queryByText('Customers')).toBeTruthy()
   })
 
   test('Renders a custom pluralized subject', () => {
     const subject = 'Customer'
     const pluralizedSubject = 'Customerzzz'
 
-    const wrapper = mount(
+    const { queryByText } = render(
       <Pagination
         subject={subject}
         totalItems={100}
         pluralizedSubject={pluralizedSubject}
       />
     )
-    const s = wrapper.find('.c-Pagination__subject')
-
-    expect(s.text().trim()).toBe(pluralizedSubject)
+    expect(queryByText(pluralizedSubject)).toBeTruthy()
   })
 
   test('should render custom content', () => {
     const subject = 'customer'
     const totalItems = 100
-    const wrapper = mount(
+    const { container } = render(
       <Pagination
         subject={subject}
         totalItems={totalItems}
@@ -99,56 +96,53 @@ describe('Subject', () => {
       />
     )
 
-    const s = wrapper.find('.custom-content')
+    const s = container.querySelector('.custom-content')
 
-    expect(s.text().trim()).toBe(`100 total customers • 26 active`)
+    expect(s).toHaveTextContent('100 total customers • 26 active')
   })
 })
 
 describe('Navigation', () => {
   test('Does not render a navigation by default', () => {
-    const wrapper = mount(<Pagination />)
-    const n = wrapper.find(NavigationUI)
+    const { queryByTestId } = render(<Pagination />)
 
-    expect(n.length).not.toBeTruthy()
+    expect(queryByTestId('Pagination.Navigation')).toBeFalsy()
   })
 
   test('Does not render a navigation, if defined && number of pages <= 1', () => {
-    const wrapper = mount(
+    const { queryByTestId } = render(
       <Pagination showNavigation={true} totalItems={10} rangePerPage={10} />
     )
-    const n = wrapper.find(NavigationUI)
 
-    expect(n.length).not.toBeTruthy()
+    expect(queryByTestId('Pagination.Navigation')).toBeFalsy()
   })
 
   test('Renders a navigation, if defined && number of pages > 1', () => {
-    const wrapper = mount(
+    const { queryByTestId } = render(
       <Pagination showNavigation={true} totalItems={10} rangePerPage={5} />
     )
-    const n = wrapper.find(NavigationUI)
 
-    expect(n.length).toBeTruthy()
+    expect(queryByTestId('Pagination.Navigation')).toBeTruthy()
   })
 
   test('Display next & last button on first page', () => {
-    const wrapper = mount(
+    const { container } = render(
       <Pagination showNavigation={true} totalItems={10} rangePerPage={5} />
     )
 
-    const first = wrapper.find('.c-Pagination__firstButton')
-    const prev = wrapper.find('.c-Pagination__prevButton')
-    const next = wrapper.find('.c-Pagination__nextButton')
-    const last = wrapper.find('.c-Pagination__lastButton')
+    const first = container.querySelector('.c-Pagination__firstButton')
+    const prev = container.querySelector('.c-Pagination__prevButton')
+    const next = container.querySelector('.c-Pagination__nextButton')
+    const last = container.querySelector('.c-Pagination__lastButton')
 
-    expect(first.length).not.toBeTruthy()
-    expect(prev.length).not.toBeTruthy()
-    expect(next.length).toBeTruthy()
-    expect(last.length).toBeTruthy()
+    expect(first).toBeFalsy()
+    expect(prev).toBeFalsy()
+    expect(next).toBeTruthy()
+    expect(last).toBeTruthy()
   })
 
   test('Display prev & first button after first page', () => {
-    const wrapper = mount(
+    const { container } = render(
       <Pagination
         showNavigation={true}
         totalItems={15}
@@ -157,19 +151,19 @@ describe('Navigation', () => {
       />
     )
 
-    const first = wrapper.find('.c-Pagination__firstButton')
-    const prev = wrapper.find('.c-Pagination__prevButton')
-    const next = wrapper.find('.c-Pagination__nextButton')
-    const last = wrapper.find('.c-Pagination__lastButton')
+    const first = container.querySelector('.c-Pagination__firstButton')
+    const prev = container.querySelector('.c-Pagination__prevButton')
+    const next = container.querySelector('.c-Pagination__nextButton')
+    const last = container.querySelector('.c-Pagination__lastButton')
 
-    expect(first.length).toBeTruthy()
-    expect(prev.length).toBeTruthy()
-    expect(next.length).toBeTruthy()
-    expect(last.length).toBeTruthy()
+    expect(first).toBeTruthy()
+    expect(prev).toBeTruthy()
+    expect(next).toBeTruthy()
+    expect(last).toBeTruthy()
   })
 
   test('Hides next & last button on last page', () => {
-    const wrapper = mount(
+    const { container } = render(
       <Pagination
         showNavigation={true}
         totalItems={15}
@@ -178,15 +172,15 @@ describe('Navigation', () => {
       />
     )
 
-    const next = wrapper.find('Button.c-Pagination__nextButton')
-    const last = wrapper.find('Button.c-Pagination__lastButton')
+    const next = container.querySelector('Button.c-Pagination__nextButton')
+    const last = container.querySelector('Button.c-Pagination__lastButton')
 
-    expect(next.length).not.toBeTruthy()
-    expect(last.length).not.toBeTruthy()
+    expect(next).toBeFalsy()
+    expect(last).toBeFalsy()
   })
 
   test('Disables all buttons when loading', () => {
-    const wrapper = mount(
+    const { container } = render(
       <Pagination
         isLoading={true}
         showNavigation={true}
@@ -196,64 +190,127 @@ describe('Navigation', () => {
       />
     )
 
-    const first = wrapper.find('Button.c-Pagination__firstButton').first()
-    const prev = wrapper.find('Button.c-Pagination__prevButton').first()
-    const next = wrapper.find('Button.c-Pagination__nextButton').first()
-    const last = wrapper.find('Button.c-Pagination__lastButton').first()
+    const first = container.querySelector('Button.c-Pagination__firstButton')
+    const prev = container.querySelector('Button.c-Pagination__prevButton')
+    const next = container.querySelector('Button.c-Pagination__nextButton')
+    const last = container.querySelector('Button.c-Pagination__lastButton')
 
-    expect(first.props('disabled')).toBeTruthy()
-    expect(prev.props('disabled')).toBeTruthy()
-    expect(next.props('disabled')).toBeTruthy()
-    expect(last.props('disabled')).toBeTruthy()
+    expect(first).toHaveAttribute('disabled')
+    expect(prev).toHaveAttribute('disabled')
+    expect(next).toHaveAttribute('disabled')
+    expect(last).toHaveAttribute('disabled')
   })
+})
 
+describe('usePaginationData', () => {
   test('Sets 1 as the minimum for currentPage', () => {
-    const wrapper = mount(
-      <Pagination
-        showNavigation={true}
-        totalItems={15}
-        rangePerPage={5}
-        activePage={0}
-      />
-    )
+    const props = {
+      totalItems: 15,
+      rangePerPage: 5,
+      activePage: 0,
+    }
 
-    expect(wrapper.instance().getCurrentPage()).toBe(1)
+    const { result } = renderHook(() => usePaginationData(props))
+    expect(result.current.currentPage).toBe(1)
   })
 
   test('Sets the number of pages as the maximum for currentPage', () => {
     const totalItems = 15
     const rangePerPage = 5
-    const wrapper = mount(
-      <Pagination
-        showNavigation={true}
-        totalItems={totalItems}
-        rangePerPage={rangePerPage}
-        activePage={200}
-      />
-    )
+    const props = {
+      totalItems,
+      rangePerPage,
+      activePage: 200,
+    }
 
-    expect(wrapper.instance().getCurrentPage()).toBe(totalItems / rangePerPage)
+    const { result } = renderHook(() => usePaginationData(props))
+
+    expect(result.current.currentPage).toBe(totalItems / rangePerPage)
   })
-})
-describe('Range', () => {
+
   test('Sets numberOfPages on even number', () => {
     const totalItems = 15
     const rangePerPage = 5
-    const wrapper = mount(
-      <Pagination
-        showNavigation={true}
-        totalItems={totalItems}
-        rangePerPage={rangePerPage}
-        activePage={1}
-      />
-    )
+    const props = {
+      totalItems,
+      rangePerPage,
+      activePage: 1,
+    }
 
-    expect(wrapper.instance().getNumberOfPages()).toBe(3)
+    const { result } = renderHook(() => usePaginationData(props))
+
+    expect(result.current.numberOfPages).toBe(3)
   })
+
+  test('Sets numberOfPages on uneven number', () => {
+    const totalItems = 17
+    const rangePerPage = 5
+
+    const props = {
+      totalItems,
+      rangePerPage,
+      activePage: 1,
+    }
+
+    const { result } = renderHook(() => usePaginationData(props))
+
+    expect(result.current.numberOfPages).toBe(4)
+  })
+
+  test('Sets correctly start and end range on last page', () => {
+    const totalItems = 15
+    const rangePerPage = 5
+
+    const props = {
+      totalItems,
+      rangePerPage,
+      activePage: 3,
+    }
+
+    const { result } = renderHook(() => usePaginationData(props))
+
+    expect(result.current.startRange).toBe('11')
+    expect(result.current.endRange).toBe('15')
+  })
+
+  test('Sets correctly start and uneven end range on last page', () => {
+    const totalItems = 17
+    const rangePerPage = 5
+
+    const props = {
+      totalItems,
+      rangePerPage,
+      activePage: 10,
+    }
+
+    const { result } = renderHook(() => usePaginationData(props))
+
+    expect(result.current.startRange).toBe('16')
+    expect(result.current.endRange).toBe('17')
+  })
+
+  test('Sets correctly start and end range on first page', () => {
+    const totalItems = 15
+    const rangePerPage = 5
+
+    const props = {
+      totalItems,
+      rangePerPage,
+      activePage: 1,
+    }
+
+    const { result } = renderHook(() => usePaginationData(props))
+
+    expect(result.current.startRange).toBe('1')
+    expect(result.current.endRange).toBe('5')
+  })
+})
+
+describe('Range', () => {
   test('Hides range if less than 2 pages', () => {
     const totalItems = 5
     const rangePerPage = 5
-    const wrapper = mount(
+    const { container } = render(
       <Pagination
         showNavigation={true}
         totalItems={totalItems}
@@ -262,14 +319,14 @@ describe('Range', () => {
       />
     )
 
-    expect(wrapper.find('.c-Pagination__range').length).toBeFalsy()
+    expect(container.querySelector('.c-Pagination__range')).toBeFalsy()
   })
 
   test('Shows totalItems if less than 2 pages', () => {
     const totalItems = 5
     const rangePerPage = 5
     const subject = 'Customers'
-    const wrapper = mount(
+    const { getByTestId } = render(
       <Pagination
         showNavigation={true}
         totalItems={totalItems}
@@ -279,71 +336,10 @@ describe('Range', () => {
       />
     )
 
-    expect(wrapper.find(RangeUI).text()).toBe(`${totalItems}`)
-    expect(wrapper.find(InformationUI).text()).toBe(`${totalItems} ${subject}`)
-  })
-  test('Sets numberOfPages on uneven number', () => {
-    const totalItems = 17
-    const rangePerPage = 5
-    const wrapper = mount(
-      <Pagination
-        showNavigation={true}
-        totalItems={totalItems}
-        rangePerPage={rangePerPage}
-        activePage={1}
-      />
+    expect(getByTestId('Pagination.Range')).toHaveTextContent(`${totalItems}`)
+    expect(getByTestId('Pagination.Info')).toHaveTextContent(
+      `${totalItems} ${subject}`
     )
-
-    expect(wrapper.instance().getNumberOfPages()).toBe(4)
-  })
-  test('Sets correctly start and end range on first page', () => {
-    const totalItems = 15
-    const rangePerPage = 5
-    const wrapper = mount(
-      <Pagination
-        showNavigation={true}
-        totalItems={totalItems}
-        rangePerPage={rangePerPage}
-        activePage={1}
-      />
-    )
-
-    expect(wrapper.instance().getStartRange()).toBe(1)
-    expect(wrapper.instance().getEndRange()).toBe(5)
-  })
-
-  test('Sets correctly start and end range on last page', () => {
-    const totalItems = 15
-    const rangePerPage = 5
-
-    const wrapper = mount(
-      <Pagination
-        showNavigation={true}
-        totalItems={totalItems}
-        rangePerPage={rangePerPage}
-        activePage={3}
-      />
-    )
-
-    expect(wrapper.instance().getStartRange()).toBe(11)
-    expect(wrapper.instance().getEndRange()).toBe(15)
-  })
-
-  test('Sets correctly start and uneven end range on last page', () => {
-    const totalItems = 17
-    const rangePerPage = 5
-
-    const wrapper = mount(
-      <Pagination
-        showNavigation={true}
-        totalItems={totalItems}
-        rangePerPage={rangePerPage}
-        activePage={10}
-      />
-    )
-
-    expect(wrapper.instance().getStartRange()).toBe(16)
-    expect(wrapper.instance().getEndRange()).toBe(17)
   })
 })
 
@@ -353,7 +349,7 @@ describe('Clicks', () => {
     const rangePerPage = 5
     const changeWatcher = jest.fn()
 
-    const wrapper = mount(
+    const { container } = render(
       <Pagination
         showNavigation={true}
         totalItems={totalItems}
@@ -362,7 +358,7 @@ describe('Clicks', () => {
         onChange={changeWatcher}
       />
     )
-    wrapper.find('Button.c-Pagination__nextButton').first().simulate('click')
+    user.click(container.querySelector('Button.c-Pagination__nextButton'))
     expect(changeWatcher).toHaveBeenCalledWith(2)
   })
 
@@ -371,7 +367,7 @@ describe('Clicks', () => {
     const rangePerPage = 5
     const changeWatcher = jest.fn()
 
-    const wrapper = mount(
+    const { container } = render(
       <Pagination
         showNavigation={true}
         totalItems={totalItems}
@@ -380,7 +376,7 @@ describe('Clicks', () => {
         onChange={changeWatcher}
       />
     )
-    wrapper.find('Button.c-Pagination__lastButton').first().simulate('click')
+    user.click(container.querySelector('Button.c-Pagination__lastButton'))
     expect(changeWatcher).toHaveBeenCalledWith(4)
   })
 
@@ -389,7 +385,7 @@ describe('Clicks', () => {
     const rangePerPage = 5
     const changeWatcher = jest.fn()
 
-    const wrapper = mount(
+    const { container } = render(
       <Pagination
         showNavigation={true}
         totalItems={totalItems}
@@ -398,7 +394,7 @@ describe('Clicks', () => {
         onChange={changeWatcher}
       />
     )
-    wrapper.find('Button.c-Pagination__firstButton').first().simulate('click')
+    user.click(container.querySelector('Button.c-Pagination__firstButton'))
     expect(changeWatcher).toHaveBeenCalledWith(1)
   })
 
@@ -407,7 +403,7 @@ describe('Clicks', () => {
     const rangePerPage = 5
     const changeWatcher = jest.fn()
 
-    const wrapper = mount(
+    const { container } = render(
       <Pagination
         showNavigation={true}
         totalItems={totalItems}
@@ -416,44 +412,8 @@ describe('Clicks', () => {
         onChange={changeWatcher}
       />
     )
-    wrapper.find('Button.c-Pagination__prevButton').first().simulate('click')
+    user.click(container.querySelector('Button.c-Pagination__prevButton'))
     expect(changeWatcher).toHaveBeenCalledWith(3)
-  })
-
-  test('Prev callback should not call onChange if already at first page', () => {
-    const totalItems = 17
-    const rangePerPage = 5
-    const changeWatcher = jest.fn()
-
-    const wrapper = mount(
-      <Pagination
-        showNavigation={true}
-        totalItems={totalItems}
-        rangePerPage={rangePerPage}
-        activePage={1}
-        onChange={changeWatcher}
-      />
-    )
-    wrapper.instance().handlePrevClick({ preventDefault: jest.fn() })
-    expect(changeWatcher).not.toHaveBeenCalled()
-  })
-
-  test('Next callback should not call onChange if already at last page', () => {
-    const totalItems = 15
-    const rangePerPage = 5
-    const changeWatcher = jest.fn()
-
-    const wrapper = mount(
-      <Pagination
-        showNavigation={true}
-        totalItems={totalItems}
-        rangePerPage={rangePerPage}
-        activePage={3}
-        onChange={changeWatcher}
-      />
-    )
-    wrapper.instance().handleNextClick({ preventDefault: jest.fn() })
-    expect(changeWatcher).not.toHaveBeenCalled()
   })
 })
 
@@ -463,7 +423,7 @@ describe('Keyboard', () => {
     const rangePerPage = 5
     const changeWatcher = jest.fn()
 
-    mount(
+    render(
       <Pagination
         showNavigation={true}
         totalItems={totalItems}
@@ -481,7 +441,7 @@ describe('Keyboard', () => {
     const rangePerPage = 5
     const changeWatcher = jest.fn()
 
-    mount(
+    render(
       <Pagination
         showNavigation={true}
         totalItems={totalItems}
