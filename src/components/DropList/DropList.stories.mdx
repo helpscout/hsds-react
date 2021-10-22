@@ -248,7 +248,7 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
         inputPlaceholder={text('inputPlaceholder', 'Search')}
         focusTogglerOnMenuClose={boolean('focusTogglerOnMenuClose', true)}
         onDropListLeave={() => {
-          console.log('DropLit left')
+          console.log('DropList left')
         }}
         items={select(
           'Items',
@@ -552,14 +552,7 @@ const groupedItems = [
     >
       <DropList
         variant="combobox"
-        items={select(
-          'Items',
-          {
-            empty: [],
-            full: regularItems,
-          },
-          regularItems
-        )}
+        items={[]}
         customEmptyListItems={[
           {
             label: 'No tags found',
