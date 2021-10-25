@@ -19,7 +19,7 @@ export const config = {
       height: '32px',
     },
     md: {
-      height: '40px',
+      height: '42px',
     },
     lg: {
       height: '48px',
