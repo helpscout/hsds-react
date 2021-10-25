@@ -39,6 +39,12 @@ export const MessageCard = React.memo(
     ) => {
       const [visible, setVisible] = useState(false)
       const isShown = useRef(false)
+      const isMounted = useRef(true)
+      useEffect(() => {
+        return () => {
+          isMounted.current = false
+        }
+      }, [])
 
       const hasImage = useCallback(() => image && image.url, [image])
 
@@ -57,7 +63,7 @@ export const MessageCard = React.memo(
 
       const makeMessageVisible = () => {
         setTimeout(() => {
-          setVisible(true)
+          isMounted.current && setVisible(true)
         }, 0)
       }
 
