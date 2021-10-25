@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import { setFontSize } from '../../styles/utilities/font'
 import { darken } from '../../utilities/color'
-import { focusRing } from '../../styles/mixins/focusRing'
+import { focusRing } from '../../styles/mixins/focusRing.css'
 
 export const ShowAllButtonUI = styled.button`
   ${focusRing}

@@ -4,7 +4,10 @@ import { darken } from '../../utilities/color'
 import forEach from '../../styles/utilities/forEach'
 import Icon from '../Icon'
 import Truncate from '../Truncate'
-import { focusRing, focusShadowWithInset } from '../../styles/mixins/focusRing'
+import {
+  focusRing,
+  focusShadowWithInset,
+} from '../../styles/mixins/focusRing.css'
 
 export const config = {
   borderRadius: 3,
