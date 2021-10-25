@@ -6,6 +6,7 @@ import {
   isToday,
   isInsideRange,
   getValidDateTimeString,
+  getHumanReadableDate,
 } from './Datepicker.utils'
 import { DayUI, TimeUI, DateRangeBGHelperUI } from './Datepicker.css'
 
@@ -125,6 +126,7 @@ function Day({ dayLabel, date, leading = false, trailing = false }) {
       className={getClassNames()}
       enableRangeSelection={enableRangeSelection}
       aria-selected={isDaySelected}
+      aria-label={getHumanReadableDate(dateString)}
       disabled={disabledDate}
       isSelected={isDaySelected}
       isDateToday={isDateToday}

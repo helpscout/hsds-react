@@ -11,6 +11,7 @@ import {
   getActiveYearRange,
   getNavigatorButtonLabel,
   calculateNumberOfLeadingDays,
+  getHumanReadableDate,
 } from './Datepicker.utils'
 
 describe('Datepicker Utils', () => {
@@ -146,5 +147,10 @@ describe('Datepicker Utils', () => {
       'next years'
     )
     expect(getNavigatorButtonLabel('hello', 'next')).toBe('')
+  })
+
+  test('getHumanReadableDate should convert a date string in the form of "2021-09-27" to "September 27, 2021"', () => {
+    expect(getHumanReadableDate('2021-09-27')).toBe('September 27, 2021')
+    expect(getHumanReadableDate('1985-10-01')).toBe('October 1, 1985')
   })
 })
