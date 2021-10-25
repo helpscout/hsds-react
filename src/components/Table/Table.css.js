@@ -1,11 +1,64 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 
+export const HeaderUI = styled('header')`
+  display: flex;
+  justify-content: space-between;
+
+  &.with-column-chooser:not(.with-header-content) {
+    justify-content: flex-end;
+  }
+
+  .DropListToggler {
+    color: ${getColor('charcoal.300')};
+    border-radius: 50%;
+    width: 34px;
+
+    &:hover {
+      color: ${getColor('charcoal.500')};
+    }
+
+    &:focus {
+      box-shadow: none;
+      background-color: ${getColor('ash.200')};
+    }
+
+    &.is-active {
+      color: ${getColor('charcoal.500')};
+    }
+  }
+`
+
 export const TableWrapperUI = styled('div')`
   overflow-x: auto;
   transition: opacity 0.15s ease-in-out;
   width: ${props => props.containerWidth || '100%'};
   position: relative;
+
+  .DropList {
+    width: 300px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+  }
+
+  .DropList__MenuList {
+    max-height: 400px;
+  }
+
+  .is-type-action {
+    height: 50px;
+    margin: 0 5px;
+    padding: 0 15px;
+    line-height: 50px;
+    color: ${getColor('charcoal.300')};
+
+    &.is-highlighted,
+    &:hover {
+      color: ${getColor('charcoal.300')};
+      text-decoration: underline;
+      cursor: pointer;
+      background-color: transparent;
+    }
+  }
 `
 
 export const LoadingUI = styled('div')`
@@ -32,7 +85,7 @@ export const TableUI = styled('table')`
 
   tbody tr:focus {
     background-color: ${props => props.theme.bgFocus};
-    box-shadow: inset 5px 0 ${props => props.theme.bgFocusIndicator};
+    box-shadow: inset 3px 0 ${props => props.theme.bgFocusIndicator};
     outline: 0;
   }
 
@@ -152,6 +205,12 @@ export const TableUI = styled('table')`
   &.with-clickable-rows {
     tbody tr:hover {
       background-color: ${props => props.theme.bgColorHover};
+      cursor: pointer;
+    }
+  }
+  &.selection-enabled {
+    tbody tr:hover {
+      background-color: ${props => props.theme.bgSelectedHover};
       cursor: pointer;
     }
   }

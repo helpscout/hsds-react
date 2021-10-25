@@ -22,7 +22,6 @@ export function stateReducerCommon({
     case `${COMBOBOX}.${useCombobox.stateChangeTypes.InputChange}`:
       return {
         ...changes,
-        highlightedIndex: 0,
       }
 
     case `${COMBOBOX}.${useCombobox.stateChangeTypes.InputBlur}`:
@@ -157,7 +156,7 @@ export function getA11ySelectionMessageCommon({
     key: contentKey,
   })
 
-  if (!Boolean(foundItem)) {
+  if (Boolean(foundItem)) {
     return `${msg} was selected`
   }
 

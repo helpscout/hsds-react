@@ -1,3 +1,5 @@
+// Deprecated
+/* istanbul ignore file */
 import { isDefined } from '../../utilities/is'
 import actionTypes from './Dropdown.actionTypes'
 import {

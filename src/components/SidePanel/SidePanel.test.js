@@ -123,4 +123,35 @@ describe('Closing', () => {
 
     expect(spy).toHaveBeenCalled()
   })
+
+  test('should call onClose on clicking outside panel if set', () => {
+    const spy = jest.fn()
+    const { container } = render(
+      <div className="app">
+        <SidePanel closeOnClickOutside="panel" show onClose={spy} />
+      </div>
+    )
+    const app = container.querySelector('.app')
+
+    user.click(app)
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('should call onClose on clicking outside overlay if set', () => {
+    const spy = jest.fn()
+    const { container } = render(
+      <div className="app">
+        <section>Something</section>
+        <div className="modal-container">
+          <SidePanel closeOnClickOutside="overlay" show onClose={spy} />
+        </div>
+      </div>
+    )
+    const section = container.querySelector('section')
+
+    user.click(section)
+
+    expect(spy).toHaveBeenCalled()
+  })
 })

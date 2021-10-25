@@ -17,6 +17,7 @@ import {
   TooltipUI,
 } from './Tooltip.css'
 import { GlobalContext } from '../HSDS/Provider'
+import KeyboardBadge from '../KeyboardBadge'
 
 export const TooltipContext = createContext({})
 
@@ -43,32 +44,32 @@ const hideOnEsc = {
   },
 }
 
-const Tooltip = props => {
-  const {
-    animationDelay,
-    animationDuration,
-    arrowSize,
-    children,
-    className,
-    closeOnContentClick,
-    closeOnEscPress,
-    display,
-    'data-cy': dataCy,
-    getTippyInstance = () => {},
-    innerRef,
-    isOpen,
-    minWidth,
-    maxWidth,
-    placement,
-    render: renderProp,
-    renderContent,
-    title,
-    triggerOn,
-    withTriggerWrapper,
-    zIndex: zIndexProp,
-    ...rest
-  } = props
-
+const Tooltip = ({
+  animationDelay,
+  animationDuration,
+  arrowSize,
+  badge,
+  children,
+  className,
+  closeOnContentClick,
+  closeOnEscPress,
+  display,
+  'data-cy': dataCy,
+  getTippyInstance = () => {},
+  innerRef,
+  isOpen,
+  minWidth,
+  maxWidth,
+  placement,
+  render: renderProp,
+  renderContent,
+  title,
+  triggerOn,
+  withTriggerWrapper,
+  withArrow = true,
+  zIndex: zIndexProp,
+  ...rest
+}) => {
   const { getCurrentScope } = useContext(GlobalContext) || {}
   const { zIndex = zIndexProp, animationDuration: animationDurationContext } =
     useContext(TooltipContext) || {}
@@ -86,6 +87,7 @@ const Tooltip = props => {
   const hasRenderContent = renderContent && isFunction(renderContent)
   const hasRender = renderProp && isFunction(renderProp)
   const shouldRenderTooltip = title || hasRenderContent || hasRender
+  const hasKeyboardBadge = badge && !hasRender
 
   const duration = animationDurationContext
     ? animationDurationContext
@@ -103,7 +105,7 @@ const Tooltip = props => {
     tabIndex: '-1',
   }
 
-  const renderTooltip = ({ scope, ...props }) => {
+  const renderTooltip = ({ scope, className, ...props }) => {
     let titleContent = null
 
     if (typeof title === 'string') {
@@ -112,15 +114,23 @@ const Tooltip = props => {
       titleContent = title
     }
 
+    const tooltipClassnames = classNames(
+      className,
+      hasKeyboardBadge && 'with-badge'
+    )
+
     const toolTipComponent = (
       <TooltipAnimationUI>
-        <TooltipUI {...props}>
+        <TooltipUI className={tooltipClassnames} {...props}>
           {renderContent ? renderContent() : titleContent}
-          <ArrowUI
-            className="c-Tooltip_ArrowUI"
-            arrowSize={arrowSize}
-            data-popper-arrow
-          />
+          {hasKeyboardBadge ? <KeyboardBadge value={badge} /> : null}
+          {withArrow && (
+            <ArrowUI
+              className="c-Tooltip_ArrowUI"
+              arrowSize={arrowSize}
+              data-popper-arrow
+            />
+          )}
         </TooltipUI>
       </TooltipAnimationUI>
     )
@@ -175,7 +185,7 @@ const Tooltip = props => {
   }
 
   // only set those props if the component is not in a controlled way
-  if (!props.hasOwnProperty('visible')) {
+  if (!rest.hasOwnProperty('visible')) {
     defaultTippyProps.showOnCreate = isOpen
     defaultTippyProps.trigger = triggerOn === 'hover' ? 'mouseenter' : triggerOn
   }
@@ -242,6 +252,8 @@ Tooltip.propTypes = {
   animationDuration: PropTypes.number,
   /** Size of the Arrow in pixels */
   arrowSize: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  /** Render the value within a KeyboardBadge component after the title. Will be render only when using the title prop */
+  badge: PropTypes.string,
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
   /** Whether to allow closing the tooltip on pressing ESC */
@@ -269,6 +281,8 @@ Tooltip.propTypes = {
   visible: PropTypes.bool,
   /** Wrap the trigger with a span */
   withTriggerWrapper: PropTypes.bool,
+  /** Whether to render the arrow */
+  withArrow: PropTypes.bool,
 }
 
 export default Tooltip

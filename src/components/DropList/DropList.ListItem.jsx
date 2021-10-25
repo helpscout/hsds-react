@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import { isFunction, isObject, isString } from '../../utilities/is'
 import {
   getItemContentKeyName,
+  isItemAction,
   isItemADivider,
   isItemAGroupLabel,
   objectHasKey,
@@ -53,6 +54,7 @@ const ListItem = forwardRef(
         'DropListItem',
         isSelected && 'is-selected',
         isDisabled && 'is-disabled',
+        objectHasKey(item, 'type') && `is-type-${item.type}`,
         highlightedIndex === index && 'is-highlighted',
         withMultipleSelection && 'with-multiple-selection',
         isString(extraClassNames) && extraClassNames,
@@ -90,7 +92,7 @@ const ListItem = forwardRef(
         <ListItemTextUI>
           {isObject(item) ? item[contentKey] : item}
         </ListItemTextUI>
-        {withMultipleSelection ? (
+        {withMultipleSelection && !isItemAction(item) ? (
           <SelectedBadge isSelected={isSelected} />
         ) : null}
       </ListItemUI>

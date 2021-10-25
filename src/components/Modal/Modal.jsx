@@ -72,8 +72,13 @@ class Modal extends React.PureComponent {
   }
 
   componentDidMount() {
+    const { focusModalOnShow } = this.props
+
     this.positionCloseNode()
-    this.focusModalCard()
+
+    if (focusModalOnShow) {
+      this.focusModalCard()
+    }
   }
 
   getChildContext() {
@@ -129,6 +134,7 @@ class Modal extends React.PureComponent {
 
   focusModalCard = () => {
     const { modalFocusTimeout } = this.props
+
     setTimeout(() => {
       if (this.cardNode) {
         this.cardNode.focus()
@@ -393,6 +399,7 @@ Modal.defaultProps = {
   containTabKeyPress: true,
   'data-cy': 'Modal',
   description: null,
+  focusModalOnShow: true,
   icon: null,
   iconSize: '24',
   illo: null,
@@ -440,6 +447,8 @@ Modal.propTypes = {
   description: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   /** Used with `path` and React Router. Renders if path matches _exactly_ */
   exact: PropTypes.bool,
+  /** If you don't want the focus to be moved to the Modal when it enters */
+  focusModalOnShow: PropTypes.bool,
   forceClosePortal: PropTypes.func,
   /** Renders as an `Icon` in the top left corner of a version 2 Modal header. */
   icon: PropTypes.string,

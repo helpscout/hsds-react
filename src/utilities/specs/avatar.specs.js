@@ -1,6 +1,6 @@
 import { createSpec, derived, faker } from '@helpscout/helix'
 
-export default createSpec({
+const avatarSpec = createSpec({
   id: faker.datatype.uuid(),
   firstName: faker.name.firstName(),
   lastName: faker.name.lastName(),
@@ -12,6 +12,7 @@ export default createSpec({
       return {
         id: prop.id,
         name: prop.name,
+        firstName: prop.firstName,
         image: prop.image,
       }
     })
@@ -22,3 +23,18 @@ export default createSpec({
     image: props.image,
   }
 })
+
+export function generateAvatarList(number, withTooltip) {
+  const avatars = avatarSpec.generate(number)
+
+  if (withTooltip) {
+    return avatars.map(av => ({
+      tooltipProps: { title: `Hello ${av.firstName}!` },
+      ...av,
+    }))
+  }
+
+  return avatars
+}
+
+export default avatarSpec

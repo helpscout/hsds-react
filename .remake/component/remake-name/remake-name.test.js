@@ -9,7 +9,7 @@ describe('renders', () => {
 
     expect(getByText('')).toBeInTheDocument()
   })
-  
+
   test('Should do something', async () => {
     const { getByRole } = render(<<%= name %> />)
 

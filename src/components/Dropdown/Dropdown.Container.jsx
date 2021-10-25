@@ -1,3 +1,5 @@
+// Deprecated
+/* istanbul ignore file */
 import React from 'react'
 import { Provider } from '@helpscout/wedux'
 import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFromComponent'

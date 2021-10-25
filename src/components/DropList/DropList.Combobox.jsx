@@ -2,10 +2,13 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useCombobox } from 'downshift'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 import { noop } from '../../utilities/other'
+import { isFunction } from '../../utilities/is'
 import {
   itemToString,
   isItemSelected,
   renderListContents,
+  isItemHighlightable,
+  checkNextElementFocusedAndThenRun,
 } from './DropList.utils'
 import {
   getA11ySelectionMessageCommon,
@@ -25,21 +28,31 @@ function Combobox({
   closeOnBlur = true,
   closeOnSelection = true,
   customEmptyList = null,
+  customEmptyListItems,
   'data-cy': dataCy = `DropList.${VARIANTS.COMBOBOX}`,
-  selectedItem = null,
-  selectedItems,
-  isOpen = false,
+  focusToggler = noop,
+  handleSelectedItemChange = noop,
+  inputPlaceholder = 'Search',
   items = [],
+  isOpen = false,
   menuCSS,
+  menuWidth,
+  onDropListLeave = noop,
   onMenuBlur = noop,
   onMenuFocus = noop,
   onListItemSelectEvent = noop,
-  handleSelectedItemChange = noop,
   renderCustomListItem = null,
+  selectedItem = null,
+  selectedItems,
   toggleOpenedState = noop,
   withMultipleSelection = false,
 }) {
   const [inputItems, setInputItems] = useState(items)
+  const isListEmpty = items.length === 0
+  const allItems =
+    isListEmpty && Array.isArray(customEmptyListItems)
+      ? customEmptyListItems
+      : inputItems
   const inputEl = useRef(null)
 
   const {
@@ -49,11 +62,12 @@ function Combobox({
     getMenuProps,
     highlightedIndex,
     inputValue,
+    setHighlightedIndex,
   } = useCombobox({
     initialInputValue: '',
     initialIsOpen: isOpen,
     isOpen,
-    items: inputItems,
+    items: allItems,
     itemToString,
     selectedItem,
 
@@ -66,11 +80,26 @@ function Combobox({
     },
 
     onInputValueChange({ inputValue }) {
-      setInputItems(
-        items.filter(item =>
-          itemToString(item).toLowerCase().startsWith(inputValue.toLowerCase())
-        )
+      let filtered = items.filter(item =>
+        itemToString(item).toLowerCase().startsWith(inputValue.toLowerCase())
       )
+      const isListEmpty = filtered.length === 0
+
+      if (isListEmpty && Array.isArray(customEmptyListItems)) {
+        const processed = customEmptyListItems.map(item => {
+          if (isFunction(item.customizeLabel)) {
+            item.label = item.customizeLabel(inputValue)
+            item.inputValue = inputValue
+          }
+
+          return item
+        })
+
+        filtered = processed
+      }
+
+      setHighlightedIndex(filtered.findIndex(isItemHighlightable))
+      setInputItems(filtered)
     },
 
     onIsOpenChange(changes) {
@@ -89,6 +118,7 @@ function Combobox({
         case useCombobox.stateChangeTypes.InputKeyDownEnter:
         case useCombobox.stateChangeTypes.ItemClick:
           clearOnSelect && handleSelectedItemChange({ selectedItem: null })
+          closeOnSelection && focusToggler()
           break
 
         default:
@@ -102,7 +132,7 @@ function Combobox({
       return stateReducerCommon({
         changes,
         closeOnSelection,
-        items,
+        items: allItems,
         selectedItems,
         state,
         type: `${VARIANTS.COMBOBOX}.${type}`,
@@ -155,28 +185,32 @@ function Combobox({
     <DropListWrapperUI
       className="DropList DropList__Combobox"
       data-cy={dataCy}
-      variant="combobox"
       menuCSS={menuCSS}
+      menuWidth={menuWidth}
       {...getComboboxProps()}
     >
-      <InputSearchHolderUI show={items.length > 0}>
+      <InputSearchHolderUI show={allItems.length > 0}>
         <input
           data-event-driver
           {...getInputProps({
             className: 'DropList__Combobox__input',
             ref: inputEl,
-            onBlur: e => {
-              onMenuBlur(e)
+            onBlur: event => {
+              onMenuBlur(event)
+              checkNextElementFocusedAndThenRun(
+                ['DropListToggler'],
+                onDropListLeave
+              )
             },
             onFocus: event => {
               onMenuFocus(event)
             },
             onKeyDown: event => {
               if (event.key === 'Tab') {
-                event.preventDefault()
                 toggleOpenedState(false)
-              }
-              if (event.key === 'Enter') {
+              } else if (event.key === 'Escape') {
+                focusToggler()
+              } else if (event.key === 'Enter') {
                 const droplistMenu =
                   event.target.parentElement.nextElementSibling
 
@@ -191,7 +225,7 @@ function Combobox({
               }
             },
           })}
-          placeholder="Search"
+          placeholder={inputPlaceholder}
         />
       </InputSearchHolderUI>
       <MenuListUI
@@ -200,9 +234,8 @@ function Combobox({
       >
         {renderListContents({
           customEmptyList,
-          emptyList: items.length === 0,
           inputValue,
-          items: inputItems,
+          items: allItems,
           renderListItem,
         })}
       </MenuListUI>

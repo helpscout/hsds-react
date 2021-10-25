@@ -12,12 +12,17 @@ import {
   flattenListItems,
   getDropListVariant,
   getItemContentKeyName,
+  getMenuWidth,
+  isItemAction,
+  isItemRegular,
   isTogglerOfType,
   itemToString,
   parseSelectionFromProps,
   removeItemFromArray,
   requiredItemPropsCheck,
   useWarnings,
+  isItemInert,
+  checkNextElementFocusedAndThenRun,
 } from './DropList.utils'
 import {
   SimpleButton,
@@ -34,13 +39,17 @@ function DropListManager({
   closeOnClickOutside = true,
   closeOnSelection = true,
   customEmptyList = null,
+  customEmptyListItems,
   'data-cy': dataCy,
   enableLeftRightNavigation = false,
   focusTogglerOnMenuClose = true,
   getTippyInstance = noop,
+  inputPlaceholder = 'Search',
   isMenuOpen = false,
   items = [],
   menuCSS,
+  menuWidth,
+  onDropListLeave = noop,
   onMenuBlur = noop,
   onMenuFocus = noop,
   onListItemSelectEvent = noop,
@@ -63,7 +72,9 @@ function DropListManager({
   const [selectedItems, setSelectedItems] = useState(
     withMultipleSelection ? parsedSelection : []
   )
-  const [parsedItems, setParsedItems] = useState(flattenListItems(items))
+  const [parsedItems, setParsedItems] = useState(
+    flattenListItems(items, withMultipleSelection)
+  )
 
   const { getCurrentScope } = useContext(GlobalContext) || {}
   const scope = getCurrentScope ? getCurrentScope() : null
@@ -74,7 +85,7 @@ function DropListManager({
   const Toggler = decorateUserToggler(toggler)
   const DropListVariant = getDropListVariant({
     autoSetComboboxAt,
-    numberOfItems: parsedItems.length,
+    numberOfItems: parsedItems.filter(isItemRegular).length,
     variant,
   })
 
@@ -89,8 +100,8 @@ function DropListManager({
   }, [{ state: parsedSelection }, withMultipleSelection])
 
   useDeepCompareEffect(() => {
-    setParsedItems(flattenListItems(items))
-  }, [items])
+    setParsedItems(flattenListItems(items, withMultipleSelection))
+  }, [items, withMultipleSelection])
 
   useEffect(() => {
     setOpenedState(isMenuOpen)
@@ -98,11 +109,18 @@ function DropListManager({
 
   function decorateUserToggler(userToggler) {
     if (React.isValidElement(userToggler)) {
-      const { className, onClick, onFocus } = userToggler.props
+      const { className, onClick, onFocus, onBlur } = userToggler.props
       const togglerProps = {
         className: classNames(DROPLIST_TOGGLER, className),
         isActive: isOpen,
 
+        onBlur: e => {
+          onBlur && onBlur(e)
+          checkNextElementFocusedAndThenRun(
+            ['MenuList', 'DropList__Combobox__input'],
+            onDropListLeave
+          )
+        },
         onClick: e => {
           onClick && onClick(e)
           e.preventDefault()
@@ -155,7 +173,12 @@ function DropListManager({
       return
     }
 
-    if (selectedItem.isDisabled) {
+    if (selectedItem.isDisabled || isItemInert(selectedItem)) {
+      return
+    }
+
+    if (isItemAction(selectedItem)) {
+      onSelect(null, selectedItem)
       return
     }
 
@@ -184,12 +207,17 @@ function DropListManager({
         }
 
         setSelectedItems(updatedSelection)
+        setSelectedItem(updatedSelection.length ? selectedItem : null)
         onSelect(updatedSelection, selectedItem)
       }
     } else {
       setSelectedItem(selectedItem || null)
       onSelect(selectedItem, selectedItem)
     }
+  }
+
+  function focusToggler() {
+    tippyInstanceRef.current && tippyInstanceRef.current.reference.focus()
   }
 
   return (
@@ -211,11 +239,11 @@ function DropListManager({
         ) {
           return
         }
-
         if (!closeOnClickOutside) {
           return
         }
 
+        onDropListLeave()
         toggleOpenedState(false)
       }}
       render={() => (
@@ -240,15 +268,10 @@ function DropListManager({
             dropListEventDriverNode && dropListEventDriverNode.focus()
           }}
           onExiting={() => {
-            if (tippyInstanceRef.current) {
-              focusTogglerOnMenuClose &&
-                tippyInstanceRef.current.reference.focus()
-            }
+            focusTogglerOnMenuClose && focusToggler()
           }}
           onExited={() => {
-            if (tippyInstanceRef.current) {
-              tippyInstanceRef.current.hide()
-            }
+            tippyInstanceRef.current && tippyInstanceRef.current.hide()
           }}
         >
           <DropListVariant
@@ -256,12 +279,17 @@ function DropListManager({
             closeOnBlur={closeOnBlur}
             closeOnSelection={closeOnSelection}
             customEmptyList={customEmptyList}
+            customEmptyListItems={customEmptyListItems}
             data-cy={dataCy}
             enableLeftRightNavigation={enableLeftRightNavigation}
+            focusToggler={focusToggler}
             handleSelectedItemChange={handleSelectedItemChange}
+            inputPlaceholder={inputPlaceholder}
             isOpen={isOpen}
             items={parsedItems}
             menuCSS={menuCSS}
+            menuWidth={getMenuWidth(DropListVariant.name, menuWidth)}
+            onDropListLeave={onDropListLeave}
             onMenuBlur={onMenuBlur}
             onMenuFocus={onMenuFocus}
             onListItemSelectEvent={onListItemSelectEvent}
@@ -316,8 +344,12 @@ DropListManager.propTypes = {
   closeOnClickOutside: PropTypes.bool,
   /** Whether to close the DropList when an item is selected */
   closeOnSelection: PropTypes.bool,
-  /** Pass a React Element to render a custom message or style when the List is empty */
+  /** Pass an Element to render a custom message or style when the List is empty */
   customEmptyList: PropTypes.any,
+  /** To render "extra" items when the list is empty, as opposed to just customizind the rendering like `customEmptyList` does */
+  customEmptyListItems: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.string, itemShape, dividerShape, groupShape])
+  ),
   /** Data attr applied to the DropList for Cypress tests. By default one of 'DropList.Select' or 'DropList.Combobox' depending on the variant used */
   'data-cy': PropTypes.string,
   /** Enable navigation with Right and Left arrows (useful for horizontally rendered lists) */
@@ -326,6 +358,8 @@ DropListManager.propTypes = {
   focusTogglerOnMenuClose: PropTypes.bool,
   /** Retrieves the tippy instance */
   getTippyInstance: PropTypes.any,
+  /** Customize the placeholder text on the combobox input */
+  inputPlaceholder: PropTypes.string,
   /** Open/close the DropList externally */
   isMenuOpen: PropTypes.bool,
   /** Items to populate the list with */
@@ -334,6 +368,8 @@ DropListManager.propTypes = {
   ),
   /** Custom css for the Menu */
   menuCSS: PropTypes.any,
+  /** Custom width for the Menu */
+  menuWidth: PropTypes.any,
   /** Callback that fires when the menu loses focus */
   onMenuBlur: PropTypes.func,
   /** Callback that fires when the menu gets focus */

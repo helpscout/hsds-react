@@ -1,14 +1,11 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
-import { getShadow } from '../../styles/utilities/shadow'
-
+import { d500 } from '../../styles/mixins/depth.css'
 import { ArrowUI, TooltipUI } from '../Tooltip/Tooltip.css'
-
 import Heading from '../Heading'
 
 export const config = {
   borderColor: getColor('grey.600'),
-  boxShadow: getShadow(100),
   padding: '15px',
   background: 'white',
 }
@@ -37,11 +34,8 @@ export const ArrowPopoverUI = styled(ArrowUI)`
     left: 0;
   }
 `
-
 export const PopoverUI = styled(TooltipUI)`
-  background: ${config.background};
-  border: 1px solid ${config.borderColor};
-  box-shadow: ${config.boxShadow};
+  ${d500}
   color: inherit;
   font-size: inherit;
   padding: ${config.padding};

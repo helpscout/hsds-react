@@ -17,6 +17,8 @@ export const columnShape = {
   renderHeaderCell: PropTypes.func,
   sortKey: PropTypes.string,
   sorter: PropTypes.func,
+  show: PropTypes.bool,
+  default: PropTypes.bool,
 }
 
 export const dataShape = {
@@ -52,4 +54,50 @@ export function getDisplayTableData({ data, rowsToDisplay }) {
   }
 
   return data
+}
+
+export function createColumnChooserListItems(columns, columnChooserResetLabel) {
+  const items = columns.reduce((acc, currentCol) => {
+    const group = currentCol.group || 'Other'
+    currentCol.label = currentCol.title
+
+    if (currentCol.disabledForChoosing) {
+      currentCol.isDisabled = true
+    }
+
+    if (!acc.length) {
+      acc.push({
+        items: [currentCol],
+        label: group,
+        type: 'group',
+      })
+    } else {
+      const idx = acc.findIndex(val => val.label === group)
+
+      if (idx !== -1) {
+        acc[idx].items.push(currentCol)
+      } else {
+        acc.push({
+          type: 'divider',
+        })
+        acc.push({
+          items: [currentCol],
+          label: group,
+          type: 'group',
+        })
+      }
+    }
+    return acc
+  }, [])
+
+  return items.concat([
+    {
+      type: 'divider',
+    },
+    {
+      label: columnChooserResetLabel || 'Reset to defaults',
+      type: 'action',
+      action: 'RESET',
+    },
+  ])
 }

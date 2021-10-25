@@ -1,11 +1,28 @@
 import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { Example } from './ActionSelect.hsappstories'
 import ActionSelect from './'
+import Page from '../Page'
+import Button from '../Button'
 
-<Meta title="Components/Dropdowns/ActionSelect" component={ActionSelect} />
+<Meta title="PhaseOut/ActionSelect" component={ActionSelect} />
 
 <Canvas>
   <Story name="default">
     <Example />
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="QA Scrolling">
+    <div>
+      <Page>
+        <div style={{ height: '80vh' }}>
+          <h1>Scroll down. ActionSelect located below</h1>
+        </div>
+        <Example />
+        <div style={{ height: 40 }} />
+        <Page.Actions primary={<Button kind="primary">Save Changes</Button>} />
+      </Page>
+    </div>
   </Story>
 </Canvas>
