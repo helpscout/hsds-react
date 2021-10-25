@@ -17,224 +17,261 @@ import {
 import Text from '../Text'
 import Icon from '../Icon'
 
-export class Pagination extends React.PureComponent {
-  getNumberOfPages() {
-    const { rangePerPage, totalItems } = this.props
-    return Math.ceil(totalItems / rangePerPage)
+export const usePaginationData = props => {
+  const {
+    activePage,
+    pluralizedSubject: pluralizedSubjectProp,
+    rangePerPage,
+    subject: subjectProp,
+    totalItems: totalItemProp,
+  } = props
+
+  const {
+    numberOfPages,
+    currentPage,
+    totalItems,
+    startRange,
+    endRange,
+  } = React.useMemo(() => {
+    const totalItems = Math.max(totalItemProp, 0)
+
+    const numberOfPages = Math.ceil(totalItems / rangePerPage)
+
+    const currentPage =
+      activePage >= 1 ? Math.min(numberOfPages, Math.round(activePage)) : 1
+
+    const startRange = formatNumber(
+      Math.max(currentPage * rangePerPage - rangePerPage + 1, 0)
+    )
+
+    const endRange = formatNumber(
+      Math.min(currentPage * rangePerPage, totalItems)
+    )
+
+    return { numberOfPages, currentPage, totalItems, startRange, endRange }
+  }, [rangePerPage, totalItemProp, activePage])
+
+  const pluralizedSubject = React.useMemo(() => {
+    if (totalItems === 0) return subjectProp
+    if (pluralizedSubjectProp && totalItems > 1) return pluralizedSubjectProp
+
+    return pluralize(subjectProp, totalItems)
+  }, [totalItems, pluralizedSubjectProp, subjectProp])
+
+  return {
+    currentPage,
+    endRange,
+    numberOfPages,
+    pluralizedSubject,
+    startRange,
+    totalItems,
   }
+}
 
-  getCurrentPage() {
-    const { activePage } = this.props
-    if (activePage < 1) {
-      return 1
-    }
-    return Math.min(this.getNumberOfPages(), Math.round(activePage))
-  }
+const PaginationNavigation = props => {
+  const { isLoading, currentPage, numberOfPages, onChange } = props
+  const isNotFirstPage = currentPage > 1
+  const isLastPage = currentPage >= numberOfPages
 
-  getStartRange() {
-    const { rangePerPage } = this.props
-    const page = this.getCurrentPage()
-    return Math.max(page * rangePerPage - rangePerPage + 1, 0)
-  }
-
-  getEndRange() {
-    const { rangePerPage, totalItems } = this.props
-    const page = this.getCurrentPage()
-    return Math.min(page * rangePerPage, totalItems)
-  }
-
-  getSubject() {
-    const { subject, pluralizedSubject } = this.props
-    const totalItems = this.getTotalItems()
-
-    if (totalItems === 0) return subject
-    if (pluralizedSubject && totalItems > 1) return pluralizedSubject
-
-    return pluralize(subject, totalItems)
-  }
-
-  getTotalItems() {
-    const { totalItems } = this.props
-    return Math.max(totalItems, 0)
-  }
-
-  shouldShowNavigation() {
-    const { showNavigation } = this.props
-    return showNavigation && this.getNumberOfPages() > 1
-  }
-
-  handleFirstClick = e => {
+  const handleFirstClick = e => {
     e.preventDefault()
-    const { onChange } = this.props
     onChange && onChange(1)
   }
 
-  handlePrevClick = e => {
+  const handlePrevClick = e => {
     e.preventDefault()
-    const { onChange } = this.props
-    const currentPage = this.getCurrentPage()
     if (currentPage > 1) {
       onChange && onChange(currentPage - 1)
     }
   }
 
-  handleNextClick = e => {
+  const handleNextClick = e => {
     e.preventDefault()
-    const { onChange } = this.props
-    const currentPage = this.getCurrentPage()
-    if (currentPage < this.getNumberOfPages()) {
-      onChange && onChange(this.getCurrentPage() + 1)
+    if (currentPage < numberOfPages) {
+      onChange && onChange(currentPage + 1)
     }
   }
 
-  handleEndClick = e => {
+  const handleEndClick = e => {
     e.preventDefault()
-    const { onChange } = this.props
-    onChange && onChange(this.getNumberOfPages())
+    onChange && onChange(numberOfPages)
   }
 
-  renderRange() {
-    const { separator, subject } = this.props
-    const totalItems = this.getTotalItems()
-    const totalNode = (
-      <span className="c-Pagination__total" data-cy="Pagination-totalItems">
-        {formatNumber(totalItems)}
-      </span>
-    )
-
-    if (!totalItems || !this.shouldShowNavigation()) {
-      return subject ? <RangeUI>{totalNode}</RangeUI> : null
-    }
-
-    return (
-      <Text className="c-Pagination__range">
-        <RangeUI data-cy="Pagination-startRange">
-          {formatNumber(this.getStartRange())}
-        </RangeUI>
-        {` `}-{` `}
-        <RangeUI data-cy="Pagination-endRange">
-          {formatNumber(this.getEndRange())}
-        </RangeUI>
-        {` `}
-        {separator}
-        {` `}
-        {totalNode}
-      </Text>
-    )
-  }
-
-  renderNavigation() {
-    const { isLoading } = this.props
-    const currentPage = this.getCurrentPage()
-    const isNotFirstPage = currentPage > 1
-    const isLastPage = currentPage >= this.getNumberOfPages()
-
-    return (
-      <NavigationUI>
-        <KeypressListener
-          keyCode={Keys.KEY_J}
-          handler={this.handlePrevClick}
-          noModifier
-          type="keyup"
-        />
-        <KeypressListener
-          keyCode={Keys.KEY_K}
-          handler={this.handleNextClick}
-          noModifier
-          type="keyup"
-        />
-        {isNotFirstPage && [
+  return (
+    <NavigationUI data-testid="Pagination.Navigation">
+      <KeypressListener
+        keyCode={Keys.KEY_J}
+        handler={handlePrevClick}
+        noModifier
+        type="keyup"
+      />
+      <KeypressListener
+        keyCode={Keys.KEY_K}
+        handler={handleNextClick}
+        noModifier
+        type="keyup"
+      />
+      {isNotFirstPage && (
+        <>
           <ButtonIconUI
             key="firstButton"
-            onClick={this.handleFirstClick}
+            onClick={handleFirstClick}
             className="c-Pagination__firstButton"
             disabled={isLoading}
             title="First page"
             data-cy="Pagination-firstButton"
           >
             <Icon name="arrow-left-double-large" size="24" center />
-          </ButtonIconUI>,
+          </ButtonIconUI>
           <ButtonIconUI
             key="prevButton"
-            onClick={this.handlePrevClick}
+            onClick={handlePrevClick}
             className="c-Pagination__prevButton"
             disabled={isLoading}
             title="Previous page (j)"
             data-cy="Pagination-prevButton"
           >
             <Icon name="arrow-left-single-large" size="24" center />
-          </ButtonIconUI>,
-        ]}
-        {!isLastPage && [
+          </ButtonIconUI>
+        </>
+      )}
+      {!isLastPage && (
+        <>
           <ButtonIconUI
             key="nextButton"
             disabled={isLoading}
-            onClick={this.handleNextClick}
+            onClick={handleNextClick}
             className="c-Pagination__nextButton"
             title="Next page (k)"
             data-cy="Pagination-nextButton"
           >
             <Icon name="arrow-right-single-large" size="24" center />
-          </ButtonIconUI>,
+          </ButtonIconUI>
           <ButtonIconUI
             key="lastButton"
             disabled={isLoading}
-            onClick={this.handleEndClick}
+            onClick={handleEndClick}
             className="c-Pagination__lastButton"
             title="Last page"
             data-cy="Pagination-lastButton"
           >
             <Icon name="arrow-right-double-large" size="24" center />
-          </ButtonIconUI>,
-        ]}
-      </NavigationUI>
-    )
+          </ButtonIconUI>
+        </>
+      )}
+    </NavigationUI>
+  )
+}
+
+const PaginationRange = ({
+  totalItems,
+  shouldShowNavigation,
+  pluralizedSubject,
+  startRange,
+  endRange,
+  separator,
+}) => {
+  const totalNode = (
+    <span className="c-Pagination__total" data-cy="Pagination-totalItems">
+      {formatNumber(totalItems)}
+    </span>
+  )
+
+  if (!totalItems || !shouldShowNavigation) {
+    return pluralizedSubject ? (
+      <RangeUI data-testid="Pagination.Range">{totalNode}</RangeUI>
+    ) : null
   }
 
-  render() {
-    const {
-      children,
-      className,
-      innerRef,
-      onChange,
-      renderCustomContent,
-      separator,
-      showNavigation,
-      subject,
-      ...rest
-    } = this.props
+  return (
+    <Text className="c-Pagination__range">
+      <RangeUI data-testid="Pagination.Range" data-cy="Pagination-startRange">
+        {startRange}
+      </RangeUI>
+      {` `}-{` `}
+      <RangeUI data-testid="Pagination.Range" data-cy="Pagination-endRange">
+        {endRange}
+      </RangeUI>
+      {` `}
+      {separator}
+      {` `}
+      {totalNode}
+    </Text>
+  )
+}
 
-    const componentClassName = classNames('c-Pagination', className)
+export const Pagination = props => {
+  const {
+    activePage,
+    className,
+    isLoading,
+    onChange,
+    pluralizedSubject: pluralizedSubjectProp,
+    rangePerPage,
+    renderCustomContent,
+    separator,
+    showNavigation,
+    subject: subjectProp,
+    totalItems: totalItemProp,
+    ...rest
+  } = props
 
-    return (
-      <PaginationUI
-        {...getValidProps(rest)}
-        aria-label="Pagination"
-        className={componentClassName}
-        ref={innerRef}
-      >
-        {renderCustomContent ? (
-          renderCustomContent({
-            currentPage: this.getCurrentPage(),
-            endRange: formatNumber(this.getEndRange()),
-            numberOfPages: this.getNumberOfPages(),
-            startRange: formatNumber(this.getStartRange()),
-            pluralizedSubject: this.getSubject(),
-          })
-        ) : (
-          <InformationUI>
-            <Text size={13}>
-              {this.renderRange()}
-              {subject && (
-                <span className="c-Pagination__subject">{` ${this.getSubject()}`}</span>
-              )}
-            </Text>
-          </InformationUI>
-        )}
-        {this.shouldShowNavigation() && this.renderNavigation()}
-      </PaginationUI>
-    )
-  }
+  const {
+    numberOfPages,
+    currentPage,
+    totalItems,
+    startRange,
+    endRange,
+    pluralizedSubject,
+  } = usePaginationData(props)
+
+  const shouldShowNavigation = showNavigation && numberOfPages > 1
+
+  const componentClassName = classNames('c-Pagination', className)
+
+  return (
+    <PaginationUI
+      {...getValidProps(rest)}
+      data-testid="Pagination"
+      role="navigation"
+      aria-label="Pagination Navigation"
+      className={componentClassName}
+    >
+      {renderCustomContent ? (
+        renderCustomContent({
+          currentPage,
+          endRange,
+          numberOfPages,
+          startRange,
+          pluralizedSubject,
+        })
+      ) : (
+        <InformationUI data-testid="Pagination.Info">
+          <Text size={13}>
+            <PaginationRange
+              totalItems={totalItems}
+              shouldShowNavigation={shouldShowNavigation}
+              pluralizedSubject={pluralizedSubject}
+              startRange={startRange}
+              endRange={endRange}
+              separator={separator}
+            />
+            {pluralizedSubject && (
+              <span className="c-Pagination__subject">{` ${pluralizedSubject}`}</span>
+            )}
+          </Text>
+        </InformationUI>
+      )}
+      {shouldShowNavigation && (
+        <PaginationNavigation
+          currentPage={currentPage}
+          isLoading={isLoading}
+          numberOfPages={numberOfPages}
+          onChange={onChange}
+        />
+      )}
+    </PaginationUI>
+  )
 }
 
 Pagination.defaultProps = {
@@ -251,7 +288,6 @@ Pagination.defaultProps = {
 }
 
 Pagination.propTypes = {
-  innerRef: PropTypes.func,
   /** Current selected page */
   activePage: PropTypes.number,
   /** Custom class names to be added to the component. */
@@ -272,6 +308,7 @@ Pagination.propTypes = {
   subject: PropTypes.string,
   /** Total of items */
   totalItems: PropTypes.number,
+  /** Character between starting and ending range */
   separator: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
