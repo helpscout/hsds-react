@@ -917,6 +917,8 @@ The `toggler` prop accepts any React component, so you can provide your own cust
             onClick={() => {
               console.log('Clicked from story')
             }}
+            withCaret={boolean('caret', true)}
+            shape={select('Shape', ['square', 'circle'], 'square')}
           />
         }
       />
