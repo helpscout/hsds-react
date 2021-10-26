@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import HSDSButton from '../Button'
+import { focusRing } from '../../styles/mixins/focusRing.css'
 
 export const NavLinkTogglerUI = styled('button')`
   display: flex;
@@ -28,6 +29,7 @@ export const SplitButtonTogglerUI = styled(HSDSButton)`
   &.SplitButton__Toggler {
     min-width: 30px !important;
     padding: 0;
+
     pointer-events: all;
 
     &.is-primary {
@@ -134,6 +136,8 @@ export const MeatButtonUI = styled('button')`
 `
 
 export const IconButtonUI = styled('button')`
+  ${focusRing}
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -144,13 +148,19 @@ export const IconButtonUI = styled('button')`
   border-radius: 3px;
   background-color: white;
 
-  &:hover {
-    cursor: pointer;
+  &.is-circle {
+    border-radius: 100px;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+
+    &:before {
+      border-radius: inherit;
+    }
   }
 
-  &:focus {
-    outline: 0;
-    box-shadow: inset 0 0 0 2px ${getColor('blue.500')};
+  &:hover {
+    cursor: pointer;
   }
 
   .is-iconName-caret-down {
