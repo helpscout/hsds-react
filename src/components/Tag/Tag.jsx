@@ -53,9 +53,8 @@ export const Tag = nextProps => {
   const [shouldRender, setRender] = useState(true)
 
   const hideTag = useCallback(() => {
-    onRemove({ id, value })
     setRender(false)
-  }, [onRemove, id, value])
+  }, [])
 
   const handleTransitionEnd = useCallback(
     e => {
@@ -73,11 +72,16 @@ export const Tag = nextProps => {
     [onClick, id, value]
   )
 
-  const handleRemove = useCallback(e => {
-    e.preventDefault()
-    e.stopPropagation()
-    setRemoving(true)
-  }, [])
+  const handleRemove = useCallback(
+    e => {
+      e.preventDefault()
+      e.stopPropagation()
+
+      !isRemoving && onRemove({ id, value })
+      setRemoving(true)
+    },
+    [isRemoving, onRemove, id, value]
+  )
 
   const isClickable = Boolean(onClick) || Boolean(href)
   const shouldShowCount = Number.isInteger(count) && size === 'lg'
