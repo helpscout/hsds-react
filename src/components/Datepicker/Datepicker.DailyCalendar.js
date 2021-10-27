@@ -37,7 +37,7 @@ function DailyCalendar({
         }
         onDeepNavigationClick={onDeepNavigationClick}
       />
-      <DailyCalendarUI numberOfMonths={numberOfMonths} role="grid">
+      <DailyCalendarUI numberOfMonths={numberOfMonths}>
         {activeMonths.map(month => (
           <Month
             key={`${month.year}-${month.month}`}
