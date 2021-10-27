@@ -147,20 +147,20 @@ export const IconButtonUI = styled('button')`
   border: 0;
   border-radius: 3px;
   background-color: white;
+  color: ${getColor('charcoal.600')};
 
   &.is-circle {
-    border-radius: 100px;
+    border-radius: 200%;
     width: 36px;
     height: 36px;
-    padding: 0;
-
-    &:before {
-      border-radius: inherit;
-    }
+    padding: 4px;
   }
 
-  &:hover {
+  &:hover,
+  &.is-active,
+  &[aria-expanded='true'] {
     cursor: pointer;
+    background-color: ${getColor('grey.300')};
   }
 
   .is-iconName-caret-down {
