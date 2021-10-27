@@ -418,13 +418,7 @@ export class Input extends React.PureComponent {
   }
 
   getErrorMarkup() {
-    const {
-      errorIcon,
-      errorMessage,
-      state,
-      tabIndex = 0,
-      tooltipAppendTo,
-    } = this.props
+    const { errorIcon, errorMessage, state, tooltipAppendTo } = this.props
     const shouldRenderError = state === STATES.error
 
     if (!shouldRenderError) return null
@@ -450,7 +444,7 @@ export class Input extends React.PureComponent {
             name={errorIcon}
             size={24}
             state={STATES.error}
-            tabIndex={tabIndex}
+            tabIndex={-1}
           />
         </Tooltip>
       </InlinePrefixSuffixUI>
