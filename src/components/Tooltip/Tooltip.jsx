@@ -216,6 +216,7 @@ const Tooltip = ({
       className: classNames('TooltipTrigger', component.props.className),
       'data-cy': component.props['data-cy'] || dataCy,
       tabIndex: component.props['tabIndex'] || 0,
+      'aria-expanded': null, // let tippy handle that prop
     }
     triggerComponent = React.cloneElement(component, triggerProps)
   } else {
