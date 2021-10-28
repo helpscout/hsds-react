@@ -73,9 +73,7 @@ describe('Tooltip', () => {
   test('Renders a Tooltip', () => {
     const { container } = render(<ConditionField />)
 
-    expect(
-      container.querySelectorAll('[data-cy="Tooltip"]').length
-    ).toBeTruthy()
+    expect(container.querySelectorAll('.TooltipTrigger').length).toBeTruthy()
   })
 })
 

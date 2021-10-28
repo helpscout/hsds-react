@@ -6,11 +6,9 @@ import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import { IconButtonUI } from './IconButton.css'
 
-export class IconButton extends React.PureComponent {
-  static className = 'c-IconButton'
-
-  getClassName() {
-    const { className, kind, icon, isBorderless } = this.props
+export const IconButton = React.forwardRef((props, forwardedRef) => {
+  const getClassName = () => {
+    const { className, kind, icon, isBorderless } = props
 
     return classNames(
       IconButton.className,
@@ -21,8 +19,8 @@ export class IconButton extends React.PureComponent {
     )
   }
 
-  getIconSize() {
-    const { iconSize, size } = this.props
+  const getIconSize = () => {
+    const { iconSize, size } = props
 
     switch (size) {
       case 'xs':
@@ -36,29 +34,34 @@ export class IconButton extends React.PureComponent {
     }
   }
 
-  render() {
-    const {
-      children,
-      icon,
-      iconSize,
-      innerRef,
-      isWithHiddenTitle,
-      withCaret,
-      ...rest
-    } = this.props
+  const {
+    children,
+    icon,
+    iconSize,
+    innerRef,
+    isWithHiddenTitle,
+    withCaret,
+    ...rest
+  } = props
 
-    return (
-      <IconButtonUI {...rest} className={this.getClassName()} ref={innerRef}>
-        <Icon
-          name={icon}
-          size={this.getIconSize()}
-          isWithHiddenTitle={isWithHiddenTitle}
-          withCaret={withCaret}
-        />
-      </IconButtonUI>
-    )
+  const setRef = buttonRef => {
+    innerRef(buttonRef)
+    forwardedRef && forwardedRef(buttonRef)
   }
-}
+
+  return (
+    <IconButtonUI {...rest} className={getClassName()} innerRef={setRef}>
+      <Icon
+        name={icon}
+        size={getIconSize()}
+        isWithHiddenTitle={isWithHiddenTitle}
+        withCaret={withCaret}
+      />
+    </IconButtonUI>
+  )
+})
+
+IconButton.className = 'c-IconButton'
 
 IconButton.defaultProps = {
   ...Button.defaultProps,

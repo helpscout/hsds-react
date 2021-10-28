@@ -7,6 +7,8 @@ export const TooltipTriggerUI = styled.span`
 
   &:focus {
     outline: 0;
+    box-shadow: 0 0 0 2px ${getColor('blue.500')};
+    border-radius: 3px;
   }
 `
 

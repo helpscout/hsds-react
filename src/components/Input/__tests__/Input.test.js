@@ -790,7 +790,7 @@ describe('ErrorMessage', () => {
     const suffix = wrapper.find(ui.suffix).first()
 
     expect(error.length).toBe(1)
-    expect(error.props().tabIndex).toBe(0)
+    expect(error.props().tabIndex).toBe(-1)
     expect(suffix.length).toBe(1)
   })
 
@@ -811,7 +811,6 @@ describe('ErrorMessage', () => {
     const el = wrapper.find('Icon')
 
     expect(el.props().name).toBe('chat')
-    expect(el.props().tabIndex).toBe(3)
   })
 })
 
