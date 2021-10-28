@@ -3,6 +3,10 @@ import { getColor } from '../../styles/utilities/color'
 import HSDSButton from '../Button'
 import { FocusUI } from '../Button/Button.css'
 import config from '../Button/Button.config'
+import {
+  focusShadow,
+  focusShadowWithInset,
+} from '../../styles/mixins/focusRing.css'
 
 export const NavLinkTogglerUI = styled('button')`
   display: flex;
@@ -30,8 +34,7 @@ export const SplitButtonUI = styled(HSDSButton)`
   &.is-primary {
     margin-right: 0;
     ${FocusUI} {
-      box-shadow: 0 0 0 ${config.focusOutlineWidth}px ${getColor('blue.600')},
-        inset 0 0 0 2px white;
+      box-shadow: ${focusShadowWithInset};
     }
   }
 `
@@ -46,8 +49,7 @@ export const SplitButtonTogglerUI = styled(HSDSButton)`
       box-shadow: -1px 0 0 ${getColor('blue.600')};
 
       ${FocusUI} {
-        box-shadow: 0 0 0 ${config.focusOutlineWidth}px ${getColor('blue.600')},
-          inset 0 0 0 2px white;
+        box-shadow: ${focusShadowWithInset};
       }
 
       &.is-success {
