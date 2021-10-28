@@ -147,7 +147,7 @@ export const IconButtonUI = styled('button')`
   border: 0;
   border-radius: 3px;
   background-color: white;
-  color: ${getColor('charcoal.600')};
+  color: ${getColor('charcoal.400')};
 
   &.is-circle {
     border-radius: 200%;
@@ -156,11 +156,22 @@ export const IconButtonUI = styled('button')`
     padding: 4px;
   }
 
-  &:hover,
-  &.is-active,
-  &[aria-expanded='true'] {
+  &:hover {
     cursor: pointer;
     background-color: ${getColor('grey.300')};
+  }
+
+  &:hover {
+    color: ${getColor('charcoal.500')};
+  }
+
+  &.is-active,
+  &[aria-expanded='true'] {
+    color: ${getColor('charcoal.700')};
+
+    &:not(:focus-visible) {
+      background-color: ${getColor('grey.300')};
+    }
   }
 
   .is-iconName-caret-down {
