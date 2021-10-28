@@ -362,6 +362,37 @@ describe('Action', () => {
   })
 })
 
+describe('UrlAttachmentImage', () => {
+  test('Does not render if url not provided', () => {
+    const wrapper = mount(<MessageCard.UrlAttachmentImage />)
+    const image = wrapper.find('img')
+
+    expect(image.length).toBe(0)
+  })
+
+  test('Renders image when url provided', () => {
+    const wrapper = mount(
+      <MessageCard.UrlAttachmentImage url="https://example.com" />
+    )
+    const image = wrapper.find('img')
+
+    expect(image.length).toBe(1)
+    expect(image.prop('src')).toEqual('https://example.com')
+  })
+
+  test('Allows to provide alt text', () => {
+    const wrapper = mount(
+      <MessageCard.UrlAttachmentImage
+        url="https://example.com"
+        altText="My alt text"
+      />
+    )
+    const image = wrapper.find('img')
+
+    expect(image.prop('alt')).toEqual('My alt text')
+  })
+})
+
 describe('Message Button Children', () => {
   test('Can render children', () => {
     const children = 'Hello world'

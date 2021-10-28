@@ -11,6 +11,8 @@ import { MessageCardImage } from './components/MessageCard.Image'
 import { MessageCardAction } from './components/MessageCard.Action'
 import { MessageCardBody } from './components/MessageCard.Body'
 import { MessageCardContent } from './components/MessageCard.Content'
+import MessageCardUrlAttachmentImage from './components/MessageCard.UrlAttachmentImage'
+import MessageCardArticleCard from './components/MessageCard.ArticleCard'
 
 export const MessageCard = React.memo(
   React.forwardRef(
@@ -39,6 +41,12 @@ export const MessageCard = React.memo(
     ) => {
       const [visible, setVisible] = useState(false)
       const isShown = useRef(false)
+      const isMounted = useRef(true)
+      useEffect(() => {
+        return () => {
+          isMounted.current = false
+        }
+      }, [])
 
       const hasImage = useCallback(() => image && image.url, [image])
 
@@ -57,7 +65,7 @@ export const MessageCard = React.memo(
 
       const makeMessageVisible = () => {
         setTimeout(() => {
-          setVisible(true)
+          isMounted.current && setVisible(true)
         }, 0)
       }
 
@@ -161,5 +169,7 @@ MessageCard.propTypes = {
 
 MessageCard.className = 'c-MessageCard'
 MessageCard.Button = MessageCardButton
+MessageCard.UrlAttachmentImage = MessageCardUrlAttachmentImage
+MessageCard.ArticleCard = MessageCardArticleCard
 
 export default MessageCard
