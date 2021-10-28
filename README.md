@@ -2,8 +2,8 @@
 
 # HSDS: React
 
-[![Build Status](https://travis-ci.org/helpscout/hsds-react.svg?branch=master)](https://travis-ci.org/helpscout/hsds-react)
-[![Coverage Status](https://coveralls.io/repos/github/helpscout/hsds-react/badge.svg?branch=master)](https://coveralls.io/github/helpscout/hsds-react?branch=master)
+[![Build Status](https://travis-ci.org/helpscout/hsds-react.svg?branch=main)](https://travis-ci.org/helpscout/hsds-react)
+[![Coverage Status](https://coveralls.io/repos/github/helpscout/hsds-react/badge.svg?branch=main)](https://coveralls.io/github/helpscout/hsds-react?branch=main)
 [![npm version](https://badge.fury.io/js/%40helpscout%2Fhsds-react.svg)](https://badge.fury.io/js/%40helpscout%2Fhsds-react)
 ![node](https://img.shields.io/badge/node-12.13.0-blue.svg)
 ![npm](https://img.shields.io/badge/npm-6.12.0-blue.svg)
@@ -71,13 +71,13 @@ npm run test
 
 ### Merging a PR
 
-To merge a PR when the release is completed, please do a _Squash and merge_ from the PR page. It will keep the history clean in the master branch
+To merge a PR when the release is completed, please do a _Squash and merge_ from the PR page. It will keep the history clean in the main branch
 
 We tend to do a release with only one PR at the time, _if possible_
 
 ### Releasing on NPM
 
-You can learn more about [releasing master](https://helpscout.gitbook.io/hsds-react/contributing/release) or [releasing a beta build](https://helpscout.gitbook.io/hsds-react/testing/local-integration-testing)
+You can learn more about [releasing main](https://helpscout.gitbook.io/hsds-react/contributing/release) or [releasing a beta build](https://helpscout.gitbook.io/hsds-react/testing/local-integration-testing)
 
 To publish and release a new version of HSDS, run the following command:
 

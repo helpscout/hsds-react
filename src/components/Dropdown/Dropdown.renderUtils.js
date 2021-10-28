@@ -1,3 +1,4 @@
+// Deprecated
 /* istanbul ignore file */
 import { SELECTORS, isPathActive } from './Dropdown.utils'
 

@@ -5,6 +5,7 @@ import {
   itemToString,
   isItemSelected,
   renderListContents,
+  checkNextElementFocusedAndThenRun,
 } from './DropList.utils'
 import {
   getA11ySelectionMessageCommon,
@@ -20,12 +21,16 @@ function Select({
   closeOnBlur = true,
   closeOnSelection = true,
   customEmptyList = null,
+  customEmptyListItems,
   'data-cy': dataCy = `DropList.${VARIANTS.SELECT}`,
   enableLeftRightNavigation = false,
   handleSelectedItemChange = noop,
   isOpen = false,
   items = [],
   menuCSS,
+  menuWidth,
+  focusToggler = noop,
+  onDropListLeave = noop,
   onMenuBlur = noop,
   onMenuFocus = noop,
   onListItemSelectEvent = noop,
@@ -35,6 +40,11 @@ function Select({
   toggleOpenedState = noop,
   withMultipleSelection = false,
 }) {
+  const isListEmpty = items.length === 0
+  const allItems =
+    isListEmpty && Array.isArray(customEmptyListItems)
+      ? customEmptyListItems
+      : items
   const {
     highlightedIndex,
     getItemProps,
@@ -44,7 +54,7 @@ function Select({
   } = useSelect({
     initialIsOpen: isOpen,
     isOpen,
-    items,
+    items: allItems,
     itemToString,
     selectedItem,
 
@@ -72,6 +82,7 @@ function Select({
         case useSelect.stateChangeTypes.MenuKeyDownEnter:
         case useSelect.stateChangeTypes.ItemClick:
           clearOnSelect && handleSelectedItemChange({ selectedItem: null })
+          closeOnSelection && focusToggler()
           break
 
         default:
@@ -85,7 +96,7 @@ function Select({
       return stateReducerCommon({
         changes,
         closeOnSelection,
-        items,
+        items: allItems,
         selectedItems,
         state,
         type: `${VARIANTS.SELECT}.${type}`,
@@ -129,7 +140,7 @@ function Select({
   function handleMenuKeyDown(event) {
     if (enableLeftRightNavigation) {
       if (event.key === 'ArrowRight') {
-        if (highlightedIndex !== items.length - 1) {
+        if (highlightedIndex !== allItems.length - 1) {
           setHighlightedIndex(highlightedIndex + 1)
         }
       } else if (event.key === 'ArrowLeft') {
@@ -140,8 +151,9 @@ function Select({
         }
       }
     }
-
-    if (event.key === 'Enter' || event.key === ' ') {
+    if (event.key === 'Escape') {
+      focusToggler()
+    } else if (event.key === 'Enter' || event.key === ' ') {
       // Since the event happens on the Menu and not the list item
       // we look for the selected item and send it to onListItemSelectEvent as listItemNode
       event.target.querySelectorAll('.DropListItem').forEach(item => {
@@ -158,6 +170,7 @@ function Select({
       className="DropList DropList__Select"
       data-cy={dataCy}
       menuCSS={menuCSS}
+      menuWidth={menuWidth}
     >
       <A11yTogglerUI {...getToggleButtonProps()}>Toggler</A11yTogglerUI>
       <MenuListUI
@@ -181,13 +194,10 @@ function Select({
                * Here we wait a little bit to see if the next element gathering focus
                * is indeed the toggler, and only close the DropList if it isn't
                */
-              setTimeout(() => {
-                if (
-                  !document.activeElement.classList.contains('DropListToggler')
-                ) {
-                  toggleOpenedState(false)
-                }
-              }, 50)
+              checkNextElementFocusedAndThenRun(['DropListToggler'], () => {
+                isOpen && toggleOpenedState(false)
+                onDropListLeave()
+              })
             }
             onMenuBlur(e)
           },
@@ -195,8 +205,7 @@ function Select({
       >
         {renderListContents({
           customEmptyList,
-          emptyList: items.length === 0,
-          items,
+          items: allItems,
           renderListItem,
         })}
       </MenuListUI>

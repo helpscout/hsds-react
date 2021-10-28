@@ -44,33 +44,32 @@ const hideOnEsc = {
   },
 }
 
-const Tooltip = props => {
-  const {
-    animationDelay,
-    animationDuration,
-    arrowSize,
-    badge,
-    children,
-    className,
-    closeOnContentClick,
-    closeOnEscPress,
-    display,
-    'data-cy': dataCy,
-    getTippyInstance = () => {},
-    innerRef,
-    isOpen,
-    minWidth,
-    maxWidth,
-    placement,
-    render: renderProp,
-    renderContent,
-    title,
-    triggerOn,
-    withTriggerWrapper,
-    zIndex: zIndexProp,
-    ...rest
-  } = props
-
+const Tooltip = ({
+  animationDelay,
+  animationDuration,
+  arrowSize,
+  badge,
+  children,
+  className,
+  closeOnContentClick,
+  closeOnEscPress,
+  display,
+  'data-cy': dataCy,
+  getTippyInstance = () => {},
+  innerRef,
+  isOpen,
+  minWidth,
+  maxWidth,
+  placement,
+  render: renderProp,
+  renderContent,
+  title,
+  triggerOn,
+  withTriggerWrapper,
+  withArrow = true,
+  zIndex: zIndexProp,
+  ...rest
+}) => {
   const { getCurrentScope } = useContext(GlobalContext) || {}
   const { zIndex = zIndexProp, animationDuration: animationDurationContext } =
     useContext(TooltipContext) || {}
@@ -125,11 +124,13 @@ const Tooltip = props => {
         <TooltipUI className={tooltipClassnames} {...props}>
           {renderContent ? renderContent() : titleContent}
           {hasKeyboardBadge ? <KeyboardBadge value={badge} /> : null}
-          <ArrowUI
-            className="c-Tooltip_ArrowUI"
-            arrowSize={arrowSize}
-            data-popper-arrow
-          />
+          {withArrow && (
+            <ArrowUI
+              className="c-Tooltip_ArrowUI"
+              arrowSize={arrowSize}
+              data-popper-arrow
+            />
+          )}
         </TooltipUI>
       </TooltipAnimationUI>
     )
@@ -184,7 +185,7 @@ const Tooltip = props => {
   }
 
   // only set those props if the component is not in a controlled way
-  if (!props.hasOwnProperty('visible')) {
+  if (!rest.hasOwnProperty('visible')) {
     defaultTippyProps.showOnCreate = isOpen
     defaultTippyProps.trigger = triggerOn === 'hover' ? 'mouseenter' : triggerOn
   }
@@ -280,6 +281,8 @@ Tooltip.propTypes = {
   visible: PropTypes.bool,
   /** Wrap the trigger with a span */
   withTriggerWrapper: PropTypes.bool,
+  /** Whether to render the arrow */
+  withArrow: PropTypes.bool,
 }
 
 export default Tooltip

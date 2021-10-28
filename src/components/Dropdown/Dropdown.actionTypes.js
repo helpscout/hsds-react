@@ -1,3 +1,5 @@
+// Deprecated
+/* istanbul ignore file */
 import { createActionTypes } from '../../utilities/actions'
 
 const actionTypes = [

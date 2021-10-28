@@ -1,3 +1,5 @@
+// Deprecated
+/* istanbul ignore file */
 import { initialState } from './Dropdown.store'
 import { getComponentKey } from '../../utilities/component'
 import classNames from 'classnames'

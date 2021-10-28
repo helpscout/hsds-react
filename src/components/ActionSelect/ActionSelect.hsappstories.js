@@ -1,14 +1,9 @@
 import React from 'react'
-import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import ActionSelect from '.'
 import FormGroup from '../FormGroup'
 import Checkbox from '../Checkbox'
 import Input from '../Input'
-import Page from '../Page'
-import Button from '../Button'
-
-const stories = storiesOf('PhaseOut/ActionSelect', module)
 
 export class Example extends React.Component {
   state = {
@@ -127,22 +122,3 @@ export class Example extends React.Component {
     )
   }
 }
-
-stories.add('Default', () => {
-  return <Example />
-})
-
-stories.add('ActionSelect/QA Scrolling', () => {
-  return (
-    <div>
-      <Page>
-        <div style={{ height: '80vh' }}>
-          <h1>Scroll down. ActionSelect located below</h1>
-        </div>
-        <Example />
-        <div style={{ height: 40 }} />
-        <Page.Actions primary={<Button kind="primary">Save Changes</Button>} />
-      </Page>
-    </div>
-  )
-})

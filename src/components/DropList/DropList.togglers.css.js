@@ -73,7 +73,7 @@ export const SelectUI = styled('button')`
   align-items: center;
   justify-content: space-between;
   width: 150px;
-  height: 38px;
+  height: 40px;
   padding: 0 15px;
   margin: 0;
   background: white;

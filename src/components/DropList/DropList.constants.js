@@ -4,10 +4,11 @@ export const VARIANTS = {
 }
 
 export const ITEM_TYPES = {
+  ACTION: 'action',
   DIVIDER: 'divider',
   GROUP: 'group',
   GROUP_LABEL: 'group_label',
-  RESET_DROPLIST: 'reset_droplist',
+  INERT: 'inert',
 }
 
 export const DROPLIST_TOGGLER = 'DropListToggler'

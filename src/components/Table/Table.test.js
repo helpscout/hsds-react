@@ -821,6 +821,14 @@ describe('Column Chooser', () => {
       label: 'Other',
       type: 'group',
     },
+    {
+      type: 'divider',
+    },
+    {
+      label: 'Reset to defaults',
+      type: 'action',
+      action: 'RESET',
+    },
   ]
 
   const plain_columns = COLUMNS_PARSED.reduce((acc, current) => {
@@ -868,14 +876,14 @@ describe('Column Chooser', () => {
     expect(container.querySelectorAll('.DropListItem').length).toBe(5)
 
     // Should add the reset item
-    expect(container.querySelectorAll('.is-reset-item').length).toBe(1)
-    expect(container.querySelector('.is-reset-item')).toHaveTextContent(
+    expect(container.querySelectorAll('.is-type-action').length).toBe(1)
+    expect(container.querySelector('.is-type-action')).toHaveTextContent(
       'Reset to defaults'
     )
 
     container.querySelectorAll('.DropListItem').forEach((item, index) => {
       if (
-        !item.classList.contains('is-reset-item') &&
+        !item.classList.contains('is-type-action') &&
         plain_columns[index].show
       ) {
         // If show is set to true in the columns, the item in the list should be selected
@@ -917,7 +925,7 @@ describe('Column Chooser', () => {
     ).toBe(2)
 
     // click the reset item, brings it back to the initial state
-    user.click(container.querySelector('.is-reset-item'))
+    user.click(container.querySelector('.is-type-action'))
 
     expect(
       container.querySelector('.c-Table__Row').querySelectorAll('td').length

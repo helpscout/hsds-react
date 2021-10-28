@@ -2,7 +2,6 @@
 
 - [HSDS: React](../README.md)
 - [Quick start](./quick-start/README.md)
-  - [Components](./quick-start/components.md)
 - [Testing](./testing/README.md)
   - [Local Integration Testing](./testing/local-integration-testing.md)
 - [Reporting Issues](./issues.md)

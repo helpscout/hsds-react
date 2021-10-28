@@ -1,6 +1,7 @@
 import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, number, text, select } from '@storybook/addon-knobs'
 import DropList from './DropList'
+import { DividerUI, ListItemUI, ListItemTextUI } from './DropList.css'
 import {
   IconBtn,
   MeatButton,
@@ -203,6 +204,10 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
     >
       <DropList
         isMenuOpen={boolean('Is Menu Open', false)}
+        focusTogglerOnMenuClose={boolean('focusTogglerOnMenuClose', true)}
+        onDropListLeave={() => {
+          console.log('DropList Left')
+        }}
         onOpenedStateChange={isOpen => {
           console.log('onOpenedStateChange', isOpen)
         }}
@@ -241,6 +246,10 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
       <DropList
         variant="combobox"
         inputPlaceholder={text('inputPlaceholder', 'Search')}
+        focusTogglerOnMenuClose={boolean('focusTogglerOnMenuClose', true)}
+        onDropListLeave={() => {
+          console.log('DropLit left')
+        }}
         items={select(
           'Items',
           {
@@ -250,6 +259,10 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
           },
           regularItems
         )}
+        onSelect={(selection, clickedItem) => {
+          console.log('🚀 ~ selection', selection)
+          console.log('🚀 ~ clickedItem', clickedItem)
+        }}
         toggler={<SimpleButton text="This is a combobox" />}
       />
     </div>
@@ -272,7 +285,9 @@ const itemShape = PropTypes.shape({
 })
 ```
 
-- Laser Targeting: if you need to target a specific List Item for styling (or else), you can add the property `className` to each item in the array, the value will be added to the existing css class names on the `DropListItem`:
+#### Laser Targeting
+
+If you need to target a specific List Item for styling (or else), you can add the property `className` to each item in the array, the value will be added to the existing css class names on the `DropListItem`:
 
 ```js
 const items = [
@@ -284,7 +299,60 @@ const items = [
 ]
 ```
 
-- Dividers: Add a `type = divider` property to an object to create a divider
+#### Inert items
+
+If you need to add an item that does nothing but be there, effectively a "non-item" which semantically is different to a disabled item, just add a `type = inert`:
+
+```js
+{
+  label: 'Some info here perhaps...?',
+  type: 'inert',
+}
+```
+
+This might be useful when using `customEmptyListItems`:
+
+```jsx
+customEmptyListItems={[
+  {
+    label: 'No tags found',
+    type: 'inert',
+  },
+  {
+    type: 'divider',
+  },
+  {
+    label: 'Create tag',
+    customizeLabel(inputValue) {
+      return `Create ${inputValue} tag`
+    },
+    type: 'action',
+  },
+]}
+```
+
+#### Action items
+
+If you want to add an item that:
+
+1. should **not** be selected
+2. behaves as any other regular item (fires `onSelect`, keyboard nav works, closes DropList on choosing it, etc)
+3. Basically you need it to fire some random action unrelated to the DropList
+
+Add a `type = action`:
+
+```js
+{
+  label: 'Create tag',
+  type: 'action',
+}
+```
+
+> This is a similar effect to using `clearOnSelect`, except only for action items as opposed to all items in the list
+
+#### Dividers
+
+Add a `type = divider` property to an object to create a divider
 
 ```js
 const items = [
@@ -315,7 +383,9 @@ const items = [
   </Story>
 </Canvas>
 
-- Groups: Add a `type = group` property (don't forget to add `label` or `value` to the group) and nest items to an object to create a group:
+#### Groups
+
+Add a `type = group` property (don't forget to add `label` or `value` to the group) and nest items to an object to create a group:
 
 ```js
 const groupedItems = [
@@ -372,7 +442,7 @@ const groupedItems = [
   </Story>
 </Canvas>
 
-- Empty list
+#### Empty list
 
 <Canvas>
   <Story name="Items: empty list">
@@ -423,7 +493,102 @@ const groupedItems = [
   </Story>
 </Canvas>
 
-- Custom List Items: Sometimes you might need to render the list items in a different manner, for that you can use the render prop `renderCustomListItem`.
+- Sometimes you might need to add some items when the list is empty, instead of rendering just a custom empty list, use `customEmptyListItems` with an array of items.
+
+<Canvas>
+  <Story name="Items: custom empty list items (Select)">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        items={[]}
+        customEmptyListItems={[
+          {
+            label: 'No tags found',
+            type: 'inert',
+          },
+          {
+            type: 'divider',
+          },
+          {
+            label: 'Create tag',
+            type: 'action',
+          },
+        ]}
+        toggler={<SimpleButton text="This is a select" />}
+      />
+    </div>
+  </Story>
+</Canvas>
+
+- On a combobox, you can customize the label of your items with the value of the input by adding a `customizeLabel` function on the item:
+
+```js
+{
+  label: 'Create tag',
+  customizeLabel(inputValue) {
+    return `Create ${inputValue} tag`
+  },
+  type: 'action',
+}
+```
+
+<Canvas>
+  <Story name="Items: custom empty list items (Combobox)">
+    <div
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        variant="combobox"
+        items={select(
+          'Items',
+          {
+            empty: [],
+            full: regularItems,
+          },
+          regularItems
+        )}
+        customEmptyListItems={[
+          {
+            label: 'No tags found',
+            type: 'inert',
+          },
+          {
+            type: 'divider',
+          },
+          {
+            label: 'Create tag',
+            customizeLabel(inputValue) {
+              return `Create ${inputValue} tag`
+            },
+            type: 'action',
+          },
+        ]}
+        onSelect={(selection, clickedItem) => {
+          console.log('🚀 ~ selection', selection)
+          console.log('🚀 ~ clickedItem', clickedItem)
+        }}
+        toggler={<SimpleButton text="This is a combobox" />}
+      />
+    </div>
+  </Story>
+</Canvas>
+
+#### Custom List Items
+
+Sometimes you might need to render the list items in a different manner, for that you can use the render prop `renderCustomListItem`.
 
 ```jsx
 // Signature
@@ -492,7 +657,9 @@ function renderCustomListItem({
   </Story>
 </Canvas>
 
-- Disabled List Items: Sometimes you might need to render the list items that would be disabled, for that you can pass `isDisbaled` flag with an item.
+#### Disabled List Items
+
+Sometimes you might need to render the list items that would be disabled, for that you can pass `isDisabled` flag with an item.
 
 <Canvas>
   <Story name="Items: disabled list items">
@@ -630,30 +797,8 @@ Depending on your use case, you might want to set `closeOnSelection = false` whe
   </Story>
 </Canvas>
 
-### With Reset Selection Item
-
-Use `withResetSelectionItem` to add an extra item to the end of the list that will have a type of `reset_droplist` so you can assign a different action when clicked, this normally only makes sense in multiple selection DropLists.
-
-Pass a string to customize the text, by default is "Reset".
-
-Example:
-
-```jsx
-<DropList
-  items={items}
-  onSelect={(selection, clickedItem) => {
-    if (clickedItem.type === 'reset_droplist') {
-      clearSelection()
-    }
-  }}
-  selection={columns.filter(shouldColumnShow)}
-  withMultipleSelection
-  withResetSelectionItem="Clear selection"
-/>
-```
-
 <Canvas>
-  <Story name="With Reset Item">
+  <Story name="With action Item">
     <div
       style={{
         width: '400px',
@@ -664,15 +809,23 @@ Example:
       }}
     >
       <DropList
-        items={regularItems.slice(0, 3)}
+        items={regularItems.slice(0, 3).concat([
+          {
+            type: 'divider',
+          },
+          {
+            label: 'Reset to defaults',
+            type: 'action',
+            action: 'RESET',
+          },
+        ])}
         onSelect={(selection, clickedItem) => {
-          if (clickedItem.type === 'reset_droplist') {
+          if (clickedItem.type === 'action' && clickedItem.action === 'RESET') {
             console.log('RESET CLICKED')
           }
         }}
         toggler={<SimpleButton text="Click" />}
         withMultipleSelection
-        withResetSelectionItem="Clear selection"
       />
     </div>
   </Story>

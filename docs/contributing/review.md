@@ -6,7 +6,7 @@ In this guide, we'll walk through submitting for our [fully test](testing.md) [c
 
 After checking in all of your wonderful changes to your `strong-component` git branch. Push it up to [Github](https://github.com/helpscout/hsds-react).
 
-[Create a new pull request](https://github.com/helpscout/hsds-react/compare) against the `master` branch!
+[Create a new pull request](https://github.com/helpscout/hsds-react/compare) against the `main` branch!
 
 ## Description and labels
 
@@ -26,7 +26,7 @@ A [Netlify](https://www.netlify.com/) deploy preview for your Pull Request will 
 
 Every pull request automatically fires off a [Travis build](https://travis-ci.org/helpscout/hsds-react). Once that passes, it'll generate a [code coverage score](https://coveralls.io/).
 
-The Travis build **must be green** and the coverage score **must be 100%** before merging into `master`.
+The Travis build **must be green** and the coverage score **must be 100%** before merging into `main`.
 
 ## Review
 
@@ -38,5 +38,5 @@ Tag one of the [`@helpscout` team members](https://github.com/helpscout/hsds-rea
 
 ## See also
 
-* [Travis CI](https://travis-ci.org/)
-* [Coveralls](https://coveralls.io/)
+- [Travis CI](https://travis-ci.org/)
+- [Coveralls](https://coveralls.io/)

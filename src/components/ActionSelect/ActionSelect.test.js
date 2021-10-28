@@ -47,6 +47,14 @@ describe('DropList', () => {
     await waitFor(() => expect(getByRole('button')).toBeDisabled())
   })
 
+  test('Marks droplist toggler with an error', async () => {
+    const { getByRole } = render(
+      <ActionSelect items={mockItems} error="Some error" />
+    )
+
+    await waitFor(() => expect(getByRole('button')).toHaveClass('is-error'))
+  })
+
   test('Provides ID to the toggler', async () => {
     const { getByRole } = render(<ActionSelect items={mockItems} id="123" />)
 

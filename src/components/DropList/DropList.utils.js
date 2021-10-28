@@ -153,21 +153,22 @@ export function isItemAGroupLabel(item) {
   return objectHasKey(item, 'type') && item.type === ITEM_TYPES.GROUP_LABEL
 }
 
-export function isItemReset(item) {
-  return objectHasKey(item, 'type') && item.type === ITEM_TYPES.RESET_DROPLIST
+export function isItemInert(item) {
+  return objectHasKey(item, 'type') && item.type === ITEM_TYPES.INERT
+}
+
+export function isItemAction(item) {
+  return objectHasKey(item, 'type') && item.type === ITEM_TYPES.ACTION
 }
 
 export function isItemRegular(item) {
   return (
-    !isItemADivider(item) &&
-    !isItemAGroup(item) &&
-    !isItemAGroupLabel(item) &&
-    !isItemReset(item)
+    !isItemADivider(item) && !isItemAGroup(item) && !isItemAGroupLabel(item)
   )
 }
 
-export function flattenListItems(listItems, withResetItem) {
-  const items = listItems.reduce((accumulator, listItem) => {
+export function flattenListItems(listItems) {
+  return listItems.reduce((accumulator, listItem) => {
     const contentKey = getItemContentKeyName(listItem)
 
     if (isItemAGroup(listItem)) {
@@ -188,31 +189,21 @@ export function flattenListItems(listItems, withResetItem) {
 
     return accumulator.concat(listItem)
   }, [])
-
-  return withResetItem
-    ? items.concat([
-        {
-          type: 'divider',
-        },
-        {
-          type: ITEM_TYPES.RESET_DROPLIST,
-          label: isString(withResetItem) ? withResetItem : 'Reset',
-          remove: true,
-        },
-      ])
-    : items
 }
 
 export function renderListContents({
   customEmptyList,
-  emptyList,
   inputValue,
   items,
   renderListItem,
 }) {
-  if (emptyList && !customEmptyList) return <EmptyListUI>No items</EmptyListUI>
+  const isEmptyList = items.length === 0
 
-  if (emptyList && customEmptyList) {
+  if (!isEmptyList) {
+    return items.map(renderListItem)
+  }
+
+  if (isEmptyList && customEmptyList) {
     return React.isValidElement(customEmptyList) ? (
       React.cloneElement(customEmptyList)
     ) : (
@@ -220,8 +211,8 @@ export function renderListContents({
     )
   }
 
-  if (items.length > 0) {
-    return items.map(renderListItem)
+  if (isEmptyList && !customEmptyList && inputValue == null) {
+    return <EmptyListUI>No items</EmptyListUI>
   }
 
   return <ListItemUI>No results for {inputValue}</ListItemUI>
@@ -237,8 +228,14 @@ export function requiredItemPropsCheck(props, propName, componentName) {
   }
 }
 
-function checkIfGroupOrDividerItem(item) {
+export function checkIfGroupOrDividerItem(item) {
   return isItemADivider(item) || isItemAGroup(item) || isItemAGroupLabel(item)
+}
+
+export function isItemHighlightable(item) {
+  return (
+    !checkIfGroupOrDividerItem(item) && !item.isDisabled && !isItemInert(item)
+  )
 }
 
 export function getEnabledItemIndex({
@@ -251,15 +248,25 @@ export function getEnabledItemIndex({
   // like in the case of a combobox being filtered to "no results"
   if (nextHighlightedIndex === -1) return -1
 
-  const isNextIndexItemHighlightable =
-    !checkIfGroupOrDividerItem(items[nextHighlightedIndex]) &&
-    !items[nextHighlightedIndex].isDisabled
+  const isNextIndexItemHighlightable = isItemHighlightable(
+    items[nextHighlightedIndex]
+  )
 
   if (
     isNextIndexItemHighlightable &&
     currentHighlightedIndex !== nextHighlightedIndex
   ) {
     return nextHighlightedIndex
+  }
+
+  const highlightableItems = items.filter(item => {
+    return (
+      !checkIfGroupOrDividerItem(item) && !item.isDisabled && !isItemInert(item)
+    )
+  })
+
+  if (highlightableItems.length === 1) {
+    return items.findIndex(isItemHighlightable)
   }
 
   let newNextHighlightedIndex
@@ -286,4 +293,35 @@ export function getEnabledItemIndex({
     items,
     arrowKey,
   })
+}
+/**
+ * Helper that allows you to run a callback after a timeout,
+ * provided that after the timeout the document.activeElement
+ * doesn't have any of the class names provided.
+ * Example: Useful when you would like to execute something after
+ * a blur event happens but not if the next element that gets focused has a certain
+ * classname.
+ * @param {String[]} classNames The class names of the document.activeElement that exclude the callback being run
+ * @param {*} cb The function to run
+ */
+export function checkNextElementFocusedAndThenRun(
+  classNames = [],
+  cb,
+  timeout = 50
+) {
+  setTimeout(() => {
+    const shouldRun = classNames.every(
+      cs => !document.activeElement.classList.contains(cs)
+    )
+
+    if (shouldRun) {
+      cb()
+    }
+  }, timeout)
+}
+
+export function getMenuWidth(variant, menuWidth) {
+  if (menuWidth != null) return menuWidth
+
+  return variant.toLowerCase() === 'combobox' ? '220px' : '200px'
 }

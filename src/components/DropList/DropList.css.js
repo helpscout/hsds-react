@@ -5,7 +5,7 @@ import Icon from '../Icon'
 
 export const DropListWrapperUI = styled('div')`
   box-sizing: border-box;
-  width: ${({ variant }) => (variant === 'combobox' ? '220px' : '200px')};
+  width: ${({ menuWidth }) => menuWidth};
   padding: 0;
   background-color: white;
   border: 1px solid ${getColor('grey.600')};
@@ -129,20 +129,11 @@ export const ListItemUI = styled('li')`
     cursor: default;
   }
 
-  &.is-reset-item {
-    height: 50px;
-    margin: 0 5px;
-    padding: 0 15px;
-    line-height: 50px;
-    color: ${getColor('charcoal.300')};
-
-    &.is-highlighted,
-    &:hover {
-      color: ${getColor('charcoal.300')};
-      text-decoration: underline;
-      cursor: pointer;
-      background-color: transparent;
-    }
+  &.is-type-inert,
+  &.is-highlighted.is-type-inert,
+  &.with-multiple-selection.is-highlighted.is-type-inert {
+    background-color: transparent;
+    cursor: default;
   }
 `
 
