@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/hsds-react",
-  "version": "3.27.3",
+  "version": "3.27.5",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -134,6 +134,7 @@
     "@storybook/theming": "6.3.4",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.0.4",
+    "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^12.1.5",
     "@types/enzyme": "^3.1.14",
     "@types/jest": "^26.0.4",
