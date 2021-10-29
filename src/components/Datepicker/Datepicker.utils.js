@@ -1,4 +1,4 @@
-import { NAVIGATION_LEVELS } from './Datepicker.constants'
+import { NAVIGATION_LEVELS, MONTHS } from './Datepicker.constants'
 
 /**
  * Check if something is JS Date Object
@@ -21,6 +21,17 @@ export function getJSDateFromString(someDateString) {
   if (isJSDate(someDateString)) return someDateString
 
   return new Date(someDateString)
+}
+
+/**
+ * Convert a date string in the form of '2021-09-27' to 'September 27, 2021'
+ * @param {string} date The date to convert
+ * @returns string
+ */
+export function getHumanReadableDate(date) {
+  const d = new Date(date)
+
+  return `${MONTHS[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`
 }
 
 /**
