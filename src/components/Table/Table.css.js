@@ -11,17 +11,8 @@ export const HeaderUI = styled('header')`
 
   .DropListToggler {
     color: ${getColor('charcoal.300')};
-    border-radius: 50%;
-    width: 34px;
-
-    &:hover {
-      color: ${getColor('charcoal.500')};
-    }
-
-    &:focus {
-      box-shadow: none;
-      background-color: ${getColor('ash.200')};
-    }
+    margin-right: 4px;
+    margin-top: 4px;
 
     &.is-active {
       color: ${getColor('charcoal.500')};

@@ -308,6 +308,7 @@ export const IconBtn = forwardRef(
       iconName = 'assign',
       iconSize = '24',
       onClick = noop,
+      shape = 'square',
       withCaret = true,
       withTooltip = false,
       tooltipProps,
@@ -315,9 +316,7 @@ export const IconBtn = forwardRef(
     },
     ref
   ) => {
-    const tooltipRef = useRef()
-
-    return (
+    const component = (
       <IconButtonUI
         aria-label="toggle menu"
         aria-haspopup="true"
@@ -325,7 +324,8 @@ export const IconBtn = forwardRef(
         className={classNames(
           className,
           'IconButtonToggler',
-          isActive && 'is-active'
+          isActive && 'is-active',
+          shape && `is-${shape}`
         )}
         data-cy="DropList.IconButtonToggler"
         data-testid="DropList.IconButtonToggler"
@@ -335,28 +335,25 @@ export const IconBtn = forwardRef(
         type="button"
         {...rest}
       >
-        {withTooltip ? (
-          <Tooltip
-            animationDelay={0}
-            animationDuration={0}
-            getTippyInstance={instance => {
-              tooltipRef.current = instance.reference
-            }}
-            placement="top-end"
-            title={a11yLabel}
-            triggerTarget={
-              tooltipRef.current && tooltipRef.current.parentElement
-            }
-            {...tooltipProps}
-          >
-            <Icon name={iconName} size={iconSize} />
-          </Tooltip>
-        ) : (
-          <Icon name={iconName} size={iconSize} />
-        )}
+        <Icon name={iconName} size={iconSize} />
         {a11yLabel ? <VisuallyHidden>{a11yLabel}</VisuallyHidden> : null}
         {withCaret ? <Icon name="caret-down" size={caretSize} /> : null}
       </IconButtonUI>
+    )
+
+    return withTooltip ? (
+      <Tooltip
+        animationDelay={0}
+        animationDuration={0}
+        placement="top-end"
+        title={a11yLabel}
+        withTriggerWrapper={false}
+        {...tooltipProps}
+      >
+        {component}
+      </Tooltip>
+    ) : (
+      component
     )
   }
 )

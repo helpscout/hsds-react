@@ -40,6 +40,7 @@ function ColumnChooser({
           iconName="column-check"
           iconSize={24}
           withCaret={false}
+          shape="circle"
         />
       }
       withMultipleSelection

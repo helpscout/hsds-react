@@ -14,7 +14,7 @@ export const focusRing = css`
 
   &:before {
     content: '';
-    border-radius: 4px;
+    border-radius: inherit;
     bottom: -2px;
     box-shadow: ${focusShadow};
     left: -2px;
