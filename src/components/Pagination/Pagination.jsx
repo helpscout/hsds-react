@@ -231,10 +231,10 @@ export const Pagination = props => {
 
   return (
     <PaginationUI
-      {...getValidProps(rest)}
       data-testid="Pagination"
       role="navigation"
       aria-label="Pagination Navigation"
+      {...getValidProps(rest)}
       className={componentClassName}
     >
       {renderCustomContent ? (
