@@ -126,6 +126,10 @@ export const TagUI = styled('div')`
   ${makeColorStyles()};
 
   &.is-filled {
+    &.is-grey {
+      --tagColor: ${getColor('grey.400')};
+    }
+
     background-color: var(--tagColor);
 
     ${CountUI} {
