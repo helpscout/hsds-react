@@ -346,7 +346,7 @@ DropListManager.propTypes = {
   closeOnSelection: PropTypes.bool,
   /** Pass an Element to render a custom message or style when the List is empty */
   customEmptyList: PropTypes.any,
-  /** To render "extra" items when the list is empty, as opposed to just customizind the rendering like `customEmptyList` does */
+  /** To render "extra" items when the list is empty, as opposed to just customizing the rendering like `customEmptyList` does */
   customEmptyListItems: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.string, itemShape, dividerShape, groupShape])
   ),

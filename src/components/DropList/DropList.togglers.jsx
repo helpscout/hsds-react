@@ -15,11 +15,13 @@ import {
   SelectErrorTooltipIconUI,
   SelectUI,
   SplitButtonTogglerUI,
+  SplitButtonUI,
 } from './DropList.togglers.css'
 
 export const SimpleButton = forwardRef(
   (
     {
+      a11yLabel,
       className = '',
       isActive = false,
       kind = 'primary',
@@ -32,7 +34,7 @@ export const SimpleButton = forwardRef(
   ) => {
     return (
       <HSDSButton
-        aria-label="toggle menu"
+        aria-label={a11yLabel || 'toggle menu'}
         aria-haspopup="true"
         aria-expanded={isActive}
         buttonRef={ref}
@@ -61,6 +63,7 @@ export const SimpleButton = forwardRef(
 export const NavLink = forwardRef(
   (
     {
+      a11yLabel,
       className = '',
       isActive = false,
       kind = 'primary',
@@ -73,7 +76,7 @@ export const NavLink = forwardRef(
   ) => {
     return (
       <NavLinkTogglerUI
-        aria-label="toggle menu"
+        aria-label={a11yLabel || 'toggle menu'}
         aria-haspopup="true"
         aria-expanded={isActive}
         ref={ref}
@@ -99,6 +102,7 @@ export const NavLink = forwardRef(
 export const SplittedButton = forwardRef(
   (
     {
+      a11yLabel,
       actionButtonProps = {},
       className = '',
       isActive = false,
@@ -119,7 +123,7 @@ export const SplittedButton = forwardRef(
         {...rest}
       >
         <ControlGroup.Item>
-          <HSDSButton
+          <SplitButtonUI
             className="SplitButton__Action"
             data-cy="DropList.SplitButtonAction"
             data-testid="DropList.SplitButtonAction"
@@ -130,11 +134,11 @@ export const SplittedButton = forwardRef(
             {...actionButtonProps}
           >
             {text}
-          </HSDSButton>
+          </SplitButtonUI>
         </ControlGroup.Item>
         <ControlGroup.Item>
           <SplitButtonTogglerUI
-            aria-label="toggle menu"
+            aria-label={a11yLabel || 'toggle menu'}
             aria-haspopup="true"
             aria-expanded={isActive}
             buttonRef={ref}
@@ -185,6 +189,7 @@ const ErrorTooltipIcon = ({ error }) => {
 export const SelectTag = forwardRef(
   (
     {
+      a11yLabel,
       className = '',
       error,
       isActive = false,
@@ -194,9 +199,13 @@ export const SelectTag = forwardRef(
     },
     ref
   ) => {
+    const ariaLabelWithText = text
+      ? `toggle menu, ${text} currently selected`
+      : 'toggle menu'
+
     return (
       <SelectUI
-        aria-label="toggle menu"
+        aria-label={a11yLabel || ariaLabelWithText}
         aria-haspopup="true"
         aria-expanded={isActive}
         className={classNames(
@@ -247,7 +256,6 @@ export const MeatButton = forwardRef(
 
     return (
       <MeatButtonUI
-        aria-label="toggle menu"
         aria-haspopup="true"
         aria-expanded={isActive}
         className={classNames(
@@ -300,6 +308,7 @@ export const IconBtn = forwardRef(
       iconName = 'assign',
       iconSize = '24',
       onClick = noop,
+      shape = 'square',
       withCaret = true,
       withTooltip = false,
       tooltipProps,
@@ -307,9 +316,7 @@ export const IconBtn = forwardRef(
     },
     ref
   ) => {
-    const tooltipRef = useRef()
-
-    return (
+    const component = (
       <IconButtonUI
         aria-label="toggle menu"
         aria-haspopup="true"
@@ -317,7 +324,8 @@ export const IconBtn = forwardRef(
         className={classNames(
           className,
           'IconButtonToggler',
-          isActive && 'is-active'
+          isActive && 'is-active',
+          shape && `is-${shape}`
         )}
         data-cy="DropList.IconButtonToggler"
         data-testid="DropList.IconButtonToggler"
@@ -327,28 +335,25 @@ export const IconBtn = forwardRef(
         type="button"
         {...rest}
       >
-        {withTooltip ? (
-          <Tooltip
-            animationDelay={0}
-            animationDuration={0}
-            getTippyInstance={instance => {
-              tooltipRef.current = instance.reference
-            }}
-            placement="top-end"
-            title={a11yLabel}
-            triggerTarget={
-              tooltipRef.current && tooltipRef.current.parentElement
-            }
-            {...tooltipProps}
-          >
-            <Icon name={iconName} size={iconSize} />
-          </Tooltip>
-        ) : (
-          <Icon name={iconName} size={iconSize} />
-        )}
+        <Icon name={iconName} size={iconSize} />
         {a11yLabel ? <VisuallyHidden>{a11yLabel}</VisuallyHidden> : null}
         {withCaret ? <Icon name="caret-down" size={caretSize} /> : null}
       </IconButtonUI>
+    )
+
+    return withTooltip ? (
+      <Tooltip
+        animationDelay={0}
+        animationDuration={0}
+        placement="top-end"
+        title={a11yLabel}
+        withTriggerWrapper={false}
+        {...tooltipProps}
+      >
+        {component}
+      </Tooltip>
+    ) : (
+      component
     )
   }
 )

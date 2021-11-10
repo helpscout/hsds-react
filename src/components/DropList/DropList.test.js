@@ -546,6 +546,37 @@ describe('Combobox', () => {
     ).toBe('none')
   })
 
+  test('should hide the search input on combobox if list empty and customEmptyListItems present', () => {
+    const { queryByRole, getByPlaceholderText } = render(
+      <DropList
+        isMenuOpen
+        items={[]}
+        customEmptyListItems={[
+          {
+            label: 'No tags found',
+            type: 'inert',
+          },
+          {
+            type: 'divider',
+          },
+          {
+            label: 'Create tag',
+            type: 'action',
+          },
+        ]}
+        toggler={<SimpleButton text="Button Toggler" />}
+        variant="combobox"
+      />
+    )
+
+    expect(queryByRole('listbox')).toBeInTheDocument()
+    expect(
+      window
+        .getComputedStyle(getByPlaceholderText('Search').parentElement)
+        .getPropertyValue('display')
+    ).toBe('none')
+  })
+
   test('should filter items', () => {
     const { container, getByPlaceholderText } = render(
       <DropList
@@ -579,6 +610,12 @@ describe('Combobox', () => {
 
     expect(container.querySelectorAll('.DropListItem').length).toBe(0)
     expect(getByText('No results for Z')).toBeInTheDocument()
+    // input search should still be present
+    expect(
+      window
+        .getComputedStyle(getByPlaceholderText('Search').parentElement)
+        .getPropertyValue('display')
+    ).toBe('block')
   })
 })
 

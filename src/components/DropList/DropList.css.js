@@ -42,7 +42,7 @@ export const MenuListUI = styled('ul')`
 export const InputSearchHolderUI = styled('div')`
   width: calc(100% - 8px);
   margin: 4px 4px 5px 4px;
-  display: ${({ show }) => (show ? 'block' : 'none')};
+  display: ${({ hide }) => (hide ? 'none' : 'block')};
 
   input {
     width: 100%;

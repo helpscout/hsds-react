@@ -8,7 +8,7 @@ import { BodyUI, FooterUI, HeaderUI } from './SidePanel.layouts.css'
 
 export function HeaderAndFooter({
   children,
-  mainActionButtonText = 'Start',
+  mainActionButtonContent = 'Start',
   mainActionDisabled = false,
   mainActionNode = noop,
   onMainActionClick = noop,
@@ -72,7 +72,7 @@ export function HeaderAndFooter({
           size="xl"
           innerRef={mainActionNode}
         >
-          {mainActionButtonText}
+          {mainActionButtonContent}
         </Button>
       </FooterUI>
     </>
@@ -108,7 +108,10 @@ HeaderAndFooter.propTypes = {
   /** Custom classname on this component */
   className: PropTypes.string,
   /** If the default footer is present, this is the label text for the button */
-  mainActionButtonText: PropTypes.string,
+  mainActionButtonContent: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+  ]),
   /** If the default footer is present, this disables the button */
   mainActionDisabled: PropTypes.bool,
   /** Retrieve the Main Action button node */

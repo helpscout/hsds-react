@@ -47,12 +47,15 @@ function Combobox({
   toggleOpenedState = noop,
   withMultipleSelection = false,
 }) {
-  const [inputItems, setInputItems] = useState(items)
-  const isListEmpty = items.length === 0
-  const allItems =
-    isListEmpty && Array.isArray(customEmptyListItems)
-      ? customEmptyListItems
-      : inputItems
+  const [inputFilteredItems, setInputFilteredItems] = useState(items)
+  const noSourceItems = items.length === 0
+  const withCustomEmptyListItems =
+    noSourceItems &&
+    Array.isArray(customEmptyListItems) &&
+    customEmptyListItems.length > 0
+  const resultingItems = withCustomEmptyListItems
+    ? customEmptyListItems
+    : inputFilteredItems
   const inputEl = useRef(null)
 
   const {
@@ -67,7 +70,7 @@ function Combobox({
     initialInputValue: '',
     initialIsOpen: isOpen,
     isOpen,
-    items: allItems,
+    items: resultingItems,
     itemToString,
     selectedItem,
 
@@ -99,7 +102,7 @@ function Combobox({
       }
 
       setHighlightedIndex(filtered.findIndex(isItemHighlightable))
-      setInputItems(filtered)
+      setInputFilteredItems(filtered)
     },
 
     onIsOpenChange(changes) {
@@ -132,7 +135,7 @@ function Combobox({
       return stateReducerCommon({
         changes,
         closeOnSelection,
-        items: allItems,
+        items: resultingItems,
         selectedItems,
         state,
         type: `${VARIANTS.COMBOBOX}.${type}`,
@@ -146,7 +149,7 @@ function Combobox({
   }, [isOpen])
 
   useDeepCompareEffect(() => {
-    setInputItems(items)
+    setInputFilteredItems(items)
   }, [items])
 
   function renderListItem(item, index) {
@@ -189,7 +192,7 @@ function Combobox({
       menuWidth={menuWidth}
       {...getComboboxProps()}
     >
-      <InputSearchHolderUI show={allItems.length > 0}>
+      <InputSearchHolderUI hide={withCustomEmptyListItems || noSourceItems}>
         <input
           data-event-driver
           {...getInputProps({
@@ -235,7 +238,7 @@ function Combobox({
         {renderListContents({
           customEmptyList,
           inputValue,
-          items: allItems,
+          items: resultingItems,
           renderListItem,
         })}
       </MenuListUI>

@@ -43,7 +43,7 @@ const FakeNavUI = styled('nav')`
 `
 
 const FakeCardUI = styled('div')`
-  ${d400}
+  ${d400};
   width: 200px;
   height: 80px;
   display: flex;

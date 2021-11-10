@@ -62,6 +62,7 @@ export class ConditionField extends React.PureComponent {
                 title={removeTitle}
                 animationDelay={tooltipDelay}
                 animationDuration={tooltipDuration}
+                withTriggerWrapper={false}
               >
                 <IconButton
                   data-cy="ConditionFieldRemoveButton"

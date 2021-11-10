@@ -140,7 +140,7 @@ class ChoiceInput extends React.PureComponent {
         <InputInputUI
           autoFocus={autoFocus}
           aria-describedby={helpText || undefined}
-          aria-invalid={state !== 'error'}
+          aria-invalid={state === 'error'}
           checked={checked}
           className={inputClassName}
           disabled={disabled}

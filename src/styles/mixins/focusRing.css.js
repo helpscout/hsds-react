@@ -5,7 +5,7 @@ export const focusShadow = `
   0 0 0 2px ${getColor('blue.500')};
 `
 export const focusShadowWithInset = `
-  0 0 0 2px ${getColor('blue.500')}, inset 0 0 2px 2px white;
+  0 0 0 2px ${getColor('blue.500')}, inset 0 0 0 2px white;
 `
 
 export const focusRing = css`
@@ -14,7 +14,7 @@ export const focusRing = css`
 
   &:before {
     content: '';
-    border-radius: 4px;
+    border-radius: inherit;
     bottom: -2px;
     box-shadow: ${focusShadow};
     left: -2px;

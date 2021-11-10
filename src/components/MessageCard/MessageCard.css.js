@@ -7,6 +7,7 @@ import Card from '../Card'
 import Button from '../Button'
 import Heading from '../Heading'
 import Image from '../Image'
+import ArticleCard from '../ArticleCard'
 
 export const MAX_IMAGE_SIZE = 258
 
@@ -22,6 +23,10 @@ export const MessageCardUI = styled(Card)`
   word-break: break-word;
   display: flex;
   flex-direction: column;
+
+  overflow: auto;
+  // The margin right is necessary to move scrollbar a bit to the right, from the edge - it wouldn't be distinguishable to the user when no scrollbar
+  margin-right: 2px;
 
   &.is-align-right {
     border-bottom-right-radius: 4px;
@@ -85,10 +90,7 @@ const editorHtmlFontSize = 14
 
 export const ContentUI = styled.div`
   margin-top: ${({ withMargin }) => (withMargin ? '20px' : '0')};
-  overflow: auto;
-  // The margin right is necessary to move scrollbar a bit to the right, from the edge - it wouldn't be distinguishable to the user when no scrollbar
   padding: 0 18px 0 20px;
-  margin-right: 2px;
   display: flex;
   flex-direction: column;
 
@@ -300,4 +302,26 @@ export const ImageContainerUI = styled('div')`
   justify-content: center;
   width: 100%;
   max-height: ${MAX_IMAGE_SIZE}px;
+`
+
+export const UrlAttachmentImageUI = styled('div')`
+  height: 80px;
+  margin: 16px 0 -22px 0;
+  overflow: hidden;
+
+  img {
+    border-radius: 4px;
+    width: 100%;
+  }
+`
+
+export const MessageArticleCardUI = styled(ArticleCard)`
+  border: none;
+  border-radius: 8px 4px 4px 8px !important;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.15) !important;
+  margin-top: 6px;
+
+  &:hover:after {
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
+  }
 `
