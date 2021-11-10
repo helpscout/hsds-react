@@ -26,6 +26,7 @@ export const config = {
 export const RemoveTagUI = styled.button`
   ${focusRing}
 
+  border-radius: 3px;
   width: 16px;
   height: 16px;
   display: flex;
