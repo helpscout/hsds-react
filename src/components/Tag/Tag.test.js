@@ -1,5 +1,9 @@
 import React from 'react'
 import { mount } from 'enzyme'
+
+import { render, fireEvent } from '@testing-library/react'
+import user from '@testing-library/user-event'
+
 import { Tag } from './Tag'
 import { Animate, Icon, Text } from '../index'
 
@@ -7,88 +11,47 @@ jest.useFakeTimers()
 
 describe('ClassNames', () => {
   test('Has default className', () => {
-    const wrapper = mount(<Tag />)
-    const o = wrapper.find('.c-Tag')
+    const { getByTestId } = render(<Tag />)
 
-    expect(o.length).toBeTruthy()
+    expect(getByTestId('Tag')).toHaveClass('c-Tag')
   })
 
   test('Accepts custom classNames', () => {
-    const wrapper = mount(<Tag className="mugatu" />)
-    const o = wrapper.find('.c-Tag').first()
+    const { getByTestId } = render(<Tag className="mugatu" />)
 
-    expect(o.getDOMNode().classList.contains('mugatu')).toBeTruthy()
-  })
-})
-
-describe('Animate', () => {
-  test('Renders an Animate component', () => {
-    const wrapper = mount(<Tag />)
-    const o = wrapper.find(Animate)
-
-    expect(o.length).toBe(1)
-  })
-
-  test('Animation duration can be defined', () => {
-    const wrapper = mount(<Tag animationDuration={1000} />)
-    const o = wrapper.find(Animate)
-
-    expect(o.props().duration).toBe(1000)
-  })
-
-  test('Passes "in" state, to Animate', () => {
-    const wrapper = mount(<Tag isRemovable />)
-
-    expect(wrapper.find(Animate).props().in).toBe(true)
+    expect(getByTestId('Tag')).toHaveClass('mugatu')
   })
 })
 
 describe('Content', () => {
-  test('Wraps children components in <Text> ', () => {
-    const wrapper = mount(<Tag>Mugatu</Tag>)
-    const o = wrapper.find(Text)
-
-    expect(o.html()).toContain('Mugatu')
-    expect(o.props().size).toBe('12')
+  test('Renders children', () => {
+    const { getByText } = render(<Tag>Mugatu</Tag>)
+    expect(getByText('Mugatu')).toBeTruthy()
   })
 
-  test('Adjusts fontSize when all caps', () => {
-    const wrapper12 = mount(<Tag>Mugatu</Tag>)
-    const o12 = wrapper12.find(Text)
-    expect(o12.props().size).toBe('12')
+  test('Renders value as children', () => {
+    const { getByText } = render(<Tag value="Mugatu" />)
+    expect(getByText('Mugatu')).toBeTruthy()
+  })
 
-    const wrapper10 = mount(
-      <Tag size="sm" allCaps>
-        Mugatu
-      </Tag>
+  test('Renders value over children', () => {
+    const { getByText, queryByText } = render(
+      <Tag value="Mugatu">children</Tag>
     )
-    const o10 = wrapper10.find(Text)
-    expect(o10.props().size).toBe('11')
+    expect(getByText('Mugatu')).toBeTruthy()
+    expect(queryByText('children')).toBeFalsy()
   })
 })
 
 describe('Remove', () => {
   test('Is not removable by default', () => {
-    const wrapper = mount(<Tag />)
-
-    const icon = wrapper.find(Icon)
-    expect(icon.length).toBe(0)
+    const { queryByTestId } = render(<Tag />)
+    expect(queryByTestId('RemoveTag')).toBeFalsy()
   })
 
   test('Renders remove Icon if isRemovable', () => {
-    const wrapper = mount(<Tag isRemovable />)
-
-    const icon = wrapper.find(Icon)
-    expect(icon.length).toBe(1)
-  })
-
-  test('Renders different icon size if isRemovable', () => {
-    const wrapper = mount(<Tag isRemovable size="md" />)
-
-    expect(wrapper.find(Icon).props().size).toBe('24')
-
-    wrapper.setProps({ size: 'sm' })
-    expect(wrapper.find(Icon).props().size).toBe('18')
+    const { queryByTestId } = render(<Tag isRemovable />)
+    expect(queryByTestId('RemoveTag')).toBeTruthy()
   })
 
   test('Does not fire callback on unmount', () => {
@@ -101,133 +64,80 @@ describe('Remove', () => {
 
   test('Fires callback on remove click', () => {
     const spy = jest.fn()
-    const mockOnBeforeRemovePromise = () => ({ then: cb => cb() })
-    const wrapper = mount(
-      <Tag
-        onBeforeRemove={mockOnBeforeRemovePromise}
-        isRemovable
-        onRemove={spy}
-        id={1}
-        value="Ron"
-      />
+    const { getByTestId, queryByTestId } = render(
+      <Tag isRemovable onRemove={spy} id={1} value="Ron" />
     )
-
-    const icon = wrapper.find(Icon)
-    icon.simulate('click')
-
-    jest.runAllTimers()
-
+    user.click(getByTestId('RemoveTag'))
+    fireEvent.transitionEnd(queryByTestId('TagGroup'))
     expect(spy).toHaveBeenCalled()
     expect(spy.mock.calls[0][0].id).toBe(1)
     expect(spy.mock.calls[0][0].value).toBe('Ron')
-  })
-
-  test('Provides onBeforeRemove with id and value', () => {
-    const spy = jest.fn()
-    const mockOnBeforeRemovePromise = props => {
-      spy(props)
-      return { then: cb => cb() }
-    }
-    const wrapper = mount(
-      <Tag
-        isRemovable
-        onBeforeRemove={mockOnBeforeRemovePromise}
-        id={1}
-        value="Ron"
-      />
-    )
-
-    const icon = wrapper.find(Icon)
-    icon.simulate('click')
-
-    jest.runAllTimers()
-
-    expect(spy).toHaveBeenCalled()
-    expect(spy.mock.calls[0][0].id).toBe(1)
-    expect(spy.mock.calls[0][0].value).toBe('Ron')
-  })
-
-  test('Renders spinner when removing', () => {
-    const wrapper = mount(<Tag isRemoving={false} isRemovable value="Ron" />)
-
-    expect(wrapper.find('Spinner')).toHaveLength(0)
-
-    wrapper.setProps({ isRemoving: true })
-    wrapper.update()
-    expect(wrapper.find('Spinner')).toHaveLength(1)
-  })
-
-  test('Renders spinner with filled styles, if defined', () => {
-    const wrapper = mount(
-      <Tag filled isRemoving={false} isRemovable value="Ron" />
-    )
-
-    wrapper.setProps({ isRemoving: true })
-    wrapper.update()
-    expect(wrapper.find('Spinner').hasClass('is-filled')).toBeTruthy()
   })
 })
 
 describe('Styles', () => {
   test('Has allCaps styles', () => {
-    const wrapper = mount(<Tag allCaps />)
-    const o = wrapper.find(Text).first()
-
-    expect(o.props().allCaps).toBeTruthy()
-    expect(o.props().size).not.toBe('12')
+    const { getByTestId } = render(<Tag allCaps />)
+    expect(getByTestId('Tag')).toHaveClass('is-all-caps')
+    expect(getByTestId('Tag')).toHaveStyle('text-transform: uppercase;')
   })
 
   test('Has color styles', () => {
-    const wrapper = mount(<Tag color="red" />)
-    const o = wrapper.find('.c-Tag').first()
-
-    expect(o.getDOMNode().classList.contains('is-red')).toBeTruthy()
+    const { getByTestId } = render(<Tag color="red" />)
+    expect(getByTestId('Tag')).toHaveClass('is-red')
   })
 
   test('Has size styles', () => {
-    const wrapper = mount(<Tag size="md" />)
-    const o = wrapper.find('.c-Tag').first()
-
-    expect(o.getDOMNode().classList.contains('is-md')).toBeTruthy()
+    const { getByTestId } = render(<Tag size="md" />)
+    expect(getByTestId('Tag')).toHaveClass('is-md')
   })
 
-  test('Has display styles', () => {
-    const wrapper = mount(<Tag display="inlineBlock" />)
-    const o = wrapper.find('.c-TagWrapper').first()
+  test('Has display flex styles', () => {
+    const { getByTestId } = render(<Tag display="block" />)
 
-    expect(
-      o.getDOMNode().classList.contains('is-display-inlineBlock')
-    ).toBeTruthy()
+    expect(getByTestId('TagGroup')).toHaveClass('is-display-block')
+    expect(getByTestId('TagGroup')).toHaveStyle('display: flex;')
+  })
+  test('Has display inline-flex styles', () => {
+    const { getByTestId } = render(<Tag display="inline" />)
+
+    expect(getByTestId('TagGroup')).toHaveClass('is-display-inline')
+    expect(getByTestId('TagGroup')).toHaveStyle('display: inline-flex;')
   })
 
   test('Has filled styles', () => {
-    const wrapper = mount(<Tag filled />)
-    const o = wrapper.find('.c-Tag').first()
-
-    expect(o.getDOMNode().classList.contains('is-filled')).toBeTruthy()
-  })
-
-  test('Has pulsing styles', () => {
-    const wrapper = mount(<Tag pulsing />)
-    const o = wrapper.find('.c-Tag').first()
-
-    expect(o.getDOMNode().classList.contains('is-pulsing')).toBeTruthy()
+    const { getByTestId } = render(<Tag filled />)
+    expect(getByTestId('Tag')).toHaveClass('is-filled')
   })
 })
 
-describe('Value', () => {
-  test('Renders value as text', () => {
-    const wrapper = mount(<Tag value="Ron" />)
-    const o = wrapper.find(Text)
-
-    expect(o.html()).toContain('Ron')
+describe('count', () => {
+  test('Keeps count hidden if size if sm', () => {
+    const { queryByTestId } = render(<Tag count={125} size="sm" />)
+    expect(queryByTestId('Tag.Count')).toBeFalsy()
   })
+  test('Keeps count hidden if size if md', () => {
+    const { queryByTestId } = render(<Tag count={125} size="md" />)
+    expect(queryByTestId('Tag.Count')).toBeFalsy()
+  })
+  test('Renders a count element if size if lg', () => {
+    const { queryByTestId, getByText } = render(<Tag count={125} size="lg" />)
+    expect(queryByTestId('Tag.Count')).toBeTruthy()
+    expect(getByText('125')).toBeTruthy()
+  })
+})
+describe('clickable', () => {
+  test('onClick set the tag as clickable', () => {
+    const spy = jest.fn()
+    const { getByTestId } = render(<Tag onClick={spy} id={1} value="Ron" />)
+    user.click(getByTestId('Tag'))
+    expect(spy).toHaveBeenCalled()
+    expect(spy.mock.calls[0][1].id).toBe(1)
+    expect(spy.mock.calls[0][1].value).toBe('Ron')
+  })
+  test('href set the tag as clickable', () => {
+    const { getByRole } = render(<Tag href="http://google.com/" />)
 
-  test('Renders value instead of children, if defined', () => {
-    const wrapper = mount(<Tag value="Ron">Champ</Tag>)
-    const o = wrapper.find(Text)
-
-    expect(o.html()).toContain('Ron')
-    expect(o.html()).not.toContain('Mike')
+    expect(getByRole('link')).toHaveAttribute('href', 'http://google.com/')
   })
 })

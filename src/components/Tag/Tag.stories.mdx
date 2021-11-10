@@ -22,80 +22,80 @@ A Tag component is a UI element that provide contextual labels for categories/ta
   <Story name="default">
     <div>
       <Tag
-        color="red"
-        filled={boolean('filled', false)}
-        pulsing={boolean('pulsing', false)}
-        size={select('Size', { md: 'md', sm: 'sm' }, 'sm')}
-      >
-        My tag
-      </Tag>
-      <br />
-      <br />
-      <Tag
+        allCaps
+        count={150}
         color="grey"
         filled={boolean('filled', false)}
-        pulsing={boolean('pulsing', false)}
-        size={select('Size', { md: 'md', sm: 'sm' }, 'sm')}
+        isRemovable={boolean('isRemovable', false)}
+        size={select('Size', ['sm', 'md', 'lg'], 'sm')}
       >
         My tag
       </Tag>
-      <br />
-      <br />
       <Tag
+        count={20}
         color="green"
         filled={boolean('filled', false)}
-        pulsing={boolean('pulsing', false)}
-        size={select('Size', { md: 'md', sm: 'sm' }, 'sm')}
+        isRemovable={boolean('isRemovable', false)}
+        size={select('Size', ['sm', 'md', 'lg'], 'sm')}
       >
         My tag
       </Tag>
-      <br />
-      <br />
-      <Tag
-        color="blue"
-        filled={boolean('filled', false)}
-        pulsing={boolean('pulsing', false)}
-        size={select('Size', { md: 'md', sm: 'sm' }, 'sm')}
-      >
-        My tag
-      </Tag>
-      <br />
-      <br />
-      <Tag
-        color="orange"
-        filled={boolean('filled', false)}
-        pulsing={boolean('pulsing', false)}
-        size={select('Size', { md: 'md', sm: 'sm' }, 'sm')}
-      >
-        My tag
-      </Tag>
-      <br />
-      <br />
       <Tag
         color="purple"
         filled={boolean('filled', false)}
-        pulsing={boolean('pulsing', false)}
-        size={select('Size', { md: 'md', sm: 'sm' }, 'sm')}
+        isRemovable={boolean('isRemovable', false)}
+        size={select('Size', ['sm', 'md', 'lg'], 'sm')}
       >
         My tag
       </Tag>
-      <br />
-      <br />
+      <Tag
+        color="blue"
+        filled={boolean('filled', false)}
+        isRemovable={boolean('isRemovable', false)}
+        size={select('Size', ['sm', 'md', 'lg'], 'sm')}
+        onClick={() => console.log('tag onClick')}
+      >
+        My tag
+      </Tag>
+      <Tag
+        count={75}
+        color="red"
+        filled={boolean('filled', false)}
+        isRemovable={boolean('isRemovable', false)}
+        size={select('Size', ['sm', 'md', 'lg'], 'sm')}
+      >
+        My tag
+      </Tag>
+      <Tag
+        color="orange"
+        filled={boolean('filled', false)}
+        isRemovable={boolean('isRemovable', false)}
+        size={select('Size', ['sm', 'md', 'lg'], 'sm')}
+      >
+        My tag
+      </Tag>
+      <Tag
+        color="teal"
+        filled={boolean('filled', false)}
+        isRemovable={boolean('isRemovable', false)}
+        size={select('Size', ['sm', 'md', 'lg'], 'sm')}
+      >
+        My tag
+      </Tag>
+      <Tag
+        href="http://google.com"
+        color="pink"
+        filled={boolean('filled', false)}
+        isRemovable={boolean('isRemovable', false)}
+        size={select('Size', ['sm', 'md', 'lg'], 'sm')}
+      >
+        My tag
+      </Tag>
       <Tag
         color="yellow"
         filled={boolean('filled', false)}
-        pulsing={boolean('pulsing', false)}
-        size={select('Size', { md: 'md', sm: 'sm' }, 'sm')}
-      >
-        My tag
-      </Tag>
-      <br />
-      <br />
-      <Tag
-        color="lightBlue"
-        filled={boolean('filled', false)}
-        pulsing={boolean('pulsing', false)}
-        size={select('Size', { md: 'md', sm: 'sm' }, 'sm')}
+        isRemovable={boolean('isRemovable', false)}
+        size={select('Size', ['sm', 'md', 'lg'], 'sm')}
       >
         My tag
       </Tag>
@@ -108,11 +108,6 @@ A Tag component is a UI element that provide contextual labels for categories/ta
 - **Designer**: Buzz
 - **Engineering**: PL
 - **Usage**: ChatApp, Customers
-
-<br />
-<br />
-<br />
-<br />
 
 ### Props
 

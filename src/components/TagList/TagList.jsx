@@ -1,90 +1,130 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Inline from '../Inline'
-import Overflow from '../Overflow'
 import classNames from 'classnames'
-import { noop, promiseNoop } from '../../utilities/other'
-import { TagListUI, ClearAllUI } from './TagList.css'
+
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getComponentKey } from '../../utilities/component'
+
+import Overflow from '../Overflow'
+import Tooltip from '../Tooltip'
+import { noop } from '../../utilities/other'
+
+import {
+  TagListUI,
+  ClearAllUI,
+  ListUI,
+  ItemUI,
+  ShowAllButtonUI,
+} from './TagList.css'
 
 export const tagListClassName = 'c-TagList'
 export const TagListContext = React.createContext()
+
 export const TagList = props => {
   const {
-    overflowFade,
+    children,
+    className,
+    clearAll,
+    limit,
+    isRemovable,
     onRemove,
     onRemoveAll,
-    onBeforeRemove,
-    children,
-    isRemovable,
-    clearAll,
+    overflowFade,
     size,
-    showAll,
-    className,
     ...rest
   } = props
 
+  const [isNoLimit, setNoLimit] = useState(false)
+
   const componentClassNames = classNames(
     tagListClassName,
-    showAll ? 'is-showingAll' : '',
+    size && `is-${size}`,
     className
   )
 
   const handleOnRemove = value => onRemove(value)
-  const handleOnRemoveAll = () => onRemoveAll()
 
-  const childrenLength = React.Children.count(children)
-  const childrenMarkup = React.Children.map(children, (child, index) => {
-    const isLastChildWithClearAll =
-      childrenLength - 1 === index && clearAll && childrenLength > 1
+  const tags = React.Children.toArray(children)
+  const total = tags.length
+
+  const shouldFilterTags =
+    limit > 0 && !overflowFade && tags.length > limit && !isNoLimit
+
+  const tagList = shouldFilterTags ? tags.slice(0, limit) : tags
+
+  const tagsComponents = tagList.map((tag, index) => {
+    const isLastWithClearAll =
+      !limit && total - 1 === index && clearAll && tags.length > 1
+
+    const shoudShowAllButton = shouldFilterTags && tagList.length - 1 === index
+
+    const clearAllComponent = isLastWithClearAll ? (
+      <ClearAllUI
+        key="clearAllButton"
+        onClick={onRemoveAll}
+        data-testid="TagList.ClearAll"
+        data-cy="TagList.ClearAll"
+      >
+        Clear all
+      </ClearAllUI>
+    ) : null
+
+    const badgeComponent = shoudShowAllButton ? (
+      <Tooltip withTriggerWrapper={false} title="Show hidden tags" delay={10}>
+        <ShowAllButtonUI
+          aria-label="Show hidden tags"
+          onClick={() => setNoLimit(true)}
+        >
+          +{total - limit}
+        </ShowAllButtonUI>
+      </Tooltip>
+    ) : null
 
     return (
-      <Inline.Item>
-        {React.cloneElement(child)}
-        {isLastChildWithClearAll && (
-          <ClearAllUI key="clearAllButton" onClick={handleOnRemoveAll}>
-            Clear all
-          </ClearAllUI>
-        )}
-      </Inline.Item>
+      <ItemUI key={getComponentKey(tag, index)}>
+        {tag}
+        {clearAllComponent}
+        {badgeComponent}
+      </ItemUI>
     )
   })
-
-  const componentMarkup = <Inline size={size}>{childrenMarkup}</Inline>
-  const contextValue = { onBeforeRemove, isRemovable, onRemove: handleOnRemove }
+  const componentMarkup = <ListUI>{tagsComponents}</ListUI>
+  const contextValue = { isRemovable, size, onRemove: handleOnRemove }
 
   return (
-    <TagListUI {...getValidProps(rest)} className={componentClassNames}>
-      <TagListContext.Provider value={contextValue}>
+    <TagListContext.Provider value={contextValue}>
+      <TagListUI
+        {...getValidProps(rest)}
+        className={componentClassNames}
+        data-testid="TagList"
+      >
         {overflowFade ? (
           <Overflow>{componentMarkup}</Overflow>
         ) : (
           componentMarkup
         )}
-      </TagListContext.Provider>
-    </TagListUI>
+      </TagListUI>
+    </TagListContext.Provider>
   )
 }
 
 TagList.defaultProps = {
   'data-cy': 'TagList',
-  onBeforeRemove: promiseNoop,
   onRemove: noop,
   onRemoveAll: noop,
   overflowFade: false,
   isRemovable: false,
   clearAll: false,
-  showAll: false,
-  size: 'xs',
+  size: 'sm',
 }
 
 TagList.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
+  /** Limit the number of items displayed within TagList */
+  limit: PropTypes.number,
   /** Enables the ability to remove child `Tag` components. */
   isRemovable: PropTypes.bool,
-  /** Function that returns a promise to resolve before removing. */
-  onBeforeRemove: PropTypes.func,
   /** Callback function when a child `Tag` is removed and unmounted. */
   onRemove: PropTypes.func,
   /** Callback function when a the clear all button was clicked */
@@ -93,10 +133,8 @@ TagList.propTypes = {
   overflowFade: PropTypes.bool,
   /** Display a Clear all button at the end of the list */
   clearAll: PropTypes.bool,
-  /** Display all tag lines */
-  showAll: PropTypes.bool,
-  /** Size of the spacing between each tag */
-  size: PropTypes.oneOf(['lg', 'md', 'sm', 'xs']),
+  /** Size of all tag */
+  size: PropTypes.oneOf(['md', 'sm']),
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
 }

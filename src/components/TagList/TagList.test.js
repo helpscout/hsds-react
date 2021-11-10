@@ -1,116 +1,59 @@
 import React from 'react'
-import { mount } from 'enzyme'
-import TagList from './TagList'
-import { Icon, Inline, Overflow, Tag } from '../index'
-import { ClearAllUI, TagListUI } from './TagList.css'
 
-jest.useFakeTimers()
+import { render, fireEvent, act, waitFor } from '@testing-library/react'
+import user from '@testing-library/user-event'
+
+import TagList from './TagList'
+import Tag from '../Tag'
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = mount(<TagList />)
+    const { getByTestId } = render(<TagList />)
 
-    expect(wrapper.getDOMNode().classList.contains('c-TagList')).toBeTruthy()
+    expect(getByTestId('TagList')).toHaveClass('c-TagList')
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = mount(<TagList className={customClass} />)
+    const { getByTestId } = render(<TagList className={customClass} />)
 
-    expect(wrapper.prop('className')).toContain(customClass)
-  })
-})
-
-describe('Inline', () => {
-  test('Renders content within Inline', () => {
-    const wrapper = mount(
-      <TagList>
-        <Tag />
-      </TagList>
-    )
-    const inline = wrapper.find(Inline)
-    const inlineItem = wrapper.find(Inline.Item)
-    const tag = inlineItem.find(Tag)
-
-    expect(inline.length).toBe(1)
-    expect(inlineItem.length).toBe(1)
-    expect(tag.length).toBe(1)
-  })
-
-  test('Does set the size prop on the Inline component', () => {
-    const wrapper = mount(
-      <TagList size="md">
-        <Tag id={1} />
-      </TagList>
-    )
-    const inline = wrapper.find(Inline)
-    expect(inline.props().size).toBe('md')
+    expect(getByTestId('TagList')).toHaveClass(customClass)
   })
 })
 
 describe('isRemovable', () => {
   test('Is not enabled by default', () => {
-    const wrapper = mount(
+    const { queryByTestId } = render(
       <TagList>
         <Tag />
       </TagList>
     )
-    const o = wrapper.find('Tag')
 
-    expect(o.props().isRemovable).toBe(false)
+    expect(queryByTestId('RemoveTag')).toBeFalsy()
   })
 
   test('Makes inner tags removable, if specified', () => {
-    const wrapper = mount(
+    const { queryByTestId } = render(
       <TagList isRemovable>
         <Tag />
       </TagList>
     )
-    const o = wrapper.find('.c-Tag__iconWrapper')
-
-    expect(o.exists()).toBe(true)
+    expect(queryByTestId('RemoveTag')).toBeTruthy()
   })
 })
 
 describe('onRemove', () => {
   test('Fires callback from tag, if specified', () => {
     const spy = jest.fn()
-    const mockOnBeforeRemovePromise = () => ({ then: cb => cb() })
 
-    const wrapper = mount(
-      <TagList
-        onBeforeRemove={mockOnBeforeRemovePromise}
-        onRemove={spy}
-        isRemovable
-      >
+    const { queryAllByTestId } = render(
+      <TagList onRemove={spy} isRemovable>
         <Tag id={1} />
         <Tag id={2} />
       </TagList>
     )
-    const o = wrapper.find(Tag).first()
-    const icon = o.find(Icon)
-
-    icon.simulate('click')
-
-    jest.runAllTimers()
-
-    expect(spy).toHaveBeenCalled()
-  })
-})
-
-describe('onRemoveAll', () => {
-  test('Fires callback from clearAll button, if specified', () => {
-    const spy = jest.fn()
-
-    const wrapper = mount(
-      <TagList onRemoveAll={spy} isRemovable clearAll>
-        <Tag id={1} />
-        <Tag id={2} />
-      </TagList>
-    )
-
-    wrapper.find(ClearAllUI).simulate('click')
-    jest.runAllTimers()
+    user.click(queryAllByTestId('RemoveTag')[0])
+    fireEvent.transitionEnd(queryAllByTestId('TagGroup')[0])
 
     expect(spy).toHaveBeenCalled()
   })
@@ -118,60 +61,138 @@ describe('onRemoveAll', () => {
 
 describe('clearAll', () => {
   test('Adds a clearAll button if more than one tag', () => {
-    const wrapper = mount(
+    const { getByTestId } = render(
       <TagList clearAll>
         <Tag id={1} />
         <Tag id={2} />
       </TagList>
     )
-    const o = wrapper.find(ClearAllUI).first()
-    expect(o.length).toBeTruthy()
+    expect(getByTestId('TagList.ClearAll')).toBeTruthy()
   })
 
   test('Does not Add a clearAll button if list contains less or equal than one tag', () => {
-    const wrapper = mount(
+    const { queryByTestId } = render(
       <TagList clearAll>
         <Tag id={1} />
       </TagList>
     )
-    const o = wrapper.find(ClearAllUI).first()
-    expect(o.length).toBeFalsy()
+    expect(queryByTestId('TagList.ClearAll')).toBeFalsy()
+  })
+
+  test('Fires callback from clearAll button, if specified', () => {
+    const spy = jest.fn()
+
+    const { getByTestId } = render(
+      <TagList onRemoveAll={spy} isRemovable clearAll>
+        <Tag id={1} />
+        <Tag id={2} />
+      </TagList>
+    )
+
+    user.click(getByTestId('TagList.ClearAll'))
+
+    expect(spy).toHaveBeenCalled()
   })
 })
 
 describe('Overflow', () => {
   test('Does not contain content in Overflow by default', () => {
-    const wrapper = mount(
+    const { container } = render(
       <TagList>
         <Tag />
       </TagList>
     )
-    const o = wrapper.find(Overflow)
 
-    expect(o.length).toBe(0)
-  })
-
-  test('Does add a className to show all tags', () => {
-    const wrapper = mount(
-      <TagList showAll>
-        <Tag />
-      </TagList>
-    )
-    expect(wrapper.find(TagListUI).first().prop('className')).toContain(
-      'is-showingAll'
-    )
+    expect(container.querySelector('.c-Overflow')).toBeFalsy()
   })
 
   test('Wraps content in Overflow, if specified', () => {
-    const wrapper = mount(
+    const { container } = render(
       <TagList overflowFade>
         <Tag />
       </TagList>
     )
-    const o = wrapper.find(Overflow)
-    const tag = o.find(Tag)
 
-    expect(o.length).toBe(1)
-    expect(tag.length).toBe(1)
+    expect(container.querySelector('.c-Overflow')).toBeTruthy()
+  })
+})
+
+describe.only('Limit', () => {
+  test('Display all tags if there is no limit', () => {
+    const { queryAllByTestId } = render(
+      <TagList>
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+      </TagList>
+    )
+
+    expect(queryAllByTestId('Tag').length).toBe(4)
+  })
+
+  test('Limits the number of tag displayed', () => {
+    const { queryAllByTestId } = render(
+      <TagList limit={2}>
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+      </TagList>
+    )
+
+    expect(queryAllByTestId('Tag').length).toBe(2)
+  })
+
+  test('Shows a +X button with the hidden items length', () => {
+    const { getByText } = render(
+      <TagList limit={2}>
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+      </TagList>
+    )
+
+    expect(getByText('+4')).toBeTruthy()
+  })
+
+  test('ClearAll is not active when there is a limit', () => {
+    const { queryByTestId } = render(
+      <TagList limit={2} clearAll>
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+      </TagList>
+    )
+
+    expect(queryByTestId('TagList.ClearAll')).toBeFalsy()
+  })
+
+  test('Clicking on the +X button will display all tags', async () => {
+    const { queryAllByTestId, findByText } = render(
+      <TagList limit={2}>
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+        <Tag />
+      </TagList>
+    )
+
+    const plusbutton = await findByText('+4')
+    user.click(plusbutton)
+
+    await waitFor(() => {
+      expect(queryAllByTestId('Tag').length).toBe(6)
+    })
   })
 })

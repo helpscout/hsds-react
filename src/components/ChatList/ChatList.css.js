@@ -4,6 +4,7 @@ import SpeechBubble from '@helpscout/hsds-illos/speech-bubble'
 import Card from '../Card'
 import Flexy from '../Flexy'
 import Link from '../Link'
+import Tag from '../Tag'
 
 export const ChatListUI = styled('div')`
   margin-bottom: 10px;
@@ -139,3 +140,27 @@ function makeBackgroundColorStyles(color) {
     }
   `
 }
+
+export const PulsingTagUI = styled(Tag)`
+  animation: 4s ease 0s infinite normal both running Tag_Blink;
+  backface-visibility: hidden;
+  filter: blur(0);
+  -webkit-filter: blur(0);
+
+  &.is-red {
+    color: ${getColor('red.500')};
+    border-color: ${getColor('red.500')};
+  }
+
+  @keyframes Tag_Blink {
+    0% {
+      opacity: 0.2;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.2;
+    }
+  }
+`
