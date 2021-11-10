@@ -10,11 +10,10 @@ import {
 } from '../../styles/mixins/focusRing.css'
 
 export const config = {
-  borderRadius: 3,
   colors: {
     blue: '#ACE3FF',
     green: '#BCF1CA',
-    grey: getColor('grey.400'),
+    grey: getColor('grey.500'),
     orange: '#FFBE6B',
     purple: '#DDCCFF',
     red: '#FFAFB1',
@@ -153,6 +152,12 @@ export const TagUI = styled('div')`
   &.is-lg {
     padding: 0 8px;
     height: 28px;
+    border-radius: 4px;
+    font-size: 13px;
+
+    ${CountUI} {
+      font-size: 12px;
+    }
   }
 
   &.is-removable {
