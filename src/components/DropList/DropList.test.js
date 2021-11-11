@@ -528,7 +528,7 @@ describe('Combobox', () => {
     expect(getByPlaceholderText('Search')).toHaveFocus()
   })
 
-  test('should return input to onComboboxInputChange', () => {
+  test('should return input to onInputChange', () => {
     const onInputChangeSpy = jest.fn()
     const { getByPlaceholderText } = render(
       <DropList
