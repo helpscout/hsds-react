@@ -115,16 +115,4 @@ TableRow.propTypes = {
   withSelectableRows: PropTypes.bool,
 }
 
-function areEqual(prevProps, nextProps) {
-  const { onRowClick, ...rest } = prevProps
-  const { onRowClick: onRowClickNext, ...restNext } = nextProps
-
-  if (equal(rest, restNext)) {
-    return true
-  }
-
-  return false
-}
-
-// export default React.memo(TableRow, areEqual)
 export default TableRow

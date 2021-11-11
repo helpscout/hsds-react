@@ -106,6 +106,26 @@ describe('Table Header', () => {
     expect(nameHeaderCell.text()).toBe('Name')
   })
 
+  test('Icon Header cells', () => {
+    const { container } = render(
+      <Table
+        tableDescription="test-table"
+        columns={defaultColumnsCustomContent}
+        data={createFakeCustomers({ amount: 5 })}
+      />
+    )
+
+    const headerCellWithIcon = container.querySelector(
+      '.c-Table__HeaderCell.Column_Company'
+    )
+
+    expect(
+      headerCellWithIcon.querySelector(
+        '.c-Icon.is-iconName-chat.column-title-as-icon'
+      )
+    ).toBeInTheDocument()
+  })
+
   test('Custom cells', () => {
     const wrapper = mount(
       <Table
@@ -350,6 +370,7 @@ describe('Sortable', () => {
     expect(container.querySelector(`thead th`).getAttribute('aria-sort')).toBe(
       'none'
     )
+    expect(container.querySelector('.is-sortable')).toBeInTheDocument()
 
     rerender(
       <Table
