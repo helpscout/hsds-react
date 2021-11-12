@@ -211,7 +211,7 @@ export const HeaderCellUI = styled('th')`
   text-align: ${props => props.align || 'left'};
   width: ${props => props.cellWidth || 'auto'};
   font-size: 13px;
-  font-weight: 400;
+  font-weight: 500;
 `
 
 export const CellUI = styled('td')`
@@ -232,8 +232,8 @@ export const SortableCellUI = styled('div')`
 
   .column-title-as-icon {
     margin-left: -2px;
-    margin-top: -2px;
-    margin-bottom: -2px;
+    margin-top: -4px;
+    margin-bottom: -4px;
   }
 `
 
@@ -241,7 +241,7 @@ export const SortableCellContentUI = styled('div')`
   display: inline-flex;
   align-items: center;
   justify-content: ${props => getCellAlignment(props.align)};
-  padding: 5px 8px;
+  padding: 6px 8px;
   margin-left: -8px;
   border-radius: 4px;
   cursor: pointer;

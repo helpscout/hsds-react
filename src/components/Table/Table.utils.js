@@ -129,7 +129,7 @@ export function generateCustomHeaderCell(column, sortedInfo) {
       <Icon
         className="column-title-as-icon"
         name={iconName}
-        size={20}
+        size={24}
         title={column.title}
         ignoreClick={false}
       />
