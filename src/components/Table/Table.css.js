@@ -222,6 +222,7 @@ export const SortableCellUI = styled('div')`
   .is-iconName-caret-down,
   .is-iconName-caret-up {
     margin-left: 4px;
+    margin-right: -2px;
   }
 
   .column-title-as-icon + .is-iconName-caret-down,
