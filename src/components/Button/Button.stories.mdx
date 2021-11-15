@@ -24,7 +24,6 @@ Actionable HTML buttons with different styles and support for React Router.
     <Button
       children={text('children', 'Button')}
       disabled={boolean('disabled', false)}
-      disableOnLoading={boolean('disableOnLoading', true)}
       isActive={boolean('isActive', false)}
       isHovered={boolean('isHovered', false)}
       isBlock={boolean('isBlock', false)}
@@ -59,6 +58,8 @@ Actionable HTML buttons with different styles and support for React Router.
           danger: 'danger',
           success: 'success',
           warning: 'warning',
+          grey: 'grey',
+          muted: 'muted',
         },
         ''
       )}
@@ -71,7 +72,6 @@ Actionable HTML buttons with different styles and support for React Router.
         },
         'default'
       )}
-      spinButtonOnLoading={boolean('spinButtonOnLoading', false)}
     />
   </Story>
 </Canvas>
