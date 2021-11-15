@@ -37,7 +37,6 @@ export const ConfirmationIconWrapperUI = styled('div')`
 
 export const CopyButtonUI = styled(Button)`
   position: relative;
-  overflow: hidden;
 
   &.c-CopyButton {
     min-width: 60px;
