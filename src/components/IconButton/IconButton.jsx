@@ -6,7 +6,7 @@ import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import { IconButtonUI } from './IconButton.css'
 
-export const IconButton = React.forwardRef((props, forwardedRef) => {
+export const IconButton = React.forwardRef((props, ref) => {
   const getClassName = () => {
     const { className, kind, icon, isBorderless } = props
 
@@ -38,19 +38,13 @@ export const IconButton = React.forwardRef((props, forwardedRef) => {
     children,
     icon,
     iconSize,
-    innerRef,
     isWithHiddenTitle,
     withCaret,
     ...rest
   } = props
 
-  const setRef = buttonRef => {
-    innerRef(buttonRef)
-    forwardedRef && forwardedRef(buttonRef)
-  }
-
   return (
-    <IconButtonUI {...rest} className={getClassName()} innerRef={setRef}>
+    <IconButtonUI {...rest} className={getClassName()} ref={ref}>
       <Icon
         name={icon}
         size={getIconSize()}
@@ -103,7 +97,6 @@ IconButton.propTypes = {
     52,
   ]),
   isWithHiddenTitle: PropTypes.bool,
-  innerRef: PropTypes.func,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
 }
