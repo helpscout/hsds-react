@@ -129,8 +129,9 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       }
     }
 
-    componentDidUpdate() {
-      if (!this.state.isOpen) {
+    componentDidUpdate(prevProps, prevState, snapshot) {
+      // Only refocus if closed and was previously opened
+      if (!this.state.isOpen && prevState.isOpen) {
         this.refocusTriggerNode()
       }
     }

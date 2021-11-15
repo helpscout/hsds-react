@@ -24,6 +24,22 @@ const TestButton = props => {
   )
 }
 
+const TestCloseButton = props => {
+  const { className, children, closePortal } = props
+  const componentClassName = classNames('button', className, 'close-button')
+  const handleClick = () => {
+    closePortal()
+  }
+  return (
+    <div>
+      <button className={componentClassName} onClick={handleClick}>
+        Click
+      </button>
+      {children}
+    </div>
+  )
+}
+
 beforeEach(() => {
   window.HSDSPortalWrapperGlobalManager = undefined
 })
@@ -221,10 +237,42 @@ describe('Trigger', () => {
     const trigger = <button>Trigger</button>
     const wrapper = mount(<TestComponent timeout={0} trigger={trigger} />)
     const o = wrapper.find('button')
-    o.getDOMNode().onfocus = spy
+    o.getDOMNode().focus = spy
     wrapper.setProps({ isOpen: false })
+    wrapper.update()
 
     expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('Does not focus triggerNode if prop remains false, but some other prop has changed', () => {
+    const spy = jest.fn()
+    const TestComponent = PortalWrapper(options)(TestButton)
+    const trigger = <button>Trigger</button>
+    const wrapper = mount(
+      <TestComponent timeout={0} trigger={trigger} isOpen={false} />
+    )
+    const o = wrapper.find('button')
+    o.getDOMNode().focus = spy
+    wrapper.setProps({ closeOnEscape: false })
+    wrapper.update()
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('Does focus triggerNode if prop is false, but was true', () => {
+    const spy = jest.fn()
+    const TestComponent = PortalWrapper(options)(TestCloseButton)
+    const trigger = <button className="trigger">Trigger</button>
+    const wrapper = mount(
+      <TestComponent timeout={0} trigger={trigger} isOpen={true} />
+    )
+    const closeButton = wrapper.find('.close-button')
+    const triggerButton = wrapper.find('.trigger')
+    triggerButton.getDOMNode().focus = spy
+    closeButton.prop('onClick')()
+    wrapper.update()
+
+    expect(spy).toHaveBeenCalled()
   })
 
   test('Allows for ref', () => {
