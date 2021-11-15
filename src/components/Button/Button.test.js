@@ -180,19 +180,9 @@ describe('Focus', () => {
     expect(o.length).toBe(1)
   })
 
-  test('Does not render FocusUI on certain buttons', () => {
-    const wrapper = mount(<Button kind="link" />)
-    wrapper.simulate('focus')
-
-    const o = wrapper.find('span.c-ButtonFocus')
-
-    expect(o.length).toBe(0)
-  })
-
   test('Does not render FocusUI if disabled', () => {
     const wrapper = mount(<Button kind="primary" disabled />)
     wrapper.simulate('focus')
-
     const o = wrapper.find('span.c-ButtonFocus')
 
     expect(o.length).toBe(0)
@@ -217,23 +207,6 @@ describe('Focus', () => {
     expect(o.hasClass('is-first'))
     expect(o.hasClass('is-notOnly'))
     expect(o.hasClass('is-last'))
-  })
-})
-
-describe('Ref', () => {
-  test('Can retrieve button ref from ref prop', () => {
-    let ref
-    mount(<Button kind="primary" innerRef={node => (ref = node)} />)
-
-    expect(ref).toBeTruthy()
-  })
-
-  test('Can retrieve button ref from buttonRef prop', () => {
-    let ref
-    mount(<Button kind="primary" buttonRef={node => (ref = node)} />)
-
-    expect(ref).toBeTruthy()
-    expect(ref.tagName).toBe('BUTTON')
   })
 })
 
@@ -362,19 +335,5 @@ describe('Loading', () => {
     const el = wrapper.find('button')
 
     expect(el.prop('disabled')).toBe(true)
-  })
-
-  test('Does not become disabled, if specified', () => {
-    const wrapper = mount(<Button isLoading disableOnLoading={false} />)
-    const el = wrapper.find('button')
-
-    expect(el.prop('disabled')).toBe(false)
-  })
-
-  test('Add special spinButtonOnLoading, if isLoading and enabled', () => {
-    const wrapper = mount(<Button isLoading spinButtonOnLoading />)
-    const el = wrapper.find('button')
-
-    expect(el.hasClass('is-spinButtonOnLoading')).toBeTruthy()
   })
 })

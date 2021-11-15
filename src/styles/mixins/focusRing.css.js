@@ -1,27 +1,27 @@
 import { css } from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 
-export const focusShadow = `
-  0 0 0 2px ${getColor('blue.500')};
-`
+export const focusShadow = `0 0 0 2px ${getColor('blue.500')};`
+
 export const focusShadowWithInset = `
   0 0 0 2px ${getColor('blue.500')}, inset 0 0 0 2px white;
 `
 
 export const focusRing = css`
+  --focusRingOffset: -2px;
   outline: none;
   position: relative;
 
   &:before {
     content: '';
     border-radius: inherit;
-    bottom: -2px;
+    bottom: var(--focusRingOffset);
     box-shadow: ${focusShadow};
-    left: -2px;
+    left: var(--focusRingOffset);
     pointer-events: none;
     position: absolute;
-    right: -2px;
-    top: -2px;
+    right: var(--focusRingOffset);
+    top: var(--focusRingOffset);
     opacity: 0;
     background: transparent;
     z-index: 3;

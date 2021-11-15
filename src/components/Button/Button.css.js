@@ -1,17 +1,22 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import get from 'dash-get'
 import Spinner from '../Spinner'
 import { getColor } from '../../styles/utilities/color'
 import forEach from '../../styles/utilities/forEach'
 import variableFontSize from '../../styles/utilities/variableFontSize'
+import { focusRing } from '../../styles/mixins/focusRing.css'
 import config from './Button.config'
 
 export const ButtonUI = styled.button`
+  ${focusRing};
+  --focusRingOffset: -${config.focusOutlineOffset}px;
+
   appearance: none;
   align-items: center;
   border: 1px solid transparent;
   cursor: pointer;
   display: inline-flex;
+  font-family: var(--HSDSGlobalFontFamily);
   font-weight: normal;
   height: ${config.size.md.height}px;
   justify-content: center;
@@ -23,13 +28,10 @@ export const ButtonUI = styled.button`
   text-align: center;
   text-decoration: none;
 
-  ${({ allowContentEventPropogation }) =>
-    allowContentEventPropogation &&
-    `
-    * {
-      pointer-events: none;
-    }
-  `};
+  /* Allow content events to pass through, https://github.com/helpscout/hsds-react/pull/394 */
+  * {
+    pointer-events: none;
+  }
 
   &:hover,
   &:active,
@@ -65,24 +67,13 @@ export const ButtonUI = styled.button`
     border-bottom-left-radius: 0;
   }
 
-  &.is-block {
-    display: flex;
-    width: 100%;
+  &.is-shape-default {
+    border-radius: 3px;
+  }
+  &.is-shape-rounded {
+    border-radius: 100px;
   }
 
-  &.is-loading {
-    &.is-spinButtonOnLoading {
-      animation: SpinButtonOnLoadAnimation 700ms linear infinite;
-      will-change: transform;
-      @keyframes SpinButtonOnLoadAnimation {
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-    }
-  }
-
-  ${makeButtonShapeStyles()};
   ${makeButtonSizeStyles()};
 
   ${props => makePrimaryStyles('primary', props)};
@@ -128,7 +119,7 @@ function makePrimaryStyles(name = 'primary', props = {}) {
 }
 
 function makeButtonKindStyles(kind, config) {
-  return `
+  return css`
     &.is-${kind} {
       background: ${config.backgroundColor};
       border-color: ${config.borderColor};
@@ -162,9 +153,10 @@ function makeButtonKindStyles(kind, config) {
       }
 
       ${makeButtonStateStyles(config, 'danger')}
-      ${makeButtonStateStyles(config, 'gray')}
       ${makeButtonStateStyles(config, 'success')}
       ${makeButtonStateStyles(config, 'warning')}
+      ${makeButtonStateStyles(config, 'grey')}
+      ${makeButtonStateStyles(config, 'muted')}
 
       ${makeDisabledStyles(`
         background: ${config.disabledBackgroundColor} !important;
@@ -207,19 +199,12 @@ function makeDisabledStyles(content) {
       pointer-events: none;
       user-select: none;
       ${content}
-    }
-  `
-}
 
-function makeButtonShapeStyles() {
-  return forEach(
-    config.shape,
-    (shape, value) => `
-    &.is-shape-${shape} {
-      border-radius: ${value};
+      &:before{
+        display: none;
+      }
     }
   `
-  )
 }
 
 function makeButtonSizeStyles() {
@@ -255,41 +240,6 @@ export const LoadingWrapperUI = styled.span`
   text-decoration: inherit;
   width: 100%;
   opacity: 0;
-`
-
-export const FocusUI = styled('span')`
-  animation: ButtonFocusFadeIn 200ms;
-  bottom: -${config.focusOutlineOffset}px;
-  box-shadow: 0 0 0 ${config.focusOutlineWidth}px ${config.focusOutlineColor};
-  display: none;
-  left: -${config.focusOutlineOffset}px;
-  pointer-events: none;
-  position: absolute;
-  right: -${config.focusOutlineOffset}px;
-  top: -${config.focusOutlineOffset}px;
-
-  &.is-first {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-  &.is-notOnly {
-    border-radius: 0;
-  }
-  &.is-last {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-
-  @keyframes ButtonFocusFadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  ${makeButtonShapeStyles()};
 `
 
 export const SpinnerUI = styled(Spinner)`
