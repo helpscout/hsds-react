@@ -27,7 +27,7 @@ const config = {
       colorHover: 'white',
       colorActive: 'white',
     },
-    gray: {
+    grey: {
       backgroundColor: getColor('charcoal.200'),
       backgroundColorHover: getColor('charcoal.300'),
       backgroundColorActive: getColor('charcoal.400'),
@@ -72,6 +72,28 @@ const config = {
     disabledBackgroundColor: 'white',
     disabledBorderColor: getColor('grey.500'),
     disabledColor: getColor('grey.600'),
+    danger: {
+      backgroundColor: 'white',
+      backgroundColorHover: getColor('pink.100'),
+      backgroundColorActive: getColor('pink.200'),
+      borderColor: getColor('red.500'),
+      borderColorHover: getColor('red.600'),
+      borderColorActive: getColor('red.800'),
+      color: getColor('red.600'),
+      colorHover: getColor('red.600'),
+      colorActive: getColor('red.800'),
+    },
+    success: {
+      backgroundColor: 'white',
+      backgroundColorHover: getColor('green.100'),
+      backgroundColorActive: getColor('green.200'),
+      borderColor: getColor('green.500'),
+      borderColorHover: getColor('green.600'),
+      borderColorActive: getColor('green.700'),
+      color: getColor('green.750'),
+      colorHover: getColor('green.800'),
+      colorActive: getColor('green.900'),
+    },
   },
   tertiary: {
     backgroundColor: 'white',
@@ -142,11 +164,6 @@ const config = {
   focusOutlineWidth: 2,
   focusOutlineOffset: 3,
   focusOutlineColor: getColor('blue.500'),
-  shape: {
-    default: '3px',
-    circle: '9999px',
-    rounded: '16px',
-  },
   size: {
     xl: {
       fontSize: 14,
