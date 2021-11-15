@@ -41,6 +41,7 @@ function Combobox({
   onMenuBlur = noop,
   onMenuFocus = noop,
   onListItemSelectEvent = noop,
+  onInputChange = noop,
   renderCustomListItem = null,
   selectedItem = null,
   selectedItems,
@@ -204,6 +205,9 @@ function Combobox({
                 ['DropListToggler'],
                 onDropListLeave
               )
+            },
+            onChange: event => {
+              onInputChange(event.target.value)
             },
             onFocus: event => {
               onMenuFocus(event)
