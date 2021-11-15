@@ -91,6 +91,7 @@ export const RemoveIconUI = styled(Icon)`
 
 export const TagUI = styled('div')`
   ${focusRing}
+  --focusRingOffset: -3px;
 
   background-color: white;
   border-radius: 3px;
@@ -113,15 +114,6 @@ export const TagUI = styled('div')`
 
   &.is-all-caps {
     text-transform: uppercase;
-  }
-
-  // focus border overwrites
-  &:before {
-    border-radius: 4px;
-    bottom: -3px;
-    left: -3px;
-    right: -3px;
-    top: -3px;
   }
 
   ${makeColorStyles()};
