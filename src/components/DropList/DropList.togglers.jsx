@@ -37,7 +37,7 @@ export const SimpleButton = forwardRef(
         aria-label={a11yLabel || 'toggle menu'}
         aria-haspopup="true"
         aria-expanded={isActive}
-        buttonRef={ref}
+        ref={ref}
         className={classNames(
           className,
           'ButtonToggler',
@@ -141,7 +141,7 @@ export const SplittedButton = forwardRef(
             aria-label={a11yLabel || 'toggle menu'}
             aria-haspopup="true"
             aria-expanded={isActive}
-            buttonRef={ref}
+            ref={ref}
             className={classNames(
               'SplitButton__Toggler',
               isActive && 'is-active'
