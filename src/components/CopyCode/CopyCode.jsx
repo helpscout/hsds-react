@@ -107,7 +107,6 @@ class CopyCode extends React.PureComponent {
         <CopyButtonUI
           kind="secondary"
           onClick={this.handleCopyClick}
-          canRenderFocus
           size={buttonSize}
         >
           Copy
