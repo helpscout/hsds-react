@@ -56,11 +56,11 @@ export default function HeaderCell({ column, columns, isLoading, sortedInfo }) {
             `${TABLE_CLASSNAME}__SortableHeaderCell`,
             columnSortStatus !== 'none' && 'sorted'
           )}
-          onClick={handleClick}
         >
           <SortableCellContentUI
             align={column.align}
             className={`${TABLE_CLASSNAME}__SortableHeaderCell__title`}
+            onClick={handleClick}
           >
             {withCustomContent ? (
               generateCustomHeaderCell(column, sortedInfo)
