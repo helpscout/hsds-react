@@ -388,7 +388,7 @@ describe('Sortable', () => {
       'ascending'
     )
 
-    user.click(container.querySelector('thead th div'))
+    user.click(container.querySelector('.c-Table__SortableHeaderCell__title'))
 
     expect(regularColumnSpy).toHaveBeenCalled()
     expect(regularColumnSpy).toHaveBeenCalledWith(columns[0].columnKey)
@@ -404,7 +404,9 @@ describe('Sortable', () => {
     // Compound column sorting, should be called with 'sortKey'
     const customerHeaderCell = container.querySelectorAll('thead th')[1]
 
-    user.click(customerHeaderCell.querySelector('div'))
+    user.click(
+      customerHeaderCell.querySelector('.c-Table__SortableHeaderCell__title')
+    )
 
     expect(compoundColumnSpy).toHaveBeenCalled()
     expect(compoundColumnSpy).toHaveBeenCalledWith(columns[1].sortKey)
