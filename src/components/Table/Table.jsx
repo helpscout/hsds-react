@@ -259,6 +259,11 @@ Table.propTypes = {
       borderTableHeader: PropTypes.string,
       borderRows: PropTypes.string,
       borderColumns: PropTypes.string,
+      bgFocus: PropTypes.string,
+      bgFocusIndicator: PropTypes.string,
+      bgSelected: PropTypes.string,
+      bgSelectedHover: PropTypes.string,
+      headerRowHeight: PropTypes.string,
     }),
   ]),
   /** Customize which key from your data should be used for selection */

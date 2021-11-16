@@ -14,7 +14,7 @@ import {
   generateCustomHeaderCell,
 } from './Table.utils'
 
-export default function HeaderCell({ column, columns, isLoading, sortedInfo }) {
+export default function HeaderCell({ column, isLoading, sortedInfo }) {
   function getColumnSortStatus() {
     const colKey = Array.isArray(column.columnKey)
       ? column.sortKey
@@ -98,8 +98,6 @@ export default function HeaderCell({ column, columns, isLoading, sortedInfo }) {
 HeaderCell.propTypes = {
   /** The column */
   column: PropTypes.shape(columnShape),
-  /** List of all columns */
-  columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
   /** Whether tha table is in the loading state */
   isLoading: PropTypes.bool,
   /** When sortable, indicates which column tha table is sorted by, and in which order (ascending or descending) */

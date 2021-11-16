@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import equal from 'fast-deep-equal'
 import classNames from 'classnames'
 import { generateCellKey, columnShape, dataShape } from './Table.utils'
 import { TABLE_CLASSNAME } from './Table'
