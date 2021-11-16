@@ -1,10 +1,10 @@
 /* istanbul ignore file */
-import React, { useRef, useEffect } from 'react'
+import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
-import throttle from 'lodash.throttle'
 import { noop } from '../../utilities/other'
 import Button from '../Button/'
 import { BodyUI, FooterUI, HeaderUI } from './SidePanel.layouts.css'
+import useScrollShadow from '../../hooks/useScrollShadow'
 
 export function HeaderAndFooter({
   children,
@@ -19,32 +19,12 @@ export function HeaderAndFooter({
   const headerRef = useRef(null)
   const bodyRef = useRef(null)
   const footerRef = useRef(null)
-
-  useEffect(() => {
-    setTimeout(() => {
-      const { isBottomScrolled } = handleShadows(bodyRef)
-
-      if (isBottomScrolled) {
-        footerRef.current.classList.add('with-shadow')
-      }
-    }, 100)
-  }, [bodyRef])
-
-  const handleOnScroll = throttle(e => {
-    const { isTopScrolled, isBottomScrolled } = handleShadows(bodyRef)
-
-    if (isTopScrolled) {
-      headerRef.current.classList.add('with-shadow')
-    } else {
-      headerRef.current.classList.remove('with-shadow')
-    }
-
-    if (isBottomScrolled) {
-      footerRef.current.classList.add('with-shadow')
-    } else {
-      footerRef.current.classList.remove('with-shadow')
-    }
-  }, 100)
+  const [handleOnScroll] = useScrollShadow({
+    bottomRef: footerRef,
+    scrollableRef: bodyRef,
+    topRef: headerRef,
+    shadows: { initial: 'none' },
+  })
 
   return (
     <>
@@ -77,31 +57,6 @@ export function HeaderAndFooter({
       </FooterUI>
     </>
   )
-}
-
-function handleShadows(scrollableRef) {
-  if (!scrollableRef.current) {
-    return {
-      isTopScrolled: false,
-      isBottomScrolled: false,
-    }
-  }
-
-  const scrollable = scrollableRef.current
-  const style = window.getComputedStyle(scrollable)
-  const scrollableScrollHeight = scrollable.scrollHeight
-  const scrollableHeight = scrollable.offsetHeight
-  const scrollablePaddingTop =
-    Number.parseInt(style.paddingTop.replace('px', ''), 10) - 10
-  const scrollablePaddingBottom =
-    Number.parseInt(style.paddingBottom.replace('px', ''), 10) + 10
-
-  return {
-    isTopScrolled: scrollable.scrollTop - scrollablePaddingTop > 0,
-    isBottomScrolled:
-      scrollable.scrollTop + scrollableHeight + scrollablePaddingBottom <
-      scrollableScrollHeight,
-  }
 }
 
 HeaderAndFooter.propTypes = {

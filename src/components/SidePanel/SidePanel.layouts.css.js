@@ -9,10 +9,6 @@ export const HeaderUI = styled('header')`
   transition: box-shadow 0.5s;
   z-index: 3;
 
-  &.with-shadow {
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 0 0 5px rgba(0, 0, 0, 0.05);
-  }
-
   .SidePanel__Heading {
     margin: 10px 0 4px 0;
     font-weight: 500;
@@ -44,10 +40,6 @@ export const FooterUI = styled('footer')`
   background-color: #fff;
   transition: box-shadow 0.5s;
   z-index: 3;
-
-  &.with-shadow {
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 0 0 5px rgba(0, 0, 0, 0.05);
-  }
 
   .c-Button {
     width: 100%;
