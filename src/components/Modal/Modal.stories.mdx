@@ -8,7 +8,7 @@ import DropList from '../DropList'
 import { SimpleButton } from '../DropList/DropList.togglers'
 import EditableTextarea from '../EditableTextarea'
 import EditableField from '../EditableField'
-import { MyModal } from './Modal.storiesHelpers'
+import { ModalWithTriggerAndInput, MyModal } from './Modal.storiesHelpers'
 
 <Meta
   title="Components/Overlay/Modal"
@@ -228,5 +228,11 @@ There are components like `DropList`, `EditableField` and `EditableTextarea` tha
 <Canvas>
   <Story name="focusing element from content">
     <MyModal />
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="modal trigger next to input">
+    <ModalWithTriggerAndInput />
   </Story>
 </Canvas>

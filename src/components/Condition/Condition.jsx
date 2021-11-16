@@ -63,9 +63,12 @@ export class Condition extends React.PureComponent {
       onChange,
       value,
       noSelect,
+      ariaDescribedBy,
       ...rest
     } = this.props
 
+    const selectedItem = this.getSelectedItem(options, value)
+    const baseSelectLabel = 'conditions toggle menu'
     return (
       <ConditionUI
         {...getValidProps(rest)}
@@ -88,8 +91,17 @@ export class Condition extends React.PureComponent {
                 <DropList
                   onSelect={this.handleConditionSelect}
                   items={options}
-                  selection={this.getSelectedItem(options, value)}
-                  toggler={<SelectTag aria-label="conditions toggle menu" />}
+                  selection={selectedItem}
+                  toggler={
+                    <SelectTag
+                      a11yLabel={
+                        selectedItem
+                          ? `${baseSelectLabel}, ${selectedItem.label} currently selected`
+                          : baseSelectLabel
+                      }
+                      aria-describedby={ariaDescribedBy}
+                    />
+                  }
                 />
               )}
             </OptionsWrapperUI>
@@ -129,6 +141,8 @@ Condition.propTypes = {
   'data-cy': PropTypes.string,
   /** Flag indicating if should not render Select component */
   noSelect: PropTypes.bool,
+  /** ID of element used for aria-describedby attribute */
+  ariaDescribedBy: PropTypes.string,
 }
 
 export default Condition
