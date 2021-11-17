@@ -89,8 +89,8 @@ export const TableUI = styled('table')`
   }
 
   th {
-    padding: 8px 14px;
-    height: 24px;
+    padding: 0 14px;
+    height: ${props => props.theme.headerRowHeight};
     color: ${props => props.theme.fontColorHeader};
   }
 
@@ -210,6 +210,8 @@ export const TableUI = styled('table')`
 export const HeaderCellUI = styled('th')`
   text-align: ${props => props.align || 'left'};
   width: ${props => props.cellWidth || 'auto'};
+  font-size: 13px;
+  font-weight: 500;
 `
 
 export const CellUI = styled('td')`
@@ -217,19 +219,39 @@ export const CellUI = styled('td')`
 `
 
 export const SortableCellUI = styled('div')`
-  display: flex;
-  align-items: center;
-  justify-content: ${props => getCellAlignment(props.align)};
-  cursor: pointer;
-
-  .SortableCell_title {
-    margin: -2px 5px 0 0;
+  .is-iconName-caret-down,
+  .is-iconName-caret-up {
+    margin-left: 4px;
+    margin-right: -2px;
   }
 
-  &:hover {
-    .SortableCell_title {
-      opacity: 0.8;
-    }
+  .column-title-as-icon + .is-iconName-caret-down,
+  .column-title-as-icon + .is-iconName-caret-up {
+    margin-left: 0;
+    margin-right: -2px;
+  }
+
+  .column-title-as-icon {
+    margin-left: -2px;
+    margin-top: -4px;
+    margin-bottom: -4px;
+  }
+`
+
+export const SortableCellContentUI = styled('div')`
+  display: inline-flex;
+  align-items: center;
+  justify-content: ${props => getCellAlignment(props.align)};
+  padding: 6px 8px;
+  margin-left: -8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+
+  &:hover,
+  .sorted & {
+    color: ${getColor('charcoal.700')};
+    background-color: ${getColor('grey.300')};
   }
 `
 

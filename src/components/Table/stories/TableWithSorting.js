@@ -46,6 +46,7 @@ export default class TablePlayground extends Component {
           columnKey: 'companyName',
           align: 'center',
           width: '35%',
+          renderHeaderCell: { iconName: 'chat' },
           sorter: this.sortAlphabetically,
         },
       ],

@@ -8,7 +8,7 @@ import Button from '../Button'
 import Scrollable from '../Scrollable'
 import { HeaderUI, TableWrapperUI, TableUI, LoadingUI } from './Table.css'
 import { defaultSkin, chooseSkin } from './Table.skins'
-import { columnShape, dataShape } from './Table.utils'
+import { columnShape, dataShape, isTableSortable } from './Table.utils'
 import { useTable } from './Table.hooks'
 import TableBody from './Table.Body'
 import TableHead from './Table.Head'
@@ -111,6 +111,7 @@ export function Table({
         className={classNames(
           `${TABLE_CLASSNAME}__Wrapper`,
           isCollapsed && 'is-collapsed',
+          isTableSortable(columns) && 'is-sortable',
           className
         )}
         containerWidth={containerWidth}
@@ -258,11 +259,16 @@ Table.propTypes = {
       borderTableHeader: PropTypes.string,
       borderRows: PropTypes.string,
       borderColumns: PropTypes.string,
+      bgFocus: PropTypes.string,
+      bgFocusIndicator: PropTypes.string,
+      bgSelected: PropTypes.string,
+      bgSelectedHover: PropTypes.string,
+      headerRowHeight: PropTypes.string,
     }),
   ]),
   /** Customize which key from your data should be used for selection */
   selectionKey: PropTypes.string,
-  /** When sortable, indicates which column tha table is sorted by, and in which order (ascending or descending) */
+  /** When sortable, indicates which column the table is sorted by, and in which order (ascending or descending) */
   sortedInfo: PropTypes.shape({
     columnKey: PropTypes.string,
     order: PropTypes.string,

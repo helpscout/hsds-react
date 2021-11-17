@@ -67,6 +67,7 @@ export const defaultColumnsCustomContent = [
   },
   {
     title: 'Company',
+    renderHeaderCell: { iconName: 'chat' },
     columnKey: 'companyName',
     width: '25%',
   },

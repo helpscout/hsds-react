@@ -67,7 +67,9 @@ Full list of acceptable fields 👇:
 - `title`: The string that renders by default in the header for this column
 - `width`: Column width, ideally the sum of all the columns should be 100%
 - `align`: Horizontal cell alignment for this column, one of "left" (default), "center" or "right"
-- `renderHeaderCell`: To customize how to render the column header. A function that takes the column object and returns a React Component/Element
+- `renderHeaderCell`: To customize how to render the column header.
+  - A function that takes the column object and returns a React Component/Element
+  - If you need an icon, you can pass on object `{ iconName: 'chat' }` to get the `<Icon />` with the correct styles applied.
 - `renderCell`: To customize how each cell renders it corresponding data on this column. A function that takes the corresponding data and returns a React Component/Element, its arguments are the data provided by `columnKey` above, if using nested data, access it by replaceing the dot (`.`) with an underscore (`_`), for example: `customer.email` in `columnKey` becomes `customer_email` in `renderCell` (see code example below). It also gives you access to the `row`
 - `sorter`: A function that instructs how to sort the data based on this column
 - `sortKey`: If this column contains more than one columnKey, sorting will be based on this value which should exist in the list of Column Keys for this column.

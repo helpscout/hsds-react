@@ -1,9 +1,15 @@
+import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { createUniqueIDFactory } from '../../utilities/id'
+import { isFunction, isObject } from '../../utilities/is'
 import { TABLE_CLASSNAME } from './Table'
+import Icon from '../Icon'
 
 const uniqueCellKeyFactory = createUniqueIDFactory('Cell')
+const renderHeaderCellObjectShape = {
+  iconName: PropTypes.string,
+}
 
 export const columnShape = {
   title: PropTypes.string,
@@ -14,7 +20,10 @@ export const columnShape = {
   width: PropTypes.string,
   align: PropTypes.string,
   renderCell: PropTypes.func,
-  renderHeaderCell: PropTypes.func,
+  renderHeaderCell: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape(renderHeaderCellObjectShape),
+  ]),
   sortKey: PropTypes.string,
   sorter: PropTypes.func,
   show: PropTypes.bool,
@@ -100,4 +109,34 @@ export function createColumnChooserListItems(columns, columnChooserResetLabel) {
       action: 'RESET',
     },
   ])
+}
+
+export function isTableSortable(columns) {
+  return (
+    Array.isArray(columns) && columns.find(column => Boolean(column.sorter))
+  )
+}
+
+export function generateCustomHeaderCell(column, sortedInfo) {
+  if (isFunction(column.renderHeaderCell)) {
+    return column.renderHeaderCell(column, sortedInfo)
+  }
+
+  if (isObject(column.renderHeaderCell)) {
+    const { iconName } = column.renderHeaderCell
+
+    return iconName ? (
+      <Icon
+        className="column-title-as-icon"
+        name={iconName}
+        size={24}
+        title={column.title}
+        ignoreClick={false}
+      />
+    ) : (
+      'Please pass iconName'
+    )
+  }
+
+  return null
 }

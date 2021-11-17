@@ -106,6 +106,26 @@ describe('Table Header', () => {
     expect(nameHeaderCell.text()).toBe('Name')
   })
 
+  test('Icon Header cells', () => {
+    const { container } = render(
+      <Table
+        tableDescription="test-table"
+        columns={defaultColumnsCustomContent}
+        data={createFakeCustomers({ amount: 5 })}
+      />
+    )
+
+    const headerCellWithIcon = container.querySelector(
+      '.c-Table__HeaderCell.Column_Company'
+    )
+
+    expect(
+      headerCellWithIcon.querySelector(
+        '.c-Icon.is-iconName-chat.column-title-as-icon'
+      )
+    ).toBeInTheDocument()
+  })
+
   test('Custom cells', () => {
     const wrapper = mount(
       <Table
@@ -350,6 +370,7 @@ describe('Sortable', () => {
     expect(container.querySelector(`thead th`).getAttribute('aria-sort')).toBe(
       'none'
     )
+    expect(container.querySelector('.is-sortable')).toBeInTheDocument()
 
     rerender(
       <Table
@@ -367,7 +388,7 @@ describe('Sortable', () => {
       'ascending'
     )
 
-    user.click(container.querySelector('thead th div'))
+    user.click(container.querySelector('.c-Table__SortableHeaderCell__title'))
 
     expect(regularColumnSpy).toHaveBeenCalled()
     expect(regularColumnSpy).toHaveBeenCalledWith(columns[0].columnKey)
@@ -383,7 +404,9 @@ describe('Sortable', () => {
     // Compound column sorting, should be called with 'sortKey'
     const customerHeaderCell = container.querySelectorAll('thead th')[1]
 
-    user.click(customerHeaderCell.querySelector('div'))
+    user.click(
+      customerHeaderCell.querySelector('.c-Table__SortableHeaderCell__title')
+    )
 
     expect(compoundColumnSpy).toHaveBeenCalled()
     expect(compoundColumnSpy).toHaveBeenCalledWith(columns[1].sortKey)
