@@ -1,9 +1,7 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import HSDSButton from '../Button'
-
-import { FocusUI } from '../Button/Button.css'
-import config from '../Button/Button.config'
+import IconButton from '../IconButton'
 
 import {
   focusRing,
@@ -132,64 +130,52 @@ export const SelectErrorTooltipIconUI = styled('div')`
   margin-left: 8px;
 `
 
-export const MeatButtonUI = styled('button')`
-  width: 24px;
-  height: 24px;
-  padding: 0.5px 0px 0px 0.5px;
-  border: 0;
-  border-radius: 3px;
-  background-color: transparent;
+export const MeatButtonUI = styled(IconButton)`
+  --buttonHeight: 24px;
+  --buttonBackgroundColor: transparent;
+  --buttonColor: ${getColor('charcoal.400')};
+  --buttonColorHover: ${getColor('charcoal.500')};
+  --buttonColorActive: ${getColor('charcoal.700')};
+  --buttonBackgroundColorHover: ${getColor('grey.300')};
 
-  &:hover {
-    cursor: pointer;
-  }
-
-  &:focus {
-    outline: 0;
-    box-shadow: inset 0 0 0 2px ${getColor('blue.500')};
-  }
-`
-
-export const IconButtonUI = styled('button')`
-  ${focusRing}
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 45px;
-  height: 34px;
-  padding: 5px;
-  border: 0;
-  border-radius: 3px;
-  background-color: white;
-  color: ${getColor('charcoal.400')};
-
-  &.is-circle {
-    border-radius: 200%;
-    width: 36px;
-    height: 36px;
-    padding: 4px;
-  }
-
-  &:hover {
-    cursor: pointer;
-    background-color: ${getColor('grey.300')};
-  }
-
-  &:hover {
-    color: ${getColor('charcoal.500')};
+  &.is-shape-circle.is-md {
+    height: 24px !important;
+    width: 24px !important;
+    padding: 0.5px 0px 0px 0.5px;
   }
 
   &.is-active,
   &[aria-expanded='true'] {
-    color: ${getColor('charcoal.700')};
+    color: var(--buttonColorActive);
 
     &:not(:focus-visible) {
-      background-color: ${getColor('grey.300')};
+      background-color: var(--buttonBackgroundColorHover);
     }
   }
+`
 
-  .is-iconName-caret-down {
-    margin-left: -3px;
+export const IconButtonUI = styled(IconButton)`
+  width: 45px !important;
+  height: 34px;
+  padding: 4px;
+  --buttonBackgroundColor: white;
+  --buttonColor: ${getColor('charcoal.400')};
+  --buttonColorHover: ${getColor('charcoal.500')};
+  --buttonColorActive: ${getColor('charcoal.700')};
+  --buttonBackgroundColorHover: ${getColor('grey.300')};
+
+  &.is-shape-circle.is-md {
+    height: 36px !important;
+    width: 36px !important;
+    padding: 4px;
+  }
+
+  &.is-active,
+  &[aria-expanded='true'] {
+    color: var(--buttonColorActive);
+
+    &:not(:focus-visible) {
+      background-color: var(--buttonBackgroundColorHover);
+    }
   }
 `

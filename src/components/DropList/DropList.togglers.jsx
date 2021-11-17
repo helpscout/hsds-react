@@ -4,7 +4,6 @@ import { noop } from '../../utilities/other'
 import ControlGroup from '../ControlGroup'
 import HSDSButton from '../Button'
 import Icon from '../Icon'
-import VisuallyHidden from '../VisuallyHidden'
 import { STATES } from '../../constants'
 import Tooltip from '../Tooltip'
 import {
@@ -254,7 +253,7 @@ export const MeatButton = forwardRef(
   ) => {
     const tooltipRef = useRef()
 
-    return (
+    const component = (
       <MeatButtonUI
         aria-haspopup="true"
         aria-expanded={isActive}
@@ -269,29 +268,31 @@ export const MeatButton = forwardRef(
         onClick={onClick}
         ref={ref}
         type="button"
+        shape="circle"
+        iconSize={iconSize}
+        icon={meatIcon}
+        isWithHiddenTitle={true}
         {...rest}
+      />
+    )
+
+    return withTooltip ? (
+      <Tooltip
+        animationDelay={0}
+        animationDuration={0}
+        getTippyInstance={instance => {
+          tooltipRef.current = instance.reference
+        }}
+        placement="top-end"
+        title={a11yLabel}
+        triggerTarget={tooltipRef.current && tooltipRef.current.parentElement}
+        withTriggerWrapper={false}
+        {...tooltipProps}
       >
-        {withTooltip ? (
-          <Tooltip
-            animationDelay={0}
-            animationDuration={0}
-            getTippyInstance={instance => {
-              tooltipRef.current = instance.reference
-            }}
-            placement="top-end"
-            title={a11yLabel}
-            triggerTarget={
-              tooltipRef.current && tooltipRef.current.parentElement
-            }
-            {...tooltipProps}
-          >
-            <Icon name={meatIcon} size={iconSize} />
-          </Tooltip>
-        ) : (
-          <Icon name={meatIcon} size={iconSize} />
-        )}
-        {a11yLabel ? <VisuallyHidden>{a11yLabel}</VisuallyHidden> : null}
-      </MeatButtonUI>
+        {component}
+      </Tooltip>
+    ) : (
+      component
     )
   }
 )
@@ -324,21 +325,21 @@ export const IconBtn = forwardRef(
         className={classNames(
           className,
           'IconButtonToggler',
-          isActive && 'is-active',
-          shape && `is-${shape}`
+          isActive && 'is-active'
         )}
         data-cy="DropList.IconButtonToggler"
         data-testid="DropList.IconButtonToggler"
         isActive={isActive}
         onClick={onClick}
+        shape={shape}
+        icon={iconName}
         ref={ref}
         type="button"
+        withCaret={withCaret}
+        iconSize={iconSize}
+        isWithHiddenTitle={true}
         {...rest}
-      >
-        <Icon name={iconName} size={iconSize} />
-        {a11yLabel ? <VisuallyHidden>{a11yLabel}</VisuallyHidden> : null}
-        {withCaret ? <Icon name="caret-down" size={caretSize} /> : null}
-      </IconButtonUI>
+      />
     )
 
     return withTooltip ? (
