@@ -164,7 +164,7 @@ WrappedButton.propTypes = {
    * 'default': rounded corner.
    * 'rounded': bigger border-radius, almost a circle (100px radius).
    */
-  shape: PropTypes.oneOf(['default', 'rounded']),
+  shape: PropTypes.oneOf(['default', 'rounded', 'circle']),
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
 }
