@@ -27,7 +27,9 @@ describe('DropList', () => {
     render(<Condition options={options} value="ron" />)
 
     expect(
-      screen.getByRole('button', { name: 'conditions toggle menu' })
+      screen.getByRole('button', {
+        name: 'conditions toggle menu, Ron currently selected',
+      })
     ).toHaveTextContent('Ron')
   })
 
@@ -39,7 +41,7 @@ describe('DropList', () => {
     const mock = jest.fn()
     render(<Condition options={options} value="ron" onChange={mock} />)
     userEvent.click(
-      screen.getByRole('button', { name: 'conditions toggle menu' })
+      screen.getByRole('button', { name: /conditions toggle menu/ })
     )
 
     await waitFor(() => expect(screen.getAllByRole('option').length).toBe(2))
@@ -55,7 +57,7 @@ describe('DropList', () => {
     render(<Condition options={options} value="brick" noSelect={true} />)
 
     expect(
-      screen.queryByRole('button', { name: 'conditions toggle menu' })
+      screen.queryByRole('button', { name: /conditions toggle menu/ })
     ).not.toBeInTheDocument()
   })
 
@@ -65,7 +67,19 @@ describe('DropList', () => {
     render(<Condition options={options} value="brick" noSelect={false} />)
 
     expect(
-      screen.getByRole('button', { name: 'conditions toggle menu' })
+      screen.getByRole('button', { name: /conditions toggle menu/ })
     ).toBeInTheDocument()
+  })
+
+  test('Allows to set aria-describedby for toggle menu', () => {
+    const options = [{ value: 'brick', label: 'Brick' }]
+
+    render(
+      <Condition options={options} value="brick" ariaDescribedBy="some-id" />
+    )
+
+    expect(
+      screen.getByRole('button', { name: /conditions toggle menu/ })
+    ).toHaveAttribute('aria-describedby', 'some-id')
   })
 })

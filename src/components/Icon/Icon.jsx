@@ -66,10 +66,9 @@ const Icon = props => {
       className={componentClassName}
       onClick={onClick}
       data-icon-name={name}
+      title={iconTitle}
     >
-      <span className="c-Icon__icon" title={iconTitle}>
-        {IconComponent && <IconComponent />}
-      </span>
+      <span className="c-Icon__icon">{IconComponent && <IconComponent />}</span>
       {caretMarkup}
       {isWithHiddenTitle ? <VisuallyHidden>{iconTitle}</VisuallyHidden> : null}
     </IconUI>

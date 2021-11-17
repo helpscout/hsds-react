@@ -16,6 +16,7 @@ export const defaultSkin = {
   bgFocusIndicator: getColor('blue.500'),
   bgSelected: getColor('blue.100'),
   bgSelectedHover: getColor('blue.100'),
+  headerRowHeight: '48px',
 }
 
 export const alternativeSkin = {

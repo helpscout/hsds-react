@@ -1,11 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import Icon from '../Icon'
-import { SortableCellUI, HeaderCellUI } from './Table.css'
+import {
+  SortableCellUI,
+  SortableCellContentUI,
+  HeaderCellUI,
+} from './Table.css'
 import { TABLE_CLASSNAME } from './Table'
-import { columnShape, generateCellClassNames } from './Table.utils'
+import {
+  columnShape,
+  generateCellClassNames,
+  generateCustomHeaderCell,
+} from './Table.utils'
 
-export default function HeaderCell({ column, columns, isLoading, sortedInfo }) {
+export default function HeaderCell({ column, isLoading, sortedInfo }) {
   function getColumnSortStatus() {
     const colKey = Array.isArray(column.columnKey)
       ? column.sortKey
@@ -30,29 +39,43 @@ export default function HeaderCell({ column, columns, isLoading, sortedInfo }) {
   }
 
   function renderCellContents() {
-    if (column.renderHeaderCell) {
-      return column.renderHeaderCell(column, sortedInfo)
+    const withCustomContent = column.renderHeaderCell != null
+    const isSortable = column.sorter != null
+
+    if (withCustomContent && !isSortable) {
+      return generateCustomHeaderCell(column, sortedInfo)
     }
 
-    if (column.sorter) {
+    if (isSortable) {
       const columnSortStatus = getColumnSortStatus()
 
       return (
         <SortableCellUI
           align={column.align}
-          className={`${TABLE_CLASSNAME}__SortableHeaderCell`}
-          onClick={handleClick}
+          className={classNames(
+            `${TABLE_CLASSNAME}__SortableHeaderCell`,
+            columnSortStatus !== 'none' && 'sorted'
+          )}
         >
-          <span className={`${TABLE_CLASSNAME}__SortableHeaderCell__title`}>
-            {column.title}
-          </span>
-          {columnSortStatus !== 'none' ? (
-            <Icon
-              name={
-                columnSortStatus === 'descending' ? 'caret-down' : 'caret-up'
-              }
-            />
-          ) : null}
+          <SortableCellContentUI
+            align={column.align}
+            className={`${TABLE_CLASSNAME}__SortableHeaderCell__title`}
+            onClick={handleClick}
+          >
+            {withCustomContent ? (
+              generateCustomHeaderCell(column, sortedInfo)
+            ) : (
+              <span>{column.title}</span>
+            )}
+            {columnSortStatus !== 'none' ? (
+              <Icon
+                name={
+                  columnSortStatus === 'descending' ? 'caret-down' : 'caret-up'
+                }
+                size={13}
+              />
+            ) : null}
+          </SortableCellContentUI>
         </SortableCellUI>
       )
     }
@@ -75,8 +98,6 @@ export default function HeaderCell({ column, columns, isLoading, sortedInfo }) {
 HeaderCell.propTypes = {
   /** The column */
   column: PropTypes.shape(columnShape),
-  /** List of all columns */
-  columns: PropTypes.arrayOf(PropTypes.shape(columnShape)),
   /** Whether tha table is in the loading state */
   isLoading: PropTypes.bool,
   /** When sortable, indicates which column tha table is sorted by, and in which order (ascending or descending) */

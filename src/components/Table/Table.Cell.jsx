@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import equal from 'fast-deep-equal'
 import get from 'lodash.get'
 import { isObject } from '../../utilities/is'
 import Truncate from '../Truncate'
@@ -69,12 +68,4 @@ TableCell.propTypes = {
   row: PropTypes.shape(dataShape),
 }
 
-function areEqual(prevProps, nextProps) {
-  if (equal(prevProps, nextProps)) {
-    return true
-  }
-
-  return false
-}
-
-export default React.memo(TableCell, areEqual)
+export default TableCell
