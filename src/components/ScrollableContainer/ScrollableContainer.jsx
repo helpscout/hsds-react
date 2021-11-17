@@ -19,6 +19,7 @@ function ScrollableContainer({
   width = '300px',
   height = '500px',
   shadows = {},
+  enableSimpleBarSupport,
 }) {
   const headerRef = useRef(null)
   const bodyRef = useRef(null)
@@ -29,13 +30,41 @@ function ScrollableContainer({
     scrollableRef: bodyRef,
     shadows,
     topRef: headerRef,
+    enableSimpleBarSupport,
   })
+
+  function renderBody() {
+    if (body) {
+      if (enableSimpleBarSupport) {
+        return React.cloneElement(body, {
+          onScroll: handleOnScroll,
+          ref: bodyRef,
+        })
+      }
+
+      return (
+        <BodyUI
+          className={classNames(
+            'ScrollableContainer__Body',
+            body.props.className
+          )}
+          component={React.cloneElement(body, {
+            ...body.props,
+            ref: bodyRef,
+          })}
+          onScroll={handleOnScroll}
+        />
+      )
+    }
+
+    return null
+  }
 
   return (
     <ContainerScrollUI
       className={classNames('c-ScrollableContainer', className)}
       data-cy={dataCy}
-      height={height}
+      height={enableSimpleBarSupport ? 'auto' : height}
       width={width}
     >
       {header ? (
@@ -50,16 +79,7 @@ function ScrollableContainer({
           })}
         />
       ) : null}
-      {body ? (
-        <BodyUI
-          className={classNames(
-            'ScrollableContainer__Body',
-            body.props.className
-          )}
-          component={React.cloneElement(body, { ...body.props, ref: bodyRef })}
-          onScroll={handleOnScroll}
-        />
-      ) : null}
+      {renderBody()}
       {footer ? (
         <FooterUI
           className={classNames(
@@ -90,6 +110,8 @@ ScrollableContainer.propTypes = {
   body: PropTypes.element,
   /** If you're animating a component in, the scrollable element (body) might not have its height determined yet until that animation completes, pass a number in ms equal or larger to the length of the animation to account for this and give React time to get the size. */
   drawInitialShadowsDelay: PropTypes.number,
+  /** If you want to use 'simplebar-react' in the body, turn this flag on */
+  enableSimpleBarSupport: PropTypes.bool,
   /** An element to render fixed at the top of the container */
   header: PropTypes.element,
   /** An element to render fixed at the bottom of the container */

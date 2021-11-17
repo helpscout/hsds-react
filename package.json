@@ -110,6 +110,7 @@
     "react-sortable-hoc": "^1.10.0",
     "react-textarea-autosize": "^7.1.0",
     "react-transition-group": "2.5.3",
+    "simplebar-react": "^2.3.6",
     "use-deep-compare-effect": "^1.6.1",
     "warning": "4.0.3"
   },

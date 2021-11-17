@@ -6,6 +6,7 @@ import {
   HeaderUI,
   FooterUI,
   BodyUI,
+  SimpleBarExample,
 } from './ScrollableContainer.storiesHelpers'
 import Button from '../Button'
 
@@ -101,3 +102,63 @@ This component is a ready to use container for when you need a layout when the m
 ### Props
 
 <ArgsTable of={ScrollableContainer} />
+
+## Usage with 'simplebar-react'
+
+Since we sometimes use this library, it made sense to add support to it, all you need is to turn the `enableSimpleBarSupport` to `true`:
+
+```jsx
+import SimpleBar from 'simplebar-react'
+import 'simplebar/dist/simplebar.min.css'
+// Those imports are up to you, not HSDS
+
+export const SimpleBarExample = function () {
+  return (
+    <ScrollableContainerUI
+      enableSimpleBarSupport
+      header={
+        <HeaderUI>
+          <h1>Heading</h1>
+        </HeaderUI>
+      }
+      body={
+        <SimpleBar style={{ maxHeight: 300 }}>
+          <p>
+            Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+            duis ea laborum ex. Reprehenderit consequat officia ea id ex
+            exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+            Enim incididunt est velit pariatur adipisicing labore dolore anim
+            cillum.
+          </p>
+          <p>
+            Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+            duis ea laborum ex. Reprehenderit consequat officia ea id ex
+            exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+            Enim incididunt est velit pariatur adipisicing labore dolore anim
+            cillum.
+          </p>
+        </SimpleBar>
+      }
+      footer={
+        <FooterUI>
+          <Button kind="primary">Action!</Button>
+        </FooterUI>
+      }
+    />
+  )
+}
+```
+
+<Canvas>
+  <Story name="simplebar">
+    <div
+      style={{
+        background: '#005CA4',
+        minHeight: '500px',
+        padding: '50px',
+      }}
+    >
+      <SimpleBarExample />
+    </div>
+  </Story>
+</Canvas>

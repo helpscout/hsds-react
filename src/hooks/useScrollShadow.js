@@ -10,6 +10,7 @@ const BOX_SHADOW_SCROLLED =
 export default function useScrollShadow({
   bottomRef,
   drawInitialShadowsDelay = 0,
+  enableSimpleBarSupport,
   scrollableRef,
   shadows = {},
   topRef,
@@ -23,7 +24,8 @@ export default function useScrollShadow({
         const topElement = topRef && topRef.current
         const bottomElement = bottomRef && bottomRef.current
         const { isBottomScrolled, isTopScrolled } = handleShadows(
-          scrollableRef.current
+          scrollableRef.current,
+          enableSimpleBarSupport
         )
 
         setShadows(topElement, isTopScrolled, { initialShadow, scrolledShadow })
@@ -42,7 +44,8 @@ export default function useScrollShadow({
 
   const handleOnScroll = throttle(() => {
     const { isTopScrolled, isBottomScrolled } = handleShadows(
-      scrollableRef.current
+      scrollableRef.current,
+      enableSimpleBarSupport
     )
     const topElement = topRef && topRef.current
     const bottomElement = bottomRef && bottomRef.current
@@ -72,7 +75,9 @@ function setShadows(element, isScrolled, { initialShadow, scrolledShadow }) {
   }
 }
 
-function handleShadows(scrollable) {
+function handleShadows(someRef, enableSimpleBarSupport = false) {
+  const scrollable = enableSimpleBarSupport ? someRef.contentWrapperEl : someRef
+
   if (!scrollable) {
     return {
       isTopScrolled: false,
