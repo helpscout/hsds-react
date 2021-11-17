@@ -1,6 +1,10 @@
 import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs/blocks'
 import AvatarsSelectionModal from './AvatarsSelectionModal'
-import { exampleAvatarsUsers } from './AvatarsSelectionModal.storiesHelpers'
+import {
+  DefaultAvatarsSelectionModal,
+  PreSelectedAvatarsSelectionModal,
+  SingleSelectionAvatarsSelectionModal,
+} from './AvatarsSelectionModal.storiesHelpers'
 import { number } from '@storybook/addon-knobs'
 
 <Meta
@@ -14,33 +18,32 @@ AvatarsSelectionModal component is a group of elements that can be used to selec
 
 This component supports multi and single select of avatars. If `selectionLimit` is `1`, it would be possible to select new avatar without the need to de-select previous. In multi select mode, old avatar need to be de-selected to select a new one.
 
+<Canvas>
+  <Story name="default">
+    <DefaultAvatarsSelectionModal />
+  </Story>
+</Canvas>
+
+#### Reference
+
+- **Designer**: Nikki, Alex
+- **Engineering**: Terrence, Jakub
+- **Usage**: Messages, Beacons
+
+<br />
+<br />
+
 ### Props
 
 <ArgsTable of={AvatarsSelectionModal} />
 
-### Stories
-
-### Multiple selection
-
-<Canvas>
-  <Story name="default">
-    <AvatarsSelectionModal
-      isOpen={true}
-      availableUsers={exampleAvatarsUsers}
-      selectionLimit={number('selectionLimit', 5)}
-    />
-  </Story>
-</Canvas>
+## Stories
 
 ### Single selection
 
 <Canvas>
   <Story name="Single selection">
-    <AvatarsSelectionModal
-      isOpen={true}
-      availableUsers={exampleAvatarsUsers}
-      selectionLimit={1}
-    />
+    <SingleSelectionAvatarsSelectionModal />
   </Story>
 </Canvas>
 
@@ -48,14 +51,6 @@ This component supports multi and single select of avatars. If `selectionLimit` 
 
 <Canvas>
   <Story name="With initial avatars selected">
-    <AvatarsSelectionModal
-      isOpen={true}
-      availableUsers={exampleAvatarsUsers}
-      selectionLimit={5}
-      initiallySelectedUsers={[
-        exampleAvatarsUsers[0].id,
-        exampleAvatarsUsers[5].id,
-      ]}
-    />
+    <PreSelectedAvatarsSelectionModal />
   </Story>
 </Canvas>
