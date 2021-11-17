@@ -71,12 +71,14 @@ export const WrappedButton = forwardRef(function Button(props, ref) {
   )
 
   const type = submit ? 'submit' : 'button'
-  const selector = Boolean(props.href) ? 'a' : 'button'
+  const isLink = Boolean(props.href) || Boolean(props.to)
+  const selector = isLink ? 'a' : 'button'
 
   const childrenMarkup = getChildrenMarkup()
 
   return (
     <ButtonUI
+      data-testid="Button"
       {...getValidProps(rest)}
       className={componentClassName}
       disabled={isDisabled}
