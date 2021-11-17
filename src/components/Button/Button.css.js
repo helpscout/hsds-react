@@ -73,18 +73,18 @@ export const ButtonUI = styled.button`
     text-decoration: var(--buttonTextDecorationHover);
   }
 
+  &:focus,
+  &.is-focused {
+    color: var(--buttonColor);
+    text-decoration: var(--buttonTextDecorationFocus);
+  }
+
   &:active,
   &.is-active {
     background: var(--buttonBackgroundColorActive);
     border-color: var(--buttonBorderColorActive);
     color: var(--buttonColorActive);
     text-decoration: var(--buttonTextDecorationActive);
-  }
-
-  &:focus,
-  &.is-focused {
-    color: var(--buttonColor);
-    text-decoration: var(--buttonTextDecorationFocus);
   }
 
   &.is-disabled,
