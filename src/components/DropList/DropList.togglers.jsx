@@ -6,6 +6,7 @@ import HSDSButton from '../Button'
 import Icon from '../Icon'
 import { STATES } from '../../constants'
 import Tooltip from '../Tooltip'
+import VisuallyHidden from '../VisuallyHidden'
 import {
   IconButtonUI,
   MeatButtonUI,
@@ -337,7 +338,8 @@ export const IconBtn = forwardRef(
         type="button"
         withCaret={withCaret}
         iconSize={iconSize}
-        isWithHiddenTitle={true}
+        isWithHiddenTitle={Boolean(a11yLabel)}
+        iconTitle={a11yLabel}
         {...rest}
       />
     )

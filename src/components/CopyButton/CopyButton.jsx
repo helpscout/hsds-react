@@ -12,7 +12,16 @@ import {
 } from './CopyButton.css'
 
 const CopyButton = props => {
-  const { className, size, icon, label, onReset, resetTimeout, ...rest } = props
+  const {
+    className,
+    size,
+    icon,
+    label,
+    onReset,
+    resetTimeout,
+    onClick,
+    ...rest
+  } = props
 
   const [shouldRenderConfirmation, setConfirmation] = useState()
   const confirmationTimeout = useRef()
@@ -28,12 +37,13 @@ const CopyButton = props => {
     }
   }, [])
 
-  const handleClick = () => {
+  const handleClick = e => {
     if (confirmationTimeout.current) {
       clearTimeout(confirmationTimeout)
     }
 
     setConfirmation(true)
+    onClick(e)
 
     confirmationTimeout.current = setTimeout(() => {
       setConfirmation(false)
