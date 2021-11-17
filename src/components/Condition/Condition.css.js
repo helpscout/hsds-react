@@ -72,7 +72,9 @@ export const SplittedButtonUI = styled(SplittedButton)`
 
     & .SplitButton__Toggler {
       /* There's already important used in a component, so I have to use it to overwrite */
-      min-width: 20px !important;
+      /* min-width: 20px !important; */
+      /* width: 20px; */
+      --buttonPadding: 0;
       width: 20px;
     }
 
