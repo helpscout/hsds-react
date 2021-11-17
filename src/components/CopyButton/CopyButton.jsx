@@ -26,7 +26,7 @@ const CopyButton = props => {
         clearTimeout(confirmationTimeout)
       }
     }
-  })
+  }, [])
 
   const handleClick = () => {
     if (confirmationTimeout.current) {

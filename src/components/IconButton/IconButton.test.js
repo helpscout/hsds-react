@@ -160,18 +160,16 @@ describe('Styles', () => {
     const borderRadius = window.getComputedStyle(
       container.querySelector('.c-IconButton')
     ).borderRadius
-    const value = borderRadius && parseInt(borderRadius, 10)
 
-    expect(value).toBeGreaterThan(100)
+    expect(borderRadius).toBe('100%')
   })
 
-  test('Shape can be set to not render a circle', () => {
+  test.only('Shape can be set to not render a circle', () => {
     const { container } = render(<IconButton shape="default" />)
-    const borderRadius = window.getComputedStyle(
-      container.querySelector('.c-IconButton')
-    ).borderRadius
-    const value = borderRadius && parseInt(borderRadius, 10)
-
-    expect(value).toBeLessThan(100)
+    expect(
+      window
+        .getComputedStyle(container.querySelector('.c-IconButton'))
+        .getPropertyValue('--buttonRadius')
+    ).toBe('3px')
   })
 })
