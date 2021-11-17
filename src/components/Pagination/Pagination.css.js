@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import Button from '../Button'
 import config from '../Button/Button.config'
-import { focusRing } from '../../styles/mixins/focusRing.css'
 
 export const PaginationUI = styled.nav`
   padding: 0 10px;
@@ -32,13 +31,11 @@ export const RangeUI = styled('span')`
 `
 
 export const ButtonIconUI = styled(Button)`
-  ${focusRing}
-  &.is-default {
-    width: 26px;
-    height: 26px;
-  }
-  &.is-default:focus,
-  &.is-default.is-focused {
+  --buttonHeight: 26px;
+  height: 26px;
+
+  &:focus,
+  &.is-focused {
     color: ${config.default.colorActive};
   }
 
