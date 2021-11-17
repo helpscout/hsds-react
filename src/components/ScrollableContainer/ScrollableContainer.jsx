@@ -12,6 +12,7 @@ import {
 function ScrollableContainer({
   className,
   'data-cy': dataCy = 'ScrollableContainer',
+  drawInitialShadowsDelay = 0,
   header,
   footer,
   body,
@@ -24,9 +25,10 @@ function ScrollableContainer({
   const footerRef = useRef(null)
   const [handleOnScroll] = useScrollShadow({
     bottomRef: footerRef,
+    drawInitialShadowsDelay,
     scrollableRef: bodyRef,
-    topRef: headerRef,
     shadows,
+    topRef: headerRef,
   })
 
   return (
@@ -86,6 +88,8 @@ ScrollableContainer.propTypes = {
   'data-cy': PropTypes.string,
   /** An element to render as the body (content), this is the one that gets scrolled */
   body: PropTypes.element,
+  /** If you're animating a component in, the scrollable element (body) might not have its height determined yet until that animation completes, pass a number in ms equal or larger to the length of the animation to account for this and give React time to get the size. */
+  drawInitialShadowsDelay: PropTypes.number,
   /** An element to render fixed at the top of the container */
   header: PropTypes.element,
   /** An element to render fixed at the bottom of the container */

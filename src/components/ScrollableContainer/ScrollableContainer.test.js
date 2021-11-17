@@ -81,32 +81,40 @@ describe('renders', () => {
     expect(footer).toBeInTheDocument()
 
     // Passing custom classnames
-    expect(header.classList.contains('TESTING__HEADER')).toBeTruthy()
-    expect(body.classList.contains('TESTING__BODY')).toBeTruthy()
-    expect(footer.classList.contains('TESTING__FOOTER')).toBeTruthy()
+    expect(header).toHaveClass('TESTING__HEADER')
+    expect(body).toHaveClass('TESTING__BODY')
+    expect(footer).toHaveClass('TESTING__FOOTER')
 
     // Correct layout styles
-    expect(window.getComputedStyle(containerScroll).display).toBe('flex')
-    expect(window.getComputedStyle(containerScroll).flexDirection).toBe(
-      'column'
-    )
-    expect(window.getComputedStyle(containerScroll).flexGrow).toBe('1')
-    expect(window.getComputedStyle(containerScroll).overflow).toBe('hidden')
-    expect(window.getComputedStyle(body).overflow).toBe('auto')
-    expect(window.getComputedStyle(body).flexGrow).toBe('1')
-    expect(window.getComputedStyle(header).zIndex).toBe('3')
-    expect(window.getComputedStyle(footer).zIndex).toBe('3')
+    expect(containerScroll).toHaveStyle({
+      display: 'flex',
+      flexDirection: 'column',
+      flexGrow: '1',
+      overflow: 'hidden',
+    })
+    expect(body).toHaveStyle({
+      flexGrow: '1',
+      overflow: 'auto',
+    })
+    expect(header).toHaveStyle('zIndex: 3')
+    expect(footer).toHaveStyle('zIndex: 3')
 
     // starter shadows
     expect(header.getAttribute('style')).toBeFalsy()
-    expect(footer.getAttribute('style')).toBeFalsy()
+    expect(header).not.toHaveAttribute('style')
 
     await fireEvent.scroll(body, {
       y: 100,
     })
 
     // scrolled shadows
-    expect(header.getAttribute('style')).toContain('--scroll-shadow')
-    expect(footer.getAttribute('style')).toContain('--scroll-shadow')
+    expect(header).toHaveAttribute(
+      'style',
+      expect.stringContaining('--scroll-shadow')
+    )
+    expect(footer).toHaveAttribute(
+      'style',
+      expect.stringContaining('--scroll-shadow')
+    )
   })
 })

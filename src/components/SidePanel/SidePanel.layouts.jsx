@@ -24,6 +24,7 @@ export function HeaderAndFooter({
     scrollableRef: bodyRef,
     topRef: headerRef,
     shadows: { initial: 'none' },
+    drawInitialShadowsDelay: 300,
   })
 
   return (

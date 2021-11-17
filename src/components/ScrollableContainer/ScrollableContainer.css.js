@@ -14,7 +14,7 @@ export const HeaderUI = styled(({ component, ref, ...props }) =>
   React.cloneElement(component, { ref, ...props })
 )`
   width: 100%;
-  transition: box-shadow 0.5s;
+  transition: box-shadow 0.2s;
   z-index: 3;
 `
 
@@ -30,6 +30,6 @@ export const FooterUI = styled(({ component, ...props }) =>
   React.cloneElement(component, props)
 )`
   width: 100%;
-  transition: box-shadow 0.5s;
+  transition: box-shadow 0.2s;
   z-index: 3;
 `
