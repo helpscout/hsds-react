@@ -9,14 +9,16 @@ export const focusShadowWithInset = `
 
 export const focusRing = css`
   --focusRingOffset: -2px;
+  --focusRingShadow: ${focusShadow};
+  --focusRingRadius: inherit;
   outline: none;
   position: relative;
 
   &:before {
     content: '';
-    border-radius: inherit;
+    border-radius: var(--focusRingRadius);
     bottom: var(--focusRingOffset);
-    box-shadow: ${focusShadow};
+    box-shadow: var(--focusRingShadow);
     left: var(--focusRingOffset);
     pointer-events: none;
     position: absolute;
