@@ -104,6 +104,10 @@ export const ButtonUI = styled.button`
     border-radius: 100px;
     --focusRingRadius: 100px;
   }
+  &.is-shape-circle {
+    border-radius: 100%;
+    --focusRingRadius: 100%;
+  }
 
   &.is-first {
     border-top-right-radius: 0;

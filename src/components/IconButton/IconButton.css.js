@@ -1,8 +1,6 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import Button from '../Button/index'
 import buttonConfig from '../Button/Button.config'
-import forEach from '../../styles/utilities/forEach'
-import { getColor } from '../../styles/utilities/color'
 
 export const config = {
   size: buttonConfig.size,
@@ -12,51 +10,49 @@ export const config = {
 export const IconButtonUI = styled(Button)`
   transition: ${config.transition};
 
-  .c-Button__content {
-    display: block;
-  }
-
   &.is-borderless,
   &.is-borderless:hover {
     border-color: transparent !important;
   }
 
-  ${makeButtonSizeStyles};
-  ${makeButtonHoverStyles};
+  ${makeButtonSizeStyles('xl', config.size.xl)};
+  ${makeButtonSizeStyles('lg', config.size.lg)};
+  ${makeButtonSizeStyles('md', config.size.md)};
+  ${makeButtonSizeStyles('sm', config.size.sm)};
+  ${makeButtonSizeStyles('xs', config.size.xs)};
+  ${makeButtonSizeStyles('xxs', config.size.xxs)};
+
+  ${makeButtonSizeStyles()};
+  ${makeButtonHoverStyles()};
 
   .c-Icon {
     margin: auto;
   }
   .c-Icon.withCaret {
-    margin-left: -3px;
+    margin-left: 0;
+  }
+  .c-Icon__icon.is-caret {
+    right: -2px;
   }
 `
 
-function makeButtonSizeStyles() {
-  return forEach(
-    config.size,
-    (size, props) => `
+function makeButtonSizeStyles(size, config) {
+  return css`
     &.is-${size} {
-      height: ${props.height}px;
-      min-width: ${props.height}px;
-      padding-left: 0.2em;
-      padding-right: 0.2em;
+      --buttonPadding: 0.2em;
+      width: var(--buttonHeight);
     }
   `
-  )
 }
 
 function makeButtonHoverStyles() {
-  return `
+  return css`
     &.is-kind-default,
     &.is-kind-secondary,
     &.is-kind-tertiary,
     &.is-kind-link {
       &:hover {
         background: rgba(0, 0, 0, 0.03);
-      }
-      &:focus {
-        background: rgba(0, 0, 0, 0.05);
       }
       &:active {
         background: rgba(0, 0, 0, 0.08);
