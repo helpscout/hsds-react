@@ -34,42 +34,37 @@ export const NavLinkTogglerUI = styled('button')`
 
 export const SplitButtonUI = styled(HSDSButton)`
   &.is-primary {
+    --focusRingShadow: ${focusShadowWithInset};
     margin-right: 0;
-    ${FocusUI} {
-      box-shadow: ${focusShadowWithInset};
-    }
   }
 `
 
 export const SplitButtonTogglerUI = styled(HSDSButton)`
-  &.SplitButton__Toggler {
-    min-width: 30px !important;
-    padding: 0;
+  pointer-events: all;
 
-    pointer-events: all;
+  &.is-primary {
+    box-shadow: -1px 0 0 ${getColor('blue.600')};
+    --focusRingShadow: ${focusShadowWithInset};
 
-    &.is-primary {
-      box-shadow: -1px 0 0 ${getColor('blue.600')};
-
-      ${FocusUI} {
-        box-shadow: ${focusShadowWithInset};
-      }
-
-      &.is-success {
-        box-shadow: -1px 0 0 ${getColor('green.600')};
-      }
-      &.is-danger {
-        box-shadow: -1px 0 0 ${getColor('red.600')};
-      }
-      &[disabled] {
-        box-shadow: -1px 0 0 ${getColor('grey.600')};
-      }
+    &.is-lg {
+      --buttonMinWidth: 30px;
+      padding: 0;
     }
 
-    .c-Button__content {
-      padding-top: 2px;
-      width: 16px;
+    &.is-success {
+      box-shadow: -1px 0 0 ${getColor('green.600')};
     }
+    &.is-danger {
+      box-shadow: -1px 0 0 ${getColor('red.600')};
+    }
+    &[disabled] {
+      box-shadow: -1px 0 0 ${getColor('grey.600')};
+    }
+  }
+
+  .c-Button__content {
+    padding-top: 2px;
+    width: 16px;
   }
 `
 
