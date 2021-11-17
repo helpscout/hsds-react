@@ -31,8 +31,11 @@ export const RangeUI = styled('span')`
 `
 
 export const ButtonIconUI = styled(Button)`
-  --buttonHeight: 26px;
-  height: 26px;
+  &.is-md {
+    --buttonPadding: 0;
+    --buttonHeight: 26px;
+    height: 26px;
+  }
 
   &:focus,
   &.is-focused {

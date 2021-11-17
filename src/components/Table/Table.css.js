@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
+import Button from '../Button'
 
 export const HeaderUI = styled('header')`
   display: flex;
@@ -252,6 +253,14 @@ export const SortableCellContentUI = styled('div')`
   .sorted & {
     color: ${getColor('charcoal.700')};
     background-color: ${getColor('grey.300')};
+  }
+`
+
+export const ButtonExpanderUI = styled(Button)`
+  &.is-md {
+    --buttonHeight: 26px;
+    height: 26px;
+    margin: 8px 0 8px 14px;
   }
 `
 
