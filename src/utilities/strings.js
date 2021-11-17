@@ -277,3 +277,16 @@ export const convertLinksToHTML = string => {
       return accumulator + escapeHTML(value)
     }, '')
 }
+
+/**
+ * This function converts given string to a "Start Case" string
+ * Example: "i am lord voldemort" => "I Am Lord Voldemort"
+ *
+ * @param {string} toConvert
+ * @return {string}
+ */
+export function toStartCase(toConvert) {
+  const capitalize = toCapitalize =>
+    toCapitalize.charAt(0).toUpperCase() + toCapitalize.slice(1)
+  return toConvert.split(' ').map(capitalize).join(' ')
+}

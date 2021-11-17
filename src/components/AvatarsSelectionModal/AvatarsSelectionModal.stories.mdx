@@ -1,0 +1,61 @@
+import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs/blocks'
+import AvatarsSelectionModal from './AvatarsSelectionModal'
+import { exampleAvatarsUsers } from './AvatarsSelectionModal.storiesHelpers'
+import { number } from '@storybook/addon-knobs'
+
+<Meta
+  title="Components/Forms/AvatarsSelectionModal"
+  component={AvatarsSelectionModal}
+/>
+
+# AvatarsSelectionModal
+
+AvatarsSelectionModal component is a group of elements that can be used to select one or many avatars from list of available. Avatars can be searched for using text input.
+
+This component supports multi and single select of avatars. If `selectionLimit` is `1`, it would be possible to select new avatar without the need to de-select previous. In multi select mode, old avatar need to be de-selected to select a new one.
+
+### Props
+
+<ArgsTable of={AvatarsSelectionModal} />
+
+### Stories
+
+### Multiple selection
+
+<Canvas>
+  <Story name="default">
+    <AvatarsSelectionModal
+      isOpen={true}
+      availableUsers={exampleAvatarsUsers}
+      selectionLimit={number('selectionLimit', 5)}
+    />
+  </Story>
+</Canvas>
+
+### Single selection
+
+<Canvas>
+  <Story name="Single selection">
+    <AvatarsSelectionModal
+      isOpen={true}
+      availableUsers={exampleAvatarsUsers}
+      selectionLimit={1}
+    />
+  </Story>
+</Canvas>
+
+### With initial avatars selected
+
+<Canvas>
+  <Story name="With initial avatars selected">
+    <AvatarsSelectionModal
+      isOpen={true}
+      availableUsers={exampleAvatarsUsers}
+      selectionLimit={5}
+      initiallySelectedUsers={[
+        exampleAvatarsUsers[0].id,
+        exampleAvatarsUsers[5].id,
+      ]}
+    />
+  </Story>
+</Canvas>
