@@ -2,6 +2,7 @@ import React from 'react'
 import { mount, render } from 'enzyme'
 import { Nav } from './Nav'
 import Item from './Nav.Item'
+import Link from '../Link'
 import { MemoryRouter as Router } from 'react-router-dom'
 
 const wrap = fn => Component => fn(<Router>{Component}</Router>)
@@ -63,20 +64,9 @@ describe('Nav.Item HTML props', () => {
 describe('Nav.Item Route/Link', () => {
   test('Renders a Link', () => {
     const wrapper = mountWithRouter(<Item />)
-    const el = wrapper.find('Link')
+    const el = wrapper.find(Link)
 
     expect(el.length).toBeTruthy()
-  })
-
-  test('Passes appropriate props to Route', () => {
-    const wrapper = mountWithRouter(
-      <Item exact={true} to="/go" strict={true} />
-    )
-    const el = wrapper.find('Route')
-
-    expect(el.prop('exact')).toBe(true)
-    expect(el.prop('path')).toBe('\\/go')
-    expect(el.prop('strict')).toBe(true)
   })
 
   test('Renders active styles', () => {
@@ -91,7 +81,7 @@ describe('Nav.Item Route/Link', () => {
 describe('Nav.Item Disabled', () => {
   test('Passes disabled prop to Link', () => {
     const wrapper = mountWithRouter(<Item disabled={true} />)
-    const el = wrapper.find('Link')
+    const el = wrapper.find(Link)
 
     expect(el.prop('disabled')).toBe(true)
   })

@@ -2,6 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { MemoryRouter as Router } from 'react-router-dom'
 import NavLink from './NavLink'
+import Link from '../Link'
 
 const wrap = Component => {
   return mount(
@@ -48,15 +49,15 @@ describe('HTML props', () => {
   })
 
   test('Does not render aria-current when inactive', () => {
-    const wrapper = wrap(<NavLink aria-current="blue" isActive={() => false} />)
+    const wrapper = wrap(<NavLink aria-current="page" isActive={() => false} />)
 
     expect(wrapper.find('a').prop('aria-current')).toBeFalsy()
   })
 
   test('Renders aria-current when active', () => {
-    const wrapper = wrap(<NavLink aria-current="blue" isActive={() => true} />)
+    const wrapper = wrap(<NavLink aria-current="page" isActive={() => true} />)
 
-    expect(wrapper.find('a').prop('aria-current')).toBe('blue')
+    expect(wrapper.find('a').prop('aria-current')).toBe('page')
   })
 })
 
@@ -83,43 +84,17 @@ describe('Style', () => {
   })
 })
 
-describe('Route', () => {
-  test('Passes appropriate props to Route', () => {
-    const props = {
-      strict: true,
-      location: {},
-      exact: true,
-    }
-    const wrapper = wrap(<NavLink {...props} />)
-    const el = wrapper.find('Route')
-
-    expect(el.prop('strict')).toBe(props.strict)
-    expect(el.prop('location')).toBe(props.location)
-    expect(el.prop('exact')).toBe(props.exact)
-  })
-
-  test('Parses a to object', () => {
-    const props = {
-      to: { pathname: '/blue' },
-    }
-    const wrapper = wrap(<NavLink {...props} />)
-    const el = wrapper.find('Route')
-
-    expect(el.prop('path')).toContain('/blue')
-  })
-})
-
 describe('Link', () => {
   test('Renders a Link', () => {
     const wrapper = wrap(<NavLink />)
-    const el = wrapper.find('Link')
+    const el = wrapper.find(Link)
 
     expect(el.length).toBeTruthy()
   })
 
   test('Can pass an href to Link', () => {
     const wrapper = wrap(<NavLink href="/blue" />)
-    const el = wrapper.find('Link')
+    const el = wrapper.find(Link)
 
     expect(el.prop('href')).toBe('/blue')
   })

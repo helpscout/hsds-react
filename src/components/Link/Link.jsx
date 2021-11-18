@@ -5,8 +5,9 @@ import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import { wordHasSpaces } from '../../utilities/strings'
 import { LinkUI } from './Link.css'
+import { Link as ReactRouterLink } from 'react-router-dom'
 
-export const WrappedLink = forwardRef(function Link(props, ref) {
+const WrappedLink = forwardRef(function Link(props, ref) {
   const {
     autoWordWrap,
     block,
@@ -19,6 +20,7 @@ export const WrappedLink = forwardRef(function Link(props, ref) {
     wordWrap,
     href,
     voidOnClick,
+    to,
     ...rest
   } = props
 
@@ -45,6 +47,8 @@ export const WrappedLink = forwardRef(function Link(props, ref) {
       rel={rel}
       ref={ref || nodeRef}
       href={linkHref}
+      to={to}
+      as={to ? ReactRouterLink : 'a'}
     >
       {children}
     </LinkUI>

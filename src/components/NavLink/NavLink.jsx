@@ -4,7 +4,7 @@
 import React from 'react'
 import Link from '../Link'
 import classNames from 'classnames'
-import { Route } from 'react-router-dom'
+import { useRouteMatch } from 'react-router'
 
 export const NavLink = ({
   'aria-current': ariaCurrent,
@@ -26,34 +26,29 @@ export const NavLink = ({
   // Regex taken from: https://github.com/pillarjs/path-to-regexp/blob/master/index.js#L202
   const escapedPath = path && path.replace(/([.+*?=^!:${}()[\]|/\\])/g, '\\$1')
 
+  let match = useRouteMatch({
+    path: escapedPath,
+    exact,
+  })
+
+  const isActive = !!(getIsActive ? getIsActive(match, location) : match)
+
+  const componentClassName = classNames(
+    NavLink.className,
+    isActive ? activeClassName : '',
+    className
+  )
+
   return (
-    <Route
-      path={escapedPath}
-      exact={exact}
-      strict={strict}
-      location={location}
-      children={({ location, match }) => {
-        const isActive = !!(getIsActive ? getIsActive(match, location) : match)
-
-        const componentClassName = classNames(
-          NavLink.className,
-          isActive ? activeClassName : '',
-          className
-        )
-
-        return (
-          <Link
-            {...rest}
-            to={to}
-            className={componentClassName}
-            style={isActive ? { ...style, ...activeStyle } : style}
-            aria-current={(isActive && ariaCurrent) || null}
-          >
-            {render ? render({ isActive }) : children}
-          </Link>
-        )
-      }}
-    />
+    <Link
+      {...rest}
+      to={to}
+      className={componentClassName}
+      style={isActive ? { ...style, ...activeStyle } : style}
+      aria-current={(isActive && ariaCurrent) || null}
+    >
+      {render ? render({ isActive }) : children}
+    </Link>
   )
 }
 
