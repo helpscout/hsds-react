@@ -10,7 +10,6 @@ const BOX_SHADOW_SCROLLED =
 export default function useScrollShadow({
   bottomRef,
   drawInitialShadowsDelay = 0,
-  enableSimpleBarSupport,
   scrollableRef,
   shadows = {},
   topRef,
@@ -20,12 +19,13 @@ export default function useScrollShadow({
 
   useEffect(() => {
     const timeoutID = setTimeout(() => {
-      if (scrollableRef.current != null) {
-        const topElement = topRef && topRef.current
-        const bottomElement = bottomRef && bottomRef.current
+      const scrollableElement = getElement(scrollableRef)
+
+      if (scrollableElement) {
+        const topElement = getElement(topRef)
+        const bottomElement = getElement(bottomRef)
         const { isBottomScrolled, isTopScrolled } = handleShadows(
-          scrollableRef.current,
-          enableSimpleBarSupport
+          scrollableElement
         )
 
         setShadows(topElement, isTopScrolled, { initialShadow, scrolledShadow })
@@ -39,16 +39,20 @@ export default function useScrollShadow({
     return () => {
       clearTimeout(timeoutID)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [drawInitialShadowsDelay, initialShadow, scrolledShadow])
+  }, [
+    drawInitialShadowsDelay,
+    initialShadow,
+    scrolledShadow,
+    topRef,
+    bottomRef,
+    scrollableRef,
+  ])
 
   const handleOnScroll = throttle(() => {
-    const { isTopScrolled, isBottomScrolled } = handleShadows(
-      scrollableRef.current,
-      enableSimpleBarSupport
-    )
-    const topElement = topRef && topRef.current
-    const bottomElement = bottomRef && bottomRef.current
+    const scrollableElement = getElement(scrollableRef)
+    const { isTopScrolled, isBottomScrolled } = handleShadows(scrollableElement)
+    const topElement = getElement(topRef)
+    const bottomElement = getElement(bottomRef)
 
     setShadows(topElement, isTopScrolled, {
       initialShadow,
@@ -63,6 +67,11 @@ export default function useScrollShadow({
   return [handleOnScroll]
 }
 
+function getElement(someRef) {
+  if (someRef instanceof HTMLElement) return someRef
+  return someRef && someRef.current
+}
+
 function setShadows(element, isScrolled, { initialShadow, scrolledShadow }) {
   if (element) {
     element.style.boxShadow = 'var(--scroll-shadow)'
@@ -75,9 +84,7 @@ function setShadows(element, isScrolled, { initialShadow, scrolledShadow }) {
   }
 }
 
-function handleShadows(someRef, enableSimpleBarSupport = false) {
-  const scrollable = enableSimpleBarSupport ? someRef.contentWrapperEl : someRef
-
+function handleShadows(scrollable) {
   if (!scrollable) {
     return {
       isTopScrolled: false,

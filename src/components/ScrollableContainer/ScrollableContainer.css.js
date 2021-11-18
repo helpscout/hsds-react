@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import SimpleBar from 'simplebar-react'
+import 'simplebar/dist/simplebar.min.css'
 
 export const ContainerScrollUI = styled('div')`
   display: flex;
@@ -24,6 +26,10 @@ export const BodyUI = styled(({ component, ...props }) =>
   width: 100%;
   flex-grow: 1;
   overflow: auto;
+`
+
+export const SimpleBarUI = styled(SimpleBar)`
+  height: ${({ height }) => height};
 `
 
 export const FooterUI = styled(({ component, ...props }) =>

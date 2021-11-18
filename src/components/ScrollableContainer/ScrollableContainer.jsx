@@ -2,11 +2,13 @@ import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import useScrollShadow from '../../hooks/useScrollShadow'
+import useClientRect from '../../hooks/useClientRect'
 import {
   ContainerScrollUI,
   HeaderUI,
   BodyUI,
   FooterUI,
+  SimpleBarUI,
 } from './ScrollableContainer.css'
 
 function ScrollableContainer({
@@ -19,27 +21,37 @@ function ScrollableContainer({
   width = '300px',
   height = '500px',
   shadows = {},
-  enableSimpleBarSupport,
+  withSimpleBar,
+  ...rest
 }) {
-  const headerRef = useRef(null)
   const bodyRef = useRef(null)
-  const footerRef = useRef(null)
+  const [headerRect, headerEl, headerRef] = useClientRect()
+  const [footerRect, footerEl, footerRef] = useClientRect()
   const [handleOnScroll] = useScrollShadow({
-    bottomRef: footerRef,
+    bottomRef: footerEl,
     drawInitialShadowsDelay,
     scrollableRef: bodyRef,
     shadows,
-    topRef: headerRef,
-    enableSimpleBarSupport,
+    topRef: headerEl,
+    withSimpleBar,
   })
 
   function renderBody() {
     if (body) {
-      if (enableSimpleBarSupport) {
-        return React.cloneElement(body, {
-          onScroll: handleOnScroll,
-          ref: bodyRef,
-        })
+      if (withSimpleBar) {
+        const { children, className, ...rest } = body.props
+
+        return (
+          <SimpleBarUI
+            height={calculateSimpleBarHeight(height, headerRect, footerRect)}
+            onScroll={handleOnScroll}
+            scrollableNodeProps={{ ref: bodyRef }}
+            className={classNames('ScrollableContainer__Body', className)}
+            {...rest}
+          >
+            {body}
+          </SimpleBarUI>
+        )
       }
 
       return (
@@ -64,8 +76,9 @@ function ScrollableContainer({
     <ContainerScrollUI
       className={classNames('c-ScrollableContainer', className)}
       data-cy={dataCy}
-      height={enableSimpleBarSupport ? 'auto' : height}
       width={width}
+      height={height}
+      {...rest}
     >
       {header ? (
         <HeaderUI
@@ -96,6 +109,19 @@ function ScrollableContainer({
   )
 }
 
+function calculateSimpleBarHeight(height, headerRect, footerRect) {
+  let otherSectionsHeight = 0
+
+  if (headerRect != null) {
+    otherSectionsHeight += headerRect.height
+  }
+  if (footerRect != null) {
+    otherSectionsHeight += footerRect.height
+  }
+
+  return `calc(${height} - ${otherSectionsHeight}px)`
+}
+
 const shadowShape = PropTypes.shape({
   initial: PropTypes.string,
   scrolled: PropTypes.string,
@@ -111,7 +137,7 @@ ScrollableContainer.propTypes = {
   /** If you're animating a component in, the scrollable element (body) might not have its height determined yet until that animation completes, pass a number in ms equal or larger to the length of the animation to account for this and give React time to get the size. */
   drawInitialShadowsDelay: PropTypes.number,
   /** If you want to use 'simplebar-react' in the body, turn this flag on */
-  enableSimpleBarSupport: PropTypes.bool,
+  withSimpleBar: PropTypes.bool,
   /** An element to render fixed at the top of the container */
   header: PropTypes.element,
   /** An element to render fixed at the bottom of the container */

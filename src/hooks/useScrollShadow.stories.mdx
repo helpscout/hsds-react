@@ -8,9 +8,9 @@ This hook is what powers [ScrollableContainer](/story/components-structural-scro
 
 Takes the following properties on an object argument:
 
-- `topRef`: `ref` for the element fixed at the top
-- `scrollableRef`: `ref` of the "body" or "content" element, this is the one that scrolls
-- `bottomRef`: `ref` for the element fixed at the bottom
+- `topRef`: `ref` for the element fixed at the top, you can also pass the DOM element directly
+- `scrollableRef`: `ref` of the "body" or "content" element, this is the one that scrolls, you can also pass the DOM element directly
+- `bottomRef`: `ref` for the element fixed at the bottom, you can also pass the DOM element directly
 - `shadows: { initial, scrolled}`: object that provides a css `box-shadow` value for the initial and scrolled state, defaults are provided.
 - `drawInitialShadowsDelay`: If you're animating a component in, the scrollable element (body) might not have its height determined yet until that animation completes, pass a number in ms equal or larger to the length of the animation to account for this and give React time to get the size.
 
