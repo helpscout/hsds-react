@@ -15,6 +15,7 @@ export const CloseModalButtonUI = styled('button')`
   height: 28px;
   width: 28px;
   background-color: ${getColor('grey.300')};
+  z-index: 1;
 
   &:hover {
     color: ${getColor('charcoal.600')};
@@ -48,7 +49,6 @@ export const SimpleModalUI = styled('div')`
   position: relative;
   width: 360px;
   height: 390px;
-  padding: 27px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -56,4 +56,8 @@ export const SimpleModalUI = styled('div')`
   background-color: #fff;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 6px;
+
+  &.with-padding {
+    padding: 27px;
+  }
 `

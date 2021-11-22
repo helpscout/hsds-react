@@ -24,6 +24,7 @@ function SimpleModal({
   trapFocus = true,
   withCloseButton = true,
   zIndex = 999,
+  noPadding = false,
   ...rest
 }) {
   const modalRef = useRef(null)
@@ -74,7 +75,7 @@ function SimpleModal({
       <SimpleModalUI
         aria-modal="true"
         aria-labelledby={ariaLabelledBy}
-        className="SimpleModal"
+        className={classNames('SimpleModal', !noPadding && 'with-padding')}
         dataCy={dataCy}
         data-testid="simple-modal"
         id="simple-modal"
@@ -121,6 +122,8 @@ SimpleModal.propTypes = {
   withCloseButton: PropTypes.bool,
   /** Customize the z-index */
   zIndex: PropTypes.number,
+  /** Customize to remove default padding around the modal */
+  noPadding: PropTypes.bool,
 }
 
 export default SimpleModal

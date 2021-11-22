@@ -1,6 +1,8 @@
 import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, number, text, select } from '@storybook/addon-knobs'
 import SimpleModal from './SimpleModal'
+import { HeaderAndFooter } from './SimpleModal.layouts'
+import Button from '../Button'
 
 <Meta
   title="Components/Overlay/SimpleModal"
@@ -74,3 +76,38 @@ function SommeApp() {
 ### Props
 
 <ArgsTable of={SimpleModal} />
+
+## Stories
+
+#### With HeaderAndFooter Layout
+
+<Canvas>
+  <Story name="header and footer layout">
+    <div style={{ position: 'relative', height: '800px' }}>
+      <SimpleModal show focusModalOnShow={false} noPadding>
+        <HeaderAndFooter
+          headerContent={<div>Some Header</div>}
+          footerContent={
+            <div>
+              <Button>Cancel</Button>
+            </div>
+          }
+        >
+          <div>
+            Lorem Lorem sit esse sit minim irure minim voluptate voluptate
+            nostrud aliqua. Do tempor qui ad sit amet labore magna proident
+            adipisicing nostrud. Adipisicing laborum veniam velit culpa deserunt
+            proident ipsum occaecat. Ex duis nulla tempor cillum mollit anim.
+            Est qui consectetur qui fugiat. Commodo tempor aute adipisicing
+            dolore est. Laboris do sint et reprehenderit consectetur amet cillum
+            quis tempor nulla qui ea. Duis tempor deserunt qui Lorem sint
+            exercitation voluptate duis Lorem. Sunt et elit nulla consectetur
+            labore. Proident dolore ullamco excepteur enim aliqua incididunt
+            culpa magna cupidatat magna non sit. Occaecat laborum dolor nisi
+            Lorem ex id occaecat incididunt cupidatat ipsum amet nostrud.
+          </div>
+        </HeaderAndFooter>
+      </SimpleModal>
+    </div>
+  </Story>
+</Canvas>
