@@ -72,9 +72,9 @@ describe('renders', () => {
     )
 
     const containerScroll = container.querySelector('.c-ScrollableContainer')
-    const header = container.querySelector('.ScrollableContainer__Header')
-    const body = container.querySelector('.ScrollableContainer__Body')
-    const footer = container.querySelector('.ScrollableContainer__Footer')
+    const header = container.querySelector('.ScrollableContainer__header')
+    const body = container.querySelector('.ScrollableContainer__body')
+    const footer = container.querySelector('.ScrollableContainer__footer')
 
     // Elements present
     expect(containerScroll).toBeInTheDocument()
@@ -119,6 +119,57 @@ describe('renders', () => {
       'style',
       expect.stringContaining('--scroll-shadow')
     )
+  })
+
+  test('Should render with string sections', () => {
+    const { container } = render(
+      <ScrollableContainerUI
+        header="Header section"
+        body="Body section"
+        footer="Footer section"
+      />
+    )
+
+    const containerScroll = container.querySelector('.c-ScrollableContainer')
+    const header = container.querySelector('.ScrollableContainer__header')
+    const body = container.querySelector('.ScrollableContainer__body')
+    const footer = container.querySelector('.ScrollableContainer__footer')
+
+    // Elements present
+    expect(containerScroll).toBeInTheDocument()
+    expect(header).toBeInTheDocument()
+    expect(body).toBeInTheDocument()
+    expect(footer).toBeInTheDocument()
+    expect(header).toHaveTextContent('Header section')
+    expect(body).toHaveTextContent('Body section')
+    expect(footer).toHaveTextContent('Footer section')
+  })
+
+  test('Should render with string sections and simplebar', () => {
+    const { container } = render(
+      <ScrollableContainerUI
+        header="Header section"
+        body="Body section"
+        footer="Footer section"
+        withSimpleBar
+      />
+    )
+
+    const containerScroll = container.querySelector('.c-ScrollableContainer')
+    const header = container.querySelector('.ScrollableContainer__header')
+    const body = container.querySelector('.ScrollableContainer__body')
+    const footer = container.querySelector('.ScrollableContainer__footer')
+    const simplebar = container.querySelector('[data-simplebar]')
+
+    // Elements present
+    expect(simplebar).toBeInTheDocument()
+    expect(containerScroll).toBeInTheDocument()
+    expect(header).toBeInTheDocument()
+    expect(body).toBeInTheDocument()
+    expect(footer).toBeInTheDocument()
+    expect(header).toHaveTextContent('Header section')
+    expect(body).toHaveTextContent('Body section')
+    expect(footer).toHaveTextContent('Footer section')
   })
 
   test('Should work with simplebar', async () => {
@@ -187,9 +238,9 @@ describe('renders', () => {
     const containerScroll = container.querySelector('.c-ScrollableContainer')
     const simplebar = container.querySelector('[data-simplebar]')
     const scrollable = container.querySelector('.simplebar-content-wrapper')
-    const header = container.querySelector('.ScrollableContainer__Header')
-    const body = container.querySelector('.ScrollableContainer__Body')
-    const footer = container.querySelector('.ScrollableContainer__Footer')
+    const header = container.querySelector('.ScrollableContainer__header')
+    const body = container.querySelector('.ScrollableContainer__body')
+    const footer = container.querySelector('.ScrollableContainer__footer')
 
     // Elements present
     expect(simplebar).toBeInTheDocument()

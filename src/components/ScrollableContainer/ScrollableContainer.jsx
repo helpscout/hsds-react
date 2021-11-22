@@ -56,48 +56,40 @@ function ScrollableContainer({
     }
 
     if (sectionContent) {
-      if (React.isValidElement(sectionContent)) {
-        if (section === 'body' && withSimpleBar) {
-          const { children, className, ...rest } = body.props
-
-          return (
-            <SimpleBarUI
-              height={calculateSimpleBarHeight(height, headerRect, footerRect)}
-              onScroll={handleOnScroll}
-              scrollableNodeProps={{ ref: bodyRef }}
-              className={classNames('ScrollableContainer__body', className)}
-              {...rest}
-            >
-              {body}
-            </SimpleBarUI>
-          )
-        }
+      if (section === 'body' && withSimpleBar) {
+        const { children, className, ...rest } = body.props || {}
 
         return (
-          <SectionUI
-            className={classNames(
-              `ScrollableContainer__${section}`,
-              sectionContent.props.className
-            )}
-            component={React.cloneElement(sectionContent, {
-              ...sectionContent.props,
-              ref: sectionRef,
-            })}
-            onScroll={section === 'body' ? handleOnScroll : null}
-          />
+          <SimpleBarUI
+            height={calculateSimpleBarHeight(height, headerRect, footerRect)}
+            onScroll={handleOnScroll}
+            scrollableNodeProps={{ ref: bodyRef }}
+            className={classNames('ScrollableContainer__body', className)}
+            {...rest}
+          >
+            {body}
+          </SimpleBarUI>
         )
       }
 
-      return (
-        <SectionUI
-          className={classNames(`ScrollableContainer__${section}`)}
-          component={React.createElement(
+      const { children, className, ...rest } = sectionContent.props || {}
+      const component = React.isValidElement(sectionContent)
+        ? React.cloneElement(sectionContent, {
+            ...rest,
+            ref: sectionRef,
+          })
+        : React.createElement(
             'div',
             {
               ref: sectionRef,
             },
             [sectionContent]
-          )}
+          )
+
+      return (
+        <SectionUI
+          className={classNames(`ScrollableContainer__${section}`, className)}
+          component={component}
           onScroll={section === 'body' ? handleOnScroll : null}
         />
       )
