@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import ScrollableContainer from '../ScrollableContainer'
 import { BodyUI, HeaderUI, FooterUI } from './SimpleModal.layouts.css'
@@ -33,4 +34,15 @@ export function HeaderAndFooter({
       {...rest}
     />
   )
+}
+
+HeaderAndFooter.propTypes = {
+  /** The content to put in the body of the modal*/
+  children: PropTypes.any,
+  /** Custom footer content */
+  footer: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  /** If you just need a modal title in the header, use this */
+  heading: PropTypes.string,
+  /** Custom header content */
+  header: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 }
