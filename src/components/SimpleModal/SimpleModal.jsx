@@ -16,14 +16,18 @@ function SimpleModal({
   ariaLabelledBy = '',
   children,
   className,
+  customCloseButton,
   closeOnClickOutside = false,
   'data-cy': dataCy = 'SimpleModal',
   focusModalOnShow = true,
   onClose = noop,
   show = false,
   trapFocus = true,
+  width = '360px',
+  height = '390px',
   withCloseButton = true,
   zIndex = 999,
+  zIndexCloseButton = 5,
   ...rest
 }) {
   const modalRef = useRef(null)
@@ -58,6 +62,29 @@ function SimpleModal({
     }
   }
 
+  function renderCloseButton() {
+    if (withCloseButton) {
+      if (customCloseButton && React.isValidElement(customCloseButton)) {
+        const clickHandler = customCloseButton.props.onClick || onClose
+        return React.cloneElement(customCloseButton, {
+          onClick: clickHandler,
+        })
+      }
+      return (
+        <CloseModalButtonUI
+          aria-label="close modal button"
+          className="SimpleModal__CloseButton"
+          onClick={onClose}
+          $zIndex={zIndexCloseButton}
+        >
+          <Icon size={18} name="cross" />
+        </CloseModalButtonUI>
+      )
+    }
+
+    return null
+  }
+
   return shouldRender ? (
     <SimpleModalOverlayUI
       className={classNames(
@@ -69,7 +96,7 @@ function SimpleModal({
       onAnimationEnd={onAnimationEnd}
       onKeyDown={handleOverlayKeyDown}
       ref={overlayRef}
-      zIndex={zIndex}
+      $zIndex={zIndex}
     >
       <SimpleModalUI
         aria-modal="true"
@@ -80,18 +107,12 @@ function SimpleModal({
         id="simple-modal"
         role="dialog"
         ref={modalRef}
+        height={height}
+        width={width}
         tabIndex="0"
         {...rest}
       >
-        {withCloseButton ? (
-          <CloseModalButtonUI
-            aria-label="close modal button"
-            className="SimpleModal__CloseButton"
-            onClick={onClose}
-          >
-            <Icon size={18} name="cross" />
-          </CloseModalButtonUI>
-        ) : null}
+        {renderCloseButton()}
         {children}
       </SimpleModalUI>
     </SimpleModalOverlayUI>
@@ -105,22 +126,30 @@ SimpleModal.propTypes = {
   children: PropTypes.any,
   /** Custom classname on this component */
   className: PropTypes.string,
+  /** Pass your own close button, don't forget to style it and position it. Your `onClose` handler will be attached to it automatically, or you can add your own click handler directly on it */
+  customCloseButton: PropTypes.element,
   /** Whether to close the Modal when clicking outside, pass a string with value "modal" if clicking ouside the Modal, or "overlay" if clicking outside the overlay should close it (in case of "contained modals") */
   closeOnClickOutside: PropTypes.oneOf([null, undefined, 'modal', 'overlay']),
   /** Data attr applied for Cypress tests */
   'data-cy': PropTypes.string,
   /** If you don't want the focus to be moved to the Modal when it enters */
   focusModalOnShow: PropTypes.bool,
+  /** Customize the modal's height */
+  height: PropTypes.string,
   /** Function that gets called when clicking the `x` button and when pressing `esc`, use this to close the modal in your app */
   onClose: PropTypes.func,
   /** Control whether the modal is open or close */
   show: PropTypes.bool,
   /** Whether to restrict focus to elements inside the modal */
   trapFocus: PropTypes.bool,
+  /** Customize the modal's width */
+  width: PropTypes.string,
   /** Whether to include a close button */
   withCloseButton: PropTypes.bool,
-  /** Customize the z-index */
+  /** Customize the z-index for the modal */
   zIndex: PropTypes.number,
+  /** Customize the z-index specifically for the close modal button */
+  zIndexCloseButton: PropTypes.number,
 }
 
 export default SimpleModal

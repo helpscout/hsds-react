@@ -15,6 +15,7 @@ export const CloseModalButtonUI = styled('button')`
   height: 28px;
   width: 28px;
   background-color: ${getColor('grey.300')};
+  z-index: ${({ $zIndex }) => $zIndex};
 
   &:hover {
     color: ${getColor('charcoal.600')};
@@ -40,15 +41,14 @@ export const SimpleModalOverlayUI = styled('div')`
   bottom: 0;
   left: 0;
   background-color: ${rgba(getColor('blue.800'), 0.7)};
-  z-index: ${({ zIndex }) => zIndex};
+  z-index: ${({ $zIndex }) => $zIndex};
   ${overlayAnimation}
 `
 
 export const SimpleModalUI = styled('div')`
   position: relative;
-  width: 360px;
-  height: 390px;
-  padding: 27px;
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
   display: flex;
   flex-direction: column;
   align-items: center;
