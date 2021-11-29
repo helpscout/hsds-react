@@ -36,17 +36,35 @@ function ScrollableContainer({
     withSimpleBar,
   })
 
-  function renderBody() {
-    if (body) {
-      if (withSimpleBar) {
-        const { children, className, ...rest } = body.props
+  function renderSection(section) {
+    let sectionContent
+    let SectionUI
+    let sectionRef
+
+    if (section === 'header') {
+      sectionContent = header
+      SectionUI = HeaderUI
+      sectionRef = headerRef
+    } else if (section === 'footer') {
+      sectionContent = footer
+      SectionUI = FooterUI
+      sectionRef = footerRef
+    } else if (section === 'body') {
+      sectionContent = body
+      SectionUI = BodyUI
+      sectionRef = bodyRef
+    }
+
+    if (sectionContent) {
+      if (section === 'body' && withSimpleBar) {
+        const { children, className, ...rest } = body.props || {}
 
         return (
           <SimpleBarUI
             height={calculateSimpleBarHeight(height, headerRect, footerRect)}
             onScroll={handleOnScroll}
             scrollableNodeProps={{ ref: bodyRef }}
-            className={classNames('ScrollableContainer__Body', className)}
+            className={classNames('ScrollableContainer__body', className)}
             {...rest}
           >
             {body}
@@ -54,17 +72,25 @@ function ScrollableContainer({
         )
       }
 
+      const { children, className, ...rest } = sectionContent.props || {}
+      const component = React.isValidElement(sectionContent)
+        ? React.cloneElement(sectionContent, {
+            ...rest,
+            ref: sectionRef,
+          })
+        : React.createElement(
+            'div',
+            {
+              ref: sectionRef,
+            },
+            [sectionContent]
+          )
+
       return (
-        <BodyUI
-          className={classNames(
-            'ScrollableContainer__Body',
-            body.props.className
-          )}
-          component={React.cloneElement(body, {
-            ...body.props,
-            ref: bodyRef,
-          })}
-          onScroll={handleOnScroll}
+        <SectionUI
+          className={classNames(`ScrollableContainer__${section}`, className)}
+          component={component}
+          onScroll={section === 'body' ? handleOnScroll : null}
         />
       )
     }
@@ -80,31 +106,9 @@ function ScrollableContainer({
       height={height}
       {...rest}
     >
-      {header ? (
-        <HeaderUI
-          className={classNames(
-            'ScrollableContainer__Header',
-            header.props.className
-          )}
-          component={React.cloneElement(header, {
-            ...header.props,
-            ref: headerRef,
-          })}
-        />
-      ) : null}
-      {renderBody()}
-      {footer ? (
-        <FooterUI
-          className={classNames(
-            'ScrollableContainer__Footer',
-            footer.props.className
-          )}
-          component={React.cloneElement(footer, {
-            ...footer.props,
-            ref: footerRef,
-          })}
-        />
-      ) : null}
+      {renderSection('header')}
+      {renderSection('body')}
+      {renderSection('footer')}
     </ContainerScrollUI>
   )
 }
@@ -132,16 +136,16 @@ ScrollableContainer.propTypes = {
   className: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
-  /** An element to render as the body (content), this is the one that gets scrolled */
-  body: PropTypes.element,
+  /** An element or content to render as the body (content), this is the one that gets scrolled */
+  body: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   /** If you're animating a component in, the scrollable element (body) might not have its height determined yet until that animation completes, pass a number in ms equal or larger to the length of the animation to account for this and give React time to get the size. */
   drawInitialShadowsDelay: PropTypes.number,
   /** If you want to use 'simplebar-react' in the body, turn this flag on */
   withSimpleBar: PropTypes.bool,
-  /** An element to render fixed at the top of the container */
-  header: PropTypes.element,
-  /** An element to render fixed at the bottom of the container */
-  footer: PropTypes.element,
+  /** An element or content to render fixed at the top of the container */
+  header: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
+  /** An element or content to render fixed at the bottom of the container */
+  footer: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   /** The container width, can also override with a styled component instead */
   width: PropTypes.string,
   /** The container height, can also override with a styled component instead */

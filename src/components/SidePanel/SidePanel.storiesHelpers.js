@@ -84,6 +84,10 @@ const FakeMainUI = styled('main')`
   background-size: 10px 10px;
 `
 
+const SimpleModalUI = styled(SimpleModal)`
+  padding: 27px;
+`
+
 export default function SidePanelApp() {
   const [showPanel, setShowPanel] = useState(false)
   const [showModal, setShowModal] = useState(false)
@@ -162,7 +166,7 @@ export default function SidePanelApp() {
             >
               Step 3
             </FakeCardUI>
-            <SimpleModal
+            <SimpleModalUI
               show={showModal}
               zIndex={1000}
               onClose={() => setShowModal(false)}
@@ -174,7 +178,7 @@ export default function SidePanelApp() {
               <br />
               <br />
               <button>More Action!</button>
-            </SimpleModal>
+            </SimpleModalUI>
           </HeaderAndFooter>
         </SidePanel>
       </FakeMainUI>

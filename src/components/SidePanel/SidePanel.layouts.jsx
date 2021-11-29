@@ -61,8 +61,6 @@ export function HeaderAndFooter({
 }
 
 HeaderAndFooter.propTypes = {
-  /** Custom classname on this component */
-  className: PropTypes.string,
   /** If the default footer is present, this is the label text for the button */
   mainActionButtonContent: PropTypes.oneOfType([
     PropTypes.string,

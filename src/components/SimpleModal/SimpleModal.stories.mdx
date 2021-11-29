@@ -1,6 +1,8 @@
 import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, number, text, select } from '@storybook/addon-knobs'
 import SimpleModal from './SimpleModal'
+import Button from '../Button'
+import { HeaderAndFooter } from './SimpleModal.layouts'
 
 <Meta
   title="Components/Overlay/SimpleModal"
@@ -74,3 +76,86 @@ function SommeApp() {
 ### Props
 
 <ArgsTable of={SimpleModal} />
+
+## Stories
+
+### Custom close button
+
+If you need a different button, pass your own. The click handler will be attached automatically with whatever you pass to `onClose` or you can add a different handler by attaching it directly on your button.
+
+Don't forget to add styles to position it yourself.
+
+<Canvas>
+  <Story name="custom close button">
+    <div style={{ position: 'relative', height: '450px' }}>
+      <SimpleModal
+        show
+        focusModalOnShow={false}
+        customCloseButton={
+          <button
+            onClick={() => {
+              console.log('close it')
+            }}
+          >
+            close
+          </button>
+        }
+      >
+        My modal with a custom button
+      </SimpleModal>
+    </div>
+  </Story>
+</Canvas>
+
+### Layouts
+
+<Canvas>
+  <Story name="header and footer">
+    <div style={{ position: 'relative', height: '650px' }}>
+      <SimpleModal show focusModalOnShow={false} width="700px">
+        <HeaderAndFooter
+          withSimpleBar
+          heading="Modal title"
+          footer={
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                height: '100%',
+              }}
+            >
+              <Button kind="primary">Action!</Button>
+            </div>
+          }
+        >
+          <p>
+            Tempor Lorem consectetur non ut magna excepteur. Veniam veniam
+            eiusmod elit ullamco commodo laboris eiusmod quis enim eiusmod id.
+            Nisi eiusmod aute pariatur et non.
+          </p>
+          <p>
+            Tempor Lorem consectetur non ut magna excepteur. Veniam veniam
+            eiusmod elit ullamco commodo laboris eiusmod quis enim eiusmod id.
+            Nisi eiusmod aute pariatur et non.
+          </p>
+          <p>
+            Tempor Lorem consectetur non ut magna excepteur. Veniam veniam
+            eiusmod elit ullamco commodo laboris eiusmod quis enim eiusmod id.
+            Nisi eiusmod aute pariatur et non.
+          </p>
+          <p>
+            Tempor Lorem consectetur non ut magna excepteur. Veniam veniam
+            eiusmod elit ullamco commodo laboris eiusmod quis enim eiusmod id.
+            Nisi eiusmod aute pariatur et non.
+          </p>
+          <p>
+            Tempor Lorem consectetur non ut magna excepteur. Veniam veniam
+            eiusmod elit ullamco commodo laboris eiusmod quis enim eiusmod id.
+            Nisi eiusmod aute pariatur et non.
+          </p>
+        </HeaderAndFooter>
+      </SimpleModal>
+    </div>
+  </Story>
+</Canvas>

@@ -20,8 +20,8 @@ export const HeaderUI = styled(({ component, ref, ...props }) =>
   z-index: 3;
 `
 
-export const BodyUI = styled(({ component, ...props }) =>
-  React.cloneElement(component, props)
+export const BodyUI = styled(({ component, ref, ...props }) =>
+  React.cloneElement(component, { ref, ...props })
 )`
   width: 100%;
   flex-grow: 1;
@@ -32,8 +32,8 @@ export const SimpleBarUI = styled(SimpleBar)`
   height: ${({ height }) => height};
 `
 
-export const FooterUI = styled(({ component, ...props }) =>
-  React.cloneElement(component, props)
+export const FooterUI = styled(({ component, ref, ...props }) =>
+  React.cloneElement(component, { ref, ...props })
 )`
   width: 100%;
   transition: box-shadow 0.2s;
