@@ -6,12 +6,8 @@ export const HeaderUI = styled('header')`
   height: 125px;
   padding: 30px;
   background-color: #fff;
-  transition: box-shadow 0.5s;
+  transition: box-shadow 0.2s;
   z-index: 3;
-
-  &.with-shadow {
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 0 0 5px rgba(0, 0, 0, 0.05);
-  }
 
   .SidePanel__Heading {
     margin: 10px 0 4px 0;
@@ -42,12 +38,8 @@ export const FooterUI = styled('footer')`
   height: 90px;
   padding: 20px;
   background-color: #fff;
-  transition: box-shadow 0.5s;
+  transition: box-shadow 0.2s;
   z-index: 3;
-
-  &.with-shadow {
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 0 0 5px rgba(0, 0, 0, 0.05);
-  }
 
   .c-Button {
     width: 100%;

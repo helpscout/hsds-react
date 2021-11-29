@@ -1,0 +1,158 @@
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
+import { boolean, number, text, select } from '@storybook/addon-knobs'
+import ScrollableContainer from './ScrollableContainer'
+import {
+  ScrollableContainerUI,
+  HeaderUI,
+  FooterUI,
+  BodyUI,
+  SimpleBarExample,
+} from './ScrollableContainer.storiesHelpers'
+import Button from '../Button'
+
+<Meta
+  title="Components/Structural/ScrollableContainer"
+  component={ScrollableContainer}
+/>
+
+# ScrollableContainer
+
+This component is a ready to use container for when you need a layout when the main content scrolls and you have either a fixed element at the top or at the bottom or both. It provides styles needed and the shadow effects, all you need to provide is the content for each section.
+
+> The container supports being a child of a css grid, if you want it to fill an entire cell make both height and width 100%
+
+<Canvas>
+  <Story name="default">
+    <div
+      style={{
+        background: '#005CA4',
+        minHeight: '500px',
+        padding: '50px',
+      }}
+    >
+      <ScrollableContainerUI
+        header={
+          <HeaderUI className="TESTING" data-testprop="This gets passed">
+            <h1>Heading</h1>
+          </HeaderUI>
+        }
+        body={
+          <BodyUI>
+            <p>
+              Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+              duis ea laborum ex. Reprehenderit consequat officia ea id ex
+              exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+              Enim incididunt est velit pariatur adipisicing labore dolore anim
+              cillum.
+            </p>
+            <p>
+              Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+              duis ea laborum ex. Reprehenderit consequat officia ea id ex
+              exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+              Enim incididunt est velit pariatur adipisicing labore dolore anim
+              cillum.
+            </p>
+            <p>
+              Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+              duis ea laborum ex. Reprehenderit consequat officia ea id ex
+              exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+              Enim incididunt est velit pariatur adipisicing labore dolore anim
+              cillum.
+            </p>
+            <p>
+              Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+              duis ea laborum ex. Reprehenderit consequat officia ea id ex
+              exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+              Enim incididunt est velit pariatur adipisicing labore dolore anim
+              cillum.
+            </p>
+            <p>
+              Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+              duis ea laborum ex. Reprehenderit consequat officia ea id ex
+              exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+              Enim incididunt est velit pariatur adipisicing labore dolore anim
+              cillum.
+            </p>
+            <p>
+              Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+              duis ea laborum ex. Reprehenderit consequat officia ea id ex
+              exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+              Enim incididunt est velit pariatur adipisicing labore dolore anim
+              cillum.
+            </p>
+          </BodyUI>
+        }
+        footer={
+          <FooterUI>
+            <Button kind="primary">Action!</Button>
+          </FooterUI>
+        }
+      />
+    </div>
+  </Story>
+</Canvas>
+
+#### Reference
+
+- **Designer**:
+- **Engineering**:
+- **Usage**:
+
+<br />
+<br />
+
+### Props
+
+<ArgsTable of={ScrollableContainer} />
+
+## Usage with 'simplebar-react'
+
+Since we sometimes use this library, it made sense to add support to it, all you need is to turn the `enableSimpleBarSupport` to `true`:
+
+```jsx
+import SimpleBar from 'simplebar-react'
+import 'simplebar/dist/simplebar.min.css'
+// Those imports are up to you, not HSDS
+
+export const SimpleBarExample = function () {
+  return (
+    <ScrollableContainerUI
+      enableSimpleBarSupport
+      header={
+        <HeaderUI>
+          <h1>Heading</h1>
+        </HeaderUI>
+      }
+      body={
+        <SimpleBar style={{ maxHeight: 300 }}>
+          <p>
+            Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+            duis ea laborum ex. Reprehenderit consequat officia ea id ex
+            exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+            Enim incididunt est velit pariatur adipisicing labore dolore anim
+            cillum.
+          </p>
+          <p>
+            Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+            duis ea laborum ex. Reprehenderit consequat officia ea id ex
+            exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+            Enim incididunt est velit pariatur adipisicing labore dolore anim
+            cillum.
+          </p>
+        </SimpleBar>
+      }
+      footer={
+        <FooterUI>
+          <Button kind="primary">Action!</Button>
+        </FooterUI>
+      }
+    />
+  )
+}
+```
+
+<Canvas>
+  <Story name="full height with simplebar">
+    <SimpleBarExample />
+  </Story>
+</Canvas>

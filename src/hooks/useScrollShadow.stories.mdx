@@ -1,0 +1,47 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Hooks/useScrollShadow" />
+
+# useScrollShadow
+
+This hook is what powers [ScrollableContainer](/story/components-structural-scrollableContainer--default-story) under the hood and it's provided here if you need extra control.
+
+Takes the following properties on an object argument:
+
+- `topRef`: `ref` for the element fixed at the top, you can also pass the DOM element directly
+- `scrollableRef`: `ref` of the "body" or "content" element, this is the one that scrolls, you can also pass the DOM element directly
+- `bottomRef`: `ref` for the element fixed at the bottom, you can also pass the DOM element directly
+- `shadows: { initial, scrolled}`: object that provides a css `box-shadow` value for the initial and scrolled state, defaults are provided.
+- `drawInitialShadowsDelay`: If you're animating a component in, the scrollable element (body) might not have its height determined yet until that animation completes, pass a number in ms equal or larger to the length of the animation to account for this and give React time to get the size.
+
+Returns a `handleOnScroll` handler to be applied to the scrollable (the body or content element) `onScroll` event.
+
+For full examples of this hook being applied see:
+
+- The aforementioned [ScrollableContainer](/story/components-structural-scrollableContainer--default-story)
+- [SidePanel](/story/components-overlay-sidepanel--full-example)
+
+Usage:
+
+```jsx
+import React, { useRef } from 'react'
+import useScrollShadow from '../../hooks/useScrollShadow'
+
+const headerRef = useRef(null)
+const bodyRef = useRef(null)
+const footerRef = useRef(null)
+const [handleOnScroll] = useScrollShadow({
+  bottomRef: footerRef,
+  scrollableRef: bodyRef,
+  topRef: headerRef,
+  shadows: { initial: 'none' },
+})
+
+return (
+  <div>
+    <header ref={headerRef}></header>
+    <div ref={bodyRef} onScroll={handleOnScroll}></div>
+    <footer ref={footerRef}></footer>
+  </div>
+)
+```
