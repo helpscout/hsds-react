@@ -14,7 +14,11 @@ Takes the following properties on an object argument:
 - `shadows: { initial, scrolled}`: object that provides a css `box-shadow` value for the initial and scrolled state, defaults are provided.
 - `drawInitialShadowsDelay`: If you're animating a component in, the scrollable element (body) might not have its height determined yet until that animation completes, pass a number in ms equal or larger to the length of the animation to account for this and give React time to get the size.
 
-Returns a `handleOnScroll` handler to be applied to the scrollable (the body or content element) `onScroll` event.
+Returns an array:
+
+1. `handleOnScroll` handler to be applied to the scrollable (the body or content element) `onScroll` event.
+2. `isTopScrolled`: content has been scrolled and there is content overflowing under the top or header section. When `false` it means we are at the top of the scrollable node.
+3. `isBottomScrolled`: content has been scrolled and there is content overflowing under the bottom or footer section. When `false` it means we are at the bottom of the scrollable node.
 
 For full examples of this hook being applied see:
 
@@ -30,7 +34,7 @@ import useScrollShadow from '../../hooks/useScrollShadow'
 const headerRef = useRef(null)
 const bodyRef = useRef(null)
 const footerRef = useRef(null)
-const [handleOnScroll] = useScrollShadow({
+const [handleOnScroll, isTopScrolled, isBottomScrolled] = useScrollShadow({
   bottomRef: footerRef,
   scrollableRef: bodyRef,
   topRef: headerRef,
@@ -39,7 +43,9 @@ const [handleOnScroll] = useScrollShadow({
 
 return (
   <div>
-    <header ref={headerRef}></header>
+    <header className={isTopScrolled ? 'big' : 'small'} ref={headerRef}>
+      <h1></h1>
+    </header>
     <div ref={bodyRef} onScroll={handleOnScroll}></div>
     <footer ref={footerRef}></footer>
   </div>

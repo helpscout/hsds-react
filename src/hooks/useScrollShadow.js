@@ -1,6 +1,6 @@
 // very difficult to test with JSDom, some basic interaction is tested in ScrollableContainer
 /* istanbul ignore file */
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import throttle from 'lodash.throttle'
 
 const BOX_SHADOW_INITIAL = '0 0 0 1px rgba(0, 0, 0, 0.1)'
@@ -16,6 +16,8 @@ export default function useScrollShadow({
 }) {
   const initialShadow = shadows.initial || BOX_SHADOW_INITIAL
   const scrolledShadow = shadows.scrolled || BOX_SHADOW_SCROLLED
+  const [isTopScrolled, setIsTopScrolled] = useState(null)
+  const [isBottomScrolled, setIsBottomScrolled] = useState(null)
 
   useEffect(() => {
     const timeoutID = setTimeout(() => {
@@ -24,15 +26,16 @@ export default function useScrollShadow({
       if (scrollableElement) {
         const topElement = getElement(topRef)
         const bottomElement = getElement(bottomRef)
-        const { isBottomScrolled, isTopScrolled } = handleShadows(
+        const { isBottomScrolled, isTopScrolled } = getScrollableSectionsState(
           scrollableElement
         )
-
         setShadows(topElement, isTopScrolled, { initialShadow, scrolledShadow })
         setShadows(bottomElement, isBottomScrolled, {
           initialShadow,
           scrolledShadow,
         })
+        setIsTopScrolled(isTopScrolled)
+        setIsBottomScrolled(isBottomScrolled)
       }
     }, drawInitialShadowsDelay)
 
@@ -50,7 +53,9 @@ export default function useScrollShadow({
 
   const handleOnScroll = throttle(() => {
     const scrollableElement = getElement(scrollableRef)
-    const { isTopScrolled, isBottomScrolled } = handleShadows(scrollableElement)
+    const { isTopScrolled, isBottomScrolled } = getScrollableSectionsState(
+      scrollableElement
+    )
     const topElement = getElement(topRef)
     const bottomElement = getElement(bottomRef)
 
@@ -62,9 +67,11 @@ export default function useScrollShadow({
       initialShadow,
       scrolledShadow,
     })
+    setIsTopScrolled(isTopScrolled)
+    setIsBottomScrolled(isBottomScrolled)
   }, 100)
 
-  return [handleOnScroll]
+  return [handleOnScroll, isTopScrolled, isBottomScrolled]
 }
 
 function getElement(someRef) {
@@ -84,7 +91,7 @@ function setShadows(element, isScrolled, { initialShadow, scrolledShadow }) {
   }
 }
 
-function handleShadows(scrollable) {
+export function getScrollableSectionsState(scrollable) {
   if (!scrollable) {
     return {
       isTopScrolled: false,
