@@ -16,10 +16,6 @@ export function HeaderAndFooter({
     <ScrollableContainer
       width="100%"
       height="100%"
-      withResizeObservers={{
-        footer: false,
-        header: false,
-      }}
       header={
         <HeaderUI
           className={classNames(

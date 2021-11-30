@@ -86,6 +86,10 @@ export const SimpleBarExample = function () {
         onScrollableSectionsStateChange={({ isTopScrolled }) => {
           setIsTopScrolled(isTopScrolled)
         }}
+        withResizeObservers={{
+          footer: false,
+          header: true,
+        }}
         header={
           <HeaderUI
             className={classNames(isTopScrolled && 'small')}

@@ -31,9 +31,9 @@ function ScrollableContainer({
 }) {
   const observers = {
     header:
-      withResizeObservers.header != null ? withResizeObservers.header : true,
+      withResizeObservers.header != null ? withResizeObservers.header : false,
     footer:
-      withResizeObservers.footer != null ? withResizeObservers.footer : true,
+      withResizeObservers.footer != null ? withResizeObservers.footer : false,
   }
   const bodyRef = useRef(null)
   const [headerRect, headerEl, headerRef] = useMeasureNode({
