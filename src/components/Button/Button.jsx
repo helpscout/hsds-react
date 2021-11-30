@@ -1,144 +1,8 @@
-import React, { useMemo, forwardRef } from 'react'
+import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import classNames from 'classnames'
 
 import { ButtonUI, LoadingWrapperUI, SpinnerUI } from './Button.css'
-import Icon from '../Icon'
-
-const SIZE_XXL = 'xxl'
-const SIZE_XL = 'xl'
-const SIZE_LG = 'lg'
-const SIZE_MD = 'md'
-const SIZE_SM = 'sm'
-const SIZE_XS = 'xs'
-const SIZE_XXS = 'xxs'
-
-const THEME_BLUE = 'blue'
-const THEME_RED = 'red'
-const THEME_GREEN = 'green'
-const THEME_GREY = 'grey'
-
-const STYLE_FILLED = 'filled'
-const STYLE_LINK = 'link'
-export const STYLE_OUTLINED = 'outlined'
-
-export const SIZES = [
-  SIZE_XXL,
-  SIZE_XL,
-  SIZE_LG,
-  SIZE_MD,
-  SIZE_SM,
-  SIZE_XS,
-  SIZE_XXS,
-]
-export const THEMES = [THEME_BLUE, THEME_RED, THEME_GREEN, THEME_GREY]
-
-const useButtonTheme = ({ theme }) => {
-  if (THEMES.includes(theme)) return theme
-  if (theme === 'gray') return THEME_GREY
-  return THEME_BLUE
-}
-const useButtonSize = ({ size }) => {
-  if (SIZES.includes(size)) return size
-  if (size === 'lgxl') return SIZE_XL // old overwrite
-  return SIZE_LG
-}
-const useButtonStyle = ({ outlined, linked }) => {
-  if (linked) return STYLE_LINK
-  if (outlined) return STYLE_OUTLINED
-  return STYLE_FILLED
-}
-
-const useButtonChildren = ({ children }) => {
-  return useMemo(() => {
-    return React.Children.map(children, (child, index) => {
-      if (!child) return
-      if (!child.hasOwnProperty('type')) return child
-      if (child.type !== Icon) return child
-
-      const len = React.Children.count(children)
-      const isFirst = index === 0
-      const isLast = index === len - 1
-      const isOnly = isFirst && isLast
-
-      return React.cloneElement(child, {
-        offsetLeft: isFirst && !isOnly,
-        offsetRight: isLast && !isOnly,
-      })
-    })
-  }, [children])
-}
-
-const useButton = props => {
-  const {
-    as,
-    className,
-    disabled,
-    href,
-    isFirst,
-    isLast,
-    isNotOnly,
-    loading,
-    rel,
-    rounded,
-    submit,
-    target,
-    to,
-    ...rest
-  } = props
-
-  const theme = useButtonTheme(props)
-  const size = useButtonSize(props)
-  const style = useButtonStyle(props)
-  const children = useButtonChildren(props)
-
-  const type = submit ? 'submit' : 'button'
-  const hrefValue = href || to
-  const selector = as || Boolean(hrefValue) ? 'a' : 'button'
-  const isDisabled = disabled || loading
-
-  const componentClassName = classNames(
-    'c-Button',
-    isDisabled && 'is-disabled',
-    isFirst && 'is-first',
-    isLast && 'is-last',
-    isNotOnly && 'is-notOnly',
-    loading && 'is-loading',
-    rounded && 'is-rounded',
-    size && `is-size-${size}`,
-    style && `is-style-${style}`,
-    theme && `is-theme-${theme}`,
-    className
-  )
-
-  let additionalProps
-  if (selector === 'button') {
-    additionalProps = {
-      type,
-      disabled: isDisabled,
-    }
-  } else {
-    additionalProps = {
-      role: 'button',
-      tabIndex: isDisabled ? undefined : 0,
-      href: selector === 'a' && isDisabled ? undefined : hrefValue,
-      target: selector === 'a' ? target : undefined,
-      'aria-disabled': !isDisabled ? undefined : isDisabled,
-      rel: selector === 'a' ? rel : undefined,
-    }
-  }
-
-  return {
-    'data-testid': 'Button',
-    ...getValidProps(rest),
-    ...additionalProps,
-    as: selector,
-    className: componentClassName,
-    children,
-    loading,
-  }
-}
+import { useButton, SIZE_LG, THEME_BLUE, SIZES, THEMES } from './Button.utils'
 
 export const WrappedButton = forwardRef(function Button(props, ref) {
   const { loading, children, ...buttonProps } = useButton(props)
@@ -166,6 +30,8 @@ WrappedButton.defaultProps = {
 }
 
 WrappedButton.propTypes = {
+  /** Change the html element used for the button component. */
+  as: PropTypes.string,
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
   /** Disable the button so it can't be clicked. */
