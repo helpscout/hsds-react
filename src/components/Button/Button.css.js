@@ -7,25 +7,20 @@ import { focusRing } from '../../styles/mixins/focusRing.css'
 import config from './Button.config'
 
 export const ButtonUI = styled.button`
-  --buttonBackgroundColor: ${config.default.backgroundColor};
-  --buttonBackgroundColorHover: ${config.default.backgroundColorHover};
-  --buttonBackgroundColorActive: ${config.default.backgroundColorActive};
-  --buttonBackgroundColorDisabled: ${config.default.disabledBackgroundColor};
-  --buttonBorderColor: ${config.default.borderColor};
-  --buttonBorderColorHover: ${config.default.borderColorHover};
-  --buttonBorderColorActive: ${config.default.borderColorActive};
-  --buttonBorderColorDisabled: ${config.default.disabledBorderColor};
-  --buttonColor: ${config.default.color};
-  --buttonColorHover: ${config.default.color};
-  --buttonColorActive: ${config.default.color};
-  --buttonColorDisabled: ${config.default.disabledColor};
+  --buttonBackgroundColor: ${config.theme.blue.mainColor};
+  --buttonBackgroundColorHover: ${config.theme.blue.hoverColor};
+  --buttonBorderColor: ${config.theme.blue.mainColor};
+  --buttonBorderColorHover: ${config.theme.blue.mainColor};
+
+  --buttonColor: white;
+  --buttonColorHover: white;
+
   --buttonTextDecoration: none;
-  --buttonTextDecorationHover: ${config.default.textDecorationHover};
-  --buttonTextDecorationActive: ${config.default.textDecorationActive};
-  --buttonTextDecorationFocus: ${config.default.textDecorationFocus};
+  --buttonTextDecorationHover: none;
+
   --buttonPadding: 0px;
   --buttonMinWidth: initial;
-  --buttonHeight: ${config.size.md.height}px;
+  --buttonHeight: ${config.size.lg.height}px;
   --buttonFontWeight: ${config.fontWeight};
   --buttonRadius: ${config.borderRadius}px;
 
@@ -33,10 +28,11 @@ export const ButtonUI = styled.button`
   --focusRingOffset: -${config.focusOutlineOffset}px;
   --focusRingRadius: var(--buttonRadius);
 
-  appearance: none;
   align-items: center;
-  border: 1px solid var(--buttonBorderColor);
+  appearance: none;
   background: var(--buttonBackgroundColor);
+  border-radius: var(--buttonRadius);
+  border: 1px solid var(--buttonBorderColor);
   color: var(--buttonColor);
   cursor: pointer;
   display: inline-flex;
@@ -51,7 +47,6 @@ export const ButtonUI = styled.button`
   position: relative;
   text-align: center;
   text-decoration: var(--buttonTextDecoration);
-  border-radius: var(--buttonRadius);
 
   /* Allow content events to pass through, https://github.com/helpscout/hsds-react/pull/394 */
   * {
@@ -65,48 +60,43 @@ export const ButtonUI = styled.button`
     text-decoration: none;
   }
 
+  &:focus,
+  &.is-focused {
+    color: var(--buttonColor);
+    text-decoration: var(--buttonTextDecoration);
+  }
+
   &:hover,
-  &.is-hovered {
+  &.is-hovered,
+  &:active {
     background: var(--buttonBackgroundColorHover);
     border-color: var(--buttonBorderColorHover);
     color: var(--buttonColorHover);
     text-decoration: var(--buttonTextDecorationHover);
   }
 
-  &:focus,
-  &.is-focused {
-    color: var(--buttonColor);
-    text-decoration: var(--buttonTextDecorationFocus);
-  }
-
-  &:active,
-  &.is-active {
-    background: var(--buttonBackgroundColorActive);
-    border-color: var(--buttonBorderColorActive);
-    color: var(--buttonColorActive);
-    text-decoration: var(--buttonTextDecorationActive);
-  }
-
   &.is-disabled,
   &[disabled] {
     pointer-events: none;
     user-select: none;
-    background: var(--buttonBackgroundColorDisabled) !important;
-    border-color: var(--buttonBorderColorDisabled) !important;
-    color: var(--buttonColorDisabled) !important;
+    background: ${getColor('grey.500')} !important;
+    border-color: ${getColor('grey.500')} !important;
+    color: white !important;
+
+    &.is-style-outlined {
+      background: white !important;
+      border-color: ${getColor('grey.600')} !important;
+      color: ${getColor('grey.800')} !important;
+    }
 
     &:before {
       display: none;
     }
   }
 
-  &.is-shape-rounded {
+  &.is-rounded {
     border-radius: 100px;
     --focusRingRadius: 100px;
-  }
-  &.is-shape-circle {
-    border-radius: 100%;
-    --focusRingRadius: 100%;
   }
 
   &.is-first {
@@ -122,6 +112,7 @@ export const ButtonUI = styled.button`
   }
 
   /* sizes */
+  ${makeButtonSizeStyles('xxl', config.size.xxl)};
   ${makeButtonSizeStyles('xl', config.size.xl)};
   ${makeButtonSizeStyles('lg', config.size.lg)};
   ${makeButtonSizeStyles('md', config.size.md)};
@@ -129,146 +120,74 @@ export const ButtonUI = styled.button`
   ${makeButtonSizeStyles('xs', config.size.xs)};
   ${makeButtonSizeStyles('xxs', config.size.xxs)};
 
-  /* kinds && states */
-  ${makeButtonStateStyles(config.default, 'danger')}
-  ${props => makePrimaryStyles('primary', props)};
-  ${makeButtonKindStyles('secondary', config.secondary)};
-  ${makeButtonKindStyles('tertiary', config.tertiary)};
-  ${makeButtonKindStyles('link', config.link)};
-  ${makeButtonKindStyles('suffix', config.suffix)};
-
-  /* some overwrites */
-  &.is-primary {
-    &.is-lg,
-    &.is-xl {
-      --buttonMinWidth: 120px;
-    }
-  }
+  /* theme */
+  ${makeButtonThemeStyles('blue', config.theme.blue)};
+  ${makeButtonThemeStyles('green', config.theme.green)};
+  ${makeButtonThemeStyles('grey', config.theme.grey)};
+  ${makeButtonThemeStyles('red', config.theme.red)};
 `
 
-function makePrimaryStyles(name = 'primary', props = {}) {
-  const theme = get(props, 'theme.brandColor', {})
-  const backgroundColor =
-    theme.backgroundColorUI || theme.brandColor || config[name].backgroundColor
-  const color =
-    theme.textColorInteractive || theme.brandTextColor || config[name].color
-
-  const backgroundColorHover =
-    theme.backgroundColorUIHover || config[name].backgroundColorHover
-  const borderColorHover = backgroundColorHover
-  const backgroundColorActive =
-    theme.backgroundColorUIActive || config[name].backgroundColorActive
-  const borderColorActive = backgroundColorActive
-
-  return makeButtonKindStyles(name, {
-    ...config[name],
-    backgroundColor,
-    borderColor: backgroundColor,
-    color,
-    backgroundColorHover,
-    borderColorHover,
-    backgroundColorActive,
-    borderColorActive,
-  })
-}
-
-function makeButtonKindStyles(kind, config) {
+function makeButtonThemeStyles(theme, config) {
   return css`
-    &.is-${kind} {
-      --buttonBackgroundColor: ${config.backgroundColor};
-      --buttonBackgroundColorHover: ${config.backgroundColorHover};
-      --buttonBackgroundColorActive: ${config.backgroundColorActive};
-      --buttonBackgroundColorDisabled: ${config.disabledBackgroundColor};
-      --buttonBorderColor: ${config.borderColor};
-      --buttonBorderColorHover: ${config.borderColorHover};
-      --buttonBorderColorActive: ${config.borderColorActive};
-      --buttonBorderColorDisabled: ${config.disabledBorderColor};
-      ${renderStyleForProp(config, 'color', '--buttonColor', 'color')};
-      ${renderStyleForProp(
-        config,
-        'disabledColor',
-        '--buttonColorDisabled',
-        'color'
-      )};
-      ${renderStyleForProp(
-        config,
-        'colorHover',
-        '--buttonColorHover',
-        'color'
-      )};
-      ${renderStyleForProp(
-        config,
-        'colorActive',
-        '--buttonColorActive',
-        'color'
-      )};
+    &.is-theme-${theme} {
+      --buttonBackgroundColor: ${config.mainColor};
+      --buttonBackgroundColorHover: ${config.hoverColor};
+      --buttonBorderColor: ${config.mainColor};
+      --buttonBorderColorHover: ${config.mainColor};
 
-      ${renderStyleForProp(config, 'textDecoration', '--buttonTextDecoration')}
-      ${renderStyleForProp(
-        config,
-        'textDecorationHover',
-        '--buttonTextDecorationHover'
-      )}
-      ${renderStyleForProp(
-        config,
-        'textDecorationActive',
-        '--buttonTextDecorationActive'
-      )}
-      ${renderStyleForProp(
-        config,
-        'textDecorationFocus',
-        '--buttonTextDecorationFocus'
-      )}
+      &.is-style-outlined {
+        --buttonBackgroundColor: white;
 
-      ${renderStyleForProp(config, 'fontWeight', '--buttonFontWeight')}
-      ${renderStyleForProp(config, 'minWidth', '--buttonMinWidth')}
-      ${renderStyleForProp(config, 'padding', '--buttonPadding')}
+        ${renderPropStyle(
+          config,
+          'outline.hoverColor',
+          '--buttonBackgroundColorHover'
+        )};
 
+        ${renderPropStyle(config, 'outline.textColor', '--buttonColor')};
+        ${renderPropStyle(
+          config,
+          'outline.textHoverColor',
+          '--buttonColorHover',
+          'textColor'
+        )};
 
-      ${makeButtonStateStyles(config, 'danger')}
-      ${makeButtonStateStyles(config, 'success')}
-      ${makeButtonStateStyles(config, 'warning')}
-      ${makeButtonStateStyles(config, 'grey')}
-      ${makeButtonStateStyles(config, 'muted')}
+        ${renderPropStyle(
+          config,
+          'outline.borderColor',
+          '--buttonBorderColor',
+          'mainColor'
+        )};
+        ${renderPropStyle(
+          config,
+          'outline.borderHoverColor',
+          '--buttonBorderColorHover',
+          'mainColor'
+        )};
+      }
     }
   `
 }
 function makeButtonSizeStyles(size, config) {
   return css`
-    &.is-${size} {
+    &.is-size-${size} {
       ${variableFontSize({ fontSize: config.fontSize })};
-      ${renderStyleForProp(config, 'height', '--buttonHeight')};
-      ${renderStyleForProp(config, 'padding', '--buttonPadding')};
-      ${renderStyleForProp(config, 'fontWeight', '--buttonFontWeight')};
+      ${renderPropStyle(config, 'height', '--buttonHeight')};
+      ${renderPropStyle(config, 'padding', '--buttonPadding')};
+      ${renderPropStyle(config, 'fontWeight', '--buttonFontWeight')};
+
+      &:not(.is-rounded) {
+        ${renderPropStyle(config, 'minWidth', '--buttonMinWidth')};
+      }
     }
   `
 }
 
-function makeButtonStateStyles(config, state) {
-  if (!config.hasOwnProperty(state)) return css``
-
-  return css`
-    &.is-${state} {
-      --buttonBackgroundColor: ${config[state].backgroundColor};
-      --buttonBackgroundColorHover: ${config[state].backgroundColorHover};
-      --buttonBackgroundColorActive: ${config[state].backgroundColorActive};
-      --buttonBorderColor: ${config[state].borderColor};
-      --buttonBorderColorHover: ${config[state].borderColorHover};
-      --buttonBorderColorActive: ${config[state].borderColorActive};
-      --buttonColor: ${config[state].color};
-      --buttonColorHover: ${config[state].color};
-      --buttonColorActive: ${config[state].color};
-    }
-  `
-}
-
-function renderStyleForProp(config, prop, attribute, fallback = null) {
+function renderPropStyle(config, prop, attribute, fallback = null) {
   const attr = attribute || prop
 
-  let value
-  if (config.hasOwnProperty(prop)) value = config[prop]
-  if (!value && fallback && config.hasOwnProperty(fallback))
-    value = config[fallback]
+  let value = get(config, prop)
+  if (!value && fallback) value = get(config, fallback)
 
   if (!value) return ''
 
@@ -287,7 +206,7 @@ export const LoadingWrapperUI = styled.span`
 `
 
 export const SpinnerUI = styled(Spinner)`
-  color: ${getColor('charcoal.500')};
+  color: inherit;
   margin: -6px 0 0 -6px;
   position: absolute;
   z-index: 1;

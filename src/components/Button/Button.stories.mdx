@@ -1,6 +1,6 @@
 import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, select, text } from '@storybook/addon-knobs'
-import Button from './Button'
+import Button, { SIZES, THEMES } from './Button'
 import { ControlGroup } from '../index'
 
 <Meta
@@ -24,50 +24,12 @@ Actionable HTML buttons with different styles and support for React Router.
     <Button
       children={text('children', 'Button')}
       disabled={boolean('disabled', false)}
-      isActive={boolean('isActive', false)}
-      isHovered={boolean('isHovered', false)}
-      isLoading={boolean('isLoading', false)}
-      kind={select(
-        'kind',
-        {
-          primary: 'primary',
-          secondary: 'secondary',
-          tertiary: 'tertiary',
-          default: 'default',
-          link: 'link',
-        },
-        'secondary'
-      )}
-      size={select(
-        'size',
-        {
-          xl: 'xl',
-          lg: 'lg',
-          md: 'md',
-          sm: 'sm',
-          xs: 'xs',
-        },
-        'lg'
-      )}
-      state={select(
-        'state',
-        {
-          default: null,
-          danger: 'danger',
-          success: 'success',
-          warning: 'warning',
-          grey: 'grey',
-        },
-        ''
-      )}
-      shape={select(
-        'shape',
-        {
-          default: 'default',
-          rounded: 'rounded',
-        },
-        'default'
-      )}
+      loading={boolean('loading', false)}
+      rounded={boolean('rounded', false)}
+      linked={boolean('linked', false)}
+      outlined={boolean('outlined', false)}
+      theme={select('theme', THEMES, THEMES[0])}
+      size={select('size', SIZES, SIZES[0])}
     />
   </Story>
 </Canvas>
@@ -93,13 +55,19 @@ Actionable HTML buttons with different styles and support for React Router.
   <Story name="Button Group">
     <ControlGroup>
       <ControlGroup.Item>
-        <Button kind="secondary">Button</Button>
+        <Button theme="grey" outlined>
+          Button
+        </Button>
       </ControlGroup.Item>
       <ControlGroup.Item>
-        <Button kind="secondary">Button</Button>
+        <Button theme="grey" outlined>
+          Button
+        </Button>
       </ControlGroup.Item>
       <ControlGroup.Item>
-        <Button kind="secondary">Button</Button>
+        <Button theme="gray" outlined>
+          Button
+        </Button>
       </ControlGroup.Item>
     </ControlGroup>
   </Story>

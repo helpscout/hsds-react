@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import React, { useMemo, forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
@@ -6,32 +6,52 @@ import classNames from 'classnames'
 import { ButtonUI, LoadingWrapperUI, SpinnerUI } from './Button.css'
 import Icon from '../Icon'
 
-export const WrappedButton = forwardRef(function Button(props, ref) {
-  const {
-    as,
-    children,
-    className,
-    disabled,
-    isActive,
-    isFirst,
-    isFocused,
-    isHovered,
-    isLast,
-    isLoading,
-    isNotOnly,
-    isSuffix,
-    kind,
-    shape,
-    size,
-    state,
-    submit,
-    theme,
-    ...rest
-  } = props
+const SIZE_XXL = 'xxl'
+const SIZE_XL = 'xl'
+const SIZE_LG = 'lg'
+const SIZE_MD = 'md'
+const SIZE_SM = 'sm'
+const SIZE_XS = 'xs'
+const SIZE_XXS = 'xxs'
 
-  const getChildrenMarkup = () => {
-    const { children } = props
+const THEME_BLUE = 'blue'
+const THEME_RED = 'red'
+const THEME_GREEN = 'green'
+const THEME_GREY = 'grey'
 
+const STYLE_FILLED = 'filled'
+const STYLE_LINK = 'link'
+export const STYLE_OUTLINED = 'outlined'
+
+export const SIZES = [
+  SIZE_XXL,
+  SIZE_XL,
+  SIZE_LG,
+  SIZE_MD,
+  SIZE_SM,
+  SIZE_XS,
+  SIZE_XXS,
+]
+export const THEMES = [THEME_BLUE, THEME_RED, THEME_GREEN, THEME_GREY]
+
+const useButtonTheme = ({ theme }) => {
+  if (THEMES.includes(theme)) return theme
+  if (theme === 'gray') return THEME_GREY
+  return THEME_BLUE
+}
+const useButtonSize = ({ size }) => {
+  if (SIZES.includes(size)) return size
+  if (size === 'lgxl') return SIZE_XL // old overwrite
+  return SIZE_LG
+}
+const useButtonStyle = ({ outlined, isLink }) => {
+  if (isLink) return STYLE_LINK
+  if (outlined) return STYLE_OUTLINED
+  return STYLE_FILLED
+}
+
+const useButtonChildren = ({ children }) => {
+  return useMemo(() => {
     return React.Children.map(children, (child, index) => {
       if (!child) return
       if (!child.hasOwnProperty('type')) return child
@@ -47,69 +67,103 @@ export const WrappedButton = forwardRef(function Button(props, ref) {
         offsetRight: isLast && !isOnly,
       })
     })
-  }
+  }, [children])
+}
 
-  const isDisabled = disabled || isLoading
+const useButton = props => {
+  const {
+    as,
+    className,
+    disabled,
+    href,
+    isFirst,
+    isLast,
+    isNotOnly,
+    loading,
+    rel,
+    rounded,
+    submit,
+    target,
+    to,
+    ...rest
+  } = props
+
+  const theme = useButtonTheme(props)
+  const size = useButtonSize(props)
+  const style = useButtonStyle(props)
+  const children = useButtonChildren(props)
+
+  const type = submit ? 'submit' : 'button'
+  const hrefValue = href || to
+  const selector = as || Boolean(hrefValue) ? 'a' : 'button'
+  const isDisabled = disabled || loading
 
   const componentClassName = classNames(
     'c-Button',
-    isActive && 'is-active',
     isDisabled && 'is-disabled',
     isFirst && 'is-first',
-    isFocused && 'is-focused',
-    isHovered && 'is-hovered',
-    isNotOnly && 'is-notOnly',
     isLast && 'is-last',
-    isLoading && 'is-loading',
-    isSuffix && 'is-suffix',
-    kind && `is-${kind}`,
-    shape && `is-shape-${shape}`,
-    size && `is-${size === 'lgxl' ? 'xl' : size}`, // remapping lgxl to xl
-    state && `is-${state}`,
-    theme && `is-${theme}`,
+    isNotOnly && 'is-notOnly',
+    loading && 'is-loading',
+    rounded && 'is-rounded',
+    size && `is-size-${size}`,
+    style && `is-style-${style}`,
+    theme && `is-theme-${theme}`,
     className
   )
 
-  const type = submit ? 'submit' : 'button'
-  const isLink = Boolean(props.href) || Boolean(props.to)
-  const selector = isLink ? 'a' : 'button'
+  let additionalProps
+  if (selector === 'button') {
+    additionalProps = {
+      type,
+      disabled: isDisabled,
+    }
+  } else {
+    additionalProps = {
+      role: 'button',
+      tabIndex: isDisabled ? undefined : 0,
+      href: selector === 'a' && isDisabled ? undefined : hrefValue,
+      target: selector === 'a' ? target : undefined,
+      'aria-disabled': !isDisabled ? undefined : isDisabled,
+      rel: selector === 'a' ? rel : undefined,
+    }
+  }
 
-  const childrenMarkup = getChildrenMarkup()
+  return {
+    'data-testid': 'Button',
+    ...getValidProps(rest),
+    ...additionalProps,
+    as: selector,
+    className: componentClassName,
+    children,
+    loading,
+  }
+}
+
+export const WrappedButton = forwardRef(function Button(props, ref) {
+  const { loading, children, ...buttonProps } = useButton(props)
 
   return (
-    <ButtonUI
-      data-testid="Button"
-      {...getValidProps(rest)}
-      className={componentClassName}
-      disabled={isDisabled}
-      ref={ref}
-      type={type}
-      as={as || selector}
-    >
-      {isLoading && <SpinnerUI className="c-Button--spinner" />}
-      {isLoading ? (
-        <LoadingWrapperUI>{childrenMarkup}</LoadingWrapperUI>
-      ) : (
-        childrenMarkup
-      )}
+    <ButtonUI {...buttonProps} ref={ref}>
+      {loading && <SpinnerUI className="c-Button--spinner" />}
+      {loading ? <LoadingWrapperUI>{children}</LoadingWrapperUI> : children}
     </ButtonUI>
   )
 })
 
 WrappedButton.defaultProps = {
   'data-cy': 'Button',
-  disable: false,
-  kind: 'default',
-  isActive: false,
-  isFocused: false,
+  disabled: false,
   isFirst: false,
-  isHovered: false,
-  isNotOnly: false,
   isLast: false,
-  isSuffix: false,
-  shape: 'default',
-  size: 'md',
+  isLink: false,
+  isNotOnly: false,
+  rounded: false,
+  loading: false,
+  linked: false,
+  size: SIZE_LG,
   submit: false,
+  theme: THEME_BLUE,
 }
 
 WrappedButton.propTypes = {
@@ -119,52 +173,29 @@ WrappedButton.propTypes = {
   disabled: PropTypes.bool,
   /** Hyperlink for the button. This transforms the button to a `<a>` selector. */
   href: PropTypes.string,
-  /** Renders the focused style. */
-  isFocused: PropTypes.bool,
+  /** rel html attribute */
+  rel: PropTypes.string,
+  /** target html attribute */
+  target: PropTypes.string,
+  /** Renders a button with the link styles */
+  linked: PropTypes.bool,
   /** Renders a loading `Spinner`. */
-  isLoading: PropTypes.bool,
-  /** Renders suffix styles. */
-  isSuffix: PropTypes.bool,
-  /** Applies the specified style to the button.
-   * 'primary': Blue button. Used for primary actions.
-   * 'secondary': White button with a border. Used for secondary actions.
-   * 'tertiary': White button with a green border. Used for secondary actions.
-   * 'default': Borderless button. Used for subtle/tertiary actions.
-   * 'link': Button that looks like a `Link`. Used for subtle/tertiary actions.
-   */
-  kind: PropTypes.oneOf([
-    'primary',
-    'secondary',
-    'tertiary',
-    'default',
-    'link',
-  ]),
+  loading: PropTypes.bool,
   /** Sets the size of the button. */
-  size: PropTypes.oneOf(['sm', 'md', 'lg', 'xl', 'lgxl', 'xs', 'xxs']),
-  /** A special property that... spins the button if `isLoading`. */
-  /** Applies state styles to the button.
-   * 'danger': red.
-   * 'success': green.
-   * 'grey': grey.
-   * 'warning': orange.
-   */
-  state: PropTypes.oneOf(['danger', 'success', 'grey', 'warning']),
+  size: PropTypes.oneOf(SIZES),
   /** Sets the `type` of the button to `"submit"`. */
   submit: PropTypes.bool,
   /** Applies a theme based style to the button. */
-  theme: PropTypes.string,
+  theme: PropTypes.oneOf(THEMES),
   /** React Router path to navigate on click. */
   to: PropTypes.string,
-  isActive: PropTypes.bool,
+
   isFirst: PropTypes.bool,
-  isHovered: PropTypes.bool,
   isNotOnly: PropTypes.bool,
   isLast: PropTypes.bool,
-  /** Applies shape styles to the button.
-   * 'default': rounded corner.
-   * 'rounded': bigger border-radius, almost a circle (100px radius).
-   */
-  shape: PropTypes.oneOf(['default', 'rounded', 'circle']),
+
+  /** Sets the button radius to 100%. */
+  rounded: PropTypes.bool,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
 }
