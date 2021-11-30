@@ -156,6 +156,11 @@ const shadowShape = PropTypes.shape({
   scrolled: PropTypes.string,
 })
 
+const resizeObserversShape = PropTypes.shape({
+  header: PropTypes.bool,
+  footer: PropTypes.bool,
+})
+
 ScrollableContainer.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
@@ -180,7 +185,7 @@ ScrollableContainer.propTypes = {
   /** If you want to use 'simplebar-react' in the body, turn this flag on */
   withSimpleBar: PropTypes.bool,
   /** If your header or footer change height dimensions on scroll, use `ResizeObserver` to have smooth transition, allows to set the observer in both sections or just one: `{ header: true, footer: true }` */
-  withResizeObservers: PropTypes.bool,
+  withResizeObservers: resizeObserversShape,
 }
 
 export default React.forwardRef((props, ref) => {
