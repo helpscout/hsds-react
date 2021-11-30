@@ -1,6 +1,7 @@
 import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, number, text, select } from '@storybook/addon-knobs'
 import IconButton from './'
+import { THEMES } from '../Button/Button.utils'
 
 <Meta
   title="Components/Buttons/IconButton"
@@ -22,42 +23,12 @@ Actionable `Button` with an `Icon`.
   <Story name="default">
     <IconButton
       icon={text('icon', 'search')}
-      iconSize={number('iconSize', 24)}
-      shape={select(
-        'shape',
-        {
-          circle: 'circle',
-          default: 'default',
-        },
-        'circle'
-      )}
-      kind={select(
-        'kind',
-        {
-          primary: 'primary',
-          primaryAlt: 'primaryAlt',
-          secondary: 'secondary',
-          secondaryAlt: 'secondaryAlt',
-          default: 'default',
-          link: 'link',
-        },
-        'secondary'
-      )}
-      size={select(
-        'size',
-        {
-          xl: 'xl',
-          lgxl: 'lgxl',
-          lg: 'lg',
-          md: 'md',
-          sm: 'sm',
-          xs: 'xs',
-        },
-        'lg'
-      )}
-      isBorderless={boolean('isBorderless', true)}
-      withCaret={boolean('withCaret', false)}
-    />
+      disabled={boolean('disabled', false)}
+      filled={boolean('filled', false)}
+      theme={select('theme', THEMES, THEMES[0])}
+    >
+      {text('text', '')}
+    </IconButton>
   </Story>
 </Canvas>
 

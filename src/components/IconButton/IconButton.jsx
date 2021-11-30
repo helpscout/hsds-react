@@ -1,104 +1,91 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
-import Button from '../Button'
+import { useButtonClassnames, THEME_GREY, THEMES } from '../Button/Button.utils'
+
 import Icon from '../Icon'
-import classNames from 'classnames'
-import { noop } from '../../utilities/other'
-import { IconButtonUI } from './IconButton.css'
+import Avatar from '../Avatar'
+import { IconButtonUI, IconContainerUI, ChildrenUI } from './IconButton.css'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 
-export const IconButton = React.forwardRef((props, ref) => {
-  const getClassName = () => {
-    const { className, kind, icon, isBorderless } = props
-
-    return classNames(
-      IconButton.className,
-      icon && `is-icon-${icon}`,
-      kind && `is-kind-${kind}`,
-      isBorderless && 'is-borderless',
-      className
-    )
+const useIconButtonAvatar = (props = {}) => {
+  const { image, fallbackImage } = props
+  if (!image) {
+    return null
   }
 
-  const getIconSize = () => {
-    const { iconSize, size } = props
+  return <Avatar image={image} fallbackImage={fallbackImage} />
+}
 
-    switch (size) {
-      case 'xs':
-        return 16
+const useIconButton = props => {
+  const { as, disabled, filled, submit, ...rest } = props
 
-      case 'sm':
-        return 18
-
-      default:
-        return iconSize
-    }
+  const forcedProps = {
+    rounded: true,
+    size: 'xl',
+    outlined: !filled,
   }
 
-  const {
-    children,
-    icon,
-    iconSize,
-    isWithHiddenTitle,
-    withCaret,
-    ...rest
-  } = props
+  const componentClassName = useButtonClassnames(
+    'c-IconButton',
+    { ...rest, ...forcedProps },
+    disabled
+  )
+
+  const type = submit ? 'submit' : 'button'
+
+  return {
+    'data-testid': 'IconButton',
+    ...getValidProps(rest),
+    type,
+    disabled,
+    as: as ? as : undefined,
+    className: componentClassName,
+  }
+}
+
+export const IconButton = forwardRef((props, ref) => {
+  const { icon, avatarProps = {}, ...rest } = props
+
+  const { children, ...buttonProps } = useIconButton(rest)
+
+  const avatarComponent = useIconButtonAvatar(avatarProps)
+  const shouldShowIcon = icon && !avatarComponent
 
   return (
-    <IconButtonUI {...rest} className={getClassName()} ref={ref}>
-      <Icon
-        name={icon}
-        size={getIconSize()}
-        isWithHiddenTitle={isWithHiddenTitle}
-        withCaret={withCaret}
-      />
+    <IconButtonUI {...buttonProps} ref={ref}>
+      <IconContainerUI>
+        {shouldShowIcon && <Icon name={icon} size={24} />}
+        {avatarComponent && avatarComponent}
+      </IconContainerUI>
+      {children && <ChildrenUI>{children}</ChildrenUI>}
     </IconButtonUI>
   )
 })
 
-IconButton.className = 'c-IconButton'
-
 IconButton.defaultProps = {
-  ...Button.defaultProps,
+  disabled: false,
+  submit: false,
+  filled: false,
+  theme: THEME_GREY,
   'data-cy': 'IconButton',
   icon: 'search',
-  iconSize: 24,
-  innerRef: noop,
-  isBorderless: true,
-  isWithHiddenTitle: false,
-  kind: 'default',
-  size: 'md',
-  shape: 'circle',
-  withCaret: false,
 }
 
 IconButton.propTypes = {
+  /** Change the html element used for the component. */
+  as: PropTypes.string,
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
+  /** Disable the button so it can't be clicked. */
+  disabled: PropTypes.bool,
   /** The name of the icon to render. */
   icon: PropTypes.string,
-  /** Renders a border around the [Button](../Button). */
-  isBorderless: PropTypes.bool,
-  /** Renders a caret for the icon */
-  withCaret: PropTypes.bool,
-  /** Adjusts the size of the icon. */
-  iconSize: PropTypes.oneOf([
-    8,
-    10,
-    12,
-    13,
-    14,
-    15,
-    16,
-    18,
-    20,
-    24,
-    32,
-    48,
-    52,
-  ]),
-  isWithHiddenTitle: PropTypes.bool,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
+  /** Sets the `type` of the button to `"submit"`. */
+  submit: PropTypes.bool,
+  /** Applies a theme based style to the button. */
+  theme: PropTypes.oneOf(THEMES),
 }
 
 export default IconButton
