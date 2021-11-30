@@ -81,6 +81,7 @@ export class EditableFieldInput extends React.Component {
 
   inputRef
   inputWrapperRef = React.createRef()
+  _isMounted = false
 
   state = {
     isDropListOpen: false,
@@ -91,6 +92,7 @@ export class EditableFieldInput extends React.Component {
   }
 
   componentDidMount() {
+    this._isMounted = true
     const { isActive } = this.props
 
     this.setInputTitle()
@@ -99,6 +101,10 @@ export class EditableFieldInput extends React.Component {
       const inputNode = this.inputRef
       inputNode && inputNode.focus()
     }
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false
   }
 
   shouldComponentUpdate(nextProps) {
@@ -233,7 +239,9 @@ export class EditableFieldInput extends React.Component {
   }
 
   handleOpenCloseDropList = isOpen => {
-    this.setState({ isDropListOpen: isOpen })
+    if (this._isMounted) {
+      this.setState({ isDropListOpen: isOpen })
+    }
   }
 
   renderOptions = () => {
