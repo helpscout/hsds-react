@@ -44,8 +44,8 @@ const useButtonSize = ({ size }) => {
   if (size === 'lgxl') return SIZE_XL // old overwrite
   return SIZE_LG
 }
-const useButtonStyle = ({ outlined, isLink }) => {
-  if (isLink) return STYLE_LINK
+const useButtonStyle = ({ outlined, linked }) => {
+  if (linked) return STYLE_LINK
   if (outlined) return STYLE_OUTLINED
   return STYLE_FILLED
 }
@@ -156,11 +156,10 @@ WrappedButton.defaultProps = {
   disabled: false,
   isFirst: false,
   isLast: false,
-  isLink: false,
+  linked: false,
   isNotOnly: false,
   rounded: false,
   loading: false,
-  linked: false,
   size: SIZE_LG,
   submit: false,
   theme: THEME_BLUE,

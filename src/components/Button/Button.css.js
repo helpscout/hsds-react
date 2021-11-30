@@ -60,14 +60,12 @@ export const ButtonUI = styled.button`
     text-decoration: none;
   }
 
-  &:focus,
-  &.is-focused {
+  &:focus {
     color: var(--buttonColor);
     text-decoration: var(--buttonTextDecoration);
   }
 
   &:hover,
-  &.is-hovered,
   &:active {
     background: var(--buttonBackgroundColorHover);
     border-color: var(--buttonBorderColorHover);
@@ -86,6 +84,11 @@ export const ButtonUI = styled.button`
     &.is-style-outlined {
       background: white !important;
       border-color: ${getColor('grey.600')} !important;
+      color: ${getColor('grey.800')} !important;
+    }
+    &.is-style-link {
+      background: transparent !important;
+      border-color: transparent !important;
       color: ${getColor('grey.800')} !important;
     }
 
@@ -163,6 +166,22 @@ function makeButtonThemeStyles(theme, config) {
           'outline.borderHoverColor',
           '--buttonBorderColorHover',
           'mainColor'
+        )};
+      }
+
+      &.is-style-link  {
+        --buttonBackgroundColor: transparent;
+        --buttonBackgroundColorHover: transparent;
+        --buttonBorderColor: transparent;
+        --buttonBorderColorHover: transparent;
+        --buttonTextDecorationHover: underline;
+
+        ${renderPropStyle(config, 'outline.textColor', '--buttonColor')};
+        ${renderPropStyle(
+          config,
+          'outline.textHoverColor',
+          '--buttonColorHover',
+          'textColor'
         )};
       }
     }
