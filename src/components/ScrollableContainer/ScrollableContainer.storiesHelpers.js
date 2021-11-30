@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import ScrollableContainer from './ScrollableContainer'
 import Button from '../Button'
+import classNames from 'classnames'
 
 export const ScrollableContainerUI = styled(ScrollableContainer)`
   border-radius: 6px;
@@ -11,15 +12,28 @@ export const ScrollableContainerUI = styled(ScrollableContainer)`
 `
 
 export const HeaderUI = styled('header')`
+  display: flex;
+  align-items: center;
   height: 75px;
-  padding: 20px 30px;
+  padding: 0 30px;
   background-color: #fff;
+  transition: height 0.2s ease-in-out;
 
   h1 {
-    font-weight: 500;
+    transition: font-size 0.3s ease-in-out;
     font-size: 18px;
+    font-weight: 500;
     line-height: 22px;
     color: ${getColor('charcoal.700')};
+    margin: 0;
+  }
+
+  &.small {
+    height: 40px;
+
+    h1 {
+      font-size: 16px;
+    }
   }
 `
 
@@ -27,8 +41,9 @@ export const BodyUI = styled('div')`
   padding: 10px 30px;
   background-color: #e5e9ec;
 `
+
 export const FooterUI = styled('footer')`
-  height: 75px;
+  min-height: 75px;
   padding: 20px 30px;
   background-color: #fff;
 
@@ -51,15 +66,31 @@ const BGUI = styled('div')`
   );
 `
 
+const InputUI = styled('input')`
+  width: 300px;
+  height: 40px;
+  margin-bottom: 10px;
+  padding: 5px 3px;
+`
 export const SimpleBarExample = function () {
+  const [isTopScrolled, setIsTopScrolled] = useState(null)
+
   return (
     <BGUI>
       <ScrollableContainerUI
+        id="main"
         withSimpleBar
         width="70%"
         height="100vh"
+        shadows={{ initial: 'none' }}
+        onScrollableSectionsStateChange={({ isTopScrolled }) => {
+          setIsTopScrolled(isTopScrolled)
+        }}
         header={
-          <HeaderUI className="TESTING" data-testprop="This gets passed">
+          <HeaderUI
+            className={classNames(isTopScrolled && 'small')}
+            data-testprop="This gets passed"
+          >
             <h1>Heading</h1>
           </HeaderUI>
         }
@@ -208,9 +239,50 @@ export const SimpleBarExample = function () {
           </BodyUI>
         }
         footer={
-          <FooterUI>
-            <Button kind="primary">Action!</Button>
-          </FooterUI>
+          <ScrollableContainer
+            shadows={{ initial: 'none' }}
+            width="100%"
+            height="200px"
+            withSimpleBar
+            body={
+              <BodyUI style={{ background: 'white' }}>
+                <InputUI
+                  type="text"
+                  name="hello"
+                  id="hello"
+                  placeholder="first input..."
+                  style={{ marginTop: '20px' }}
+                />
+                <br />
+                <InputUI
+                  type="text"
+                  name="hello"
+                  id="hello2"
+                  placeholder="another input here..."
+                />
+                <br />
+                <InputUI
+                  type="text"
+                  name="hello"
+                  id="hello3"
+                  placeholder="another input here..."
+                />
+                <br />
+                <InputUI
+                  type="text"
+                  name="hello"
+                  id="hello4"
+                  placeholder="last input..."
+                />
+                <br />
+              </BodyUI>
+            }
+            footer={
+              <FooterUI>
+                <Button kind="primary">Action!</Button>
+              </FooterUI>
+            }
+          />
         }
       />
     </BGUI>

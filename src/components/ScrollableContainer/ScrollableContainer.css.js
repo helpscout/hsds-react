@@ -8,8 +8,8 @@ export const ContainerScrollUI = styled('div')`
   flex-direction: column;
   flex-grow: 1;
   overflow: hidden;
-  width: ${({ width }) => width};
-  height: ${({ height }) => height};
+  width: ${({ $width }) => $width};
+  height: ${({ $height }) => $height};
 `
 
 export const HeaderUI = styled(({ component, ref, ...props }) =>
@@ -18,6 +18,8 @@ export const HeaderUI = styled(({ component, ref, ...props }) =>
   width: 100%;
   transition: box-shadow 0.2s;
   z-index: 3;
+  flex-shrink: 0;
+  flex-grow: 0;
 `
 
 export const BodyUI = styled(({ component, ref, ...props }) =>
@@ -29,7 +31,7 @@ export const BodyUI = styled(({ component, ref, ...props }) =>
 `
 
 export const SimpleBarUI = styled(SimpleBar)`
-  height: ${({ height }) => height};
+  height: ${({ $height }) => $height};
 `
 
 export const FooterUI = styled(({ component, ref, ...props }) =>
@@ -38,4 +40,6 @@ export const FooterUI = styled(({ component, ref, ...props }) =>
   width: 100%;
   transition: box-shadow 0.2s;
   z-index: 3;
+  flex-shrink: 0;
+  flex-grow: 0;
 `

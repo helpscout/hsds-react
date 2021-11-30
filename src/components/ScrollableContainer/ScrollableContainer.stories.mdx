@@ -94,9 +94,9 @@ This component is a ready to use container for when you need a layout when the m
 
 #### Reference
 
-- **Designer**:
-- **Engineering**:
-- **Usage**:
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: HS App UI
 
 <br />
 <br />
@@ -107,52 +107,36 @@ This component is a ready to use container for when you need a layout when the m
 
 ## Usage with 'simplebar-react'
 
-Since we sometimes use this library, it made sense to add support to it, all you need is to turn the `enableSimpleBarSupport` to `true`:
+Since we sometimes use [this library](https://github.com/Grsmto/simplebar/tree/master/packages/simplebar-react) it made sense to add support for it, all you need is to turn the `withSimpleBar` to `true`, the component will set it up for you.
+
+## Nesting
+
+You can nest containers, see the "full example" story below with a ScrollableContainer in the footer of another.
+
+## Interactive header and footer
+
+If you need to do something special when either the header or footer are "scrolled", use the `onScrollableSectionsStateChange` callback, which will give access to those sections scrolled state and fire when those change:
 
 ```jsx
-import SimpleBar from 'simplebar-react'
-import 'simplebar/dist/simplebar.min.css'
-// Those imports are up to you, not HSDS
+const [isTopScrolled, setIsTopScrolled] = useState(null)
 
-export const SimpleBarExample = function () {
-  return (
-    <ScrollableContainerUI
-      enableSimpleBarSupport
-      header={
-        <HeaderUI>
-          <h1>Heading</h1>
-        </HeaderUI>
-      }
-      body={
-        <SimpleBar style={{ maxHeight: 300 }}>
-          <p>
-            Ullamco reprehenderit in irure officia dolore anim eiusmod labore
-            duis ea laborum ex. Reprehenderit consequat officia ea id ex
-            exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
-            Enim incididunt est velit pariatur adipisicing labore dolore anim
-            cillum.
-          </p>
-          <p>
-            Ullamco reprehenderit in irure officia dolore anim eiusmod labore
-            duis ea laborum ex. Reprehenderit consequat officia ea id ex
-            exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
-            Enim incididunt est velit pariatur adipisicing labore dolore anim
-            cillum.
-          </p>
-        </SimpleBar>
-      }
-      footer={
-        <FooterUI>
-          <Button kind="primary">Action!</Button>
-        </FooterUI>
-      }
-    />
-  )
-}
+<ScrollableContainerUI
+    onScrollableSectionsStateChange={({ isTopScrolled, isBottomScrolled }) => {
+      setIsTopScrolled(isTopScrolled)
+    }}
+    header={
+      <HeaderUI
+        className={isTopScrolled ? 'small' : 'big'}
+      >
+        <h1>Heading</h1>
+      </HeaderUI>
+    }
+    //...
+/>
 ```
 
 <Canvas>
-  <Story name="full height with simplebar">
+  <Story name="full example">
     <SimpleBarExample />
   </Story>
 </Canvas>
