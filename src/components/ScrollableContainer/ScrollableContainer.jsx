@@ -29,18 +29,12 @@ function ScrollableContainer({
   withResizeObservers = {},
   ...rest
 }) {
-  const observers = {
-    header:
-      withResizeObservers.header != null ? withResizeObservers.header : false,
-    footer:
-      withResizeObservers.footer != null ? withResizeObservers.footer : false,
-  }
   const bodyRef = useRef(null)
   const [headerRect, headerEl, headerRef] = useMeasureNode({
-    observeSize: observers.header,
+    observeSize: Boolean(withResizeObservers.header),
   })
   const [footerRect, footerEl, footerRef] = useMeasureNode({
-    observeSize: observers.footer,
+    observeSize: Boolean(withResizeObservers.footer),
   })
   const [handleOnScroll, isTopScrolled, isBottomScrolled] = useScrollShadow({
     bottomRef: footerEl,

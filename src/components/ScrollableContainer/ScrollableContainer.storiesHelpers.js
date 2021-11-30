@@ -87,7 +87,6 @@ export const SimpleBarExample = function () {
           setIsTopScrolled(isTopScrolled)
         }}
         withResizeObservers={{
-          footer: false,
           header: true,
         }}
         header={
