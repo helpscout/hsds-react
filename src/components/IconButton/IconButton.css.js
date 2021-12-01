@@ -32,13 +32,13 @@ export const IconButtonUI = styled(ButtonUI)`
       height: 32px;
     }
   }
-
-  :last-child {
-    margin-right: 4px;
-  }
 `
 
 export const ChildrenUI = styled.span`
-  margin-left: 4px;
+  margin-left: 8px;
   margin-right: 16px;
+
+  &.has-icon {
+    margin-left: 4px;
+  }
 `

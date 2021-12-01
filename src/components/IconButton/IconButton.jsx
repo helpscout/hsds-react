@@ -65,7 +65,11 @@ export const IconButton = forwardRef((props, ref) => {
         {shouldShowIcon && <Icon name={icon} size={24} />}
         {avatarComponent && avatarComponent}
       </IconContainerUI>
-      {children && <ChildrenUI>{children}</ChildrenUI>}
+      {children && (
+        <ChildrenUI className={shouldShowIcon && 'has-icon'}>
+          {children}
+        </ChildrenUI>
+      )}
     </IconButtonUI>
   )
 })
