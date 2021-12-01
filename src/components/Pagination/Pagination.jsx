@@ -114,6 +114,8 @@ const PaginationNavigation = props => {
       {isNotFirstPage && (
         <>
           <ButtonIconUI
+            theme="grey"
+            outlined
             key="firstButton"
             onClick={handleFirstClick}
             className="c-Pagination__firstButton"
@@ -124,6 +126,8 @@ const PaginationNavigation = props => {
             <Icon name="arrow-left-double-large" size="24" center />
           </ButtonIconUI>
           <ButtonIconUI
+            theme="grey"
+            outlined
             key="prevButton"
             onClick={handlePrevClick}
             className="c-Pagination__prevButton"
@@ -138,6 +142,8 @@ const PaginationNavigation = props => {
       {!isLastPage && (
         <>
           <ButtonIconUI
+            theme="grey"
+            outlined
             key="nextButton"
             disabled={isLoading}
             onClick={handleNextClick}
@@ -148,6 +154,8 @@ const PaginationNavigation = props => {
             <Icon name="arrow-right-single-large" size="24" center />
           </ButtonIconUI>
           <ButtonIconUI
+            theme="grey"
+            outlined
             key="lastButton"
             disabled={isLoading}
             onClick={handleEndClick}

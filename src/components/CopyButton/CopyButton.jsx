@@ -11,15 +11,17 @@ import {
   IconUI,
 } from './CopyButton.css'
 
-const CopyButton = props => {
+const WrappedCopybutton = React.forwardRef(function CopyButton(props, ref) {
   const {
     className,
-    size,
     icon,
     label,
-    onReset,
-    resetTimeout,
     onClick,
+    onReset,
+    outlined,
+    resetTimeout,
+    size,
+    theme,
     ...rest
   } = props
 
@@ -61,10 +63,13 @@ const CopyButton = props => {
 
   return (
     <CopyButtonUI
+      size={size}
+      theme={theme}
+      outlined={outlined}
       {...getValidProps(rest)}
       onClick={handleClick}
-      size={size}
       className={componentClassName}
+      ref={ref}
     >
       <ConfirmationIconWrapperUI>
         <Icon
@@ -77,46 +82,36 @@ const CopyButton = props => {
       {label && <TextUI>{label}</TextUI>}
     </CopyButtonUI>
   )
-}
+})
 
-CopyButton.defaultProps = {
+WrappedCopybutton.defaultProps = {
   'data-cy': 'CopyButton',
-  kind: 'secondary',
+  theme: 'blue',
   label: 'Copy',
   onClick: noop,
   onReset: noop,
   resetTimeout: 2000,
   size: 'sm',
+  outlined: true,
 }
 
-CopyButton.propTypes = {
+WrappedCopybutton.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
-  /** Applies the specified style to the button.
-   * 'primary': Blue button. Used for primary actions.
-   * 'primaryAlt': Purple button. Used for primary actions.
-   * 'secondary': White button with a border. Used for secondary actions.
-   * 'secondaryAlt': White button with a green border. Used for secondary actions.
-   * 'default': Borderless button. Used for subtle/tertiary actions.
-   * 'link': Button that looks like a `Link`. Used for subtle/tertiary actions.
-   */
-  kind: PropTypes.oneOf([
-    'primary',
-    'primaryAlt',
-    'secondary',
-    'secondaryAlt',
-    'default',
-    'link',
-  ]),
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onClick: PropTypes.func,
   onReset: PropTypes.func,
   resetTimeout: PropTypes.number,
-  /** Sets the size of the button. Can be one of `"sm"`, `"md"` or `"lg"`. */
-  size: PropTypes.any,
+  /** Sets the button size. */
+  size: PropTypes.string,
+  /** Sets the button theme. */
+  theme: PropTypes.string,
   title: PropTypes.string,
+
+  /** Set the outlined style to the button. */
+  outlined: PropTypes.bool,
 }
 
-export default CopyButton
+export default WrappedCopybutton

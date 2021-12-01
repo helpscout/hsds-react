@@ -9,7 +9,7 @@ export class MessageCardButton extends React.PureComponent {
     const { children, ...rest } = this.props
 
     return (
-      <ActionButtonUI {...rest}>
+      <ActionButtonUI theme="blue" {...rest}>
         <Truncate>{children}</Truncate>
       </ActionButtonUI>
     )

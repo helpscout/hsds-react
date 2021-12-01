@@ -11,6 +11,12 @@ import {
   SecondaryAlertButtonUI,
   SecondaryButtonUI,
 } from './Modal.ActionFooter.css'
+import {
+  THEME_GREEN,
+  THEME_BLUE,
+  THEME_RED,
+  THEME_GREY,
+} from '../Button/Button.utils'
 
 class ModalActionFooter extends React.PureComponent {
   handleCancel = e => {
@@ -33,13 +39,15 @@ class ModalActionFooter extends React.PureComponent {
 
   renderPrimaryButton() {
     const { primaryButtonText, state, primaryButtonDisabled } = this.props
+    let theme = THEME_BLUE
+    if (state === 'success') theme = THEME_GREEN
+    if (state === 'danger') theme = THEME_RED
+
     return (
       <PrimaryButtonUI
-        data-cy="PrimaryButton"
-        state={state}
-        kind="primary"
         size="lg"
-        version={2}
+        theme={theme}
+        data-cy="PrimaryButton"
         onClick={this.handlePrimaryAction}
         disabled={primaryButtonDisabled}
       >
@@ -60,10 +68,10 @@ class ModalActionFooter extends React.PureComponent {
 
     return (
       <ButtonComponent
-        data-cy="SecondaryButton"
-        kind="secondary"
         size="lg"
-        version={2}
+        theme="grey"
+        outlined
+        data-cy="SecondaryButton"
         onClick={this.handleSecondaryAction}
         disabled={secondaryButtonDisabled}
       >
@@ -81,10 +89,11 @@ class ModalActionFooter extends React.PureComponent {
 
     return (
       <CancelButtonUI
+        linked
+        size="lg"
+        theme={THEME_GREY}
         className="is-cancel"
         data-cy="CancelButton"
-        kind="default"
-        version={2}
         onClick={this.handleCancel}
       >
         {cancelText}

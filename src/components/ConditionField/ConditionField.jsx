@@ -65,6 +65,8 @@ export class ConditionField extends React.PureComponent {
                 withTriggerWrapper={false}
               >
                 <IconButton
+                  seamless
+                  size="lg"
                   data-cy="ConditionFieldRemoveButton"
                   icon={closeIcon}
                   onClick={onRemove}

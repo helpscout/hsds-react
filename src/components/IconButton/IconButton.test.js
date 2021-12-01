@@ -76,11 +76,11 @@ describe('Button', () => {
   })
 
   test('Renders a button with various kinds', () => {
-    const { getByRole, rerender } = render(<IconButton kind="primary" />)
+    const { getByRole, rerender } = render(<IconButton theme="blue" />)
 
     expect(getByRole('button').classList.contains('is-primary')).toBeTruthy()
 
-    rerender(<IconButton kind="secondary" />)
+    rerender(<IconButton theme="grey" outlined />)
 
     expect(getByRole('button').classList.contains('is-secondary')).toBeTruthy()
   })
@@ -146,7 +146,7 @@ describe('Styles', () => {
 
   test('Can render with border styles', () => {
     const { container } = render(
-      <IconButton kind="secondary" isBorderless={false} />
+      <IconButton theme="grey" outlined isBorderless={false} />
     )
 
     expect(

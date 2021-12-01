@@ -3,10 +3,7 @@ import { getColor } from '../../styles/utilities/color'
 import HSDSButton from '../Button'
 import IconButton from '../IconButton'
 
-import {
-  focusRing,
-  focusShadowWithInset,
-} from '../../styles/mixins/focusRing.css'
+import { focusShadowWithInset } from '../../styles/mixins/focusRing.css'
 
 export const NavLinkTogglerUI = styled('button')`
   display: flex;
@@ -31,7 +28,7 @@ export const NavLinkTogglerUI = styled('button')`
 `
 
 export const SplitButtonUI = styled(HSDSButton)`
-  &.is-primary {
+  &.is-theme-blue {
     --focusRingShadow: ${focusShadowWithInset};
     margin-right: 0;
   }
@@ -39,25 +36,26 @@ export const SplitButtonUI = styled(HSDSButton)`
 
 export const SplitButtonTogglerUI = styled(HSDSButton)`
   pointer-events: all;
+  --focusRingShadow: ${focusShadowWithInset};
 
-  &.is-primary {
-    box-shadow: -1px 0 0 ${getColor('blue.600')};
-    --focusRingShadow: ${focusShadowWithInset};
-
-    &.is-lg {
-      --buttonMinWidth: 30px;
-      padding: 0;
+  &:not(.is-style-outlined) {
+    &.is-theme-blue {
+      box-shadow: -1px 0 0 ${getColor('blue.600')};
     }
-
-    &.is-success {
+    &.is-theme-green {
       box-shadow: -1px 0 0 ${getColor('green.600')};
     }
-    &.is-danger {
+    &.is-theme-red {
       box-shadow: -1px 0 0 ${getColor('red.600')};
     }
     &[disabled] {
       box-shadow: -1px 0 0 ${getColor('grey.600')};
     }
+  }
+
+  &.is-size-lg {
+    --buttonMinWidth: 30px;
+    padding: 0;
   }
 
   .c-Button__content {

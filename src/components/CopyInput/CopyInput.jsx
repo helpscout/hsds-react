@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import CopyButton from '../CopyButton'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
 import { copyToClipboard, selectText } from '../../utilities/clipboard'
 import { noop } from '../../utilities/other'
-import { CopyInputUI } from './CopyInput.css'
+import { CopyInputUI, CopyButtonUI } from './CopyInput.css'
 
 class CopyInput extends React.PureComponent {
   inputNode
@@ -52,13 +51,13 @@ class CopyInput extends React.PureComponent {
           }
         }}
         suffix={
-          <CopyButton
+          <CopyButtonUI
+            size="lg"
+            theme="grey"
             onClick={this.handleCopyClick.bind(this)}
             isLast
-            size="lg"
-            style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
             tabIndex={'-1'}
-            innerRef={node => (this.copyButtonNode = node)}
+            ref={node => (this.copyButtonNode = node)}
             icon={buttonLabel ? null : 'copy-small'}
             label={buttonLabel}
           />

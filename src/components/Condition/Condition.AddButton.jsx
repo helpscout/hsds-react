@@ -90,26 +90,28 @@ class AddButton extends React.PureComponent {
             selection={dropListItems.find(item => item.id === type)}
             toggler={
               <SplittedButtonUI
+                theme="green"
+                outlined
                 {...getValidProps(rest)}
                 text={label}
-                kind="tertiary"
                 actionButtonProps={{ disabled: rest.disabled }}
                 togglerButtonProps={{
                   kind: rest.disabled ? 'secondary' : 'tertiary',
                   flipChevron: true,
                 }}
-                size={'xxs'}
+                size="xxs"
                 onActionClick={this.handleOnClick}
               />
             }
           />
         ) : (
           <ButtonUI
+            theme="green"
+            outlined
+            size={size}
             {...getValidProps(rest)}
             className={this.getClassName()}
-            kind="tertiary"
             onClick={this.handleOnClick}
-            size={size}
           >
             <Icon name="plus-small" isWithHiddenTitle={false} size={iconSize} />
             {label}

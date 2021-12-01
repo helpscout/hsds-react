@@ -209,7 +209,7 @@ export const SimpleBarExample = function () {
         }
         footer={
           <FooterUI>
-            <Button kind="primary">Action!</Button>
+            <Button theme="blue">Action!</Button>
           </FooterUI>
         }
       />

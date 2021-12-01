@@ -178,9 +178,10 @@ export function Table({
 
         {isTableCollapsable && isCollapsed ? (
           <ButtonExpanderUI
+            size="sm"
+            theme="blue"
+            linked
             className={`${TABLE_CLASSNAME}__Expander`}
-            kind="link"
-            size="md"
             onClick={() => {
               expandTable(data)
               onExpand({ collapsed: false })
@@ -192,9 +193,10 @@ export function Table({
 
         {isTableCollapsable && !isCollapsed ? (
           <ButtonExpanderUI
+            size="sm"
+            theme="blue"
+            linked
             className={`${TABLE_CLASSNAME}__Expander`}
-            kind="link"
-            size="md"
             onClick={() => {
               collapseTable(data, maxRowsToDisplay)
               onExpand({ collapsed: true })

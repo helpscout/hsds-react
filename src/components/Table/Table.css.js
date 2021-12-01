@@ -252,10 +252,10 @@ export const SortableCellContentUI = styled('div')`
 `
 
 export const ButtonExpanderUI = styled(Button)`
-  &.is-md {
+  &.is-size-sm {
+    --buttonFontWeight: normal;
     --buttonHeight: 26px;
-    height: 26px;
-    margin: 8px 0 8px 14px;
+    margin: 8px 0 8px 4px;
   }
 `
 

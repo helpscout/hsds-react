@@ -29,6 +29,10 @@ export const ActionFooterUI = styled(Toolbar)`
 
 export const CancelButtonUI = styled(Button)`
   margin-right: auto;
+
+  &.is-theme-grey {
+    --buttonFontWeight: normal;
+  }
 `
 
 export const SecondaryButtonUI = styled(Button)`

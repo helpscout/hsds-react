@@ -1,11 +1,6 @@
 import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
-import {
-  useButtonClassnames,
-  THEME_GREY,
-  SIZE_XL,
-  SIZE_LG,
-} from '../Button/Button.utils'
+import { useButtonClassnames, SIZE_XL, SIZE_LG } from '../Button/Button.utils'
 
 import Icon from '../Icon'
 import Avatar from '../Avatar'
@@ -24,14 +19,14 @@ const useIconButtonAvatar = (props = {}) => {
 }
 
 const useIconButton = props => {
-  const { as, disabled, size, filled, submit, title, ...rest } = props
+  const { as, disabled, size, filled, submit, title, seamless, ...rest } = props
 
   const forcedProps = {
     rounded: true,
     size: SIZES.includes(size) ? size : 'xl',
     outlined: !filled,
+    seamless: seamless && !filled,
   }
-
   const componentClassName = useButtonClassnames(
     'c-IconButton',
     { ...rest, ...forcedProps },
@@ -84,6 +79,7 @@ IconButton.defaultProps = {
   theme: 'grey',
   'data-cy': 'IconButton',
   icon: 'search',
+  seamless: false,
 }
 
 IconButton.propTypes = {
@@ -97,6 +93,8 @@ IconButton.propTypes = {
   className: PropTypes.string,
   /** Disable the button so it can't be clicked. */
   disabled: PropTypes.bool,
+  /** Hide the border and background of an outlined button */
+  seamless: PropTypes.bool,
   /** The name of the icon to render. */
   icon: PropTypes.string,
   /** Data attr for Cypress tests. */

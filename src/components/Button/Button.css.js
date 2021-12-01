@@ -7,6 +7,7 @@ import { focusRing } from '../../styles/mixins/focusRing.css'
 import config from './Button.config'
 
 export const ButtonUI = styled.button`
+  --buttonMainColor: ${config.theme.blue.mainColor};
   --buttonBackgroundColor: ${config.theme.blue.mainColor};
   --buttonBackgroundColorHover: ${config.theme.blue.hoverColor};
   --buttonBorderColor: ${config.theme.blue.mainColor};
@@ -66,6 +67,7 @@ export const ButtonUI = styled.button`
   }
 
   &:hover,
+  &.is-active,
   &:active {
     background: var(--buttonBackgroundColorHover);
     border-color: var(--buttonBorderColorHover);
@@ -133,6 +135,7 @@ export const ButtonUI = styled.button`
 function makeButtonThemeStyles(theme, config) {
   return css`
     &.is-theme-${theme} {
+      --buttonMainColor: ${config.mainColor};
       --buttonBackgroundColor: ${config.mainColor};
       --buttonBackgroundColorHover: ${config.hoverColor};
       --buttonBorderColor: ${config.mainColor};
@@ -167,6 +170,17 @@ function makeButtonThemeStyles(theme, config) {
           '--buttonBorderColorHover',
           'mainColor'
         )};
+
+        &.is-seamless {
+          ${renderPropStyle(
+            config,
+            'outline.textColorSeamlessHover',
+            '--buttonColorHover'
+          )};
+
+          background: transparent !important;
+          border-color: transparent !important;
+        }
       }
 
       &.is-style-link  {
@@ -194,9 +208,10 @@ function makeButtonSizeStyles(size, config) {
       ${renderPropStyle(config, 'height', '--buttonHeight')};
       ${renderPropStyle(config, 'padding', '--buttonPadding')};
       ${renderPropStyle(config, 'fontWeight', '--buttonFontWeight')};
+      ${renderPropStyle(config, 'minWidth', '--buttonMinWidth')};
 
-      &:not(.is-rounded) {
-        ${renderPropStyle(config, 'minWidth', '--buttonMinWidth')};
+      &.is-rounded {
+        --buttonMinWidth: 0px;
       }
     }
   `

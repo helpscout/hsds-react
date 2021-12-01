@@ -3,13 +3,6 @@ import { getColor } from '../../styles/utilities/color'
 import Button from '../Button'
 import Icon from '../Icon'
 
-export const config = {
-  copyConfirmed: {
-    background: getColor('blue.500'),
-    color: 'white',
-  },
-}
-
 export const TextUI = styled.span`
   display: inline-flex;
   transition: opacity linear 150ms;
@@ -32,32 +25,16 @@ export const ConfirmationIconWrapperUI = styled('div')`
   opacity: 0;
   transition: opacity linear 150ms;
   color: white;
-  background: ${config.copyConfirmed.background} !important;
+  background: var(--confirmColor);
 `
 
 export const CopyButtonUI = styled(Button)`
+  --confirmColor: var(--buttonMainColor);
+  --confirmBorderColor: var(buttonBorderColor);
   position: relative;
 
-  &.c-CopyButton {
-    min-width: 60px;
-
-    &.is-with-icon {
-      min-width: auto;
-      max-width: auto;
-      width: 40px;
-      padding: 0;
-      text-align: center;
-      background: ${getColor('grey.200')};
-      color: ${getColor('charcoal.300')};
-
-      &:hover {
-        background: ${getColor('blue.100')};
-      }
-    }
-  }
-
   &.is-copyConfirmed {
-    border-color: ${config.copyConfirmed.background} !important;
+    border-color: var(--confirmColor) !important;
     ${TextUI} {
       opacity: 0;
     }

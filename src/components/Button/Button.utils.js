@@ -70,7 +70,15 @@ const useButtonChildren = ({ children }) => {
 }
 
 export const useButtonClassnames = (defaultClassname, props, isDisabled) => {
-  const { isFirst, isLast, isNotOnly, loading, rounded, className } = props
+  const {
+    seamless,
+    className,
+    isFirst,
+    isLast,
+    isNotOnly,
+    loading,
+    rounded,
+  } = props
 
   const theme = useButtonTheme(props)
   const size = useButtonSize(props)
@@ -78,6 +86,7 @@ export const useButtonClassnames = (defaultClassname, props, isDisabled) => {
 
   return classNames(
     defaultClassname,
+    seamless && `is-seamless`,
     isDisabled && 'is-disabled',
     isFirst && 'is-first',
     isLast && 'is-last',

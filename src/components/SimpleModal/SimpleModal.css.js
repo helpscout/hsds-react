@@ -2,32 +2,13 @@ import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import { rgba } from '../../utilities/color'
 import { defaultAnimation as overlayAnimation } from '../../hooks/useAnimatedRender'
+import IconButton from '../IconButton'
 
-export const CloseModalButtonUI = styled('button')`
+export const CloseModalButtonUI = styled(IconButton)`
   position: absolute;
-  padding: 5px;
-  background: #fff;
-  border: 0;
-  border-radius: 50%;
-  color: ${getColor('charcoal.400')};
   top: 10px;
   right: 10px;
-  height: 28px;
-  width: 28px;
-  background-color: ${getColor('grey.300')};
   z-index: ${({ $zIndex }) => $zIndex};
-
-  &:hover {
-    color: ${getColor('charcoal.600')};
-    background-color: ${getColor('grey.400')};
-    cursor: pointer;
-  }
-
-  &:active,
-  &:focus {
-    outline: 0;
-    box-shadow: 0 0 0 2px ${getColor('blue.400')};
-  }
 `
 
 export const SimpleModalOverlayUI = styled('div')`

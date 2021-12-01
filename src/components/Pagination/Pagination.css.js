@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import Button from '../Button'
-import config from '../Button/Button.config'
 
 export const PaginationUI = styled.nav`
   padding: 0 10px;
@@ -31,10 +30,21 @@ export const RangeUI = styled('span')`
 `
 
 export const ButtonIconUI = styled(Button)`
-  &.is-md {
+  &.is-theme-grey {
+    --focusRingOffset: -2px;
     --buttonPadding: 0;
     --buttonHeight: 26px;
+    --buttonMinWidth: 0;
     height: 26px;
+
+    &.is-style-outlined {
+      --buttonTextColorHover: ${getColor('charcoal.700')};
+      --buttonBorderColorHover: transparent;
+      --buttonBorderColor: transparent;
+    }
+    &[disabled] {
+      border-color: transparent !important;
+    }
   }
 
   & + & {

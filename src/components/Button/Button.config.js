@@ -16,6 +16,7 @@ const config = {
         textColor: getColor('blue.600'),
         textHoverColor: getColor('blue.700'),
         hoverColor: getColor('blue.100'),
+        textColorSeamlessHover: getColor('blue.800'),
       },
     },
     grey: {
@@ -27,6 +28,7 @@ const config = {
         textColor: getColor('charcoal.400'),
         textHoverColor: getColor('charcoal.500'),
         hoverColor: getColor('grey.200'),
+        textColorSeamlessHover: getColor('charcoal.800'),
       },
     },
     red: {
@@ -37,6 +39,7 @@ const config = {
         textColor: getColor('red.600'),
         textHoverColor: getColor('red.700'),
         hoverColor: getColor('red.100'),
+        textColorSeamlessHover: getColor('red.800'),
       },
     },
     green: {
@@ -47,6 +50,7 @@ const config = {
         textColor: getColor('green.750'),
         textHoverColor: getColor('green.800'),
         hoverColor: getColor('green.100'),
+        textColorSeamlessHover: getColor('green.900'),
       },
     },
   },

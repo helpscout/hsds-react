@@ -19,7 +19,7 @@ describe('ClassNames', () => {
 describe('Kind', () => {
   test('Adds the respective classNames', () => {
     const { getByTestId, rerender } = render(
-      <Button kind="primary">Primary</Button>
+      <Button theme="blue">Primary</Button>
     )
 
     expect(getByTestId('Button')).toHaveClass('is-primary')
@@ -109,7 +109,7 @@ describe('States', () => {
 
   test('primary lg & xl have a minimum width of 120px', () => {
     const { getByTestId } = render(
-      <Button kind="primary" size="lg">
+      <Button theme="blue" size="lg">
         Button
       </Button>
     )

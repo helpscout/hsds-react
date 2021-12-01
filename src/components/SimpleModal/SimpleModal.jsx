@@ -10,7 +10,6 @@ import {
   SimpleModalOverlayUI,
   SimpleModalUI,
 } from './SimpleModal.css'
-import Icon from '../Icon'
 
 function SimpleModal({
   ariaLabelledBy = '',
@@ -76,9 +75,10 @@ function SimpleModal({
           className="SimpleModal__CloseButton"
           onClick={onClose}
           $zIndex={zIndexCloseButton}
-        >
-          <Icon size={18} name="cross" />
-        </CloseModalButtonUI>
+          icon="cross-small"
+          size="lg"
+          seamless
+        />
       )
     }
 
