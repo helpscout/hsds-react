@@ -1,8 +1,8 @@
 import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
-import { boolean, number, text, select } from '@storybook/addon-knobs'
 import SimpleModal from './SimpleModal'
 import Button from '../Button'
 import { HeaderAndFooter } from './SimpleModal.layouts'
+import { SimpleModalWithTrigger } from './SimpleModal.storiesHelpers'
 
 <Meta
   title="Components/Overlay/SimpleModal"
@@ -103,6 +103,16 @@ Don't forget to add styles to position it yourself.
       >
         My modal with a custom button
       </SimpleModal>
+    </div>
+  </Story>
+</Canvas>
+
+### With button trigger
+
+<Canvas>
+  <Story name="with trigger">
+    <div style={{ position: 'relative', height: '450px' }}>
+      <SimpleModalWithTrigger />
     </div>
   </Story>
 </Canvas>

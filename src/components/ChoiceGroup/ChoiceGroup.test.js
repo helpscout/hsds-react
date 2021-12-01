@@ -202,6 +202,24 @@ describe('ChoiceGroup', () => {
       input3.simulate('change', { target: { checked: true } })
       expect(spy).toHaveBeenCalledWith('mugatu')
     })
+
+    test('returns empty array if deselected item with mutliSelect off', () => {
+      const spy = jest.fn()
+      const wrapper = mount(
+        <ChoiceGroup onChange={spy} multiSelect={false}>
+          <Checkbox value="derek" />
+          <Checkbox value="hansel" />
+          <Checkbox value="mugatu" />
+        </ChoiceGroup>
+      )
+      const input = wrapper.find(Checkbox).at(0).find('input')
+
+      input.simulate('change', { target: { checked: true } })
+      expect(spy).toHaveBeenCalledWith('derek')
+
+      input.simulate('change', { target: { checked: false } })
+      expect(spy).toHaveBeenCalledWith([])
+    })
   })
 
   describe('multiSelectLimit', () => {
