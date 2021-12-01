@@ -48,9 +48,9 @@ export default function buttonStandardizationTransform(fileInfo, api) {
       if (!a || !a.name || !a.name.name) return null
       return a.name.name === name
     })
-    if (!attr) return {}
+    if (!attr) return { value: { value: null, expression: null } }
 
-    return { name: attr.name.name, value: attr.value.value }
+    return { name: attr.name.name, value: attr.value }
   }
 
   const filterAttributes = (attributes, extraAttrsToRemoves = []) => {
@@ -87,13 +87,7 @@ export default function buttonStandardizationTransform(fileInfo, api) {
       return j.jsxAttribute(j.jsxIdentifier(name), j.literal(value))
     }
 
-    return j.jsxAttribute(
-      j.jsxIdentifier(name),
-      j.jsxExpressionContainer({
-        type: 'Literal',
-        value: value,
-      })
-    )
+    return j.jsxAttribute(j.jsxIdentifier(name), value)
   }
 
   const renameAttribute = (attributes, before, after) => {
@@ -111,6 +105,7 @@ export default function buttonStandardizationTransform(fileInfo, api) {
     const { value: state } = getAttribute(attributes, 'state')
     const { value: size } = getAttribute(attributes, 'size')
     const { value: shape } = getAttribute(attributes, 'shape')
+    const { value: theme } = getAttribute(attributes, 'theme')
 
     const toValidateAttr = createAttribute('data-button-tovalidate', true)
     const themeDefaultAttr = createAttribute('theme', 'blue')
@@ -130,8 +125,10 @@ export default function buttonStandardizationTransform(fileInfo, api) {
       'iconSize',
     ]
 
+    // if theme exists, do nothing
+    if (theme.value) return attributes
     // if there is no attribute at all, we'll add a data-tovalidate to list the button as a change and let developer decided what they need to do
-    if (!kind && !state && !size) {
+    if (!kind.value && !state.value && !size.value && !size.expression) {
       return [
         toValidateAttr,
         themeDefaultAttr,
@@ -142,38 +139,38 @@ export default function buttonStandardizationTransform(fileInfo, api) {
     }
 
     const nextAttributes = []
-    if (size === 'xl' || size === 'lgxl') {
+    if (size.value === 'xl' || size.value === 'lgxl') {
       nextAttributes.push(createAttribute('size', 'xxl'))
-    } else {
+    } else if (size.value || size.expression) {
       nextAttributes.push(createAttribute('size', size))
     }
 
-    if (state === 'danger') {
+    if (state.value === 'danger') {
       nextAttributes.push(createAttribute('theme', 'red'))
     }
-    if (state === 'success' || kind === 'tertiary') {
+    if (state.value === 'success' || kind.value === 'tertiary') {
       nextAttributes.push(createAttribute('theme', 'green'))
     }
-    if (state === 'grey') {
+    if (state.value === 'grey') {
       nextAttributes.push(createAttribute('theme', 'grey'))
     }
 
-    if (kind === 'primary' && !state) {
+    if (kind.value === 'primary' && !state.value) {
       nextAttributes.push(createAttribute('theme', 'blue'))
     }
-    if (kind === 'secondary' && !state) {
+    if (kind.value === 'secondary' && !state.value) {
       nextAttributes.push(createAttribute('theme', 'grey'))
     }
 
-    if (kind === 'link') {
+    if (kind.value === 'link') {
       nextAttributes.push(createAttribute('theme', 'grey'))
       nextAttributes.push(linkedAttr)
     }
 
-    if (kind === 'secondary' || kind === 'tertiary') {
+    if (kind.value === 'secondary' || kind.value === 'tertiary') {
       nextAttributes.push(outlinedAttr)
     }
-    if (shape === 'rounded') {
+    if (shape.value === 'rounded') {
       nextAttributes.push(roundedAttr)
     }
 
