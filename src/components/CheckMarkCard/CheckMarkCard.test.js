@@ -5,6 +5,7 @@ import Checkbox from '../Checkbox'
 import Icon from '../Icon'
 import Tooltip from '../Tooltip'
 import VisuallyHidden from '../VisuallyHidden'
+import { render, screen } from '@testing-library/react'
 
 describe('className', () => {
   test('Has default className', () => {
@@ -204,5 +205,19 @@ describe('Focus', () => {
 
     wrapper.find('input').first().simulate('blur')
     expect(wrapper.getDOMNode().classList.contains('is-focused')).toBeFalsy()
+  })
+})
+
+describe('Label', () => {
+  it('should use content as a label for checkbox', () => {
+    render(
+      <CheckMarkCard
+        label="John"
+        subtitle="NYC"
+        avatar={'https://exmaple-image'}
+      />
+    )
+
+    expect(screen.getByRole('checkbox')).toHaveAccessibleName('John NYC')
   })
 })

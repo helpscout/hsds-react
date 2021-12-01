@@ -159,7 +159,7 @@ const CheckMarkCard = props => {
         <Mark cardChecked={cardChecked} {...markProps} />
         {shouldShowAvatar && (
           <AvatarWrapperUI>
-            <Avatar size="xl" image={avatar} name={label} />
+            <Avatar size="xl" image={avatar} name={label} aria-hidden />
           </AvatarWrapperUI>
         )}
         {shouldDisplayHeading && <HeadingUI>{heading || label}</HeadingUI>}
@@ -172,7 +172,6 @@ const CheckMarkCard = props => {
           disabled={disabled || shouldShowStatus}
           id={id}
           inputRef={setInputNodeRef}
-          label={label || valueProp}
           onBlur={handleOnBlur}
           onFocus={handleOnFocus}
           onChange={handleOnChange}
