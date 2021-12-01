@@ -37,11 +37,6 @@ export const ButtonIconUI = styled(Button)`
     height: 26px;
   }
 
-  &:focus,
-  &.is-focused {
-    color: ${config.default.colorActive};
-  }
-
   & + & {
     margin-left: 2px;
   }

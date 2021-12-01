@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import {
   useButtonClassnames,
   THEME_GREY,
-  THEMES,
   SIZE_XL,
   SIZE_LG,
 } from '../Button/Button.utils'
@@ -25,7 +24,7 @@ const useIconButtonAvatar = (props = {}) => {
 }
 
 const useIconButton = props => {
-  const { as, disabled, size, filled, submit, ...rest } = props
+  const { as, disabled, size, filled, submit, title, ...rest } = props
 
   const forcedProps = {
     rounded: true,
@@ -41,6 +40,8 @@ const useIconButton = props => {
 
   const type = submit ? 'submit' : 'button'
 
+  const ariaLabel = rest['aria-label'] || title || undefined
+
   return {
     'data-testid': 'IconButton',
     ...getValidProps(rest),
@@ -48,6 +49,7 @@ const useIconButton = props => {
     disabled,
     as: as ? as : undefined,
     className: componentClassName,
+    'aria-label': ariaLabel,
   }
 }
 
@@ -58,11 +60,12 @@ export const IconButton = forwardRef((props, ref) => {
 
   const avatarComponent = useIconButtonAvatar(avatarProps)
   const shouldShowIcon = icon && !avatarComponent
-
   return (
     <IconButtonUI {...buttonProps} ref={ref}>
       <IconContainerUI>
-        {shouldShowIcon && <Icon name={icon} size={24} />}
+        {shouldShowIcon && (
+          <Icon name={icon} size={24} title={buttonProps['aria-label']} />
+        )}
         {avatarComponent && avatarComponent}
       </IconContainerUI>
       {children && (
@@ -78,12 +81,16 @@ IconButton.defaultProps = {
   disabled: false,
   submit: false,
   filled: false,
-  theme: THEME_GREY,
+  theme: 'grey',
   'data-cy': 'IconButton',
   icon: 'search',
 }
 
 IconButton.propTypes = {
+  avatarProps: PropTypes.shape({
+    image: PropTypes.string.isRequired,
+    fallbackImage: PropTypes.string,
+  }),
   /** Change the html element used for the component. */
   as: PropTypes.string,
   /** Custom class names to be added to the component. */
@@ -95,11 +102,11 @@ IconButton.propTypes = {
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
   /** Sets the size of the button. */
-  size: PropTypes.oneOf(SIZES),
+  size: PropTypes.oneOf(['lg', 'xl']),
   /** Sets the `type` of the button to `"submit"`. */
   submit: PropTypes.bool,
   /** Applies a theme based style to the button. */
-  theme: PropTypes.oneOf(THEMES),
+  theme: PropTypes.oneOf(['blue', 'red', 'green', 'grey']),
 }
 
 export default IconButton

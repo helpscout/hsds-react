@@ -130,49 +130,10 @@ export const SelectErrorTooltipIconUI = styled('div')`
   margin-left: 8px;
 `
 
-export const MeatButtonUI = styled(IconButton)`
-  --buttonHeight: 24px;
-  --buttonBackgroundColor: transparent;
-  --buttonColor: ${getColor('charcoal.400')};
-  --buttonColorHover: ${getColor('charcoal.500')};
-  --buttonColorActive: ${getColor('charcoal.700')};
-  --buttonBackgroundColorHover: ${getColor('grey.300')};
-
-  &.is-shape-circle.is-md {
-    height: 24px !important;
-    width: 24px !important;
-    padding: 0.5px 0px 0px 0.5px;
-  }
-
-  &.is-active,
-  &[aria-expanded='true'] {
-    color: var(--buttonColorActive);
-
-    &:not(:focus-visible) {
-      background-color: var(--buttonBackgroundColorHover);
-    }
-  }
-`
-
 export const IconButtonUI = styled(IconButton)`
-  width: 45px !important;
-  height: 34px;
-  padding: 4px;
-  --buttonBackgroundColor: white;
-  --buttonColor: ${getColor('charcoal.400')};
-  --buttonColorHover: ${getColor('charcoal.500')};
-  --buttonColorActive: ${getColor('charcoal.700')};
-  --buttonBackgroundColorHover: ${getColor('grey.300')};
-
-  &.is-shape-circle.is-md {
-    height: 36px !important;
-    width: 36px !important;
-    padding: 4px;
-  }
-
   &.is-active,
   &[aria-expanded='true'] {
-    color: var(--buttonColorActive);
+    color: var(--buttonColorHover);
 
     &:not(:focus-visible) {
       background-color: var(--buttonBackgroundColorHover);

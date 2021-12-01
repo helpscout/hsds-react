@@ -11,13 +11,8 @@ export const HeaderUI = styled('header')`
   }
 
   .DropListToggler {
-    color: ${getColor('charcoal.300')};
+    align-self: center;
     margin-right: 4px;
-    margin-top: 4px;
-
-    &.is-active {
-      color: ${getColor('charcoal.500')};
-    }
   }
 `
 

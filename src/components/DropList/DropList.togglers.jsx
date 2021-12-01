@@ -6,10 +6,9 @@ import HSDSButton from '../Button'
 import Icon from '../Icon'
 import { STATES } from '../../constants'
 import Tooltip from '../Tooltip'
-import VisuallyHidden from '../VisuallyHidden'
+
 import {
   IconButtonUI,
-  MeatButtonUI,
   NavLinkTogglerUI,
   SelectArrowsUI,
   SelectErrorTooltipIconUI,
@@ -243,7 +242,6 @@ export const MeatButton = forwardRef(
       a11yLabel = '',
       className = '',
       isActive = false,
-      iconSize = '24',
       meatIcon = 'kebab',
       onClick = noop,
       withTooltip = false,
@@ -255,7 +253,7 @@ export const MeatButton = forwardRef(
     const tooltipRef = useRef()
 
     const component = (
-      <MeatButtonUI
+      <IconButtonUI
         aria-haspopup="true"
         aria-expanded={isActive}
         className={classNames(
@@ -265,14 +263,10 @@ export const MeatButton = forwardRef(
         )}
         data-cy="DropList.MeatButtonToggler"
         data-testid="DropList.MeatButtonToggler"
-        isActive={isActive}
         onClick={onClick}
         ref={ref}
-        type="button"
-        shape="circle"
-        iconSize={iconSize}
         icon={meatIcon}
-        isWithHiddenTitle={true}
+        title={a11yLabel}
         {...rest}
       />
     )
@@ -304,14 +298,10 @@ export const IconBtn = forwardRef(
   (
     {
       a11yLabel = '',
-      caretSize = '14',
       className = '',
       isActive = false,
       iconName = 'assign',
-      iconSize = '24',
       onClick = noop,
-      shape = 'square',
-      withCaret = true,
       withTooltip = false,
       tooltipProps,
       ...rest
@@ -332,14 +322,8 @@ export const IconBtn = forwardRef(
         data-testid="DropList.IconButtonToggler"
         isActive={isActive}
         onClick={onClick}
-        shape={shape}
         icon={iconName}
         ref={ref}
-        type="button"
-        withCaret={withCaret}
-        iconSize={iconSize}
-        isWithHiddenTitle={Boolean(a11yLabel)}
-        iconTitle={a11yLabel}
         {...rest}
       />
     )
