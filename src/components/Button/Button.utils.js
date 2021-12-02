@@ -4,6 +4,7 @@ import { useTheme } from 'styled-components'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
 import Icon from '../Icon'
+import { Link as ReactRouterLink } from 'react-router-dom'
 
 export const SIZE_XXL = 'xxl'
 export const SIZE_XL = 'xl'
@@ -154,7 +155,7 @@ export const useButton = props => {
     'data-testid': 'Button',
     ...getValidProps(rest),
     ...additionalProps,
-    as: selector,
+    as: to ? ReactRouterLink : selector,
     className: componentClassName,
     children,
     loading,
