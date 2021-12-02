@@ -141,7 +141,7 @@ export default function buttonStandardizationTransform(fileInfo, api) {
         toValidateAttr,
         themeDefaultAttr,
         sizeDefaultAttr,
-        outlinedAttr,
+        linkedAttr,
         ...filterAttributes(attributes, extraAttrsToRemoves),
       ]
     }
@@ -180,6 +180,10 @@ export default function buttonStandardizationTransform(fileInfo, api) {
     }
     if (shape.value === 'rounded') {
       nextAttributes.push(roundedAttr)
+    }
+
+    if (!kind.value || kind.value === 'default') {
+      nextAttributes.push(linkedAttr)
     }
 
     let updatedAttributes = renameAttribute(attributes, 'innerRef', 'ref')
