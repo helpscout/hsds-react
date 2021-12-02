@@ -139,7 +139,7 @@ function makeButtonThemeStyles(theme, config) {
       --buttonBackgroundColor: ${config.mainColor};
       --buttonBackgroundColorHover: ${config.hoverColor};
       --buttonBorderColor: ${config.mainColor};
-      --buttonBorderColorHover: ${config.mainColor};
+      --buttonBorderColorHover: ${config.hoverColor};
 
       &.is-style-outlined {
         --buttonBackgroundColor: white;
@@ -184,6 +184,7 @@ function makeButtonThemeStyles(theme, config) {
       }
 
       &.is-style-link  {
+        --buttonMinWidth: 0;
         --buttonBackgroundColor: transparent;
         --buttonBackgroundColorHover: transparent;
         --buttonBorderColor: transparent;
@@ -211,6 +212,7 @@ function makeButtonSizeStyles(size, config) {
       ${renderPropStyle(config, 'minWidth', '--buttonMinWidth')};
 
       &.is-rounded {
+        ${renderPropStyle(config, 'roundedPadding', '--buttonPadding')};
         --buttonMinWidth: 0px;
       }
     }

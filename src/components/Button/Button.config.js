@@ -36,6 +36,7 @@ const config = {
       hoverColor: getColor('red.700'),
       outline: {
         borderColor: getColor('red.500'),
+        borderHoverColor: getColor('red.500'),
         textColor: getColor('red.600'),
         textHoverColor: getColor('red.700'),
         hoverColor: getColor('red.100'),
@@ -47,6 +48,7 @@ const config = {
       hoverColor: getColor('green.800'),
       outline: {
         borderColor: getColor('green.500'),
+        borderHoverColor: getColor('green.500'),
         textColor: getColor('green.750'),
         textHoverColor: getColor('green.800'),
         hoverColor: getColor('green.100'),
@@ -59,24 +61,28 @@ const config = {
       fontSize: 14,
       height: '50px',
       padding: '30px',
+      roundedPadding: '20px',
       minWidth: '200px',
     },
     xl: {
       fontSize: 14,
       height: '44px',
       padding: '30px',
+      roundedPadding: '20px',
       minWidth: '120px',
     },
     lg: {
       fontSize: 14,
       height: '40px',
       padding: '30px',
+      roundedPadding: '20px',
       minWidth: '120px',
     },
     md: {
       fontSize: 14,
       height: '35px',
       padding: '30px',
+      roundedPadding: '20px',
       minWidth: '90px',
     },
     sm: {

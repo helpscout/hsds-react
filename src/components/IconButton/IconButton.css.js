@@ -14,23 +14,33 @@ export const IconContainerUI = styled.span`
 
 export const IconButtonUI = styled(ButtonUI)`
   &.is-size-xl {
-    --buttonPadding: 3px;
     min-width: var(--buttonHeight);
 
     ${IconContainerUI} {
       width: 36px;
       height: 36px;
     }
+
+    &.is-rounded {
+      --buttonPadding: 3px;
+    }
   }
 
   &.is-size-lg {
-    --buttonPadding: 3px;
     min-width: var(--buttonHeight);
 
     ${IconContainerUI} {
       width: 32px;
       height: 32px;
     }
+
+    &.is-rounded {
+      --buttonPadding: 3px;
+    }
+  }
+
+  &.is-style-outlined:not(.has-children) {
+    box-shadow: inset 0 0 0 3px white;
   }
 `
 

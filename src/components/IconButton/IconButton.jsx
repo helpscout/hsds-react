@@ -1,7 +1,8 @@
 import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
-import { useButtonClassnames, SIZE_XL, SIZE_LG } from '../Button/Button.utils'
+import classNames from 'classnames'
 
+import { useButtonClassnames, SIZE_XL, SIZE_LG } from '../Button/Button.utils'
 import Icon from '../Icon'
 import Avatar from '../Avatar'
 import { IconButtonUI, IconContainerUI, ChildrenUI } from './IconButton.css'
@@ -51,12 +52,15 @@ const useIconButton = props => {
 export const IconButton = forwardRef((props, ref) => {
   const { icon, avatarProps = {}, ...rest } = props
 
-  const { children, ...buttonProps } = useIconButton(rest)
+  const { children, className, ...buttonProps } = useIconButton(rest)
 
   const avatarComponent = useIconButtonAvatar(avatarProps)
   const shouldShowIcon = icon && !avatarComponent
+
+  const buttonClassname = classNames(className, children && 'has-children')
+
   return (
-    <IconButtonUI {...buttonProps} ref={ref}>
+    <IconButtonUI {...buttonProps} className={buttonClassname} ref={ref}>
       <IconContainerUI>
         {shouldShowIcon && (
           <Icon name={icon} size={24} title={buttonProps['aria-label']} />
