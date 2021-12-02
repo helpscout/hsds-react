@@ -190,6 +190,7 @@ function makeButtonThemeStyles(theme, config) {
         --buttonBorderColor: transparent;
         --buttonBorderColorHover: transparent;
         --buttonTextDecorationHover: underline;
+        --buttonFontWeight: 400;
 
         ${renderPropStyle(config, 'outline.textColor', '--buttonColor')};
         ${renderPropStyle(

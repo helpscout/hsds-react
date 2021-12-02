@@ -1,3 +1,11 @@
+import { API, FileInfo } from 'jscodeshift'
+
+/**
+ *
+ * @param {FileInfo} fileInfo
+ * @param {API} api
+ * @returns
+ */
 export default function buttonStandardizationTransform(fileInfo, api) {
   const j = api.jscodeshift
   const root = j(fileInfo.source)
