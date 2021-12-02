@@ -1,5 +1,6 @@
-import React from 'react'
-import { useMemo } from 'react'
+import React, { useMemo } from 'react'
+import { useTheme } from 'styled-components'
+
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
 import Icon from '../Icon'
@@ -16,6 +17,7 @@ export const THEME_BLUE = 'blue'
 export const THEME_RED = 'red'
 export const THEME_GREEN = 'green'
 export const THEME_GREY = 'grey'
+export const THEME_BRAND = 'brand'
 
 export const STYLE_FILLED = 'filled'
 export const STYLE_LINK = 'link'
@@ -33,6 +35,11 @@ export const SIZES = [
 export const THEMES = [THEME_BLUE, THEME_RED, THEME_GREEN, THEME_GREY]
 
 const useButtonTheme = ({ theme }) => {
+  const styledTheme = useTheme()
+
+  if (styledTheme && styledTheme.brandColor) {
+    return THEME_BRAND
+  }
   if (THEMES.includes(theme)) return theme
   if (theme === 'gray') return THEME_GREY
   return THEME_BLUE

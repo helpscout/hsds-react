@@ -6,6 +6,21 @@ import variableFontSize from '../../styles/utilities/variableFontSize'
 import { focusRing } from '../../styles/mixins/focusRing.css'
 import config from './Button.config'
 
+function mapBrandColorToConfig(theme) {
+  if (!theme) return {}
+
+  const mainColor = theme.backgroundColorUI || theme.brandColor
+  const textColor = theme.textColorInteractive || theme.brandTextColor
+
+  const hoverColor = theme.backgroundColorUIHover
+
+  return {
+    mainColor,
+    hoverColor,
+    textColor,
+  }
+}
+
 export const ButtonUI = styled.button`
   --buttonMainColor: ${config.theme.blue.mainColor};
   --buttonBackgroundColor: ${config.theme.blue.mainColor};
@@ -128,8 +143,12 @@ export const ButtonUI = styled.button`
   /* theme */
   ${makeButtonThemeStyles('blue', config.theme.blue)};
   ${makeButtonThemeStyles('green', config.theme.green)};
-  ${makeButtonThemeStyles('grey', config.theme.grey)};
   ${makeButtonThemeStyles('red', config.theme.red)};
+  ${makeButtonThemeStyles('grey', config.theme.grey)};
+  ${({ theme }) =>
+    theme && theme.brandColor
+      ? makeButtonThemeStyles('brand', mapBrandColorToConfig(theme.brandColor))
+      : ''};
 `
 
 function makeButtonThemeStyles(theme, config) {
@@ -140,50 +159,58 @@ function makeButtonThemeStyles(theme, config) {
       --buttonBackgroundColorHover: ${config.hoverColor};
       --buttonBorderColor: ${config.mainColor};
       --buttonBorderColorHover: ${config.hoverColor};
+      ${renderPropStyle(config, 'textColor', '--buttonColor')};
+      ${renderPropStyle(config, 'textColor', '--buttonColorHover')};
 
-      &.is-style-outlined {
-        --buttonBackgroundColor: white;
+      ${() => {
+        if (config.outline) {
+          return css`
+            &.is-style-outlined {
+              --buttonBackgroundColor: white;
 
-        ${renderPropStyle(
-          config,
-          'outline.hoverColor',
-          '--buttonBackgroundColorHover'
-        )};
+              ${renderPropStyle(
+                config,
+                'outline.hoverColor',
+                '--buttonBackgroundColorHover'
+              )};
 
-        ${renderPropStyle(config, 'outline.textColor', '--buttonColor')};
-        ${renderPropStyle(
-          config,
-          'outline.textHoverColor',
-          '--buttonColorHover',
-          'textColor'
-        )};
+              ${renderPropStyle(config, 'outline.textColor', '--buttonColor')};
+              ${renderPropStyle(
+                config,
+                'outline.textHoverColor',
+                '--buttonColorHover',
+                'textColor'
+              )};
 
-        ${renderPropStyle(
-          config,
-          'outline.borderColor',
-          '--buttonBorderColor',
-          'mainColor'
-        )};
-        ${renderPropStyle(
-          config,
-          'outline.borderHoverColor',
-          '--buttonBorderColorHover',
-          'mainColor'
-        )};
+              ${renderPropStyle(
+                config,
+                'outline.borderColor',
+                '--buttonBorderColor',
+                'mainColor'
+              )};
+              ${renderPropStyle(
+                config,
+                'outline.borderHoverColor',
+                '--buttonBorderColorHover',
+                'mainColor'
+              )};
 
-        &.is-seamless {
-          ${renderPropStyle(
-            config,
-            'outline.textColorSeamlessHover',
-            '--buttonColorHover'
-          )};
+              &.is-seamless {
+                ${renderPropStyle(
+                  config,
+                  'outline.textColorSeamlessHover',
+                  '--buttonColorHover'
+                )};
 
-          background: transparent !important;
-          border-color: transparent !important;
+                background: transparent !important;
+                border-color: transparent !important;
+              }
+            }
+          `
         }
-      }
+      }}
 
-      &.is-style-link  {
+      &.is-style-link {
         --buttonMinWidth: 0;
         --buttonBackgroundColor: transparent;
         --buttonBackgroundColorHover: transparent;
