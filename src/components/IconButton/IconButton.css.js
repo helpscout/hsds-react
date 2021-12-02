@@ -51,7 +51,7 @@ export const IconButtonUI = styled(ButtonUI)`
     }
   }
 
-  &.is-style-outlined:not(.has-children) {
+  &.is-style-outlined:not(.has-children):not(.is-seamless) {
     box-shadow: inset 0 0 0 3px white;
   }
 `
