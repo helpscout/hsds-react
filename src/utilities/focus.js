@@ -88,25 +88,24 @@ export function getClosestFocusableParent(element) {
  */
 export function manageTrappedFocus(container, e) {
   const focusedNode = e.target
+  const isContainerFocused = focusedNode === container
 
-  if (focusedNode !== container) {
-    const focusableNodes = findFocusableNodes(container)
+  const focusableNodes = findFocusableNodes(container)
 
-    if (focusableNodes != null) {
-      const focusedNodeIndex = Array.prototype.indexOf.call(
-        focusableNodes,
-        focusedNode
-      )
-      const isFirstNode = focusedNodeIndex === 0
-      const isLastNode = focusedNodeIndex === focusableNodes.length - 1
+  if (focusableNodes != null) {
+    const focusedNodeIndex = Array.prototype.indexOf.call(
+      focusableNodes,
+      focusedNode
+    )
+    const isFirstNode = focusedNodeIndex === 0
+    const isLastNode = focusedNodeIndex === focusableNodes.length - 1
 
-      if (!e.shiftKey && isLastNode) {
-        e.preventDefault()
-        focusableNodes[0].focus()
-      } else if (e.shiftKey && isFirstNode) {
-        e.preventDefault()
-        focusableNodes[focusableNodes.length - 1].focus()
-      }
+    if (!e.shiftKey && isLastNode) {
+      e.preventDefault()
+      focusableNodes[0].focus()
+    } else if (e.shiftKey && (isFirstNode || isContainerFocused)) {
+      e.preventDefault()
+      focusableNodes[focusableNodes.length - 1].focus()
     }
   }
 }
