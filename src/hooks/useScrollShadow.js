@@ -18,19 +18,23 @@ export default function useScrollShadow({
   const scrolledShadow = shadows.scrolled || BOX_SHADOW_SCROLLED
   const [isTopScrolled, setIsTopScrolled] = useState(null)
   const [isBottomScrolled, setIsBottomScrolled] = useState(null)
+  const topElement = getElement(topRef)
+  const bottomElement = getElement(bottomRef)
+  const scrollableElement = getElement(scrollableRef)
+  const scrollableHeight =
+    scrollableElement && scrollableElement.getBoundingClientRect().height
 
   useEffect(() => {
     const timeoutID = setTimeout(() => {
-      const scrollableElement = getElement(scrollableRef)
-
       if (scrollableElement) {
-        const topElement = getElement(topRef)
-        const bottomElement = getElement(bottomRef)
         const { isBottomScrolled, isTopScrolled } = getScrollableSectionsState(
           scrollableElement
         )
-        setShadows(topElement, isTopScrolled, { initialShadow, scrolledShadow })
-        setShadows(bottomElement, isBottomScrolled, {
+        applyShadows(topElement, isTopScrolled, {
+          initialShadow,
+          scrolledShadow,
+        })
+        applyShadows(bottomElement, isBottomScrolled, {
           initialShadow,
           scrolledShadow,
         })
@@ -46,9 +50,10 @@ export default function useScrollShadow({
     drawInitialShadowsDelay,
     initialShadow,
     scrolledShadow,
-    topRef,
-    bottomRef,
-    scrollableRef,
+    topElement,
+    bottomElement,
+    scrollableElement,
+    scrollableHeight,
   ])
 
   const handleOnScroll = throttle(() => {
@@ -56,14 +61,12 @@ export default function useScrollShadow({
     const { isTopScrolled, isBottomScrolled } = getScrollableSectionsState(
       scrollableElement
     )
-    const topElement = getElement(topRef)
-    const bottomElement = getElement(bottomRef)
 
-    setShadows(topElement, isTopScrolled, {
+    applyShadows(topElement, isTopScrolled, {
       initialShadow,
       scrolledShadow,
     })
-    setShadows(bottomElement, isBottomScrolled, {
+    applyShadows(bottomElement, isBottomScrolled, {
       initialShadow,
       scrolledShadow,
     })
@@ -79,7 +82,7 @@ function getElement(someRef) {
   return someRef && someRef.current
 }
 
-function setShadows(element, isScrolled, { initialShadow, scrolledShadow }) {
+function applyShadows(element, isScrolled, { initialShadow, scrolledShadow }) {
   if (element) {
     element.style.boxShadow = 'var(--scroll-shadow)'
 
