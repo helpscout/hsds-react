@@ -203,7 +203,7 @@ describe('ChoiceGroup', () => {
       expect(spy).toHaveBeenCalledWith('mugatu')
     })
 
-    test('returns empty array if deselected item with mutliSelect off', () => {
+    test('returns empty array if deselected item with multiSelect off', () => {
       const spy = jest.fn()
       const wrapper = mount(
         <ChoiceGroup onChange={spy} multiSelect={false}>
@@ -218,6 +218,24 @@ describe('ChoiceGroup', () => {
       expect(spy).toHaveBeenCalledWith('derek')
 
       input.simulate('change', { target: { checked: false } })
+      expect(spy).toHaveBeenCalledWith([])
+    })
+
+    test('returns empty array if deselected item via enter press with multiSelect off', () => {
+      const spy = jest.fn()
+      const wrapper = mount(
+        <ChoiceGroup onChange={spy} multiSelect={false}>
+          <Checkbox value="derek" />
+          <Checkbox value="hansel" />
+          <Checkbox value="mugatu" />
+        </ChoiceGroup>
+      )
+      const input = wrapper.find(Checkbox).at(0).find('input')
+
+      input.simulate('keydown', { key: 'Enter' })
+      expect(spy).toHaveBeenCalledWith('derek')
+
+      input.simulate('keydown', { key: 'Enter' })
       expect(spy).toHaveBeenCalledWith([])
     })
   })

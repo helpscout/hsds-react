@@ -94,7 +94,7 @@ class ChoiceGroup extends React.Component {
     const { multiSelect, onEnter, onChange } = this.props
     const selectedValue = multiSelect
       ? this.getMultiSelectValue(value, checked)
-      : value
+      : this.getSingleSelectValue(value, checked)
     const limitReached = this.getSelectLimitState(this.props, selectedValue)
 
     this.setState({ selectedValue, limitReached })
