@@ -2,13 +2,18 @@ import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-import { useButtonClassnames, SIZE_XL, SIZE_LG } from '../Button/Button.utils'
+import {
+  useButtonClassnames,
+  SIZE_XL,
+  SIZE_LG,
+  SIZE_SM,
+} from '../Button/Button.utils'
 import Icon from '../Icon'
 import Avatar from '../Avatar'
 import { IconButtonUI, IconContainerUI, ChildrenUI } from './IconButton.css'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 
-export const SIZES = [SIZE_XL, SIZE_LG]
+export const SIZES = [SIZE_XL, SIZE_LG, SIZE_SM]
 
 const useIconButtonAvatar = (props = {}) => {
   const { image, fallbackImage } = props
@@ -104,7 +109,7 @@ IconButton.propTypes = {
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
   /** Sets the size of the button. */
-  size: PropTypes.oneOf(['lg', 'xl']),
+  size: PropTypes.oneOf(['sm', 'lg', 'xl']),
   /** Sets the `type` of the button to `"submit"`. */
   submit: PropTypes.bool,
   /** Applies a theme based style to the button. */

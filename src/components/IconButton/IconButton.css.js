@@ -38,6 +38,18 @@ export const IconButtonUI = styled(ButtonUI)`
       --buttonPadding: 3px;
     }
   }
+  &.is-size-sm {
+    min-width: var(--buttonHeight);
+
+    ${IconContainerUI} {
+      width: 24px;
+      height: 24px;
+    }
+
+    &.is-rounded {
+      --buttonPadding: 3px;
+    }
+  }
 
   &.is-style-outlined:not(.has-children) {
     box-shadow: inset 0 0 0 3px white;
