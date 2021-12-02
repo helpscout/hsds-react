@@ -77,8 +77,9 @@ const useButtonChildren = ({ children }) => {
   }, [children])
 }
 
-export const useButtonClassnames = (defaultClassname, props, isDisabled) => {
+export const useButtonClassnames = (defaultClassname, props) => {
   const {
+    disabled,
     seamless,
     className,
     isFirst,
@@ -91,6 +92,8 @@ export const useButtonClassnames = (defaultClassname, props, isDisabled) => {
   const theme = useButtonTheme(props)
   const size = useButtonSize(props)
   const style = useButtonStyle(props)
+
+  const isDisabled = disabled || loading
 
   return classNames(
     defaultClassname,
@@ -106,6 +109,43 @@ export const useButtonClassnames = (defaultClassname, props, isDisabled) => {
     theme && `is-theme-${theme}`,
     className
   )
+}
+
+export const useButtonAs = ({
+  as,
+  disabled,
+  href,
+  loading,
+  rel,
+  tabIndex,
+  submit,
+  target,
+  to,
+}) => {
+  const isDisabled = disabled || loading
+  const type = submit ? 'submit' : 'button'
+  const hrefValue = href || to
+  const selector = as || Boolean(hrefValue) ? 'a' : 'button'
+
+  if (selector === 'button') {
+    return {
+      as: to ? ReactRouterLink : selector,
+      to: to ? to : undefined,
+      type,
+      disabled: isDisabled,
+    }
+  }
+
+  return {
+    as: to ? ReactRouterLink : selector,
+    role: 'button',
+    tabIndex: isDisabled ? undefined : tabIndex || 0,
+    href: selector === 'a' && isDisabled ? undefined : hrefValue,
+    to: to ? to : undefined,
+    target: selector === 'a' ? target : undefined,
+    'aria-disabled': !isDisabled ? undefined : isDisabled,
+    rel: selector === 'a' ? rel : undefined,
+  }
 }
 
 export const useButton = props => {
@@ -127,35 +167,23 @@ export const useButton = props => {
   } = props
 
   const children = useButtonChildren(props)
-  const isDisabled = disabled || loading
-  const componentClassName = useButtonClassnames('c-Button', props, isDisabled)
+  const componentClassName = useButtonClassnames('c-Button', props)
 
-  const type = submit ? 'submit' : 'button'
-  const hrefValue = href || to
-  const selector = as || Boolean(hrefValue) ? 'a' : 'button'
-
-  let additionalProps
-  if (selector === 'button') {
-    additionalProps = {
-      type,
-      disabled: isDisabled,
-    }
-  } else {
-    additionalProps = {
-      role: 'button',
-      tabIndex: isDisabled ? undefined : 0,
-      href: selector === 'a' && isDisabled ? undefined : hrefValue,
-      target: selector === 'a' ? target : undefined,
-      'aria-disabled': !isDisabled ? undefined : isDisabled,
-      rel: selector === 'a' ? rel : undefined,
-    }
-  }
+  const additionalProps = useButtonAs({
+    as,
+    disabled,
+    href,
+    loading,
+    rel,
+    submit,
+    target,
+    to,
+  })
 
   return {
     'data-testid': 'Button',
     ...getValidProps(rest),
     ...additionalProps,
-    as: to ? ReactRouterLink : selector,
     className: componentClassName,
     children,
     loading,

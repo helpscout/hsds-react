@@ -4,6 +4,7 @@ import classNames from 'classnames'
 
 import {
   useButtonClassnames,
+  useButtonAs,
   SIZE_XL,
   SIZE_LG,
   SIZE_SM,
@@ -25,7 +26,7 @@ const useIconButtonAvatar = (props = {}) => {
 }
 
 const useIconButton = props => {
-  const { as, disabled, size, filled, submit, title, seamless, ...rest } = props
+  const { size, filled, submit, title, seamless, children, ...rest } = props
 
   const forcedProps = {
     rounded: true,
@@ -33,42 +34,42 @@ const useIconButton = props => {
     outlined: !filled,
     seamless: seamless && !filled,
   }
-  const componentClassName = useButtonClassnames(
-    'c-IconButton',
-    { ...rest, ...forcedProps },
-    disabled
-  )
 
-  const type = submit ? 'submit' : 'button'
+  const additionalProps = useButtonAs(props)
+
+  const buttonProps = {
+    ...rest,
+    ...forcedProps,
+    ...additionalProps,
+  }
+
+  const componentClassName = useButtonClassnames('c-IconButton', buttonProps)
 
   const ariaLabel = rest['aria-label'] || title || undefined
 
   return {
     'data-testid': 'IconButton',
-    ...getValidProps(rest),
-    type,
-    disabled,
-    as: as ? as : undefined,
-    className: componentClassName,
+    ...getValidProps(buttonProps),
+    className: classNames(componentClassName, children && 'has-children'),
     'aria-label': ariaLabel,
+    iconSize: size !== SIZE_SM ? 24 : 20,
+    children,
   }
 }
 
 export const IconButton = forwardRef((props, ref) => {
   const { icon, avatarProps = {}, ...rest } = props
 
-  const { children, className, ...buttonProps } = useIconButton(rest)
+  const { iconSize, children, ...buttonProps } = useIconButton(rest)
 
   const avatarComponent = useIconButtonAvatar(avatarProps)
   const shouldShowIcon = icon && !avatarComponent
 
-  const buttonClassname = classNames(className, children && 'has-children')
-
   return (
-    <IconButtonUI {...buttonProps} className={buttonClassname} ref={ref}>
+    <IconButtonUI {...buttonProps} ref={ref}>
       <IconContainerUI>
         {shouldShowIcon && (
-          <Icon name={icon} size={24} title={buttonProps['aria-label']} />
+          <Icon name={icon} size={iconSize} title={buttonProps['aria-label']} />
         )}
         {avatarComponent && avatarComponent}
       </IconContainerUI>

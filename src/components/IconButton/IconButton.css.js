@@ -47,7 +47,7 @@ export const IconButtonUI = styled(ButtonUI)`
     }
 
     &.is-rounded {
-      --buttonPadding: 3px;
+      --buttonPadding: 2px;
     }
   }
 
