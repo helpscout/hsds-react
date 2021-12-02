@@ -22,11 +22,11 @@ function mapBrandColorToConfig(theme) {
 }
 
 export const ButtonUI = styled.button`
-  --buttonMainColor: ${config.theme.blue.mainColor};
-  --buttonBackgroundColor: ${config.theme.blue.mainColor};
-  --buttonBackgroundColorHover: ${config.theme.blue.hoverColor};
-  --buttonBorderColor: ${config.theme.blue.mainColor};
-  --buttonBorderColorHover: ${config.theme.blue.mainColor};
+  --buttonMainColor: ${config.theme.grey.mainColor};
+  --buttonBackgroundColor: ${config.theme.grey.mainColor};
+  --buttonBackgroundColorHover: ${config.theme.grey.hoverColor};
+  --buttonBorderColor: ${config.theme.grey.mainColor};
+  --buttonBorderColorHover: ${config.theme.grey.mainColor};
 
   --buttonColor: white;
   --buttonColorHover: white;
@@ -46,22 +46,30 @@ export const ButtonUI = styled.button`
 
   align-items: center;
   appearance: none;
+  background: ${config.theme.grey.mainColor};
   background: var(--buttonBackgroundColor);
+  border-radius: 3px;
   border-radius: var(--buttonRadius);
-  border: 1px solid var(--buttonBorderColor);
+  border: 1px solid ${config.theme.grey.mainColor};
+  border-color: var(--buttonBorderColor);
+  color: white;
   color: var(--buttonColor);
   cursor: pointer;
   display: inline-flex;
   font-family: var(--HSDSGlobalFontFamily);
+  font-weight: 500;
   font-weight: var(--buttonFontWeight);
+  height: 44px;
   height: var(--buttonHeight);
   justify-content: center;
   line-height: 1;
   min-width: var(--buttonMinWidth);
   outline: none;
+  padding: 0 30px;
   padding: 0 var(--buttonPadding);
   position: relative;
   text-align: center;
+  text-decoration: none;
   text-decoration: var(--buttonTextDecoration);
 
   /* Allow content events to pass through, https://github.com/helpscout/hsds-react/pull/394 */
@@ -77,16 +85,22 @@ export const ButtonUI = styled.button`
   }
 
   &:focus {
+    color: white;
     color: var(--buttonColor);
+    text-decoration: none;
     text-decoration: var(--buttonTextDecoration);
   }
 
   &:hover,
   &.is-active,
   &:active {
+    background: ${config.theme.grey.hoverColor};
     background: var(--buttonBackgroundColorHover);
+    border-color: ${config.theme.grey.hoverColor};
     border-color: var(--buttonBorderColorHover);
+    color: white;
     color: var(--buttonColorHover);
+    text-decoration: none;
     text-decoration: var(--buttonTextDecorationHover);
   }
 
