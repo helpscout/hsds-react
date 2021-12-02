@@ -5,6 +5,7 @@ import { getColor } from '../../styles/utilities/color'
 import ScrollableContainer from './ScrollableContainer'
 import Button from '../Button'
 import classNames from 'classnames'
+import useFancyAnimationScroller from '../../hooks/useFancyAnimationScroller'
 
 export const ScrollableContainerUI = styled(ScrollableContainer)`
   border-radius: 6px;
@@ -18,20 +19,17 @@ export const HeaderUI = styled('header')`
   height: 75px;
   padding: 0 30px;
   background-color: #fff;
-  transition: height 0.2s ease-in-out;
 
   h1 {
-    transition: font-size 0.3s ease-in-out;
     font-size: 18px;
     font-weight: 500;
     line-height: 22px;
     color: ${getColor('charcoal.700')};
     margin: 0;
+    transition: font-size 0.2s cubic-bezier(0.5, 1, 0.89, 1);
   }
 
   &.small {
-    height: 40px;
-
     h1 {
       font-size: 16px;
     }
@@ -150,7 +148,20 @@ export const SimpleBarExample = function () {
   const [isTopScrolled, setIsTopScrolled] = useState(null)
   const containerRef = useRef(null)
   const [footerHeight] = useConvoLayoutEffect(containerRef)
-
+  const [handleScroll] = useFancyAnimationScroller({
+    container: containerRef,
+    selectors: {
+      scrollable: '.simplebar-content-wrapper',
+      target: '.top-header',
+    },
+    classNames: {
+      targetReached: 'small',
+    },
+    targets: {
+      from: 75,
+      to: 40,
+    },
+  })
   return (
     <BGUI>
       <ScrollableContainerUI
@@ -162,13 +173,14 @@ export const SimpleBarExample = function () {
         onScrollableSectionsStateChange={({ isTopScrolled }) => {
           setIsTopScrolled(isTopScrolled)
         }}
+        onScroll={handleScroll}
         withResizeObservers={{
           header: true,
           footer: true,
         }}
         header={
           <HeaderUI
-            className={classNames(isTopScrolled && 'small', 'top-header')}
+            className={classNames('top-header')}
             data-testprop="This gets passed"
           >
             <h1>Heading</h1>

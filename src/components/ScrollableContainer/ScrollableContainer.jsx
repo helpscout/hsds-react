@@ -19,21 +19,21 @@ function ScrollableContainer({
   drawInitialShadowsDelay = 0,
   footer,
   forwardedRef,
-  onScrollableSectionsStateChange = noop,
   header,
   height = '500px',
-  onScroll = noop,
+  onScroll,
+  onScrollableSectionsStateChange = noop,
   shadows = {},
   width = '300px',
-  withSimpleBar,
   withResizeObservers = {},
+  withSimpleBar,
   ...rest
 }) {
   const bodyRef = useRef(null)
-  const [headerRect, headerEl, headerRef] = useMeasureNode({
+  const [headerRect, headerEl, headerRef, headerObserverRef] = useMeasureNode({
     observeSize: Boolean(withResizeObservers.header),
   })
-  const [footerRect, footerEl, footerRef] = useMeasureNode({
+  const [footerRect, footerEl, footerRef, footerObserverRef] = useMeasureNode({
     observeSize: Boolean(withResizeObservers.footer),
   })
   const [handleOnScroll, isTopScrolled, isBottomScrolled] = useScrollShadow({
@@ -53,6 +53,22 @@ function ScrollableContainer({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTopScrolled, isBottomScrolled])
+
+  // Cleanup observers if any
+  useEffect(() => {
+    const footerObserver = footerObserverRef.current
+    const headerObserver = headerObserverRef.current
+
+    return () => {
+      if (footerObserver != null && footerObserver instanceof ResizeObserver) {
+        footerObserver.disconnect()
+      }
+      if (headerObserver != null && headerObserver instanceof ResizeObserver) {
+        headerObserver.disconnect()
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   function renderSection(section) {
     let sectionContent
@@ -80,7 +96,10 @@ function ScrollableContainer({
         return (
           <SimpleBarUI
             $height={calculateSimpleBarHeight(height, headerRect, footerRect)}
-            onScroll={handleOnScroll}
+            onScroll={e => {
+              handleOnScroll()
+              onScroll && onScroll(e)
+            }}
             scrollableNodeProps={{ ref: bodyRef }}
             className={classNames('ScrollableContainer__body', className)}
             {...rest}
@@ -108,7 +127,14 @@ function ScrollableContainer({
         <SectionUI
           className={classNames(`ScrollableContainer__${section}`, className)}
           component={component}
-          onScroll={section === 'body' ? handleOnScroll : null}
+          onScroll={
+            section === 'body'
+              ? e => {
+                  handleOnScroll()
+                  onScroll && onScroll(e)
+                }
+              : null
+          }
         />
       )
     }
@@ -164,22 +190,24 @@ ScrollableContainer.propTypes = {
   body: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   /** If you're animating a component in, the scrollable element (body) might not have its height determined yet until that animation completes, pass a number in ms equal or larger to the length of the animation to account for this and give React time to get the size. */
   drawInitialShadowsDelay: PropTypes.number,
-  /** Returns the scrolled state of the top and bottom sections when they change `{ isTopScrolled, isBottomScrolled }` */
-  onScrollableSectionsStateChange: PropTypes.func,
+  /** An element or content to render fixed at the bottom of the container */
+  footer: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   /** An element or content to render fixed at the top of the container */
   header: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   /** The container height, can also override with a styled component instead */
   height: PropTypes.string,
-  /** An element or content to render fixed at the bottom of the container */
-  footer: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
-  /** The container width, can also override with a styled component instead */
-  width: PropTypes.string,
+  /** Callback on the scroll event */
+  onScroll: PropTypes.func,
+  /** Returns the scrolled state of the top and bottom sections when they change `{ isTopScrolled, isBottomScrolled }` */
+  onScrollableSectionsStateChange: PropTypes.func,
   /** Custom box-shadow values for the initial and scrolled states: `{ initial, scrolled }` */
   shadows: shadowShape,
-  /** If you want to use 'simplebar-react' in the body, turn this flag on */
-  withSimpleBar: PropTypes.bool,
+  /** The container width, can also override with a styled component instead */
+  width: PropTypes.string,
   /** If your header or footer change height dimensions on scroll, use `ResizeObserver` to have smooth transition, allows to set the observer in both sections or just one: `{ header: true, footer: true }` */
   withResizeObservers: resizeObserversShape,
+  /** If you want to use 'simplebar-react' in the body, turn this flag on */
+  withSimpleBar: PropTypes.bool,
 }
 
 export default React.forwardRef((props, ref) => {
