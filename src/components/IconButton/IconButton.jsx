@@ -26,10 +26,20 @@ const useIconButtonAvatar = (props = {}) => {
 }
 
 const useIconButton = props => {
-  const { size, filled, submit, title, seamless, children, ...rest } = props
+  const {
+    children,
+    filled,
+    icon,
+    seamless,
+    size,
+    submit,
+    title,
+    ...rest
+  } = props
 
   const forcedProps = {
-    rounded: true,
+    // IconButton is always rounded, makes it easier to overwrite properties without the classname
+    rounded: null,
     size: SIZES.includes(size) ? size : 'xl',
     outlined: !filled,
     seamless: seamless && !filled,
@@ -46,21 +56,26 @@ const useIconButton = props => {
   const componentClassName = useButtonClassnames('c-IconButton', buttonProps)
 
   const ariaLabel = rest['aria-label'] || title || undefined
-
+  const hasOnlyIcon = !children && icon
   return {
     'data-testid': 'IconButton',
     ...getValidProps(buttonProps),
-    className: classNames(componentClassName, children && 'has-children'),
+    className: classNames(
+      componentClassName,
+      children && 'has-children',
+      hasOnlyIcon && 'has-icon-only'
+    ),
     'aria-label': ariaLabel,
     iconSize: size !== SIZE_SM ? 24 : 20,
+    icon,
     children,
   }
 }
 
 export const IconButton = forwardRef((props, ref) => {
-  const { icon, avatarProps = {}, ...rest } = props
+  const { avatarProps = {}, ...rest } = props
 
-  const { iconSize, children, ...buttonProps } = useIconButton(rest)
+  const { iconSize, children, icon, ...buttonProps } = useIconButton(rest)
 
   const avatarComponent = useIconButtonAvatar(avatarProps)
   const shouldShowIcon = icon && !avatarComponent

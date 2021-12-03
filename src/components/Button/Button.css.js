@@ -22,11 +22,11 @@ function mapBrandColorToConfig(theme) {
 }
 
 export const ButtonUI = styled.button`
-  --buttonMainColor: ${config.theme.grey.mainColor};
-  --buttonBackgroundColor: ${config.theme.grey.mainColor};
-  --buttonBackgroundColorHover: ${config.theme.grey.hoverColor};
-  --buttonBorderColor: ${config.theme.grey.mainColor};
-  --buttonBorderColorHover: ${config.theme.grey.mainColor};
+  --buttonMainColor: ${config.theme.blue.mainColor};
+  --buttonBackgroundColor: ${config.theme.blue.mainColor};
+  --buttonBackgroundColorHover: ${config.theme.blue.hoverColor};
+  --buttonBorderColor: ${config.theme.blue.mainColor};
+  --buttonBorderColorHover: ${config.theme.blue.mainColor};
 
   --buttonColor: white;
   --buttonColorHover: white;
@@ -46,11 +46,11 @@ export const ButtonUI = styled.button`
 
   align-items: center;
   appearance: none;
-  background: ${config.theme.grey.mainColor};
+  background: ${config.theme.blue.mainColor};
   background: var(--buttonBackgroundColor);
   border-radius: 3px;
   border-radius: var(--buttonRadius);
-  border: 1px solid ${config.theme.grey.mainColor};
+  border: 1px solid ${config.theme.blue.mainColor};
   border-color: var(--buttonBorderColor);
   color: white;
   color: var(--buttonColor);
@@ -94,9 +94,9 @@ export const ButtonUI = styled.button`
   &:hover,
   &.is-active,
   &:active {
-    background: ${config.theme.grey.hoverColor};
+    background: ${config.theme.blue.hoverColor};
     background: var(--buttonBackgroundColorHover);
-    border-color: ${config.theme.grey.hoverColor};
+    border-color: ${config.theme.blue.hoverColor};
     border-color: var(--buttonBorderColorHover);
     color: white;
     color: var(--buttonColorHover);
@@ -206,8 +206,16 @@ function makeButtonThemeStyles(theme, config) {
                 config,
                 'outline.borderHoverColor',
                 '--buttonBorderColorHover',
-                'mainColor'
+                'outline.borderColor'
               )};
+
+              &.has-icon-only {
+                ${renderPropStyle(
+                  config,
+                  'outline.hoverColorIconOnly',
+                  '--buttonBackgroundColorHover'
+                )};
+              }
 
               &.is-seamless {
                 ${renderPropStyle(

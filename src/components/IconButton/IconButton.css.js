@@ -13,42 +13,24 @@ export const IconContainerUI = styled.span`
 `
 
 export const IconButtonUI = styled(ButtonUI)`
-  &.is-size-xl {
+  border-radius: 100px;
+  --focusRingRadius: 100px;
+
+  &.is-size-xl,
+  .is-size-lg {
     min-width: var(--buttonHeight);
-
-    ${IconContainerUI} {
-      width: 36px;
-      height: 36px;
-    }
-
-    &.is-rounded {
-      --buttonPadding: 3px;
-    }
+    --buttonPadding: 3px;
   }
 
-  &.is-size-lg {
-    min-width: var(--buttonHeight);
-
-    ${IconContainerUI} {
-      width: 32px;
-      height: 32px;
-    }
-
-    &.is-rounded {
-      --buttonPadding: 3px;
-    }
-  }
   &.is-size-sm {
     min-width: var(--buttonHeight);
+    --buttonPadding: 2px;
+  }
 
-    ${IconContainerUI} {
-      width: 24px;
-      height: 24px;
-    }
-
-    &.is-rounded {
-      --buttonPadding: 2px;
-    }
+  ${IconContainerUI} {
+    --containerSize: calc(var(--buttonHeight) - calc(var(--buttonPadding) * 2));
+    width: var(--containerSize);
+    height: var(--containerSize);
   }
 
   &.is-style-outlined:not(.has-children):not(.is-seamless) {
