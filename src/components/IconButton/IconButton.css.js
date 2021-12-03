@@ -17,7 +17,7 @@ export const IconButtonUI = styled(ButtonUI)`
   --focusRingRadius: 100px;
 
   &.is-size-xl,
-  .is-size-lg {
+  &.is-size-lg {
     min-width: var(--buttonHeight);
     --buttonPadding: 3px;
   }
