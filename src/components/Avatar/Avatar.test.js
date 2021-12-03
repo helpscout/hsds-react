@@ -499,6 +499,17 @@ describe('onLoad', () => {
     wrapper.find(AvatarImage).instance().image.onload()
     expect(spy).toHaveBeenCalled()
   })
+
+  test('onLoad handler gets called when the avatar image already in cache and set immediately', () => {
+    const spy = jest.fn()
+    const wrapper = mount(
+      <Avatar name="Buddy" image="buddy.jpg" onLoad={spy} />
+    )
+    wrapper.find(AvatarImage).instance().image.onload()
+
+    mount(<Avatar name="Buddy" image="buddy.jpg" onLoad={spy} />)
+    expect(spy).toHaveBeenCalledTimes(2)
+  })
 })
 
 describe('Action', () => {

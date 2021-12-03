@@ -45,6 +45,7 @@ export class AvatarImage extends React.PureComponent {
 
       if (cache[this.sourceList[i]] === true) {
         this.state = { currentIndex: i, isLoading: false, isLoaded: true }
+        this.props.onLoad()
         return
       }
     }
