@@ -27,6 +27,11 @@ export const IconButtonUI = styled(ButtonUI)`
     --buttonPadding: 2px;
   }
 
+  &.has-icon-only {
+    min-width: 0;
+    width: var(--buttonHeight);
+  }
+
   ${IconContainerUI} {
     --containerSize: calc(var(--buttonHeight) - calc(var(--buttonPadding) * 2));
     width: var(--containerSize);
