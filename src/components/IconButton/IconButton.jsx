@@ -16,9 +16,13 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 
 export const SIZES = [SIZE_XL, SIZE_LG, SIZE_SM]
 
-const useIconButtonAvatar = (props = {}) => {
+const useIconButtonAvatar = props => {
+  if (!props) {
+    return null
+  }
+
   const { image, fallbackImage } = props
-  if (!image) {
+  if (!image && !fallbackImage) {
     return null
   }
 
