@@ -36,10 +36,20 @@ class ChoiceInput extends React.PureComponent {
   runKeyPress = event => {
     event.stopPropagation()
     event.preventDefault()
-    const { id, onEnter, value, type } = this.props
-    const checked =
-      type === 'checkbox' ? !event.target.checked : event.target.checked
+    const { id, onEnter, value } = this.props
+    const checked = this.newCheckedOnKeyPress(event)
     onEnter(value, checked, id)
+  }
+
+  newCheckedOnKeyPress(event) {
+    const { type } = this.props
+    if (type === 'checkbox') {
+      return !event.target.checked
+    }
+    if (type === 'radio') {
+      return true
+    }
+    return event.target.checked
   }
 
   handleOnKeyUp = event => {
