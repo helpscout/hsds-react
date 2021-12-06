@@ -155,7 +155,7 @@ export const SimpleBarExample = function () {
       target: '.top-header',
     },
     classNames: {
-      targetReached: 'small',
+      scrollTopReached: 'small',
     },
     targets: {
       from: 75,

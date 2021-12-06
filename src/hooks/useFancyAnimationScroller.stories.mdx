@@ -17,7 +17,7 @@ Params (object) :
   - `scrollable`: The scrollable element. If using `<ScrollableContainer />` with "simple-bar" the selector for the scrollable node is:`.simplebar-content-wrapper`.
   - `target`: The element to apply the height effect to, usually the fixed header.
 - `classNames`: Optional classnames to apply on certain circumnstances.
-  - `targetReached`: A classname to add or remove as the "target" above (ie the header) is reached (scrollable content all the way to the top). Useful if you want to animate the contents of the header somehow.
+  - `scrollTopReached`: A classname to add or remove as the "target" above (ie the header) is reached (scrollable content all the way to the top). Useful if you want to animate the contents of the header somehow.
 - `targets`:
   - `from`: The initial height of the target (header) in pixels.
   - `to`: The final height of the target (header) in pixels.
@@ -34,7 +34,7 @@ function MyComponent() {
       target: '.top-header',
     },
     classNames: {
-      targetReached: 'small',
+      scrollTopReached: 'small',
     },
     targets: {
       from: 75,

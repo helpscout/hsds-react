@@ -31,8 +31,8 @@ export default function useFancyAnimationScroller({
 
           targetNode.style.height = `${newHeight}px`
 
-          if (classNames.targetReached && newHeight >= to * 0.75) {
-            targetNode.classList.add(classNames.targetReached)
+          if (classNames.scrollTopReached && newHeight >= to * 0.75) {
+            targetNode.classList.add(classNames.scrollTopReached)
           }
         }
       } else {
@@ -44,8 +44,8 @@ export default function useFancyAnimationScroller({
 
           targetNode.style.height = `${newHeight}px`
 
-          if (classNames.targetReached && newHeight === from) {
-            targetNode.classList.remove(classNames.targetReached)
+          if (classNames.scrollTopReached && newHeight === from) {
+            targetNode.classList.remove(classNames.scrollTopReached)
           }
         }
       }
