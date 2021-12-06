@@ -91,3 +91,22 @@ describe('clipboard', () => {
     spy.mockRestore()
   })
 })
+
+describe('renderValue', () => {
+  test('renders the value through the renderValue', () => {
+    const renderValue = value => <span data-testid="customRender">{value}</span>
+
+    const { getByTestId } = render(
+      <CopyValue value="test" renderValue={renderValue} />
+    )
+    expect(getByTestId('customRender')).toBeTruthy()
+    expect(getByTestId('customRender')).toHaveTextContent('test')
+  })
+})
+
+describe('prefix', () => {
+  test('renders a prefix before the value', () => {
+    const { getByTestId } = render(<CopyValue value="test" prefix="#" />)
+    expect(getByTestId('CopyValue')).toHaveTextContent('#')
+  })
+})
