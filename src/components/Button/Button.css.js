@@ -238,6 +238,7 @@ function makeButtonThemeStyles(theme, config) {
 
       &.is-style-link {
         --buttonMinWidth: 0;
+        --buttonPadding: 0;
         --buttonBackgroundColor: transparent;
         --buttonBackgroundColorHover: transparent;
         --buttonBorderColor: transparent;
