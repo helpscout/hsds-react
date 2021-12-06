@@ -110,3 +110,14 @@ describe('prefix', () => {
     expect(getByTestId('CopyValue')).toHaveTextContent('#')
   })
 })
+
+describe('onClick', () => {
+  test('onClick will be executed when the button is clicked', () => {
+    const spy = jest.fn()
+    const { getByTestId } = render(
+      <CopyValue onClick={spy} value="test" prefix="#" />
+    )
+    userEvent.click(getByTestId('IconButton'))
+    expect(spy).toHaveBeenCalled()
+  })
+})
