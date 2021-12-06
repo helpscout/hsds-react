@@ -112,8 +112,8 @@ class AddButton extends React.PureComponent {
             {...getValidProps(rest)}
             className={this.getClassName()}
             onClick={this.handleOnClick}
+            prefixIcon="plus-small"
           >
-            <Icon name="plus-small" isWithHiddenTitle={false} size={iconSize} />
             {label}
           </ButtonUI>
         )}

@@ -1,9 +1,13 @@
 import styled, { css } from 'styled-components'
 import get from 'dash-get'
+
 import Spinner from '../Spinner'
+import Icon from '../Icon'
+
 import { getColor } from '../../styles/utilities/color'
 import variableFontSize from '../../styles/utilities/variableFontSize'
 import { focusRing } from '../../styles/mixins/focusRing.css'
+
 import config from './Button.config'
 
 function mapBrandColorToConfig(theme) {
@@ -265,6 +269,15 @@ function makeButtonSizeStyles(size, config) {
         ${renderPropStyle(config, 'roundedPadding', '--buttonPadding')};
         --buttonMinWidth: 0px;
       }
+
+      &.has-prefix-icon {
+        padding-left: calc(var(--buttonPadding) - 8px);
+        --buttonMinWidth: 0px;
+      }
+      &.has-suffix-icon {
+        padding-right: calc(var(--buttonPadding) - 8px);
+        --buttonMinWidth: 0px;
+      }
     }
   `
 }
@@ -298,6 +311,13 @@ export const SpinnerUI = styled(Spinner)`
   z-index: 1;
   top: 50%;
   left: 50%;
+`
+
+export const PrefixIconUI = styled(Icon)`
+  color: inherit;
+`
+export const SuffixIconUI = styled(Icon)`
+  color: inherit;
 `
 
 SpinnerUI.defaultProps = {

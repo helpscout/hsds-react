@@ -87,6 +87,8 @@ export const useButtonClassnames = (defaultClassname, props) => {
     isNotOnly,
     loading,
     rounded,
+    prefixIcon,
+    suffixIcon,
   } = props
 
   const theme = useButtonTheme(props)
@@ -107,6 +109,8 @@ export const useButtonClassnames = (defaultClassname, props) => {
     size && `is-size-${size}`,
     style && `is-style-${style}`,
     theme && `is-theme-${theme}`,
+    prefixIcon && 'has-prefix-icon',
+    suffixIcon && 'has-suffix-icon',
     className
   )
 }
@@ -163,7 +167,7 @@ export const useButton = props => {
     submit,
     target,
     to,
-    ...rest
+    ...otherProps
   } = props
 
   const children = useButtonChildren(props)
@@ -180,6 +184,8 @@ export const useButton = props => {
     to,
   })
 
+  const { prefixIcon, suffixIcon, ...rest } = otherProps
+
   return {
     'data-testid': 'Button',
     ...getValidProps(rest),
@@ -187,5 +193,7 @@ export const useButton = props => {
     className: componentClassName,
     children,
     loading,
+    prefixIcon,
+    suffixIcon,
   }
 }

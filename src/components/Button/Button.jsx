@@ -1,16 +1,45 @@
 import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
 
-import { ButtonUI, LoadingWrapperUI, SpinnerUI } from './Button.css'
+import {
+  ButtonUI,
+  LoadingWrapperUI,
+  SpinnerUI,
+  PrefixIconUI,
+  SuffixIconUI,
+} from './Button.css'
 import { useButton } from './Button.utils'
 
 export const WrappedButton = forwardRef(function Button(props, ref) {
-  const { loading, children, ...buttonProps } = useButton(props)
+  const {
+    loading,
+    children,
+    prefixIcon,
+    suffixIcon,
+    ...buttonProps
+  } = useButton(props)
+
+  const content = (
+    <>
+      {prefixIcon && (
+        <PrefixIconUI name={prefixIcon} isWithHiddenTitle={false} size="24" />
+      )}
+      {children}
+      {suffixIcon && (
+        <SuffixIconUI name={suffixIcon} isWithHiddenTitle={false} size="24" />
+      )}
+    </>
+  )
 
   return (
     <ButtonUI {...buttonProps} ref={ref}>
-      {loading && <SpinnerUI className="c-Button--spinner" />}
-      {loading ? <LoadingWrapperUI>{children}</LoadingWrapperUI> : children}
+      {loading && (
+        <>
+          <SpinnerUI className="c-Button--spinner" />
+          <LoadingWrapperUI>{content}</LoadingWrapperUI>
+        </>
+      )}
+      {!loading && content}
     </ButtonUI>
   )
 })
