@@ -11,7 +11,7 @@ import {
 jest.useFakeTimers()
 
 describe('renders', () => {
-  beforeEach(() => {
+  beforeAll(() => {
     window.ResizeObserver = jest.fn().mockImplementation(() => ({
       observe: jest.fn(),
       unobserve: jest.fn(),
@@ -19,7 +19,7 @@ describe('renders', () => {
     }))
   })
 
-  afterEach(() => {
+  afterAll(() => {
     window.ResizeObserver = undefined
   })
 
