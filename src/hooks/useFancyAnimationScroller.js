@@ -60,6 +60,12 @@ function getElement(someRef) {
   return someRef && someRef.current
 }
 
+/**
+ * Calculates a number from a scale of exponential decay at a given rate.
+ * @param {Number} rate The rate of decay, the larger the n umber the quickest the decay
+ * @param {Number} upper The limit value
+ * @returns Number
+ */
 export function exponentialDecay(rate, upper) {
   return t => {
     return upper * (1 - Math.exp(-(rate * t)))
