@@ -83,6 +83,16 @@ describe('Events', () => {
     expect(spy).toHaveBeenCalled()
   })
 
+  test('onEnter callback for Radio input always returns checked true', () => {
+    const spy = jest.fn()
+    const wrapper = mount(<Input onEnter={spy} type="radio" value="Value" />)
+    const input = wrapper.find('input')
+
+    input.simulate('keydown', { key: 'Enter' })
+
+    expect(spy).toHaveBeenCalledWith('Value', true, undefined)
+  })
+
   test('Can trigger onEnter callback using space', () => {
     const spy = jest.fn()
     const wrapper = mount(<Input onEnter={spy} checked value="Value" />)
