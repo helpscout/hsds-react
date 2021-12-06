@@ -104,9 +104,7 @@ export const TagUI = styled('div')`
   letter-spacing: -0.1px;
   line-height: 12px;
   font-size: 11.5px;
-
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
-    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-family: var(--HSDSGlobalFontFamilySystem);
   text-decoration: none;
 
   &.is-all-caps {

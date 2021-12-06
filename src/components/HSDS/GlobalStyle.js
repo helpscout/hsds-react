@@ -4,6 +4,9 @@ import { createGlobalStyle } from 'styled-components'
 export const FONT_FAMILY =
   '"Aktiv Grotesk", "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
 
+export const FONT_FAMILY_SYSTEM =
+  '-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
+
 export const FONT_FAMILY_MONO =
   '"SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace'
 
@@ -13,6 +16,8 @@ export default createGlobalStyle`
   :root{
     --HSDSGlobalFontFamily: ${props =>
       props.fontFamily ? props.fontFamily : FONT_FAMILY};
+    --HSDSGlobalFontFamilySystem: ${props =>
+      props.fontFamilySystem ? props.fontFamilySystem : FONT_FAMILY_SYSTEM};
     --HSDSGlobalFontFamilyMono: ${props =>
       props.fontFamilyMono ? props.fontFamilyMono : FONT_FAMILY_MONO};
     --HSDSGlobalFontSize: ${props =>
