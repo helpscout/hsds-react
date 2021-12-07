@@ -34,6 +34,9 @@ export const IconButtonUI = styled(IconButton)`
 
     --buttonColor: var(--iconTextColor);
 
+    width: var(--buttonHeight);
+    min-width: 0;
+
     &:focus,
     &.is-focused {
       --buttonBackgroundColor: var(--buttonMainColor);
