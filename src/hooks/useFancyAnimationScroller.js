@@ -1,3 +1,5 @@
+// very difficult to test with JSDom, some basic interaction is tested in ScrollableContainer
+/* istanbul ignore file */
 import { useRef } from 'react'
 
 export default function useFancyAnimationScroller({
