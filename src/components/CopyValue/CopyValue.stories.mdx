@@ -1,0 +1,67 @@
+import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
+import { action } from '@storybook/addon-actions'
+import { text } from '@storybook/addon-knobs'
+import CopyValue from './'
+import Text from '../Text'
+
+<Meta
+  title="Components/Forms/CopyValue"
+  component={CopyValue}
+  parameters={{
+    design: {
+      type: 'figma',
+      url:
+        'https://www.figma.com/file/Wp9mDxTvWicSTWtezj2ImkMP/HSDS-Product?node-id=10004%3A27239',
+    },
+  }}
+/>
+
+# CopyValue
+
+A component to copy a give value
+
+<Canvas>
+  <Story name="default">
+    <CopyValue
+      value={text('value', '123123123')}
+      onClick={action('Click')}
+      onReset={action('Reset')}
+      prefix={text('prefix', '#')}
+    />
+  </Story>
+</Canvas>
+
+#### Reference
+
+- **Designer**: Buzz
+- **Engineering**: Juan Pablo
+- **Usage**: Everywhere
+
+<br />
+<br />
+
+### Props
+
+<ArgsTable of={CopyValue} />
+
+### Stories
+
+#### CopyValue with custom render
+
+<Canvas>
+  <Story name="custom-render">
+    <CopyValue
+      value={text('value', '123123123')}
+      onClick={action('Click')}
+      onReset={action('Reset')}
+      prefix={text('prefix', '#')}
+      renderValue={value => {
+        return (
+          <Text weight={700} size={48}>
+            {value}
+          </Text>
+        )
+      }}
+    />
+  </Story>
+</Canvas>

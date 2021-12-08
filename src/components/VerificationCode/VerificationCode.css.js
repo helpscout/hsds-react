@@ -56,8 +56,7 @@ export const DigitMaskUI = styled('div')`
   width: 40px;
   height: 50px;
   padding: 0 0 7px 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
-    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-family: var(--HSDSGlobalFontFamilySystem);
   font-size: 35px;
   line-height: 41px;
   text-align: center;
@@ -82,8 +81,7 @@ export const DigitInputUI = styled('input')`
   margin: 0;
   border: 0;
   border-bottom: 2px solid #d5dce1;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
-    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-family: var(--HSDSGlobalFontFamilySystem);
   font-size: 35px;
   line-height: 35px;
   text-align: center;

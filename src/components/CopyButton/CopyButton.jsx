@@ -1,9 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Icon from '../Icon'
 import classNames from 'classnames'
 import { noop } from '../../utilities/other'
+
+import { useCopyConfirmation } from './CopyButton.utils'
+
 import {
   CopyButtonUI,
   ConfirmationIconWrapperUI,
@@ -17,41 +20,13 @@ const WrappedCopybutton = React.forwardRef(function CopyButton(props, ref) {
     icon,
     label,
     onClick,
-    onReset,
     outlined,
-    resetTimeout,
     size,
     theme,
     ...rest
   } = props
 
-  const [shouldRenderConfirmation, setConfirmation] = useState()
-  const confirmationTimeout = useRef()
-
-  useEffect(() => {
-    if (confirmationTimeout.current) {
-      clearTimeout(confirmationTimeout)
-    }
-    return () => {
-      if (confirmationTimeout.current) {
-        clearTimeout(confirmationTimeout)
-      }
-    }
-  }, [])
-
-  const handleClick = e => {
-    if (confirmationTimeout.current) {
-      clearTimeout(confirmationTimeout)
-    }
-
-    setConfirmation(true)
-    onClick(e)
-
-    confirmationTimeout.current = setTimeout(() => {
-      setConfirmation(false)
-      onReset()
-    }, resetTimeout)
-  }
+  const [shouldRenderConfirmation, handleClick] = useCopyConfirmation(props)
 
   const componentClassName = classNames(
     'c-CopyButton',
