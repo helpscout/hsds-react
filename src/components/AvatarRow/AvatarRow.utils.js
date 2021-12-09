@@ -13,23 +13,6 @@ export function splitAvatarsArray(avatars, itemsDisplayed) {
   return { shownAvatars, hiddenAvatars }
 }
 
-// TODO: Move this to the general utils library that is coming some time in the winter
-export function setupObserver(callback) {
-  return new ResizeObserver(entries => {
-    for (let entry of entries) {
-      if (entry.contentBoxSize) {
-        // Firefox implements `contentBoxSize` as a single content rect, rather than an array
-        const contentBoxSize = Array.isArray(entry.contentBoxSize)
-          ? entry.contentBoxSize[0]
-          : entry.contentBoxSize
-        const { inlineSize: width } = contentBoxSize
-
-        callback({ width })
-      }
-    }
-  })
-}
-
 export function getNumberOfItemsToDisplay({
   avatarSize,
   containerWidth,

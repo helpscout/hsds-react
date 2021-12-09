@@ -2,15 +2,12 @@ import React, { useRef, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import throttle from 'lodash.throttle'
 import classNames from 'classnames'
+import { setupObserver } from '../../hooks/useMeasureNode'
+import { splitAvatarsArray, getNumberOfItemsToDisplay } from './AvatarRow.utils'
+import { config } from '../Avatar/Avatar.css'
 import { AvatarRowUI, CounterAvatarUI } from './AvatarRow.css'
 import Avatar from '../Avatar'
 import Tooltip from '../Tooltip'
-import { config } from '../Avatar/Avatar.css'
-import {
-  setupObserver,
-  splitAvatarsArray,
-  getNumberOfItemsToDisplay,
-} from './AvatarRow.utils'
 
 const { size: avatarConfigSizes } = config
 
@@ -47,9 +44,11 @@ function AvatarRow({
     }
 
     const avatarRowEl = avatarRowRef.current
-    const resizeObserver = setupObserver(
-      throttleOnResize ? throttle(onResize, throttleWait) : onResize
-    )
+    const resizeObserver = setupObserver({
+      observerEntryType: 'contentBoxSize',
+      cb: throttleOnResize ? throttle(onResize, throttleWait) : onResize,
+      dimensions: { width: true },
+    })
 
     observerRef.current = resizeObserver
 

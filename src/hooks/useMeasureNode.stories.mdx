@@ -1,0 +1,61 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Hooks/useMeasureNode" />
+
+# useMeasureNode
+
+Custom hook that allows you to measure a DOM element, almost completely based on [React's guidelines](http://reactjs.org/docs/hooks-faq.html#how-can-i-measure-a-dom-node).
+
+The measures are calculated by either one of:
+
+1. [`getBoundingClientRect`](http://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect)
+2. [`ResizeObserver`](http://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver)
+
+Returns an array with:
+
+1. `measures`: The dimensions `{ width, height }`
+2. `el`: The DOM element the ref points to
+3. `ref`: The `ref` to pass to the desired element
+4. `observerRef`: A `ref` containing the Observer (in case you need to "unobserve" for example)
+
+Example:
+
+```jsx
+function MeasureExample() {
+  const [measures, el, ref] = useMeasureNode()
+
+  return (
+    <>
+      <h1 ref={ref}>Hello, world</h1>
+      {measures !== null && (
+        <h2>The above header is {Math.round(measures.height)}px tall</h2>
+      )}
+    </>
+  )
+}
+```
+
+Example (with observer enabled):
+
+```jsx
+function MeasureExample() {
+  const [measures, el, ref, observerRef] = useMeasureNode({ observeSize: true })
+
+  useEffect(() => {
+    return () => {
+      if (someCondition) {
+        observerRef.current.disconnect()
+      }
+    }
+  }, [someCondition])
+
+  return (
+    <>
+      <h1 ref={ref}>Hello, world</h1>
+      {measures !== null && (
+        <h2>The above header is {Math.round(measures.height)}px tall</h2>
+      )}
+    </>
+  )
+}
+```

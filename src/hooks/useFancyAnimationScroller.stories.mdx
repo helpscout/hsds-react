@@ -1,0 +1,59 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Hooks/useFancyAnimationScroller" />
+
+# useFancyAnimationScroller
+
+Custom hook that will adjust the height of a given element in relation to the scrolling amount of a container.
+
+How much the height grows or shrinks is calculated using a exponential decay curve, so that the height of the scrollable container is taken into accountand you don't weird a weird effect (like continuing scaling up the height during the whole scroll movement of a very large scrollable container).
+
+Uses `requestAnimationFrame` under the hood to make it performant.
+
+Params (object) :
+
+- `container`: Either a node or ref from the container that wraps the scrollable element and the node to apply the effect to
+- `selectors`: Valid selectors to pass to `querySelector` to find 👇
+  - `scrollable`: The scrollable element. If using `<ScrollableContainer />` with "simple-bar" the selector for the scrollable node is:`.simplebar-content-wrapper`.
+  - `target`: The element to apply the height effect to, usually the fixed header.
+- `classNames`: Optional classnames to apply on certain circumnstances.
+  - `scrollTopReached`: A classname to add or remove as the "target" above (ie the header) is reached (scrollable content all the way to the top). Useful if you want to animate the contents of the header somehow.
+- `targets`:
+  - `from`: The initial height of the target (header) in pixels.
+  - `to`: The final height of the target (header) in pixels.
+
+```jsx
+import useFancyAnimationScroller from '@helpscout/hsds-react/hooks/useFancyAnimationScroller'
+
+function MyComponent() {
+  const containerRef = useRef(null)
+  const [handleScroll] = useFancyAnimationScroller({
+    container: containerRef,
+    selectors: {
+      scrollable: '.simplebar-content-wrapper',
+      target: '.top-header',
+    },
+    classNames: {
+      scrollTopReached: 'small',
+    },
+    targets: {
+      from: 75,
+      to: 40,
+    },
+  })
+
+  return (
+    <ScrollableContainer
+      ref={containerRef}
+      onScroll={handleScroll}
+      withSimpleBar
+      header={
+        <HeaderUI className="top-header">
+          <h1>Heading</h1>
+        </HeaderUI>
+      }
+      body={<div>Some cool content</div>}
+    />
+  )
+}
+```

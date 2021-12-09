@@ -5,11 +5,24 @@ import {
   HeaderUI,
   BodyUI,
   FooterUI,
+  SimpleBarExample,
 } from './ScrollableContainer.storiesHelpers'
 
 jest.useFakeTimers()
 
 describe('renders', () => {
+  beforeAll(() => {
+    window.ResizeObserver = jest.fn().mockImplementation(() => ({
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+      disconnect: jest.fn(),
+    }))
+  })
+
+  afterAll(() => {
+    window.ResizeObserver = undefined
+  })
+
   test('Should render and scroll', async () => {
     const { container } = render(
       <ScrollableContainerUI
@@ -281,5 +294,13 @@ describe('renders', () => {
       'style',
       expect.stringContaining('--scroll-shadow')
     )
+  })
+
+  test('should render nested', () => {
+    const { container } = render(<SimpleBarExample />)
+
+    const mainFooter = container.querySelector('.ScrollableContainer__footer')
+
+    expect(mainFooter).toHaveClass('c-ScrollableContainer')
   })
 })
