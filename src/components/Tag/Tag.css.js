@@ -25,6 +25,7 @@ export const config = {
 
 export const RemoveTagUI = styled.button`
   ${focusRing}
+  --focusRingRadius: 3px;
   --focusRingShadow: ${focusShadowWithInset};
 
   border-radius: 3px;
@@ -43,7 +44,6 @@ export const RemoveTagUI = styled.button`
   border: none;
   background: transparent;
   padding: 0;
-
 
   &:hover,
   &:focus {
