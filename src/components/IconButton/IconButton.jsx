@@ -21,12 +21,12 @@ const useIconButtonAvatar = props => {
     return null
   }
 
-  const { image, fallbackImage } = props
-  if (!image && !fallbackImage) {
+  const { image, initials, ...rest } = props
+  if (!image && !initials) {
     return null
   }
 
-  return <Avatar image={image} fallbackImage={fallbackImage} />
+  return <Avatar image={image} initials={initials} {...rest} />
 }
 
 const useIconButton = props => {

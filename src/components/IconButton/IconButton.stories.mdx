@@ -62,8 +62,28 @@ Actionable `Button` with an `Icon`.
       size={select('size', SIZES, SIZES[0])}
       avatarProps={{
         image: AvatarSpec.generate().image,
-        fallbackImage:
-          'https://d33v4339jhl8k0.cloudfront.net/customer-avatar/01.png',
+        initials: 'PB',
+      }}
+    >
+      {text('text', '')}
+    </IconButton>
+  </Story>
+</Canvas>
+
+#### with avatar & initials
+
+<Canvas>
+  <Story name="with-avatar-initials">
+    <IconButton
+      icon={text('icon', 'search')}
+      disabled={boolean('disabled', false)}
+      filled={boolean('filled', false)}
+      seamless={boolean('seamless', false)}
+      theme={select('theme', THEMES, THEMES[0])}
+      size={select('size', SIZES, SIZES[0])}
+      avatarProps={{
+        image: null,
+        initials: 'PB',
       }}
     >
       {text('text', '')}
