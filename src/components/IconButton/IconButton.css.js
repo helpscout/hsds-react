@@ -34,7 +34,9 @@ export const IconButtonUI = styled(ButtonUI)`
   }
 
   ${IconContainerUI} {
-    --containerSize: calc(var(--buttonHeight) - calc(var(--buttonPadding) * 2));
+    --containerSize: calc(
+      var(--buttonHeight) - calc(var(--buttonPadding) * 2) - 2px
+    ); /* extra 2px is for the border */
     width: var(--containerSize);
     height: var(--containerSize);
   }
