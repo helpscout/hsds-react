@@ -34,11 +34,8 @@ export const IconButtonUI = styled(ButtonUI)`
   }
 
   ${IconContainerUI} {
-    --containerSize: calc(
-      var(--buttonHeight) - calc(var(--buttonPadding) * 2) - 2px
-    ); /* extra 2px is for the border */
-    width: var(--containerSize);
-    height: var(--containerSize);
+    height: calc(var(--buttonHeight) - calc(var(--buttonPadding) * 2) - 2px);
+    aspect-ratio: 1;
   }
 
   &.is-style-outlined:not(.has-children):not(.is-seamless) {
