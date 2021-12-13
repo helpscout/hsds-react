@@ -34,7 +34,6 @@ export class Form extends React.PureComponent {
         size="lg"
         theme="blue"
         className="save-button"
-        version={2}
         submit={true}
         {...commonButtonProps}
         {...saveButtonProps}
@@ -45,9 +44,10 @@ export class Form extends React.PureComponent {
 
     const cancelButton = onCancel && (
       <Button
-        size="md"
+        size="lg"
         className="cancel-button"
-        version={2}
+        linked
+        theme="grey"
         onClick={onCancel}
         {...commonButtonProps}
         {...cancelButtonProps}
@@ -58,10 +58,10 @@ export class Form extends React.PureComponent {
 
     const destroyButton = onDestroy && (
       <Button
-        size="md"
+        size="lg"
         theme="red"
+        linked
         className="delete-button"
-        version={2}
         onClick={onDestroy}
         {...commonButtonProps}
         {...destroyButtonProps}
