@@ -274,7 +274,7 @@ export const MeatButton = forwardRef(
         icon={meatIcon}
         title={a11yLabel}
         theme={theme}
-        size={SIZE_LG}
+        size={size}
         {...rest}
       />
     )
