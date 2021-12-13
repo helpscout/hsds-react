@@ -73,6 +73,8 @@ WrappedButton.propTypes = {
   target: PropTypes.string,
   /** Renders a button with the link styles */
   linked: PropTypes.bool,
+  /** Renders a link button without any size styles (height, padding, min-width) */
+  inlined: PropTypes.bool,
   /** Renders a loading `Spinner`. */
   loading: PropTypes.bool,
   /** Sets the size of the button. */

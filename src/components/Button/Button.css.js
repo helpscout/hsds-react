@@ -279,6 +279,12 @@ function makeButtonSizeStyles(size, config) {
         padding-right: calc(var(--buttonPadding) - 8px);
         --buttonMinWidth: 0px;
       }
+
+      &.is-style-link.is-inlined {
+        --buttonPadding: 0;
+        --buttonMinWidth: 0;
+        --buttonHeight: auto;
+      }
     }
   `
 }

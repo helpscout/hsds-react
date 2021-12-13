@@ -79,15 +79,16 @@ const useButtonChildren = ({ children }) => {
 
 export const useButtonClassnames = (defaultClassname, props) => {
   const {
-    disabled,
-    seamless,
     className,
+    disabled,
+    inlined,
     isFirst,
     isLast,
     isNotOnly,
     loading,
-    rounded,
     prefixIcon,
+    rounded,
+    seamless,
     suffixIcon,
   } = props
 
@@ -109,6 +110,7 @@ export const useButtonClassnames = (defaultClassname, props) => {
     size && `is-size-${size}`,
     style && `is-style-${style}`,
     theme && `is-theme-${theme}`,
+    inlined && 'is-inlined',
     prefixIcon && 'has-prefix-icon',
     suffixIcon && 'has-suffix-icon',
     className
