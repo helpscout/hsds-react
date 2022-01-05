@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { getColor } from '../../../../styles/utilities/color'
 import { page1, page2 } from './convoData'
 import { formatDate } from './convoList.utils'
 import { CONVO_STATUS_CLASSNAMES, skin } from './ConvoList.constants'
-import AvatarSpec from '../../../../utilities/specs/avatar.specs'
+import AvatarRow from '../../../AvatarRow'
 import Badge from '../../../Badge'
 import Icon from '../../../Icon'
-import Avatar from '../../../Avatar'
 import Popover from '../../../Popover'
 import Pagination from '../../../Pagination'
 import Truncate from '../../../Truncate'
@@ -17,6 +16,19 @@ import { ConvoListUI, GridUI, AsideUI, H1UI } from './ConvoList.css'
 export default function ConvoList() {
   const [pager, setPager] = useState(page1.pager)
   const [results, setResults] = useState(page1.results)
+  const [avatars, setAvatars] = useState([
+    {
+      size: 'xs',
+      outerBorderColor: getColor('pink.900'),
+      borderColor: 'white',
+      showStatusBorderColor: true,
+      name: 'Ringo Starr',
+      tooltipProps: {
+        appendTo: () => document.body,
+        title: 'Ringo Starr',
+      },
+    },
+  ])
   const [isLoading, setIsLoading] = useState(false)
   const tableWidth = { min: '700px' }
   const containerWidth = '100%'
@@ -76,6 +88,25 @@ export default function ConvoList() {
     },
   ]
 
+  useEffect(() => {
+    setTimeout(() => {
+      setAvatars([
+        ...avatars,
+        {
+          size: 'xs',
+          outerBorderColor: 'transparent',
+          borderColor: 'white',
+          showStatusBorderColor: true,
+          name: 'George Harrison',
+          tooltipProps: {
+            appendTo: () => document.body,
+            title: 'George Harrison',
+          },
+        },
+      ])
+    }, 3000)
+  }, [])
+
   function handlePageChange(nextPage) {
     setIsLoading(true)
 
@@ -115,27 +146,20 @@ export default function ConvoList() {
             )
             console.groupEnd()
           }}
-          onRowMouseEnter={(e, row) => {}}
           rowWrapper={(children, row) => {
             if (row.id === 281796231 || row.id === 281796229) {
               return (
                 <Popover
-                  triggerOn="mouseenter"
+                  triggerOn="click"
                   appendTo={() => document.body}
                   withTriggerWrapper={false}
                   placement="left"
                   renderContent={() => (
-                    <Avatar
+                    <AvatarRow
                       size="xs"
-                      outerBorderColor={
-                        row.id === 281796231
-                          ? getColor('pink.900')
-                          : getColor('yellow.500')
-                      }
-                      borderColor="white"
-                      showStatusBorderColor
-                      name={AvatarSpec.generate().name}
-                      image={AvatarSpec.generate().image}
+                      gap={10}
+                      avatars={avatars}
+                      minSpaceForNAvatars={avatars.length > 1 ? 2 : 1}
                     />
                   )}
                 >

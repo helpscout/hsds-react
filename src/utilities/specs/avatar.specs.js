@@ -13,14 +13,14 @@ const avatarSpec = createSpec({
         id: prop.id,
         name: prop.name,
         firstName: prop.firstName,
-        image: prop.image,
+        // image: prop.image,
       }
     })
   }
   return {
     id: props.id,
     name: props.name,
-    image: props.image,
+    // image: props.image,
   }
 })
 
@@ -30,6 +30,7 @@ export function generateAvatarList(number, withTooltip) {
   if (withTooltip) {
     return avatars.map(av => ({
       tooltipProps: { title: `Hello ${av.firstName}!` },
+      animation: false,
       ...av,
     }))
   }

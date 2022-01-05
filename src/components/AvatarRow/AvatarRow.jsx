@@ -18,6 +18,7 @@ function AvatarRow({
   'data-cy': dataCy = 'AvatarRow',
   extraTooltipProps = {},
   gap = 2,
+  minSpaceForNAvatars,
   throttleOnResize = true,
   throttleWait = 200,
   ...avatarProps
@@ -85,7 +86,10 @@ function AvatarRow({
       data-cy={dataCy}
       ref={avatarRowRef}
       $gap={gap}
-      $minWidth={avatarSize}
+      $minWidth={
+        minSpaceForNAvatars * avatarSize + gap * (numberOfAvatars - 1) ||
+        avatarSize
+      }
     >
       {shownAvatars.map(props => (
         <Avatar key={props.id || props.name} {...props} {...avatarProps} />

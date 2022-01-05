@@ -6,8 +6,12 @@ import { Resizable } from 're-resizable'
 export const AvatarRowPlayground = () => {
   const [avatars, setAvatars] = React.useState(generateAvatarList(3, true))
 
-  const handleClick = () => {
-    setAvatars([...avatars, ...generateAvatarList(1, true)])
+  const handleClick = action => {
+    if (action === 'add') {
+      setAvatars([...avatars, ...generateAvatarList(1, true)])
+    } else {
+      setAvatars(avatars.slice(0, avatars.length - 1))
+    }
   }
 
   return (
@@ -31,7 +35,10 @@ export const AvatarRowPlayground = () => {
       </Resizable>
       <br />
       <br />
-      <button onClick={handleClick}>increase avatar count</button>
+      <button onClick={() => handleClick('add')}>increase avatar count</button>
+      <button onClick={() => handleClick('remove')}>
+        decrease avatar count
+      </button>
     </>
   )
 }
