@@ -144,6 +144,26 @@ This component renders a Message Card Notification with (optional) Title, Subtit
   </Story>
 </Canvas>
 
+# With variables
+
+<Canvas>
+  <Story name="With variables">
+    <MessageCard
+      subtitle={text('Subtitle', 'The J&G Team is here')}
+      title={text('Title', 'Need help?')}
+      body={text(
+        'Body',
+        '<p>Hi {%customer.firstName,fallback=there%}!</p> <p>This <i>sentence</i> has five <u>words</u>. </p> <p>See you at our <b>amazing show with {%coordinator,fallback=Coordinator%}</b>!</p> <p>It would happen at {%date%}</p> <p>And this is non-existing variable {%nonExisting,fallback=no%}</p>'
+      )}
+      variables={[
+        { id: 'customer.firstName', label: 'First Name' },
+        { id: 'coordinator', label: 'Person' },
+        { id: 'date', label: 'Date' },
+      ]}
+    />
+  </Story>
+</Canvas>
+
 #### Reference
 
 - **Designer**: Buzz

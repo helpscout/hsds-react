@@ -35,6 +35,7 @@ export const MessageCard = React.memo(
         align,
         isMobile,
         isWithBoxShadow,
+        variables = [],
         ...rest
       },
       ref
@@ -96,7 +97,11 @@ export const MessageCard = React.memo(
               withMargin={!!(title || subtitle)}
               render={!!(body || image || children)}
             >
-              <MessageCardBody body={body} onClick={onBodyClick} />
+              <MessageCardBody
+                body={body}
+                onClick={onBodyClick}
+                variables={variables}
+              />
               <MessageCardImage image={image} onLoad={makeMessageVisible} />
               {children}
             </MessageCardContent>
@@ -165,6 +170,13 @@ MessageCard.propTypes = {
   onShow: PropTypes.func,
   /** Enable animations when showing the Message. */
   withAnimation: PropTypes.bool,
+  /** List of variables that can be highlighted inside Message. */
+  variables: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      label: PropTypes.string,
+    })
+  ),
 }
 
 MessageCard.className = 'c-MessageCard'
