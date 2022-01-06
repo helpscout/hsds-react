@@ -292,6 +292,7 @@ export const BodyUI = styled.div`
     font-style: normal;
     font-weight: normal;
     text-decoration: none;
+    white-space: nowrap;
   }
 `
 
