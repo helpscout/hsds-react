@@ -4,15 +4,15 @@ describe('MessageCard.utils', () => {
   const variables = [
     {
       id: 'customer.firstName',
-      label: 'First Name',
+      display: 'First Name',
     },
     {
       id: 'customer.lastName',
-      label: 'Last Name',
+      display: 'Last Name',
     },
     {
       id: 'customVariable',
-      label: 'Custom Variable',
+      display: 'Custom Variable',
     },
   ]
 

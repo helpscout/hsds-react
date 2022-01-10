@@ -191,7 +191,7 @@ describe('Body variables', () => {
   const variables = [
     {
       id: 'customer.firstName',
-      label: 'First Name',
+      display: 'First Name',
     },
   ]
 

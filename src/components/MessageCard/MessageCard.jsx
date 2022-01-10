@@ -174,7 +174,7 @@ MessageCard.propTypes = {
   variables: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
-      label: PropTypes.string,
+      display: PropTypes.string,
     })
   ),
 }

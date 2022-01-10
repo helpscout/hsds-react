@@ -156,9 +156,9 @@ This component renders a Message Card Notification with (optional) Title, Subtit
         '<p>Hi {%customer.firstName,fallback=there%}!</p> <p>This <i>sentence</i> has five <u>words</u>. </p> <p>See you at our <b>amazing show with {%coordinator,fallback=Coordinator%}</b>!</p> <p>It would happen at {%date%}</p> <p>And this is non-existing variable {%nonExisting,fallback=no%}</p>'
       )}
       variables={[
-        { id: 'customer.firstName', label: 'First Name' },
-        { id: 'coordinator', label: 'Person' },
-        { id: 'date', label: 'Date' },
+        { id: 'customer.firstName', display: 'First Name' },
+        { id: 'coordinator', display: 'Person' },
+        { id: 'date', display: 'Date' },
       ]}
     />
   </Story>

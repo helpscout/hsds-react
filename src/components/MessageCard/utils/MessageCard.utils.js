@@ -8,7 +8,7 @@ export const messageVariableClassName = 'hsds-message-card-variable'
  * Variable raw text is replaced with <span class="hsds-message-card-variable"> element.
  *
  * @param text {String} text to replace variables within (if any)
- * @param variables {Array<{id: String, label: String}>} list of variables to replace
+ * @param variables {Array<{id: String, display: String}>} list of variables to replace
  */
 export const replaceMessageVariables = (text = '', variables = []) => {
   if (variables.length === 0) {
@@ -25,7 +25,7 @@ export const replaceMessageVariables = (text = '', variables = []) => {
   const replacer = (match, variableId, fallbackConfig, fallback) => {
     const variable = variables.find(variable => variable.id === variableId)
     if (variable) {
-      const variableText = !fallback ? variable.label : fallback
+      const variableText = !fallback ? variable.display : fallback
       return `<span class="${messageVariableClassName}">${variableText}</span>`
     }
     return match
