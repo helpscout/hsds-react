@@ -281,7 +281,7 @@ export const BodyUI = styled.div`
     display: inline-flex;
     align-items: center;
     padding: 3px 8px;
-    margin: 0 4px;
+    margin-right: 4px;
     height: 20px;
     line-height: 17px;
 
