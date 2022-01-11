@@ -1,9 +1,10 @@
 import styled from 'styled-components'
 import { getColor } from '../../../../styles/utilities/color'
+import Popover from '../../../Popover'
 
 export const GridUI = styled('div')`
   display: grid;
-  grid-template-columns: 100px 1fr;
+  grid-template-columns: 200px 1fr;
 `
 
 export const ConvoListUI = styled('div')`
@@ -44,6 +45,10 @@ export const ConvoListUI = styled('div')`
   .replying td:first-child::before {
     border-left: 12px solid ${getColor('pink.900')};
   }
+`
+
+export const PopoverUI = styled(Popover)`
+  /* max-width: 172px; */
 `
 
 export const AsideUI = styled('aside')`

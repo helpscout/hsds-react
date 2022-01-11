@@ -11,7 +11,7 @@ import Pagination from '../../../Pagination'
 import Truncate from '../../../Truncate'
 import Table from '../../'
 import { ConversationCell } from './ConvoList.customCells'
-import { ConvoListUI, GridUI, AsideUI, H1UI } from './ConvoList.css'
+import { ConvoListUI, GridUI, AsideUI, H1UI, PopoverUI } from './ConvoList.css'
 
 export default function ConvoList() {
   const [pager, setPager] = useState(page1.pager)
@@ -87,25 +87,32 @@ export default function ConvoList() {
       },
     },
   ]
+  const numberofavatars = avatars.length
 
   useEffect(() => {
-    setTimeout(() => {
-      setAvatars([
-        ...avatars,
-        {
-          size: 'xs',
-          outerBorderColor: 'transparent',
-          borderColor: 'white',
-          showStatusBorderColor: true,
-          name: 'George Harrison',
-          tooltipProps: {
-            appendTo: () => document.body,
-            title: 'George Harrison',
+    const id = setTimeout(() => {
+      if (numberofavatars < 5) {
+        setAvatars([
+          ...avatars,
+          {
+            size: 'xs',
+            outerBorderColor: 'transparent',
+            borderColor: 'white',
+            showStatusBorderColor: true,
+            name: `George Harrison ${Math.random()}`,
+            tooltipProps: {
+              appendTo: () => document.body,
+              title: 'George Harrison',
+            },
           },
-        },
-      ])
+        ])
+      }
     }, 3000)
-  }, [])
+
+    return () => {
+      clearTimeout(id)
+    }
+  }, [numberofavatars])
 
   function handlePageChange(nextPage) {
     setIsLoading(true)
@@ -149,7 +156,7 @@ export default function ConvoList() {
           rowWrapper={(children, row) => {
             if (row.id === 281796231 || row.id === 281796229) {
               return (
-                <Popover
+                <PopoverUI
                   triggerOn="click"
                   appendTo={() => document.body}
                   withTriggerWrapper={false}
@@ -159,7 +166,9 @@ export default function ConvoList() {
                       size="xs"
                       gap={10}
                       avatars={avatars}
-                      minSpaceForNAvatars={avatars.length > 1 ? 2 : 1}
+                      // minAvatarsShown={
+                      //   avatars.length <= 4 ? avatars.length : 4
+                      // }
                     />
                   )}
                 >
@@ -168,7 +177,7 @@ export default function ConvoList() {
                       row.id === 281796231 ? 'replying' : 'viewing'
                     }`,
                   })}
-                </Popover>
+                </PopoverUI>
               )
             }
             return children
