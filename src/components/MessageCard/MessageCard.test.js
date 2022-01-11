@@ -1,62 +1,49 @@
 import React from 'react'
-import { mount, render } from 'enzyme'
+import { render, act, screen, fireEvent } from '@testing-library/react'
 import MessageCard from './MessageCard'
-import {
-  TitleUI,
-  SubtitleUI,
-  BodyUI,
-  ActionUI,
-  ImageUI,
-} from './MessageCard.css'
 import { MessageCardButton as Button } from './MessageCard.Button'
-import { act } from 'react-dom/test-utils'
+import userEvent from '@testing-library/user-event'
 
 describe('className', () => {
   test('Has default className', () => {
-    const wrapper = render(<MessageCard />)
-    const el = wrapper.find('.c-MessageCard')
+    const { container } = render(<MessageCard />)
 
-    expect(el.length).toBeTruthy()
+    expect(messageCard(container)).toBeInTheDocument()
   })
 
   test('Can render custom className', () => {
     const customClassName = 'blue'
-    const wrapper = render(<MessageCard className={customClassName} />)
-    const el = wrapper.find('.c-MessageCard')
+    const { container } = render(<MessageCard className={customClassName} />)
 
-    expect(el.hasClass(customClassName)).toBeTruthy()
+    expect(messageCard(container)).toHaveClass(customClassName)
   })
 })
 
 describe('Mobile', () => {
   test('Should not have mobile styles by default', () => {
-    const wrapper = mount(<MessageCard />)
-    const el = wrapper.find('div.c-MessageCard')
+    const { container } = render(<MessageCard />)
 
-    expect(el.getDOMNode().classList.contains('is-mobile')).toBeFalsy()
+    expect(messageCard(container)).not.toHaveClass('is-mobile')
   })
 
   test('Should have mobile styles if specified', () => {
-    const wrapper = mount(<MessageCard isMobile />)
-    const el = wrapper.find('div.c-MessageCard')
+    const { container } = render(<MessageCard isMobile />)
 
-    expect(el.getDOMNode().classList.contains('is-mobile')).toBeTruthy()
+    expect(messageCard(container)).toHaveClass('is-mobile')
   })
 })
 
 describe('Align', () => {
   test('Has default alignment of right', () => {
-    const wrapper = mount(<MessageCard />)
-    const el = wrapper.find('div.c-MessageCard')
+    const { container } = render(<MessageCard />)
 
-    expect(el.getDOMNode().classList.contains('is-align-right')).toBeTruthy()
+    expect(messageCard(container)).toHaveClass('is-align-right')
   })
 
   test('Can change alignment styles, if specified', () => {
-    const wrapper = mount(<MessageCard align="left" />)
-    const el = wrapper.find('div.c-MessageCard')
+    const { container } = render(<MessageCard align="left" />)
 
-    expect(el.getDOMNode().classList.contains('is-align-left')).toBeTruthy()
+    expect(messageCard(container)).toHaveClass('is-align-left')
   })
 })
 
@@ -65,201 +52,230 @@ describe('Visibility', () => {
 
   test('Should be visible by default if there is no image', () => {
     const onShowSpy = jest.fn()
-    const wrapper = mount(<MessageCard onShow={onShowSpy} />)
+    const { container } = render(<MessageCard onShow={onShowSpy} />)
 
-    expect(cardWrapperVisible(wrapper)).toEqual(false)
+    expect(cardWrapper(container)).not.toBeVisible()
     expect(onShowSpy).not.toHaveBeenCalled()
 
     act(() => {
       jest.runAllTimers()
-      wrapper.update()
     })
 
-    expect(cardWrapperVisible(wrapper)).toEqual(true)
+    expect(cardWrapper(container)).toBeVisible()
     expect(onShowSpy).toHaveBeenCalled()
   })
 
   test('Should not be visible by default if there is an image, but become visible when image loads', () => {
     const onShowSpy = jest.fn()
-    const wrapper = mount(
+    const { container } = render(
       <MessageCard
         image={{ url: 'https://path.to/image.png' }}
         onShow={onShowSpy}
       />
     )
 
-    expect(cardWrapperVisible(wrapper)).toEqual(false)
+    expect(cardWrapper(container)).not.toBeVisible()
     expect(onShowSpy).not.toHaveBeenCalled()
-
-    jest.runAllTimers()
-    wrapper.update()
-
-    expect(cardWrapperVisible(wrapper)).toEqual(false)
-    expect(onShowSpy).not.toHaveBeenCalled()
-
-    wrapper.find('img').simulate('load')
 
     act(() => {
       jest.runAllTimers()
-      wrapper.update()
     })
 
-    expect(wrapper.find('img')).toHaveLength(1)
-    expect(cardWrapperVisible(wrapper)).toEqual(true)
+    expect(cardWrapper(container)).not.toBeVisible()
+    expect(onShowSpy).not.toHaveBeenCalled()
+
+    fireEvent.load(screen.getByRole('img'))
+
+    act(() => {
+      jest.runAllTimers()
+    })
+
+    expect(screen.getByRole('img')).toBeInTheDocument()
+    expect(cardWrapper(container)).toBeVisible()
     expect(onShowSpy).toHaveBeenCalled()
   })
 
   test('Should become visible without image if image fails to load', () => {
     const onShowSpy = jest.fn()
-    const wrapper = mount(
+    const { container } = render(
       <MessageCard
         image={{ url: 'https://path.to/image.png' }}
         onShow={onShowSpy}
       />
     )
 
-    expect(cardWrapperVisible(wrapper)).toEqual(false)
+    expect(cardWrapper(container)).not.toBeVisible()
     expect(onShowSpy).not.toHaveBeenCalled()
-
-    jest.runAllTimers()
-    wrapper.update()
-
-    expect(cardWrapperVisible(wrapper)).toEqual(false)
-    expect(onShowSpy).not.toHaveBeenCalled()
-
-    wrapper.find('img').simulate('error')
 
     act(() => {
       jest.runAllTimers()
-      wrapper.update()
     })
 
-    expect(wrapper.find('img')).toHaveLength(0)
-    expect(cardWrapperVisible(wrapper)).toEqual(true)
+    expect(cardWrapper(container)).not.toBeVisible()
+    expect(onShowSpy).not.toHaveBeenCalled()
+
+    fireEvent.error(screen.getByRole('img'))
+
+    act(() => {
+      jest.runAllTimers()
+    })
+
+    expect(screen.queryByRole('img')).not.toBeInTheDocument()
+    expect(cardWrapper(container)).toBeVisible()
     expect(onShowSpy).toHaveBeenCalled()
   })
-
-  function cardWrapperVisible(wrapper) {
-    return wrapper.find('.c-MessageCardWrapper').at(0).prop('visible')
-  }
 })
 
 describe('Animation', () => {
   test('Should have no animation by default', () => {
-    const wrapper = mount(<MessageCard />)
+    const { container } = render(<MessageCard />)
 
-    expect(cardWrapperAnimation(wrapper)).toEqual(false)
+    expect(cardWrapper(container)).toHaveStyle({ transition: 'none' })
   })
 
   test('Should have animation if withAnimation is true', () => {
-    const wrapper = mount(<MessageCard withAnimation />)
+    const { container } = render(<MessageCard withAnimation />)
 
-    expect(cardWrapperAnimation(wrapper)).toEqual(true)
+    expect(cardWrapper(container)).toHaveStyle({
+      transition: 'all 300ms ease-in-out',
+    })
   })
-
-  function cardWrapperAnimation(wrapper) {
-    return wrapper.find('.c-MessageCardWrapper').at(0).prop('withAnimation')
-  }
 })
 
 describe('Body', () => {
   test('Does not render body if is not passed down as a prop', () => {
-    const wrapper = mount(<MessageCard />)
-    const o = wrapper.find(BodyUI)
+    const { container } = render(<MessageCard />)
 
-    expect(o.length).toBe(0)
+    expect(messageBody(container)).not.toBeInTheDocument()
   })
 
   test('Renders body if it is passed down as a prop', () => {
-    const wrapper = mount(<MessageCard body="Santa!" />)
-    const o = wrapper.find(BodyUI)
+    const { container } = render(<MessageCard body="Santa!" />)
 
-    expect(o.length).toBe(1)
-    expect(o.html()).toContain('Santa!')
+    expect(messageBody(container)).toHaveTextContent('Santa!')
   })
 
   test('Renders html in body', () => {
-    const wrapper = mount(<MessageCard body="<span>Santa!</span>" />)
-    const o = wrapper.find(BodyUI)
+    const { container } = render(<MessageCard body="<span>Santa!</span>" />)
 
-    expect(o.render().find('span').length).toBe(1)
+    expect(
+      container.querySelector('[data-cy="beacon-message-body-content"] span')
+    ).toHaveTextContent('Santa!')
   })
 
   test('Renders new line without html in body', () => {
     const body = 'this is a new line\nwith another line'
-    const wrapper = mount(<MessageCard body={body} />)
-    const o = wrapper.find(BodyUI)
+    const { container } = render(<MessageCard body={body} />)
 
-    expect(o.render().find('br').length).toBe(1)
+    expect(
+      container.querySelector('[data-cy="beacon-message-body-content"] br')
+    ).toBeInTheDocument()
   })
 
   test('Accepts a custom onBodyClick callback', () => {
     const body = 'some text with a <a href="#">link</a> in it'
     const callback = jest.fn()
-    const wrapper = mount(<MessageCard body={body} onBodyClick={callback} />)
+    const { container } = render(
+      <MessageCard body={body} onBodyClick={callback} />
+    )
 
-    wrapper.simulate('click')
+    userEvent.click(messageCard(container))
     expect(callback).not.toHaveBeenCalled()
 
-    wrapper.find(BodyUI).simulate('click')
+    userEvent.click(messageBody(container))
     expect(callback).toHaveBeenCalled()
+  })
+})
+
+describe('Body variables', () => {
+  const variables = [
+    {
+      id: 'customer.firstName',
+      display: 'First Name',
+    },
+  ]
+
+  it('should replace existing variables in body text', () => {
+    const body = `<p>Hi {%customer.firstName,fallback=there%}</p>`
+
+    render(<MessageCard body={body} variables={variables} />)
+
+    expect(screen.getByText('there')).toBeInTheDocument()
+  })
+
+  it('should replace existing variables in body text, when also having new line character', () => {
+    const body = `Hi\n{%customer.firstName,fallback=there%}`
+
+    render(<MessageCard body={body} variables={variables} />)
+
+    expect(screen.getByText('there')).toBeInTheDocument()
+  })
+
+  it('should NOT replace variable if none provided', () => {
+    const body = `<p>Hi {%customer.firstName,fallback=there%}</p>`
+
+    render(<MessageCard body={body} />)
+
+    expect(
+      screen.getByText('Hi {%customer.firstName,fallback=there%}')
+    ).toBeInTheDocument()
   })
 })
 
 describe('Title', () => {
   test('Does not render title if is not passed down as a prop', () => {
-    const wrapper = mount(<MessageCard />)
-    const o = wrapper.find(TitleUI)
+    const { container } = render(<MessageCard />)
 
-    expect(o.length).toBe(0)
+    expect(messageTitle(container)).not.toBeInTheDocument()
   })
 
   test('Renders title if it is passed down as a prop', () => {
-    const wrapper = mount(<MessageCard title="Santa!" />)
-    const o = wrapper.find(TitleUI)
+    const { container } = render(<MessageCard title="Santa!" />)
 
-    expect(o.length).toBe(1)
-    expect(o.html()).toContain('Santa!')
+    expect(messageTitle(container)).toHaveTextContent('Santa!')
   })
+
+  function messageTitle(container) {
+    return container.querySelector('[data-cy="beacon-message-title"]')
+  }
 })
 
 describe('Subtitle', () => {
   test('Does not render subtitle if is not passed down as a prop', () => {
-    const wrapper = mount(<MessageCard />)
-    const o = wrapper.find(SubtitleUI)
+    const { container } = render(<MessageCard />)
 
-    expect(o.length).toBe(0)
+    expect(messageSubtitle(container)).not.toBeInTheDocument()
   })
 
   test('Renders subtitle if it is passed down as a prop', () => {
-    const wrapper = mount(<MessageCard subtitle="Santa!" />)
-    const o = wrapper.find(SubtitleUI)
+    const { container } = render(<MessageCard subtitle="Santa!" />)
 
-    expect(o.length).toBe(1)
-    expect(o.html()).toContain('Santa!')
+    expect(messageSubtitle(container)).toHaveTextContent('Santa!')
   })
+
+  function messageSubtitle(container) {
+    return container.querySelector('[data-cy="beacon-message-subtitle"]')
+  }
 })
 
 describe('image', () => {
   test('Does not render image if is not passed down as a prop', () => {
-    const wrapper = mount(<MessageCard />)
-    const image = wrapper.find('img')
+    render(<MessageCard />)
 
-    expect(image).toHaveLength(0)
+    expect(screen.queryByRole('img')).not.toBeInTheDocument()
   })
 
   test('Renders image if it is passed down as a prop', () => {
-    const wrapper = mount(
-      <MessageCard image={{ url: 'https://path.to/image.png' }} />
-    )
-    const image = wrapper.find('img')
+    render(<MessageCard image={{ url: 'https://path.to/image.png' }} />)
 
-    expect(image).toHaveLength(1)
-    expect(image.prop('src')).toEqual('https://path.to/image.png')
+    expect(screen.getByRole('img')).toHaveAttribute(
+      'src',
+      'https://path.to/image.png'
+    )
   })
 
   test('Sets size of image when provided', () => {
-    const wrapper = mount(
+    render(
       <MessageCard
         image={{
           url: 'https://path.to/image.png',
@@ -268,14 +284,13 @@ describe('image', () => {
         }}
       />
     )
-    const image = wrapper.find(ImageUI)
 
-    expect(image.prop('width')).toEqual('100px')
-    expect(image.prop('height')).toEqual('200px')
+    expect(screen.getByRole('img')).toHaveStyle({ width: '100px' })
+    expect(screen.getByRole('img')).toHaveStyle({ height: '200px' })
   })
 
   test('Scales size of image when larger than fits and width is bigger', () => {
-    const wrapper = mount(
+    render(
       <MessageCard
         image={{
           url: 'https://path.to/image.png',
@@ -284,14 +299,13 @@ describe('image', () => {
         }}
       />
     )
-    const image = wrapper.find(ImageUI)
 
-    expect(image.prop('height')).toEqual('96.75px')
-    expect(image.prop('width')).toEqual('258px')
+    expect(screen.getByRole('img')).toHaveStyle({ width: '258px' })
+    expect(screen.getByRole('img')).toHaveStyle({ height: '96.75px' })
   })
 
   test('Scales size of image when larger than fits and height is bigger', () => {
-    const wrapper = mount(
+    render(
       <MessageCard
         image={{
           url: 'https://path.to/image.png',
@@ -300,114 +314,114 @@ describe('image', () => {
         }}
       />
     )
-    const image = wrapper.find(ImageUI)
 
-    expect(image.prop('height')).toEqual('258px')
-    expect(image.prop('width')).toEqual('96.75px')
+    expect(screen.getByRole('img')).toHaveStyle({ width: '96.75px' })
+    expect(screen.getByRole('img')).toHaveStyle({ height: '258px' })
   })
 
   test('Sets default size of image when not provided', () => {
-    const wrapper = mount(
-      <MessageCard image={{ url: 'https://path.to/image.png' }} />
-    )
-    const image = wrapper.find(ImageUI)
+    render(<MessageCard image={{ url: 'https://path.to/image.png' }} />)
 
-    expect(image.prop('width')).toEqual('100%')
-    expect(image.prop('height')).toEqual('auto')
+    expect(screen.getByRole('img')).toHaveStyle({ width: '100%' })
+    expect(screen.getByRole('img')).toHaveStyle({ height: 'auto' })
   })
 
   test('Sets provided alt text', () => {
-    const wrapper = mount(
+    render(
       <MessageCard
         image={{ url: 'https://path.to/image.png', altText: 'Alt text' }}
       />
     )
-    const image = wrapper.find('img')
 
-    expect(image.prop('alt')).toEqual('Alt text')
+    expect(screen.getByRole('img')).toHaveAttribute('alt', 'Alt text')
   })
 
   test('Sets default alt text', () => {
-    const wrapper = mount(
-      <MessageCard image={{ url: 'https://path.to/image.png' }} />
-    )
-    const image = wrapper.find('img')
+    render(<MessageCard image={{ url: 'https://path.to/image.png' }} />)
 
-    expect(image.prop('alt')).toEqual('Message image')
+    expect(screen.getByRole('img')).toHaveAttribute('alt', 'Message image')
   })
 })
 
 describe('Action', () => {
   test('Does not render action if is not passed down as a prop', () => {
-    const wrapper = mount(<MessageCard />)
-    const o = wrapper.find(ActionUI)
+    const { container } = render(<MessageCard />)
 
-    expect(o.length).toBe(0)
+    expect(
+      container.querySelector('[data-cy="beacon-message-cta-wrapper"]')
+    ).not.toBeInTheDocument()
   })
 
   test('Renders action if it is passed down as a prop', () => {
     const action = () => <div>Click here</div>
-    const wrapper = mount(<MessageCard action={action} />)
-    const o = wrapper.find(ActionUI)
+    const { container } = render(<MessageCard action={action} />)
 
-    expect(o.length).toBe(1)
-    expect(o.html()).toContain('Click here')
+    expect(
+      container.querySelector('[data-cy="beacon-message-cta-wrapper"]')
+    ).toHaveTextContent('Click here')
   })
 
   test('Should remove the box shadow', () => {
-    const wrapper = mount(<MessageCard isWithBoxShadow={false} />)
-    const el = wrapper.find('div.c-MessageCard')
+    const { container } = render(<MessageCard isWithBoxShadow={false} />)
 
-    expect(el.getDOMNode().classList.contains('is-with-box-shadow')).toBeFalsy()
+    expect(messageCard(container)).not.toHaveClass('is-with-box-shadow')
   })
 })
 
 describe('UrlAttachmentImage', () => {
   test('Does not render if url not provided', () => {
-    const wrapper = mount(<MessageCard.UrlAttachmentImage />)
-    const image = wrapper.find('img')
+    render(<MessageCard.UrlAttachmentImage />)
 
-    expect(image.length).toBe(0)
+    expect(screen.queryByRole('img')).not.toBeInTheDocument()
   })
 
   test('Renders image when url provided', () => {
-    const wrapper = mount(
-      <MessageCard.UrlAttachmentImage url="https://example.com" />
-    )
-    const image = wrapper.find('img')
+    render(<MessageCard.UrlAttachmentImage url="https://example.com" />)
 
-    expect(image.length).toBe(1)
-    expect(image.prop('src')).toEqual('https://example.com')
+    expect(screen.getByRole('img')).toHaveAttribute(
+      'src',
+      'https://example.com'
+    )
   })
 
   test('Allows to provide alt text', () => {
-    const wrapper = mount(
+    render(
       <MessageCard.UrlAttachmentImage
         url="https://example.com"
         altText="My alt text"
       />
     )
-    const image = wrapper.find('img')
 
-    expect(image.prop('alt')).toEqual('My alt text')
+    expect(screen.getByRole('img')).toHaveAttribute('alt', 'My alt text')
   })
 })
 
-describe('Message Button Children', () => {
+describe('Message Button', () => {
   test('Can render children', () => {
     const children = 'Hello world'
-    const wrapper = mount(<Button>{children}</Button>)
+    render(<Button>{children}</Button>)
 
-    expect(wrapper.html()).toContain(children)
+    expect(screen.getByRole('button', { name: children })).toBeInTheDocument()
   })
-})
 
-describe('Message Button onClick', () => {
   test('Can accept custom onClick callback', () => {
     const callback = jest.fn()
-    const wrapper = mount(<Button onClick={callback}>Click Me</Button>)
-    wrapper.simulate('click')
+    render(<Button onClick={callback}>Click Me</Button>)
+
+    userEvent.click(screen.getByRole('button'))
 
     expect(callback).toHaveBeenCalled()
   })
 })
+
+function messageCard(container) {
+  return container.querySelector('.c-MessageCard')
+}
+
+function cardWrapper(container) {
+  return container.querySelector('.c-MessageCardWrapper')
+}
+
+function messageBody(container) {
+  return container.querySelector('[data-cy="beacon-message-body-content"]')
+}
