@@ -166,9 +166,8 @@ export default function ConvoList() {
                       size="xs"
                       gap={10}
                       avatars={avatars}
-                      // minAvatarsShown={
-                      //   avatars.length <= 4 ? avatars.length : 4
-                      // }
+                      throttleOnResize={false}
+                      minAvatarsShown={avatars.length <= 4 ? avatars.length : 4}
                     />
                   )}
                 >

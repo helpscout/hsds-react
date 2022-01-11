@@ -71,6 +71,7 @@ function AvatarRow({
         gap,
         numberOfAvatars,
         numberOfItemsOnDisplay,
+        minAvatarsShown,
       })
     )
   }
@@ -80,13 +81,15 @@ function AvatarRow({
     numberOfItemsOnDisplay
   )
 
+  const minWidth = minAvatarsShown * avatarSize + gap * (minAvatarsShown - 1)
+
   return (
     <AvatarRowUI
       className={classNames('AvatarRow', className)}
       data-cy={dataCy}
       ref={avatarRowRef}
       $gap={gap}
-      $minWidth={minAvatarsShown * avatarSize + gap * (minAvatarsShown - 1)}
+      $minWidth={minWidth}
     >
       {shownAvatars.map(props => (
         <Avatar key={props.id || props.name} {...props} {...avatarProps} />

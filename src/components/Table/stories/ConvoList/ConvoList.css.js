@@ -48,7 +48,7 @@ export const ConvoListUI = styled('div')`
 `
 
 export const PopoverUI = styled(Popover)`
-  /* max-width: 172px; */
+  max-width: 172px;
 `
 
 export const AsideUI = styled('aside')`
