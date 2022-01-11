@@ -8,6 +8,7 @@ import Button from '../Button'
 import Heading from '../Heading'
 import Image from '../Image'
 import ArticleCard from '../ArticleCard'
+import { messageVariableClassName } from './utils/MessageCard.utils'
 
 export const MAX_IMAGE_SIZE = 258
 
@@ -274,6 +275,25 @@ export const BodyUI = styled.div`
   }
   s {
     text-decoration: line-through;
+  }
+
+  span.${messageVariableClassName} {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 8px;
+    margin-right: 4px;
+    height: 20px;
+    line-height: 17px;
+
+    color: ${getColor('purple.800')};
+    background-color: ${getColor('purple.200')};
+    border-radius: 100px;
+
+    // clearing any text style coming from b or i elements, as we want to have it always display the same
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+    white-space: nowrap;
   }
 `
 
