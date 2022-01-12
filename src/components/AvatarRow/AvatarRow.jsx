@@ -123,6 +123,8 @@ AvatarRow.propTypes = {
   className: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
+  /** Show a minimum amount of avatars before folding */
+  minAvatarsShown: PropTypes.number,
   /** If you want to throttle the onResize function */
   throttleOnResize: PropTypes.bool,
   /** Customize the throttle wait in ms */
