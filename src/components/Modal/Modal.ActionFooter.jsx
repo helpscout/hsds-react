@@ -38,7 +38,12 @@ class ModalActionFooter extends React.PureComponent {
   }
 
   renderPrimaryButton() {
-    const { primaryButtonText, state, primaryButtonDisabled } = this.props
+    const {
+      primaryButtonText,
+      primaryButtonProps,
+      state,
+      primaryButtonDisabled,
+    } = this.props
     let theme = THEME_BLUE
     if (state === 'success') theme = THEME_GREEN
     if (state === 'danger') theme = THEME_RED
@@ -46,8 +51,9 @@ class ModalActionFooter extends React.PureComponent {
     return (
       <PrimaryButtonUI
         size="lg"
-        theme={theme}
         data-cy="PrimaryButton"
+        {...primaryButtonProps}
+        theme={theme}
         onClick={this.handlePrimaryAction}
         disabled={primaryButtonDisabled}
       >
@@ -57,7 +63,12 @@ class ModalActionFooter extends React.PureComponent {
   }
 
   renderSecondaryButton() {
-    const { kind, secondaryButtonText, secondaryButtonDisabled } = this.props
+    const {
+      kind,
+      secondaryButtonText,
+      secondaryButtonProps,
+      secondaryButtonDisabled,
+    } = this.props
 
     if (!secondaryButtonText) {
       return null
@@ -72,6 +83,7 @@ class ModalActionFooter extends React.PureComponent {
         theme="grey"
         outlined
         data-cy="SecondaryButton"
+        {...secondaryButtonProps}
         onClick={this.handleSecondaryAction}
         disabled={secondaryButtonDisabled}
       >
@@ -81,7 +93,7 @@ class ModalActionFooter extends React.PureComponent {
   }
 
   renderCancelButton() {
-    const { cancelText, showDefaultCancel } = this.props
+    const { cancelText, cancelProps, showDefaultCancel } = this.props
 
     if (!(showDefaultCancel && cancelText)) {
       return null
@@ -94,6 +106,7 @@ class ModalActionFooter extends React.PureComponent {
         theme={THEME_GREY}
         className="is-cancel"
         data-cy="CancelButton"
+        {...cancelProps}
         onClick={this.handleCancel}
       >
         {cancelText}
@@ -132,14 +145,17 @@ class ModalActionFooter extends React.PureComponent {
 
 ModalActionFooter.defaultProps = {
   cancelText: 'Cancel',
+  cancelProps: {},
   'data-cy': 'ModalActionFooter',
   kind: MODAL_KIND.DEFAULT,
   onCancel: noop,
   onPrimaryClick: noop,
   onSecondaryClick: noop,
   primaryButtonText: 'Save',
+  primaryButtonProps: {},
   primaryButtonDisabled: false,
   secondaryButtonText: null,
+  secondaryButtonProps: {},
   secondaryButtonDisabled: false,
   showDefaultCancel: true,
   state: '',
@@ -148,6 +164,8 @@ ModalActionFooter.defaultProps = {
 ModalActionFooter.propTypes = {
   /** Text on cancel button */
   cancelText: PropTypes.string,
+  /** Extra props on cancel button */
+  cancelProps: PropTypes.object,
   /** The kind of version 2 Modal style to apply. */
   kind: PropTypes.oneOf(['alert', 'default', 'branded', 'sequence']),
   /** Callback on cancel button click */
@@ -158,12 +176,16 @@ ModalActionFooter.propTypes = {
   onSecondaryClick: PropTypes.func,
   /** Text on primary button */
   primaryButtonText: PropTypes.string,
+  /** Extra props on primary button */
+  primaryButtonProps: PropTypes.object,
   /** Whether the button is disabled */
   primaryButtonDisabled: PropTypes.bool,
   /** Text on secondary button */
   secondaryButtonText: PropTypes.string,
   /** Whether the button is disabled */
   secondaryButtonDisabled: PropTypes.bool,
+  /** Extra props on secondary button */
+  secondaryButtonProps: PropTypes.object,
   /** Show cancel button */
   showDefaultCancel: PropTypes.bool,
   /** State to use when styling a version 2 Modal (currently only `danger` state is custom styled). */
