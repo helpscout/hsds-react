@@ -4,12 +4,11 @@ import { noop } from '../../utilities/other'
 import ControlGroup from '../ControlGroup'
 import HSDSButton from '../Button'
 import Icon from '../Icon'
-import VisuallyHidden from '../VisuallyHidden'
 import { STATES } from '../../constants'
 import Tooltip from '../Tooltip'
+
 import {
   IconButtonUI,
-  MeatButtonUI,
   NavLinkTogglerUI,
   SelectArrowsUI,
   SelectErrorTooltipIconUI,
@@ -17,6 +16,7 @@ import {
   SplitButtonTogglerUI,
   SplitButtonUI,
 } from './DropList.togglers.css'
+import { THEME_BLUE, THEME_GREY, SIZE_LG } from '../Button/Button.utils'
 
 export const SimpleButton = forwardRef(
   (
@@ -24,9 +24,9 @@ export const SimpleButton = forwardRef(
       a11yLabel,
       className = '',
       isActive = false,
-      kind = 'primary',
+      theme = THEME_BLUE,
       onClick = noop,
-      size = 'lg',
+      size = SIZE_LG,
       text = '',
       ...rest
     },
@@ -37,7 +37,7 @@ export const SimpleButton = forwardRef(
         aria-label={a11yLabel || 'toggle menu'}
         aria-haspopup="true"
         aria-expanded={isActive}
-        buttonRef={ref}
+        ref={ref}
         className={classNames(
           className,
           'ButtonToggler',
@@ -45,11 +45,9 @@ export const SimpleButton = forwardRef(
         )}
         data-cy="DropList.ButtonToggler"
         data-testid="DropList.ButtonToggler"
-        isActive={isActive}
-        kind={kind}
-        onClick={onClick}
+        theme={theme}
         size={size}
-        type="button"
+        onClick={onClick}
         {...rest}
       >
         <span>{text}</span>
@@ -68,7 +66,7 @@ export const NavLink = forwardRef(
       isActive = false,
       kind = 'primary',
       onClick = noop,
-      size = 'lg',
+      size = SIZE_LG,
       text = '',
       ...rest
     },
@@ -106,12 +104,14 @@ export const SplittedButton = forwardRef(
       actionButtonProps = {},
       className = '',
       isActive = false,
-      kind = 'primary',
+      theme = THEME_BLUE,
       onActionClick = noop,
       onClick = noop,
-      size = 'lg',
+      size = SIZE_LG,
       text = '',
       togglerButtonProps = {},
+      disabled = false,
+      outlined = false,
       ...rest
     },
     ref
@@ -124,12 +124,14 @@ export const SplittedButton = forwardRef(
       >
         <ControlGroup.Item>
           <SplitButtonUI
+            theme={theme}
+            size={size}
+            disabled={disabled}
+            outlined={outlined}
             className="SplitButton__Action"
             data-cy="DropList.SplitButtonAction"
             data-testid="DropList.SplitButtonAction"
-            kind={kind}
             onClick={onActionClick}
-            size={size}
             type="button"
             {...actionButtonProps}
           >
@@ -138,21 +140,22 @@ export const SplittedButton = forwardRef(
         </ControlGroup.Item>
         <ControlGroup.Item>
           <SplitButtonTogglerUI
+            theme={theme}
+            size={size}
+            disabled={disabled}
+            outlined={outlined}
             aria-label={a11yLabel || 'toggle menu'}
             aria-haspopup="true"
             aria-expanded={isActive}
-            buttonRef={ref}
+            ref={ref}
             className={classNames(
               'SplitButton__Toggler',
               isActive && 'is-active'
             )}
             data-cy="DropList.SplitButtonToggler"
             data-testid="DropList.SplitButtonToggler"
-            isActive={isActive}
             isLast
-            kind={kind}
             onClick={onClick}
-            size={size}
             type="button"
             {...togglerButtonProps}
           >
@@ -243,8 +246,9 @@ export const MeatButton = forwardRef(
       a11yLabel = '',
       className = '',
       isActive = false,
-      iconSize = '24',
       meatIcon = 'kebab',
+      size = SIZE_LG,
+      theme = THEME_GREY,
       onClick = noop,
       withTooltip = false,
       tooltipProps,
@@ -254,8 +258,8 @@ export const MeatButton = forwardRef(
   ) => {
     const tooltipRef = useRef()
 
-    return (
-      <MeatButtonUI
+    const component = (
+      <IconButtonUI
         aria-haspopup="true"
         aria-expanded={isActive}
         className={classNames(
@@ -265,33 +269,33 @@ export const MeatButton = forwardRef(
         )}
         data-cy="DropList.MeatButtonToggler"
         data-testid="DropList.MeatButtonToggler"
-        isActive={isActive}
         onClick={onClick}
         ref={ref}
-        type="button"
+        icon={meatIcon}
+        title={a11yLabel}
+        theme={theme}
+        size={size}
         {...rest}
+      />
+    )
+
+    return withTooltip ? (
+      <Tooltip
+        animationDelay={0}
+        animationDuration={0}
+        getTippyInstance={instance => {
+          tooltipRef.current = instance.reference
+        }}
+        placement="top-end"
+        title={a11yLabel}
+        triggerTarget={tooltipRef.current && tooltipRef.current.parentElement}
+        withTriggerWrapper={false}
+        {...tooltipProps}
       >
-        {withTooltip ? (
-          <Tooltip
-            animationDelay={0}
-            animationDuration={0}
-            getTippyInstance={instance => {
-              tooltipRef.current = instance.reference
-            }}
-            placement="top-end"
-            title={a11yLabel}
-            triggerTarget={
-              tooltipRef.current && tooltipRef.current.parentElement
-            }
-            {...tooltipProps}
-          >
-            <Icon name={meatIcon} size={iconSize} />
-          </Tooltip>
-        ) : (
-          <Icon name={meatIcon} size={iconSize} />
-        )}
-        {a11yLabel ? <VisuallyHidden>{a11yLabel}</VisuallyHidden> : null}
-      </MeatButtonUI>
+        {component}
+      </Tooltip>
+    ) : (
+      component
     )
   }
 )
@@ -302,16 +306,14 @@ export const IconBtn = forwardRef(
   (
     {
       a11yLabel = '',
-      caretSize = '14',
       className = '',
       isActive = false,
       iconName = 'assign',
-      iconSize = '24',
       onClick = noop,
-      shape = 'square',
-      withCaret = true,
       withTooltip = false,
       tooltipProps,
+      theme = THEME_GREY,
+      size = SIZE_LG,
       ...rest
     },
     ref
@@ -324,21 +326,18 @@ export const IconBtn = forwardRef(
         className={classNames(
           className,
           'IconButtonToggler',
-          isActive && 'is-active',
-          shape && `is-${shape}`
+          isActive && 'is-active'
         )}
         data-cy="DropList.IconButtonToggler"
         data-testid="DropList.IconButtonToggler"
         isActive={isActive}
         onClick={onClick}
+        icon={iconName}
         ref={ref}
-        type="button"
+        theme={theme}
+        size={size}
         {...rest}
-      >
-        <Icon name={iconName} size={iconSize} />
-        {a11yLabel ? <VisuallyHidden>{a11yLabel}</VisuallyHidden> : null}
-        {withCaret ? <Icon name="caret-down" size={caretSize} /> : null}
-      </IconButtonUI>
+      />
     )
 
     return withTooltip ? (

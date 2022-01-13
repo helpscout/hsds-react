@@ -118,7 +118,7 @@ export default function SidePanelApp() {
           <Radio label="Right" value="right" name="right" />
           <Radio label="Left" value="left" name="left" />
         </ChoiceGroup>
-        <Button kind="secondary" size="xs" onClick={() => handleToggle()}>
+        <Button theme="grey" outlined size="xs" onClick={() => handleToggle()}>
           Toggle Panel
         </Button>
       </FakeNavUI>

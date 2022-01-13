@@ -306,8 +306,8 @@ export const ActionUI = styled('div')`
 export const ActionButtonUI = styled(Button)`
   ${setFontSize(14)};
   font-family: ${FONT_FAMILY};
-  height: 54px !important;
   line-height: normal !important;
+  width: 100%;
 `
 
 export const ImageUI = styled(Image)`

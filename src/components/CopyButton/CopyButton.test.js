@@ -1,44 +1,44 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import { render, act } from '@testing-library/react'
 import CopyButton from './CopyButton'
+import userEvent from '@testing-library/user-event'
 
 jest.useFakeTimers()
 
 describe('ClassName', () => {
   test('Has default component className', () => {
-    const wrapper = mount(<CopyButton />)
-    const el = wrapper.find('button.c-CopyButton')
+    const { getByTestId } = render(<CopyButton />)
 
-    expect(el.hasClass('c-CopyButton')).toBe(true)
+    expect(getByTestId('Button')).toHaveClass('c-CopyButton')
   })
 
   test('Applies custom className if specified', () => {
     const className = 'gator'
-    const wrapper = mount(<CopyButton className={className} />)
-    const el = wrapper.find('button.c-CopyButton')
+    const { getByTestId } = render(<CopyButton className={className} />)
 
-    expect(el.hasClass(className)).toBe(true)
+    expect(getByTestId('Button')).toHaveClass(className)
   })
 })
 
 describe('Timeout', () => {
   test('Clears timeout on unmount', () => {
     const spy = jest.spyOn(window, 'clearTimeout')
-    const wrapper = mount(<CopyButton />)
-
-    wrapper.unmount()
-
+    const { getByTestId, unmount } = render(<CopyButton />)
+    act(() => {
+      userEvent.click(getByTestId('Button'))
+      unmount()
+    })
     expect(spy).toHaveBeenCalled()
-
     spy.mockRestore()
   })
 
-  test('Clears timeout on click', () => {
+  test('Clears timeout on the second click', () => {
     const spy = jest.spyOn(window, 'clearTimeout')
-    const wrapper = mount(<CopyButton />)
-    const el = wrapper.find('button')
-
-    el.simulate('click')
+    const { getByTestId } = render(<CopyButton />)
+    act(() => {
+      userEvent.click(getByTestId('Button'))
+      userEvent.click(getByTestId('Button'))
+    })
 
     expect(spy).toHaveBeenCalled()
 
@@ -46,26 +46,26 @@ describe('Timeout', () => {
   })
 
   test('Renders, then resets confirmation UI on click', () => {
-    const wrapper = mount(<CopyButton />)
-    const el = wrapper.find('button')
+    const { getByTestId } = render(<CopyButton />)
+    act(() => {
+      userEvent.click(getByTestId('Button'))
+    })
+    expect(getByTestId('Button')).toHaveClass('is-copyConfirmed')
 
-    el.simulate('click')
-
-    expect(wrapper.state().shouldRenderConfirmation).toBe(true)
-
-    jest.runAllTimers()
-
-    expect(wrapper.state().shouldRenderConfirmation).toBe(false)
+    act(() => {
+      jest.runAllTimers()
+    })
+    expect(getByTestId('Button')).not.toHaveClass('is-copyConfirmed')
   })
 
   test('Fires onReset callback when timeout completes', () => {
     const spy = jest.fn()
-    const wrapper = mount(<CopyButton onReset={spy} />)
-    const el = wrapper.find('button')
+    const { getByTestId } = render(<CopyButton onReset={spy} />)
+    act(() => {
+      userEvent.click(getByTestId('Button'))
 
-    el.simulate('click')
-    jest.runAllTimers()
-
+      jest.runAllTimers()
+    })
     expect(spy).toHaveBeenCalled()
   })
 })

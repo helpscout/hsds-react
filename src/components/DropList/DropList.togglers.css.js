@@ -1,14 +1,9 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import HSDSButton from '../Button'
+import IconButton from '../IconButton'
 
-import { FocusUI } from '../Button/Button.css'
-import config from '../Button/Button.config'
-
-import {
-  focusRing,
-  focusShadowWithInset,
-} from '../../styles/mixins/focusRing.css'
+import { focusShadowWithInset } from '../../styles/mixins/focusRing.css'
 
 export const NavLinkTogglerUI = styled('button')`
   display: flex;
@@ -33,43 +28,39 @@ export const NavLinkTogglerUI = styled('button')`
 `
 
 export const SplitButtonUI = styled(HSDSButton)`
-  &.is-primary {
+  &.is-theme-blue {
+    --focusRingShadow: ${focusShadowWithInset};
     margin-right: 0;
-    ${FocusUI} {
-      box-shadow: ${focusShadowWithInset};
-    }
   }
 `
 
 export const SplitButtonTogglerUI = styled(HSDSButton)`
-  &.SplitButton__Toggler {
-    min-width: 30px !important;
-    padding: 0;
+  pointer-events: all;
+  --focusRingShadow: ${focusShadowWithInset};
 
-    pointer-events: all;
-
-    &.is-primary {
+  &:not(.is-style-outlined) {
+    &.is-theme-blue {
       box-shadow: -1px 0 0 ${getColor('blue.600')};
-
-      ${FocusUI} {
-        box-shadow: ${focusShadowWithInset};
-      }
-
-      &.is-success {
-        box-shadow: -1px 0 0 ${getColor('green.600')};
-      }
-      &.is-danger {
-        box-shadow: -1px 0 0 ${getColor('red.600')};
-      }
-      &[disabled] {
-        box-shadow: -1px 0 0 ${getColor('grey.600')};
-      }
     }
-
-    .c-Button__content {
-      padding-top: 2px;
-      width: 16px;
+    &.is-theme-green {
+      box-shadow: -1px 0 0 ${getColor('green.600')};
     }
+    &.is-theme-red {
+      box-shadow: -1px 0 0 ${getColor('red.600')};
+    }
+    &[disabled] {
+      box-shadow: -1px 0 0 ${getColor('grey.600')};
+    }
+  }
+
+  &.is-size-lg {
+    --buttonMinWidth: 30px;
+    padding: 0;
+  }
+
+  .c-Button__content {
+    padding-top: 2px;
+    width: 16px;
   }
 `
 
@@ -137,64 +128,13 @@ export const SelectErrorTooltipIconUI = styled('div')`
   margin-left: 8px;
 `
 
-export const MeatButtonUI = styled('button')`
-  width: 24px;
-  height: 24px;
-  padding: 0.5px 0px 0px 0.5px;
-  border: 0;
-  border-radius: 3px;
-  background-color: transparent;
-
-  &:hover {
-    cursor: pointer;
-  }
-
-  &:focus {
-    outline: 0;
-    box-shadow: inset 0 0 0 2px ${getColor('blue.500')};
-  }
-`
-
-export const IconButtonUI = styled('button')`
-  ${focusRing}
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 45px;
-  height: 34px;
-  padding: 5px;
-  border: 0;
-  border-radius: 3px;
-  background-color: white;
-  color: ${getColor('charcoal.400')};
-
-  &.is-circle {
-    border-radius: 200%;
-    width: 36px;
-    height: 36px;
-    padding: 4px;
-  }
-
-  &:hover {
-    cursor: pointer;
-    background-color: ${getColor('grey.300')};
-  }
-
-  &:hover {
-    color: ${getColor('charcoal.500')};
-  }
-
+export const IconButtonUI = styled(IconButton)`
   &.is-active,
   &[aria-expanded='true'] {
-    color: ${getColor('charcoal.700')};
+    color: var(--buttonColorHover);
 
     &:not(:focus-visible) {
-      background-color: ${getColor('grey.300')};
+      background-color: var(--buttonBackgroundColorHover);
     }
-  }
-
-  .is-iconName-caret-down {
-    margin-left: -3px;
   }
 `

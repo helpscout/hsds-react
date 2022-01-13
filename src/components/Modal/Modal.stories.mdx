@@ -70,6 +70,7 @@ There are two versions of the Modal component, version 2 is the new standard (ve
         secondaryButtonText={text('secondaryButtonText', 'Secondary')}
         secondaryButtonDisabled={boolean('secondaryButtonDisabled', false)}
         primaryButtonDisabled={boolean('primaryButtonDisabled', false)}
+        cancelProps={{ 'data-cy': 'NewValue' }}
         state={select(
           'State',
           {

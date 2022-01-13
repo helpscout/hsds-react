@@ -25,6 +25,8 @@ export const config = {
 
 export const RemoveTagUI = styled.button`
   ${focusRing}
+  --focusRingRadius: 3px;
+  --focusRingShadow: ${focusShadowWithInset};
 
   border-radius: 3px;
   width: 16px;
@@ -42,11 +44,6 @@ export const RemoveTagUI = styled.button`
   border: none;
   background: transparent;
   padding: 0;
-
-  // focus border overwrites
-  &:before {
-    box-shadow: ${focusShadowWithInset};
-  }
 
   &:hover,
   &:focus {
@@ -91,6 +88,7 @@ export const RemoveIconUI = styled(Icon)`
 
 export const TagUI = styled('div')`
   ${focusRing}
+  --focusRingOffset: -3px;
 
   background-color: white;
   border-radius: 3px;
@@ -106,22 +104,11 @@ export const TagUI = styled('div')`
   letter-spacing: -0.1px;
   line-height: 12px;
   font-size: 11.5px;
-
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
-    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-family: var(--HSDSGlobalFontFamilySystem);
   text-decoration: none;
 
   &.is-all-caps {
     text-transform: uppercase;
-  }
-
-  // focus border overwrites
-  &:before {
-    border-radius: 4px;
-    bottom: -3px;
-    left: -3px;
-    right: -3px;
-    top: -3px;
   }
 
   ${makeColorStyles()};

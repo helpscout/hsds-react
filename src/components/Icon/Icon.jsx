@@ -62,6 +62,7 @@ const Icon = props => {
   return (
     <IconUI
       aria-hidden
+      role="img"
       {...getValidProps(rest)}
       className={componentClassName}
       onClick={onClick}

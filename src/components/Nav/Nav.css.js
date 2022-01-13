@@ -22,6 +22,23 @@ export const ListUI = styled('ul')`
   padding: 0;
 `
 
+export const TitleUI = styled(Text)`
+  display: block;
+  min-height: 14px;
+`
+export const IndicatorUI = styled('div')`
+  background: ${getColor('blue.500')};
+  border-radius: 9999px;
+  bottom: -1px;
+  height: 2px;
+  opacity: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  transition: ${config.indicatorTransition};
+  will-change: opacity;
+`
+
 export const ItemUI = styled('li')`
   padding: 0;
   transform: translateZ(0);
@@ -43,6 +60,13 @@ export const ItemUI = styled('li')`
 
     &.is-active {
       color: ${getColor('charcoal.500')};
+
+      ${TitleUI} {
+        font-weight: 500;
+      }
+      ${IndicatorUI} {
+        opacity: 1;
+      }
     }
   }
 `
@@ -51,17 +75,6 @@ export const ContentUI = styled('div')`
   padding: 20px 7px 20px 5px;
   position: relative;
   text-align: center;
-`
-
-export const TitleUI = styled(Text)`
-  display: block;
-  min-height: 14px;
-
-  ${({ isActive }) =>
-    isActive &&
-    `
-    font-weight: 500;
-  `};
 `
 
 export const GhostTitleUI = styled(Text)`
@@ -76,23 +89,4 @@ export const ErrorWrapperUI = styled(Flexy.Item)`
   position: relative;
   top: -10px;
   width: 20px;
-`
-
-export const IndicatorUI = styled('div')`
-  background: ${getColor('blue.500')};
-  border-radius: 9999px;
-  bottom: -1px;
-  height: 2px;
-  opacity: 0;
-  left: 0;
-  right: 0;
-  position: absolute;
-  transition: ${config.indicatorTransition};
-  will-change: opacity;
-
-  ${({ isActive }) =>
-    isActive &&
-    `
-    opacity: 1;
-  `};
 `

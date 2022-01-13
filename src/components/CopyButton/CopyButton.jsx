@@ -4,6 +4,9 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Icon from '../Icon'
 import classNames from 'classnames'
 import { noop } from '../../utilities/other'
+
+import { useCopyConfirmation } from './CopyButton.utils'
+
 import {
   CopyButtonUI,
   ConfirmationIconWrapperUI,
@@ -11,128 +14,79 @@ import {
   IconUI,
 } from './CopyButton.css'
 
-class CopyButton extends React.PureComponent {
-  state = {
-    shouldRenderConfirmation: false,
-  }
+const WrappedCopybutton = React.forwardRef(function CopyButton(props, ref) {
+  const {
+    className,
+    icon,
+    label,
+    onClick,
+    outlined,
+    size,
+    theme,
+    ...rest
+  } = props
 
-  _isMounted = false
-  confirmationTimeout = null
+  const [shouldRenderConfirmation, handleClick] = useCopyConfirmation(props)
 
-  componentDidMount() {
-    this._isMounted = true
-  }
+  const componentClassName = classNames(
+    'c-CopyButton',
+    shouldRenderConfirmation && 'is-copyConfirmed',
+    icon && 'is-with-icon',
+    className
+  )
+  const iconSize = size === 'sm' ? '20' : '24'
 
-  componentWillUnmount() {
-    this.clearConfirmationTimeout()
-    this._isMounted = false
-  }
+  return (
+    <CopyButtonUI
+      size={size}
+      theme={theme}
+      outlined={outlined}
+      {...getValidProps(rest)}
+      onClick={handleClick}
+      className={componentClassName}
+      ref={ref}
+    >
+      <ConfirmationIconWrapperUI>
+        <Icon
+          className="c-CopyButton__iconConfirmation"
+          name="checkmark"
+          size={iconSize}
+        />
+      </ConfirmationIconWrapperUI>
+      {icon && <IconUI size={iconSize} name={icon} />}
+      {label && <TextUI>{label}</TextUI>}
+    </CopyButtonUI>
+  )
+})
 
-  safeSetState = state => {
-    if (this._isMounted) {
-      this.setState(state)
-    }
-  }
-
-  startConfirmationTimeout = () => {
-    const { onReset, resetTimeout } = this.props
-
-    this.safeSetState({
-      shouldRenderConfirmation: true,
-    })
-
-    this.confirmationTimeout = setTimeout(() => {
-      this.safeSetState({
-        shouldRenderConfirmation: false,
-      })
-      onReset()
-    }, resetTimeout)
-  }
-
-  clearConfirmationTimeout = () => {
-    clearTimeout(this.confirmationTimeout)
-  }
-
-  handleOnClick = event => {
-    this.clearConfirmationTimeout()
-    this.startConfirmationTimeout()
-    this.props.onClick(event)
-  }
-
-  render() {
-    const { className, kind, size, icon, label, ...rest } = this.props
-    const { shouldRenderConfirmation } = this.state
-
-    const componentClassName = classNames(
-      'c-CopyButton',
-      shouldRenderConfirmation && 'is-copyConfirmed',
-      icon && 'is-with-icon',
-      className
-    )
-    const iconSize = size === 'sm' ? '20' : '24'
-
-    return (
-      <CopyButtonUI
-        {...getValidProps(rest)}
-        kind={kind}
-        onClick={this.handleOnClick}
-        size={size}
-        className={componentClassName}
-      >
-        <ConfirmationIconWrapperUI>
-          <Icon
-            className="c-CopyButton__iconConfirmation"
-            name="checkmark"
-            size={iconSize}
-          />
-        </ConfirmationIconWrapperUI>
-        {icon && <IconUI size={iconSize} name={icon} />}
-        {label && <TextUI>{label}</TextUI>}
-      </CopyButtonUI>
-    )
-  }
-}
-
-CopyButton.defaultProps = {
-  canRenderFocus: false,
+WrappedCopybutton.defaultProps = {
   'data-cy': 'CopyButton',
-  kind: 'secondary',
+  theme: 'blue',
   label: 'Copy',
   onClick: noop,
   onReset: noop,
   resetTimeout: 2000,
   size: 'sm',
+  outlined: true,
 }
 
-CopyButton.propTypes = {
-  canRenderFocus: PropTypes.bool,
+WrappedCopybutton.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
-  /** Applies the specified style to the button.
-   * 'primary': Blue button. Used for primary actions.
-   * 'primaryAlt': Purple button. Used for primary actions.
-   * 'secondary': White button with a border. Used for secondary actions.
-   * 'secondaryAlt': White button with a green border. Used for secondary actions.
-   * 'default': Borderless button. Used for subtle/tertiary actions.
-   * 'link': Button that looks like a `Link`. Used for subtle/tertiary actions.
-   */
-  kind: PropTypes.oneOf([
-    'primary',
-    'primaryAlt',
-    'secondary',
-    'secondaryAlt',
-    'default',
-    'link',
-  ]),
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onClick: PropTypes.func,
   onReset: PropTypes.func,
   resetTimeout: PropTypes.number,
-  /** Sets the size of the button. Can be one of `"sm"`, `"md"` or `"lg"`. */
-  size: PropTypes.any,
+  /** Sets the button size. */
+  size: PropTypes.string,
+  /** Sets the button theme. */
+  theme: PropTypes.string,
   title: PropTypes.string,
+
+  /** Set the outlined style to the button. */
+  outlined: PropTypes.bool,
 }
 
-export default CopyButton
+export default WrappedCopybutton

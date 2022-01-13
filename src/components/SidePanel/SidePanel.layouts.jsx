@@ -46,12 +46,12 @@ export function HeaderAndFooter({
 
       <FooterUI className="SidePanel__Footer" ref={footerRef}>
         <Button
+          size="xxl"
+          theme="blue"
           className="SidePanel__MainAction"
           disabled={mainActionDisabled}
-          kind="primary"
           onClick={onMainActionClick}
-          size="xl"
-          innerRef={mainActionNode}
+          ref={mainActionNode}
         >
           {mainActionButtonContent}
         </Button>

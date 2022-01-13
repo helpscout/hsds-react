@@ -4,7 +4,6 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Flexy from '../Flexy'
 import Icon from '../Icon'
 import Tooltip from '../Tooltip'
-import NavLink from '../NavLink'
 import classNames from 'classnames'
 import { noop } from '../../utilities/other'
 import {
@@ -15,6 +14,8 @@ import {
   IndicatorUI,
   ErrorWrapperUI,
 } from './Nav.css'
+
+import { NavLink } from 'react-router-dom'
 
 export class NavItem extends React.Component {
   static className = 'c-NavItem'
@@ -69,23 +70,15 @@ export class NavItem extends React.Component {
     )
   }
 
-  renderContent = ({ isActive }) => {
+  renderContent = () => {
     const { children } = this.props
-    const componentClassName = classNames(
-      NavItem.contentClassName,
-      isActive && 'is-active'
-    )
+    const componentClassName = classNames(NavItem.contentClassName)
 
     return (
       <ContentUI className={componentClassName}>
         <Flexy gap="xs">
           <Flexy.Block>
-            <TitleUI
-              size="13"
-              lineHeightReset
-              isActive={isActive}
-              className="c-NavItemTitle"
-            >
+            <TitleUI size="13" lineHeightReset className="c-NavItemTitle">
               {children}
             </TitleUI>
             <GhostTitleUI
@@ -99,7 +92,7 @@ export class NavItem extends React.Component {
           </Flexy.Block>
           {this.renderError()}
         </Flexy>
-        <IndicatorUI className="c-NavItemIndicator" isActive={isActive} />
+        <IndicatorUI className="c-NavItemIndicator" />
       </ContentUI>
     )
   }
@@ -115,9 +108,12 @@ export class NavItem extends React.Component {
       >
         <NavLink
           {...this.getLinkProps()}
+          activeClassName="is-active"
           className="c-NavItemLink"
-          render={this.renderContent}
-        />
+          isActive={this.props.isActive || null}
+        >
+          {this.renderContent()}
+        </NavLink>
       </ItemUI>
     )
   }

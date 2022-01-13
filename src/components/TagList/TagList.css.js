@@ -21,8 +21,7 @@ export const ShowAllButtonUI = styled.button`
   box-shadow: none;
   font-size: 12px;
   line-height: 1;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
-    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-family: var(--HSDSGlobalFontFamilySystem);
 
   &:hover {
     cursor: pointer;

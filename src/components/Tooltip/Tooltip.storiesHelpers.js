@@ -91,7 +91,7 @@ export const CustomContent = () => {
   const tooltipContent = (
     <Text>
       Hello there. <strong>This is really important!</strong>
-      <Button kind="primary" size="sm" state="gray">
+      <Button theme="blue" size="sm">
         Learn More
       </Button>
     </Text>

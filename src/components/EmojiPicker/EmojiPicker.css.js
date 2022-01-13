@@ -43,6 +43,8 @@ export const EmojiItemUI = styled('div')`
   text-align: center;
   cursor: pointer;
   transform: scale(1);
+  display: flex;
+  align-items: center;
 
   .is-highlighted & {
     transform: scale(1.075);
@@ -66,7 +68,9 @@ export const EmojiPickerUI = styled('div')`
     align-items: center;
     width: 100%;
     height: ${({ emojiSize }) => SIZES.LIST_HEIGHT[emojiSize]};
-    padding: 0 5px;
+    padding: 0;
+    overflow: hidden;
+    line-height: 1;
   }
 
   ${EmojiItemUI} {

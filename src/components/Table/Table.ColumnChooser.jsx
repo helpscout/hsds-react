@@ -38,9 +38,7 @@ function ColumnChooser({
         <IconBtn
           a11yLabel="Choose columns to show or hide"
           iconName="column-check"
-          iconSize={24}
-          withCaret={false}
-          shape="circle"
+          size="lg"
         />
       }
       withMultipleSelection
