@@ -240,19 +240,21 @@ describe('With selectable conjunction', () => {
 
 describe('onRemove', () => {
   test('Renders a remove button', () => {
-    const { getByRole, getByTitle } = render(<ConditionField />)
+    const { getByRole, container } = render(<ConditionField />)
 
     expect(getByRole('button')).toBeInTheDocument()
-    expect(getByTitle('collapse')).toBeInTheDocument()
+    expect(
+      container.querySelector('[data-icon-name="collapse"]')
+    ).toBeInTheDocument()
   })
 
   test('Does not render a remove button', () => {
-    const { queryByRole, queryByTitle } = render(
+    const { queryByRole, container } = render(
       <ConditionField isWithRemove={false} />
     )
 
     expect(queryByRole('button')).toBe(null)
-    expect(queryByTitle('collapse')).toBe(null)
+    expect(container.querySelector('[data-icon-name="collapse"]')).toBe(null)
   })
 
   test('Fires onRemove callback when remove button is clicked', async () => {

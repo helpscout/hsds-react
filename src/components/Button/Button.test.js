@@ -3,6 +3,10 @@ import { render, fireEvent } from '@testing-library/react'
 import Button from './Button'
 import Icon from '../Icon'
 import userEvent from '@testing-library/user-event'
+import { MemoryRouter as Router } from 'react-router-dom'
+
+const wrap = fn => Component => fn(<Router>{Component}</Router>)
+const renderWithRouter = wrap(render)
 
 describe('ClassNames', () => {
   test('Accepts custom className', () => {
@@ -16,17 +20,21 @@ describe('ClassNames', () => {
   })
 })
 
-describe('Kind', () => {
+describe('Theme', () => {
   test('Adds the respective classNames', () => {
-    const { getByTestId, rerender } = render(
-      <Button theme="blue">Primary</Button>
-    )
+    const { getByTestId, rerender } = render(<Button theme="blue">blue</Button>)
 
-    expect(getByTestId('Button')).toHaveClass('is-primary')
+    expect(getByTestId('Button')).toHaveClass('is-theme-blue')
 
-    rerender(<Button kind="link">Plain</Button>)
+    rerender(<Button theme="red">Red</Button>)
+    expect(getByTestId('Button')).toHaveClass('is-theme-red')
 
-    expect(getByTestId('Button')).toHaveClass('is-link')
+    rerender(<Button theme="green">Red</Button>)
+    expect(getByTestId('Button')).toHaveClass('is-theme-green')
+
+    rerender(<Button linked>Plain</Button>)
+
+    expect(getByTestId('Button')).toHaveClass('is-style-link')
   })
 
   test('Creates a button with type="submit"', () => {
@@ -40,7 +48,6 @@ describe('Sizes', () => {
   test('Adds the respective classNames', () => {
     const { getByText } = render(
       <>
-        <Button size="lgxl">LargeExtraLarge</Button>
         <Button size="xl">ExtraLarge</Button>
         <Button size="lg">Large</Button>
         <Button size="md">Medium</Button>
@@ -50,50 +57,17 @@ describe('Sizes', () => {
         <Button>Default</Button>
       </>
     )
-    expect(getByText('Default')).toHaveClass('is-md')
-    expect(getByText('ExtraExtraSmall')).toHaveClass('is-xxs')
-    expect(getByText('ExtraSmall')).toHaveClass('is-xs')
-    expect(getByText('Small')).toHaveClass('is-sm')
-    expect(getByText('Medium')).toHaveClass('is-md')
-    expect(getByText('Large')).toHaveClass('is-lg')
-    expect(getByText('ExtraLarge')).toHaveClass('is-xl')
-    expect(getByText('LargeExtraLarge')).toHaveClass('is-xl')
+    expect(getByText('Default')).toHaveClass('is-size-lg')
+    expect(getByText('ExtraExtraSmall')).toHaveClass('is-size-xxs')
+    expect(getByText('ExtraSmall')).toHaveClass('is-size-xs')
+    expect(getByText('Small')).toHaveClass('is-size-sm')
+    expect(getByText('Medium')).toHaveClass('is-size-md')
+    expect(getByText('Large')).toHaveClass('is-size-lg')
+    expect(getByText('ExtraLarge')).toHaveClass('is-size-xl')
   })
 })
 
 describe('States', () => {
-  test('Adds the respective classNames', () => {
-    const { getByText } = render(
-      <>
-        <Button state="success">Success</Button>
-        <Button state="danger">Danger</Button>
-        <Button state="warning">Warning</Button>
-      </>
-    )
-
-    expect(getByText('Success')).toHaveClass('is-success')
-    expect(getByText('Danger')).toHaveClass('is-danger')
-    expect(getByText('Warning')).toHaveClass('is-warning')
-  })
-
-  test('Adds the active classNames', () => {
-    const { getByTestId } = render(<Button isActive>Button</Button>)
-
-    expect(getByTestId('Button')).toHaveClass('is-active')
-  })
-
-  test('Adds the focus classNames', () => {
-    const { getByTestId } = render(<Button isFocused>Button</Button>)
-
-    expect(getByTestId('Button')).toHaveClass('is-focused')
-  })
-
-  test('Adds the hover classNames', () => {
-    const { getByTestId } = render(<Button isHovered>Button</Button>)
-
-    expect(getByTestId('Button')).toHaveClass('is-hovered')
-  })
-
   test('Disables the button', () => {
     const callback = jest.fn()
     const { getByTestId } = render(
@@ -121,11 +95,6 @@ describe('States', () => {
 })
 
 describe('Styles', () => {
-  test('Applies suffix styles', () => {
-    const { getByTestId } = render(<Button isSuffix>Click Me</Button>)
-
-    expect(getByTestId('Button')).toHaveClass('is-suffix')
-  })
   test('Renders isFirst styles', () => {
     const { getByTestId } = render(<Button isFirst />)
 
@@ -142,14 +111,6 @@ describe('Styles', () => {
     const { getByTestId } = render(<Button isLast />)
 
     expect(getByTestId('Button')).toHaveClass('is-last')
-  })
-})
-
-describe('Themes', () => {
-  test('Can add theme className', () => {
-    const { getByTestId } = render(<Button theme="editing" />)
-
-    expect(getByTestId('Button')).toHaveClass('is-editing')
   })
 })
 
@@ -246,7 +207,7 @@ describe('Content event propagation', () => {
 
 describe('Link', () => {
   test('Can render a link, if href is defined', () => {
-    const { getByText } = render(<Button href="/" />)
+    const { getByText } = renderWithRouter(<Button href="/" />)
 
     expect(
       getByText((content, element) => {
@@ -256,7 +217,7 @@ describe('Link', () => {
   })
 
   test('Can render a link, if to is defined', () => {
-    const { getByText } = render(<Button to="/" />)
+    const { getByText } = renderWithRouter(<Button to="/" />)
     expect(
       getByText((content, element) => {
         return element.tagName.toLowerCase() === 'a'
@@ -265,13 +226,15 @@ describe('Link', () => {
   })
 
   test('Can render a link based props', () => {
-    const { getByTestId } = render(<Button href="/" target="_blank" />)
+    const { getByTestId } = renderWithRouter(
+      <Button href="/" target="_blank" />
+    )
 
     expect(getByTestId('Button')).toHaveAttribute('target', '_blank')
   })
 
   test('Render a button element type', () => {
-    const { getByText } = render(<Button />)
+    const { getByText } = renderWithRouter(<Button />)
     expect(
       getByText((content, element) => {
         return element.tagName.toLowerCase() === 'button'
@@ -282,23 +245,23 @@ describe('Link', () => {
 
 describe('Loading', () => {
   test('Add loading className, if isLoading', () => {
-    const { getByTestId } = render(<Button isLoading />)
+    const { getByTestId } = render(<Button loading />)
 
     expect(getByTestId('Button')).toHaveClass('is-loading')
   })
 
   test('Renders a spinner if isLoading', () => {
-    const { container } = render(<Button isLoading />)
+    const { container } = render(<Button loading />)
     expect(container.querySelector('.c-Spinner')).toBeTruthy()
   })
 
   test('Does not renders a spinner if not isLoading', () => {
-    const { container } = render(<Button isLoading={false} />)
+    const { container } = render(<Button />)
     expect(container.querySelector('.c-Spinner')).toBeFalsy()
   })
 
   test('Becomes disabled if isLoading, by default', () => {
-    const { getByTestId } = render(<Button isLoading />)
+    const { getByTestId } = render(<Button loading />)
     expect(getByTestId('Button')).toBeDisabled()
   })
 })

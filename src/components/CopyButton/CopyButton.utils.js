@@ -5,17 +5,7 @@ export const useCopyConfirmation = props => {
 
   const [shouldRenderConfirmation, setConfirmation] = useState(false)
   const confirmationTimeout = useRef()
-
-  useEffect(() => {
-    if (confirmationTimeout.current) {
-      clearTimeout(confirmationTimeout)
-    }
-    return () => {
-      if (confirmationTimeout.current) {
-        clearTimeout(confirmationTimeout)
-      }
-    }
-  }, [])
+  const isCancelled = useRef(false)
 
   const handleClick = useCallback(
     e => {
@@ -27,12 +17,26 @@ export const useCopyConfirmation = props => {
       onClick && onClick(e)
 
       confirmationTimeout.current = setTimeout(() => {
-        setConfirmation(false)
-        onReset && onReset()
+        if (!isCancelled.current) {
+          setConfirmation(false)
+          onReset && onReset()
+        }
       }, resetTimeout)
     },
     [onClick, onReset, resetTimeout]
   )
+
+  useEffect(() => {
+    if (confirmationTimeout.current) {
+      clearTimeout(confirmationTimeout)
+    }
+    return () => {
+      isCancelled.current = true
+      if (confirmationTimeout.current) {
+        clearTimeout(confirmationTimeout)
+      }
+    }
+  }, [])
 
   return [shouldRenderConfirmation, handleClick]
 }

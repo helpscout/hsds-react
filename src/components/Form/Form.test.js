@@ -112,11 +112,11 @@ describe('Actions', () => {
     const wrapper = mount(
       <Form
         actionTabbable={false}
-        cancelButtonProps={{ isLoading: true }}
-        destroyButtonProps={{ isLoading: true }}
+        cancelButtonProps={{ loading: true }}
+        destroyButtonProps={{ loading: true }}
         onCancel={() => {}}
         onDestroy={() => {}}
-        saveButtonProps={{ isLoading: true }}
+        saveButtonProps={{ loading: true }}
       />
     )
 

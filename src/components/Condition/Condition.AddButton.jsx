@@ -72,11 +72,11 @@ class AddButton extends React.PureComponent {
       onTypeChanged,
       selectableType,
       onClick,
+      disabled,
       ...rest
     } = this.props
     const isAnd = type.toLowerCase() === 'and'
     const align = isAnd ? 'center' : 'left'
-    const iconSize = isAnd ? 24 : 20
     const label = isAnd ? 'and' : 'or'
     const size = isAnd ? 'sm' : 'xxs'
 
@@ -94,9 +94,9 @@ class AddButton extends React.PureComponent {
                 outlined
                 {...getValidProps(rest)}
                 text={label}
-                actionButtonProps={{ disabled: rest.disabled }}
+                actionButtonProps={{ disabled }}
                 togglerButtonProps={{
-                  kind: rest.disabled ? 'secondary' : 'tertiary',
+                  theme: disabled ? 'grey' : 'green',
                   flipChevron: true,
                 }}
                 size="xxs"

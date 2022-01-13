@@ -320,7 +320,7 @@ export const IconBtn = forwardRef(
   ) => {
     const component = (
       <IconButtonUI
-        aria-label="toggle menu"
+        aria-label={a11yLabel || 'toggle-menu'}
         aria-haspopup="true"
         aria-expanded={isActive}
         className={classNames(

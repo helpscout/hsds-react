@@ -86,7 +86,7 @@ describe('Buttons', () => {
     const wrapper = mount(
       <ActionFooter primaryButtonText={buttonText} onPrimaryClick={clickSpy} />
     )
-    const o = wrapper.find('.c-Button.is-primary').first()
+    const o = wrapper.find('.c-Button.is-theme-blue').first()
 
     expect(o.length).toBe(1)
     expect(o.text()).toBe(buttonText)
@@ -98,7 +98,7 @@ describe('Buttons', () => {
   test('Renders Primary Button', () => {
     const buttonText = 'Primary'
     const wrapper = mount(<ActionFooter primaryButtonText={buttonText} />)
-    const o = wrapper.find('.c-Button.is-primary').first()
+    const o = wrapper.find('.c-Button.is-theme-blue').first()
 
     expect(o.length).toBe(1)
     expect(o.text()).toBe(buttonText)
@@ -113,7 +113,7 @@ describe('Buttons', () => {
         onSecondaryClick={clickSpy}
       />
     )
-    const o = wrapper.find('.c-Button.is-secondary').first()
+    const o = wrapper.find('.c-Button.is-theme-grey.is-style-outlined').first()
 
     expect(o.length).toBe(1)
     expect(o.text()).toBe(buttonText)
@@ -125,7 +125,7 @@ describe('Buttons', () => {
   test('Renders Secondary Button', () => {
     const buttonText = 'Secondary'
     const wrapper = mount(<ActionFooter secondaryButtonText={buttonText} />)
-    const o = wrapper.find('.c-Button.is-secondary').first()
+    const o = wrapper.find('.c-Button.is-theme-grey.is-style-outlined').first()
 
     expect(o.length).toBe(1)
     expect(o.text()).toBe(buttonText)
@@ -141,7 +141,7 @@ describe('Buttons', () => {
         onSecondaryClick={clickSpy}
       />
     )
-    const o = wrapper.find('.c-Button.is-secondary').first()
+    const o = wrapper.find('.c-Button.is-theme-grey.is-style-outlined').first()
 
     expect(o.length).toBe(1)
     expect(o.text()).toBe(buttonText)
@@ -156,7 +156,7 @@ describe('Buttons', () => {
     const wrapper = mount(
       <ActionFooter cancelText={buttonText} onCancel={clickSpy} />
     )
-    const o = wrapper.find('.c-Button.is-default').first()
+    const o = wrapper.find('.c-Button.is-style-link').first()
 
     expect(o.length).toBe(1)
     expect(o.text()).toBe(buttonText)
@@ -168,7 +168,7 @@ describe('Buttons', () => {
   test('Renders default Cancel Button', () => {
     const buttonText = 'Nevermind'
     const wrapper = mount(<ActionFooter cancelText={buttonText} />)
-    const o = wrapper.find('.c-Button.is-default').first()
+    const o = wrapper.find('.c-Button.is-style-link').first()
 
     expect(o.length).toBe(1)
     expect(o.text()).toBe(buttonText)
@@ -177,7 +177,7 @@ describe('Buttons', () => {
 
   test('Hides default Cancel Button if specified', () => {
     const wrapper = mount(<ActionFooter showDefaultCancel={false} />)
-    const o = wrapper.find('.c-Button.is-default').first()
+    const o = wrapper.find('.c-Button.is-style-link').first()
 
     expect(o.length).toBeFalsy()
   })
