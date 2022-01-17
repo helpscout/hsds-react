@@ -69,7 +69,7 @@ HeaderAndFooter.propTypes = {
   /** If the default footer is present, this disables the button */
   mainActionDisabled: PropTypes.bool,
   /** Retrieve the Main Action button node */
-  mainActionNode: PropTypes.func,
+  mainActionNode: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   /** If the default Header included, this is the Heading */
   panelHeading: PropTypes.string,
   /** ID for the H1, make sure it matches the ariaLabelledBy from the SidePanel */

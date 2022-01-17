@@ -52,7 +52,7 @@ const getComponentClassName = ({
 }
 
 export const AccordionBody = props => {
-  const { className } = props
+  const { className, preRender } = props
   const { isPage, isSeamless, duration, onOpen, onClose, size } =
     useContext(AccordionContext) || {}
   const { isOpen, uuid } = useContext(SectionContext) || {}
@@ -76,6 +76,7 @@ export const AccordionBody = props => {
       onClose={() => {
         onClose(uuid)
       }}
+      preRenderContent={preRender}
     >
       <BodyUI {...getValidProps(props)} className={componentClassName} />
     </Collapsible>
@@ -84,6 +85,7 @@ export const AccordionBody = props => {
 
 AccordionBody.defaultProps = {
   'data-cy': 'AccordionBody',
+  preRender: false,
 }
 
 AccordionBody.propTypes = {
@@ -93,6 +95,8 @@ AccordionBody.propTypes = {
   className: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
+  /** Flag indicating if content should be pre-rendered to the DOM (otherwise the content would not be in the DOM until opened) */
+  preRender: PropTypes.bool,
 }
 
 export default AccordionBody

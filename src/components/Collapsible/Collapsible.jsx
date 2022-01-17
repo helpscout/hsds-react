@@ -159,6 +159,7 @@ class Collapsible extends React.Component {
       onOpen,
       onClose,
       style,
+      preRenderContent,
       ...rest
     } = this.props
     const { animationState, height } = this.state
@@ -176,7 +177,7 @@ class Collapsible extends React.Component {
 
     const displayHeight = this.collapsibleHeight(isOpen, animationState, height)
 
-    const content = animating || isOpen ? children : null
+    const content = animating || isOpen || preRenderContent ? children : null
 
     const collapseStyle = {
       height: displayHeight,
@@ -207,6 +208,7 @@ Collapsible.defaultProps = {
   isOpen: false,
   onOpen: noop,
   onClose: noop,
+  preRenderContent: false,
 }
 
 Collapsible.propTypes = {
@@ -228,6 +230,8 @@ Collapsible.propTypes = {
   style: PropTypes.any,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
+  /** Flag indicating if content should be pre-rendered to the DOM (otherwise the content would not be in the DOM until opened) */
+  preRenderContent: PropTypes.bool,
 }
 
 export default Collapsible
