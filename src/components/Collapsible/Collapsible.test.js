@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, waitFor } from '@testing-library/react'
+import { render, waitFor, screen } from '@testing-library/react'
 import { mount } from 'enzyme'
 import Collapsible from './Collapsible'
 
@@ -192,6 +192,28 @@ describe('Collapsible', () => {
       wrapper.setState({ animationState: 'closing' })
 
       expect(o.getTransitionDuration()).toBe(100)
+    })
+  })
+
+  describe('Content', () => {
+    it('should render content if preRenderContent is set to true', () => {
+      render(
+        <Collapsible preRenderContent>
+          <div>Content</div>
+        </Collapsible>
+      )
+
+      expect(screen.getByText('Content')).toBeInTheDocument()
+    })
+
+    it('should not render content by default if preRenderContent is set to false', () => {
+      render(
+        <Collapsible preRenderContent={false}>
+          <div>Content</div>
+        </Collapsible>
+      )
+
+      expect(screen.queryByText('Content')).not.toBeInTheDocument()
     })
   })
 })

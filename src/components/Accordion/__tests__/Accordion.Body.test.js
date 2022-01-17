@@ -89,6 +89,18 @@ describe('open', () => {
     const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
     expect(o).toHaveLength(0)
   })
+
+  test('Has body when closed, but preRender set to true', () => {
+    const wrapper = mount(
+      <Accordion duration={0}>
+        <Section>
+          <Body preRender />
+        </Section>
+      </Accordion>
+    )
+    const o = wrapper.find(`div.${classNames.baseComponentClassName}`)
+    expect(o).toHaveLength(1)
+  })
 })
 
 describe('Events', () => {
