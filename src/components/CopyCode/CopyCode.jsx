@@ -104,12 +104,7 @@ class CopyCode extends React.PureComponent {
         >
           {this.getCodeMarkup()}
         </CopyCodeUI>
-        <CopyButtonUI
-          kind="secondary"
-          onClick={this.handleCopyClick}
-          canRenderFocus
-          size={buttonSize}
-        >
+        <CopyButtonUI size={buttonSize} onClick={this.handleCopyClick}>
           Copy
         </CopyButtonUI>
       </WrapperUI>

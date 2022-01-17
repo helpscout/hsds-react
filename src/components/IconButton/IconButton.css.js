@@ -1,66 +1,53 @@
 import styled from 'styled-components'
-import Button from '../Button/index'
-import buttonConfig from '../Button/Button.config'
-import forEach from '../../styles/utilities/forEach'
-import { getColor } from '../../styles/utilities/color'
+import { ButtonUI } from '../Button/Button.css'
 
-export const config = {
-  size: buttonConfig.size,
-  transition: `background-color 120ms ease`,
-}
+export const IconContainerUI = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-export const IconButtonUI = styled(Button)`
-  transition: ${config.transition};
-
-  .c-Button__content {
-    display: block;
-  }
-
-  &.is-borderless,
-  &.is-borderless:hover {
-    border-color: transparent !important;
-  }
-
-  ${makeButtonSizeStyles};
-  ${makeButtonHoverStyles};
-
-  .c-Icon {
-    margin: auto;
-  }
-  .c-Icon.withCaret {
-    margin-left: -3px;
+  .c-Avatar {
+    width: 100%;
+    height: 100%;
   }
 `
 
-function makeButtonSizeStyles() {
-  return forEach(
-    config.size,
-    (size, props) => `
-    &.is-${size} {
-      height: ${props.height}px;
-      min-width: ${props.height}px;
-      padding-left: 0.2em;
-      padding-right: 0.2em;
-    }
-  `
-  )
-}
+export const IconButtonUI = styled(ButtonUI)`
+  border-radius: 100px;
+  --focusRingRadius: 100px;
 
-function makeButtonHoverStyles() {
-  return `
-    &.is-kind-default,
-    &.is-kind-secondary,
-    &.is-kind-tertiary,
-    &.is-kind-link {
-      &:hover {
-        background: rgba(0, 0, 0, 0.03);
-      }
-      &:focus {
-        background: rgba(0, 0, 0, 0.05);
-      }
-      &:active {
-        background: rgba(0, 0, 0, 0.08);
-      }
-    }
-  `
-}
+  &.is-size-xl,
+  &.is-size-lg {
+    min-width: var(--buttonHeight);
+    --buttonPadding: 3px;
+  }
+
+  &.is-size-sm {
+    min-width: var(--buttonHeight);
+    --buttonPadding: 2px;
+  }
+
+  &.has-icon-only {
+    min-width: 0;
+    width: var(--buttonHeight);
+    padding: var(--buttonPadding);
+  }
+
+  ${IconContainerUI} {
+    height: calc(var(--buttonHeight) - calc(var(--buttonPadding) * 2) - 2px);
+    aspect-ratio: 1;
+  }
+
+  &.is-style-outlined:not(.has-children):not(.is-seamless) {
+    box-shadow: inset 0 0 0 3px white;
+  }
+`
+
+export const ChildrenUI = styled.span`
+  margin-left: 8px;
+  margin-right: 16px;
+
+  &.has-icon {
+    margin-left: 4px;
+  }
+`

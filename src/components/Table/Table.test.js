@@ -879,9 +879,10 @@ describe('Column Chooser', () => {
 
     const button = getByRole('button')
 
-    expect(
-      button.querySelectorAll('span.c-VisuallyHidden')[1]
-    ).toHaveTextContent('Choose columns to show or hide')
+    expect(button).toHaveAttribute(
+      'aria-label',
+      'Choose columns to show or hide'
+    )
 
     // Starts with 3 columns
     expect(container.querySelectorAll('th').length).toBe(3)

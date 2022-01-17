@@ -72,11 +72,11 @@ class AddButton extends React.PureComponent {
       onTypeChanged,
       selectableType,
       onClick,
+      disabled,
       ...rest
     } = this.props
     const isAnd = type.toLowerCase() === 'and'
     const align = isAnd ? 'center' : 'left'
-    const iconSize = isAnd ? 24 : 20
     const label = isAnd ? 'and' : 'or'
     const size = isAnd ? 'sm' : 'xxs'
 
@@ -90,28 +90,30 @@ class AddButton extends React.PureComponent {
             selection={dropListItems.find(item => item.id === type)}
             toggler={
               <SplittedButtonUI
+                theme="green"
+                outlined
                 {...getValidProps(rest)}
                 text={label}
-                kind="tertiary"
-                actionButtonProps={{ disabled: rest.disabled }}
+                actionButtonProps={{ disabled }}
                 togglerButtonProps={{
-                  kind: rest.disabled ? 'secondary' : 'tertiary',
+                  theme: disabled ? 'grey' : 'green',
                   flipChevron: true,
                 }}
-                size={'xxs'}
+                size="xxs"
                 onActionClick={this.handleOnClick}
               />
             }
           />
         ) : (
           <ButtonUI
+            theme="green"
+            outlined
+            size={size}
             {...getValidProps(rest)}
             className={this.getClassName()}
-            kind="tertiary"
             onClick={this.handleOnClick}
-            size={size}
+            prefixIcon="plus-small"
           >
-            <Icon name="plus-small" isWithHiddenTitle={false} size={iconSize} />
             {label}
           </ButtonUI>
         )}

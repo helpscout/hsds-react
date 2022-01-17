@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
+import Button from '../Button'
 
 export const HeaderUI = styled('header')`
   display: flex;
@@ -10,13 +11,8 @@ export const HeaderUI = styled('header')`
   }
 
   .DropListToggler {
-    color: ${getColor('charcoal.300')};
+    align-self: center;
     margin-right: 4px;
-    margin-top: 4px;
-
-    &.is-active {
-      color: ${getColor('charcoal.500')};
-    }
   }
 `
 
@@ -252,6 +248,14 @@ export const SortableCellContentUI = styled('div')`
   .sorted & {
     color: ${getColor('charcoal.700')};
     background-color: ${getColor('grey.300')};
+  }
+`
+
+export const ButtonExpanderUI = styled(Button)`
+  &.is-size-sm {
+    --buttonFontWeight: normal;
+    --buttonHeight: 26px;
+    margin: 8px 0 8px 4px;
   }
 `
 

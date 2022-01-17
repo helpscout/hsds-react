@@ -2,8 +2,9 @@ import { BodyUI } from '../MessageCard.css'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { noop } from '../../../utilities/other'
+import { replaceMessageVariables } from '../utils/MessageCard.utils'
 
-export const MessageCardBody = ({ withMargin, body, onClick }) => {
+export const MessageCardBody = ({ body, onClick, variables }) => {
   const getBodyToRender = () => {
     // if there is no html in the string, transform new line to paragraph
     if (body && !/<\/?[a-z][\s\S]*>/i.test(body)) {
@@ -12,14 +13,10 @@ export const MessageCardBody = ({ withMargin, body, onClick }) => {
     return body
   }
 
-  const bodyToRender = getBodyToRender()
+  const bodyToRender = replaceMessageVariables(getBodyToRender(), variables)
 
   return bodyToRender ? (
-    <BodyUI
-      onClick={onClick}
-      withMargin={withMargin}
-      data-cy="beacon-message-body-content"
-    >
+    <BodyUI onClick={onClick} data-cy="beacon-message-body-content">
       <div dangerouslySetInnerHTML={{ __html: bodyToRender }} />
     </BodyUI>
   ) : null
@@ -28,10 +25,15 @@ export const MessageCardBody = ({ withMargin, body, onClick }) => {
 MessageCardBody.propTypes = {
   /** Body content */
   body: PropTypes.string,
-  /** Indicate if should add margin above the body */
-  withMargin: PropTypes.string,
   /** Callback when body clicked */
   onClick: PropTypes.func,
+  /** List of variables that can be highlighted inside Body */
+  variables: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      display: PropTypes.string,
+    })
+  ),
 }
 
 MessageCardBody.defaultProps = {

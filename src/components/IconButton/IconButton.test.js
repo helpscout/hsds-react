@@ -76,11 +76,11 @@ describe('Button', () => {
   })
 
   test('Renders a button with various kinds', () => {
-    const { getByRole, rerender } = render(<IconButton kind="primary" />)
+    const { getByRole, rerender } = render(<IconButton theme="blue" />)
 
     expect(getByRole('button').classList.contains('is-primary')).toBeTruthy()
 
-    rerender(<IconButton kind="secondary" />)
+    rerender(<IconButton theme="grey" outlined />)
 
     expect(getByRole('button').classList.contains('is-secondary')).toBeTruthy()
   })
@@ -146,7 +146,7 @@ describe('Styles', () => {
 
   test('Can render with border styles', () => {
     const { container } = render(
-      <IconButton kind="secondary" isBorderless={false} />
+      <IconButton theme="grey" outlined isBorderless={false} />
     )
 
     expect(
@@ -160,18 +160,16 @@ describe('Styles', () => {
     const borderRadius = window.getComputedStyle(
       container.querySelector('.c-IconButton')
     ).borderRadius
-    const value = borderRadius && parseInt(borderRadius, 10)
 
-    expect(value).toBeGreaterThan(100)
+    expect(borderRadius).toBe('100%')
   })
 
-  test('Shape can be set to not render a circle', () => {
+  test.only('Shape can be set to not render a circle', () => {
     const { container } = render(<IconButton shape="default" />)
-    const borderRadius = window.getComputedStyle(
-      container.querySelector('.c-IconButton')
-    ).borderRadius
-    const value = borderRadius && parseInt(borderRadius, 10)
-
-    expect(value).toBeLessThan(100)
+    expect(
+      window
+        .getComputedStyle(container.querySelector('.c-IconButton'))
+        .getPropertyValue('--buttonRadius')
+    ).toBe('3px')
   })
 })

@@ -1,4 +1,4 @@
-// Generated with @helpscout/colorway (v0.9.7)
+// Generated with @helpscout/colorway (v0.10.0)
 //
 // This file was automatically generated with @helpscout/colorway
 // Please don't modify this file. Your changes will be overwritten.
@@ -144,6 +144,8 @@ const palette = {
     '700': '#FD9AAE',
     '800': '#FC5D7D',
     '900': '#F23459',
+    '950': '#E9074B',
+    '1000': '#C5003B',
     default: '#FFB3C3',
   },
   whaletail: {

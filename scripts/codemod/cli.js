@@ -148,6 +148,10 @@ const TRANSFORMER_INQUIRER_CHOICES = [
       '3.0 ReplaceImports: Replace all hsds-react import with the next release',
     value: 'ReplaceImportsTransform',
   },
+  {
+    name: '3.31 Button: Button standardization',
+    value: 'ButtonStandardizationTransform',
+  },
 ]
 
 function expandFilePathsIfNeeded(filesBeforeExpansion) {
@@ -225,7 +229,7 @@ function run() {
         type: 'input',
         name: 'moduleName',
         message: 'Enter the original package name',
-        when: function(answers) {
+        when: function (answers) {
           return (
             answers.transformer === 'all' ||
             answers.transformer === 'ReplaceImportsTransform'
@@ -237,7 +241,7 @@ function run() {
         type: 'input',
         name: 'moduleNameTarget',
         message: 'Enter the new package name',
-        when: function(answers) {
+        when: function (answers) {
           const isReplaceImports =
             answers.transformer === 'all' ||
             answers.transformer === 'ReplaceImportsTransform'

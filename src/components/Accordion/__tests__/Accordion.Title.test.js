@@ -4,6 +4,10 @@ import Accordion, { AccordionContext } from '../Accordion'
 import Section, { SectionContext } from '../Accordion.Section'
 import Title, { classNameStrings as classNames } from '../Accordion.Title'
 import Keys from '../../../constants/Keys'
+import { MemoryRouter as Router } from 'react-router-dom'
+
+const wrap = fn => Component => fn(<Router>{Component}</Router>)
+const mountWithRouter = wrap(mount)
 
 describe('ClassNames', () => {
   test('Has default className', () => {
@@ -180,7 +184,7 @@ describe('setSectionState', () => {
 
 describe('Link', () => {
   test('Renders a link, if to is defined', () => {
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <SectionContext.Provider value={{ isOpen: true }}>
         <Title to="/" />
       </SectionContext.Provider>
@@ -191,7 +195,7 @@ describe('Link', () => {
   })
 
   test('Renders a link, if href is defined', () => {
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <SectionContext.Provider value={{ isOpen: true }}>
         <Title href="/" />
       </SectionContext.Provider>
@@ -202,7 +206,7 @@ describe('Link', () => {
   })
 
   test('Adjusts caret size, if link', () => {
-    const wrapper = mount(<Title />)
+    const wrapper = mountWithRouter(<Title />)
     let icon = wrapper.find('Icon').first()
 
     expect(icon.prop('size')).toBe(14)
@@ -216,7 +220,7 @@ describe('Link', () => {
 
 describe('isOpen', () => {
   test('Renders open styles, if defined', () => {
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <SectionContext.Provider value={{ isOpen: true }}>
         <Title />
       </SectionContext.Provider>
@@ -227,7 +231,7 @@ describe('isOpen', () => {
   })
 
   test('Always render non-open styles, if isLink', () => {
-    const wrapper = mount(
+    const wrapper = mountWithRouter(
       <SectionContext.Provider value={{ isOpen: true }}>
         <Title to="/" />
       </SectionContext.Provider>
@@ -241,7 +245,7 @@ describe('isOpen', () => {
 describe('Events', () => {
   test('onClick callback works', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Title onClick={spy} />)
+    const wrapper = mountWithRouter(<Title onClick={spy} />)
 
     wrapper.simulate('click')
 
@@ -250,7 +254,7 @@ describe('Events', () => {
 
   test('onClick callback works for links', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Title onClick={spy} to="/" />)
+    const wrapper = mountWithRouter(<Title onClick={spy} to="/" />)
 
     wrapper.simulate('click')
 

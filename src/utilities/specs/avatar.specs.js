@@ -13,14 +13,14 @@ const avatarSpec = createSpec({
         id: prop.id,
         name: prop.name,
         firstName: prop.firstName,
-        // image: prop.image,
+        image: `https://avatars.dicebear.com/api/pixel-art/${prop.id}.svg?mood[]=happy&background=%23E5E9EC`,
       }
     })
   }
   return {
     id: props.id,
     name: props.name,
-    // image: props.image,
+    image: `https://avatars.dicebear.com/api/pixel-art/${props.id}.svg?mood[]=happy&background=%23E5E9EC`,
   }
 })
 

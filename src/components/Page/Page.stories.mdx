@@ -226,9 +226,13 @@ This component is a presentational wrapper used to render form actions.
           { left: 'left', right: 'right' },
           'left'
         )}
-        primary={<Button kind="primary">Thing</Button>}
-        secondary={<Button kind="secondary">Thing</Button>}
-        serious={<Button kind="link">Thing</Button>}
+        primary={<Button theme="blue">Thing</Button>}
+        secondary={
+          <Button theme="grey" outlined>
+            Thing
+          </Button>
+        }
+        serious={<Button theme="blue">Thing</Button>}
       />
     </Page>
   </Story>

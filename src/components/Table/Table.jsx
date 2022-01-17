@@ -4,9 +4,14 @@ import useDeepCompareEffect from 'use-deep-compare-effect'
 import { ThemeProvider } from 'styled-components'
 import classNames from 'classnames'
 import { noop } from '../../utilities/other'
-import Button from '../Button'
 import Scrollable from '../Scrollable'
-import { HeaderUI, TableWrapperUI, TableUI, LoadingUI } from './Table.css'
+import {
+  HeaderUI,
+  TableWrapperUI,
+  TableUI,
+  LoadingUI,
+  ButtonExpanderUI,
+} from './Table.css'
 import { defaultSkin, chooseSkin } from './Table.skins'
 import { columnShape, dataShape, isTableSortable } from './Table.utils'
 import { useTable } from './Table.hooks'
@@ -172,31 +177,33 @@ export function Table({
         {isLoading && <LoadingUI className={`${TABLE_CLASSNAME}__Loading`} />}
 
         {isTableCollapsable && isCollapsed ? (
-          <Button
+          <ButtonExpanderUI
+            size="sm"
+            theme="blue"
+            linked
             className={`${TABLE_CLASSNAME}__Expander`}
-            kind="link"
             onClick={() => {
               expandTable(data)
               onExpand({ collapsed: false })
             }}
-            style={{ marginLeft: '14px' }}
           >
             {expanderText ? expanderText.collapsed : 'View All'}
-          </Button>
+          </ButtonExpanderUI>
         ) : null}
 
         {isTableCollapsable && !isCollapsed ? (
-          <Button
+          <ButtonExpanderUI
+            size="sm"
+            theme="blue"
+            linked
             className={`${TABLE_CLASSNAME}__Expander`}
-            kind="link"
             onClick={() => {
               collapseTable(data, maxRowsToDisplay)
               onExpand({ collapsed: true })
             }}
-            style={{ marginLeft: '14px' }}
           >
             {expanderText ? expanderText.expanded : 'Collapse'}
-          </Button>
+          </ButtonExpanderUI>
         ) : null}
       </TableWrapperUI>
     </ThemeProvider>

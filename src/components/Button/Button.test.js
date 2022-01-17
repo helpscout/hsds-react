@@ -1,300 +1,205 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import { render, fireEvent } from '@testing-library/react'
 import Button from './Button'
 import Icon from '../Icon'
+import userEvent from '@testing-library/user-event'
+import { MemoryRouter as Router } from 'react-router-dom'
+
+const wrap = fn => Component => fn(<Router>{Component}</Router>)
+const renderWithRouter = wrap(render)
 
 describe('ClassNames', () => {
   test('Accepts custom className', () => {
-    const wrapper = mount(<Button className="foo bar baz">Click Me</Button>)
-    const classNames = wrapper.find('button.c-Button').prop('className')
+    const { getByTestId } = render(
+      <Button className="foo bar baz">Click Me</Button>
+    )
 
-    expect(classNames).toContain('foo')
-    expect(classNames).toContain('bar')
-    expect(classNames).toContain('baz')
+    expect(getByTestId('Button')).toHaveClass('foo')
+    expect(getByTestId('Button')).toHaveClass('bar')
+    expect(getByTestId('Button')).toHaveClass('baz')
   })
 })
 
-describe('Kind', () => {
+describe('Theme', () => {
   test('Adds the respective classNames', () => {
-    const primary = mount(<Button kind="primary">Primary</Button>)
-    const link = mount(<Button kind="link">Plain</Button>)
+    const { getByTestId, rerender } = render(<Button theme="blue">blue</Button>)
 
-    expect(primary.find('button.c-Button').hasClass('is-primary')).toBe(true)
-    expect(link.find('button.c-Button').hasClass('is-link')).toBe(true)
+    expect(getByTestId('Button')).toHaveClass('is-theme-blue')
+
+    rerender(<Button theme="red">Red</Button>)
+    expect(getByTestId('Button')).toHaveClass('is-theme-red')
+
+    rerender(<Button theme="green">Red</Button>)
+    expect(getByTestId('Button')).toHaveClass('is-theme-green')
+
+    rerender(<Button linked>Plain</Button>)
+
+    expect(getByTestId('Button')).toHaveClass('is-style-link')
   })
 
   test('Creates a button with type="submit"', () => {
-    const wrapper = mount(<Button submit>Submit</Button>)
+    const { getByTestId } = render(<Button submit>Submit</Button>)
 
-    expect(wrapper.find('button').prop('type')).toBe('submit')
-  })
-
-  test('Can create block buttons, if specified', () => {
-    const wrapper = mount(<Button isBlock>Button</Button>)
-
-    expect(wrapper.find('button.c-Button').hasClass('is-block')).toBe(true)
-  })
-
-  test('Does not render Block style, if spefied', () => {
-    const wrapper = mount(<Button isBlock={false}>Button</Button>)
-
-    expect(wrapper.find('button.c-Button').hasClass('is-block')).toBe(false)
+    expect(getByTestId('Button')).toHaveAttribute('type', 'submit')
   })
 })
 
 describe('Sizes', () => {
   test('Adds the respective classNames', () => {
-    const lg = mount(<Button size="lg">Large</Button>)
-    const md = mount(<Button size="md">Medium</Button>)
-    const sm = mount(<Button size="sm">Small</Button>)
-    const xl = mount(<Button size="lgxl">ExtraLarge</Button>)
-
-    expect(lg.find('button.c-Button').hasClass('is-lg')).toBe(true)
-    expect(md.find('button.c-Button').hasClass('is-md')).toBe(true)
-    expect(sm.find('button.c-Button').hasClass('is-sm')).toBe(true)
-    expect(xl.find('button.c-Button').hasClass('is-xl')).toBe(true)
+    const { getByText } = render(
+      <>
+        <Button size="xl">ExtraLarge</Button>
+        <Button size="lg">Large</Button>
+        <Button size="md">Medium</Button>
+        <Button size="sm">Small</Button>
+        <Button size="xs">ExtraSmall</Button>
+        <Button size="xxs">ExtraExtraSmall</Button>
+        <Button>Default</Button>
+      </>
+    )
+    expect(getByText('Default')).toHaveClass('is-size-lg')
+    expect(getByText('ExtraExtraSmall')).toHaveClass('is-size-xxs')
+    expect(getByText('ExtraSmall')).toHaveClass('is-size-xs')
+    expect(getByText('Small')).toHaveClass('is-size-sm')
+    expect(getByText('Medium')).toHaveClass('is-size-md')
+    expect(getByText('Large')).toHaveClass('is-size-lg')
+    expect(getByText('ExtraLarge')).toHaveClass('is-size-xl')
   })
 })
 
 describe('States', () => {
-  test('Adds the respective classNames', () => {
-    const success = mount(<Button state="success">Success</Button>)
-    const danger = mount(<Button state="danger">Danger</Button>)
-    const warning = mount(<Button state="warning">Warning</Button>)
-
-    expect(success.find('button.c-Button').hasClass('is-success')).toBe(true)
-    expect(danger.find('button.c-Button').hasClass('is-danger')).toBe(true)
-    expect(warning.find('button.c-Button').hasClass('is-warning')).toBe(true)
-  })
-
-  test('Adds the active classNames', () => {
-    const wrapper = mount(<Button isActive>Button</Button>)
-
-    expect(wrapper.find('button.c-Button').hasClass('is-active')).toBe(true)
-  })
-
-  test('Adds the focus classNames', () => {
-    const wrapper = mount(<Button isFocused>Button</Button>)
-
-    expect(wrapper.find('button.c-Button').hasClass('is-focused')).toBe(true)
-  })
-
-  test('Adds the hover classNames', () => {
-    const wrapper = mount(<Button isHovered>Button</Button>)
-
-    expect(wrapper.find('button.c-Button').hasClass('is-hovered')).toBe(true)
-  })
-
   test('Disables the button', () => {
     const callback = jest.fn()
-    const disabledButton = mount(
+    const { getByTestId } = render(
       <Button disabled onClick={callback}>
         Disabled
       </Button>
     )
-    disabledButton.simulate('click')
+    userEvent.click(getByTestId('Button'))
 
-    expect(disabledButton.prop('disabled')).toBe(true)
-    expect(callback).not.toBeCalled()
-  })
-})
-
-describe('Styles', () => {
-  test('Applies suffix styles', () => {
-    const wrapper = mount(<Button isSuffix>Click Me</Button>)
-
-    expect(wrapper.find('button.c-Button').hasClass('is-suffix')).toBe(true)
-  })
-})
-
-describe('Themes', () => {
-  test('Does not have a theme className by default', () => {
-    const wrapper = mount(<Button />)
-
-    expect(wrapper.props().theme).not.toBeTruthy()
+    expect(getByTestId('Button')).toBeDisabled()
+    expect(callback).not.toHaveBeenCalled()
   })
 
-  test('Can add theme className', () => {
-    const wrapper = mount(<Button theme="editing" />)
+  test('primary lg & xl have a minimum width of 120px', () => {
+    const { getByTestId } = render(
+      <Button theme="blue" size="lg">
+        Button
+      </Button>
+    )
 
-    expect(wrapper.find('button.c-Button').hasClass('is-editing')).toBeTruthy()
+    const styles = window.getComputedStyle(getByTestId('Button'))
+    expect(styles.getPropertyValue('min-width')).toBe('var(--buttonMinWidth)')
+    expect(styles.getPropertyValue('--buttonMinWidth')).toBe('120px')
   })
 })
 
 describe('Styles', () => {
   test('Renders isFirst styles', () => {
-    const wrapper = mount(<Button isFirst />)
+    const { getByTestId } = render(<Button isFirst />)
 
-    expect(wrapper.find('button.c-Button').hasClass('is-first')).toBe(true)
+    expect(getByTestId('Button')).toHaveClass('is-first')
   })
 
   test('Renders isNotOnly styles', () => {
-    const wrapper = mount(<Button isNotOnly />)
+    const { getByTestId } = render(<Button isNotOnly />)
 
-    expect(wrapper.find('button.c-Button').hasClass('is-notOnly')).toBe(true)
+    expect(getByTestId('Button')).toHaveClass('is-notOnly')
   })
 
   test('Renders isLast styles', () => {
-    const wrapper = mount(<Button isLast />)
+    const { getByTestId } = render(<Button isLast />)
 
-    expect(wrapper.find('button.c-Button').hasClass('is-last')).toBe(true)
+    expect(getByTestId('Button')).toHaveClass('is-last')
   })
 })
 
 describe('Events', () => {
   test('Fires onBlur callback', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Button onBlur={spy} />)
+    const { getByTestId } = render(<Button onBlur={spy} />)
 
-    wrapper.simulate('blur')
+    fireEvent.blur(getByTestId('Button'))
 
     expect(spy).toHaveBeenCalled()
   })
 
   test('Fires onClick callback', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Button onClick={spy} />)
+    const { getByTestId } = render(<Button onClick={spy} />)
 
-    wrapper.simulate('click')
+    userEvent.click(getByTestId('Button'))
 
     expect(spy).toHaveBeenCalled()
   })
 
   test('Fires onFocus callback', () => {
     const spy = jest.fn()
-    const wrapper = mount(<Button onFocus={spy} />)
+    const { getByTestId } = render(<Button onFocus={spy} />)
 
-    wrapper.simulate('focus')
+    getByTestId('Button').focus()
 
     expect(spy).toHaveBeenCalled()
   })
 })
 
-describe('Focus', () => {
-  test('Renders FocusUI on focus', () => {
-    const wrapper = mount(<Button kind="primary" />)
-    wrapper.simulate('focus')
-
-    const o = wrapper.find('span.c-ButtonFocus')
-
-    expect(o.length).toBe(1)
-  })
-
-  test('Does not render FocusUI on certain buttons', () => {
-    const wrapper = mount(<Button kind="link" />)
-    wrapper.simulate('focus')
-
-    const o = wrapper.find('span.c-ButtonFocus')
-
-    expect(o.length).toBe(0)
-  })
-
-  test('Does not render FocusUI if disabled', () => {
-    const wrapper = mount(<Button kind="primary" disabled />)
-    wrapper.simulate('focus')
-
-    const o = wrapper.find('span.c-ButtonFocus')
-
-    expect(o.length).toBe(0)
-  })
-
-  test('Can be rendered with prop', () => {
-    const wrapper = mount(<Button kind="primary" isFocused />)
-
-    const o = wrapper.find('span.c-ButtonFocus')
-
-    expect(o.length).toBe(1)
-  })
-
-  test('Passes isFirst, isNotOnly, and isLast props', () => {
-    const wrapper = mount(
-      <Button kind="primary" isFocused isFirst isNotOnly isLast />
-    )
-
-    const o = wrapper.find('span.c-ButtonFocus')
-
-    expect(o.length).toBe(1)
-    expect(o.hasClass('is-first'))
-    expect(o.hasClass('is-notOnly'))
-    expect(o.hasClass('is-last'))
-  })
-})
-
-describe('Ref', () => {
-  test('Can retrieve button ref from ref prop', () => {
-    let ref
-    mount(<Button kind="primary" innerRef={node => (ref = node)} />)
-
-    expect(ref).toBeTruthy()
-  })
-
-  test('Can retrieve button ref from buttonRef prop', () => {
-    let ref
-    mount(<Button kind="primary" buttonRef={node => (ref = node)} />)
-
-    expect(ref).toBeTruthy()
-    expect(ref.tagName).toBe('BUTTON')
-  })
-})
-
 describe('Icon', () => {
   test('Can render an Icon', () => {
-    const wrapper = mount(
+    const { container } = render(
       <Button>
         <Icon />
       </Button>
     )
 
-    expect(wrapper.find('Icon').length).toBe(1)
+    expect(container.querySelector('.c-Icon')).toBeTruthy()
   })
 
   test('Can render an Icon + Text', () => {
-    const wrapper = mount(
+    const { getByTestId, container } = render(
       <Button>
         <Icon /> News
       </Button>
     )
 
-    expect(wrapper.find('Icon').length).toBe(1)
-    expect(wrapper.text()).toContain('News')
+    expect(container.querySelector('.c-Icon')).toBeTruthy()
+    expect(getByTestId('Button')).toHaveTextContent('News')
   })
 
   test('Provides Icon with offsetLeft prop', () => {
-    const wrapper = mount(
+    const { getByTestId, container } = render(
       <Button>
         <Icon /> News
       </Button>
     )
 
-    expect(wrapper.find('Icon').prop('offsetLeft')).toBe(true)
-    expect(wrapper.find('Icon').prop('offsetRight')).toBe(false)
-    expect(wrapper.text()).toContain('News')
+    expect(container.querySelector('.c-Icon')).toHaveClass('is-offsetLeft')
+    expect(container.querySelector('.c-Icon')).not.toHaveClass('is-offsetRight')
+
+    expect(getByTestId('Button')).toHaveTextContent('News')
   })
 
   test('Provides Icon with offsetRight prop', () => {
-    const wrapper = mount(
+    const { getByTestId, container } = render(
       <Button>
         News <Icon />
       </Button>
     )
 
-    expect(wrapper.find('Icon').prop('offsetLeft')).toBe(false)
-    expect(wrapper.find('Icon').prop('offsetRight')).toBe(true)
-    expect(wrapper.text()).toContain('News')
+    expect(container.querySelector('.c-Icon')).not.toHaveClass('is-offsetLeft')
+    expect(container.querySelector('.c-Icon')).toHaveClass('is-offsetRight')
+    expect(getByTestId('Button')).toHaveTextContent('News')
   })
 })
 
 describe('Content event propagation', () => {
   test('Allows content event propagation by default', () => {
     const spy = jest.fn()
-    const wrapper = mount(
+    const { container } = render(
       <Button onClick={spy}>
         <Icon />
       </Button>
     )
-    const el = wrapper.find('Icon').last()
-
-    el.simulate('click')
+    userEvent.click(container.querySelector('.c-Icon'))
 
     expect(spy).toHaveBeenCalled()
   })
@@ -302,79 +207,61 @@ describe('Content event propagation', () => {
 
 describe('Link', () => {
   test('Can render a link, if href is defined', () => {
-    const wrapper = mount(<Button href="/" />)
+    const { getByText } = renderWithRouter(<Button href="/" />)
 
-    expect(wrapper.find('a').length).toBeTruthy()
-    expect(wrapper.find('button').length).toBeFalsy()
+    expect(
+      getByText((content, element) => {
+        return element.tagName.toLowerCase() === 'a'
+      })
+    ).toBeTruthy()
   })
 
   test('Can render a link, if to is defined', () => {
-    const wrapper = mount(<Button to="/" />)
-
-    expect(wrapper.find('a').length).toBeTruthy()
-    expect(wrapper.find('button').length).toBeFalsy()
+    const { getByText } = renderWithRouter(<Button to="/" />)
+    expect(
+      getByText((content, element) => {
+        return element.tagName.toLowerCase() === 'a'
+      })
+    ).toBeTruthy()
   })
 
   test('Can render a link based props', () => {
-    const wrapper = mount(<Button href="/" target="_blank" />)
-    const el = wrapper.find('a').first()
+    const { getByTestId } = renderWithRouter(
+      <Button href="/" target="_blank" />
+    )
 
-    expect(el.length).toBeTruthy()
-    expect(el.prop('target')).toBe('_blank')
+    expect(getByTestId('Button')).toHaveAttribute('target', '_blank')
   })
 
-  test('Changes back to <button>, if href is removed', () => {
-    const wrapper = mount(<Button href="/" />)
-
-    expect(wrapper.find('a').length).toBeTruthy()
-
-    wrapper.setProps({ href: null })
-
-    expect(wrapper.find('a').length).toBeFalsy()
-    expect(wrapper.find('button').length).toBeTruthy()
+  test('Render a button element type', () => {
+    const { getByText } = renderWithRouter(<Button />)
+    expect(
+      getByText((content, element) => {
+        return element.tagName.toLowerCase() === 'button'
+      })
+    ).toBeTruthy()
   })
 })
 
 describe('Loading', () => {
   test('Add loading className, if isLoading', () => {
-    const wrapper = mount(<Button isLoading />)
-    const el = wrapper.find('button')
+    const { getByTestId } = render(<Button loading />)
 
-    expect(el.hasClass('is-loading')).toBeTruthy()
+    expect(getByTestId('Button')).toHaveClass('is-loading')
   })
 
   test('Renders a spinner if isLoading', () => {
-    const wrapper = mount(<Button isLoading />)
-    const el = wrapper.find('div.c-Spinner')
-
-    expect(el.length).toBeTruthy()
+    const { container } = render(<Button loading />)
+    expect(container.querySelector('.c-Spinner')).toBeTruthy()
   })
 
   test('Does not renders a spinner if not isLoading', () => {
-    const wrapper = mount(<Button isLoading={false} />)
-    const el = wrapper.find('div.c-Spinner')
-
-    expect(el.length).toBeFalsy()
+    const { container } = render(<Button />)
+    expect(container.querySelector('.c-Spinner')).toBeFalsy()
   })
 
   test('Becomes disabled if isLoading, by default', () => {
-    const wrapper = mount(<Button isLoading />)
-    const el = wrapper.find('button')
-
-    expect(el.prop('disabled')).toBe(true)
-  })
-
-  test('Does not become disabled, if specified', () => {
-    const wrapper = mount(<Button isLoading disableOnLoading={false} />)
-    const el = wrapper.find('button')
-
-    expect(el.prop('disabled')).toBe(false)
-  })
-
-  test('Add special spinButtonOnLoading, if isLoading and enabled', () => {
-    const wrapper = mount(<Button isLoading spinButtonOnLoading />)
-    const el = wrapper.find('button')
-
-    expect(el.hasClass('is-spinButtonOnLoading')).toBeTruthy()
+    const { getByTestId } = render(<Button loading />)
+    expect(getByTestId('Button')).toBeDisabled()
   })
 })
