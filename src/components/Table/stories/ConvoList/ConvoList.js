@@ -98,7 +98,7 @@ export default function ConvoList() {
             outerBorderColor: 'transparent',
             borderColor: 'white',
             showStatusBorderColor: true,
-            name: `George Harrison ${Math.random()}`,
+            name: `George Harrison ${Math.random().toFixed(2)}`,
             tooltipProps: {
               appendTo: () => document.body,
               title: 'George Harrison',
@@ -156,7 +156,7 @@ export default function ConvoList() {
             if (row.id === 281796231 || row.id === 281796229) {
               return (
                 <PopoverUI
-                  triggerOn="click"
+                  triggerOn="mouseenter"
                   appendTo={() => document.body}
                   withTriggerWrapper={false}
                   placement="left"

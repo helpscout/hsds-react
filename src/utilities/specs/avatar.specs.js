@@ -30,7 +30,6 @@ export function generateAvatarList(number, withTooltip) {
   if (withTooltip) {
     return avatars.map(av => ({
       tooltipProps: { title: `Hello ${av.firstName}!` },
-      animation: false,
       ...av,
     }))
   }
