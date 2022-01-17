@@ -46,6 +46,16 @@ describe('MessageCard.utils', () => {
     )
   })
 
+  it('should replace variables in provided text when fallback contains % sign', () => {
+    const text = `<p>Hi {%customer.firstName,fallback=there % there%} {%customer.lastName,fallback=you % there%}</p>`
+
+    const result = replaceMessageVariables(text, variables)
+
+    expect(result).toEqual(
+      `<p>Hi <span class="hsds-message-card-variable">there % there</span> <span class="hsds-message-card-variable">you % there</span></p>`
+    )
+  })
+
   it('should NOT replace unknown variable', () => {
     const text = `<p>Hi {%customer.unknown,fallback=Test%}</p>`
 
