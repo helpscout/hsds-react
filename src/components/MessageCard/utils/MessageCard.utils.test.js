@@ -37,12 +37,12 @@ describe('MessageCard.utils', () => {
   })
 
   it('should replace variables in provided text with variable label when empty fallback', () => {
-    const text = `<p>Hi {%customer.firstName,fallback=%}</p>`
+    const text = `<p>Hi {%customer.firstName,fallback=%} {%customer.lastName,fallback=you%}</p>`
 
     const result = replaceMessageVariables(text, variables)
 
     expect(result).toEqual(
-      `<p>Hi <span class="hsds-message-card-variable">First Name</span></p>`
+      `<p>Hi <span class="hsds-message-card-variable">First Name</span> <span class="hsds-message-card-variable">you</span></p>`
     )
   })
 
