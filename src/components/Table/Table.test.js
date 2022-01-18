@@ -367,7 +367,8 @@ describe('Sortable', () => {
     )
 
     // Regular column sorting, should be called with 'columnKey'
-    expect(container.querySelector(`thead th`).getAttribute('aria-sort')).toBe(
+    expect(container.querySelector(`thead th`)).toHaveAttribute(
+      'aria-sort',
       'none'
     )
     expect(container.querySelector('.is-sortable')).toBeInTheDocument()
@@ -384,9 +385,13 @@ describe('Sortable', () => {
       />
     )
 
-    expect(container.querySelector('thead th').getAttribute('aria-sort')).toBe(
+    expect(container.querySelector('thead th')).toHaveAttribute(
+      'aria-sort',
       'ascending'
     )
+    expect(
+      container.querySelector('.c-Table__SortableHeaderCell__title')
+    ).toHaveAttribute('tabIndex', '0')
 
     user.click(container.querySelector('.c-Table__SortableHeaderCell__title'))
 
@@ -423,7 +428,8 @@ describe('Sortable', () => {
       />
     )
 
-    expect(container.querySelector('thead th').getAttribute('aria-sort')).toBe(
+    expect(container.querySelector('thead th')).toHaveAttribute(
+      'aria-sort',
       'descending'
     )
   })

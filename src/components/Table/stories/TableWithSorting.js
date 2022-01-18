@@ -10,9 +10,14 @@ export default class TablePlayground extends Component {
       data: createFakeCustomers({ amount: 10 }),
       columns: [
         {
+          title: 'Not sortable',
+          columnKey: ['name'],
+          width: '25%',
+        },
+        {
           title: 'Customer (sorts by name)',
           columnKey: ['name', 'companyName'],
-          width: '30%',
+          width: '25%',
           sortKey: 'name',
           sorter: this.sortAlphabetically,
           renderCell: ({ name, companyName }) => {
@@ -28,7 +33,7 @@ export default class TablePlayground extends Component {
         {
           title: 'Customer (sorts by company)',
           columnKey: ['name', 'companyName'],
-          width: '30%',
+          width: '25%',
           sortKey: 'companyName',
           sorter: this.sortAlphabetically,
           renderCell: ({ name, companyName }) => {
@@ -45,7 +50,7 @@ export default class TablePlayground extends Component {
           title: 'Company',
           columnKey: 'companyName',
           align: 'center',
-          width: '35%',
+          width: '25%',
           renderHeaderCell: { iconName: 'chat' },
           sorter: this.sortAlphabetically,
         },

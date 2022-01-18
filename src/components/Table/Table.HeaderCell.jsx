@@ -61,6 +61,7 @@ export default function HeaderCell({ column, isLoading, sortedInfo }) {
             align={column.align}
             className={`${TABLE_CLASSNAME}__SortableHeaderCell__title`}
             onClick={handleClick}
+            tabIndex="0"
           >
             {withCustomContent ? (
               generateCustomHeaderCell(column, sortedInfo)
