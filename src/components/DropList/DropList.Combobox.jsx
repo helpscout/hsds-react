@@ -35,6 +35,7 @@ function Combobox({
   inputPlaceholder = 'Search',
   items = [],
   isOpen = false,
+  menuAriaLabel,
   menuCSS,
   menuWidth,
   onDropListLeave = noop,
@@ -238,6 +239,8 @@ function Combobox({
       <MenuListUI
         className={`${DROPLIST_MENULIST} MenuList-Combobox`}
         {...getMenuProps()}
+        aria-label={menuAriaLabel}
+        aria-labelledby={null}
       >
         {renderListContents({
           customEmptyList,

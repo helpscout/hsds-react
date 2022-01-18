@@ -47,6 +47,7 @@ function DropListManager({
   inputPlaceholder = 'Search',
   isMenuOpen = false,
   items = [],
+  menuAriaLabel = '',
   menuCSS,
   menuWidth,
   onDropListLeave = noop,
@@ -288,6 +289,7 @@ function DropListManager({
             inputPlaceholder={inputPlaceholder}
             isOpen={isOpen}
             items={parsedItems}
+            menuAriaLabel={menuAriaLabel}
             menuCSS={menuCSS}
             menuWidth={getMenuWidth(DropListVariant.name, menuWidth)}
             onDropListLeave={onDropListLeave}
@@ -368,6 +370,8 @@ DropListManager.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.string, itemShape, dividerShape, groupShape])
   ),
+  /** Custom aria label for the Menu */
+  menuAriaLabel: PropTypes.string,
   /** Custom css for the Menu */
   menuCSS: PropTypes.any,
   /** Custom width for the Menu */

@@ -42,6 +42,45 @@ describe('Render', () => {
     expect(getByText('Button Toggler')).toBeInTheDocument()
   })
 
+  test('should add aria label to menu if passsed (select)', async () => {
+    const { getByTestId, queryByRole, queryByLabelText } = render(
+      <DropList
+        menuAriaLabel="Demo label"
+        items={beatles}
+        toggler={<SimpleButton text="Button Toggler" />}
+      />
+    )
+    const toggler = getByTestId('DropList.ButtonToggler')
+
+    expect(queryByRole('listbox')).not.toBeInTheDocument()
+
+    user.click(toggler)
+
+    await waitFor(() => {
+      expect(queryByLabelText('Demo label')).toBeInTheDocument()
+    })
+  })
+
+  test('should add aria label to menu if passsed (combobox)', async () => {
+    const { getByTestId, queryByRole, queryByLabelText } = render(
+      <DropList
+        variant="combobox"
+        menuAriaLabel="Demo label"
+        items={beatles}
+        toggler={<SimpleButton text="Button Toggler" />}
+      />
+    )
+    const toggler = getByTestId('DropList.ButtonToggler')
+
+    expect(queryByRole('listbox')).not.toBeInTheDocument()
+
+    user.click(toggler)
+
+    await waitFor(() => {
+      expect(queryByLabelText('Demo label')).toBeInTheDocument()
+    })
+  })
+
   test('should render a menu list with string items', async () => {
     const { getByTestId, queryByText, queryByRole } = render(
       <DropList

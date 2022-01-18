@@ -27,6 +27,7 @@ function Select({
   handleSelectedItemChange = noop,
   isOpen = false,
   items = [],
+  menuAriaLabel,
   menuCSS,
   menuWidth,
   focusToggler = noop,
@@ -172,7 +173,9 @@ function Select({
       menuCSS={menuCSS}
       menuWidth={menuWidth}
     >
-      <A11yTogglerUI {...getToggleButtonProps()}>Toggler</A11yTogglerUI>
+      <A11yTogglerUI {...getToggleButtonProps()} aria-labelledby={null}>
+        Toggler
+      </A11yTogglerUI>
       <MenuListUI
         data-event-driver
         className={`${DROPLIST_MENULIST} MenuList-Select`}
@@ -202,6 +205,8 @@ function Select({
             onMenuBlur(e)
           },
         })}
+        aria-label={menuAriaLabel}
+        aria-labelledby={null}
       >
         {renderListContents({
           customEmptyList,
