@@ -19,8 +19,10 @@ export const replaceMessageVariables = (text = '', variables = []) => {
   // 1) {%variableName,fallback=Fallback%}
   // 2) {%variableName,fallback=%}
   // 3) {%variableName%}
+  // 4) {%variableName,fallback=Fallback with % sign%}
   // There are 3 groups, from left: variable name, fallback presence (optional), fallback value (optional)
-  const regex = /{%([^,%]+)(,fallback=([^%]*)?)?%}/g
+  // (.*?(?=%}) is a group that finds fallback value, up until it reaches first `%}` group of characters
+  const regex = /{%([^,%]+)(,fallback=(.*?(?=%})))?%}/g
 
   const replacer = (match, variableId, fallbackConfig, fallback) => {
     const variable = variables.find(variable => variable.id === variableId)
