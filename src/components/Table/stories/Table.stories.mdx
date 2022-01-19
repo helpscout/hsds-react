@@ -71,7 +71,7 @@ Full list of acceptable fields 👇:
   - A function that takes the column object and returns a React Component/Element
   - If you need an icon, you can pass on object `{ iconName: 'chat' }` to get the `<Icon />` with the correct styles applied.
 - `renderCell`: To customize how each cell renders it corresponding data on this column. A function that takes the corresponding data and returns a React Component/Element, its arguments are the data provided by `columnKey` above, if using nested data, access it by replaceing the dot (`.`) with an underscore (`_`), for example: `customer.email` in `columnKey` becomes `customer_email` in `renderCell` (see code example below). It also gives you access to the `row`
-- `sorter`: A function that instructs how to sort the data based on this column
+- `sorter`: A function that instructs how to sort the data based on this column. If you return a promise, the table will be able to refocus the button when triggered via pressing the `enter` key
 - `sortKey`: If this column contains more than one columnKey, sorting will be based on this value which should exist in the list of Column Keys for this column.
 
 Note: only `columnKey` is required
