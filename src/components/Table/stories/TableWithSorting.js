@@ -88,7 +88,7 @@ export default class TablePlayground extends Component {
     })
 
     // simulate sortData as an API call
-    sortData(data, columnKey, sortedInfo.order).then(sortedData => {
+    return sortData(data, columnKey, sortedInfo.order).then(sortedData => {
       this.setState({
         data: sortedData,
         sortedInfo: {
