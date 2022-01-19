@@ -38,7 +38,7 @@ export default function HeaderCell({ column, isLoading, sortedInfo }) {
     e.persist()
 
     if (!isLoading && column.sorter != null) {
-      const sorterFn = Array.isArray(column.columnKey)
+      const sorterFnResult = Array.isArray(column.columnKey)
         ? column.sorter(column.sortKey)
         : column.sorter(column.columnKey)
 
@@ -49,8 +49,8 @@ export default function HeaderCell({ column, isLoading, sortedInfo }) {
        * The check here only looks for a `then` function as we don't want
        * to run this in all cases (like it would be if we use `Promise.resolve`)
        */
-      if (sorterFn && typeof sorterFn.then === 'function') {
-        sorterFn.then(() => {
+      if (sorterFnResult && typeof sorterFnResult.then === 'function') {
+        sorterFnResult.then(() => {
           /**
            * Refocus button only if the event was triggered with keyboard (thus avoid having to setup a separate onKeyDown event)
            *
