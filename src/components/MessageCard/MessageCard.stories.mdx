@@ -164,6 +164,24 @@ This component renders a Message Card Notification with (optional) Title, Subtit
   </Story>
 </Canvas>
 
+# With survey
+
+<Canvas>
+  <Story name="With survey">
+    <MessageCard
+      title="How did you feel about your checkout experience?"
+      body="Your feedback is valuable to us. Let us know how we did so we can continue to improve our services."
+      action={() => (
+        <MessageCard.Survey
+          withFeedbackForm
+          feedbackFormText="Tell us more..."
+          onSubmit={data => console.log(data)}
+        />
+      )}
+    />
+  </Story>
+</Canvas>
+
 #### Reference
 
 - **Designer**: Buzz
