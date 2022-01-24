@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 import classNames from 'classnames'
+import debounce from 'lodash.debounce'
 import Tippy from '@tippyjs/react/headless'
 import { noop } from '../../utilities/other'
-import { GlobalContext } from '../HSDS/Provider'
 import { DROPLIST_TOGGLER, VARIANTS } from './DropList.constants'
 import { getAnimateProps, getTippyProps } from './DropList.config'
 import {
@@ -22,7 +22,6 @@ import {
   requiredItemPropsCheck,
   useWarnings,
   isItemInert,
-  checkNextElementFocusedAndThenRun,
 } from './DropList.utils'
 import {
   SimpleButton,
@@ -35,7 +34,6 @@ function DropListManager({
   animateOptions = {},
   autoSetComboboxAt = 0,
   clearOnSelect = false,
-  closeOnBlur = true,
   closeOnClickOutside = true,
   closeOnSelection = true,
   customEmptyList = null,
@@ -78,9 +76,6 @@ function DropListManager({
     flattenListItems(items, withMultipleSelection)
   )
 
-  const { getCurrentScope } = useContext(GlobalContext) || {}
-  const scope = getCurrentScope ? getCurrentScope() : null
-
   const animateProps = getAnimateProps(animateOptions)
   const tippyProps = getTippyProps(tippyOptions)
 
@@ -109,19 +104,35 @@ function DropListManager({
     setOpenedState(isMenuOpen)
   }, [isMenuOpen])
 
+  const debouncedOnDropListLeave = useMemo(
+    () => debounce(onDropListLeave, 300),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
+
   function decorateUserToggler(userToggler) {
     if (React.isValidElement(userToggler)) {
-      const { className, onClick, onFocus, onBlur } = userToggler.props
+      const {
+        className,
+        onClick,
+        onFocus,
+        onKeyDown,
+        onBlur,
+      } = userToggler.props
       const togglerProps = {
         className: classNames(DROPLIST_TOGGLER, className),
         isActive: isOpen,
-
+        onKeyDown: e => {
+          onKeyDown && onKeyDown(e)
+          if (e.key === 'Tab') {
+            debouncedOnDropListLeave()
+          }
+        },
         onBlur: e => {
           onBlur && onBlur(e)
-          checkNextElementFocusedAndThenRun(
-            ['MenuList', 'DropList__Combobox__input'],
-            onDropListLeave
-          )
+          if (!isOpen) {
+            debouncedOnDropListLeave()
+          }
         },
         onClick: e => {
           onClick && onClick(e)
@@ -245,8 +256,8 @@ function DropListManager({
           return
         }
 
-        onDropListLeave()
         toggleOpenedState(false)
+        debouncedOnDropListLeave()
       }}
       render={() => (
         <Animate
@@ -257,9 +268,7 @@ function DropListManager({
               tippyInstanceRef.current.show()
 
               if (tippyOptions.appendTo) {
-                tippyInstanceRef.current.popper.classList.add(
-                  scope ? scope : 'hsds-react'
-                )
+                tippyInstanceRef.current.popper.classList.add('hsds-react')
               }
             }
           }}
@@ -278,7 +287,6 @@ function DropListManager({
         >
           <DropListVariant
             clearOnSelect={clearOnSelect}
-            closeOnBlur={closeOnBlur}
             closeOnSelection={closeOnSelection}
             customEmptyList={customEmptyList}
             customEmptyListItems={customEmptyListItems}
@@ -292,7 +300,7 @@ function DropListManager({
             menuAriaLabel={menuAriaLabel}
             menuCSS={menuCSS}
             menuWidth={getMenuWidth(DropListVariant.name, menuWidth)}
-            onDropListLeave={onDropListLeave}
+            onDropListLeave={debouncedOnDropListLeave}
             onInputChange={onInputChange}
             onMenuBlur={onMenuBlur}
             onMenuFocus={onMenuFocus}
@@ -342,8 +350,6 @@ DropListManager.propTypes = {
   autoSetComboboxAt: PropTypes.number,
   /** Clears selected item on select */
   clearOnSelect: PropTypes.bool,
-  /** Whether to close the DropList on blur (useful when debugging) */
-  closeOnBlur: PropTypes.bool,
   /** Whether to close the DropList when clicking outside the droplist */
   closeOnClickOutside: PropTypes.bool,
   /** Whether to close the DropList when an item is selected */
@@ -382,6 +388,8 @@ DropListManager.propTypes = {
   onMenuBlur: PropTypes.func,
   /** Callback that fires when the menu gets focus */
   onMenuFocus: PropTypes.func,
+  /** Callback that fires when leaving the DropList entirely (including the toggler) */
+  onDropListLeave: PropTypes.func,
   /** Downshift does not provide the event on select, this callback fires when selecting an item (clicking, keydown enter (and space on Select variant)), gives you the DOM selected item as listItemNode and the original event */
   onListItemSelectEvent: PropTypes.func,
   /** Callback that fires whenever the DropList opens and closes */

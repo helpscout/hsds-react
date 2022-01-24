@@ -206,9 +206,6 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
         isMenuOpen={boolean('Is Menu Open', false)}
         focusTogglerOnMenuClose={boolean('focusTogglerOnMenuClose', true)}
         menuAriaLabel="Demo DropList"
-        onDropListLeave={() => {
-          console.log('DropList Left')
-        }}
         onOpenedStateChange={isOpen => {
           console.log('onOpenedStateChange', isOpen)
         }}
@@ -265,6 +262,73 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
           console.log('🚀 ~ clickedItem', clickedItem)
         }}
         toggler={<SimpleButton text="This is a combobox" />}
+      />
+    </div>
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Focusing and leaving">
+    <div
+      tabIndex="0"
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        isMenuOpen={boolean('Is Menu Open', false)}
+        focusTogglerOnMenuClose={boolean('focusTogglerOnMenuClose', true)}
+        menuAriaLabel="Demo DropList"
+        onDropListLeave={() => {
+          console.log('Select left')
+        }}
+        onOpenedStateChange={isOpen => {
+          console.log('onOpenedStateChange', isOpen)
+        }}
+        onListItemSelectEvent={({ event, listItemNode }) => {
+          console.log('event', event)
+          console.log('listItemNode', listItemNode)
+        }}
+        selection={select(
+          'Selection',
+          {
+            clear: null,
+            first: regularItems[0],
+            second: regularItems[1],
+            third: regularItems[2],
+          },
+          regularItems[1]
+        )}
+        items={regularItems}
+        toggler={<SimpleButton text="Select" />}
+      />
+      <DropList
+        variant="combobox"
+        inputPlaceholder={text('inputPlaceholder', 'Search')}
+        focusTogglerOnMenuClose={boolean('focusTogglerOnMenuClose', true)}
+        onDropListLeave={() => {
+          console.log('Combobox left')
+        }}
+        items={select(
+          'Items',
+          {
+            regular: regularItems,
+            withDivider: itemsWithDivider,
+            grouped: simpleGroupedItems,
+          },
+          regularItems
+        )}
+        onSelect={(selection, clickedItem) => {
+          console.log('🚀 ~ selection', selection)
+          console.log('🚀 ~ clickedItem', clickedItem)
+        }}
+        toggler={
+          <SimpleButton text="Combobox" style={{ marginLeft: '20px' }} />
+        }
       />
     </div>
   </Story>

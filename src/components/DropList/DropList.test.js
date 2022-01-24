@@ -1664,15 +1664,14 @@ describe('More open close behaviours', () => {
 
     // open the droplist
     user.click(toggler)
-    // click outside
     user.type(queryByRole('listbox'), '{esc}')
 
     expect(getByTestId('DropList.ButtonToggler')).toHaveFocus()
   })
 
-  test('onDropListLeave: click outside', () => {
+  test('onDropListLeave: click outside', async () => {
     const onDropListLeaveSpy = jest.fn()
-    const { queryByText } = render(
+    const { container, queryByText } = render(
       <DropList
         onDropListLeave={onDropListLeaveSpy}
         focusTogglerOnMenuClose={false}
@@ -1685,13 +1684,19 @@ describe('More open close behaviours', () => {
 
     // open the droplist
     user.click(toggler)
-    // click outside
-    user.click(document.body)
+    await waitFor(() => {
+      expect(onDropListLeaveSpy).not.toHaveBeenCalled()
+    })
 
-    expect(onDropListLeaveSpy).toHaveBeenCalled()
+    // click outside
+    user.click(container.parentElement)
+
+    await waitFor(() => {
+      expect(onDropListLeaveSpy).toHaveBeenCalledTimes(1)
+    })
   })
 
-  test('onDropListLeave: tab out of toggler (menu open)', () => {
+  test('onDropListLeave: tab out of toggler (menu open)', async () => {
     const onDropListLeaveSpy = jest.fn()
     const onBlurSpy = jest.fn()
     const { queryByText } = render(
@@ -1712,9 +1717,11 @@ describe('More open close behaviours', () => {
 
     user.click(toggler)
 
-    // Focus passes to the menu when we open it
-    expect(onDropListLeaveSpy).not.toHaveBeenCalled()
-    expect(onBlurSpy).toHaveBeenCalled()
+    await waitFor(() => {
+      // Focus passes to the menu when we open it
+      expect(onDropListLeaveSpy).not.toHaveBeenCalled()
+      expect(onBlurSpy).toHaveBeenCalled()
+    })
   })
 
   test('onDropListLeave: blur out of menu', async () => {
@@ -1742,7 +1749,7 @@ describe('More open close behaviours', () => {
     user.click(queryByText('Demo'))
 
     await waitFor(() => {
-      expect(onDropListLeaveSpy).toHaveBeenCalled()
+      expect(onDropListLeaveSpy).toHaveBeenCalledTimes(1)
     })
   })
 
@@ -1770,7 +1777,7 @@ describe('More open close behaviours', () => {
     user.tab()
 
     await waitFor(() => {
-      expect(onDropListLeaveSpy).toHaveBeenCalled()
+      expect(onDropListLeaveSpy).toHaveBeenCalledTimes(1)
     })
   })
 })
