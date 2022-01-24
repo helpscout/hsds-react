@@ -389,9 +389,6 @@ describe('Sortable', () => {
       'aria-sort',
       'ascending'
     )
-    expect(
-      container.querySelector('.c-Table__SortableHeaderCell__title')
-    ).toHaveAttribute('tabIndex', '0')
 
     user.click(container.querySelector('.c-Table__SortableHeaderCell__title'))
 
