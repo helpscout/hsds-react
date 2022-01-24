@@ -112,22 +112,10 @@ function DropListManager({
 
   function decorateUserToggler(userToggler) {
     if (React.isValidElement(userToggler)) {
-      const {
-        className,
-        onClick,
-        onFocus,
-        onKeyDown,
-        onBlur,
-      } = userToggler.props
+      const { className, onClick, onFocus, onBlur } = userToggler.props
       const togglerProps = {
         className: classNames(DROPLIST_TOGGLER, className),
         isActive: isOpen,
-        onKeyDown: e => {
-          onKeyDown && onKeyDown(e)
-          if (e.key === 'Tab') {
-            debouncedOnDropListLeave()
-          }
-        },
         onBlur: e => {
           onBlur && onBlur(e)
           if (!isOpen) {
