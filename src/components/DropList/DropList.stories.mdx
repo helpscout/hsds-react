@@ -280,36 +280,15 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
       }}
     >
       <DropList
-        isMenuOpen={boolean('Is Menu Open', false)}
-        focusTogglerOnMenuClose={boolean('focusTogglerOnMenuClose', true)}
         menuAriaLabel="Demo DropList"
         onDropListLeave={() => {
           console.log('Select left')
         }}
-        onOpenedStateChange={isOpen => {
-          console.log('onOpenedStateChange', isOpen)
-        }}
-        onListItemSelectEvent={({ event, listItemNode }) => {
-          console.log('event', event)
-          console.log('listItemNode', listItemNode)
-        }}
-        selection={select(
-          'Selection',
-          {
-            clear: null,
-            first: regularItems[0],
-            second: regularItems[1],
-            third: regularItems[2],
-          },
-          regularItems[1]
-        )}
         items={regularItems}
         toggler={<SimpleButton text="Select" />}
       />
       <DropList
         variant="combobox"
-        inputPlaceholder={text('inputPlaceholder', 'Search')}
-        focusTogglerOnMenuClose={boolean('focusTogglerOnMenuClose', true)}
         onDropListLeave={() => {
           console.log('Combobox left')
         }}
@@ -322,10 +301,6 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
           },
           regularItems
         )}
-        onSelect={(selection, clickedItem) => {
-          console.log('🚀 ~ selection', selection)
-          console.log('🚀 ~ clickedItem', clickedItem)
-        }}
         toggler={
           <SimpleButton text="Combobox" style={{ marginLeft: '20px' }} />
         }
