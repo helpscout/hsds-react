@@ -14,6 +14,7 @@ import Icon from '../../Icon'
 
 export const MessageCardSurvey = ({
   withFeedbackForm = false,
+  forceFeedbackForm = false,
   feedbackFormText = '',
   onSubmit = () => {},
   showSpinner = false,
@@ -27,6 +28,7 @@ export const MessageCardSurvey = ({
   const [showFeedbackForm, setShowFeedbackForm] = React.useState(false)
   const [selected, setSelected] = React.useState(null)
   const [feedback, setFeedback] = React.useState('')
+  const shouldShowFeedbackForm = showFeedbackForm || forceFeedbackForm
 
   function handleClick(id) {
     setSelected(id)
@@ -76,7 +78,7 @@ export const MessageCardSurvey = ({
         ))}
       </SurveyOptionsUI>
 
-      {showFeedbackForm && (
+      {shouldShowFeedbackForm && (
         <FeedbackFormUI onSubmit={handleSubmit}>
           <label htmlFor="survey-comment">{feedbackFormText}</label>
           <Input
