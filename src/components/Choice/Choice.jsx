@@ -177,7 +177,7 @@ class Choice extends React.PureComponent {
       disabled,
       helpText,
       id: choiceID,
-      ariaDescribedBy: `${choiceID}_description`,
+      ariaDescribedBy: helpText ? `${choiceID}_description` : null,
       inputRef,
       innerRef,
       kind,
