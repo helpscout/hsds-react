@@ -147,6 +147,13 @@ describe('HelpText', () => {
     )
     wrapper.unmount()
   })
+
+  test('Does not set described by on input if no help text', () => {
+    const wrapper = mount(<Choice label="Label" id="test-id" />)
+
+    expect(wrapper.find('input').prop('aria-describedby')).not.toBeDefined()
+    wrapper.unmount()
+  })
 })
 
 describe('Label', () => {
