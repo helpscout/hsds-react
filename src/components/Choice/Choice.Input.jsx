@@ -122,6 +122,7 @@ class ChoiceInput extends React.PureComponent {
       state,
       type,
       value,
+      ariaDescribedBy,
       'data-cy': dataCy,
     } = this.props
     const { isFocused } = this.state
@@ -149,7 +150,7 @@ class ChoiceInput extends React.PureComponent {
       <InputUI className={componentClassName}>
         <InputInputUI
           autoFocus={autoFocus}
-          aria-describedby={helpText || undefined}
+          aria-describedby={ariaDescribedBy || undefined}
           aria-invalid={state === 'error'}
           checked={checked}
           className={inputClassName}
@@ -212,6 +213,8 @@ ChoiceInput.propTypes = {
   'data-cy': PropTypes.string,
   disabled: PropTypes.bool,
   helpText: PropTypes.string,
+  /** ID of element that describes this input */
+  ariaDescribedBy: PropTypes.string,
   id: PropTypes.string,
   inputRef: PropTypes.func,
   innerRef: PropTypes.func,
