@@ -133,6 +133,20 @@ describe('HelpText', () => {
     expect(text.text()).toBe(helpText)
     wrapper.unmount()
   })
+
+  test('Assigns ID to a helpText and use it on input as described by', () => {
+    const helpText = 'Help Text'
+    const wrapper = mount(
+      <Choice label="Label" helpText={helpText} id="test-id" />
+    )
+    const text = wrapper.find('.c-HelpText').hostNodes()
+
+    expect(text.prop('id')).toBe('test-id_description')
+    expect(wrapper.find('input').prop('aria-describedby')).toBe(
+      'test-id_description'
+    )
+    wrapper.unmount()
+  })
 })
 
 describe('Label', () => {
