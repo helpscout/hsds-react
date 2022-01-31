@@ -8,7 +8,6 @@ import {
   isItemSelected,
   renderListContents,
   isItemHighlightable,
-  checkNextElementFocusedAndThenRun,
 } from './DropList.utils'
 import {
   getA11ySelectionMessageCommon,
@@ -25,7 +24,6 @@ import { DROPLIST_MENULIST, VARIANTS } from './DropList.constants'
 
 function Combobox({
   clearOnSelect = false,
-  closeOnBlur = true,
   closeOnSelection = true,
   customEmptyList = null,
   customEmptyListItems,
@@ -35,6 +33,7 @@ function Combobox({
   inputPlaceholder = 'Search',
   items = [],
   isOpen = false,
+  menuAriaLabel,
   menuCSS,
   menuWidth,
   onDropListLeave = noop,
@@ -108,7 +107,6 @@ function Combobox({
 
     onIsOpenChange(changes) {
       onIsOpenChangeCommon({
-        closeOnBlur,
         closeOnSelection,
         toggleOpenedState,
         type: `${VARIANTS.COMBOBOX}.${changes.type}`,
@@ -201,10 +199,6 @@ function Combobox({
             ref: inputEl,
             onBlur: event => {
               onMenuBlur(event)
-              checkNextElementFocusedAndThenRun(
-                ['DropListToggler'],
-                onDropListLeave
-              )
             },
             onChange: event => {
               onInputChange(event.target.value)
@@ -215,6 +209,7 @@ function Combobox({
             onKeyDown: event => {
               if (event.key === 'Tab') {
                 toggleOpenedState(false)
+                onDropListLeave()
               } else if (event.key === 'Escape') {
                 focusToggler()
               } else if (event.key === 'Enter') {
@@ -238,6 +233,8 @@ function Combobox({
       <MenuListUI
         className={`${DROPLIST_MENULIST} MenuList-Combobox`}
         {...getMenuProps()}
+        aria-label={menuAriaLabel}
+        aria-labelledby={null}
       >
         {renderListContents({
           customEmptyList,

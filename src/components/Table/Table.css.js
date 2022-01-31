@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import Button from '../Button'
+import { focusRing } from '../../styles/mixins/focusRing.css'
 
 export const HeaderUI = styled('header')`
   display: flex;
@@ -233,16 +234,23 @@ export const SortableCellUI = styled('div')`
     margin-bottom: -4px;
   }
 `
+export const SortableCellContentUI = styled('button')`
+  ${focusRing};
+  --focusRingRadius: 4px;
 
-export const SortableCellContentUI = styled('div')`
   display: inline-flex;
   align-items: center;
   justify-content: ${props => getCellAlignment(props.align)};
   padding: 6px 8px;
   margin-left: -8px;
-  border-radius: 4px;
+  border-radius: var(--focusRingRadius);
+  background-color: transparent;
+  color: ${props => props.theme.fontColorHeader};
+  font-weight: 500;
+  border: 0;
   cursor: pointer;
   transition: background-color 0.15s ease-in-out;
+  font-family: var(--HSDSGlobalFontFamily);
 
   &:hover,
   .sorted & {

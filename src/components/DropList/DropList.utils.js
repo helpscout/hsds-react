@@ -294,31 +294,6 @@ export function getEnabledItemIndex({
     arrowKey,
   })
 }
-/**
- * Helper that allows you to run a callback after a timeout,
- * provided that after the timeout the document.activeElement
- * doesn't have any of the class names provided.
- * Example: Useful when you would like to execute something after
- * a blur event happens but not if the next element that gets focused has a certain
- * classname.
- * @param {String[]} classNames The class names of the document.activeElement that exclude the callback being run
- * @param {*} cb The function to run
- */
-export function checkNextElementFocusedAndThenRun(
-  classNames = [],
-  cb,
-  timeout = 50
-) {
-  setTimeout(() => {
-    const shouldRun = classNames.every(
-      cs => !document.activeElement.classList.contains(cs)
-    )
-
-    if (shouldRun) {
-      cb()
-    }
-  }, timeout)
-}
 
 export function getMenuWidth(variant, menuWidth) {
   if (menuWidth != null) return menuWidth

@@ -105,6 +105,7 @@ import forward from '../../icons/forward.svg'
 import fullscreen from '../../icons/fullscreen.svg'
 import globe from '../../icons/globe.svg'
 import graph from '../../icons/graph.svg'
+import handwave from '../../icons/handwave.svg'
 import heart from '../../icons/heart.svg'
 import house from '../../icons/house.svg'
 import hsLogo from '../../icons/hs-logo.svg'
@@ -140,6 +141,7 @@ import newWindowLarge from '../../icons/new-window-large.svg'
 import note from '../../icons/note.svg'
 import objects from '../../icons/objects.svg'
 import offline from '../../icons/offline.svg'
+import orderedList from '../../icons/ordered-list.svg'
 import paperPlane from '../../icons/paper-plane.svg'
 import pause from '../../icons/pause.svg'
 import pencilSmall from '../../icons/pencil-small.svg'
@@ -335,6 +337,7 @@ const ICONS = {
   fullscreen,
   globe,
   graph,
+  handwave,
   heart,
   'helpscout-logo': hsLogo,
   house,
@@ -374,6 +377,7 @@ const ICONS = {
   objects,
   offline,
   'option-dots': ellipsis,
+  'ordered-list': orderedList,
   'paper-plane': paperPlane,
   pause,
   'pencil-small': pencilSmall,

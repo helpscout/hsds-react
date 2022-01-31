@@ -128,13 +128,14 @@ class Choice extends React.PureComponent {
 
   getHelpTextMarkup = () => {
     const { helpText, stacked, state } = this.props
+    const { id: choiceID } = this.state
 
     const className = classNames('c-Choice__help-text', stacked && 'is-stacked')
 
     return (
       helpText && (
         <ChoiceHelpTextUI className={className}>
-          <HelpText state={state} muted>
+          <HelpText state={state} muted id={`${choiceID}_description`}>
             {helpText}
           </HelpText>
         </ChoiceHelpTextUI>
@@ -176,6 +177,7 @@ class Choice extends React.PureComponent {
       disabled,
       helpText,
       id: choiceID,
+      ariaDescribedBy: helpText ? `${choiceID}_description` : null,
       inputRef,
       innerRef,
       kind,

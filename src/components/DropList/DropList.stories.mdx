@@ -205,9 +205,7 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
       <DropList
         isMenuOpen={boolean('Is Menu Open', false)}
         focusTogglerOnMenuClose={boolean('focusTogglerOnMenuClose', true)}
-        onDropListLeave={() => {
-          console.log('DropList Left')
-        }}
+        menuAriaLabel="Demo DropList"
         onOpenedStateChange={isOpen => {
           console.log('onOpenedStateChange', isOpen)
         }}
@@ -264,6 +262,48 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
           console.log('🚀 ~ clickedItem', clickedItem)
         }}
         toggler={<SimpleButton text="This is a combobox" />}
+      />
+    </div>
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Focusing and leaving">
+    <div
+      tabIndex="0"
+      style={{
+        width: '400px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <DropList
+        menuAriaLabel="Demo DropList"
+        onDropListLeave={() => {
+          console.log('Select left')
+        }}
+        items={regularItems}
+        toggler={<SimpleButton text="Select" />}
+      />
+      <DropList
+        variant="combobox"
+        onDropListLeave={() => {
+          console.log('Combobox left')
+        }}
+        items={select(
+          'Items',
+          {
+            regular: regularItems,
+            withDivider: itemsWithDivider,
+            grouped: simpleGroupedItems,
+          },
+          regularItems
+        )}
+        toggler={
+          <SimpleButton text="Combobox" style={{ marginLeft: '20px' }} />
+        }
       />
     </div>
   </Story>

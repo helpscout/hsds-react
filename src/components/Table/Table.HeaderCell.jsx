@@ -15,6 +15,10 @@ import {
 } from './Table.utils'
 
 export default function HeaderCell({ column, isLoading, sortedInfo }) {
+  const sorterBtnId = Array.isArray(column.columnKey)
+    ? `${column.columnKey.join('_')}_${column.sortKey}_sorter`
+    : `${column.columnKey}_${column.sortKey}_sorter`
+
   function getColumnSortStatus() {
     const colKey = Array.isArray(column.columnKey)
       ? column.sortKey
@@ -30,11 +34,39 @@ export default function HeaderCell({ column, isLoading, sortedInfo }) {
     return 'none'
   }
 
-  function handleClick() {
+  function handleClick(e) {
+    e.persist()
+
     if (!isLoading && column.sorter != null) {
-      Array.isArray(column.columnKey)
+      const sorterFnResult = Array.isArray(column.columnKey)
         ? column.sorter(column.sortKey)
         : column.sorter(column.columnKey)
+
+      /**
+       * If the sorter function returns a promise, we refocus the button only when
+       * the event was triggered via {enter} key press.
+       *
+       * The check here only looks for a `then` function as we don't want
+       * to run this in all cases (like it would be if we use `Promise.resolve`)
+       */
+      if (sorterFnResult && typeof sorterFnResult.then === 'function') {
+        sorterFnResult.then(() => {
+          /**
+           * Refocus button only if the event was triggered with keyboard (thus avoid having to setup a separate onKeyDown event)
+           *
+           * https://developer.mozilla.org/en-US/docs/Web/API/UIEvent/detail
+           *     For click or dblclick events, UIEvent.detail is the current click count.
+           *     For mousedown or mouseup events, UIEvent.detail is 1 plus the current click count.
+           * => For all other UIEvent objects, UIEvent.detail is always zero.
+           */
+          if (e.detail === 0) {
+            // Due to async DOM stuff going on, get this out of the queue to make sure is the last and actually takes effect
+            setTimeout(() => {
+              document.getElementById(sorterBtnId).focus()
+            }, 0)
+          }
+        })
+      }
     }
   }
 
@@ -61,6 +93,7 @@ export default function HeaderCell({ column, isLoading, sortedInfo }) {
             align={column.align}
             className={`${TABLE_CLASSNAME}__SortableHeaderCell__title`}
             onClick={handleClick}
+            id={sorterBtnId}
           >
             {withCustomContent ? (
               generateCustomHeaderCell(column, sortedInfo)

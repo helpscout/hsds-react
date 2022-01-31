@@ -5,7 +5,6 @@ import {
   itemToString,
   isItemSelected,
   renderListContents,
-  checkNextElementFocusedAndThenRun,
 } from './DropList.utils'
 import {
   getA11ySelectionMessageCommon,
@@ -18,7 +17,6 @@ import { DROPLIST_MENULIST, VARIANTS } from './DropList.constants'
 
 function Select({
   clearOnSelect = false,
-  closeOnBlur = true,
   closeOnSelection = true,
   customEmptyList = null,
   customEmptyListItems,
@@ -27,6 +25,7 @@ function Select({
   handleSelectedItemChange = noop,
   isOpen = false,
   items = [],
+  menuAriaLabel,
   menuCSS,
   menuWidth,
   focusToggler = noop,
@@ -162,6 +161,9 @@ function Select({
           onListItemSelectEvent({ listItemNode: item, event })
         }
       })
+    } else if (event.key === 'Tab') {
+      isOpen && toggleOpenedState(false)
+      onDropListLeave()
     }
   }
 
@@ -172,7 +174,9 @@ function Select({
       menuCSS={menuCSS}
       menuWidth={menuWidth}
     >
-      <A11yTogglerUI {...getToggleButtonProps()}>Toggler</A11yTogglerUI>
+      <A11yTogglerUI {...getToggleButtonProps()} aria-labelledby={null}>
+        Toggler
+      </A11yTogglerUI>
       <MenuListUI
         data-event-driver
         className={`${DROPLIST_MENULIST} MenuList-Select`}
@@ -182,26 +186,11 @@ function Select({
             onMenuFocus(e)
           },
           onBlur: e => {
-            if (closeOnBlur) {
-              /**
-               * Closing on blur
-               *
-               * When clicking on the toggler, this event gets fired _before_
-               * so it sets the isOpen flag to false, and then the click event happens
-               * and sets isOpen to true, making the DropList never close on cliking
-               * the toggler.
-               *
-               * Here we wait a little bit to see if the next element gathering focus
-               * is indeed the toggler, and only close the DropList if it isn't
-               */
-              checkNextElementFocusedAndThenRun(['DropListToggler'], () => {
-                isOpen && toggleOpenedState(false)
-                onDropListLeave()
-              })
-            }
             onMenuBlur(e)
           },
         })}
+        aria-label={menuAriaLabel}
+        aria-labelledby={null}
       >
         {renderListContents({
           customEmptyList,
