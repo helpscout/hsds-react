@@ -1,9 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import Row from './Table.Row'
 import { columnShape, dataShape } from './Table.utils'
+import { isObject } from '../../utilities/is'
+import { TBodyUI } from './Table.css'
 
 export function TableBody({
+  animateRows,
   columns,
   'data-cy': dataCy = 'TableBody',
   deselectRow,
@@ -38,7 +42,40 @@ export function TableBody({
     )
   }
 
-  return <tbody data-cy={dataCy}>{rows.map(renderRow)}</tbody>
+  if (animateRows) {
+    let animateRowsObj = {
+      timeout: 500,
+      classNames: 'animated-row',
+    }
+
+    if (isObject(animateRows)) {
+      animateRowsObj = { ...animateRowsObj, ...animateRows }
+    }
+
+    return (
+      <TBodyUI
+        className="TableBody--animated"
+        data-cy={dataCy}
+        $timeout={animateRowsObj.timeout}
+      >
+        <TransitionGroup className="animated-table-body" component={null}>
+          {rows.map(row => {
+            return (
+              <CSSTransition key={row.id} {...animateRowsObj}>
+                {renderRow(row)}
+              </CSSTransition>
+            )
+          })}
+        </TransitionGroup>
+      </TBodyUI>
+    )
+  }
+
+  return (
+    <tbody className="TableBody" data-cy={dataCy}>
+      {rows.map(renderRow)}
+    </tbody>
+  )
 }
 
 TableBody.propTypes = {

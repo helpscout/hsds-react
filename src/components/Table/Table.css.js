@@ -204,6 +204,26 @@ export const TableUI = styled('table')`
   }
 `
 
+export const TBodyUI = styled('tbody')`
+  .animated-row-enter {
+    opacity: 0;
+  }
+
+  .animated-row-enter-active {
+    opacity: 1;
+    ${({ $timeout }) => `transition: opacity ${$timeout}ms ease-in;`}
+  }
+
+  .animated-row-exit {
+    opacity: 1;
+  }
+
+  .animated-row-exit-active {
+    opacity: 0;
+    ${({ $timeout }) => `transition: opacity ${$timeout}ms ease-in;`}
+  }
+`
+
 export const HeaderCellUI = styled('th')`
   text-align: ${props => props.align || 'left'};
   width: ${props => props.cellWidth || 'auto'};
