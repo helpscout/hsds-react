@@ -8,8 +8,8 @@ const buttons = [
 ]
 
 export const MessageCardSurveyThumbs = ({
-  selected = null,
   onSelection = () => {},
+  selected = null,
 }) => {
   function handleClick(id) {
     onSelection(id)
@@ -23,7 +23,7 @@ export const MessageCardSurveyThumbs = ({
           onClick={() => handleClick(id)}
           selected={selected === id}
         >
-          <span role="img" aria-label="cool">
+          <span role="img" aria-label={id}>
             {text}
           </span>
         </EmojiButtonUI>
@@ -34,4 +34,5 @@ export const MessageCardSurveyThumbs = ({
 
 MessageCardSurveyThumbs.propTypes = {
   onSelection: PropTypes.func,
+  selected: PropTypes.string,
 }
