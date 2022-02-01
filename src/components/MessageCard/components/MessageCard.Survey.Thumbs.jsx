@@ -3,25 +3,21 @@ import PropTypes from 'prop-types'
 import { EmojiButtonUI, SurveyOptionsUI } from './MessageCard.Survey.css'
 
 const buttons = [
-  { id: 'yes', text: '👍' },
-  { id: 'no', text: '👎' },
+  { id: 'thumbs-up', text: '👍' },
+  { id: 'thumbs-down', text: '👎' },
 ]
 
 export const MessageCardSurveyThumbs = ({
   onSelection = () => {},
   selected = null,
 }) => {
-  function handleClick(id) {
-    onSelection(id)
-  }
-
   return (
     <SurveyOptionsUI>
       {buttons.map(({ id, text }) => (
         <EmojiButtonUI
           key={id}
-          onClick={() => handleClick(id)}
-          selected={selected === id}
+          onClick={() => onSelection(id)}
+          className={selected === id ? 'is-selected' : ''}
         >
           <span role="img" aria-label={id}>
             {text}

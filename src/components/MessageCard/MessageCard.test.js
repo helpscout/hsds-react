@@ -427,7 +427,7 @@ describe('Surveys', () => {
 
     expect(screen.queryByLabelText(formLabel)).not.toBeInTheDocument()
 
-    userEvent.click(screen.getByRole('button', { name: 'yes' }))
+    userEvent.click(screen.getByRole('button', { name: 'thumbs-up' }))
 
     expect(screen.queryByLabelText(formLabel)).toBeInTheDocument()
   })
@@ -446,13 +446,13 @@ describe('Surveys', () => {
       </MessageCard.Survey>
     )
 
-    userEvent.click(screen.getByRole('button', { name: 'no' }))
+    userEvent.click(screen.getByRole('button', { name: 'thumbs-down' }))
     userEvent.type(screen.getByLabelText(formLabel), 'Did not like it')
     userEvent.click(screen.getByRole('button', { name: 'Send' }))
 
     expect(onSubmit).toHaveBeenCalledWith({
       feedback: 'Did not like it',
-      selected: 'no',
+      selected: 'thumbs-down',
     })
   })
 
@@ -465,10 +465,10 @@ describe('Surveys', () => {
       </MessageCard.Survey>
     )
 
-    userEvent.click(screen.getByRole('button', { name: 'yes' }))
+    userEvent.click(screen.getByRole('button', { name: 'thumbs-up' }))
 
     expect(onSubmit).toHaveBeenCalledWith({
-      selected: 'yes',
+      selected: 'thumbs-up',
     })
   })
 
@@ -476,7 +476,7 @@ describe('Surveys', () => {
     const formLabel = 'Tell us more...'
 
     render(
-      <MessageCard.Survey forceFeedbackForm>
+      <MessageCard.Survey forceFeedbackForm feedbackFormText={formLabel}>
         <ThumbsSurvey />
       </MessageCard.Survey>
     )

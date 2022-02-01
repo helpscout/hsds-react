@@ -35,11 +35,9 @@ export const EmojiButtonUI = styled('button')`
     transform: scale(1.3);
   }
 
-  ${({ selected }) =>
-    selected &&
-    `
+  &.is-selected {
     border: 2px solid ${getColor('blue.500')};
-  `}
+  }
 `
 
 export const FeedbackFormUI = styled('form')`
