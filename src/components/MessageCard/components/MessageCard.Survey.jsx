@@ -6,6 +6,7 @@ import {
   SpinnerContainerUI,
   SurveyUI,
 } from './MessageCard.Survey.css'
+import { SurveyContext } from '../MessageCard.Survey.context'
 import Input from '../../Input'
 import Button from '../../Button'
 import Spinner from '../../Spinner'
@@ -46,15 +47,6 @@ export const MessageCardSurvey = ({
     })
   }
 
-  function renderChildren() {
-    return React.Children.map(children, child => {
-      return React.cloneElement(child, {
-        selected,
-        onSelection: handleSelection,
-      })
-    })
-  }
-
   if (showConfirmationMessage) {
     return (
       <SurveyUI data-cy="beacon-message-cta-survey">
@@ -66,9 +58,16 @@ export const MessageCardSurvey = ({
     )
   }
 
+  const contextValue = {
+    onSelection: handleSelection,
+    selected,
+  }
+
   return (
     <SurveyUI data-cy="beacon-message-cta-survey">
-      {renderChildren()}
+      <SurveyContext.Provider value={contextValue}>
+        {children}
+      </SurveyContext.Provider>
 
       {shouldShowFeedbackForm && (
         <FeedbackFormUI onSubmit={handleSubmit}>
