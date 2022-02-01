@@ -60,6 +60,7 @@ export function TableRow({
           selected && 'is-row-selected',
           rowClassName(row)
         )}
+        data-row-id={row.id}
         onClick={handleRowClick}
         onKeyDown={handleKeyDown}
         tabIndex={withFocusableRows ? '0' : '-1'}
