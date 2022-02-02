@@ -9,7 +9,7 @@ export const ContainerScrollUI = styled('div')`
   flex-grow: 1;
   overflow: hidden;
   width: ${({ $width }) => $width};
-  height: ${({ $height }) => $height};
+  height: ${({ $height }) => `calc(${$height})`};
 `
 
 export const HeaderUI = styled(({ component, ref, ...props }) =>
