@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import useScrollShadow from '../../hooks/useScrollShadow'
@@ -29,10 +29,7 @@ function ScrollableContainer({
   withSimpleBar,
   ...rest
 }) {
-  const [excedentHeight, setExcedentHeight] = useState(0)
-
   const bodyRef = useRef(null)
-  const scRef = useRef(null)
   const [headerRect, headerEl, headerRef, headerObserverRef] = useMeasureNode({
     observeSize: Boolean(withResizeObservers.header),
   })
@@ -74,26 +71,6 @@ function ScrollableContainer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    if (height.includes('100vh')) {
-      const scrollableRef = forwardedRef || scRef
-
-      if (scrollableRef !== null) {
-        const {
-          height: scHeight,
-        } = scrollableRef.current.getBoundingClientRect()
-        const {
-          height: parentHeight,
-        } = scrollableRef.current.parentElement.getBoundingClientRect()
-
-        if (excedentHeight !== parentHeight - scHeight) {
-          setExcedentHeight(parentHeight - scHeight)
-        }
-      }
-    }
-  })
-
   function renderSection(section) {
     let sectionContent
     let SectionUI
@@ -119,17 +96,14 @@ function ScrollableContainer({
 
         return (
           <SimpleBarUI
-            $height={calculateSimpleBarHeight(
-              height,
-              excedentHeight,
-              headerRect,
-              footerRect
-            )}
-            onScroll={e => {
-              handleOnScroll()
-              onScroll && onScroll(e)
+            $height={calculateSimpleBarHeight(height, headerRect, footerRect)}
+            scrollableNodeProps={{
+              ref: bodyRef,
+              onScroll: e => {
+                handleOnScroll()
+                onScroll && onScroll(e)
+              },
             }}
-            scrollableNodeProps={{ ref: bodyRef }}
             className={classNames('ScrollableContainer__body', className)}
             {...rest}
           >
@@ -176,8 +150,8 @@ function ScrollableContainer({
       className={classNames('c-ScrollableContainer', className)}
       data-cy={dataCy}
       $width={width}
-      $height={`${height} - ${excedentHeight}px`}
-      ref={forwardedRef || scRef}
+      $height={height}
+      ref={forwardedRef}
       {...rest}
     >
       {renderSection('header')}
@@ -187,12 +161,7 @@ function ScrollableContainer({
   )
 }
 
-function calculateSimpleBarHeight(
-  height,
-  excedentHeight,
-  headerRect,
-  footerRect
-) {
+function calculateSimpleBarHeight(height, headerRect, footerRect) {
   let otherSectionsHeight = 0
 
   if (headerRect != null) {
@@ -201,8 +170,6 @@ function calculateSimpleBarHeight(
   if (footerRect != null) {
     otherSectionsHeight += footerRect.height
   }
-
-  otherSectionsHeight += excedentHeight
 
   return `calc(${height} - ${otherSectionsHeight}px)`
 }

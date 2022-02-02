@@ -12,25 +12,6 @@ export const ScrollableContainerUI = styled(ScrollableContainer)`
   margin: 0px auto;
   background-color: #e5e9ec;
 `
-const AppHeaderUI = styled('header')`
-  height: 100px;
-  background-color: #444cf7;
-  color: white;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
-
-const AppFooterUI = styled('footer')`
-  height: 50px;
-  background-color: #444cf7;
-  color: white;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
 
 export const HeaderUI = styled('header')`
   display: flex;
@@ -39,6 +20,7 @@ export const HeaderUI = styled('header')`
   height: 75px;
   padding: 0 30px;
   background-color: #fff;
+
   h1 {
     font-size: 18px;
     font-weight: 500;
@@ -52,15 +34,6 @@ export const HeaderUI = styled('header')`
     h1 {
       font-size: 16px;
     }
-  }
-
-  button {
-    margin-left: 10px;
-    font-size: 11px;
-    border: 0;
-    padding: 3px 5px;
-    border-radius: 3px;
-    box-shadow: 2px 2px slategray;
   }
 `
 
@@ -173,7 +146,6 @@ function getHeights(containerNode) {
 }
 
 export const SimpleBarExample = function () {
-  const [isTopScrolled, setIsTopScrolled] = useState(null)
   const [showHeader, setShowHeader] = useState(true)
   const [showFooter, setShowFooter] = useState(true)
   const containerRef = useRef(null)
@@ -194,212 +166,189 @@ export const SimpleBarExample = function () {
   })
   return (
     <BGUI>
-      <div>
-        {showHeader ? <AppHeaderUI>App header</AppHeaderUI> : null}
-        <ScrollableContainerUI
-          ref={containerRef}
-          withSimpleBar
-          width="70%"
-          height="100vh"
-          shadows={{ initial: 'none' }}
-          onScrollableSectionsStateChange={({ isTopScrolled }) => {
-            setIsTopScrolled(isTopScrolled)
-          }}
-          onScroll={handleScroll}
-          withResizeObservers={{
-            header: true,
-            footer: true,
-          }}
-          header={
-            <HeaderUI
-              className={classNames('top-header')}
-              data-testprop="This gets passed"
-            >
-              <h1>Heading</h1>
-              <div className="actions">
-                <button
-                  onClick={() => {
-                    setShowHeader(!showHeader)
-                  }}
-                >
-                  {showHeader ? 'hide' : 'show'} app header
-                </button>
-                <button
-                  onClick={() => {
-                    setShowFooter(!showFooter)
-                  }}
-                >
-                  {showFooter ? 'hide' : 'show'} app footer
-                </button>
-              </div>
-            </HeaderUI>
-          }
-          body={
-            <BodyUI className="TESTING" data-testprop="This gets passed">
-              <p>
-                Ullamco reprehenderit in irure officia dolore anim eiusmod
-                labore duis ea laborum ex. Reprehenderit consequat officia ea id
-                ex exercitation et sit et. Velit velit aliqua occaecat quis
-                occaecat. Enim incididunt est velit pariatur adipisicing labore
-                dolore anim cillum.
-              </p>
-              <p>
-                Ullamco reprehenderit in irure officia dolore anim eiusmod
-                labore duis ea laborum ex. Reprehenderit consequat officia ea id
-                ex exercitation et sit et. Velit velit aliqua occaecat quis
-                occaecat. Enim incididunt est velit pariatur adipisicing labore
-                dolore anim cillum.
-              </p>
-              <p>
-                Ullamco reprehenderit in irure officia dolore anim eiusmod
-                labore duis ea laborum ex. Reprehenderit consequat officia ea id
-                ex exercitation et sit et. Velit velit aliqua occaecat quis
-                occaecat. Enim incididunt est velit pariatur adipisicing labore
-                dolore anim cillum.
-              </p>
-              <p>
-                Ullamco reprehenderit in irure officia dolore anim eiusmod
-                labore duis ea laborum ex. Reprehenderit consequat officia ea id
-                ex exercitation et sit et. Velit velit aliqua occaecat quis
-                occaecat. Enim incididunt est velit pariatur adipisicing labore
-                dolore anim cillum.
-              </p>
-              <p>
-                Ullamco reprehenderit in irure officia dolore anim eiusmod
-                labore duis ea laborum ex. Reprehenderit consequat officia ea id
-                ex exercitation et sit et. Velit velit aliqua occaecat quis
-                occaecat. Enim incididunt est velit pariatur adipisicing labore
-                dolore anim cillum.
-              </p>
-              <p>
-                Ullamco reprehenderit in irure officia dolore anim eiusmod
-                labore duis ea laborum ex. Reprehenderit consequat officia ea id
-                ex exercitation et sit et. Velit velit aliqua occaecat quis
-                occaecat. Enim incididunt est velit pariatur adipisicing labore
-                dolore anim cillum.
-              </p>
-              <p>
-                Ullamco reprehenderit in irure officia dolore anim eiusmod
-                labore duis ea laborum ex. Reprehenderit consequat officia ea id
-                ex exercitation et sit et. Velit velit aliqua occaecat quis
-                occaecat. Enim incididunt est velit pariatur adipisicing labore
-                dolore anim cillum.
-              </p>
-              <p>
-                Ullamco reprehenderit in irure officia dolore anim eiusmod
-                labore duis ea laborum ex. Reprehenderit consequat officia ea id
-                ex exercitation et sit et. Velit velit aliqua occaecat quis
-                occaecat. Enim incididunt est velit pariatur adipisicing labore
-                dolore anim cillum.
-              </p>
-              <p>
-                Ullamco reprehenderit in irure officia dolore anim eiusmod
-                labore duis ea laborum ex. Reprehenderit consequat officia ea id
-                ex exercitation et sit et. Velit velit aliqua occaecat quis
-                occaecat. Enim incididunt est velit pariatur adipisicing labore
-                dolore anim cillum.
-              </p>
-              <p>
-                Ullamco reprehenderit in irure officia dolore anim eiusmod
-                labore duis ea laborum ex. Reprehenderit consequat officia ea id
-                ex exercitation et sit et. Velit velit aliqua occaecat quis
-                occaecat. Enim incididunt est velit pariatur adipisicing labore
-                dolore anim cillum.
-              </p>
-              <p>
-                Ullamco reprehenderit in irure officia dolore anim eiusmod
-                labore duis ea laborum ex. Reprehenderit consequat officia ea id
-                ex exercitation et sit et. Velit velit aliqua occaecat quis
-                occaecat. Enim incididunt est velit pariatur adipisicing labore
-                dolore anim cillum.
-              </p>
-              <p>
-                Ullamco reprehenderit in irure officia dolore anim eiusmod
-                labore duis ea laborum ex. Reprehenderit consequat officia ea id
-                ex exercitation et sit et. Velit velit aliqua occaecat quis
-                occaecat. Enim incididunt est velit pariatur adipisicing labore
-                dolore anim cillum.
-              </p>
-              <p>
-                Ullamco reprehenderit in irure officia dolore anim eiusmod
-                labore duis ea laborum ex. Reprehenderit consequat officia ea id
-                ex exercitation et sit et. Velit velit aliqua occaecat quis
-                occaecat. Enim incididunt est velit pariatur adipisicing labore
-                dolore anim cillum.
-              </p>
-              <p>
-                Ullamco reprehenderit in irure officia dolore anim eiusmod
-                labore duis ea laborum ex. Reprehenderit consequat officia ea id
-                ex exercitation et sit et. Velit velit aliqua occaecat quis
-                occaecat. Enim incididunt est velit pariatur adipisicing labore
-                dolore anim cillum.
-              </p>
-              <p>
-                Ullamco reprehenderit in irure officia dolore anim eiusmod
-                labore duis ea laborum ex. Reprehenderit consequat officia ea id
-                ex exercitation et sit et. Velit velit aliqua occaecat quis
-                occaecat. Enim incididunt est velit pariatur adipisicing labore
-                dolore anim cillum.
-              </p>
-              <p>
-                Ullamco reprehenderit in irure officia dolore anim eiusmod
-                labore duis ea laborum ex. Reprehenderit consequat officia ea id
-                ex exercitation et sit et. Velit velit aliqua occaecat quis
-                occaecat. Enim incididunt est velit pariatur adipisicing labore
-                dolore anim cillum.
-              </p>
-            </BodyUI>
-          }
-          footer={
-            <ScrollableContainer
-              className="top-footer"
-              shadows={{ initial: 'none' }}
-              width="100%"
-              height={footerHeight}
-              withSimpleBar
-              body={
-                <BodyUI style={{ background: 'white' }}>
-                  <InputUI
-                    type="text"
-                    name="hello"
-                    id="hello"
-                    placeholder="first input..."
-                    style={{ marginTop: '20px' }}
-                  />
-                  <br />
-                  <InputUI
-                    type="text"
-                    name="hello"
-                    id="hello2"
-                    placeholder="another input here..."
-                  />
-                  <br />
-                  <InputUI
-                    type="text"
-                    name="hello"
-                    id="hello3"
-                    placeholder="another input here..."
-                  />
-                  <br />
-                  <InputUI
-                    type="text"
-                    name="hello"
-                    id="hello4"
-                    placeholder="last input..."
-                  />
-                  <br />
-                </BodyUI>
-              }
-              footer={
-                <FooterUI>
-                  <Button theme="blue">Action!</Button>
-                </FooterUI>
-              }
-            />
-          }
-        />
-        {showFooter ? <AppFooterUI>App footer</AppFooterUI> : null}
-      </div>
+      <ScrollableContainerUI
+        ref={containerRef}
+        withSimpleBar
+        width="70%"
+        height="100vh"
+        shadows={{ initial: 'none' }}
+        onScroll={handleScroll}
+        withResizeObservers={{
+          header: true,
+          footer: true,
+        }}
+        header={
+          <HeaderUI
+            className={classNames('top-header')}
+            data-testprop="This gets passed"
+          >
+            <h1>Heading</h1>
+          </HeaderUI>
+        }
+        body={
+          <BodyUI className="TESTING" data-testprop="This gets passed">
+            <p>
+              Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+              duis ea laborum ex. Reprehenderit consequat officia ea id ex
+              exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+              Enim incididunt est velit pariatur adipisicing labore dolore anim
+              cillum.
+            </p>
+            <p>
+              Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+              duis ea laborum ex. Reprehenderit consequat officia ea id ex
+              exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+              Enim incididunt est velit pariatur adipisicing labore dolore anim
+              cillum.
+            </p>
+            <p>
+              Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+              duis ea laborum ex. Reprehenderit consequat officia ea id ex
+              exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+              Enim incididunt est velit pariatur adipisicing labore dolore anim
+              cillum.
+            </p>
+            <p>
+              Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+              duis ea laborum ex. Reprehenderit consequat officia ea id ex
+              exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+              Enim incididunt est velit pariatur adipisicing labore dolore anim
+              cillum.
+            </p>
+            <p>
+              Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+              duis ea laborum ex. Reprehenderit consequat officia ea id ex
+              exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+              Enim incididunt est velit pariatur adipisicing labore dolore anim
+              cillum.
+            </p>
+            <p>
+              Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+              duis ea laborum ex. Reprehenderit consequat officia ea id ex
+              exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+              Enim incididunt est velit pariatur adipisicing labore dolore anim
+              cillum.
+            </p>
+            <p>
+              Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+              duis ea laborum ex. Reprehenderit consequat officia ea id ex
+              exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+              Enim incididunt est velit pariatur adipisicing labore dolore anim
+              cillum.
+            </p>
+            <p>
+              Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+              duis ea laborum ex. Reprehenderit consequat officia ea id ex
+              exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+              Enim incididunt est velit pariatur adipisicing labore dolore anim
+              cillum.
+            </p>
+            <p>
+              Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+              duis ea laborum ex. Reprehenderit consequat officia ea id ex
+              exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+              Enim incididunt est velit pariatur adipisicing labore dolore anim
+              cillum.
+            </p>
+            <p>
+              Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+              duis ea laborum ex. Reprehenderit consequat officia ea id ex
+              exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+              Enim incididunt est velit pariatur adipisicing labore dolore anim
+              cillum.
+            </p>
+            <p>
+              Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+              duis ea laborum ex. Reprehenderit consequat officia ea id ex
+              exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+              Enim incididunt est velit pariatur adipisicing labore dolore anim
+              cillum.
+            </p>
+            <p>
+              Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+              duis ea laborum ex. Reprehenderit consequat officia ea id ex
+              exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+              Enim incididunt est velit pariatur adipisicing labore dolore anim
+              cillum.
+            </p>
+            <p>
+              Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+              duis ea laborum ex. Reprehenderit consequat officia ea id ex
+              exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+              Enim incididunt est velit pariatur adipisicing labore dolore anim
+              cillum.
+            </p>
+            <p>
+              Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+              duis ea laborum ex. Reprehenderit consequat officia ea id ex
+              exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+              Enim incididunt est velit pariatur adipisicing labore dolore anim
+              cillum.
+            </p>
+            <p>
+              Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+              duis ea laborum ex. Reprehenderit consequat officia ea id ex
+              exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+              Enim incididunt est velit pariatur adipisicing labore dolore anim
+              cillum.
+            </p>
+            <p>
+              Ullamco reprehenderit in irure officia dolore anim eiusmod labore
+              duis ea laborum ex. Reprehenderit consequat officia ea id ex
+              exercitation et sit et. Velit velit aliqua occaecat quis occaecat.
+              Enim incididunt est velit pariatur adipisicing labore dolore anim
+              cillum.
+            </p>
+          </BodyUI>
+        }
+        footer={
+          <ScrollableContainer
+            className="top-footer"
+            shadows={{ initial: 'none' }}
+            width="100%"
+            height={footerHeight}
+            withSimpleBar
+            body={
+              <BodyUI style={{ background: 'white' }}>
+                <InputUI
+                  type="text"
+                  name="hello"
+                  id="hello"
+                  placeholder="first input..."
+                  style={{ marginTop: '20px' }}
+                />
+                <br />
+                <InputUI
+                  type="text"
+                  name="hello"
+                  id="hello2"
+                  placeholder="another input here..."
+                />
+                <br />
+                <InputUI
+                  type="text"
+                  name="hello"
+                  id="hello3"
+                  placeholder="another input here..."
+                />
+                <br />
+                <InputUI
+                  type="text"
+                  name="hello"
+                  id="hello4"
+                  placeholder="last input..."
+                />
+                <br />
+              </BodyUI>
+            }
+            footer={
+              <FooterUI>
+                <Button theme="blue">Action!</Button>
+              </FooterUI>
+            }
+          />
+        }
+      />
     </BGUI>
   )
 }
