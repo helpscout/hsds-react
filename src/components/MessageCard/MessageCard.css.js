@@ -282,7 +282,7 @@ export const BodyUI = styled.div`
     align-items: center;
     padding: 3px 8px;
     margin-right: 4px;
-    height: 20px;
+    min-height: 20px;
     line-height: 17px;
 
     color: ${getColor('purple.800')};
@@ -293,7 +293,6 @@ export const BodyUI = styled.div`
     font-style: normal;
     font-weight: normal;
     text-decoration: none;
-    white-space: nowrap;
   }
 `
 
