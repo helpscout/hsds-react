@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { SurveyContext } from '../MessageCard.Survey.context'
 import { EmojiButtonUI, SurveyOptionsUI } from './MessageCard.Survey.css'
+import { useSurveyContext } from '../MessageCard.Survey.context'
 
 const buttons = [
   { id: 'thumbs-up', text: '👍' },
@@ -9,9 +9,7 @@ const buttons = [
 ]
 
 export const MessageCardSurveyThumbs = () => {
-  const { onSelection = () => {}, selected = null } = React.useContext(
-    SurveyContext
-  )
+  const { onSelection, selected } = useSurveyContext()
 
   return (
     <SurveyOptionsUI>

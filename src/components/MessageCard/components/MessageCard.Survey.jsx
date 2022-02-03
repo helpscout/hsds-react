@@ -7,6 +7,7 @@ import {
   SurveyUI,
 } from './MessageCard.Survey.css'
 import { SurveyContext } from '../MessageCard.Survey.context'
+import { noop } from '../../../utilities/other'
 import Input from '../../Input'
 import Button from '../../Button'
 import Spinner from '../../Spinner'
@@ -17,7 +18,7 @@ export const MessageCardSurvey = ({
   withFeedbackForm = false,
   forceFeedbackForm = false,
   feedbackFormText = '',
-  onSubmit = () => {},
+  onSubmit = noop,
   showSpinner = false,
   showConfirmationMessage = false,
 }) => {
