@@ -4,7 +4,7 @@ import { getColor } from '../../../styles/utilities/color'
 export const SurveyUI = styled('div')`
   background: ${getColor('grey.200')};
   border-radius: 5px;
-  margin: 0px -16px -15px -16px;
+  margin: 0px -16px -16px -16px;
   padding: 14px 15px;
   position: relative;
 `
