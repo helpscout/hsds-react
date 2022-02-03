@@ -1,5 +1,7 @@
 import styled from 'styled-components'
+import { focusRing } from '../../../styles/mixins/focusRing.css'
 import { getColor } from '../../../styles/utilities/color'
+import Button from '../../Button'
 
 export const SurveyUI = styled('div')`
   background: ${getColor('grey.200')};
@@ -27,6 +29,10 @@ export const EmojiButtonUI = styled('button')`
   transition: transform 0.2s ease-in-out;
   width: 42px;
 
+  ${focusRing};
+  --focusRingOffset: -3px;
+  --focusRingRadius: 50%;
+
   &:first-child {
     margin-left: 0;
   }
@@ -42,17 +48,18 @@ export const EmojiButtonUI = styled('button')`
 
 export const FeedbackFormUI = styled('form')`
   margin-top: 16px;
+`
 
-  label {
-    color: ${getColor('charcoal.500')};
-    display: block;
-    margin-bottom: 6px;
-  }
+export const FeedbackLabelUI = styled('label')`
+  color: ${getColor('charcoal.500')};
+  display: block;
+  margin-bottom: 6px;
+`
 
-  .c-Button {
-    height: 54px;
+export const SubmitFeedbackFormButtonUI = styled(Button)`
+  &.is-size-xxl {
+    --buttonMinWidth: 100%;
     margin-top: 15px;
-    width: 100%;
   }
 `
 

@@ -3,13 +3,14 @@ import PropTypes from 'prop-types'
 import {
   ConfirmationMessageUI,
   FeedbackFormUI,
+  FeedbackLabelUI,
   SpinnerContainerUI,
+  SubmitFeedbackFormButtonUI,
   SurveyUI,
 } from './MessageCard.Survey.css'
 import { SurveyContext } from '../MessageCard.Survey.context'
 import { noop } from '../../../utilities/other'
 import Input from '../../Input'
-import Button from '../../Button'
 import Spinner from '../../Spinner'
 import Icon from '../../Icon'
 
@@ -72,7 +73,9 @@ export const MessageCardSurvey = ({
 
       {shouldShowFeedbackForm && (
         <FeedbackFormUI onSubmit={handleSubmit}>
-          <label htmlFor="survey-comment">{feedbackFormText}</label>
+          <FeedbackLabelUI htmlFor="survey-comment">
+            {feedbackFormText}
+          </FeedbackLabelUI>
           <Input
             id="survey-comment"
             name="survey-comment"
@@ -82,9 +85,9 @@ export const MessageCardSurvey = ({
             value={feedback}
             onChange={value => setFeedback(value)}
           />
-          <Button submit theme="blue">
+          <SubmitFeedbackFormButtonUI submit size="xxl" theme="blue">
             Send
-          </Button>
+          </SubmitFeedbackFormButtonUI>
         </FeedbackFormUI>
       )}
 
