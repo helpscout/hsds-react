@@ -1,6 +1,7 @@
 import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs/blocks'
 import { boolean, select, text } from '@storybook/addon-knobs'
 import MessageCard from './'
+import { ThumbsSurvey } from './MessageCard.Survey.variants'
 
 <Meta
   title="Components/Conversation/Message/MessageCard"
@@ -160,6 +161,26 @@ This component renders a Message Card Notification with (optional) Title, Subtit
         { id: 'coordinator', display: 'Person' },
         { id: 'date', display: 'Date' },
       ]}
+    />
+  </Story>
+</Canvas>
+
+# With survey
+
+<Canvas>
+  <Story name="With survey">
+    <MessageCard
+      title="How did you feel about your checkout experience?"
+      body="Your feedback is valuable to us. Let us know how we did so we can continue to improve our services."
+      action={() => (
+        <MessageCard.Survey
+          withFeedbackForm
+          feedbackFormText="Tell us more..."
+          onSubmit={data => console.log(data)}
+        >
+          <ThumbsSurvey />
+        </MessageCard.Survey>
+      )}
     />
   </Story>
 </Canvas>
