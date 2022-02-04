@@ -218,11 +218,14 @@ export class EditableField extends React.Component {
     const changedField =
       this.state.fieldValue.length === 1
         ? this.state.fieldValue[0]
-        : find(this.state.fieldValue, val => val.id === event.target.id)
+        : find(this.state.fieldValue, val => `${val.id}` === event.target.id)
     const initialField =
       this.state.initialFieldValue.length === 1
         ? this.state.initialFieldValue[0]
-        : find(this.state.initialFieldValue, val => val.id === event.target.id)
+        : find(
+            this.state.initialFieldValue,
+            val => `${val.id}` === event.target.id
+          )
 
     if (
       equal(this.state.initialFieldValue, this.state.fieldValue) ||
