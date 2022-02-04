@@ -61,6 +61,7 @@ export class EditableFieldActions extends React.Component {
               onClick={event => {
                 this.handleActionClick({ action, event })
               }}
+              {...action.buttonAttrs}
             >
               <Icon name={action.icon || ACTION_ICONS[action.name]} size="24" />
             </FieldButtonUI>
