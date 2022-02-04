@@ -68,8 +68,9 @@ A special type of inputs that allow you to edit it inline
   - `"link"`: For url types, adds a button to open a new tab/window with the url
 - By default `EditableField` incorporates one action: “delete”
 - To override either of the predefined actions, pass them in the array using the same action name
-- If the user doesn’t want any action, she needs to explicitly pass `null`
+- If the user doesn't want any action, she needs to explicitly pass `null`
 - `icon` should be the name of an Icon that is present in HSDS
+- Pass a `buttonAttrs` object to attach attributes directly on the html button (such as aria labels): `{ buttonAttrs: { 'aria-label': 'My important button' } }`
 
 ### onCommit
 
@@ -237,6 +238,9 @@ const ATLAS = {
           name: 'link',
           callback(obj) {
             console.log('HSDS: EditableFieldApp -> callback -> obj', obj)
+          },
+          buttonAttrs: {
+            'aria-label': 'some aria label',
           },
         }}
       />
