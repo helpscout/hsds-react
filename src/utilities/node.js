@@ -248,6 +248,11 @@ export const isNodeWithinViewport = options => {
 export function nodesHaveSameParent(parentSelector, node1, node2) {
   if (!parentSelector || !node1 || !node2) return false
 
+  //for testing
+  if (!node1.closest) {
+    return false
+  }
+
   const parent1 = node1.closest(parentSelector)
   const parent2 = node2.closest(parentSelector)
 
