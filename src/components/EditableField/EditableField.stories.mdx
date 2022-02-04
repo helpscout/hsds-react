@@ -340,6 +340,46 @@ const ATLAS = {
 
 #### Validation
 
+To enable field validation use the function prop `validate`, it provides the following payload:
+
+```jsx
+<EditableField
+  validate={payload => {
+    /**
+      payload.data = { cause, item, operation } => data associated with the operation
+      payload.name => the field name that we are validating
+      payload.value => the new field value to validate
+      payload.values => in multiple value fields, get all items as an array
+    **/
+
+    const { name, value } = payload // this is usually all you need
+    const isValid = value !== 'valid' // determine what makes it valid or not
+
+  // always return a promise...
+  return return new Promise(resolve => {
+    if (isValid) {
+      resolve({
+        isValid, // required
+        name,
+        value,
+        updatedProps // if you need to update some props on the validated item
+      })
+    } else {
+      resolve({
+        isValid, // required
+        name,
+        value,
+        type: 'error' || 'warning' || 'custom', // the first two are provided (makes things red or yellow),
+        message: 'That is definitely not right', // gets put in the tooltip
+        icon, // name of a hsds button to put there, 'alert-small' is the default
+        color, // pass a valid custom color
+      })
+    }
+  })
+  }}
+/>
+```
+
 <Canvas>
   <Story name="Validation">
     <ValidationApp />
