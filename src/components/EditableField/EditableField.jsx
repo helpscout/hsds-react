@@ -256,12 +256,10 @@ export class EditableField extends React.Component {
 
     // In multivalue fields, remove the empty one when there're at least 2 fields
     const shouldDiscardEmpty =
-      !hasOptions &&
       multipleValuesEnabled &&
       removedEmptyFields.length < this.state.fieldValue.length
 
     if (shouldDiscardEmpty) {
-      console.log('here 2')
       let deletedField
 
       // if the last visible field has been removed, remove its _id property before
