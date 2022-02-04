@@ -18,8 +18,6 @@ export function getNumberOfItemsToDisplay({
   containerWidth,
   gap,
   numberOfAvatars,
-  numberOfItemsOnDisplay,
-  minAvatarsShown,
 }) {
   /** Only act if we have more than 1 avatar */
   if (!containerWidth || numberOfAvatars <= 1) {
@@ -37,15 +35,14 @@ export function getNumberOfItemsToDisplay({
   if (containerWidth >= spaceForAllAvatars) {
     return numberOfAvatars
   } else {
-    let numberOfGaps =
-      minAvatarsShown > numberOfItemsOnDisplay
-        ? minAvatarsShown - 1
-        : numberOfItemsOnDisplay - 1
-
+    // The real space for an avatar is its size + gap, we round down to account
+    // for the last avatar not having a gap after it [AV]gap[AV]gap[AV]gap[AV]
+    const numberOfGaps = Math.floor(containerWidth / (avatarSize + gap))
     const itemsThatFit = Math.floor(
       (containerWidth - numberOfGaps * gap) / avatarSize
     )
 
+    // Always show 1 regardless if there's enough space for it
     return itemsThatFit > 0 ? itemsThatFit : 1
   }
 }

@@ -106,7 +106,7 @@ export default function ConvoList() {
           },
         ])
       }
-    }, 3000)
+    }, 1000)
 
     return () => {
       clearTimeout(id)
@@ -144,7 +144,7 @@ export default function ConvoList() {
           }}
           onRowClick={(e, row) => {
             const url = `/conversation/${row.id}/${row.number}`
-            console.group('Row Click')
+            console.groupCollapsed('Row Click')
             console.log('🚀 ~ file: ConvoList.js ~ line 181 ~ row', row)
             console.log('🚀 ~ file: ConvoList.js ~ line 143 ~ url', url)
             console.warn(

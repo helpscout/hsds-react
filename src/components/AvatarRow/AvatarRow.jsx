@@ -70,8 +70,6 @@ function AvatarRow({
         containerWidth,
         gap,
         numberOfAvatars,
-        numberOfItemsOnDisplay,
-        minAvatarsShown,
       })
     )
   }
