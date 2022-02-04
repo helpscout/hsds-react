@@ -270,6 +270,14 @@ const ATLAS = {
         name="paint"
         placeholder="Add a colour"
         type="text"
+        onCommit={({ name, value }) => {
+          value.forEach(val => {
+            console.group(`Filed: ${name}`)
+            console.log('🚀 ~ option', val.option)
+            console.log('🚀 ~ value', val.value)
+            console.groupEnd()
+          })
+        }}
         valueOptions={PAINT_OPTIONS}
         value={[
           { option: PAINT_OPTIONS[0], value: 'Anthraquinone Blue PB60' },

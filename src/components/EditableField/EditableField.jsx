@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import equal from 'fast-deep-equal'
+import classNames from 'classnames'
 import {
   EditableFieldUI,
   FieldUI,
@@ -19,7 +21,6 @@ import { EditableFieldMask as Mask } from './EditableField.Mask'
 import { EditableFieldActions as Actions } from './EditableField.Actions'
 import Icon from '../Icon'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import classNames from 'classnames'
 import {
   createNewValueFieldObject,
   generateFieldActions,
@@ -31,7 +32,7 @@ import { key } from '../../constants/Keys'
 import { noop } from '../../utilities/other'
 import { isArray, isFunction } from '../../utilities/is'
 import { find } from '../../utilities/arrays'
-import equal from 'fast-deep-equal'
+import { nodesHaveSameParent } from '../../utilities/node'
 
 export class EditableField extends React.Component {
   static className = EDITABLEFIELD_CLASSNAMES.component
@@ -228,6 +229,20 @@ export class EditableField extends React.Component {
       equal(initialField, changedField) ||
       this.state.disabledItem.indexOf(changedField.id) !== -1
     ) {
+      // On multiple value fields, if we jump from one input to another
+      // of the same EditableField, all we want is to fire onInputBlur
+      const parentSelector = `[data-field-id="ef_${this.props.name}"]`
+      const nextElHasSameParent = nodesHaveSameParent(
+        parentSelector,
+        event.relatedTarget,
+        event.target
+      )
+
+      if (nextElHasSameParent) {
+        onInputBlur({ name, value: this.state.fieldValue, event })
+        return
+      }
+
       this.setState({ activeField: EMPTY_VALUE }, () => {
         onInputBlur({ name, value: this.state.fieldValue, event })
       })
@@ -246,6 +261,7 @@ export class EditableField extends React.Component {
       removedEmptyFields.length < this.state.fieldValue.length
 
     if (shouldDiscardEmpty) {
+      console.log('here 2')
       let deletedField
 
       // if the last visible field has been removed, remove its _id property before
@@ -396,16 +412,27 @@ export class EditableField extends React.Component {
                    * to the focused input. With that info, we can update the active field _after_ the blur
                    * setState, knowing that if the activeState in the state is different from what we had before
                    * it means the focus event kicked in.
+                   *
+                   * In multiple value EFs, We also need to check if the next element that receives focus is part of the
+                   * same group.
                    */
 
                   const unchangedByFocusEvent =
                     this.state.activeField === activeField
+                  const parentSelector = `[data-field-id="ef_${this.props.name}"]`
+                  const nextElHasSameParent = nodesHaveSameParent(
+                    parentSelector,
+                    event.relatedTarget,
+                    event.target
+                  )
 
-                  this.setState({
-                    activeField: unchangedByFocusEvent
-                      ? EMPTY_VALUE
-                      : this.state.activeField,
-                  })
+                  if (!nextElHasSameParent) {
+                    this.setState({
+                      activeField: unchangedByFocusEvent
+                        ? EMPTY_VALUE
+                        : this.state.activeField,
+                    })
+                  }
                 }
               )
             } else {
@@ -1048,6 +1075,7 @@ export class EditableField extends React.Component {
       return (
         <EditableFieldUI
           {...getValidProps(rest)}
+          data-field-id={`ef_${name}`}
           className={this.getClassName()}
           ref={this.setEditableNode}
           inline
@@ -1060,6 +1088,7 @@ export class EditableField extends React.Component {
     return (
       <EditableFieldUI
         {...getValidProps(rest)}
+        data-field-id={`ef_${name}`}
         className={this.getClassName()}
         ref={this.setEditableNode}
       >
