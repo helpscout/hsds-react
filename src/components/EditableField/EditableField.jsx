@@ -577,7 +577,6 @@ export class EditableField extends React.Component {
         })
 
         // Skip if the field was marked as validated
-
         if (!impactedField.validated) {
           this.setState({ disabledItem: this.state.disabledItem.concat(name) })
 
@@ -693,7 +692,6 @@ export class EditableField extends React.Component {
   }
 
   // tested
-
   updateFieldValue = ({ value, name, updatedProps = {} }) => {
     const { fieldValue } = this.state
 
