@@ -154,7 +154,10 @@ This component renders a Message Card Notification with (optional) Title, Subtit
       title={text('Title', 'Need help?')}
       body={text(
         'Body',
-        '<p>Hi {%customer.firstName,fallback=there%}!</p> <p>This <i>sentence</i> has five <u>words</u>. </p> <p>See you at our <b>amazing show with {%coordinator,fallback=Coordinator%}</b>!</p> <p>It would happen at {%date%}</p> <p>And this is non-existing variable {%nonExisting,fallback=no%}</p>'
+        '<p>Hi {%customer.firstName,fallback=there%}!</p> <p>This <i>sentence</i> has five <u>words</u>. </p>' +
+          ' <p>See you at our <b>amazing show with {%coordinator,fallback=Coordinator%}</b>!</p>' +
+          ' <p>It would happen at {%date%}</p> <p>And this is non-existing variable {%nonExisting,fallback=no%}</p>' +
+          ' <p>Long variable {%coordinator,fallback=Some quite very very long variable fallback%}</p>'
       )}
       variables={[
         { id: 'customer.firstName', display: 'First Name' },
