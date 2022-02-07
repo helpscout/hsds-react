@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { EmoticonUI, IconUI } from './Emoticon.css'
 import { getName, getIcon } from './Emoticon.utils'
 
@@ -73,7 +72,7 @@ Emoticon.defaultProps = {
   inline: false,
   isActive: true,
   isDisabled: false,
-  innerRef: noop,
+  innerRef: () => undefined,
   name: 'happy',
   role: 'presentation',
   size: 'md',

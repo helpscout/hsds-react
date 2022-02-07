@@ -1,5 +1,3 @@
-import { noop } from './other'
-
 /**
  * Returns the first item of an array
  * @param  {Array} array The array.
@@ -41,7 +39,7 @@ export const includes = (array = [], item) => {
  * @param   {Function} callback Callback to match.
  * @returns {boolean} The result.
  */
-export const find = (array = [], callback = noop) => {
+export const find = (array = [], callback = () => undefined) => {
   if (Array.prototype.find) return array.find(callback)
 
   return array.filter(callback)[0]

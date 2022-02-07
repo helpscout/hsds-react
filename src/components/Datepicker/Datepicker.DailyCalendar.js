@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useMonth } from '@datepicker-react/hooks'
-import { noop } from '../../utilities/other'
 import { isMonthInThePast } from './Datepicker.utils'
 import { NAVIGATION_LEVELS } from './Datepicker.constants'
 import Month from './Datepicker.Month'
 import Navigator from './Datepicker.Navigator'
 import { DailyCalendarUI } from './Datepicker.css'
+
+const noop = () => undefined
 
 function DailyCalendar({
   activeMonths,

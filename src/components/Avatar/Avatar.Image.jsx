@@ -9,7 +9,6 @@ import { PropTypes } from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import VisuallyHidden from '../VisuallyHidden'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { ImageWrapperUI, ImageUI, InitialsUI } from './Avatar.css'
 import { getAnimationProps } from './Avatar.utils'
 
@@ -241,8 +240,8 @@ AvatarImage.defaultProps = {
   initials: null,
   light: false,
   name: null,
-  onError: noop,
-  onLoad: noop,
+  onError: () => undefined,
+  onLoad: () => undefined,
   src: null,
 }
 

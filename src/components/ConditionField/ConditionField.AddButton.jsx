@@ -6,7 +6,6 @@ import { withMotion } from '../Motion'
 import Condition from '../Condition'
 import classNames from 'classnames'
 import { AddButtonContentUI } from './ConditionField.css'
-import { noop } from '../../utilities/other'
 
 export const ConditionFieldAddButton = props => {
   const { className, onTypeChanged, selectableType, ...rest } = props
@@ -33,7 +32,7 @@ ConditionFieldAddButton.defaultProps = {
   isBorderless: true,
   isWithMotion: true,
   type: 'or',
-  onTypeChanged: noop,
+  onTypeChanged: () => undefined,
   selectableType: false,
 }
 

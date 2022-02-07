@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { isPlainContent } from './Popover.utils'
 import { ArrowPopoverUI, HeaderUI, HeadingUI, PopoverUI } from './Popover.css'
 import Text from '../Text'
@@ -48,7 +47,7 @@ const PopoverHeader = ({ header, renderHeader }) => {
 
 export const Popover = ({
   arrowSize = 14,
-  innerRef = noop,
+  innerRef = () => undefined,
   header,
   renderHeader,
   content,

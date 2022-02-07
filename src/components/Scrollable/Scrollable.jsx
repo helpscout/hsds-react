@@ -12,8 +12,9 @@ import {
   getFadeLeftStyles,
   getFadeRightStyles,
 } from '../../utilities/scrollFade'
-import { noop } from '../../utilities/other'
 import { ScrollableUI, ContentUI, FaderUI } from './Scrollable.css'
+
+const noop = () => undefined
 
 export class Scrollable extends React.PureComponent {
   containernode

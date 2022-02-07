@@ -1,11 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Icon from '../Icon'
 import { ButtonUI, ButtonWrapperUI, SplittedButtonUI } from './Condition.css'
 import classNames from 'classnames'
 import { isNodeWithinViewport } from '../../utilities/node'
-import { noop } from '../../utilities/other'
 import { linear, smoothScrollTo } from '../../utilities/smoothScroll'
 import DropList from '../DropList/DropList'
 
@@ -125,8 +123,8 @@ class AddButton extends React.PureComponent {
 AddButton.defaultProps = {
   'data-cy': 'ConditionAddButton',
   isBorderless: false,
-  onClick: noop,
-  onTypeChanged: noop,
+  onClick: () => undefined,
+  onTypeChanged: () => undefined,
   scrollDuration: 300,
   scrollOffset: 200,
   type: 'or',

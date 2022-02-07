@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Text from '../Text'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import Progress from './Stepper.Progress'
 import { StepUI, LineUI, CircleUI, GhostTitleUI } from './Stepper.css'
 
@@ -56,8 +55,8 @@ Step.defaultProps = {
   isActive: false,
   isClickable: false,
   index: 0,
-  innerRef: noop,
-  onClick: noop,
+  innerRef: () => undefined,
+  onClick: () => undefined,
 }
 
 Step.propTypes = {

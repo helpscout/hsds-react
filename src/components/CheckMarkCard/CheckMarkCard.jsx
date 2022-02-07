@@ -9,7 +9,6 @@ import VisuallyHidden from '../VisuallyHidden'
 
 import classNames from 'classnames'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { noop } from '../../utilities/other'
 
 import {
   AvatarWrapperUI,
@@ -22,7 +21,7 @@ import {
 } from './CheckMarkCard.css'
 
 const uniqueID = createUniqueIDFactory('CheckMarkCard')
-
+const noop = () => undefined
 const useCustomId = id => {
   const customId = useRef(id || uniqueID())
   return customId.current

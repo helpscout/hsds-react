@@ -29,8 +29,9 @@ import {
 } from './EditableField.utils'
 import classNames from 'classnames'
 import { key } from '../../constants/Keys'
-import { noop } from '../../utilities/other'
 import equal from 'fast-deep-equal'
+
+const noop = () => undefined
 
 const Toggler = forwardRef(
   (

@@ -6,7 +6,8 @@ import SortableItem from './Sortable.Item'
 import SortableList from './Sortable.List'
 import { includes } from '../../utilities/arrays'
 import arrayMove from '../../utilities/arrayMove.lib'
-import { noop } from '../../utilities/other'
+
+const noop = () => undefined
 
 class Sortable extends React.PureComponent {
   constructor(props) {

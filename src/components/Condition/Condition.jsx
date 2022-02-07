@@ -7,7 +7,6 @@ import And from './Condition.And'
 import AddButton from './Condition.AddButton'
 import Operator from './Condition.Operator'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import DropList from '../DropList/DropList'
 import { SelectTag } from '../DropList/DropList.togglers'
 
@@ -117,9 +116,9 @@ export class Condition extends React.PureComponent {
 
 Condition.defaultProps = {
   'data-cy': 'Condition',
-  innerRef: noop,
+  innerRef: () => undefined,
   isWithAnd: false,
-  onChange: noop,
+  onChange: () => undefined,
   options: [],
   noSelect: false,
 }

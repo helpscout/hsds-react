@@ -8,10 +8,11 @@ import AccordionSection from './Accordion.Section'
 import AccordionSubheading from './Accordion.Subheading'
 import AccordionTitle from './Accordion.Title'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { AccordionUI } from './Accordion.css'
 import { PageContext } from '../Page/Page'
 import Sortable from '../Sortable'
+
+const noop = () => undefined
 
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion',

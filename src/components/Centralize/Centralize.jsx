@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { CentralizeUI } from './Centralize.css'
 
 export class Centralize extends React.PureComponent {
@@ -31,7 +30,7 @@ export class Centralize extends React.PureComponent {
 
 Centralize.defaultProps = {
   'data-cy': 'Centralize',
-  innerRef: noop,
+  innerRef: () => undefined,
 }
 
 Centralize.propTypes = {

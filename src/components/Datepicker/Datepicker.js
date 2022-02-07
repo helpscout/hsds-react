@@ -1,7 +1,6 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useDatepicker, START_DATE } from '@datepicker-react/hooks'
-import { noop } from '../../utilities/other'
 import { getJSDateFromString, getValidDateTimeString } from './Datepicker.utils'
 import DatepickerContext from './Datepicker.Context'
 import { CalendarContainerUI } from './Datepicker.css'
@@ -15,8 +14,8 @@ function Datepicker({
   firstDayOfWeek = 1,
   minBookingDays = 1,
   numberOfMonths = 1,
-  onDateChange = noop,
-  innerRef = noop,
+  onDateChange = () => undefined,
+  innerRef = () => undefined,
   startDate = null,
 }) {
   const datePickerRef = useRef(null)

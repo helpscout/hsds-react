@@ -3,7 +3,6 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import PropTypes from 'prop-types'
 import EventListener from '../EventListener'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { repeat } from '../../utilities/strings'
 import { ResizerUI, GhostUI } from './Input.Resizer.css'
 
@@ -147,7 +146,7 @@ InputResizer.defaultProps = {
   'data-cy': 'InputResizer',
   minimumLines: 1,
   offsetAmount: 0,
-  onResize: noop,
+  onResize: () => undefined,
   seamless: false,
 }
 

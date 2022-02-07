@@ -17,7 +17,6 @@ import {
   getViewportPosition,
   getDirections,
 } from '../../utilities/nodePosition'
-import { noop } from '../../utilities/other'
 
 import { DropContentUI, DropUI } from './Drop.css'
 
@@ -185,7 +184,7 @@ DropPositioner.defaultProps = {
   'data-cy': 'DropPositioner',
   direction: 'down',
   offset: 8,
-  onUpdatePosition: noop,
+  onUpdatePosition: () => undefined,
   zIndex: 1000,
 }
 

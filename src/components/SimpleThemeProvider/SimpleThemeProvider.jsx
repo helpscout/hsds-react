@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { noop } from '../../utilities/other'
 
 class SimpleThemeProvider extends React.PureComponent {
   static defaultProps = {
     theme: 'default',
   }
   static childContextTypes = {
-    theme: noop,
+    theme: () => undefined,
   }
 
   constructor(props, context) {

@@ -7,7 +7,6 @@ import { getComponentKey } from '../../utilities/component'
 
 import Overflow from '../Overflow'
 import Tooltip from '../Tooltip'
-import { noop } from '../../utilities/other'
 
 import {
   TagListUI,
@@ -110,8 +109,8 @@ export const TagList = props => {
 
 TagList.defaultProps = {
   'data-cy': 'TagList',
-  onRemove: noop,
-  onRemoveAll: noop,
+  onRemove: () => undefined,
+  onRemoveAll: () => undefined,
   overflowFade: false,
   isRemovable: false,
   clearAll: false,

@@ -6,8 +6,9 @@ import Modal from '../Modal'
 import MessageCaption from './Message.Caption'
 import classNames, { BEM } from '../../utilities/classNames'
 import { isString } from '../../utilities/is'
-import { noop } from '../../utilities/other'
 import { MediaUI, ImageUI } from './Message.Media.css'
+
+const noop = () => undefined
 
 export class MessageMedia extends React.Component {
   /**

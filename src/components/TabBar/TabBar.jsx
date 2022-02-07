@@ -4,7 +4,6 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Nav from '../Nav'
 import Toolbar from '../Toolbar'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { TabBarUI, SecContentUI, ToolbarUI } from './TabBar.css'
 
 export class TabBar extends React.Component {
@@ -43,7 +42,7 @@ export class TabBar extends React.Component {
 TabBar.defaultProps = {
   align: 'left',
   'data-cy': 'TabBar',
-  innerRef: noop,
+  innerRef: () => undefined,
 }
 
 TabBar.propTypes = {

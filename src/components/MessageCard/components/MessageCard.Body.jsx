@@ -1,7 +1,6 @@
 import { BodyUI } from '../MessageCard.css'
 import React from 'react'
 import PropTypes from 'prop-types'
-import { noop } from '../../../utilities/other'
 import { replaceMessageVariables } from '../utils/MessageCard.utils'
 
 export const MessageCardBody = ({ body, onClick, variables }) => {
@@ -37,5 +36,5 @@ MessageCardBody.propTypes = {
 }
 
 MessageCardBody.defaultProps = {
-  onClick: noop,
+  onClick: () => undefined,
 }

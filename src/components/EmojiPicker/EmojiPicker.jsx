@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import DropList from '../DropList'
 import Emoji from '../Emoji'
 import { IconToggler } from './EmojiPicker.Toggler'
@@ -14,7 +13,7 @@ export function EmojiPicker({
   'data-cy': dataCy = 'EmojiPicker',
   emojiSize = 'md',
   items = emojiSet,
-  onTogglerClick = noop,
+  onTogglerClick = () => undefined,
   tippyOptions = { placement: 'top-start' },
   toggler = (
     <IconToggler className="c-EmojiPickerToggler" onClick={onTogglerClick} />

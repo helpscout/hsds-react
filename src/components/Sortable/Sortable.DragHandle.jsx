@@ -4,8 +4,6 @@ import { SortableHandle } from 'react-sortable-hoc'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Icon from '../Icon'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
-
 import { DragHandleUI } from './Sortable.css'
 
 const SortableDragHandle = SortableHandle(props => {
@@ -33,7 +31,7 @@ SortableDragHandle.propTypes = {
 SortableDragHandle.defaultProps = {
   'data-cy': 'SortableDragHandle',
   iconSize: '20',
-  onDragStart: noop,
+  onDragStart: () => undefined,
 }
 
 export default SortableDragHandle

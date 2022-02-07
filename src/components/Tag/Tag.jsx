@@ -8,7 +8,6 @@ import React, {
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { TagListContext } from '../TagList/TagList'
 import {
   TagUI,
@@ -157,7 +156,7 @@ Tag.defaultProps = {
   display: 'inline',
   isRemovable: false,
   isRemoving: false,
-  onRemove: noop,
+  onRemove: () => undefined,
   showTooltipOnTruncate: true,
   value: '',
   size: 'sm',

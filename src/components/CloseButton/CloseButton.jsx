@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { CloseButtonUI, IconUI } from './CloseButton.css'
+
+const noop = () => undefined
 
 export class CloseButton extends React.PureComponent {
   renderIcon() {

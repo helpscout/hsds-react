@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import useAnimatedRender from '../../hooks/useAnimatedRender'
 import useClickOutside from '../../hooks/useClickOutside'
-import { noop } from '../../utilities/other'
 import { manageTrappedFocus } from '../../utilities/focus'
 import {
   ContentUI,
@@ -20,7 +19,7 @@ function SidePanel({
   closeOnClickOutside = false,
   'data-cy': dataCy = 'SidePanel',
   focusPanelOnShow = true,
-  onClose = noop,
+  onClose = () => undefined,
   panelWidth = '400px',
   show = false,
   side = 'right',

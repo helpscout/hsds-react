@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Icon from '../Icon'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 
 import { useCopyConfirmation } from './CopyButton.utils'
 
@@ -63,8 +62,8 @@ WrappedCopybutton.defaultProps = {
   'data-cy': 'CopyButton',
   theme: 'blue',
   label: 'Copy',
-  onClick: noop,
-  onReset: noop,
+  onClick: () => undefined,
+  onReset: () => undefined,
   resetTimeout: 2000,
   size: 'sm',
   outlined: true,

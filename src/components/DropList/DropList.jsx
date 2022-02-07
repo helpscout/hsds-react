@@ -4,7 +4,6 @@ import useDeepCompareEffect from 'use-deep-compare-effect'
 import classNames from 'classnames'
 import debounce from 'lodash.debounce'
 import Tippy from '@tippyjs/react/headless'
-import { noop } from '../../utilities/other'
 import { DROPLIST_TOGGLER, VARIANTS } from './DropList.constants'
 import { getAnimateProps, getTippyProps } from './DropList.config'
 import {
@@ -29,6 +28,8 @@ import {
   getTogglerPlacementProps,
 } from './DropList.togglers'
 import Animate from '../Animate'
+
+const noop = () => undefined
 
 function DropListManager({
   animateOptions = {},

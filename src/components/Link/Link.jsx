@@ -2,11 +2,11 @@ import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { wordHasSpaces } from '../../utilities/strings'
 import { LinkUI } from './Link.css'
 import { Link as ReactRouterLink } from 'react-router-dom'
 
+const noop = () => undefined
 const WrappedLink = forwardRef(function Link(props, ref) {
   const {
     autoWordWrap,

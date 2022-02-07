@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 import { ThemeProvider } from 'styled-components'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import Scrollable from '../Scrollable'
 import {
   HeaderUI,
@@ -19,6 +18,7 @@ import TableBody from './Table.Body'
 import TableHead from './Table.Head'
 import ColumnChooser from './Table.ColumnChooser'
 
+const noop = () => undefined
 export const TABLE_CLASSNAME = 'c-Table'
 
 export function Table({

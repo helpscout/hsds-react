@@ -11,7 +11,6 @@ import Truncate from '../Truncate'
 import { MASK_CLASSNAMES, STATES_CLASSNAMES } from './EditableField.utils'
 import classNames from 'classnames'
 import equal from 'fast-deep-equal'
-import { noop } from '../../utilities/other'
 
 export class EditableFieldMask extends React.Component {
   valueRef
@@ -120,7 +119,7 @@ EditableFieldMask.defaultProps = {
   emphasize: false,
   maskTabIndex: null,
   type: 'text',
-  onValueKeyDown: noop,
+  onValueKeyDown: () => undefined,
 }
 
 EditableFieldMask.propTypes = {

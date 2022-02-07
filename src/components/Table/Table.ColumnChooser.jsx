@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import equal from 'fast-deep-equal'
-import { noop } from '../../utilities/other'
 import DropList from '../DropList'
 import { IconBtn } from '../DropList/DropList.togglers'
 import { columnShape, createColumnChooserListItems } from './Table.utils'
 
+const noop = () => undefined
 const shouldColumnShow = column => !!column.show
 
 function ColumnChooser({

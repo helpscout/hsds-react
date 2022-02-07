@@ -5,7 +5,6 @@ import Flexy from '../Flexy'
 import Icon from '../Icon'
 import Tooltip from '../Tooltip'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import {
   ItemUI,
   ContentUI,
@@ -150,6 +149,6 @@ NavItem.defaultProps = {
   disabled: false,
   error: '',
   exact: true,
-  innerRef: noop,
+  innerRef: () => undefined,
 }
 export default NavItem

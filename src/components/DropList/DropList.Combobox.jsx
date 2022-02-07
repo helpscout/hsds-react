@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useCombobox } from 'downshift'
 import useDeepCompareEffect from 'use-deep-compare-effect'
-import { noop } from '../../utilities/other'
 import { isFunction } from '../../utilities/is'
 import {
   itemToString,
@@ -21,6 +20,8 @@ import {
 } from './DropList.css'
 import ListItem, { generateListItemKey } from './DropList.ListItem'
 import { DROPLIST_MENULIST, VARIANTS } from './DropList.constants'
+
+const noop = () => undefined
 
 function Combobox({
   clearOnSelect = false,

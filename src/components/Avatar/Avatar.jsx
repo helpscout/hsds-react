@@ -4,7 +4,6 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
 import { getEasingTiming } from '../../utilities/easing'
 import { nameToInitials } from '../../utilities/strings'
-import { noop } from '../../utilities/other'
 import Icon from '../Icon'
 import StatusDot from '../StatusDot'
 import Tooltip from '../Tooltip'
@@ -364,8 +363,8 @@ Avatar.defaultProps = {
   shape: 'circle',
   style: {},
   withShadow: false,
-  onError: noop,
-  onLoad: noop,
+  onError: () => undefined,
+  onLoad: () => undefined,
 }
 
 const avatarPropTypes = {

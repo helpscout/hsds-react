@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
 import { copyToClipboard, selectText } from '../../utilities/clipboard'
-import { noop } from '../../utilities/other'
 import { CopyInputUI, CopyButtonUI } from './CopyInput.css'
 
 class CopyInput extends React.PureComponent {
@@ -71,8 +70,8 @@ CopyInput.defaultProps = {
   buttonLabel: null,
   copyToClipboard: true,
   'data-cy': 'CopyInput',
-  innerRef: noop,
-  onCopy: noop,
+  innerRef: () => undefined,
+  onCopy: () => undefined,
   readOnly: true,
   value: '',
 }

@@ -6,8 +6,9 @@ import ContentResizer from './ActionSelect.ContentResizer'
 import classNames from 'classnames'
 import { findFirstFocusableNode } from '../../utilities/focus'
 import { smoothScrollTo, linear } from '../../utilities/smoothScroll'
-import { noop } from '../../utilities/other'
 import { ActionSelectUI } from './ActionSelect.css'
+
+const noop = () => undefined
 
 export class ActionSelect extends React.PureComponent {
   static className = 'c-ActionSelect'

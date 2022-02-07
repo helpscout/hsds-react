@@ -5,7 +5,6 @@ import FormLabelContext from '../FormLabel/Context'
 import VisuallyHidden from '../VisuallyHidden'
 import classNames from 'classnames'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { noop } from '../../utilities/other'
 import {
   WrapperUI,
   SwitchUI,
@@ -15,6 +14,7 @@ import {
   ToggleUI,
 } from './Switch.css'
 
+const noop = () => undefined
 const uniqueID = createUniqueIDFactory('Switch')
 
 class Switch extends React.PureComponent {

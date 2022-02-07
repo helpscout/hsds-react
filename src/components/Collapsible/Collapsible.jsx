@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
-import { requestAnimationFrame, noop } from '../../utilities/other'
+import { requestAnimationFrame } from '../../utilities/other'
 import { CollapsibleUI } from './Collapsible.css'
 
 class Collapsible extends React.Component {
@@ -206,8 +206,8 @@ Collapsible.defaultProps = {
   'data-cy': 'Collapsible',
   duration: 300,
   isOpen: false,
-  onOpen: noop,
-  onClose: noop,
+  onOpen: () => undefined,
+  onClose: () => undefined,
   preRenderContent: false,
 }
 

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import VisuallyHidden from '../VisuallyHidden'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { IconUI } from './Icon.css'
 import { svgSet } from './Icon.utils'
 
@@ -84,7 +83,7 @@ Icon.defaultProps = {
   isWithHiddenTitle: true,
   muted: false,
   name: 'emoji',
-  onClick: noop,
+  onClick: () => undefined,
   offsetLeft: false,
   offsetRight: false,
   size: '20',

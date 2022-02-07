@@ -1,12 +1,10 @@
 import React, { useRef, forwardRef } from 'react'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import ControlGroup from '../ControlGroup'
 import HSDSButton from '../Button'
 import Icon from '../Icon'
 import { STATES } from '../../constants'
 import Tooltip from '../Tooltip'
-
 import {
   IconButtonUI,
   NavLinkTogglerUI,
@@ -17,6 +15,8 @@ import {
   SplitButtonUI,
 } from './DropList.togglers.css'
 import { THEME_BLUE, THEME_GREY, SIZE_LG } from '../Button/Button.utils'
+
+const noop = () => undefined
 
 export const SimpleButton = forwardRef(
   (

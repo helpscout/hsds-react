@@ -7,9 +7,9 @@ import FormLabelContext from '../FormLabel/Context'
 import get from '../../utilities/get'
 import classNames from 'classnames'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { noop } from '../../utilities/other'
 import { ChoiceGroupUI } from './ChoiceGroup.css'
 
+const noop = () => undefined
 const uniqueID = createUniqueIDFactory('ChoiceGroup')
 
 class ChoiceGroup extends React.Component {

@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { getClosestDocument } from '../../utilities/node'
 import { addEventListener, removeEventListener } from '../../utilities/events'
-import { noop } from '../../utilities/other'
 
 // see https://github.com/oliviertassinari/react-event-listener/
 class EventListener extends React.Component {
@@ -70,7 +69,7 @@ class EventListener extends React.Component {
 }
 
 EventListener.defaultProps = {
-  handler: noop,
+  handler: () => undefined,
   scope: window,
 }
 

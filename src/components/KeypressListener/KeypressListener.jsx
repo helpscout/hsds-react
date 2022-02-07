@@ -5,7 +5,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { addEventListener, removeEventListener } from '../../utilities/events'
 import { getClosestDocument } from '../../utilities/node'
-import { noop } from '../../utilities/other'
 import { isDefined } from '../../utilities/is'
 
 class KeypressListener extends React.Component {
@@ -78,7 +77,7 @@ class KeypressListener extends React.Component {
 }
 
 KeypressListener.defaultProps = {
-  handler: noop,
+  handler: () => undefined,
   noModifier: true,
   scope: document,
   type: 'keyup',

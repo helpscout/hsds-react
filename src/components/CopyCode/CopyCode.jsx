@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { copyToClipboard, selectText } from '../../utilities/clipboard'
 import {
   CopyButtonUI,
@@ -118,10 +117,10 @@ CopyCode.defaultProps = {
   code: '',
   copyToClipboard: true,
   'data-cy': 'CopyCode',
-  innerRef: noop,
+  innerRef: () => undefined,
   language: 'javascript',
   maxWidth: 500,
-  onCopy: noop,
+  onCopy: () => undefined,
 }
 
 CopyCode.propTypes = {

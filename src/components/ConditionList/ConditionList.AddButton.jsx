@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Condition from '../Condition'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { AddButtonWrapperUI } from './ConditionList.css'
 
 export class ConditionListAddButton extends React.PureComponent {
@@ -33,8 +32,8 @@ export class ConditionListAddButton extends React.PureComponent {
 
 ConditionListAddButton.defaultProps = {
   'data-cy': 'ConditionListAddButton',
-  innerRef: noop,
-  onClick: noop,
+  innerRef: () => undefined,
+  onClick: () => undefined,
   scrollDuration: 300,
   scrollOffset: 200,
 }

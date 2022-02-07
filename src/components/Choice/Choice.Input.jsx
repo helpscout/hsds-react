@@ -4,7 +4,6 @@ import { key } from '../../constants/Keys'
 import InputBackdropV2 from '../Input/Input.BackdropV2'
 import Icon from '../Icon'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import {
   InputUI,
   InputInputUI,
@@ -12,6 +11,8 @@ import {
   InputPlaceholderUI,
   InputRadioUI,
 } from './Choice.css'
+
+const noop = () => undefined
 
 class ChoiceInput extends React.PureComponent {
   state = {

@@ -18,9 +18,10 @@ import { STATES } from '../../constants'
 import classNames from 'classnames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isString } from '../../utilities/is'
-import { noop } from '../../utilities/other'
 import { InputWrapperUI } from '../Input/Input.css'
 import { SelectUI, FieldUI, InlinePrefixSuffixUI, ItemUI } from './Select.css'
+
+const noop = () => undefined
 
 const PLACEHOLDER_VALUE = '__placeholder__'
 const uniqueID = createUniqueIDFactory('Select')

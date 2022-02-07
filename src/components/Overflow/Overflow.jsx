@@ -11,8 +11,10 @@ import {
   getFadeLeftStyles,
   getFadeRightStyles,
 } from '../../utilities/scrollFade'
-import { noop, requestAnimationFrame } from '../../utilities/other'
+import { requestAnimationFrame } from '../../utilities/other'
 import { OverflowUI } from './Overflow.css'
+
+const noop = () => undefined
 
 export class Overflow extends React.PureComponent {
   state = {

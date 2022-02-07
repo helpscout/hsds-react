@@ -8,7 +8,6 @@ import Truncate from '../Truncate'
 import Timer from './Notification.Timer'
 import { NotificationUI, TextUI } from './Notification.css'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { stripUrlPrefix } from '../../utilities/strings'
 
 export const NOTIFICATION_TYPE = {
@@ -196,8 +195,8 @@ Notification.defaultProps = {
   'data-cy': 'Notification',
   isActive: true,
   isDismissable: false,
-  onClick: noop,
-  onDismiss: noop,
+  onClick: () => undefined,
+  onDismiss: () => undefined,
   timeout: 2000,
   type: 'text',
   truncateLimit: 60,

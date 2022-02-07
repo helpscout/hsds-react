@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { noop } from '../../utilities/other'
 
 class SleepDetector extends React.Component {
   constructor(props) {
@@ -46,7 +45,7 @@ class SleepDetector extends React.Component {
 SleepDetector.defaultProps = {
   buffer: 5000,
   interval: 10000,
-  onWake: noop,
+  onWake: () => undefined,
 }
 SleepDetector.propTypes = {
   /** How often (ms) to check for inactive tab (default is 10000) */

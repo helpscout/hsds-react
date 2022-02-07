@@ -2,7 +2,6 @@ import { calculateSize } from '../MessageCard.utils'
 import { ImageContainerUI, ImageUI } from '../MessageCard.css'
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { noop } from '../../../utilities/other'
 
 export const MessageCardImage = ({ image, onLoad }) => {
   const [imageError, setImageError] = useState(false)
@@ -44,5 +43,5 @@ MessageCardImage.propTypes = {
 }
 
 MessageCardImage.defaultProps = {
-  onLoad: noop,
+  onLoad: () => undefined,
 }

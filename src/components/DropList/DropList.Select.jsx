@@ -1,6 +1,5 @@
 import React from 'react'
 import { useSelect } from 'downshift'
-import { noop } from '../../utilities/other'
 import {
   itemToString,
   isItemSelected,
@@ -14,6 +13,8 @@ import {
 import { A11yTogglerUI, DropListWrapperUI, MenuListUI } from './DropList.css'
 import ListItem, { generateListItemKey } from './DropList.ListItem'
 import { DROPLIST_MENULIST, VARIANTS } from './DropList.constants'
+
+const noop = () => undefined
 
 function Select({
   clearOnSelect = false,

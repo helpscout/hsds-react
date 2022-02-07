@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import ConditionListAddButton from './ConditionList.AddButton'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { ConditionListUI } from './ConditionList.css'
 import { PageContext } from '../Page/Page'
 
@@ -62,8 +61,8 @@ export class ConditionList extends React.Component {
 
 ConditionList.defaultProps = {
   'data-cy': 'ConditionList',
-  innerRef: noop,
-  onAdd: noop,
+  innerRef: () => undefined,
+  onAdd: () => undefined,
   isAddEnabled: true,
   isWithOffset: false,
   scrollDuration: 300,

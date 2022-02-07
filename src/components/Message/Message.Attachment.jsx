@@ -4,7 +4,6 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Link from '../Link'
 import Text from '../Text'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { TextUI } from './Message.css'
 import MessageChat from './Message.Chat'
 
@@ -73,7 +72,7 @@ export const MessageAttachment = (props, context) => {
 MessageAttachment.defaultProps = {
   'data-cy': 'MessageAttachment',
   download: true,
-  onClick: noop,
+  onClick: () => undefined,
   openDownloadInNewTab: true,
   isUploading: false,
   size: 'md',
@@ -81,7 +80,7 @@ MessageAttachment.defaultProps = {
 }
 
 MessageAttachment.contextTypes = {
-  theme: noop,
+  theme: () => undefined,
 }
 
 MessageAttachment.propTypes = {

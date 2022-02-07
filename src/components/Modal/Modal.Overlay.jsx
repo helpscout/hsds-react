@@ -4,7 +4,6 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Animate from '../Animate'
 import BaseOverlay from '../Overlay'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 
 class ModalOverlay extends React.PureComponent {
   render() {
@@ -47,7 +46,7 @@ class ModalOverlay extends React.PureComponent {
 
 ModalOverlay.defaultProps = {
   'data-cy': 'ModalOverlay',
-  onClick: noop,
+  onClick: () => undefined,
   isOpen: true,
   isHsApp: false,
   overlayAnimationDelay: 0,

@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { noop } from '../../utilities/other'
 import { isNativeSpanType } from '@helpscout/react-utils/dist/isType'
 import compose from '@helpscout/react-utils/dist/compose'
 import TypingDots from '../TypingDots'
@@ -174,7 +173,7 @@ MessageBubble.defaultProps = {
 }
 
 MessageBubble.contextTypes = {
-  theme: noop,
+  theme: () => undefined,
 }
 
 MessageBubble.propTypes = {

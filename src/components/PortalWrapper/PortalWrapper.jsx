@@ -15,7 +15,7 @@ import {
 import { setupManager } from '../../utilities/globalManager'
 import classNames from 'classnames'
 import { isFunction } from '../../utilities/is'
-import { noop, requestAnimationFrame } from '../../utilities/other'
+import { requestAnimationFrame } from '../../utilities/other'
 import matchPath from '../../utilities/react-router/matchPath'
 import Content from './PortalWrapper.Content'
 import WithRouterCheck from '../WithRouterCheck'
@@ -56,7 +56,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       preventEscActionElements: extendedOptions.preventEscActionElements || [],
     }
     static childContextTypes = {
-      closePortal: noop,
+      closePortal: () => undefined,
     }
 
     static displayName = `withPortal(${getComponentName(ComposedComponent)})`

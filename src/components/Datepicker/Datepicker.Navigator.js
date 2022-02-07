@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { NAVIGATION_LEVELS } from './Datepicker.constants'
 import { getNavigatorButtonLabel } from './Datepicker.utils'
 import Icon from '../Icon'
@@ -11,6 +10,8 @@ import {
   NavigatorUI,
   DeepNavigatorButtonUI,
 } from './Datepicker.css'
+
+const noop = () => undefined
 
 function Navigator({
   canNavigateForward = true,

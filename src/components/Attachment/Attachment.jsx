@@ -7,14 +7,13 @@ import Image from '../Image'
 import Text from '../Text'
 import Truncate from '../Truncate'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { AttachmentUI, ErrorBorderUI } from './Attachment.css'
 
 export const Provider = AttachmentProvider
 
 export class Attachment extends React.PureComponent {
   static contextTypes = {
-    theme: noop,
+    theme: () => undefined,
   }
   static Provider = AttachmentProvider
 
@@ -154,8 +153,8 @@ Attachment.defaultProps = {
   'data-cy': 'Attachment',
   mime: 'image/png',
   name: 'image.png',
-  onClick: noop,
-  onRemoveClick: noop,
+  onClick: () => undefined,
+  onRemoveClick: () => undefined,
   truncateLimit: 20,
   state: 'default',
   type: 'link',

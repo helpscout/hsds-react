@@ -1,7 +1,6 @@
 /* istanbul ignore file */
 import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
-import { noop } from '../../utilities/other'
 import Button from '../Button/'
 import { BodyUI, FooterUI, HeaderUI } from './SidePanel.layouts.css'
 import useScrollShadow from '../../hooks/useScrollShadow'
@@ -10,8 +9,8 @@ export function HeaderAndFooter({
   children,
   mainActionButtonContent = 'Start',
   mainActionDisabled = false,
-  mainActionNode = noop,
-  onMainActionClick = noop,
+  mainActionNode = () => undefined,
+  onMainActionClick = () => undefined,
   panelHeading = 'Review and Start',
   panelHeadingId = '',
   panelSubHeading = 'Complete the required details before going live',

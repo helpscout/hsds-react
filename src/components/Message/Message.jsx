@@ -15,12 +15,11 @@ import MessageProvider from './Message.Provider'
 import classNames from 'classnames'
 import { getComponentName } from '../../utilities/component'
 import { isString } from '../../utilities/is'
-import { noop } from '../../utilities/other'
 import { MessageUI } from './Message.css'
 
 export class Message extends React.PureComponent {
   static contextTypes = {
-    theme: noop,
+    theme: () => undefined,
   }
   static Action = MessageAction
   static Attachment = MessageAttachment

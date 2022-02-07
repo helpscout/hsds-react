@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import NavItem from './Nav.Item'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { NavUI, ListUI } from './Nav.css'
 
 export class Nav extends React.Component {
@@ -33,7 +32,7 @@ export class Nav extends React.Component {
 
 Nav.defaultProps = {
   'data-cy': 'Nav',
-  innerRef: noop,
+  innerRef: () => undefined,
 }
 
 Nav.propTypes = {

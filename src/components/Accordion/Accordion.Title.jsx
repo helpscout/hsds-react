@@ -9,7 +9,6 @@ import classNames from 'classnames'
 import { BadgeUI, TitleContentUI, TitleUI } from './Accordion.css'
 import { SectionContext } from './Accordion.Section'
 import { AccordionContext } from './Accordion'
-import { noop } from '../../utilities/other'
 import SortableDragHandle from '../Sortable/Sortable.DragHandle'
 
 export const classNameStrings = {
@@ -98,7 +97,7 @@ const AccordionTitle = props => {
   const {
     isPage,
     isSeamless,
-    setSectionState = noop,
+    setSectionState = () => undefined,
     size,
     isSorting,
     isSortable,
@@ -193,7 +192,7 @@ const AccordionTitle = props => {
 AccordionTitle.defaultProps = {
   'data-cy': 'AccordionTitle',
   isCompact: false,
-  onClick: noop,
+  onClick: () => undefined,
 }
 
 AccordionTitle.propTypes = {

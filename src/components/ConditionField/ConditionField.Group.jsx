@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import AddButton from './ConditionField.AddButton'
-import { noop } from '../../utilities/other'
 
 export class ConditionFieldGroup extends React.PureComponent {
   renderFields() {
@@ -54,8 +53,8 @@ ConditionFieldGroup.defaultProps = {
   'data-cy': 'ConditionFieldGroup',
   isAddEnabled: true,
   canChangeConjunction: false,
-  onAdd: noop,
-  onConjunctionChange: noop,
+  onAdd: () => undefined,
+  onConjunctionChange: () => undefined,
   conjunction: 'or',
 }
 

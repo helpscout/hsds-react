@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { MODAL_KIND, getModalKindClassName } from './Modal.utils'
 import {
   ActionFooterUI,
@@ -17,6 +16,8 @@ import {
   THEME_RED,
   THEME_GREY,
 } from '../Button/Button.utils'
+
+const noop = () => undefined
 
 class ModalActionFooter extends React.PureComponent {
   handleCancel = e => {

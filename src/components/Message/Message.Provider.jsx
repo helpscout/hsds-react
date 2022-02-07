@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import SimpleThemeProvider from '../SimpleThemeProvider'
-import { noop } from '../../utilities/other'
 
 class MessageProvider extends SimpleThemeProvider {
   render() {
@@ -14,7 +13,7 @@ MessageProvider.defaultProps = {
 }
 
 MessageProvider.childContextTypes = {
-  theme: noop,
+  theme: () => undefined,
 }
 
 MessageProvider.propTypes = {

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Emoticon from '../Emoticon'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { RateActionUI } from './RateAction.css'
 import { getName } from '../Emoticon/Emoticon.utils'
 
@@ -82,10 +81,10 @@ export class RateAction extends React.PureComponent {
 RateAction.defaultProps = {
   'data-cy': 'RateAction',
   disabled: false,
-  innerRef: noop,
+  innerRef: () => undefined,
   isActive: false,
   name: 'reaction-happy',
-  onClick: noop,
+  onClick: () => undefined,
   size: 'lg',
   withCircle: false,
 }

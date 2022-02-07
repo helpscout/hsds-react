@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Scrollable from '../Scrollable'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { BodyUI } from './Modal.css'
+
+const noop = () => undefined
 
 class ModalBody extends React.PureComponent {
   node

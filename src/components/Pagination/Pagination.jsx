@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import pluralize from '../../utilities/pluralize'
 import KeypressListener from '../KeypressListener'
 import Keys from '../../constants/Keys'
@@ -285,9 +284,9 @@ export const Pagination = props => {
 Pagination.defaultProps = {
   activePage: 1,
   'data-cy': 'Pagination',
-  innerRef: noop,
+  innerRef: () => undefined,
   isLoading: false,
-  onChange: noop,
+  onChange: () => undefined,
   rangePerPage: 50,
   separator: 'of',
   showNavigation: true,

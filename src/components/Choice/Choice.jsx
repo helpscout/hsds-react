@@ -9,13 +9,13 @@ import VisuallyHidden from '../VisuallyHidden'
 import ChoiceGroupContext from '../ChoiceGroup/ChoiceGroup.Context'
 import classNames from 'classnames'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { noop } from '../../utilities/other'
 import {
   ChoiceLabelUI,
   ChoiceLabelTextUI,
   ChoiceHelpTextUI,
 } from './Choice.css'
 
+const noop = () => undefined
 const uniqueID = createUniqueIDFactory('Choice')
 
 class Choice extends React.PureComponent {

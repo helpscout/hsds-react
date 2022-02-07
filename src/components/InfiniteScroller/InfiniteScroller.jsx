@@ -6,7 +6,8 @@ import EventListener from '../EventListener'
 import classNames from 'classnames'
 import LoadingDots from '../LoadingDots'
 import { isNodeElement, isNodeVisible } from '../../utilities/node'
-import { noop } from '../../utilities/other'
+
+const noop = () => undefined
 
 class InfiniteScroller extends React.PureComponent {
   constructor(props) {

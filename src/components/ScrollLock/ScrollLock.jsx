@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
-import { noop } from '../../utilities/other'
 import { handleWheelEvent } from './ScrollLock.utils'
 import { isSafari } from '../../utilities/browser'
 
@@ -60,7 +59,7 @@ ScrollLock.defaultProps = {
   isDisabled: false,
   direction: 'y',
   stopPropagation: false,
-  onWheel: noop,
+  onWheel: () => undefined,
 }
 
 ScrollLock.propTypes = {

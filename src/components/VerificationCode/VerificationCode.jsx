@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
 import { copyToClipboard } from '../../utilities/clipboard'
-import { noop } from '../../utilities/other'
 import {
   selectAll,
   clearAll,
@@ -302,8 +301,8 @@ VerificationCode.defaultProps = {
   'data-cy': 'VerificationCode',
   isValid: true,
   numberOfChars: 6,
-  onEnter: noop,
-  onChange: noop,
+  onEnter: () => undefined,
+  onChange: () => undefined,
 }
 
 VerificationCode.propTypes = {

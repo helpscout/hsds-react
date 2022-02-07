@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isFunction, isString } from '../../utilities/is'
-import { noop } from '../../utilities/other'
 import Icon from '../Icon'
 import Radio from '../Radio'
 import {
@@ -13,6 +12,7 @@ import {
   HeadingUI,
 } from './RadioCard.css'
 
+const noop = () => undefined
 const uniqueID = createUniqueIDFactory('RadioCard')
 const DEFAULT_ICON = 'fab-chat'
 

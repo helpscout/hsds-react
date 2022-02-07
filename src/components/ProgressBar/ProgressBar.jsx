@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { ProgressBarUI, BarUI } from './ProgressBar.css'
 
 class ProgressBar extends React.PureComponent {
@@ -62,7 +61,7 @@ class ProgressBar extends React.PureComponent {
 
 ProgressBar.defaultProps = {
   'data-cy': 'ProgressBar',
-  onChange: noop,
+  onChange: () => undefined,
   value: 0,
   size: 'md',
 }

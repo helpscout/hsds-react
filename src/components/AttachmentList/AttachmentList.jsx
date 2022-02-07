@@ -6,7 +6,6 @@ import Icon from '../Icon'
 import Inline from '../Inline'
 import Overflow from '../Overflow'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { AttachmentListUI } from './AttachmentList.css'
 
 export class AttachmentList extends React.Component {
@@ -143,7 +142,7 @@ export class AttachmentList extends React.Component {
 AttachmentList.defaultProps = {
   'data-cy': 'AttachmentList',
   downloadAllLabel: 'Download All',
-  onDownloadAllClick: noop,
+  onDownloadAllClick: () => undefined,
   showDownloadAll: true,
   withOverflow: true,
 }

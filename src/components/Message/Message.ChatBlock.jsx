@@ -5,7 +5,6 @@ import Flexy from '../Flexy'
 import MessageBubble from './Message.Bubble'
 import Timestamp from '../Timestamp'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { ChatBlockUI } from './Message.ChatBlock.css'
 
 export class ChatBlock extends React.PureComponent {
@@ -85,7 +84,7 @@ export class ChatBlock extends React.PureComponent {
 }
 
 ChatBlock.contextTypes = {
-  theme: noop,
+  theme: () => undefined,
 }
 
 ChatBlock.defaultProps = {

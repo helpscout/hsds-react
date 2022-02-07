@@ -29,10 +29,11 @@ import {
   STATES_CLASSNAMES,
 } from './EditableField.utils'
 import { key } from '../../constants/Keys'
-import { noop } from '../../utilities/other'
 import { isArray, isFunction } from '../../utilities/is'
 import { find } from '../../utilities/arrays'
 import { nodesHaveSameParent } from '../../utilities/node'
+
+const noop = () => undefined
 
 export class EditableField extends React.Component {
   static className = EDITABLEFIELD_CLASSNAMES.component

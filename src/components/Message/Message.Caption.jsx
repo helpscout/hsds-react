@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Text from '../Text'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 
 const MessageCaption = (props, context) => {
   const { className, children, size, wordWrap, ...rest } = props
@@ -33,7 +32,7 @@ const MessageCaption = (props, context) => {
 }
 
 MessageCaption.contextTypes = {
-  theme: noop,
+  theme: () => undefined,
 }
 
 MessageCaption.defaultProps = {

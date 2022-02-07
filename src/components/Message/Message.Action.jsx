@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Text from '../Text'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { ActionUI, TimestampUI } from './Message.Action.css'
 
 export const MessageAction = (props, context) => {
@@ -66,7 +65,7 @@ export const MessageAction = (props, context) => {
 }
 
 MessageAction.contextTypes = {
-  theme: noop,
+  theme: () => undefined,
 }
 
 MessageAction.defaultProps = {

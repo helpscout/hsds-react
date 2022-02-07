@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import useScrollShadow from '../../hooks/useScrollShadow'
 import useMeasureNode from '../../hooks/useMeasureNode'
-import { noop } from '../../utilities/other'
 import {
   ContainerScrollUI,
   HeaderUI,
@@ -22,7 +21,7 @@ function ScrollableContainer({
   header,
   height = '500px',
   onScroll,
-  onScrollableSectionsStateChange = noop,
+  onScrollableSectionsStateChange = () => undefined,
   shadows = {},
   width = '300px',
   withResizeObservers = {},

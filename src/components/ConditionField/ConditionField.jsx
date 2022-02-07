@@ -8,7 +8,6 @@ import ConditionFieldGroup from './ConditionField.Group'
 import ConditionFieldOr from './ConditionField.Or'
 import ConditionFieldStatic from './ConditionField.Static'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { FieldCloseWrapperUI } from './ConditionField.css'
 import ConditionFieldAnd from './ConditionField.And'
 
@@ -84,11 +83,11 @@ export class ConditionField extends React.PureComponent {
 ConditionField.defaultProps = {
   closeIcon: 'collapse',
   'data-cy': 'ConditionField',
-  innerRef: noop,
+  innerRef: () => undefined,
   isWithConjunction: false,
   conjunction: 'or',
   isWithRemove: true,
-  onRemove: noop,
+  onRemove: () => undefined,
   removeTitle: 'Remove',
   tooltipDelay: 800,
   tooltipDuration: 60,

@@ -1,10 +1,12 @@
 import React, { forwardRef } from 'react'
-import { noop } from '../../utilities/other'
 import Icon from '../Icon'
 import { TogglerUI } from './EmojiPicker.css'
 
 export const IconToggler = forwardRef(
-  ({ isActive = false, size = '24', onClick = noop, ...rest }, ref) => {
+  (
+    { isActive = false, size = '24', onClick = () => undefined, ...rest },
+    ref
+  ) => {
     return (
       <TogglerUI
         aria-label="toggle menu"

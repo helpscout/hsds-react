@@ -7,7 +7,6 @@ import { normalizeUrl } from '../../utilities/urls'
 import { ACTION_ICONS } from './EditableField.constants'
 import { ACTIONS_CLASSNAMES, STATES_CLASSNAMES } from './EditableField.utils'
 import equal from 'fast-deep-equal'
-import { noop } from '../../utilities/other'
 
 export class EditableFieldActions extends React.Component {
   shouldComponentUpdate(nextProps) {
@@ -74,8 +73,8 @@ export class EditableFieldActions extends React.Component {
 
 EditableFieldActions.defaultProps = {
   'data-cy': 'EditableFieldActions',
-  deleteAction: noop,
-  customAction: noop,
+  deleteAction: () => undefined,
+  customAction: () => undefined,
 }
 
 EditableFieldActions.propTypes = {

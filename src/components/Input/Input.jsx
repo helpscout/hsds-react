@@ -21,7 +21,7 @@ import Keys from '../../constants/Keys'
 import classNames from 'classnames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isModifierKeyPressed } from '../../utilities/keys'
-import { noop, requestAnimationFrame } from '../../utilities/other'
+import { requestAnimationFrame } from '../../utilities/other'
 import { moveCursorToEnd, isTextArea } from './Input.utils'
 import {
   CharValidatorText,
@@ -34,6 +34,7 @@ import {
 } from './Input.css'
 
 const uniqueID = createUniqueIDFactory('Input')
+const noop = () => undefined
 
 export class Input extends React.PureComponent {
   static AddOn = InputAddOn

@@ -1,10 +1,9 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStatics'
 import getComponentName from '@helpscout/react-utils/dist/getComponentName'
 import { isModifierKeyPressed } from '../../utilities/keys'
 import { isString } from '../../utilities/is'
-import { noop } from '../../utilities/other'
 import get from '../../utilities/get'
 import { createLocation } from '../../utilities/history'
 import WithRouterCheck from '../WithRouterCheck'
@@ -14,7 +13,7 @@ const RouteWrapper = WrappedComponent => {
 
   class RouteWrapperComponent extends React.Component {
     static defaultProps = {
-      onClick: noop,
+      onClick: () => undefined,
       fetch: () => Promise.resolve(),
       replace: false,
     }

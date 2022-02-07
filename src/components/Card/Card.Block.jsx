@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Scrollable from '../Scrollable'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { BlockUI } from './Card.css'
 
 class Block extends React.PureComponent {
@@ -61,8 +60,8 @@ class Block extends React.PureComponent {
 
 Block.defaultProps = {
   'data-cy': 'Block',
-  onScroll: noop,
-  scrollableRef: noop,
+  onScroll: () => undefined,
+  scrollableRef: () => undefined,
 }
 
 Block.propTypes = {

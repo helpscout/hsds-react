@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { ActionButtonUI } from './MessageCard.css'
-import { noop } from '../../utilities/other'
 import Truncate from '../Truncate'
 
 export class MessageCardButton extends React.PureComponent {
@@ -18,7 +17,7 @@ export class MessageCardButton extends React.PureComponent {
 
 MessageCardButton.defaultProps = {
   'data-cy': 'beacon-message-cta',
-  onClick: noop,
+  onClick: () => undefined,
   size: 'xxl',
 }
 

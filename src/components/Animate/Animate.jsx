@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 import { Transition } from 'react-transition-group'
 import { getSequenceNames } from '../../utilities/animation'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { getEasingTiming } from '../../utilities/easing'
 import { AnimateUI } from './Animate.css'
 import { AnimateGroupContext } from '../AnimateGroup/AnimateGroup'
+
+const noop = () => undefined
 
 export class Animate extends React.PureComponent {
   static contextType = AnimateGroupContext

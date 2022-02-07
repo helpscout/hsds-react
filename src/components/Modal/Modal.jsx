@@ -14,7 +14,6 @@ import KeypressListener from '../KeypressListener'
 import PortalWrapper from '../PortalWrapper'
 import Keys from '../../constants/Keys'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { findFocusableNodes } from '../../utilities/focus'
 import { getClosestDocument, isNodeElement } from '../../utilities/node'
 import { MODAL_KIND, getModalKindClassName } from './Modal.utils'
@@ -52,7 +51,7 @@ const overlayV2Animation = {
 
 class Modal extends React.PureComponent {
   static childContextTypes = {
-    positionCloseNode: noop,
+    positionCloseNode: () => undefined,
   }
   static ActionFooter = ModalActionFooter
   static Body = ModalBody
@@ -395,7 +394,7 @@ Modal.defaultProps = {
   closeIcon: true,
   closeIconOffset: 10,
   closeIconRepositionDelay: 0,
-  closePortal: noop,
+  closePortal: () => undefined,
   containTabKeyPress: true,
   'data-cy': 'Modal',
   description: null,
@@ -413,7 +412,7 @@ Modal.defaultProps = {
   modalAnimationSequence: 'fade down',
   modalFocusTimeout: 90,
   numSteps: 1,
-  onScroll: noop,
+  onScroll: () => undefined,
   overlayAnimationDelay: 0,
   overlayAnimationDuration: 200,
   overlayAnimationEasing: 'ease',

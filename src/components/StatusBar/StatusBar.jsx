@@ -4,8 +4,9 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Collapsible from '../Collapsible'
 import StatusBarButton from './StatusBar.Button'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { StatusBarUI } from './StatusBar.css'
+
+const noop = () => undefined
 
 class StatusBar extends React.PureComponent {
   constructor(props) {

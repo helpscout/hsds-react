@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { ContentUI } from './Modal.css'
 import Body from './Modal.Body'
 
@@ -29,7 +28,7 @@ class ModalContent extends React.PureComponent {
 }
 
 ModalContent.defaultProps = {
-  scrollableRef: noop,
+  scrollableRef: () => undefined,
 }
 
 ModalContent.propTypes = {

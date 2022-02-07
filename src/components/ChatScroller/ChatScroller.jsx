@@ -6,7 +6,6 @@ import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFro
 import getShallowDiffs from '@helpscout/react-utils/dist/getShallowDiffs'
 import { smoothScrollTo } from '../../utilities/smoothScroll'
 import { last, includes } from '../../utilities/arrays'
-import { noop } from '../../utilities/other'
 import { shouldAutoScroll, getScrollProps } from './ChatScroller.utils'
 
 export class ChatScroller extends React.PureComponent {
@@ -145,7 +144,7 @@ ChatScroller.defaultProps = {
   isTyping: false,
   messageSelectors: '.c-MessageChat, .c-MessageAction',
   offsetThreshold: 0.3,
-  onScroll: noop,
+  onScroll: () => undefined,
   propsToCheck: ['messages', 'lastMessageId', 'isTyping'],
   scrollableSelector: '.c-ScrollableNode',
   smoothScrollDuration: 100,

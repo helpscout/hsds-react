@@ -6,7 +6,6 @@ import MessageCaption from './Message.Caption'
 import Flexy from '../Flexy'
 import Spinner from '../Spinner'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { ChatBlockUI } from './Message.Chat.css'
 
 export class MessageChat extends React.PureComponent {
@@ -111,7 +110,7 @@ export class MessageChat extends React.PureComponent {
 }
 
 MessageChat.contextTypes = {
-  theme: noop,
+  theme: () => undefined,
 }
 
 MessageChat.defaultProps = {

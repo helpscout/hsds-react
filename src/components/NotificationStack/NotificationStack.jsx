@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { NotificationStackUI } from './NotificationStack.css'
+
+const noop = () => undefined
 
 export class NotificationStack extends React.PureComponent {
   firstNotificationId = null

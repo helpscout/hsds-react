@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import MessageCardButton from './MessageCard.Button'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { MessageCardUI, MessageCardWrapperUI } from './MessageCard.css'
 import { MessageCardTitle } from './components/MessageCard.Title'
 import { MessageCardSubtitle } from './components/MessageCard.Subtitle'
@@ -14,6 +13,8 @@ import { MessageCardContent } from './components/MessageCard.Content'
 import { MessageCardSurvey } from './components/MessageCard.Survey'
 import MessageCardUrlAttachmentImage from './components/MessageCard.UrlAttachmentImage'
 import MessageCardArticleCard from './components/MessageCard.ArticleCard'
+
+const noop = () => undefined
 
 export const MessageCard = React.memo(
   React.forwardRef(

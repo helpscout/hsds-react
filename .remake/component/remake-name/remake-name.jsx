@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { <%= name %>UI } from './<%= name %>.css'
 
 function <%= name %>({
   className,
   'data-cy': dataCy = '<%= name %>',
-  onClick = noop,
+  onClick = () => undefined,
 }) {
   const [] = useState()
 

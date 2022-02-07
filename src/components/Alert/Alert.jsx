@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import Badge from '../Badge'
 import Animate from '../Animate'
 import Collapsible from '../Collapsible'
@@ -134,7 +133,7 @@ Alert.defaultProps = {
   dismissible: false,
   icon: false,
   noMargin: false,
-  onDismiss: noop,
+  onDismiss: () => undefined,
   status: 'warning',
 }
 

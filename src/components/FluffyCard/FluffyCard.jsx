@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import FluffyCardContainer from './FluffyCard.Container'
 import { FluffyCardUI } from './FluffyCard.css'
+
+const noop = () => undefined
 
 class FluffyCard extends React.PureComponent {
   static Container = FluffyCardContainer

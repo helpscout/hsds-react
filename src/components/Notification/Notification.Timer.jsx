@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { TimerUI } from './Notification.css'
 
 export class Timer extends React.PureComponent {
@@ -34,7 +33,7 @@ Timer.propTypes = {
 
 Timer.defaultProps = {
   isRunning: true,
-  onTimerEnd: noop,
+  onTimerEnd: () => undefined,
   style: {},
   timeout: 5000,
 }

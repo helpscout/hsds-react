@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import { ItemUI } from './Inline.css'
 
 export class InlineItem extends React.PureComponent {
@@ -32,7 +31,7 @@ export class InlineItem extends React.PureComponent {
 
 InlineItem.defaultProps = {
   'data-cy': 'InlineItem',
-  innerRef: noop,
+  innerRef: () => undefined,
 }
 
 InlineItem.propTypes = {

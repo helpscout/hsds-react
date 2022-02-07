@@ -4,7 +4,6 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Animate from '../Animate'
 import { ContentUI, ContentResizerUI } from './ActionSelect.css'
 import { getEasingTiming } from '../../utilities/easing'
-import { noop } from '../../utilities/other'
 
 export const getInitialState = props => {
   const { children } = props
@@ -33,11 +32,11 @@ export class ContentResizer extends React.PureComponent {
     animationEasing: 'ease',
     borderOffset: 1,
     'data-cy': 'ActionSelectContentResizer',
-    mainRef: noop,
+    mainRef: () => undefined,
     isFadeContentOnOpen: true,
     onAnimationEnd: null,
     onAnimationUpdate: null,
-    onResize: noop,
+    onResize: () => undefined,
     resizeCount: 0,
     selectedKey: null,
   }

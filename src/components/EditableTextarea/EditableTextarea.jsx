@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import Textarea from 'react-textarea-autosize'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
 import debounce from '../../utilities/debounce'
 import { ComponentUI, EditableTextareaUI, MaskUI } from './EditableTextarea.css'
 import {
@@ -16,6 +15,8 @@ import { scrollToTop } from './EditableTextarea.utils'
 import { key } from '../../constants/Keys'
 import { CAUSE, OPERATION } from '../EditableField/EditableField.constants'
 import { getValidationColor } from '../EditableField/EditableField.utils'
+
+const noop = () => undefined
 
 export class EditableTextarea extends React.PureComponent {
   static className = 'c-EditableTextarea'
