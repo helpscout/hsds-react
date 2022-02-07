@@ -183,6 +183,13 @@ const ATLAS = {
         type="text"
         multipleValues
         placeholder="Add a film name"
+        addButtonProps={{
+          className: 'my-classname',
+          'aria-label': 'testtt',
+          onClick: e => {
+            console.log(e)
+          },
+        }}
       />
       <EditableField
         label="Musicians"
