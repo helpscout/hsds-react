@@ -11,6 +11,7 @@ import { MessageCardImage } from './components/MessageCard.Image'
 import { MessageCardAction } from './components/MessageCard.Action'
 import { MessageCardBody } from './components/MessageCard.Body'
 import { MessageCardContent } from './components/MessageCard.Content'
+import { MessageCardSurvey } from './components/MessageCard.Survey'
 import MessageCardUrlAttachmentImage from './components/MessageCard.UrlAttachmentImage'
 import MessageCardArticleCard from './components/MessageCard.ArticleCard'
 
@@ -183,5 +184,6 @@ MessageCard.className = 'c-MessageCard'
 MessageCard.Button = MessageCardButton
 MessageCard.UrlAttachmentImage = MessageCardUrlAttachmentImage
 MessageCard.ArticleCard = MessageCardArticleCard
+MessageCard.Survey = MessageCardSurvey
 
 export default MessageCard
