@@ -1,4 +1,4 @@
-import styled from '../styled'
+import styled from 'styled-components'
 
 import { COLOURS, SIZES } from '../EditableField/EditableField.utils'
 import { FONT_FAMILY } from '../../styles/configs/constants'
