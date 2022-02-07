@@ -1,10 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Hr from '../Hr'
 import Text from '../Text'
 import classNames from 'classnames'
-import { BlankSlateUI, SpeechBubbleIlloUI, ContentUI } from './ChatList.css'
+import {
+  BlankSlateUI,
+  SpeechBubbleIlloUI,
+  ContentUI,
+  ItemDividerUI,
+} from './ChatList.css'
 
 export const defaultMessage = "You're all caught-up"
 
@@ -23,7 +27,7 @@ class BlankSlate extends React.PureComponent {
             {message}
           </Text>
         </ContentUI>
-        <Hr className="c-ChatListItem__divider" size="none" />
+        <ItemDividerUI className="c-ChatListItem__divider" />
       </BlankSlateUI>
     )
   }

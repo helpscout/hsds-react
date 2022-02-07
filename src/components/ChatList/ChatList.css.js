@@ -164,3 +164,14 @@ export const PulsingTagUI = styled(Tag)`
     }
   }
 `
+
+export const ItemDividerUI = styled('hr')`
+  margin: 0;
+  border: 0;
+  border-top-color: ${getColor('grey.400')};
+  border-top-style: solid;
+  border-top-width: 1px;
+  box-sizing: content-box;
+  display: block;
+  height: 0;
+`

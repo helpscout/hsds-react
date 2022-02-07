@@ -5,7 +5,6 @@ import Animate from '../Animate'
 import Badge from '../Badge'
 import Flexy from '../Flexy'
 import Heading from '../Heading'
-import Hr from '../Hr'
 import TypingDots from '../TypingDots'
 import List from '../List'
 import Overflow from '../Overflow'
@@ -29,6 +28,7 @@ import {
   AvatarListWrapperUI,
   DividerWrapperUI,
   PulsingTagUI,
+  ItemDividerUI,
 } from './ChatList.css'
 
 class Item extends React.Component {
@@ -198,7 +198,7 @@ class Item extends React.Component {
               {metaMarkup}
             </BlockUI>
             <DividerWrapperUI>
-              <Hr className="c-ChatListItem__divider" size="none" />
+              <ItemDividerUI className="c-ChatListItem__divider" />
             </DividerWrapperUI>
           </ItemUI>
         </div>
