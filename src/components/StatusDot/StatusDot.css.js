@@ -80,6 +80,13 @@ export const StatusDotUI = styled('div')`
   }
 `
 
+export const CenteredContentUI = styled('div')`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
 function makeSizeStyles() {
   return forEach(config.size, (name, value) => {
     const size = Math.floor(config.borderWidth * 2) + value

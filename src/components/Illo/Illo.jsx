@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Centralize from '../Centralize'
 import VisuallyHidden from '../VisuallyHidden'
 import classNames from 'classnames'
-import { IlloUI, IconUI } from './Illo.css'
+import { IlloUI, IconUI, CenteredContentUI } from './Illo.css'
 import { svgSet } from './Illo.utils'
 
 const Illo = props => {
@@ -43,11 +42,11 @@ const Illo = props => {
       data-illo-name={name}
       style={componentStyle}
     >
-      <Centralize>
+      <CenteredContentUI>
         <IconUI className="c-Illo__icon" title={iconTitle}>
           {IlloComponent && <IlloComponent />}
         </IconUI>
-      </Centralize>
+      </CenteredContentUI>
       <VisuallyHidden>{iconTitle}</VisuallyHidden>
     </IlloUI>
   )

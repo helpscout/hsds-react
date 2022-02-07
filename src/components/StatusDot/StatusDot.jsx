@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Centralize from '../Centralize'
 import Icon from '../Icon'
 import classNames from 'classnames'
-import { StatusDotUI } from './StatusDot.css'
+import { StatusDotUI, CenteredContentUI } from './StatusDot.css'
 
 class StatusDot extends React.PureComponent {
   getStyles = () => {
@@ -37,11 +36,11 @@ class StatusDot extends React.PureComponent {
 
     return (
       icon && (
-        <Centralize>
+        <CenteredContentUI>
           <div className="c-StatusDot__icon">
             <Icon name={icon} size="20" />
           </div>
-        </Centralize>
+        </CenteredContentUI>
       )
     )
   }

@@ -38,6 +38,13 @@ export const HeaderUI = styled('div')`
   transition: ${config.headerTransition};
 `
 
+export const CenteredContentUI = styled('div')`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
 export const ContentUI = styled('div')`
   padding-top: ${config.headerOffset}px;
 `

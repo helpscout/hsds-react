@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import forEach from '../../styles/utilities/forEach'
 import { getColor, rgba } from '../../styles/utilities/color'
-import Centralize from '../Centralize'
 
 const statusStyles = {
   error: 'red',
@@ -53,11 +52,16 @@ const makeStatusStyles = () => {
   })
 }
 
-export const StatusBarUI = styled(Centralize)`
+export const StatusBarUI = styled('div')`
   cursor: pointer;
   padding: 6px 20px;
   min-height: 32px;
   text-align: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   ${statusBarStyleLight('blue')};
 
   .c-StatusBar__content {

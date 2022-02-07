@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
-import Centralize from '../Centralize'
 import Flexy from '../Flexy'
 import Button from '../Button'
 import { SplittedButton } from '../DropList/DropList.togglers'
@@ -99,9 +98,12 @@ export const ButtonUI = styled(Button)`
   text-transform: uppercase;
 `
 
-export const OperatorWrapperBaseUI = styled(Centralize)`
+export const OperatorWrapperBaseUI = styled('div')`
   position: relative;
   height: ${config.operatorHeight};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &::before {
     background: ${getColor('border.ui')};

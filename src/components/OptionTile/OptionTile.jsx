@@ -2,10 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FluffyCardContainer from './OptionTile.Container'
-import Centralize from '../Centralize'
 import Text from '../Text'
 import classNames from 'classnames'
-import { OptionTileUI, HeaderUI, ContentUI, TitleUI } from './OptionTile.css'
+import {
+  OptionTileUI,
+  HeaderUI,
+  ContentUI,
+  TitleUI,
+  CenteredContentUI,
+} from './OptionTile.css'
 import OptionIcon from './OptionIcon'
 
 class OptionTile extends React.PureComponent {
@@ -40,9 +45,9 @@ class OptionTile extends React.PureComponent {
         textAlign={textAlign}
       >
         <HeaderUI className="c-OptionTile__header">
-          <Centralize>
+          <CenteredContentUI>
             <OptionIcon icon={icon} iconTitle={iconTitle} />
-          </Centralize>
+          </CenteredContentUI>
         </HeaderUI>
         <ContentUI className="c-OptionTile__content">
           <TitleUI className="c-OptionTile__titleWrapper">

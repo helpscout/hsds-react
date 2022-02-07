@@ -59,6 +59,13 @@ export const IconUI = styled('span')`
   }
 `
 
+export const CenteredContentUI = styled('div')`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
 function makeSizeStyles() {
   return forEach(
     ILLO_SIZES,
