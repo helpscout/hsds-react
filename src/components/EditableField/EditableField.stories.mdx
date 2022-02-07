@@ -68,8 +68,9 @@ A special type of inputs that allow you to edit it inline
   - `"link"`: For url types, adds a button to open a new tab/window with the url
 - By default `EditableField` incorporates one action: “delete”
 - To override either of the predefined actions, pass them in the array using the same action name
-- If the user doesn’t want any action, she needs to explicitly pass `null`
+- If the user doesn't want any action, she needs to explicitly pass `null`
 - `icon` should be the name of an Icon that is present in HSDS
+- Pass a `buttonAttrs` object to attach attributes directly on the html button (such as aria labels): `{ buttonAttrs: { 'aria-label': 'My important button' } }`
 
 ### onCommit
 
@@ -238,6 +239,9 @@ const ATLAS = {
           callback(obj) {
             console.log('HSDS: EditableFieldApp -> callback -> obj', obj)
           },
+          buttonAttrs: {
+            'aria-label': 'some aria label',
+          },
         }}
       />
     </ContainerUI>
@@ -270,6 +274,14 @@ const ATLAS = {
         name="paint"
         placeholder="Add a colour"
         type="text"
+        onCommit={({ name, value }) => {
+          value.forEach(val => {
+            console.group(`Filed: ${name}`)
+            console.log('🚀 ~ option', val.option)
+            console.log('🚀 ~ value', val.value)
+            console.groupEnd()
+          })
+        }}
         valueOptions={PAINT_OPTIONS}
         value={[
           { option: PAINT_OPTIONS[0], value: 'Anthraquinone Blue PB60' },
@@ -331,6 +343,46 @@ const ATLAS = {
 </Canvas>
 
 #### Validation
+
+To enable field validation use the function prop `validate`, it provides the following payload:
+
+```jsx
+<EditableField
+  validate={payload => {
+    /**
+      payload.data = { cause, item, operation } => data associated with the operation
+      payload.name => the field name that we are validating
+      payload.value => the new field value to validate
+      payload.values => in multiple value fields, get all items as an array
+    **/
+
+    const { name, value } = payload // this is usually all you need
+    const isValid = value !== 'valid' // determine what makes it valid or not
+
+  // always return a promise...
+  return return new Promise(resolve => {
+    if (isValid) {
+      resolve({
+        isValid, // required
+        name,
+        value,
+        updatedProps // if you need to update some props on the validated item
+      })
+    } else {
+      resolve({
+        isValid, // required
+        name,
+        value,
+        type: 'error' || 'warning' || 'custom', // the first two are provided (makes things red or yellow),
+        message: 'That is definitely not right', // gets put in the tooltip
+        icon, // name of a hsds button to put there, 'alert-small' is the default
+        color, // pass a valid custom color
+      })
+    }
+  })
+  }}
+/>
+```
 
 <Canvas>
   <Story name="Validation">

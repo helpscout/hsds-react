@@ -1,6 +1,7 @@
 import React from 'react'
 import { render, act, screen, fireEvent } from '@testing-library/react'
 import MessageCard from './MessageCard'
+import { ThumbsSurvey } from './MessageCard.Survey.variants'
 import { MessageCardButton as Button } from './MessageCard.Button'
 import userEvent from '@testing-library/user-event'
 
@@ -411,6 +412,76 @@ describe('Message Button', () => {
     userEvent.click(screen.getByRole('button'))
 
     expect(callback).toHaveBeenCalled()
+  })
+})
+
+describe('Surveys', () => {
+  test('Renders a feedback form after selection if withFeedbackForm is set', () => {
+    const formLabel = 'Tell us more...'
+
+    render(
+      <MessageCard.Survey withFeedbackForm feedbackFormText={formLabel}>
+        <ThumbsSurvey />
+      </MessageCard.Survey>
+    )
+
+    expect(screen.queryByLabelText(formLabel)).not.toBeInTheDocument()
+
+    userEvent.click(screen.getByRole('button', { name: 'thumbs-up' }))
+
+    expect(screen.queryByLabelText(formLabel)).toBeInTheDocument()
+  })
+
+  test('Calls the onSubmit callback when submitting the feedback form', () => {
+    const formLabel = 'Tell us more...'
+    const onSubmit = jest.fn()
+
+    render(
+      <MessageCard.Survey
+        withFeedbackForm
+        feedbackFormText={formLabel}
+        onSubmit={onSubmit}
+      >
+        <ThumbsSurvey />
+      </MessageCard.Survey>
+    )
+
+    userEvent.click(screen.getByRole('button', { name: 'thumbs-down' }))
+    userEvent.type(screen.getByLabelText(formLabel), 'Did not like it')
+    userEvent.click(screen.getByRole('button', { name: 'Send' }))
+
+    expect(onSubmit).toHaveBeenCalledWith({
+      feedback: 'Did not like it',
+      selected: 'thumbs-down',
+    })
+  })
+
+  test('Calls the onSubmit callback right away if withFeedbackForm is not set', () => {
+    const onSubmit = jest.fn()
+
+    render(
+      <MessageCard.Survey onSubmit={onSubmit}>
+        <ThumbsSurvey />
+      </MessageCard.Survey>
+    )
+
+    userEvent.click(screen.getByRole('button', { name: 'thumbs-up' }))
+
+    expect(onSubmit).toHaveBeenCalledWith({
+      selected: 'thumbs-up',
+    })
+  })
+
+  test('Shows the feedback form before submit if forceFeedbackForm is set', () => {
+    const formLabel = 'Tell us more...'
+
+    render(
+      <MessageCard.Survey forceFeedbackForm feedbackFormText={formLabel}>
+        <ThumbsSurvey />
+      </MessageCard.Survey>
+    )
+
+    expect(screen.queryByLabelText(formLabel)).toBeInTheDocument()
   })
 })
 
