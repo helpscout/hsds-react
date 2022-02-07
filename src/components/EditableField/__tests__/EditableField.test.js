@@ -193,26 +193,6 @@ describe('Value', () => {
     expect(spy).toHaveBeenCalledWith({ event, name, value: initialValue })
   })
 
-  test.skip('handleInputKeyDown', () => {
-    const spy = jest.fn()
-    const wrapper = mount(
-      <EditableField name="company" value="hello" onInputKeyDown={spy} />
-    )
-    const initialValue = wrapper.state('fieldValue')
-    const name = initialValue[0].id
-    const event = {
-      key: 'J',
-      currentTarget: {
-        value: 'howdy',
-      },
-    }
-    wrapper.instance().handleInputKeyDown({
-      event,
-      name,
-    })
-    expect(spy).toHaveBeenCalledWith({ event, name, value: initialValue })
-  })
-
   test('handleInputKeyDown enter: commits value', done => {
     const wrapper = mount(<EditableField name="company" value="hello" />)
     const initialValue = wrapper.state('fieldValue')
@@ -323,31 +303,6 @@ describe('Value', () => {
     }).catch(done)
   })
 
-  // test.skip('handleInputKeyDown esc: discards value', done => {
-  //   const wrapper = mount(<EditableField name="company" value="hello" />)
-  //   const initialValue = wrapper.state('fieldValue')
-  //   const name = initialValue[0].id
-
-  //   wrapper.instance().handleInputKeyDown({
-  //     event: {
-  //       key: 'Esc',
-  //       currentTarget: {
-  //         value: 'howdy',
-  //       },
-  //     },
-  //     name,
-  //   })
-  //   const f = flushPromises()
-  //   jest.runAllTimers()
-
-  //   f.then(() => {
-  //     wrapper.update()
-
-  //     expect(wrapper.state('fieldValue')).toEqual(initialValue)
-  //     done()
-  //   }).catch(done)
-  // })
-
   test('Should render add button when multiple values are passed', () => {
     const { container } = render(
       <EditableField name="company" value={['hello', 'goodbye', 'hola']} />
@@ -356,6 +311,23 @@ describe('Value', () => {
     expect(
       container.querySelector('button.EditableField__addButton')
     ).toBeInTheDocument()
+  })
+
+  test('Should render add button when with custom props', () => {
+    const { container } = render(
+      <EditableField
+        name="company"
+        value={['hello', 'goodbye', 'hola']}
+        addButtonProps={{ 'aria-label': 'my-label', className: 'custom-class' }}
+      />
+    )
+
+    expect(
+      container.querySelector('button.EditableField__addButton')
+    ).toHaveAttribute('aria-label')
+    expect(
+      container.querySelector('button.EditableField__addButton')
+    ).toHaveClass('custom-class')
   })
 
   test('should add an input field when clicking the add button', async () => {
@@ -372,6 +344,29 @@ describe('Value', () => {
 
     await waitFor(() => {
       expect(container.querySelectorAll('input').length).toBe(4)
+    })
+  })
+
+  test('should fire custom onclick if passed on the add button', async () => {
+    const onClickSpy = jest.fn()
+    const { container } = render(
+      <EditableField
+        name="company"
+        value={['hello', 'goodbye', 'hola']}
+        addButtonProps={{ onClick: onClickSpy }}
+      />
+    )
+
+    const button = container.querySelector(
+      `.${EDITABLEFIELD_CLASSNAMES.addButton}`
+    )
+
+    expect(container.querySelectorAll('input').length).toBe(3)
+    user.click(button)
+
+    await waitFor(() => {
+      expect(container.querySelectorAll('input').length).toBe(4)
+      expect(onClickSpy).toHaveBeenCalled()
     })
   })
 
