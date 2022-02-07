@@ -12,7 +12,6 @@ import { noop } from '../../utilities/other'
 import { AccordionUI } from './Accordion.css'
 import { PageContext } from '../Page/Page'
 import Sortable from '../Sortable'
-import { GlobalContext } from '../HSDS/Provider'
 
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion',
@@ -99,10 +98,6 @@ const Accordion = props => {
   )
 
   const { accordion = {} } = useContext(PageContext)
-  const { getCurrentScope } = React.useContext(GlobalContext) || {}
-
-  const scope = getCurrentScope ? getCurrentScope() : null
-
   const isPage = accordion.isPage || isPageProps
   const isSeamless = accordion.isSeamless || isSeamlessProps
 
@@ -115,11 +110,7 @@ const Accordion = props => {
   }
 
   const getContainer = () => {
-    if (scope) {
-      return document.querySelector(`.${scope}`)
-    }
-
-    return document.body
+    return document.querySelector('.hsds-react') || document.body
   }
 
   const contextValue = {
