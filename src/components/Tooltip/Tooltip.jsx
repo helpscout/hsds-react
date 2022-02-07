@@ -16,7 +16,6 @@ import {
   TooltipTriggerUI,
   TooltipUI,
 } from './Tooltip.css'
-import { GlobalContext } from '../HSDS/Provider'
 import KeyboardBadge from '../KeyboardBadge'
 
 export const TooltipContext = createContext({})
@@ -70,7 +69,6 @@ const Tooltip = ({
   zIndex: zIndexProp,
   ...rest
 }) => {
-  const { getCurrentScope } = useContext(GlobalContext) || {}
   const { zIndex = zIndexProp, animationDuration: animationDurationContext } =
     useContext(TooltipContext) || {}
   const [isEntered, setEntered] = useState(animationDuration === 0)
@@ -81,8 +79,6 @@ const Tooltip = ({
       isMounted.current = false
     }
   }, [])
-
-  const scope = getCurrentScope ? getCurrentScope() : null
 
   const hasRenderContent = renderContent && isFunction(renderContent)
   const hasRender = renderProp && isFunction(renderProp)
@@ -101,11 +97,10 @@ const Tooltip = ({
     maxWidth,
     minWidth,
     ref: innerRef,
-    scope: scope,
     tabIndex: '-1',
   }
 
-  const renderTooltip = ({ scope, className, ...props }) => {
+  const renderTooltip = ({ className, ...props }) => {
     let titleContent = null
 
     if (typeof title === 'string') {
@@ -135,7 +130,7 @@ const Tooltip = ({
       </TooltipAnimationUI>
     )
 
-    return <div className={scope}>{toolTipComponent}</div>
+    return <div className="hsds-react hsds-beacon">{toolTipComponent}</div>
   }
 
   const render = attrs => {
