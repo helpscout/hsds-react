@@ -22,7 +22,7 @@ describe('MessageCard.utils', () => {
     const result = replaceMessageVariables(text, variables)
 
     expect(result).toEqual(
-      `<p>Hi <span class="hsds-message-card-variable">there</span> <span class="hsds-message-card-variable">you</span></p>`
+      `<p>Hi <span class="hsds-message-card-variable" title="there"><span class="hsds-message-card-variable__text">there</span></span> <span class="hsds-message-card-variable" title="you"><span class="hsds-message-card-variable__text">you</span></span></p>`
     )
   })
 
@@ -32,7 +32,7 @@ describe('MessageCard.utils', () => {
     const result = replaceMessageVariables(text, variables)
 
     expect(result).toEqual(
-      `<p>Hi <span class="hsds-message-card-variable">there</span> <span class="hsds-message-card-variable">Custom Variable</span></p>`
+      `<p>Hi <span class="hsds-message-card-variable" title="there"><span class="hsds-message-card-variable__text">there</span></span> <span class="hsds-message-card-variable" title="Custom Variable"><span class="hsds-message-card-variable__text">Custom Variable</span></span></p>`
     )
   })
 
@@ -42,7 +42,7 @@ describe('MessageCard.utils', () => {
     const result = replaceMessageVariables(text, variables)
 
     expect(result).toEqual(
-      `<p>Hi <span class="hsds-message-card-variable">First Name</span> <span class="hsds-message-card-variable">you</span></p>`
+      `<p>Hi <span class="hsds-message-card-variable" title="First Name"><span class="hsds-message-card-variable__text">First Name</span></span> <span class="hsds-message-card-variable" title="you"><span class="hsds-message-card-variable__text">you</span></span></p>`
     )
   })
 
@@ -52,7 +52,7 @@ describe('MessageCard.utils', () => {
     const result = replaceMessageVariables(text, variables)
 
     expect(result).toEqual(
-      `<p>Hi <span class="hsds-message-card-variable">there % there</span> <span class="hsds-message-card-variable">you % there</span></p>`
+      `<p>Hi <span class="hsds-message-card-variable" title="there % there"><span class="hsds-message-card-variable__text">there % there</span></span> <span class="hsds-message-card-variable" title="you % there"><span class="hsds-message-card-variable__text">you % there</span></span></p>`
     )
   })
 
