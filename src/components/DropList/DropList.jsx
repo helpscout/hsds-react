@@ -257,7 +257,10 @@ function DropListManager({
               tippyInstanceRef.current.show()
 
               if (tippyOptions.appendTo) {
-                tippyInstanceRef.current.popper.classList.add('hsds-react')
+                tippyInstanceRef.current.popper.classList.add(
+                  'hsds-react',
+                  'hsds-beacon'
+                )
               }
             }
           }}

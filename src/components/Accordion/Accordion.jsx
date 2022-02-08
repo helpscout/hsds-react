@@ -111,7 +111,11 @@ const Accordion = props => {
   }
 
   const getContainer = () => {
-    return document.querySelector('.hsds-react') || document.body
+    return (
+      document.querySelector('.hsds-react') ||
+      document.querySelector('.hsds-beacon') ||
+      document.body
+    )
   }
 
   const contextValue = {
