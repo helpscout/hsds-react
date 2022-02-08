@@ -35,6 +35,7 @@ function ScrollableContainer({
   const [footerRect, footerEl, footerRef, footerObserverRef] = useMeasureNode({
     observeSize: Boolean(withResizeObservers.footer),
   })
+
   const [handleOnScroll, isTopScrolled, isBottomScrolled] = useScrollShadow({
     bottomRef: footerEl,
     drawInitialShadowsDelay,
@@ -95,11 +96,13 @@ function ScrollableContainer({
         return (
           <SimpleBarUI
             $height={calculateSimpleBarHeight(height, headerRect, footerRect)}
-            onScroll={e => {
-              handleOnScroll()
-              onScroll && onScroll(e)
+            scrollableNodeProps={{
+              ref: bodyRef,
+              onScroll: e => {
+                handleOnScroll()
+                onScroll && onScroll(e)
+              },
             }}
-            scrollableNodeProps={{ ref: bodyRef }}
             className={classNames('ScrollableContainer__body', className)}
             {...rest}
           >

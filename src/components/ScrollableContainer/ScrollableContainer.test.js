@@ -275,13 +275,13 @@ describe('renders', () => {
     expect(header.getAttribute('style')).toBeFalsy()
     expect(header).not.toHaveAttribute('style')
 
-    expect(containerScroll).toHaveStyle('height: 500px')
+    expect(containerScroll).toHaveStyle('height: calc(500px)')
     // Attempts to calculate the correct height for the simplebar content,
     // JSDOM doesn't support layout measurement so we just want to make sure the "calc" is in
     // the string
     expect(simplebar).toHaveStyle('height: calc(500px - 0px);')
 
-    await fireEvent.scroll(body, {
+    await fireEvent.scroll(scrollable, {
       y: 100,
     })
 

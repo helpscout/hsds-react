@@ -16,6 +16,7 @@ export const ScrollableContainerUI = styled(ScrollableContainer)`
 export const HeaderUI = styled('header')`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 75px;
   padding: 0 30px;
   background-color: #fff;
@@ -52,7 +53,7 @@ export const FooterUI = styled('footer')`
 `
 
 const BGUI = styled('div')`
-  width: 100%;
+  width: calc(100% + 2rem);
   margin: -1rem;
   background-color: #e5e5f7;
   background-size: 10px 10px;
@@ -145,7 +146,6 @@ function getHeights(containerNode) {
 }
 
 export const SimpleBarExample = function () {
-  const [isTopScrolled, setIsTopScrolled] = useState(null)
   const containerRef = useRef(null)
   const [footerHeight] = useConvoLayoutEffect(containerRef)
   const [handleScroll] = useFancyAnimationScroller({
@@ -170,9 +170,6 @@ export const SimpleBarExample = function () {
         width="70%"
         height="100vh"
         shadows={{ initial: 'none' }}
-        onScrollableSectionsStateChange={({ isTopScrolled }) => {
-          setIsTopScrolled(isTopScrolled)
-        }}
         onScroll={handleScroll}
         withResizeObservers={{
           header: true,

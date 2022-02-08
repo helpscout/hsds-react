@@ -13,5 +13,6 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "jestrunner.configPath": "jest.config.js"
+  "jestrunner.configPath": "jest.config.js",
+  "search.followSymlinks": false
 }
