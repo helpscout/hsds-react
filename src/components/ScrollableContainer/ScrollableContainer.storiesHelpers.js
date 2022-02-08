@@ -146,8 +146,6 @@ function getHeights(containerNode) {
 }
 
 export const SimpleBarExample = function () {
-  const [showHeader, setShowHeader] = useState(true)
-  const [showFooter, setShowFooter] = useState(true)
   const containerRef = useRef(null)
   const [footerHeight] = useConvoLayoutEffect(containerRef)
   const [handleScroll] = useFancyAnimationScroller({
