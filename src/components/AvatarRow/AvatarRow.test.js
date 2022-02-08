@@ -91,7 +91,6 @@ describe('Space calculations (getNumberOfItemsToDisplay)', () => {
         containerWidth: spaceNeededForAll - 10,
         gap: 2,
         numberOfAvatars: avatars.length,
-        numberOfItemsOnDisplay: avatars.length,
       })
     ).toBe(5)
 
@@ -101,7 +100,6 @@ describe('Space calculations (getNumberOfItemsToDisplay)', () => {
         containerWidth: spaceNeededForAll - 50,
         gap: 2,
         numberOfAvatars: avatars.length,
-        numberOfItemsOnDisplay: avatars.length,
       })
     ).toBe(4)
   })
@@ -115,7 +113,6 @@ describe('Space calculations (getNumberOfItemsToDisplay)', () => {
         containerWidth: avatarSize - 5,
         gap: 2,
         numberOfAvatars: avatars.length,
-        numberOfItemsOnDisplay: avatars.length,
       })
     ).toBe(1)
   })
@@ -129,7 +126,6 @@ describe('Space calculations (getNumberOfItemsToDisplay)', () => {
         containerWidth: undefined,
         gap: 2,
         numberOfAvatars: avatars.length,
-        numberOfItemsOnDisplay: avatars.length,
       })
     ).toBe(undefined)
 
@@ -139,7 +135,6 @@ describe('Space calculations (getNumberOfItemsToDisplay)', () => {
         containerWidth: 500,
         gap: 2,
         numberOfAvatars: 1,
-        numberOfItemsOnDisplay: avatars.length,
       })
     ).toBe(undefined)
   })

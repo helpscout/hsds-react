@@ -5,7 +5,8 @@ export const messageVariableClassName = 'hsds-message-card-variable'
  * They would be replaced with fallback text, if present. If no fallback text, label from variable would be used
  * Only variables provided in parameter would be replaced, others are kept untouched in the raw version
  *
- * Variable raw text is replaced with <span class="hsds-message-card-variable"> element.
+ * Variable raw text is replaced with <span class="hsds-message-card-variable"> and <span class="hsds-message-card-variable__text"> elements.
+ * Two elements are necessary to properly insert ellipsis for longer variables, and keep the proper styling
  *
  * @param text {String} text to replace variables within (if any)
  * @param variables {Array<{id: String, display: String}>} list of variables to replace
@@ -28,7 +29,7 @@ export const replaceMessageVariables = (text = '', variables = []) => {
     const variable = variables.find(variable => variable.id === variableId)
     if (variable) {
       const variableText = !fallback ? variable.display : fallback
-      return `<span class="${messageVariableClassName}">${variableText}</span>`
+      return `<span class="${messageVariableClassName}" title="${variableText}"><span class="${messageVariableClassName}__text">${variableText}</span></span>`
     }
     return match
   }

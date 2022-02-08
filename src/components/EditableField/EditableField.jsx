@@ -906,8 +906,9 @@ export class EditableField extends React.Component {
   }
 
   renderAddButton = () => {
-    const { disabled } = this.props
+    const { disabled, addButtonProps } = this.props
     const { fieldValue, multipleValuesEnabled } = this.state
+    const { className, onClick, ...rest } = addButtonProps
 
     const isLastValueEmpty =
       fieldValue[fieldValue.length - 1].value === EMPTY_VALUE
@@ -917,10 +918,18 @@ export class EditableField extends React.Component {
 
     return multipleValuesEnabled && !isSingleAndEmpty && !disabled ? (
       <AddButtonUI
-        className={EDITABLEFIELD_CLASSNAMES.addButton}
+        className={classNames(EDITABLEFIELD_CLASSNAMES.addButton, className)}
         type="button"
-        onClick={this.handleAddValue}
+        onClick={
+          onClick == null
+            ? this.handleAddValue
+            : e => {
+                onClick(e)
+                this.handleAddValue()
+              }
+        }
         disabled={isLastValueEmpty || invalidValuePresent}
+        {...rest}
       >
         <Icon name={ACTION_ICONS.plus} size="24" />
       </AddButtonUI>
@@ -1110,7 +1119,7 @@ export class EditableField extends React.Component {
 }
 
 EditableField.defaultProps = {
-  type: FIELDTYPES.text,
+  addButtonProps: {},
   'data-cy': 'EditableField',
   defaultOption: null,
   disabled: false,
@@ -1136,12 +1145,15 @@ EditableField.defaultProps = {
   onOptionBlur: noop,
   onOptionChange: noop,
   onOptionFocus: noop,
+  type: FIELDTYPES.text,
   validate: () => Promise.resolve({ isValid: true }),
 }
 
 EditableField.propTypes = {
   /** Actions to attach to an EditableField (default includes 'delete') */
   actions: PropTypes.any,
+  /** Add custom attributes to the add button on multiple value fields */
+  addButtonProps: PropTypes.object,
   /** The className of the component. */
   className: PropTypes.string,
   /** If the EditableField is “option-enabled” by using the valueOptions array, the user can provide which of the options should be the default, if non provided, EditableField will choose the first option in the valueOptions array. */

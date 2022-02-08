@@ -9,6 +9,7 @@ import {
 import ConvoList from './ConvoList/ConvoList'
 import TableWithPagination from './TableWithPagination'
 import TableWithSorting from './TableWithSorting'
+import TableWithAnimatedRows from './TableWithAnimatedRows'
 
 <Meta
   title="Components/Structural/Table"
@@ -148,6 +149,74 @@ const purpleTheme = {
       columns={compoundColumns}
       data={createFakeCustomers({ amount: 10 })}
     />
+  </Story>
+</Canvas>
+
+#### With animated row addition/removal
+
+Uses [react-transition-group](https://reactcommunity.org/react-transition-group) under the hood to animate rows.
+
+Using `animateRows = true` will enable it with a some defaults, you can customize the animation by overriding the css that is applied on the `<tbody>`
+
+Default class names and css:
+
+```css
+.animated-row-enter {
+  opacity: 0;
+}
+
+.animated-row-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.animated-row-exit {
+  opacity: 1;
+}
+
+.animated-row-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
+```
+
+Example override:
+
+```js
+const TableUI = styled(Table)`
+  .TableBody--animated {
+    .animated-row-enter {
+      background-color: red !important;
+    }
+
+    .animated-row-enter-active {
+      background-color: transparent !important;
+      transition: background-color 500ms ease-in;
+    }
+
+    .animated-row-exit {
+      background-color: transparent !important;
+    }
+
+    .animated-row-exit-active {
+      background-color: red !important;
+      transition: background-color 500ms ease-in;
+    }
+  }
+`
+```
+
+If you need more control over the animation, pass an object to `animateRows` with any valid prop for [CSSTransition](https://reactcommunity.org/react-transition-group/css-transition) and [Transition](https://reactcommunity.org/react-transition-group/transition).
+
+For example:
+
+```jsx
+<Table animateRows={{ timeout: 300, onExit: () => console.log('Exit!') }} />
+```
+
+<Canvas>
+  <Story name="with animated row addition/removal">
+    <TableWithAnimatedRows />
   </Story>
 </Canvas>
 

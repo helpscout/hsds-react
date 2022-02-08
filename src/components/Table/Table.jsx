@@ -22,6 +22,7 @@ const noop = () => undefined
 export const TABLE_CLASSNAME = 'c-Table'
 
 export function Table({
+  animateRows,
   className,
   columns = [],
   columnChooserResetLabel,
@@ -157,6 +158,7 @@ export function Table({
               withSelectableRows={withSelectableRows}
             />
             <TableBody
+              animateRows={animateRows}
               columns={state.columns}
               deselectRow={deselectRow}
               maxRowsToDisplay={maxRowsToDisplay}
@@ -211,6 +213,8 @@ export function Table({
 }
 
 Table.propTypes = {
+  /** Enable animation for row addition / removal. */
+  animateRows: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   /** Custom class names to be added to the component top level element. */
   className: PropTypes.string,
   /** List of columns */
