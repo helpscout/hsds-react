@@ -31,6 +31,8 @@ import {
 import Animate from '../Animate'
 
 function DropListManager({
+  index,
+  focusListOnOpen = true,
   animateOptions = {},
   autoSetComboboxAt = 0,
   clearOnSelect = false,
@@ -264,7 +266,10 @@ function DropListManager({
             const dropListEventDriverNode = element.querySelector(
               '[data-event-driver]'
             )
-            dropListEventDriverNode && dropListEventDriverNode.focus()
+
+            focusListOnOpen &&
+              dropListEventDriverNode &&
+              dropListEventDriverNode.focus()
           }}
           onExiting={() => {
             focusTogglerOnMenuClose && focusToggler()
@@ -274,6 +279,7 @@ function DropListManager({
           }}
         >
           <DropListVariant
+            index={index}
             clearOnSelect={clearOnSelect}
             closeOnSelection={closeOnSelection}
             customEmptyList={customEmptyList}
@@ -283,7 +289,7 @@ function DropListManager({
             focusToggler={focusToggler}
             handleSelectedItemChange={handleSelectedItemChange}
             inputPlaceholder={inputPlaceholder}
-            isOpen={isOpen}
+            isOpen={focusListOnOpen ? isOpen : null}
             items={parsedItems}
             menuAriaLabel={menuAriaLabel}
             menuCSS={menuCSS}

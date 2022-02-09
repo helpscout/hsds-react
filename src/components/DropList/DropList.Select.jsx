@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelect } from 'downshift'
 import { noop } from '../../utilities/other'
 import {
@@ -16,6 +16,7 @@ import ListItem, { generateListItemKey } from './DropList.ListItem'
 import { DROPLIST_MENULIST, VARIANTS } from './DropList.constants'
 
 function Select({
+  index,
   clearOnSelect = false,
   closeOnSelection = true,
   customEmptyList = null,
@@ -103,6 +104,10 @@ function Select({
       })
     },
   })
+
+  useEffect(() => {
+    setHighlightedIndex(index)
+  }, [index])
 
   function renderListItem(item, index) {
     const itemProps = {
