@@ -107,7 +107,7 @@ export const IconButton = forwardRef((props, ref) => {
           {children}
         </ChildrenUI>
       )}
-      {status && <StatusUI />}
+      {status && <StatusUI data-testid="IconButton.Status" />}
     </IconButtonUI>
   )
 })

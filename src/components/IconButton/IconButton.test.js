@@ -164,12 +164,30 @@ describe('Styles', () => {
     expect(borderRadius).toBe('100%')
   })
 
-  test.only('Shape can be set to not render a circle', () => {
+  test('Shape can be set to not render a circle', () => {
     const { container } = render(<IconButton shape="default" />)
     expect(
       window
         .getComputedStyle(container.querySelector('.c-IconButton'))
         .getPropertyValue('--buttonRadius')
     ).toBe('3px')
+  })
+})
+
+describe('Status', () => {
+  test('Does not render a status indicator by default', () => {
+    const { getByRole, queryByTestId } = render(<IconButton size="xl" />)
+
+    expect(getByRole('button').classList.contains('with-status')).toBeFalsy()
+    expect(queryByTestId('IconButton.Status')).toBeFalsy()
+  })
+
+  test('Does render a status indicator', () => {
+    const { getByRole, queryByTestId } = render(
+      <IconButton status={true} size="xl" />
+    )
+
+    expect(getByRole('button').classList.contains('with-status')).toBeTruthy()
+    expect(queryByTestId('IconButton.Status')).toBeTruthy()
   })
 })
