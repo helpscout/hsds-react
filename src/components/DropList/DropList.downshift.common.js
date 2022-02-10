@@ -12,6 +12,7 @@ const { SELECT, COMBOBOX } = VARIANTS
 export function stateReducerCommon({
   changes,
   closeOnSelection,
+  highlightIndexControlled,
   items,
   selectedItems,
   state,
@@ -81,9 +82,30 @@ export function stateReducerCommon({
         ...changes,
         highlightedIndex: getEnabledItemIndex({
           currentHighlightedIndex,
-          nextHighlightedIndex,
+          nextHighlightedIndex:
+            highlightIndexControlled != null
+              ? currentHighlightedIndex - 1
+              : nextHighlightedIndex,
           items,
           arrowKey: 'UP',
+        }),
+      }
+    }
+
+    case `${COMBOBOX}.${useCombobox.stateChangeTypes.FunctionSetHighlightedIndex}`: {
+      const { highlightedIndex: currentHighlightedIndex } = state
+      const { highlightedIndex: nextHighlightedIndex } = changes
+      if (currentHighlightedIndex === -1) {
+        return changes
+      }
+      return {
+        ...changes,
+        highlightedIndex: getEnabledItemIndex({
+          currentHighlightedIndex,
+          nextHighlightedIndex,
+          items,
+          arrowKey:
+            nextHighlightedIndex > currentHighlightedIndex ? 'DOWN' : 'UP',
         }),
       }
     }
@@ -97,7 +119,10 @@ export function stateReducerCommon({
         ...changes,
         highlightedIndex: getEnabledItemIndex({
           currentHighlightedIndex,
-          nextHighlightedIndex,
+          nextHighlightedIndex:
+            highlightIndexControlled != null
+              ? currentHighlightedIndex + 1
+              : nextHighlightedIndex,
           items,
           arrowKey: 'DOWN',
         }),

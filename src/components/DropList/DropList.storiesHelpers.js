@@ -1,11 +1,37 @@
-import React, { useState } from 'react'
+import React, { useRef, useReducer, forwardRef } from 'react'
 import styled from 'styled-components'
 import DropList from './'
-import { SimpleButton } from './DropList.togglers'
-import { regularItems } from '../../utilities/specs/dropdown.specs'
+
+const WrapperUI = styled('div')`
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+`
+const ItemUI = styled('div')`
+  position: relative;
+  margin-right: 30px;
+`
+
+const TogglerUI = styled('button')`
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  min-width: 1px;
+  padding: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+`
+
+const InvisibleToggler = forwardRef((props, ref) => {
+  return <TogglerUI tabIndex="-1" ref={ref} />
+})
 
 const someItems = [
   { label: 'John' },
+  { label: 'Juan' },
+  { label: 'Joseph' },
   { label: 'Paul' },
   { label: 'Ringo' },
   { label: 'George' },
@@ -14,56 +40,160 @@ const someItems = [
   { label: 'David' },
 ]
 
-export const DropListTest = () => {
-  const [items, setItems] = useState([])
-  const [index, setIndex] = useState(0)
-  const [value, setValue] = useState('')
+function reducer(state, action) {
+  const { type, payload } = action
+
+  switch (type) {
+    case 'select':
+      return {
+        ...state,
+        value: payload.value,
+        isOpen: false,
+        items: [],
+        highlightedIndex: 0,
+        selectedItem: payload.selection,
+      }
+
+    case 'cancel':
+      return {
+        ...state,
+        isOpen: false,
+        items: [],
+        highlightedIndex: 0,
+      }
+
+    case 'typing':
+      let updatedItems = []
+
+      if (payload.value.length > 2) {
+        updatedItems = someItems.filter(
+          item =>
+            item.label.charAt(0).toLowerCase() ===
+            payload.value.charAt(0).toLowerCase()
+        )
+      }
+
+      return {
+        ...state,
+        value: payload.value,
+        items: updatedItems,
+        isOpen: updatedItems.length > 0,
+      }
+
+    case 'highlight':
+      let updatedIndex = 0
+
+      if (payload.direction === 'up') {
+        updatedIndex =
+          state.highlightedIndex === 0
+            ? state.items.length - 1
+            : state.highlightedIndex - 1
+      } else if (payload.direction === 'down') {
+        updatedIndex =
+          state.highlightedIndex >= state.items.length - 1
+            ? 0
+            : state.highlightedIndex + 1
+      }
+
+      return { ...state, highlightedIndex: updatedIndex }
+
+    default:
+      return state
+  }
+}
+
+const DropListAutocomplete = () => {
+  const initialState = {
+    isOpen: false,
+    items: [],
+    highlightedIndex: 0,
+    value: '',
+  }
+  const [state, dispatch] = useReducer(reducer, initialState)
+  const inputRef = useRef(null)
 
   function handleKeyDown(e) {
     if (e.key === 'ArrowUp') {
       e.preventDefault()
-      setIndex(index === 0 ? 0 : index - 1)
+      dispatch({
+        type: 'highlight',
+        payload: {
+          direction: 'up',
+        },
+      })
     } else if (e.key === 'ArrowDown') {
       e.preventDefault()
-      setIndex(index === items.length - 1 ? items.length - 1 : index + 1)
+      dispatch({
+        type: 'highlight',
+        payload: {
+          direction: 'down',
+        },
+      })
     } else if (e.key === 'Enter') {
-      setValue(items[index].label)
-      setItems([])
+      dispatch({
+        type: 'select',
+        payload: {
+          value: state.items[state.highlightedIndex].label,
+        },
+      })
+    } else if (e.key === 'Escape') {
+      dispatch({
+        type: 'cancel',
+      })
     }
   }
 
   function handleOnChange(e) {
     const { target } = e
 
-    setValue(target.value)
-
-    if (target.value.length > 2) {
-      setItems(
-        someItems.filter(
-          item =>
-            item.label.charAt(0).toLowerCase() ===
-            target.value.charAt(0).toLowerCase()
-        )
-      )
-    }
+    dispatch({
+      type: 'typing',
+      payload: {
+        value: target.value,
+      },
+    })
   }
 
   return (
-    <div>
+    <ItemUI>
       <input
         type="text"
         onChange={handleOnChange}
         onKeyDown={handleKeyDown}
-        value={value}
+        value={state.value}
+        ref={inputRef}
       />
       <DropList
-        index={index}
-        isMenuOpen={!!items.length}
-        items={items}
-        focusTogglerOnMenuClose={false}
+        clearOnSelect
+        customEmptyList={<span />}
         focusListOnOpen={false}
-        toggler={<SimpleButton text="This is a select" />}
+        focusTogglerOnMenuClose={false}
+        highlightIndex={state.highlightedIndex}
+        isMenuOpen={state.isOpen}
+        items={state.items}
+        onSelect={selection => {
+          dispatch({
+            type: 'select',
+            payload: {
+              value: selection.label,
+            },
+          })
+        }}
+        onOpenedStateChange={isOpen => {
+          if (!isOpen) {
+            inputRef && inputRef.current.focus()
+          }
+        }}
+        toggler={<InvisibleToggler />}
       />
-    </div>
+    </ItemUI>
+  )
+}
+
+export const DropListTest = () => {
+  return (
+    <WrapperUI>
+      <DropListAutocomplete />
+    </WrapperUI>
   )
 }

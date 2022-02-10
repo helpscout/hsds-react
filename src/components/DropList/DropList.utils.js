@@ -234,7 +234,10 @@ export function checkIfGroupOrDividerItem(item) {
 
 export function isItemHighlightable(item) {
   return (
-    !checkIfGroupOrDividerItem(item) && !item.isDisabled && !isItemInert(item)
+    item != null &&
+    !checkIfGroupOrDividerItem(item) &&
+    !item.isDisabled &&
+    !isItemInert(item)
   )
 }
 

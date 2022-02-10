@@ -31,8 +31,6 @@ import {
 import Animate from '../Animate'
 
 function DropListManager({
-  index,
-  focusListOnOpen = true,
   animateOptions = {},
   autoSetComboboxAt = 0,
   clearOnSelect = false,
@@ -42,8 +40,10 @@ function DropListManager({
   customEmptyListItems,
   'data-cy': dataCy,
   enableLeftRightNavigation = false,
+  focusListOnOpen = true,
   focusTogglerOnMenuClose = true,
   getTippyInstance = noop,
+  highlightIndex,
   inputPlaceholder = 'Search',
   isMenuOpen = false,
   items = [],
@@ -63,6 +63,7 @@ function DropListManager({
   toggler = {},
   variant = VARIANTS.SELECT,
   withMultipleSelection = false,
+  initialInputValue = '',
 }) {
   const [isOpen, setOpenedState] = useState(false)
   const tippyInstanceRef = useRef(null)
@@ -279,14 +280,14 @@ function DropListManager({
           }}
         >
           <DropListVariant
-            index={index}
+            highlightIndex={highlightIndex}
             clearOnSelect={clearOnSelect}
             closeOnSelection={closeOnSelection}
             customEmptyList={customEmptyList}
             customEmptyListItems={customEmptyListItems}
             data-cy={dataCy}
             enableLeftRightNavigation={enableLeftRightNavigation}
-            focusToggler={focusToggler}
+            focusToggler={focusTogglerOnMenuClose ? focusToggler : noop}
             handleSelectedItemChange={handleSelectedItemChange}
             inputPlaceholder={inputPlaceholder}
             isOpen={focusListOnOpen ? isOpen : null}

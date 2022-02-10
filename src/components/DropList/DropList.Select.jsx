@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useSelect } from 'downshift'
 import { noop } from '../../utilities/other'
 import {
@@ -16,7 +16,6 @@ import ListItem, { generateListItemKey } from './DropList.ListItem'
 import { DROPLIST_MENULIST, VARIANTS } from './DropList.constants'
 
 function Select({
-  index,
   clearOnSelect = false,
   closeOnSelection = true,
   customEmptyList = null,
@@ -24,6 +23,7 @@ function Select({
   'data-cy': dataCy = `DropList.${VARIANTS.SELECT}`,
   enableLeftRightNavigation = false,
   handleSelectedItemChange = noop,
+  highlightIndex,
   isOpen = false,
   items = [],
   menuAriaLabel,
@@ -57,6 +57,7 @@ function Select({
     items: allItems,
     itemToString,
     selectedItem,
+    highlightedIndex: highlightIndex,
 
     getA11ySelectionMessage: ({ selectedItem }) => {
       return getA11ySelectionMessageCommon({
@@ -104,10 +105,6 @@ function Select({
       })
     },
   })
-
-  useEffect(() => {
-    setHighlightedIndex(index)
-  }, [index])
 
   function renderListItem(item, index) {
     const itemProps = {
