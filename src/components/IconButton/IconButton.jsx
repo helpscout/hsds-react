@@ -11,7 +11,12 @@ import {
 } from '../Button/Button.utils'
 import Icon from '../Icon'
 import Avatar from '../Avatar'
-import { IconButtonUI, IconContainerUI, ChildrenUI } from './IconButton.css'
+import {
+  IconButtonUI,
+  IconContainerUI,
+  ChildrenUI,
+  StatusUI,
+} from './IconButton.css'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 
 export const SIZES = [SIZE_XL, SIZE_LG, SIZE_SM]
@@ -38,6 +43,7 @@ const useIconButton = props => {
     size,
     submit,
     title,
+    status,
     ...rest
   } = props
 
@@ -67,19 +73,23 @@ const useIconButton = props => {
     className: classNames(
       componentClassName,
       children && 'has-children',
-      hasOnlyIcon && 'has-icon-only'
+      hasOnlyIcon && 'has-icon-only',
+      status && 'with-status'
     ),
     'aria-label': ariaLabel,
     iconSize: size !== SIZE_SM ? 24 : 20,
     icon,
     children,
+    status,
   }
 }
 
 export const IconButton = forwardRef((props, ref) => {
   const { avatarProps = {}, ...rest } = props
 
-  const { iconSize, children, icon, ...buttonProps } = useIconButton(rest)
+  const { iconSize, children, icon, status, ...buttonProps } = useIconButton(
+    rest
+  )
 
   const avatarComponent = useIconButtonAvatar(avatarProps)
   const shouldShowIcon = icon && !avatarComponent
@@ -97,6 +107,7 @@ export const IconButton = forwardRef((props, ref) => {
           {children}
         </ChildrenUI>
       )}
+      {status && <StatusUI />}
     </IconButtonUI>
   )
 })
@@ -109,6 +120,7 @@ IconButton.defaultProps = {
   'data-cy': 'IconButton',
   icon: 'search',
   seamless: false,
+  status: false,
 }
 
 IconButton.propTypes = {
@@ -124,6 +136,8 @@ IconButton.propTypes = {
   disabled: PropTypes.bool,
   /** Hide the border and background of an outlined button */
   seamless: PropTypes.bool,
+  /** Display a status indicator */
+  status: PropTypes.bool,
   /** The name of the icon to render. */
   icon: PropTypes.string,
   /** Data attr for Cypress tests. */
