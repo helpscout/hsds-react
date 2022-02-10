@@ -25,47 +25,6 @@ describe('Icon', () => {
     ).toBeInTheDocument()
     expect(container.querySelector('svg')).toBeInTheDocument()
   })
-
-  test('Can customize Icon size', () => {
-    const { container } = render(<IconButton icon="chat" iconSize={20} />)
-    const icon = container.querySelector('.c-Icon')
-
-    expect(window.getComputedStyle(icon).height).toBe('20px')
-    expect(window.getComputedStyle(icon).width).toBe('20px')
-  })
-
-  test('Can render with caret', () => {
-    const { container } = render(<IconButton withCaret />)
-    const icon = container.querySelector('.c-Icon')
-
-    expect(icon.querySelector('.is-caret')).toBeInTheDocument()
-  })
-
-  test('Does not render with caret by default', () => {
-    const { container } = render(<IconButton />)
-    const icon = container.querySelector('.c-Icon')
-
-    expect(icon.querySelector('.is-caret')).toBe(null)
-  })
-
-  test('Auto adjusts Icon size, if Button size is smaller', () => {
-    const { container, rerender } = render(
-      <IconButton icon="chat" iconSize={24} />
-    )
-    let icon
-
-    rerender(<IconButton icon="chat" iconSize={18} />)
-
-    icon = container.querySelector('.c-Icon')
-    expect(window.getComputedStyle(icon).height).toBe('18px')
-    expect(window.getComputedStyle(icon).width).toBe('18px')
-
-    rerender(<IconButton icon="chat" iconSize={16} />)
-
-    icon = container.querySelector('.c-Icon')
-    expect(window.getComputedStyle(icon).height).toBe('16px')
-    expect(window.getComputedStyle(icon).width).toBe('16px')
-  })
 })
 
 describe('Button', () => {
@@ -75,24 +34,28 @@ describe('Button', () => {
     expect(getByRole('button')).toBeInTheDocument()
   })
 
-  test('Renders a button with various kinds', () => {
+  test('Renders a button with various theme', () => {
     const { getByRole, rerender } = render(<IconButton theme="blue" />)
 
-    expect(getByRole('button').classList.contains('is-primary')).toBeTruthy()
+    expect(getByRole('button').classList.contains('is-theme-blue')).toBeTruthy()
 
-    rerender(<IconButton theme="grey" outlined />)
+    rerender(<IconButton theme="grey" />)
 
-    expect(getByRole('button').classList.contains('is-secondary')).toBeTruthy()
+    expect(getByRole('button').classList.contains('is-theme-grey')).toBeTruthy()
   })
 
   test('Renders a button with various sizes', () => {
     const { getByRole, rerender } = render(<IconButton size="lg" />)
 
-    expect(getByRole('button').classList.contains('is-lg')).toBeTruthy()
+    expect(getByRole('button').classList.contains('is-size-lg')).toBeTruthy()
 
-    rerender(<IconButton size="xs" />)
+    rerender(<IconButton size="sm" />)
 
-    expect(getByRole('button').classList.contains('is-xs')).toBeTruthy()
+    expect(getByRole('button').classList.contains('is-size-sm')).toBeTruthy()
+
+    rerender(<IconButton size="xl" />)
+
+    expect(getByRole('button').classList.contains('is-size-xl')).toBeTruthy()
   })
 })
 
@@ -132,45 +95,6 @@ describe('Events', () => {
     user.click(container.querySelector('.c-Icon'))
 
     expect(spy).toHaveBeenCalled()
-  })
-})
-
-describe('Styles', () => {
-  test('Renders borderless, by default', () => {
-    const { container } = render(<IconButton />)
-    expect(
-      window.getComputedStyle(container.querySelector('.c-IconButton'))
-        .borderColor
-    ).toBe('transparent')
-  })
-
-  test('Can render with border styles', () => {
-    const { container } = render(
-      <IconButton theme="grey" outlined isBorderless={false} />
-    )
-
-    expect(
-      window.getComputedStyle(container.querySelector('.c-IconButton'))
-        .borderColor
-    ).not.toBe('transparent')
-  })
-
-  test('Renders a circle shape, by default', () => {
-    const { container } = render(<IconButton />)
-    const borderRadius = window.getComputedStyle(
-      container.querySelector('.c-IconButton')
-    ).borderRadius
-
-    expect(borderRadius).toBe('100%')
-  })
-
-  test('Shape can be set to not render a circle', () => {
-    const { container } = render(<IconButton shape="default" />)
-    expect(
-      window
-        .getComputedStyle(container.querySelector('.c-IconButton'))
-        .getPropertyValue('--buttonRadius')
-    ).toBe('3px')
   })
 })
 
