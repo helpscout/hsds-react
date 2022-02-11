@@ -94,10 +94,7 @@ export const Tag = nextProps => {
 
   const componentClassNames = classNames(
     tagClassName,
-
-    color && `is-${color}`,
     isClickable && 'is-clickable',
-    filled && 'is-filled',
     isRemovable && 'is-removable',
     allCaps && 'is-all-caps',
     size && `is-${size}`,
@@ -107,7 +104,9 @@ export const Tag = nextProps => {
   const groupClassNames = classNames(
     display && `is-display-${display}`,
     size && `is-${size}`,
-    !isRemoving && 'element-in'
+    !isRemoving && 'element-in',
+    color && `is-${color}`,
+    filled && 'is-filled'
   )
 
   let as = 'div'
