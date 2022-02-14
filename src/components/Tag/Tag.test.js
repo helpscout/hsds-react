@@ -5,7 +5,6 @@ import { render, fireEvent } from '@testing-library/react'
 import user from '@testing-library/user-event'
 
 import { Tag } from './Tag'
-import { Animate, Icon, Text } from '../index'
 
 jest.useFakeTimers()
 
@@ -20,6 +19,11 @@ describe('ClassNames', () => {
     const { getByTestId } = render(<Tag className="mugatu" />)
 
     expect(getByTestId('Tag')).toHaveClass('mugatu')
+  })
+  test('Accepts custom element classNames', () => {
+    const { getByTestId } = render(<Tag elementClassName="mugatu" />)
+
+    expect(getByTestId('TagElement')).toHaveClass('mugatu')
   })
 })
 
@@ -68,7 +72,7 @@ describe('Remove', () => {
       <Tag isRemovable onRemove={spy} id={1} value="Ron" />
     )
     user.click(getByTestId('RemoveTag'))
-    fireEvent.transitionEnd(queryByTestId('TagGroup'))
+    fireEvent.transitionEnd(queryByTestId('Tag'))
     expect(spy).toHaveBeenCalled()
     expect(spy.mock.calls[0][0].id).toBe(1)
     expect(spy.mock.calls[0][0].value).toBe('Ron')
@@ -78,8 +82,8 @@ describe('Remove', () => {
 describe('Styles', () => {
   test('Has allCaps styles', () => {
     const { getByTestId } = render(<Tag allCaps />)
-    expect(getByTestId('Tag')).toHaveClass('is-all-caps')
-    expect(getByTestId('Tag')).toHaveStyle('text-transform: uppercase;')
+    expect(getByTestId('TagElement')).toHaveClass('is-all-caps')
+    expect(getByTestId('TagElement')).toHaveStyle('text-transform: uppercase;')
   })
 
   test('Has color styles', () => {
@@ -89,20 +93,20 @@ describe('Styles', () => {
 
   test('Has size styles', () => {
     const { getByTestId } = render(<Tag size="md" />)
-    expect(getByTestId('Tag')).toHaveClass('is-md')
+    expect(getByTestId('TagElement')).toHaveClass('is-md')
   })
 
   test('Has display flex styles', () => {
     const { getByTestId } = render(<Tag display="block" />)
 
-    expect(getByTestId('TagGroup')).toHaveClass('is-display-block')
-    expect(getByTestId('TagGroup')).toHaveStyle('display: flex;')
+    expect(getByTestId('Tag')).toHaveClass('is-display-block')
+    expect(getByTestId('Tag')).toHaveStyle('display: flex;')
   })
   test('Has display inline-flex styles', () => {
     const { getByTestId } = render(<Tag display="inline" />)
 
-    expect(getByTestId('TagGroup')).toHaveClass('is-display-inline')
-    expect(getByTestId('TagGroup')).toHaveStyle('display: inline-flex;')
+    expect(getByTestId('Tag')).toHaveClass('is-display-inline')
+    expect(getByTestId('Tag')).toHaveStyle('display: inline-flex;')
   })
 
   test('Has filled styles', () => {
@@ -130,7 +134,7 @@ describe('clickable', () => {
   test('onClick set the tag as clickable', () => {
     const spy = jest.fn()
     const { getByTestId } = render(<Tag onClick={spy} id={1} value="Ron" />)
-    user.click(getByTestId('Tag'))
+    user.click(getByTestId('TagElement'))
     expect(spy).toHaveBeenCalled()
     expect(spy.mock.calls[0][1].id).toBe(1)
     expect(spy.mock.calls[0][1].value).toBe('Ron')

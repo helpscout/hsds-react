@@ -28,6 +28,7 @@ export const RemoveTagUI = styled.button`
   --focusRingRadius: 3px;
   --focusRingShadow: ${focusShadowWithInset};
 
+  color: var(--tagTextColor);
   border-radius: 3px;
   width: 16px;
   height: 16px;
@@ -58,7 +59,7 @@ export const CountUI = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${getColor('charcoal.600')};
+  color: var(--tagTextColor);
   background-color: var(--tagColor);
   border-radius: 100px;
   margin-left: 8px;
@@ -86,14 +87,14 @@ export const RemoveIconUI = styled(Icon)`
   width: 100%;
 `
 
-export const TagUI = styled('div')`
+export const TagElementUI = styled('div')`
   ${focusRing}
   --focusRingOffset: -3px;
 
-  background-color: white;
+  background-color: var(--tagBackgroundColor);
   border-radius: 3px;
   border: 1px solid var(--tagColor);
-  color: ${getColor('charcoal.600')};
+  color: var(--tagTextColor);
   display: flex;
   flex: 1 1 100%;
   align-items: center;
@@ -109,20 +110,6 @@ export const TagUI = styled('div')`
 
   &.is-all-caps {
     text-transform: uppercase;
-  }
-
-  ${makeColorStyles()};
-
-  &.is-filled {
-    &.is-grey {
-      --tagColor: ${getColor('grey.400')};
-    }
-
-    background-color: var(--tagColor);
-
-    ${CountUI} {
-      background-color: white;
-    }
   }
 
   &.is-clickable {
@@ -161,11 +148,27 @@ export const TagUI = styled('div')`
   }
 `
 
-export const TagGroupUI = styled.div`
+export const TagUI = styled.div`
   position: relative;
   display: inline-flex;
   opacity: 0;
   transition: 0.3s ease-out opacity;
+  --tagTextColor: ${getColor('charcoal.600')};
+  --tagBackgroundColor: white;
+
+  ${makeColorStyles()};
+
+  &.is-filled {
+    &.is-grey {
+      --tagColor: ${getColor('grey.400')};
+    }
+
+    --tagBackgroundColor: var(--tagColor);
+
+    ${CountUI} {
+      background-color: white;
+    }
+  }
 
   &.element-in {
     opacity: 1;

@@ -8,7 +8,7 @@ import React, {
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
+
 import { TagListContext } from '../TagList/TagList'
 import {
   TagUI,
@@ -16,8 +16,10 @@ import {
   RemoveTagUI,
   TruncateUI,
   CountUI,
-  TagGroupUI,
+  TagElementUI,
 } from './Tag.css'
+
+const noop = () => undefined
 
 export const tagClassName = 'c-Tag'
 
@@ -38,12 +40,14 @@ export const Tag = nextProps => {
     id,
     isRemovable,
     onRemove,
+    onHide,
     isRemoving: isRemovingProp,
     showTooltipOnTruncate,
     size,
     value,
     onClick,
     href,
+    elementClassName,
     ...rest
   } = useExtendPropsWithContext(nextProps, TagListContext)
 
@@ -54,7 +58,8 @@ export const Tag = nextProps => {
 
   const hideTag = useCallback(() => {
     setRender(false)
-  }, [])
+    onHide && onHide()
+  }, [onHide])
 
   const handleTransitionEnd = useCallback(
     e => {
@@ -92,22 +97,22 @@ export const Tag = nextProps => {
     }
   }, [isRemovingProp, hideTag])
 
-  const componentClassNames = classNames(
+  const tagClassnames = classNames(
     tagClassName,
-
+    display && `is-display-${display}`,
+    !isRemoving && 'element-in',
     color && `is-${color}`,
-    isClickable && 'is-clickable',
     filled && 'is-filled',
+    className
+  )
+
+  const tagElementClassNames = classNames(
+    tagClassName,
+    isClickable && 'is-clickable',
     isRemovable && 'is-removable',
     allCaps && 'is-all-caps',
     size && `is-${size}`,
-    shouldShowCount && 'has-count',
-    className
-  )
-  const groupClassNames = classNames(
-    display && `is-display-${display}`,
-    size && `is-${size}`,
-    !isRemoving && 'element-in'
+    elementClassName
   )
 
   let as = 'div'
@@ -116,20 +121,24 @@ export const Tag = nextProps => {
   }
 
   const tagProps = {
-    className: componentClassNames,
+    className: tagElementClassNames,
     as,
     onClick: handleClick,
   }
   if (href) tagProps.href = href
 
   return shouldRender ? (
-    <TagGroupUI
-      className={groupClassNames}
+    <TagUI
+      className={tagClassnames}
       onTransitionEnd={handleTransitionEnd}
       ref={tagRef}
-      data-testid="TagGroup"
+      data-testid="Tag"
     >
-      <TagUI {...getValidProps(rest)} {...tagProps} data-testid="Tag">
+      <TagElementUI
+        {...getValidProps(rest)}
+        {...tagProps}
+        data-testid="TagElement"
+      >
         <TruncateUI
           className="c-Tag__textWrapper"
           showTooltipOnTruncate={showTooltipOnTruncate}
@@ -137,7 +146,7 @@ export const Tag = nextProps => {
           {value || children || null}
         </TruncateUI>
         {shouldShowCount && <CountUI data-testid="Tag.Count">{count}</CountUI>}
-      </TagUI>
+      </TagElementUI>
       {isRemovable && (
         <RemoveTagUI
           aria-label="Remove tag"
@@ -147,7 +156,7 @@ export const Tag = nextProps => {
           <RemoveIconUI name="cross-small" size={18} title="Remove" />
         </RemoveTagUI>
       )}
-    </TagGroupUI>
+    </TagUI>
   ) : null
 }
 
@@ -158,6 +167,7 @@ Tag.defaultProps = {
   isRemovable: false,
   isRemoving: false,
   onRemove: noop,
+  onHide: noop,
   showTooltipOnTruncate: true,
   value: '',
   size: 'sm',
@@ -184,6 +194,8 @@ Tag.propTypes = {
   count: PropTypes.number,
   /** Determines the CSS `display` of the component. Default `inline`. */
   display: PropTypes.oneOf(['block', 'inline']),
+  /** Custom class names to be added to the element component. */
+  elementClassName: PropTypes.string,
   /** Applies a filled in color style to the component. */
   filled: PropTypes.bool,
   /** ID of the component. */
