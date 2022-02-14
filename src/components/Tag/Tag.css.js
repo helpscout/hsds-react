@@ -87,7 +87,7 @@ export const RemoveIconUI = styled(Icon)`
   width: 100%;
 `
 
-export const TagUI = styled('div')`
+export const TagElementUI = styled('div')`
   ${focusRing}
   --focusRingOffset: -3px;
 
@@ -148,7 +148,7 @@ export const TagUI = styled('div')`
   }
 `
 
-export const TagGroupUI = styled.div`
+export const TagUI = styled.div`
   position: relative;
   display: inline-flex;
   opacity: 0;
