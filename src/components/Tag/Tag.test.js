@@ -4,7 +4,7 @@ import { mount } from 'enzyme'
 import { render, fireEvent } from '@testing-library/react'
 import user from '@testing-library/user-event'
 
-import { Tag } from './Tag'
+import Tag from './Tag'
 
 jest.useFakeTimers()
 

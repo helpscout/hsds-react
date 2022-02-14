@@ -3,7 +3,7 @@ import React, {
   useState,
   useCallback,
   useEffect,
-  useRef,
+  forwardRef,
 } from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
@@ -28,7 +28,7 @@ const useExtendPropsWithContext = (nextProps, context) => {
   return { ...nextProps, ...contextValue }
 }
 
-export const Tag = nextProps => {
+const ForwardedTag = forwardRef(function Tag(props, ref) {
   const {
     allCaps,
     children,
@@ -49,9 +49,7 @@ export const Tag = nextProps => {
     href,
     elementClassName,
     ...rest
-  } = useExtendPropsWithContext(nextProps, TagListContext)
-
-  const tagRef = useRef()
+  } = useExtendPropsWithContext(props, TagListContext)
 
   const [isRemoving, setRemoving] = useState(isRemovingProp)
   const [shouldRender, setRender] = useState(true)
@@ -61,14 +59,9 @@ export const Tag = nextProps => {
     onHide && onHide()
   }, [onHide])
 
-  const handleTransitionEnd = useCallback(
-    e => {
-      if (e.target === tagRef.current && isRemoving) {
-        hideTag()
-      }
-    },
-    [hideTag, isRemoving]
-  )
+  const handleTransitionEnd = useCallback(() => {
+    if (isRemoving) hideTag()
+  }, [hideTag, isRemoving])
 
   const handleClick = useCallback(
     e => {
@@ -92,7 +85,7 @@ export const Tag = nextProps => {
   const shouldShowCount = Number.isInteger(count) && size === 'lg'
 
   useEffect(() => {
-    if (isRemovingProp && tagRef.current) {
+    if (isRemovingProp) {
       hideTag()
     }
   }, [isRemovingProp, hideTag])
@@ -131,7 +124,7 @@ export const Tag = nextProps => {
     <TagUI
       className={tagClassnames}
       onTransitionEnd={handleTransitionEnd}
-      ref={tagRef}
+      ref={ref}
       data-testid="Tag"
     >
       <TagElementUI
@@ -158,9 +151,9 @@ export const Tag = nextProps => {
       )}
     </TagUI>
   ) : null
-}
+})
 
-Tag.defaultProps = {
+ForwardedTag.defaultProps = {
   color: 'grey',
   'data-cy': 'Tag',
   display: 'inline',
@@ -173,7 +166,7 @@ Tag.defaultProps = {
   size: 'sm',
 }
 
-Tag.propTypes = {
+ForwardedTag.propTypes = {
   /** Renders text in Uppercase */
   allCaps: PropTypes.bool,
   /** Custom class names to be added to the component. */
@@ -216,4 +209,4 @@ Tag.propTypes = {
   'data-cy': PropTypes.string,
 }
 
-export default Tag
+export default ForwardedTag
