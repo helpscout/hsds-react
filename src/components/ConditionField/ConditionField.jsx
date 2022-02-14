@@ -80,14 +80,16 @@ export class ConditionField extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 ConditionField.defaultProps = {
   closeIcon: 'collapse',
   'data-cy': 'ConditionField',
-  innerRef: () => undefined,
+  innerRef: noop,
   isWithConjunction: false,
   conjunction: 'or',
   isWithRemove: true,
-  onRemove: () => undefined,
+  onRemove: noop,
   removeTitle: 'Remove',
   tooltipDelay: 800,
   tooltipDuration: 60,

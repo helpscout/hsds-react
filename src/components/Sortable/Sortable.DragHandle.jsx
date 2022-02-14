@@ -22,6 +22,8 @@ const SortableDragHandle = SortableHandle(props => {
   )
 })
 
+function noop() {}
+
 SortableDragHandle.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
@@ -31,7 +33,7 @@ SortableDragHandle.propTypes = {
 SortableDragHandle.defaultProps = {
   'data-cy': 'SortableDragHandle',
   iconSize: '20',
-  onDragStart: () => undefined,
+  onDragStart: noop,
 }
 
 export default SortableDragHandle

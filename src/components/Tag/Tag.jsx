@@ -150,13 +150,15 @@ export const Tag = nextProps => {
   ) : null
 }
 
+function noop() {}
+
 Tag.defaultProps = {
   color: 'grey',
   'data-cy': 'Tag',
   display: 'inline',
   isRemovable: false,
   isRemoving: false,
-  onRemove: () => undefined,
+  onRemove: noop,
   showTooltipOnTruncate: true,
   value: '',
   size: 'sm',

@@ -202,12 +202,14 @@ class Collapsible extends React.Component {
   }
 }
 
+function noop() {}
+
 Collapsible.defaultProps = {
   'data-cy': 'Collapsible',
   duration: 300,
   isOpen: false,
-  onOpen: () => undefined,
-  onClose: () => undefined,
+  onOpen: noop,
+  onClose: noop,
   preRenderContent: false,
 }
 

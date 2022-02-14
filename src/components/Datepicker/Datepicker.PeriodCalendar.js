@@ -6,7 +6,7 @@ import Navigator from './Datepicker.Navigator'
 import { PeriodUI, PeriodButtonUI } from './Datepicker.css'
 import { MONTHS, NAVIGATION_LEVELS } from './Datepicker.constants'
 
-const noop = () => undefined
+function noop() {}
 
 function PeriodCalendar({
   activeMonths,

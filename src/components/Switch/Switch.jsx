@@ -14,7 +14,7 @@ import {
   ToggleUI,
 } from './Switch.css'
 
-const noop = () => undefined
+function noop() {}
 const uniqueID = createUniqueIDFactory('Switch')
 
 class Switch extends React.PureComponent {

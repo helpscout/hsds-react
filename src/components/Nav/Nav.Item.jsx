@@ -118,6 +118,8 @@ export class NavItem extends React.Component {
   }
 }
 
+function noop() {}
+
 NavItem.propTypes = {
   /** The className of the component. */
   className: PropTypes.string,
@@ -149,6 +151,6 @@ NavItem.defaultProps = {
   disabled: false,
   error: '',
   exact: true,
-  innerRef: () => undefined,
+  innerRef: noop,
 }
 export default NavItem

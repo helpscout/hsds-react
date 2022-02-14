@@ -14,7 +14,7 @@ import { MessageCardSurvey } from './components/MessageCard.Survey'
 import MessageCardUrlAttachmentImage from './components/MessageCard.UrlAttachmentImage'
 import MessageCardArticleCard from './components/MessageCard.ArticleCard'
 
-const noop = () => undefined
+function noop() {}
 
 export const MessageCard = React.memo(
   React.forwardRef(

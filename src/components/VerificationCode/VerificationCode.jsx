@@ -293,6 +293,8 @@ class VerificationCode extends React.Component {
   }
 }
 
+function noop() {}
+
 VerificationCode.defaultProps = {
   autoFocus: false,
   autoSubmitPaste: false,
@@ -301,8 +303,8 @@ VerificationCode.defaultProps = {
   'data-cy': 'VerificationCode',
   isValid: true,
   numberOfChars: 6,
-  onEnter: () => undefined,
-  onChange: () => undefined,
+  onEnter: noop,
+  onChange: noop,
 }
 
 VerificationCode.propTypes = {

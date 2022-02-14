@@ -66,12 +66,14 @@ class CopyInput extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 CopyInput.defaultProps = {
   buttonLabel: null,
   copyToClipboard: true,
   'data-cy': 'CopyInput',
-  innerRef: () => undefined,
-  onCopy: () => undefined,
+  innerRef: noop,
+  onCopy: noop,
   readOnly: true,
   value: '',
 }

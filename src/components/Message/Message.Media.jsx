@@ -8,7 +8,7 @@ import classNames, { BEM } from '../../utilities/classNames'
 import { isString } from '../../utilities/is'
 import { MediaUI, ImageUI } from './Message.Media.css'
 
-const noop = () => undefined
+function noop() {}
 
 export class MessageMedia extends React.Component {
   /**

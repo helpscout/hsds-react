@@ -20,6 +20,7 @@ export const classNameStrings = {
 }
 
 const getComponentClassName = ({ className, isOpen, isLink, status }) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   let { isSeamless } = useContext(AccordionContext) || {}
 
   if (isLink) isSeamless = false

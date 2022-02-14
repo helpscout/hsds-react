@@ -45,9 +45,11 @@ const PopoverHeader = ({ header, renderHeader }) => {
   return null
 }
 
+function noop() {}
+
 export const Popover = ({
   arrowSize = 14,
-  innerRef = () => undefined,
+  innerRef = noop,
   header,
   renderHeader,
   content,

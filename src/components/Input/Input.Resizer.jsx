@@ -140,13 +140,15 @@ export class InputResizer extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 InputResizer.defaultProps = {
   contents: '',
   currentHeight: null,
   'data-cy': 'InputResizer',
   minimumLines: 1,
   offsetAmount: 0,
-  onResize: () => undefined,
+  onResize: noop,
   seamless: false,
 }
 

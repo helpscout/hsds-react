@@ -4,7 +4,7 @@ import Block from './Card.Block'
 import classNames from 'classnames'
 import { CardUI } from './Card.css'
 
-const noop = () => undefined
+function noop() {}
 
 class Card extends React.PureComponent {
   static Block = Block

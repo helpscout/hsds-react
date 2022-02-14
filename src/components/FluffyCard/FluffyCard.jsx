@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import FluffyCardContainer from './FluffyCard.Container'
 import { FluffyCardUI } from './FluffyCard.css'
 
-const noop = () => undefined
+function noop() {}
 
 class FluffyCard extends React.PureComponent {
   static Container = FluffyCardContainer

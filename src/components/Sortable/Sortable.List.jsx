@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { SortableContainer } from 'react-sortable-hoc'
 import classNames from 'classnames'

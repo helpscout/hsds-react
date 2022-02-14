@@ -107,10 +107,12 @@ export const TagList = props => {
   )
 }
 
+function noop() {}
+
 TagList.defaultProps = {
   'data-cy': 'TagList',
-  onRemove: () => undefined,
-  onRemoveAll: () => undefined,
+  onRemove: noop,
+  onRemoveAll: noop,
   overflowFade: false,
   isRemovable: false,
   clearAll: false,

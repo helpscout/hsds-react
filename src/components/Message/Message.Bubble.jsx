@@ -168,12 +168,14 @@ export const MessageBubble = (props, context) => {
   )
 }
 
+function noop() {}
+
 MessageBubble.defaultProps = {
   'data-cy': 'MessageBubble',
 }
 
 MessageBubble.contextTypes = {
-  theme: () => undefined,
+  theme: noop,
 }
 
 MessageBubble.propTypes = {

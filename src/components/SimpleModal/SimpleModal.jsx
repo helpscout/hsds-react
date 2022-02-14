@@ -10,6 +10,8 @@ import {
   SimpleModalUI,
 } from './SimpleModal.css'
 
+function noop() {}
+
 function SimpleModal({
   ariaLabelledBy = '',
   children,
@@ -18,7 +20,7 @@ function SimpleModal({
   closeOnClickOutside = false,
   'data-cy': dataCy = 'SimpleModal',
   focusModalOnShow = true,
-  onClose = () => undefined,
+  onClose = noop,
   show = false,
   trapFocus = true,
   width = '360px',

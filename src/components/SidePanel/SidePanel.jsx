@@ -12,6 +12,8 @@ import {
 } from './SidePanel.css'
 import Icon from '../Icon'
 
+function noop() {}
+
 function SidePanel({
   ariaLabelledBy = '',
   children,
@@ -19,7 +21,7 @@ function SidePanel({
   closeOnClickOutside = false,
   'data-cy': dataCy = 'SidePanel',
   focusPanelOnShow = true,
-  onClose = () => undefined,
+  onClose = noop,
   panelWidth = '400px',
   show = false,
   side = 'right',

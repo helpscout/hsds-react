@@ -7,7 +7,7 @@ import Month from './Datepicker.Month'
 import Navigator from './Datepicker.Navigator'
 import { DailyCalendarUI } from './Datepicker.css'
 
-const noop = () => undefined
+function noop() {}
 
 function DailyCalendar({
   activeMonths,

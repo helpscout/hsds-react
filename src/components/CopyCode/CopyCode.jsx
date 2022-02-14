@@ -111,16 +111,18 @@ class CopyCode extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 CopyCode.defaultProps = {
   autoFocus: false,
   buttonSize: 'sm',
   code: '',
   copyToClipboard: true,
   'data-cy': 'CopyCode',
-  innerRef: () => undefined,
+  innerRef: noop,
   language: 'javascript',
   maxWidth: 500,
-  onCopy: () => undefined,
+  onCopy: noop,
 }
 
 CopyCode.propTypes = {

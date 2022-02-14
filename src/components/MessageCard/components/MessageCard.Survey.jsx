@@ -13,12 +13,14 @@ import Input from '../../Input'
 import Spinner from '../../Spinner'
 import Icon from '../../Icon'
 
+function noop() {}
+
 export const MessageCardSurvey = ({
   children,
   withFeedbackForm = false,
   forceFeedbackForm = false,
   feedbackFormText = '',
-  onSubmit = () => undefined,
+  onSubmit = noop,
   showSpinner = false,
   showConfirmationMessage = false,
 }) => {

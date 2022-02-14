@@ -5,6 +5,8 @@ import Scrollable from '../Scrollable'
 import classNames from 'classnames'
 import { BlockUI } from './Card.css'
 
+function noop() {}
+
 class Block extends React.PureComponent {
   render() {
     const {
@@ -60,8 +62,8 @@ class Block extends React.PureComponent {
 
 Block.defaultProps = {
   'data-cy': 'Block',
-  onScroll: () => undefined,
-  scrollableRef: () => undefined,
+  onScroll: noop,
+  scrollableRef: noop,
 }
 
 Block.propTypes = {

@@ -189,14 +189,16 @@ export class Notification extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 Notification.defaultProps = {
   animationSequence: 'fade upUp',
   align: 'right',
   'data-cy': 'Notification',
   isActive: true,
   isDismissable: false,
-  onClick: () => undefined,
-  onDismiss: () => undefined,
+  onClick: noop,
+  onDismiss: noop,
   timeout: 2000,
   type: 'text',
   truncateLimit: 60,

@@ -25,6 +25,8 @@ export const ConditionFieldAddButton = props => {
   )
 }
 
+function noop() {}
+
 ConditionFieldAddButton.defaultProps = {
   animationDuration: 250,
   animationEasing: 'linear',
@@ -32,7 +34,7 @@ ConditionFieldAddButton.defaultProps = {
   isBorderless: true,
   isWithMotion: true,
   type: 'or',
-  onTypeChanged: () => undefined,
+  onTypeChanged: noop,
   selectableType: false,
 }
 

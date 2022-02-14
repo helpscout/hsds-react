@@ -18,7 +18,7 @@ import TableBody from './Table.Body'
 import TableHead from './Table.Head'
 import ColumnChooser from './Table.ColumnChooser'
 
-const noop = () => undefined
+function noop() {}
 export const TABLE_CLASSNAME = 'c-Table'
 
 export function Table({

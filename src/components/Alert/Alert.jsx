@@ -17,6 +17,8 @@ import {
   ActionRightUI,
 } from './Alert.css'
 
+function noop() {}
+
 export const classNameSpace = 'c-Alert'
 export const cx = {
   main: classNameSpace,
@@ -133,7 +135,7 @@ Alert.defaultProps = {
   dismissible: false,
   icon: false,
   noMargin: false,
-  onDismiss: () => undefined,
+  onDismiss: noop,
   status: 'warning',
 }
 

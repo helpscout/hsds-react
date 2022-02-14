@@ -30,6 +30,8 @@ export const MessageCardImage = ({ image, onLoad }) => {
   )
 }
 
+function noop() {}
+
 MessageCardImage.propTypes = {
   /** Image to render */
   image: PropTypes.shape({
@@ -43,5 +45,5 @@ MessageCardImage.propTypes = {
 }
 
 MessageCardImage.defaultProps = {
-  onLoad: () => undefined,
+  onLoad: noop,
 }

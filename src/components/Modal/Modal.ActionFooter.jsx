@@ -17,7 +17,7 @@ import {
   THEME_GREY,
 } from '../Button/Button.utils'
 
-const noop = () => undefined
+function noop() {}
 
 class ModalActionFooter extends React.PureComponent {
   handleCancel = e => {

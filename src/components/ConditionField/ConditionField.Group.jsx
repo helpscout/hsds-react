@@ -49,12 +49,14 @@ export class ConditionFieldGroup extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 ConditionFieldGroup.defaultProps = {
   'data-cy': 'ConditionFieldGroup',
   isAddEnabled: true,
   canChangeConjunction: false,
-  onAdd: () => undefined,
-  onConjunctionChange: () => undefined,
+  onAdd: noop,
+  onConjunctionChange: noop,
   conjunction: 'or',
 }
 

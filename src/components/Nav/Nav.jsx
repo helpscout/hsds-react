@@ -30,9 +30,11 @@ export class Nav extends React.Component {
   }
 }
 
+function noop() {}
+
 Nav.defaultProps = {
   'data-cy': 'Nav',
-  innerRef: () => undefined,
+  innerRef: noop,
 }
 
 Nav.propTypes = {

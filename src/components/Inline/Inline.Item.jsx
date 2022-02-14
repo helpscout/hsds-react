@@ -29,9 +29,11 @@ export class InlineItem extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 InlineItem.defaultProps = {
   'data-cy': 'InlineItem',
-  innerRef: () => undefined,
+  innerRef: noop,
 }
 
 InlineItem.propTypes = {

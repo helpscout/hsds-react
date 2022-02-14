@@ -120,11 +120,13 @@ class AddButton extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 AddButton.defaultProps = {
   'data-cy': 'ConditionAddButton',
   isBorderless: false,
-  onClick: () => undefined,
-  onTypeChanged: () => undefined,
+  onClick: noop,
+  onTypeChanged: noop,
   scrollDuration: 300,
   scrollOffset: 200,
   type: 'or',

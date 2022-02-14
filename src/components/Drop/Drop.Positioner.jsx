@@ -179,12 +179,14 @@ DropPositioner.propTypes = {
   zIndex: PropTypes.number,
 }
 
+function noop() {}
+
 DropPositioner.defaultProps = {
   autoPosition: true,
   'data-cy': 'DropPositioner',
   direction: 'down',
   offset: 8,
-  onUpdatePosition: () => undefined,
+  onUpdatePosition: noop,
   zIndex: 1000,
 }
 

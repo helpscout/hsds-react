@@ -59,9 +59,11 @@ class ProgressBar extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 ProgressBar.defaultProps = {
   'data-cy': 'ProgressBar',
-  onChange: () => undefined,
+  onChange: noop,
   value: 0,
   size: 'md',
 }

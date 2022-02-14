@@ -2,8 +2,10 @@ import React from 'react'
 
 export const SurveyContext = React.createContext()
 
+function noop() {}
+
 export function useSurveyContext() {
-  const { onSelection = () => undefined, selected = null } =
+  const { onSelection = noop, selected = null } =
     React.useContext(SurveyContext) || {}
 
   return {

@@ -69,10 +69,12 @@ export const MessageAttachment = (props, context) => {
   )
 }
 
+function noop() {}
+
 MessageAttachment.defaultProps = {
   'data-cy': 'MessageAttachment',
   download: true,
-  onClick: () => undefined,
+  onClick: noop,
   openDownloadInNewTab: true,
   isUploading: false,
   size: 'md',
@@ -80,7 +82,7 @@ MessageAttachment.defaultProps = {
 }
 
 MessageAttachment.contextTypes = {
-  theme: () => undefined,
+  theme: noop,
 }
 
 MessageAttachment.propTypes = {

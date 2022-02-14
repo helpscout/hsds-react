@@ -14,7 +14,7 @@ import {
 } from '../../utilities/scrollFade'
 import { ScrollableUI, ContentUI, FaderUI } from './Scrollable.css'
 
-const noop = () => undefined
+function noop() {}
 
 export class Scrollable extends React.PureComponent {
   containernode

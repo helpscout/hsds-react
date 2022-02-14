@@ -21,7 +21,7 @@ import { isString } from '../../utilities/is'
 import { InputWrapperUI } from '../Input/Input.css'
 import { SelectUI, FieldUI, InlinePrefixSuffixUI, ItemUI } from './Select.css'
 
-const noop = () => undefined
+function noop() {}
 
 const PLACEHOLDER_VALUE = '__placeholder__'
 const uniqueID = createUniqueIDFactory('Select')

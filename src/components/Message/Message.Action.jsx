@@ -64,8 +64,10 @@ export const MessageAction = (props, context) => {
   )
 }
 
+function noop() {}
+
 MessageAction.contextTypes = {
-  theme: () => undefined,
+  theme: noop,
 }
 
 MessageAction.defaultProps = {

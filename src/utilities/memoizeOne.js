@@ -10,7 +10,7 @@ const shallowEqual = function shallowEqual(newValue, oldValue) {
 const simpleIsEqual = function simpleIsEqual(newArgs, lastArgs) {
   return (
     newArgs.length === lastArgs.length &&
-    newArgs.every(function(newArg, index) {
+    newArgs.every(function (newArg, index) {
       return shallowEqual(newArg, lastArgs[index])
     })
   )

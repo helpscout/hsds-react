@@ -20,6 +20,8 @@ import matchPath from '../../utilities/react-router/matchPath'
 import Content from './PortalWrapper.Content'
 import WithRouterCheck from '../WithRouterCheck'
 
+function noop() {}
+
 const defaultOptions = {
   id: 'PortalWrapper',
   timeout: 100,
@@ -56,7 +58,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       preventEscActionElements: extendedOptions.preventEscActionElements || [],
     }
     static childContextTypes = {
-      closePortal: () => undefined,
+      closePortal: noop,
     }
 
     static displayName = `withPortal(${getComponentName(ComposedComponent)})`

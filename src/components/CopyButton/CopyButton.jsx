@@ -58,12 +58,14 @@ const WrappedCopybutton = React.forwardRef(function CopyButton(props, ref) {
   )
 })
 
+function noop() {}
+
 WrappedCopybutton.defaultProps = {
   'data-cy': 'CopyButton',
   theme: 'blue',
   label: 'Copy',
-  onClick: () => undefined,
-  onReset: () => undefined,
+  onClick: noop,
+  onReset: noop,
   resetTimeout: 2000,
   size: 'sm',
   outlined: true,

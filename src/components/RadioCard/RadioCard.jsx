@@ -12,7 +12,7 @@ import {
   HeadingUI,
 } from './RadioCard.css'
 
-const noop = () => undefined
+function noop() {}
 const uniqueID = createUniqueIDFactory('RadioCard')
 const DEFAULT_ICON = 'fab-chat'
 

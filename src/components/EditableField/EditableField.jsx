@@ -33,7 +33,7 @@ import { isArray, isFunction } from '../../utilities/is'
 import { find } from '../../utilities/arrays'
 import { nodesHaveSameParent } from '../../utilities/node'
 
-const noop = () => undefined
+function noop() {}
 
 export class EditableField extends React.Component {
   static className = EDITABLEFIELD_CLASSNAMES.component

@@ -6,7 +6,7 @@ import { wordHasSpaces } from '../../utilities/strings'
 import { LinkUI } from './Link.css'
 import { Link as ReactRouterLink } from 'react-router-dom'
 
-const noop = () => undefined
+function noop() {}
 const WrappedLink = forwardRef(function Link(props, ref) {
   const {
     autoWordWrap,

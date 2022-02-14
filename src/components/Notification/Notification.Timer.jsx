@@ -23,6 +23,8 @@ export class Timer extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 Timer.propTypes = {
   className: PropTypes.string,
   isRunning: PropTypes.bool,
@@ -33,7 +35,7 @@ Timer.propTypes = {
 
 Timer.defaultProps = {
   isRunning: true,
-  onTimerEnd: () => undefined,
+  onTimerEnd: noop,
   style: {},
   timeout: 5000,
 }

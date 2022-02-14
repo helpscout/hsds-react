@@ -78,13 +78,15 @@ export class RateAction extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 RateAction.defaultProps = {
   'data-cy': 'RateAction',
   disabled: false,
-  innerRef: () => undefined,
+  innerRef: noop,
   isActive: false,
   name: 'reaction-happy',
-  onClick: () => undefined,
+  onClick: noop,
   size: 'lg',
   withCircle: false,
 }

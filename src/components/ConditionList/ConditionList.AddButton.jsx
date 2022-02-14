@@ -30,10 +30,12 @@ export class ConditionListAddButton extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 ConditionListAddButton.defaultProps = {
   'data-cy': 'ConditionListAddButton',
-  innerRef: () => undefined,
-  onClick: () => undefined,
+  innerRef: noop,
+  onClick: noop,
   scrollDuration: 300,
   scrollOffset: 200,
 }

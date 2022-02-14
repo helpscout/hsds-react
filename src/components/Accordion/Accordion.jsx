@@ -12,8 +12,6 @@ import { AccordionUI } from './Accordion.css'
 import { PageContext } from '../Page/Page'
 import Sortable from '../Sortable'
 
-const noop = () => undefined
-
 export const classNameStrings = {
   baseComponentClassName: 'c-Accordion',
   isAllowMultipleClassName: 'is-allow-multiple',
@@ -170,6 +168,8 @@ const Accordion = props => {
     </AccordionUI>
   )
 }
+
+function noop() {}
 
 Accordion.defaultProps = {
   'data-cy': 'Accordion',

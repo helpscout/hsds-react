@@ -68,8 +68,10 @@ class EventListener extends React.Component {
   }
 }
 
+function noop() {}
+
 EventListener.defaultProps = {
-  handler: () => undefined,
+  handler: noop,
   scope: window,
 }
 

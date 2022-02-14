@@ -8,6 +8,8 @@ import Overflow from '../Overflow'
 import classNames from 'classnames'
 import { AttachmentListUI } from './AttachmentList.css'
 
+function noop() {}
+
 export class AttachmentList extends React.Component {
   static contextTypes = {
     theme: () => null,
@@ -142,7 +144,7 @@ export class AttachmentList extends React.Component {
 AttachmentList.defaultProps = {
   'data-cy': 'AttachmentList',
   downloadAllLabel: 'Download All',
-  onDownloadAllClick: () => undefined,
+  onDownloadAllClick: noop,
   showDownloadAll: true,
   withOverflow: true,
 }

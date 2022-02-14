@@ -15,7 +15,7 @@ import {
   ChoiceHelpTextUI,
 } from './Choice.css'
 
-const noop = () => undefined
+function noop() {}
 const uniqueID = createUniqueIDFactory('Choice')
 
 class Choice extends React.PureComponent {

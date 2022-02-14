@@ -7,7 +7,7 @@ import { getEasingTiming } from '../../utilities/easing'
 import { AnimateUI } from './Animate.css'
 import { AnimateGroupContext } from '../AnimateGroup/AnimateGroup'
 
-const noop = () => undefined
+function noop() {}
 
 export class Animate extends React.PureComponent {
   static contextType = AnimateGroupContext

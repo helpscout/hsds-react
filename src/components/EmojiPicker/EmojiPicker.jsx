@@ -7,13 +7,15 @@ import { IconToggler } from './EmojiPicker.Toggler'
 import { EmojiPickerUI, EmojiItemUI } from './EmojiPicker.css'
 import { emojiSet } from './emojiSet'
 
+function noop() {}
+
 export function EmojiPicker({
   animateOptions = { sequence: 'fade up', duration: 150 },
   className = '',
   'data-cy': dataCy = 'EmojiPicker',
   emojiSize = 'md',
   items = emojiSet,
-  onTogglerClick = () => undefined,
+  onTogglerClick = noop,
   tippyOptions = { placement: 'top-start' },
   toggler = (
     <IconToggler className="c-EmojiPickerToggler" onClick={onTogglerClick} />

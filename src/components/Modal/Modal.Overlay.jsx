@@ -44,9 +44,11 @@ class ModalOverlay extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 ModalOverlay.defaultProps = {
   'data-cy': 'ModalOverlay',
-  onClick: () => undefined,
+  onClick: noop,
   isOpen: true,
   isHsApp: false,
   overlayAnimationDelay: 0,

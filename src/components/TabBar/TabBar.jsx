@@ -39,10 +39,12 @@ export class TabBar extends React.Component {
   }
 }
 
+function noop() {}
+
 TabBar.defaultProps = {
   align: 'left',
   'data-cy': 'TabBar',
-  innerRef: () => undefined,
+  innerRef: noop,
 }
 
 TabBar.propTypes = {

@@ -12,7 +12,7 @@ import {
   InputRadioUI,
 } from './Choice.css'
 
-const noop = () => undefined
+function noop() {}
 
 class ChoiceInput extends React.PureComponent {
   state = {
@@ -115,7 +115,6 @@ class ChoiceInput extends React.PureComponent {
       className,
       checked,
       disabled,
-      helpText,
       id,
       kind,
       readOnly,

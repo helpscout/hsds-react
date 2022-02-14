@@ -11,7 +11,7 @@ import {
   DeepNavigatorButtonUI,
 } from './Datepicker.css'
 
-const noop = () => undefined
+function noop() {}
 
 function Navigator({
   canNavigateForward = true,

@@ -75,6 +75,8 @@ const Icon = props => {
   )
 }
 
+function noop() {}
+
 Icon.defaultProps = {
   center: false,
   clickable: false,
@@ -83,7 +85,7 @@ Icon.defaultProps = {
   isWithHiddenTitle: true,
   muted: false,
   name: 'emoji',
-  onClick: () => undefined,
+  onClick: noop,
   offsetLeft: false,
   offsetRight: false,
   size: '20',

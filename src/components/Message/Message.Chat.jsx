@@ -109,8 +109,10 @@ export class MessageChat extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 MessageChat.contextTypes = {
-  theme: () => undefined,
+  theme: noop,
 }
 
 MessageChat.defaultProps = {

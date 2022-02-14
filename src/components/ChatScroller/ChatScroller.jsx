@@ -138,13 +138,15 @@ export class ChatScroller extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 ChatScroller.defaultProps = {
   'data-cy': 'ChatScroller',
   distanceForAutoScroll: 150,
   isTyping: false,
   messageSelectors: '.c-MessageChat, .c-MessageAction',
   offsetThreshold: 0.3,
-  onScroll: () => undefined,
+  onScroll: noop,
   propsToCheck: ['messages', 'lastMessageId', 'isTyping'],
   scrollableSelector: '.c-ScrollableNode',
   smoothScrollDuration: 100,

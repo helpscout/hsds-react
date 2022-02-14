@@ -1,4 +1,4 @@
-export const noop = () => undefined
+export function noop() {}
 export const promiseNoop = () => Promise.resolve()
 
 export const requestAnimationFrame = callback => {

@@ -25,6 +25,8 @@ import {
   getCircleProps,
 } from './Avatar.css'
 
+function noop() {}
+
 export class Avatar extends React.PureComponent {
   src
 
@@ -363,8 +365,8 @@ Avatar.defaultProps = {
   shape: 'circle',
   style: {},
   withShadow: false,
-  onError: () => undefined,
-  onLoad: () => undefined,
+  onError: noop,
+  onLoad: noop,
 }
 
 const avatarPropTypes = {

@@ -8,12 +8,14 @@ class MessageProvider extends SimpleThemeProvider {
   }
 }
 
+function noop() {}
+
 MessageProvider.defaultProps = {
   theme: 'admin',
 }
 
 MessageProvider.childContextTypes = {
-  theme: () => undefined,
+  theme: noop,
 }
 
 MessageProvider.propTypes = {

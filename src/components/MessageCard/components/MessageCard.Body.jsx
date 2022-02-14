@@ -35,6 +35,8 @@ MessageCardBody.propTypes = {
   ),
 }
 
+function noop() {}
+
 MessageCardBody.defaultProps = {
-  onClick: () => undefined,
+  onClick: noop,
 }

@@ -30,10 +30,12 @@ export class StepperProgress extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 StepperProgress.defaultProps = {
   'data-cy': 'StepperProgress',
   isActive: false,
-  innerRef: () => undefined,
+  innerRef: noop,
 }
 
 StepperProgress.propTypes = {

@@ -14,7 +14,7 @@ import {
 import { requestAnimationFrame } from '../../utilities/other'
 import { OverflowUI } from './Overflow.css'
 
-const noop = () => undefined
+function noop() {}
 
 export class Overflow extends React.PureComponent {
   state = {

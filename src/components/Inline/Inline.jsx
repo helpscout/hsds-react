@@ -30,9 +30,11 @@ export class Inline extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 Inline.defaultProps = {
   'data-cy': 'Inline',
-  innerRef: () => undefined,
+  innerRef: noop,
   size: 'sm',
 }
 

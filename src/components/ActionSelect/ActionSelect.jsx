@@ -8,8 +8,6 @@ import { findFirstFocusableNode } from '../../utilities/focus'
 import { smoothScrollTo, linear } from '../../utilities/smoothScroll'
 import { ActionSelectUI } from './ActionSelect.css'
 
-const noop = () => undefined
-
 export class ActionSelect extends React.PureComponent {
   static className = 'c-ActionSelect'
 
@@ -194,6 +192,8 @@ function getSelectTagText(selectedItem, items) {
 
   return 'None'
 }
+
+function noop() {}
 
 ActionSelect.defaultProps = {
   'data-cy': 'ActionSelect',

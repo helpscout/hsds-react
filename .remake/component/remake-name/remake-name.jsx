@@ -3,10 +3,12 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { <%= name %>UI } from './<%= name %>.css'
 
+function noop() {}
+
 function <%= name %>({
   className,
   'data-cy': dataCy = '<%= name %>',
-  onClick = () => undefined,
+  onClick = noop,
 }) {
   const [] = useState()
 

@@ -31,8 +31,10 @@ const MessageCaption = (props, context) => {
   )
 }
 
+function noop() {}
+
 MessageCaption.contextTypes = {
-  theme: () => undefined,
+  theme: noop,
 }
 
 MessageCaption.defaultProps = {

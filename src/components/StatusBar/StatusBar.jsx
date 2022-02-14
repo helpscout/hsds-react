@@ -6,7 +6,7 @@ import StatusBarButton from './StatusBar.Button'
 import classNames from 'classnames'
 import { StatusBarUI } from './StatusBar.css'
 
-const noop = () => undefined
+function noop() {}
 
 class StatusBar extends React.PureComponent {
   constructor(props) {

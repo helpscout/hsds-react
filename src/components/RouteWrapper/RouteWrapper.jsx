@@ -8,12 +8,14 @@ import get from '../../utilities/get'
 import { createLocation } from '../../utilities/history'
 import WithRouterCheck from '../WithRouterCheck'
 
+function noop() {}
+
 const RouteWrapper = WrappedComponent => {
   const namespace = getComponentName(WrappedComponent)
 
   class RouteWrapperComponent extends React.Component {
     static defaultProps = {
-      onClick: () => undefined,
+      onClick: noop,
       fetch: () => Promise.resolve(),
       replace: false,
     }

@@ -83,8 +83,10 @@ export class ChatBlock extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 ChatBlock.contextTypes = {
-  theme: () => undefined,
+  theme: noop,
 }
 
 ChatBlock.defaultProps = {

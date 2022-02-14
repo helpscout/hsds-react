@@ -76,8 +76,10 @@ class KeypressListener extends React.Component {
   }
 }
 
+function noop() {}
+
 KeypressListener.defaultProps = {
-  handler: () => undefined,
+  handler: noop,
   noModifier: true,
   scope: document,
   type: 'keyup',

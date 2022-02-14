@@ -7,7 +7,7 @@ import { getComponentKey } from '../../utilities/component'
 import { isDefined } from '../../utilities/is'
 import { StepperUI, StepWrapperUI } from './Stepper.css'
 
-const noop = () => undefined
+function noop() {}
 
 export class Stepper extends React.PureComponent {
   static className = 'c-Stepper'

@@ -16,7 +16,7 @@ import {
 } from './DropList.togglers.css'
 import { THEME_BLUE, THEME_GREY, SIZE_LG } from '../Button/Button.utils'
 
-const noop = () => undefined
+function noop() {}
 
 export const SimpleButton = forwardRef(
   (

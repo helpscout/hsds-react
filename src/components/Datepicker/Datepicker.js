@@ -7,6 +7,8 @@ import { CalendarContainerUI } from './Datepicker.css'
 import PeriodCalendar from './Datepicker.PeriodCalendar'
 import DailyCalendar from './Datepicker.DailyCalendar'
 
+function noop() {}
+
 function Datepicker({
   allowFutureDatePick = true,
   enableRangeSelection = false,
@@ -14,8 +16,8 @@ function Datepicker({
   firstDayOfWeek = 1,
   minBookingDays = 1,
   numberOfMonths = 1,
-  onDateChange = () => undefined,
-  innerRef = () => undefined,
+  onDateChange = noop,
+  innerRef = noop,
   startDate = null,
 }) {
   const datePickerRef = useRef(null)

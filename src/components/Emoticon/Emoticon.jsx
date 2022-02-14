@@ -65,6 +65,8 @@ export class Emoticon extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 Emoticon.defaultProps = {
   center: false,
   clickable: true,
@@ -72,7 +74,7 @@ Emoticon.defaultProps = {
   inline: false,
   isActive: true,
   isDisabled: false,
-  innerRef: () => undefined,
+  innerRef: noop,
   name: 'happy',
   role: 'presentation',
   size: 'md',

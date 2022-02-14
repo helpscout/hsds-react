@@ -15,9 +15,11 @@ export class MessageCardButton extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 MessageCardButton.defaultProps = {
   'data-cy': 'beacon-message-cta',
-  onClick: () => undefined,
+  onClick: noop,
   size: 'xxl',
 }
 

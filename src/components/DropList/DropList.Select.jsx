@@ -14,7 +14,7 @@ import { A11yTogglerUI, DropListWrapperUI, MenuListUI } from './DropList.css'
 import ListItem, { generateListItemKey } from './DropList.ListItem'
 import { DROPLIST_MENULIST, VARIANTS } from './DropList.constants'
 
-const noop = () => undefined
+function noop() {}
 
 function Select({
   clearOnSelect = false,

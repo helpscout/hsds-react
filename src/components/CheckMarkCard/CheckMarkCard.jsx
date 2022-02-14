@@ -21,7 +21,7 @@ import {
 } from './CheckMarkCard.css'
 
 const uniqueID = createUniqueIDFactory('CheckMarkCard')
-const noop = () => undefined
+function noop() {}
 const useCustomId = id => {
   const customId = useRef(id || uniqueID())
   return customId.current

@@ -34,7 +34,7 @@ import {
 } from './Input.css'
 
 const uniqueID = createUniqueIDFactory('Input')
-const noop = () => undefined
+function noop() {}
 
 export class Input extends React.PureComponent {
   static AddOn = InputAddOn

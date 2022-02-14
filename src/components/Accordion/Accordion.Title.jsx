@@ -97,7 +97,7 @@ const AccordionTitle = props => {
   const {
     isPage,
     isSeamless,
-    setSectionState = () => undefined,
+    setSectionState = noop,
     size,
     isSorting,
     isSortable,
@@ -189,10 +189,12 @@ const AccordionTitle = props => {
   )
 }
 
+function noop() {}
+
 AccordionTitle.defaultProps = {
   'data-cy': 'AccordionTitle',
   isCompact: false,
-  onClick: () => undefined,
+  onClick: noop,
 }
 
 AccordionTitle.propTypes = {

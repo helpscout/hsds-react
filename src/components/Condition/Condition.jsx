@@ -114,11 +114,13 @@ export class Condition extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 Condition.defaultProps = {
   'data-cy': 'Condition',
-  innerRef: () => undefined,
+  innerRef: noop,
   isWithAnd: false,
-  onChange: () => undefined,
+  onChange: noop,
   options: [],
   noSelect: false,
 }

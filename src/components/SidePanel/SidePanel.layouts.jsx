@@ -5,12 +5,14 @@ import Button from '../Button/'
 import { BodyUI, FooterUI, HeaderUI } from './SidePanel.layouts.css'
 import useScrollShadow from '../../hooks/useScrollShadow'
 
+function noop() {}
+
 export function HeaderAndFooter({
   children,
   mainActionButtonContent = 'Start',
   mainActionDisabled = false,
-  mainActionNode = () => undefined,
-  onMainActionClick = () => undefined,
+  mainActionNode = noop,
+  onMainActionClick = noop,
   panelHeading = 'Review and Start',
   panelHeadingId = '',
   panelSubHeading = 'Complete the required details before going live',

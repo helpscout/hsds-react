@@ -5,7 +5,7 @@ import Scrollable from '../Scrollable'
 import classNames from 'classnames'
 import { BodyUI } from './Modal.css'
 
-const noop = () => undefined
+function noop() {}
 
 class ModalBody extends React.PureComponent {
   node

@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
 import { NotificationStackUI } from './NotificationStack.css'
 
-const noop = () => undefined
+function noop() {}
 
 export class NotificationStack extends React.PureComponent {
   firstNotificationId = null

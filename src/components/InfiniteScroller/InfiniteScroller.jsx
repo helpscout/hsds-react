@@ -7,7 +7,7 @@ import classNames from 'classnames'
 import LoadingDots from '../LoadingDots'
 import { isNodeElement, isNodeVisible } from '../../utilities/node'
 
-const noop = () => undefined
+function noop() {}
 
 class InfiniteScroller extends React.PureComponent {
   constructor(props) {

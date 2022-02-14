@@ -113,13 +113,15 @@ export class EditableFieldMask extends React.Component {
   }
 }
 
+function noop() {}
+
 EditableFieldMask.defaultProps = {
   'data-cy': 'EditableFieldMask',
   disabled: false,
   emphasize: false,
   maskTabIndex: null,
   type: 'text',
-  onValueKeyDown: () => undefined,
+  onValueKeyDown: noop,
 }
 
 EditableFieldMask.propTypes = {

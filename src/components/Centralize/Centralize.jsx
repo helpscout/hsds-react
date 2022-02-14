@@ -28,9 +28,11 @@ export class Centralize extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 Centralize.defaultProps = {
   'data-cy': 'Centralize',
-  innerRef: () => undefined,
+  innerRef: noop,
 }
 
 Centralize.propTypes = {

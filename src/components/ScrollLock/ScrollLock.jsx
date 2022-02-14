@@ -55,11 +55,13 @@ export class ScrollLock extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 ScrollLock.defaultProps = {
   isDisabled: false,
   direction: 'y',
   stopPropagation: false,
-  onWheel: () => undefined,
+  onWheel: noop,
 }
 
 ScrollLock.propTypes = {

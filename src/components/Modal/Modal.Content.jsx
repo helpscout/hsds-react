@@ -27,8 +27,10 @@ class ModalContent extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 ModalContent.defaultProps = {
-  scrollableRef: () => undefined,
+  scrollableRef: noop,
 }
 
 ModalContent.propTypes = {

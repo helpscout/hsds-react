@@ -49,9 +49,11 @@ const overlayV2Animation = {
   sequence: 'fade',
 }
 
+function noop() {}
+
 class Modal extends React.PureComponent {
   static childContextTypes = {
-    positionCloseNode: () => undefined,
+    positionCloseNode: noop,
   }
   static ActionFooter = ModalActionFooter
   static Body = ModalBody
@@ -394,7 +396,7 @@ Modal.defaultProps = {
   closeIcon: true,
   closeIconOffset: 10,
   closeIconRepositionDelay: 0,
-  closePortal: () => undefined,
+  closePortal: noop,
   containTabKeyPress: true,
   'data-cy': 'Modal',
   description: null,
@@ -412,7 +414,7 @@ Modal.defaultProps = {
   modalAnimationSequence: 'fade down',
   modalFocusTimeout: 90,
   numSteps: 1,
-  onScroll: () => undefined,
+  onScroll: noop,
   overlayAnimationDelay: 0,
   overlayAnimationDuration: 200,
   overlayAnimationEasing: 'ease',

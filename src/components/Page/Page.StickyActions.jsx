@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { isIntersectionObserverSupported } from './Page.utils'
 
-const noop = () => undefined
+function noop() {}
 
 class PageStickyActions extends React.PureComponent {
   static className = 'c-PageStickyActions'

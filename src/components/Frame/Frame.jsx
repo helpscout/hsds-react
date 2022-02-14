@@ -41,6 +41,7 @@ const FrameContent = ({ children, theme }) => {
       ssmProps.target = frameContext.document.head
     }
     return ssmProps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shContext])
 
   return (

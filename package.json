@@ -44,7 +44,7 @@
     "clean": "rimraf public && rimraf dist && mkdir dist",
     "dev": "npm run prestart && npm run test:dev",
     "jest": "node scripts/test.js --env=jsdom ",
-    "lint": "eslint src/**/*.js --cache",
+    "lint": "eslint src/**/*.js src/**/*.jsx --cache",
     "open": "open ./",
     "open:coverage": "open ./coverage/lcov-report/index.html",
     "open:cov": "npm run open:coverage",

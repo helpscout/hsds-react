@@ -29,7 +29,7 @@ import {
 } from './DropList.togglers'
 import Animate from '../Animate'
 
-const noop = () => undefined
+function noop() {}
 
 function DropListManager({
   animateOptions = {},

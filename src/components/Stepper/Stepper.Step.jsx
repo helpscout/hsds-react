@@ -50,13 +50,15 @@ export class Step extends React.PureComponent {
   }
 }
 
+function noop() {}
+
 Step.defaultProps = {
   'data-cy': 'Step',
   isActive: false,
   isClickable: false,
   index: 0,
-  innerRef: () => undefined,
-  onClick: () => undefined,
+  innerRef: noop,
+  onClick: noop,
 }
 
 Step.propTypes = {

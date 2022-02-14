@@ -59,10 +59,12 @@ export class ConditionList extends React.Component {
   }
 }
 
+function noop() {}
+
 ConditionList.defaultProps = {
   'data-cy': 'ConditionList',
-  innerRef: () => undefined,
-  onAdd: () => undefined,
+  innerRef: noop,
+  onAdd: noop,
   isAddEnabled: true,
   isWithOffset: false,
   scrollDuration: 300,

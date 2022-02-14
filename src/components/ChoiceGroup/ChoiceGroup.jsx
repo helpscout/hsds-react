@@ -9,7 +9,7 @@ import classNames from 'classnames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { ChoiceGroupUI } from './ChoiceGroup.css'
 
-const noop = () => undefined
+function noop() {}
 const uniqueID = createUniqueIDFactory('ChoiceGroup')
 
 class ChoiceGroup extends React.Component {

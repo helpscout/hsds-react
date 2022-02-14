@@ -16,7 +16,7 @@ import { key } from '../../constants/Keys'
 import { CAUSE, OPERATION } from '../EditableField/EditableField.constants'
 import { getValidationColor } from '../EditableField/EditableField.utils'
 
-const noop = () => undefined
+function noop() {}
 
 export class EditableTextarea extends React.PureComponent {
   static className = 'c-EditableTextarea'

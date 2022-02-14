@@ -12,6 +12,8 @@ import classNames from 'classnames'
 import { ImageWrapperUI, ImageUI, InitialsUI } from './Avatar.css'
 import { getAnimationProps } from './Avatar.utils'
 
+function noop() {}
+
 let cache = {}
 export const clearCache = () => {
   cache = {}
@@ -240,8 +242,8 @@ AvatarImage.defaultProps = {
   initials: null,
   light: false,
   name: null,
-  onError: () => undefined,
-  onLoad: () => undefined,
+  onError: noop,
+  onLoad: noop,
   src: null,
 }
 

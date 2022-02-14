@@ -5,7 +5,7 @@ import DropList from '../DropList'
 import { IconBtn } from '../DropList/DropList.togglers'
 import { columnShape, createColumnChooserListItems } from './Table.utils'
 
-const noop = () => undefined
+function noop() {}
 const shouldColumnShow = column => !!column.show
 
 function ColumnChooser({

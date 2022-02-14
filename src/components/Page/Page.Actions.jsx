@@ -11,7 +11,7 @@ import {
 import PageStickyActions from './Page.StickyActions'
 import classNames from 'classnames'
 
-const noop = () => undefined
+function noop() {}
 
 const ActionContent = props => {
   const {

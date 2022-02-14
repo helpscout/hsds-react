@@ -84,6 +84,7 @@ const Portal = ({
         setTimeout(unmount, timeout)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return createPortal(children, el)

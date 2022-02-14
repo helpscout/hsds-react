@@ -31,7 +31,7 @@ import classNames from 'classnames'
 import { key } from '../../constants/Keys'
 import equal from 'fast-deep-equal'
 
-const noop = () => undefined
+function noop() {}
 
 const Toggler = forwardRef(
   (

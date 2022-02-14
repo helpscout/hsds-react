@@ -71,10 +71,12 @@ export class EditableFieldActions extends React.Component {
   }
 }
 
+function noop() {}
+
 EditableFieldActions.defaultProps = {
   'data-cy': 'EditableFieldActions',
-  deleteAction: () => undefined,
-  customAction: () => undefined,
+  deleteAction: noop,
+  customAction: noop,
 }
 
 EditableFieldActions.propTypes = {

@@ -11,6 +11,8 @@ import {
   SimpleBarUI,
 } from './ScrollableContainer.css'
 
+function noop() {}
+
 function ScrollableContainer({
   body,
   className,
@@ -21,7 +23,7 @@ function ScrollableContainer({
   header,
   height = '500px',
   onScroll,
-  onScrollableSectionsStateChange = () => undefined,
+  onScrollableSectionsStateChange = noop,
   shadows = {},
   width = '300px',
   withResizeObservers = {},

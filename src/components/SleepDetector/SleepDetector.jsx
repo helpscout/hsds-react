@@ -42,11 +42,14 @@ class SleepDetector extends React.Component {
   }
 }
 
+function noop() {}
+
 SleepDetector.defaultProps = {
   buffer: 5000,
   interval: 10000,
-  onWake: () => undefined,
+  onWake: noop,
 }
+
 SleepDetector.propTypes = {
   /** How often (ms) to check for inactive tab (default is 10000) */
   buffer: PropTypes.number,

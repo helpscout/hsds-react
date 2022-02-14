@@ -281,12 +281,14 @@ export const Pagination = props => {
   )
 }
 
+function noop() {}
+
 Pagination.defaultProps = {
   activePage: 1,
   'data-cy': 'Pagination',
-  innerRef: () => undefined,
+  innerRef: noop,
   isLoading: false,
-  onChange: () => undefined,
+  onChange: noop,
   rangePerPage: 50,
   separator: 'of',
   showNavigation: true,
