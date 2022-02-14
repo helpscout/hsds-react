@@ -26,10 +26,11 @@ export const config = {
 export const RemoveTagUI = styled.button`
   ${focusRing}
   --focusRingRadius: 3px;
+  --focusRingOffset: 0px;
   --focusRingShadow: ${focusShadowWithInset};
 
   color: var(--tagTextColor);
-  border-radius: 3px;
+  border-radius: var(--focusRingRadius);
   width: 16px;
   height: 16px;
   display: flex;
@@ -90,9 +91,10 @@ export const RemoveIconUI = styled(Icon)`
 export const TagElementUI = styled('div')`
   ${focusRing}
   --focusRingOffset: -3px;
+  --focusRingRadius: 3px;
 
   background-color: var(--tagBackgroundColor);
-  border-radius: 3px;
+  border-radius: var(--focusRingRadius);
   border: 1px solid var(--tagColor);
   color: var(--tagTextColor);
   display: flex;
@@ -140,10 +142,10 @@ export const TagElementUI = styled('div')`
   }
 
   &.is-removable {
-    padding-right: 16px;
+    padding-right: 18px;
 
     &.is-md {
-      padding-right: 20px;
+      padding-right: 22px;
     }
   }
 `
