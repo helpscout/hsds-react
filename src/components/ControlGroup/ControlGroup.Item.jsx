@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
-import { isDOMTypeElement } from '../../utilities/is'
 import { ItemUI } from './ControlGroup.css'
 
 class ControlGroupItem extends React.PureComponent {
@@ -49,6 +48,10 @@ class ControlGroupItem extends React.PureComponent {
       </ItemUI>
     )
   }
+}
+
+function isDOMTypeElement(element) {
+  return React.isValidElement(element) && typeof element.type === 'string'
 }
 
 ControlGroupItem.defaultProps = {
