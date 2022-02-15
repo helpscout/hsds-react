@@ -26,9 +26,11 @@ export const config = {
 export const RemoveTagUI = styled.button`
   ${focusRing}
   --focusRingRadius: 3px;
+  --focusRingOffset: 0px;
   --focusRingShadow: ${focusShadowWithInset};
 
-  border-radius: 3px;
+  color: var(--tagTextColor);
+  border-radius: var(--focusRingRadius);
   width: 16px;
   height: 16px;
   display: flex;
@@ -58,7 +60,7 @@ export const CountUI = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${getColor('charcoal.600')};
+  color: var(--tagTextColor);
   background-color: var(--tagColor);
   border-radius: 100px;
   margin-left: 8px;
@@ -86,14 +88,15 @@ export const RemoveIconUI = styled(Icon)`
   width: 100%;
 `
 
-export const TagUI = styled('div')`
+export const TagElementUI = styled('div')`
   ${focusRing}
   --focusRingOffset: -3px;
+  --focusRingRadius: 3px;
 
-  background-color: white;
-  border-radius: 3px;
+  background-color: var(--tagBackgroundColor);
+  border-radius: var(--focusRingRadius);
   border: 1px solid var(--tagColor);
-  color: ${getColor('charcoal.600')};
+  color: var(--tagTextColor);
   display: flex;
   flex: 1 1 100%;
   align-items: center;
@@ -109,20 +112,6 @@ export const TagUI = styled('div')`
 
   &.is-all-caps {
     text-transform: uppercase;
-  }
-
-  ${makeColorStyles()};
-
-  &.is-filled {
-    &.is-grey {
-      --tagColor: ${getColor('grey.400')};
-    }
-
-    background-color: var(--tagColor);
-
-    ${CountUI} {
-      background-color: white;
-    }
   }
 
   &.is-clickable {
@@ -153,19 +142,35 @@ export const TagUI = styled('div')`
   }
 
   &.is-removable {
-    padding-right: 16px;
+    padding-right: 18px;
 
     &.is-md {
-      padding-right: 20px;
+      padding-right: 22px;
     }
   }
 `
 
-export const TagGroupUI = styled.div`
+export const TagUI = styled.div`
   position: relative;
   display: inline-flex;
   opacity: 0;
   transition: 0.3s ease-out opacity;
+  --tagTextColor: ${getColor('charcoal.600')};
+  --tagBackgroundColor: white;
+
+  ${makeColorStyles()};
+
+  &.is-filled {
+    &.is-grey {
+      --tagColor: ${getColor('grey.400')};
+    }
+
+    --tagBackgroundColor: var(--tagColor);
+
+    ${CountUI} {
+      background-color: white;
+    }
+  }
 
   &.element-in {
     opacity: 1;

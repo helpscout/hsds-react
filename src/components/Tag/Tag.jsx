@@ -3,7 +3,7 @@ import React, {
   useState,
   useCallback,
   useEffect,
-  useRef,
+  forwardRef,
 } from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
@@ -15,7 +15,7 @@ import {
   RemoveTagUI,
   TruncateUI,
   CountUI,
-  TagGroupUI,
+  TagElementUI,
 } from './Tag.css'
 
 export const tagClassName = 'c-Tag'
@@ -25,7 +25,7 @@ const useExtendPropsWithContext = (nextProps, context) => {
   return { ...nextProps, ...contextValue }
 }
 
-export const Tag = nextProps => {
+const ForwardedTag = forwardRef(function Tag(props, ref) {
   const {
     allCaps,
     children,
@@ -37,32 +37,28 @@ export const Tag = nextProps => {
     id,
     isRemovable,
     onRemove,
+    onHide,
     isRemoving: isRemovingProp,
     showTooltipOnTruncate,
     size,
     value,
     onClick,
     href,
+    elementClassName,
     ...rest
-  } = useExtendPropsWithContext(nextProps, TagListContext)
-
-  const tagRef = useRef()
+  } = useExtendPropsWithContext(props, TagListContext)
 
   const [isRemoving, setRemoving] = useState(isRemovingProp)
   const [shouldRender, setRender] = useState(true)
 
   const hideTag = useCallback(() => {
     setRender(false)
-  }, [])
+    onHide && onHide()
+  }, [onHide])
 
-  const handleTransitionEnd = useCallback(
-    e => {
-      if (e.target === tagRef.current && isRemoving) {
-        hideTag()
-      }
-    },
-    [hideTag, isRemoving]
-  )
+  const handleTransitionEnd = useCallback(() => {
+    if (isRemoving) hideTag()
+  }, [hideTag, isRemoving])
 
   const handleClick = useCallback(
     e => {
@@ -86,27 +82,27 @@ export const Tag = nextProps => {
   const shouldShowCount = Number.isInteger(count) && size === 'lg'
 
   useEffect(() => {
-    if (isRemovingProp && tagRef.current) {
+    if (isRemovingProp) {
       hideTag()
     }
   }, [isRemovingProp, hideTag])
 
-  const componentClassNames = classNames(
+  const tagClassnames = classNames(
     tagClassName,
-
+    display && `is-display-${display}`,
+    !isRemoving && 'element-in',
     color && `is-${color}`,
-    isClickable && 'is-clickable',
     filled && 'is-filled',
+    className
+  )
+
+  const tagElementClassNames = classNames(
+    tagClassName,
+    isClickable && 'is-clickable',
     isRemovable && 'is-removable',
     allCaps && 'is-all-caps',
     size && `is-${size}`,
-    shouldShowCount && 'has-count',
-    className
-  )
-  const groupClassNames = classNames(
-    display && `is-display-${display}`,
-    size && `is-${size}`,
-    !isRemoving && 'element-in'
+    elementClassName
   )
 
   let as = 'div'
@@ -115,20 +111,24 @@ export const Tag = nextProps => {
   }
 
   const tagProps = {
-    className: componentClassNames,
+    className: tagElementClassNames,
     as,
     onClick: handleClick,
   }
   if (href) tagProps.href = href
 
   return shouldRender ? (
-    <TagGroupUI
-      className={groupClassNames}
+    <TagUI
+      className={tagClassnames}
       onTransitionEnd={handleTransitionEnd}
-      ref={tagRef}
-      data-testid="TagGroup"
+      ref={ref}
+      data-testid="Tag"
     >
-      <TagUI {...getValidProps(rest)} {...tagProps} data-testid="Tag">
+      <TagElementUI
+        {...getValidProps(rest)}
+        {...tagProps}
+        data-testid="TagElement"
+      >
         <TruncateUI
           className="c-Tag__textWrapper"
           showTooltipOnTruncate={showTooltipOnTruncate}
@@ -136,7 +136,7 @@ export const Tag = nextProps => {
           {value || children || null}
         </TruncateUI>
         {shouldShowCount && <CountUI data-testid="Tag.Count">{count}</CountUI>}
-      </TagUI>
+      </TagElementUI>
       {isRemovable && (
         <RemoveTagUI
           aria-label="Remove tag"
@@ -146,25 +146,26 @@ export const Tag = nextProps => {
           <RemoveIconUI name="cross-small" size={18} title="Remove" />
         </RemoveTagUI>
       )}
-    </TagGroupUI>
+    </TagUI>
   ) : null
-}
+})
 
 function noop() {}
 
-Tag.defaultProps = {
+ForwardedTag.defaultProps = {
   color: 'grey',
   'data-cy': 'Tag',
   display: 'inline',
   isRemovable: false,
   isRemoving: false,
   onRemove: noop,
+  onHide: noop,
   showTooltipOnTruncate: true,
   value: '',
   size: 'sm',
 }
 
-Tag.propTypes = {
+ForwardedTag.propTypes = {
   /** Renders text in Uppercase */
   allCaps: PropTypes.bool,
   /** Custom class names to be added to the component. */
@@ -185,6 +186,8 @@ Tag.propTypes = {
   count: PropTypes.number,
   /** Determines the CSS `display` of the component. Default `inline`. */
   display: PropTypes.oneOf(['block', 'inline']),
+  /** Custom class names to be added to the element component. */
+  elementClassName: PropTypes.string,
   /** Applies a filled in color style to the component. */
   filled: PropTypes.bool,
   /** ID of the component. */
@@ -205,4 +208,4 @@ Tag.propTypes = {
   'data-cy': PropTypes.string,
 }
 
-export default Tag
+export default ForwardedTag
