@@ -134,6 +134,7 @@ export class EditableField extends React.Component {
       value,
       name,
       defaultOption: defaultStateOption,
+      currentFieldValue: this.state.fieldValue,
     })
 
     if (!equal(initialFieldValue, this.state.fieldValue)) {

@@ -1,8 +1,7 @@
-import { isArray, isObject } from '../../utilities/is'
+import { isObject } from '../../utilities/is'
 import { find } from '../../utilities/arrays'
 import { getColor } from '../../styles/utilities/color'
 import { createUniqueIDFactory } from '../../utilities/id'
-
 const uniqueID = createUniqueIDFactory('EditableField')
 
 export const EF_COMPONENT_KEY = 'EditableField'
@@ -12,23 +11,34 @@ export const INPUT_COMPONENT_KEY = 'FieldInput'
 export const MASK_COMPONENT_KEY = 'FieldMask'
 export const TRUNCATED_COMPONENT_KEY = 'Truncated'
 
-export function normalizeFieldValue({ value, name, defaultOption }) {
-  if (isArray(value)) {
+export function normalizeFieldValue({
+  value,
+  name,
+  defaultOption,
+  currentFieldValue,
+}) {
+  if (Array.isArray(value)) {
     if (value.length === 0) {
       return [createNewValueFieldObject('', name, defaultOption)]
     }
     return value.map(val => createNewValueFieldObject(val, name, defaultOption))
   } else {
-    return [createNewValueFieldObject(value, name, defaultOption)]
+    const currentId = currentFieldValue && currentFieldValue[0].id
+    return [createNewValueFieldObject(value, name, defaultOption, currentId)]
   }
 }
 
-export function createNewValueFieldObject(value, name, defaultOption) {
+export function createNewValueFieldObject(
+  value,
+  name,
+  defaultOption,
+  currentId
+) {
   // If it's an object already, grab the fields first
   if (isObject(value)) {
     const fieldObj = {
       ...value,
-      id: value.id || `${name}_${uniqueID()}`,
+      id: currentId || value.id || `${name}_${uniqueID()}`,
       validated: false,
     }
 
@@ -41,7 +51,7 @@ export function createNewValueFieldObject(value, name, defaultOption) {
 
   const fieldObj = {
     value,
-    id: `${name}_${uniqueID()}`,
+    id: currentId || `${name}_${uniqueID()}`,
     validated: false,
   }
 
