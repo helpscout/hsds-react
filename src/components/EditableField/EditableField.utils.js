@@ -1,4 +1,5 @@
 import isArray from 'lodash.isarray'
+import isNil from 'lodash.isnil'
 import isPlainObject from 'lodash.isplainobject'
 import { find } from '../../utilities/arrays'
 import { getColor } from '../../styles/utilities/color'
@@ -43,7 +44,7 @@ export function createNewValueFieldObject(
       validated: false,
     }
 
-    if (defaultOption !== null && !Boolean(value.option)) {
+    if (!isNil(defaultOption) && !Boolean(value.option)) {
       fieldObj.option = defaultOption
     }
 
@@ -56,7 +57,7 @@ export function createNewValueFieldObject(
     validated: false,
   }
 
-  if (defaultOption !== null) {
+  if (!isNil(defaultOption)) {
     fieldObj.option = defaultOption
   }
 
@@ -103,7 +104,7 @@ export function findParentByClassName(childNode, className) {
 
   let parent = childNode.parentElement
 
-  while (parent != null && !parent.classList.contains(className)) {
+  while (!isNil(parent) && !parent.classList.contains(className)) {
     parent = parent.parentElement
   }
 

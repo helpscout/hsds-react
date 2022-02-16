@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import isArray from 'lodash.isarray'
 import isFunction from 'lodash.isfunction'
+import isNil from 'lodash.isnil'
 import isPlainObject from 'lodash.isplainobject'
 import { TABLE_CLASSNAME } from './Table'
 import Icon from '../Icon'
@@ -60,7 +61,7 @@ export function generateCellClassNames(column, cellType = 'Cell') {
 }
 
 export function getDisplayTableData({ data, rowsToDisplay }) {
-  if (rowsToDisplay != null && rowsToDisplay < data.length) {
+  if (!isNil(rowsToDisplay) && rowsToDisplay < data.length) {
     return data.slice(0, rowsToDisplay)
   }
 

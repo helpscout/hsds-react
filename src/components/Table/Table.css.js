@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import isNil from 'lodash.isnil'
 import { getColor } from '../../styles/utilities/color'
 import Button from '../Button'
 import { focusRing } from '../../styles/mixins/focusRing.css'
@@ -118,7 +119,7 @@ export const TableUI = styled('table')`
 
   tbody tr:first-child td:first-child {
     border-top-left-radius: ${props =>
-      props.theme.borderTableHeader == null ||
+      isNil(props.theme.borderTableHeader) ||
       props.theme.borderTableHeader === 'none'
         ? '3px'
         : '0'};
@@ -129,7 +130,7 @@ export const TableUI = styled('table')`
 
   tbody tr:first-child td:last-child {
     border-top-right-radius: ${props =>
-      props.theme.borderTableHeader == null ||
+      isNil(props.theme.borderTableHeader) ||
       props.theme.borderTableHeader === 'none'
         ? '3px'
         : '0'};
@@ -162,7 +163,7 @@ export const TableUI = styled('table')`
 
   tbody tr:first-child td {
     border-top: ${props =>
-      props.theme.borderTableHeader == null ||
+      isNil(props.theme.borderTableHeader) ||
       props.theme.borderTableHeader === 'none'
         ? props.theme.borderTableBody
         : '0'};

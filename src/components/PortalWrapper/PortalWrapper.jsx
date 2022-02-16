@@ -1,6 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
+import classNames from 'classnames'
+import isFunction from 'lodash.isfunction'
+import isNil from 'lodash.isnil'
 import getComponentDefaultProp from '@helpscout/react-utils/dist/getComponentDefaultProp'
 import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStatics'
 import getComponentName from '@helpscout/react-utils/dist/getComponentName'
@@ -13,8 +16,6 @@ import {
   createUniqueIndexFactory,
 } from '../../utilities/id'
 import { setupManager } from '../../utilities/globalManager'
-import classNames from 'classnames'
-import isFunction from 'lodash.isfunction'
 import { requestAnimationFrame } from '../../utilities/other'
 import matchPath from '../../utilities/react-router/matchPath'
 import Content from './PortalWrapper.Content'
@@ -168,7 +169,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       if (!history) return false
 
       if (path && history && history.location) {
-        return matchPath(history.location.pathname, { path, exact }) !== null
+        return !isNil(matchPath(history.location.pathname, { path, exact }))
       } else {
         return false
       }
@@ -280,8 +281,9 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
 
       const uniqueIndex = getUniqueIndex(id, options.id)
 
-      const zIndex =
-        options.zIndex != null ? options.zIndex + uniqueIndex : null
+      const zIndex = !isNil(options.zIndex)
+        ? options.zIndex + uniqueIndex
+        : null
 
       return (
         <Animate

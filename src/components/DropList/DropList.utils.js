@@ -41,7 +41,7 @@ export function displayWarnings({
         'The Select toggler option should not have withMultipleSelection enabled, it has been disabled for you'
       )
     }
-    if (menuCSS != null && tippyOptions.appendTo === undefined) {
+    if (!isNil(menuCSS) && tippyOptions.appendTo === undefined) {
       console.error(
         'menuCSS is only needed when using tippyOptions.appendTo to portal the DropList, please use regular styled components if you need custom styles'
       )
@@ -61,7 +61,7 @@ export function isTogglerOfType(toggler, type) {
 }
 
 export function itemToString(item) {
-  if (item == null || checkIfGroupOrDividerItem(item)) return ''
+  if (isNil(item) || checkIfGroupOrDividerItem(item)) return ''
   // Items can be simple strings
   if (isString(item)) return item
 
@@ -77,21 +77,20 @@ export function itemToString(item) {
 
 export function parseSelectionFromProps({ withMultipleSelection, selection }) {
   if (withMultipleSelection) {
-    return selection != null ? [].concat(selection) : []
+    return !isNil(selection) ? [].concat(selection) : []
   }
-  if (selection != null) {
-    return selection != null ? selection : null
-  }
+
+  return !isNil(selection) ? selection : null
 }
 
 export function isItemSelected({ item, selectedItem, selectedItems }) {
-  if (selectedItem == null && selectedItems.length === 0) return false
+  if (isNil(selectedItem) && selectedItems.length === 0) return false
 
   if (isPlainObject(item)) {
     const itemContentKey = getItemContentKeyName(item)
     const itemContent = item[itemContentKey]
 
-    if (selectedItem != null && selectedItems.length === 0) {
+    if (!isNil(selectedItem) && selectedItems.length === 0) {
       const selectedItemContentKey = getItemContentKeyName(selectedItem)
       const selectedItemContent = selectedItem[selectedItemContentKey]
 
@@ -118,7 +117,7 @@ export function objectHasKey(obj, key) {
 }
 
 export function findItemInArray({ item, arr, key = 'label' }) {
-  if (item == null) return undefined
+  if (isNil(item)) return undefined
 
   return arr.find(i => {
     if (isPlainObject(i)) {
@@ -213,7 +212,7 @@ export function renderListContents({
     )
   }
 
-  if (isEmptyList && !customEmptyList && inputValue == null) {
+  if (isEmptyList && !customEmptyList && isNil(inputValue)) {
     return <EmptyListUI>No items</EmptyListUI>
   }
 
@@ -298,7 +297,7 @@ export function getEnabledItemIndex({
 }
 
 export function getMenuWidth(variant, menuWidth) {
-  if (menuWidth != null) return menuWidth
+  if (!isNil(menuWidth)) return menuWidth
 
   return variant.toLowerCase() === 'combobox' ? '220px' : '200px'
 }

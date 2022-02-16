@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 import { ThemeProvider } from 'styled-components'
 import classNames from 'classnames'
+import isNil from 'lodash.isnil'
 import Scrollable from '../Scrollable'
 import {
   HeaderUI,
@@ -56,7 +57,7 @@ export function Table({
   ...rest
 }) {
   const defaultColumns = columns.map(col => {
-    if (col.show == null) {
+    if (isNil(col.show)) {
       col.show = true
     }
 
@@ -74,7 +75,7 @@ export function Table({
     updateColumns,
     resetColumns,
   } = actions
-  const isTableCollapsable = maxRowsToDisplay != null
+  const isTableCollapsable = !isNil(maxRowsToDisplay)
   const isCollapsed = data.length !== state.currentTableData.length
 
   useDeepCompareEffect(() => {

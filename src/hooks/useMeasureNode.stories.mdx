@@ -27,7 +27,7 @@ function MeasureExample() {
   return (
     <>
       <h1 ref={ref}>Hello, world</h1>
-      {measures !== null && (
+      {!isNil(measures) && (
         <h2>The above header is {Math.round(measures.height)}px tall</h2>
       )}
     </>
@@ -52,7 +52,7 @@ function MeasureExample() {
   return (
     <>
       <h1 ref={ref}>Hello, world</h1>
-      {measures !== null && (
+      {!isNil(measures) && (
         <h2>The above header is {Math.round(measures.height)}px tall</h2>
       )}
     </>

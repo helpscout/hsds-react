@@ -4,6 +4,7 @@ import equal from 'fast-deep-equal'
 import classNames from 'classnames'
 import isArray from 'lodash.isarray'
 import isFunction from 'lodash.isfunction'
+import isNil from 'lodash.isnil'
 import {
   EditableFieldUI,
   FieldUI,
@@ -217,7 +218,7 @@ export class EditableField extends React.Component {
     const { name, event } = payload
     const { activeField, multipleValuesEnabled, valueOptions } = this.state
     const { validate, onCommit, onDiscard, onInputBlur } = this.props
-    const hasOptions = valueOptions != null
+    const hasOptions = !isNil(valueOptions)
     const changedField =
       this.state.fieldValue.length === 1
         ? this.state.fieldValue[0]
@@ -859,7 +860,7 @@ export class EditableField extends React.Component {
         validated: false,
       }
 
-      if (defaultOption != null) {
+      if (!isNil(defaultOption)) {
         emptyValue.option = defaultOption
       }
 
@@ -923,7 +924,7 @@ export class EditableField extends React.Component {
         className={classNames(EDITABLEFIELD_CLASSNAMES.addButton, className)}
         type="button"
         onClick={
-          onClick == null
+          isNil(onClick)
             ? this.handleAddValue
             : e => {
                 onClick(e)

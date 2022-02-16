@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 import { useState, useCallback, useRef } from 'react'
 import isArray from 'lodash.isarray'
+import isNil from 'lodash.isnil'
 
 export default function useMeasureNode({ observeSize = false }) {
   const [measures, setMeasures] = useState(null)
@@ -9,7 +10,7 @@ export default function useMeasureNode({ observeSize = false }) {
   const observerRef = useRef(null)
 
   const ref = useCallback(node => {
-    if (node != null) {
+    if (!isNil(node)) {
       if (observeSize) {
         const resizeObserver = setupObserver({
           cb: setMeasures,

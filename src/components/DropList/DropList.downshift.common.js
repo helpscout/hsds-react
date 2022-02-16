@@ -1,4 +1,5 @@
 import { useSelect, useCombobox } from 'downshift'
+import isNil from 'lodash.isnil'
 import isPlainObject from 'lodash.isplainobject'
 import {
   findItemInArray,
@@ -140,7 +141,7 @@ export function getA11ySelectionMessageCommon({
   selectedItems,
   withMultipleSelection,
 }) {
-  if (selectedItem == null && selectedItems.length === 0) {
+  if (isNil(selectedItem) && selectedItems.length === 0) {
     return 'All have been deselected'
   }
 

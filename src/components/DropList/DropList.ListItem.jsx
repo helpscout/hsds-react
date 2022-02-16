@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react'
 import classNames from 'classnames'
 import isFunction from 'lodash.isfunction'
+import isNil from 'lodash.isnil'
 import isPlainObject from 'lodash.isplainobject'
 import isString from 'lodash.isstring'
 import {
@@ -64,7 +65,7 @@ const ListItem = forwardRef(
       )
     }
 
-    if (renderCustomListItem != null && isFunction(renderCustomListItem)) {
+    if (!isNil(renderCustomListItem) && isFunction(renderCustomListItem)) {
       return (
         <li
           className={getListItemClassNames('DropListItem--custom')}

@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import isArray from 'lodash.isarray'
+import isNil from 'lodash.isnil'
 import Icon from '../Icon'
 import {
   SortableCellUI,
@@ -24,7 +25,7 @@ export default function HeaderCell({ column, isLoading, sortedInfo }) {
     const colKey = isArray(column.columnKey) ? column.sortKey : column.columnKey
 
     const isTableSortedByThisColumn =
-      sortedInfo != null && sortedInfo.order && sortedInfo.columnKey === colKey
+      !isNil(sortedInfo) && sortedInfo.order && sortedInfo.columnKey === colKey
 
     if (isTableSortedByThisColumn) {
       return sortedInfo.order
@@ -36,7 +37,7 @@ export default function HeaderCell({ column, isLoading, sortedInfo }) {
   function handleClick(e) {
     e.persist()
 
-    if (!isLoading && column.sorter != null) {
+    if (!isLoading && !isNil(column.sorter)) {
       const sorterFnResult = isArray(column.columnKey)
         ? column.sorter(column.sortKey)
         : column.sorter(column.columnKey)
@@ -70,8 +71,8 @@ export default function HeaderCell({ column, isLoading, sortedInfo }) {
   }
 
   function renderCellContents() {
-    const withCustomContent = column.renderHeaderCell != null
-    const isSortable = column.sorter != null
+    const withCustomContent = !isNil(column.renderHeaderCell)
+    const isSortable = !isNil(column.sorter)
 
     if (withCustomContent && !isSortable) {
       return generateCustomHeaderCell(column, sortedInfo)

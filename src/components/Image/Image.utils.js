@@ -1,3 +1,4 @@
+import isNil from 'lodash.isnil'
 import { calculateAspectRatioFit } from '../../utilities/images'
 
 /**
@@ -13,7 +14,7 @@ export function getImageSize(props) {
   const values = Object.values(imageProps)
 
   for (let index = 0; index < values.length; index++) {
-    if (values[index] == null) return {}
+    if (isNil(values[index])) return {}
   }
 
   const aspect = calculateAspectRatioFit(imageProps)

@@ -1,7 +1,8 @@
+import isNil from 'lodash.isnil'
+import isNumber from 'lodash.isnumber'
 import isPlainObject from 'lodash.isplainobject'
 import colorScheme from '../configs/colors'
 import { darken, getColorShade, lighten } from '../../utilities/color'
-import isNumber from 'lodash.isnumber'
 import get from '../../utilities/get'
 export { rgba } from '../../utilities/color'
 
@@ -31,7 +32,7 @@ export const getColor = (...args) => {
   let index = 0
   let color = colorScheme
 
-  while (color != null && index < path.length) {
+  while (!isNil(color) && index < path.length) {
     color = color[path[index++]]
   }
 
