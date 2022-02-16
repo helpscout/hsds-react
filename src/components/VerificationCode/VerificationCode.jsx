@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
+import VisuallyHidden from '../VisuallyHidden'
 import { copyToClipboard } from '../../utilities/clipboard'
 import {
   selectAll,
@@ -254,6 +255,7 @@ class VerificationCode extends React.Component {
           tabIndex="-1"
           ref={this.setClipboardPlaceholderNode}
         />
+        <VisuallyHidden id="digitInput">Code Digit</VisuallyHidden>
         {Array(numberOfChars)
           .fill(0)
           .map((_, index) => {
@@ -265,6 +267,7 @@ class VerificationCode extends React.Component {
                 <DigitMaskUI className={`DigitMask ${CLASSNAMES.hidden}`} />
                 <DigitInputUI
                   className="DigitInput"
+                  aria-labelledby="digitInput"
                   maxLength="1"
                   onClick={this.handleInputClick}
                   onKeyUp={e => {
