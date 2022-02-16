@@ -3,9 +3,9 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
+import isNil from 'lodash.isnil'
 import { addEventListener, removeEventListener } from '../../utilities/events'
 import { getClosestDocument } from '../../utilities/node'
-import { isDefined } from '../../utilities/is'
 
 class KeypressListener extends React.Component {
   node
@@ -30,7 +30,7 @@ class KeypressListener extends React.Component {
     const { keyCode, handler, modifier, noModifier } = this.props
     let modKey = true
 
-    if (!isDefined(keyCode)) {
+    if (isNil(keyCode)) {
       return handler(event)
     }
 

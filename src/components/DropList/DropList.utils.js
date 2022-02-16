@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import isPlainObject from 'lodash.isplainobject'
 import isString from 'lodash.isstring'
-import { isDefined } from '../../utilities/is'
+import isNil from 'lodash.isnil'
 import { ITEM_TYPES, VARIANTS } from './DropList.constants'
 import { SelectTag } from './DropList.togglers'
 import { ListItemUI, EmptyListUI } from './DropList.css'
@@ -114,7 +114,7 @@ export function getItemContentKeyName(item) {
 }
 
 export function objectHasKey(obj, key) {
-  return isPlainObject(obj) && isDefined(obj[key])
+  return isPlainObject(obj) && !isNil(obj[key])
 }
 
 export function findItemInArray({ item, arr, key = 'label' }) {

@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import isNil from 'lodash.isnil'
 import Step from './Stepper.Step'
 import classNames from 'classnames'
 import { getComponentKey } from '../../utilities/component'
-import { isDefined } from '../../utilities/is'
 import { StepperUI, StepWrapperUI } from './Stepper.css'
 
 function noop() {}
@@ -52,7 +52,7 @@ export class Stepper extends React.PureComponent {
 
   getMatchIndex() {
     const { currentIndex } = this.props
-    const matchIndex = isDefined(currentIndex) ? currentIndex : -1
+    const matchIndex = !isNil(currentIndex) ? currentIndex : -1
 
     return matchIndex
   }
@@ -66,7 +66,7 @@ export class Stepper extends React.PureComponent {
   getCurrentStep() {
     const { currentIndex, steps } = this.props
 
-    return isDefined(currentIndex) && steps[currentIndex]
+    return !isNil(currentIndex) && steps[currentIndex]
   }
 
   renderSteps() {

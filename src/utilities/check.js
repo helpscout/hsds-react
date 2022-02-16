@@ -1,12 +1,12 @@
 import isArray from 'lodash.isarray'
-
+import isNil from 'lodash.isnil'
 /**
  * Determines if something is defined.
  *
  * @param   {any} obj
  * @returns {boolean}
  */
-export const isDefined = obj => obj !== undefined && obj !== null
+export const isDefined = obj => !isNil(obj)
 
 /**
  * Determines if at least one object from a collection is defined.

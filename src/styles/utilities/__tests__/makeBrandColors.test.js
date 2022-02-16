@@ -1,5 +1,5 @@
+import isNil from 'lodash.isnil'
 import { defaultBrandColor, makeBrandColors } from '../color'
-import { isDefined } from '../../../utilities/is'
 
 const brandColorProps = [
   'backgroundColorActive',
@@ -23,7 +23,7 @@ const brandColorProps = [
 
 const hasAllBrandColorProps = brandColors => {
   const keyCount = Object.keys(brandColors).reduce((count, key) => {
-    if (brandColorProps.indexOf(key) >= 0 && isDefined(brandColors[key])) {
+    if (brandColorProps.indexOf(key) >= 0 && !isNil(brandColors[key])) {
       return count + 1
     } else {
       return count

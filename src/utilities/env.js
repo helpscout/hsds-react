@@ -1,9 +1,9 @@
 /* istanbul ignore file */
-import { isDefined } from './is'
+import isNil from 'lodash.isnil'
 import get from './get'
 
 export const isBrowserEnv = () => {
-  if (!isDefined(process)) return true
+  if (isNil(process)) return true
 
   return get(process, 'browser') === true
 }

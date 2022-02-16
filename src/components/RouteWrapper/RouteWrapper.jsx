@@ -60,8 +60,6 @@ const RouteWrapper = WrappedComponent => {
 
     render() {
       const { fetch, replace, to, ...rest } = this.props
-      // TODO: Resolve data-bypass
-      // const dataByPassValue = isDefined(dataByPass) ? dataByPass : !!to
 
       return (
         <WrappedComponent
