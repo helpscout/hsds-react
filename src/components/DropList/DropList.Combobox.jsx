@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useCombobox } from 'downshift'
 import useDeepCompareEffect from 'use-deep-compare-effect'
-import { isFunction } from '../../utilities/is'
+import isFunction from 'lodash.isfunction'
 import {
   itemToString,
   isItemSelected,

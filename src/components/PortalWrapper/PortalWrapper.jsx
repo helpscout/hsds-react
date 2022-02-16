@@ -14,7 +14,7 @@ import {
 } from '../../utilities/id'
 import { setupManager } from '../../utilities/globalManager'
 import classNames from 'classnames'
-import { isFunction } from '../../utilities/is'
+import isFunction from 'lodash.isfunction'
 import { requestAnimationFrame } from '../../utilities/other'
 import matchPath from '../../utilities/react-router/matchPath'
 import Content from './PortalWrapper.Content'

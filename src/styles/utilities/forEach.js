@@ -1,4 +1,5 @@
-import { isArray, isObject, isFunction } from '../../utilities/is'
+import isFunction from 'lodash.isfunction'
+import { isArray, isObject } from '../../utilities/is'
 
 /**
  * A helper function that works like Sass' @for.

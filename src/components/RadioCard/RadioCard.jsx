@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import isString from 'lodash.isstring'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { isFunction } from '../../utilities/is'
+import isFunction from 'lodash.isfunction'
 import Icon from '../Icon'
 import Radio from '../Radio'
 import {

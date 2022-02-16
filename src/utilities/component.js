@@ -1,9 +1,10 @@
 /* istanbul ignore file */
 import React from 'react'
 import getComponentNameUtil from '@helpscout/react-utils/dist/getComponentName'
+import isFunction from 'lodash.isfunction'
 import isString from 'lodash.isstring'
 import { includes } from './arrays'
-import { isArray, isFunction, isObject, isDefined } from './is'
+import { isArray, isObject, isDefined } from './is'
 
 export const CARD_TYPE = ['ArticleCard', 'Card']
 
