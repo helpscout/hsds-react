@@ -1,6 +1,6 @@
 /* istanbul ignore file */
+import get from 'lodash.get'
 import closest from './closest'
-import get from './get'
 import { isNodeEnv } from './other'
 
 const Element = window['Element']

@@ -1,34 +1,4 @@
-/**
- * A wrapper for addEventListener for DOM nodes.
- *
- * @param   {NodeElement} target
- * @param   {string} eventName
- * @param   {function} handler
- * @param   {object} options
- *
- * @returns {undefined}
- */
-export const addEventListener = (target, eventName, handler, options) => {
-  if (!target || !target.addEventListener) return
-
-  return target.addEventListener(eventName, handler, options)
-}
-
-/**
- * A wrapper for removeEventListener for DOM nodes.
- *
- * @param   {NodeElement} target
- * @param   {string} eventName
- * @param   {function} handler
- * @param   {object} options
- *
- * @returns {undefined}
- */
-export const removeEventListener = (target, eventName, handler, options) => {
-  if (!target || !target.removeEventListener) return
-
-  return target.removeEventListener(eventName, handler, options)
-}
+import { isFirefox } from '../../utilities/browser'
 
 /**
  * Determines if a wheel event came from a mouse or from a trackpad.
@@ -65,4 +35,30 @@ export const isMouseWheelYEvent = (event = {}) => {
   if (computedDeltaX !== neutralX) return false
 
   return computedDeltaY >= wheelThreshold
+}
+
+export const remapScrollingPlane = event => {
+  // Scrolling behaviour is strange in Firefox…
+  // We'll let Firefox natively handle things.
+
+  // Can't write tests for this in JSDOM.
+  // Can't create fixture for JSDOM's built-in Navigator instance.
+  if (isFirefox()) return
+
+  const node = event.currentTarget
+
+  // Don't customize native shift + scroll interactions
+
+  if (event.target.shiftKey) return
+  if (!node) return
+  if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) {
+    return
+  }
+
+  if (isMouseWheelYEvent(event)) {
+    node.scrollLeft += event.deltaY
+  }
+
+  // Scroll-locking
+  event.preventDefault()
 }
