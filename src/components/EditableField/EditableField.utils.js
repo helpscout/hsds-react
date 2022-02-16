@@ -1,3 +1,4 @@
+import isArray from 'lodash.isarray'
 import isPlainObject from 'lodash.isplainobject'
 import { find } from '../../utilities/arrays'
 import { getColor } from '../../styles/utilities/color'
@@ -17,7 +18,7 @@ export function normalizeFieldValue({
   defaultOption,
   currentFieldValue,
 }) {
-  if (Array.isArray(value)) {
+  if (isArray(value)) {
     if (value.length === 0) {
       return [createNewValueFieldObject('', name, defaultOption)]
     }
@@ -80,7 +81,7 @@ export function generateFieldActions(actions) {
   }
 
   // User is also able to override the action
-  let actionsArray = Array.isArray(actions) ? actions : [actions]
+  let actionsArray = isArray(actions) ? actions : [actions]
   let isDeleteActionPresent = find(
     actionsArray,
     action => action.name === 'delete'

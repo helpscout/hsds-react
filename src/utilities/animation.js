@@ -1,5 +1,5 @@
+import isArray from 'lodash.isarray'
 import isString from 'lodash.isstring'
-import { isArray } from './is'
 
 export const getSequenceNames = sequence => {
   let names = []

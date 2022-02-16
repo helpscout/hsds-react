@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
+import isArray from 'lodash.isarray'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import ChoiceGroupContext from './ChoiceGroup.Context'
 import FormGroup from '../FormGroup'
 import FormLabelContext from '../FormLabel/Context'
 import get from '../../utilities/get'
-import classNames from 'classnames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { ChoiceGroupUI } from './ChoiceGroup.css'
 
@@ -192,7 +193,7 @@ class ChoiceGroup extends React.Component {
 }
 
 function hasSelectedValue(value) {
-  if (Array.isArray(value)) {
+  if (isArray(value)) {
     return value.length > 0
   }
   if (value != null) {

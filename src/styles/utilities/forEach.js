@@ -1,6 +1,6 @@
+import isArray from 'lodash.isarray'
 import isFunction from 'lodash.isfunction'
 import isPlainObject from 'lodash.isplainobject'
-import { isArray } from '../../utilities/is'
 
 /**
  * A helper function that works like Sass' @for.

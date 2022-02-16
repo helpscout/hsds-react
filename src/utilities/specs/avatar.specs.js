@@ -1,3 +1,4 @@
+import isArray from 'lodash.isarray'
 import { createSpec, derived, faker } from '@helpscout/helix'
 
 const avatarSpec = createSpec({
@@ -7,7 +8,7 @@ const avatarSpec = createSpec({
   name: derived(({ firstName, lastName }) => `${firstName} ${lastName}`),
   image: faker.image.avatar(),
 }).afterGenerate(props => {
-  if (Array.isArray(props)) {
+  if (isArray(props)) {
     return props.map(prop => {
       return {
         id: prop.id,

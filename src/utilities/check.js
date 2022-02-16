@@ -1,3 +1,5 @@
+import isArray from 'lodash.isarray'
+
 /**
  * Determines if something is defined.
  *
@@ -14,7 +16,7 @@ export const isDefined = obj => obj !== undefined && obj !== null
  */
 export const anyDefined = objs => {
   if (!objs) return false
-  const props = Array.isArray(objs) ? objs : Object.values(objs)
+  const props = isArray(objs) ? objs : Object.values(objs)
   return props.filter(isDefined).length >= 1
 }
 
@@ -23,6 +25,6 @@ export const anyDefined = objs => {
  */
 export const allDefined = objs => {
   if (!objs) return false
-  const props = Array.isArray(objs) ? objs : Object.values(objs)
+  const props = isArray(objs) ? objs : Object.values(objs)
   return props.filter(isDefined).length === props.length
 }

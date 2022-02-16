@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelect } from 'downshift'
+import isArray from 'lodash.isarray'
 import {
   itemToString,
   isItemSelected,
@@ -42,9 +43,7 @@ function Select({
 }) {
   const isListEmpty = items.length === 0
   const allItems =
-    isListEmpty && Array.isArray(customEmptyListItems)
-      ? customEmptyListItems
-      : items
+    isListEmpty && isArray(customEmptyListItems) ? customEmptyListItems : items
   const {
     highlightedIndex,
     getItemProps,

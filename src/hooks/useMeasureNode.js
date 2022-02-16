@@ -1,6 +1,7 @@
 // very difficult to test with JSDom
 /* istanbul ignore file */
 import { useState, useCallback, useRef } from 'react'
+import isArray from 'lodash.isarray'
 
 export default function useMeasureNode({ observeSize = false }) {
   const [measures, setMeasures] = useState(null)
@@ -38,7 +39,7 @@ export function setupObserver({
   return new ResizeObserver(entries => {
     for (let entry of entries) {
       if (entry[observerEntryType]) {
-        const size = Array.isArray(entry[observerEntryType])
+        const size = isArray(entry[observerEntryType])
           ? entry[observerEntryType][0]
           : entry[observerEntryType]
         const { blockSize: height, inlineSize: width } = size

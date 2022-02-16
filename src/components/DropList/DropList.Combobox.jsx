@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useCombobox } from 'downshift'
 import useDeepCompareEffect from 'use-deep-compare-effect'
+import isArray from 'lodash.isarray'
 import isFunction from 'lodash.isfunction'
 import {
   itemToString,
@@ -52,7 +53,7 @@ function Combobox({
   const noSourceItems = items.length === 0
   const withCustomEmptyListItems =
     noSourceItems &&
-    Array.isArray(customEmptyListItems) &&
+    isArray(customEmptyListItems) &&
     customEmptyListItems.length > 0
   const resultingItems = withCustomEmptyListItems
     ? customEmptyListItems
@@ -89,7 +90,7 @@ function Combobox({
       )
       const isListEmpty = filtered.length === 0
 
-      if (isListEmpty && Array.isArray(customEmptyListItems)) {
+      if (isListEmpty && isArray(customEmptyListItems)) {
         const processed = customEmptyListItems.map(item => {
           if (isFunction(item.customizeLabel)) {
             item.label = item.customizeLabel(inputValue)

@@ -1,4 +1,5 @@
 import React from 'react'
+import lodashIsArray from 'lodash.isarray'
 
 export function isDefined(value) {
   return value !== undefined && value !== null
@@ -20,7 +21,7 @@ export function typeOf(value, type) {
 }
 
 export function isArray(value) {
-  return Array.isArray(value)
+  return lodashIsArray(value)
 }
 
 export function isBool(value) {

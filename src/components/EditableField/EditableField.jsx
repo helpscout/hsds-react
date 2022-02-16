@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import equal from 'fast-deep-equal'
 import classNames from 'classnames'
+import isArray from 'lodash.isarray'
 import isFunction from 'lodash.isfunction'
 import {
   EditableFieldUI,
@@ -30,7 +31,6 @@ import {
   STATES_CLASSNAMES,
 } from './EditableField.utils'
 import { key } from '../../constants/Keys'
-import { isArray } from '../../utilities/is'
 import { find } from '../../utilities/arrays'
 import { nodesHaveSameParent } from '../../utilities/node'
 
