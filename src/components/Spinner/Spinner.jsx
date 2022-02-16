@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import VisuallyHidden from '../VisuallyHidden'
 import classNames from 'classnames'
-import { isString } from '../../utilities/is'
+import isString from 'lodash.isstring'
 import { legacySizes } from './Spinner.utils'
 import { SpinnerUI, SpinnerSVGUI, SpinnerCircleUI } from './Spinner.css'
 

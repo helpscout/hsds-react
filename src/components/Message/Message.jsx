@@ -14,7 +14,7 @@ import MessageMedia from './Message.Media'
 import MessageProvider from './Message.Provider'
 import classNames from 'classnames'
 import { getComponentName } from '../../utilities/component'
-import { isString } from '../../utilities/is'
+import isString from 'lodash.isstring'
 import { MessageUI } from './Message.css'
 
 function noop() {}

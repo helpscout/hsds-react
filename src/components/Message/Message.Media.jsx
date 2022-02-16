@@ -5,7 +5,7 @@ import Spinner from '../Spinner'
 import Modal from '../Modal'
 import MessageCaption from './Message.Caption'
 import classNames, { BEM } from '../../utilities/classNames'
-import { isString } from '../../utilities/is'
+import isString from 'lodash.isstring'
 import { MediaUI, ImageUI } from './Message.Media.css'
 
 function noop() {}

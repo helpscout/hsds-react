@@ -2,10 +2,10 @@ import { useEffect, useContext, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 import PropTypes from 'prop-types'
 import { FrameContext } from 'react-frame-component'
-
+import isString from 'lodash.isstring'
 import Container, { ID as portalContainerId } from './Portal.Container'
 import { isNodeElement } from '../../utilities/node'
-import { isObject, isString } from '../../utilities/is'
+import { isObject } from '../../utilities/is'
 import { GlobalContext } from '../HSDS/Provider'
 
 const getMountSelector = (renderTo, body) => {

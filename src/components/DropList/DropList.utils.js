@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
-import { isDefined, isObject, isString } from '../../utilities/is'
+import isString from 'lodash.isstring'
+import { isDefined, isObject } from '../../utilities/is'
 import { ITEM_TYPES, VARIANTS } from './DropList.constants'
 import { SelectTag } from './DropList.togglers'
 import { ListItemUI, EmptyListUI } from './DropList.css'

@@ -1,4 +1,5 @@
-import { isFunction, isString, isNumber } from '../../utilities/is'
+import isString from 'lodash.isstring'
+import { isFunction, isNumber } from '../../utilities/is'
 
 export const breakpoints = {
   xs: 0,

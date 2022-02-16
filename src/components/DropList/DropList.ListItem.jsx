@@ -1,6 +1,7 @@
 import React, { forwardRef } from 'react'
 import classNames from 'classnames'
-import { isFunction, isObject, isString } from '../../utilities/is'
+import isString from 'lodash.isstring'
+import { isFunction, isObject } from '../../utilities/is'
 import {
   getItemContentKeyName,
   isItemAction,

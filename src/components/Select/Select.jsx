@@ -17,7 +17,7 @@ import Arrows from './Select.Arrows'
 import { STATES } from '../../constants'
 import classNames from 'classnames'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { isString } from '../../utilities/is'
+import isString from 'lodash.isstring'
 import { InputWrapperUI } from '../Input/Input.css'
 import { SelectUI, FieldUI, InlinePrefixSuffixUI, ItemUI } from './Select.css'
 
