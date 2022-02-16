@@ -1,4 +1,10 @@
-import { allDefined } from '../../utilities/check'
+export function allDefined(objs) {
+  if (!objs) return false
+  const props = Array.isArray(objs) ? objs : Object.values(objs)
+  // TODO: change when the other PR is merged for isNil
+  // return props.filter(p => !isNil(p)).length === props.length
+  return props.filter(p => p != null).length === props.length
+}
 
 /**
  * Determines if the ChatScroller is within range of scrolling.
