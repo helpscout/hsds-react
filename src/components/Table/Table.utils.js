@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import isFunction from 'lodash.isfunction'
-import { isObject } from '../../utilities/is'
+import isPlainObject from 'lodash.isplainobject'
 import { TABLE_CLASSNAME } from './Table'
 import Icon from '../Icon'
 
@@ -123,7 +123,7 @@ export function generateCustomHeaderCell(column, sortedInfo) {
     return column.renderHeaderCell(column, sortedInfo)
   }
 
-  if (isObject(column.renderHeaderCell)) {
+  if (isPlainObject(column.renderHeaderCell)) {
     const { iconName } = column.renderHeaderCell
 
     return iconName ? (

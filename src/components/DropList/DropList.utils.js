@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
+import isPlainObject from 'lodash.isplainobject'
 import isString from 'lodash.isstring'
-import { isDefined, isObject } from '../../utilities/is'
+import { isDefined } from '../../utilities/is'
 import { ITEM_TYPES, VARIANTS } from './DropList.constants'
 import { SelectTag } from './DropList.togglers'
 import { ListItemUI, EmptyListUI } from './DropList.css'
@@ -64,7 +65,7 @@ export function itemToString(item) {
   // Items can be simple strings
   if (isString(item)) return item
 
-  if (isObject(item)) {
+  if (isPlainObject(item)) {
     // Object items should have 'label' or 'value', obtain which one is used per item
     const itemContentKeyName = getItemContentKeyName(item)
 
@@ -86,7 +87,7 @@ export function parseSelectionFromProps({ withMultipleSelection, selection }) {
 export function isItemSelected({ item, selectedItem, selectedItems }) {
   if (selectedItem == null && selectedItems.length === 0) return false
 
-  if (isObject(item)) {
+  if (isPlainObject(item)) {
     const itemContentKey = getItemContentKeyName(item)
     const itemContent = item[itemContentKey]
 
@@ -113,17 +114,17 @@ export function getItemContentKeyName(item) {
 }
 
 export function objectHasKey(obj, key) {
-  return isObject(obj) && isDefined(obj[key])
+  return isPlainObject(obj) && isDefined(obj[key])
 }
 
 export function findItemInArray({ item, arr, key = 'label' }) {
   if (item == null) return undefined
 
   return arr.find(i => {
-    if (isObject(i)) {
+    if (isPlainObject(i)) {
       return i[key] === item[key]
     }
-    if (isObject(item)) {
+    if (isPlainObject(item)) {
       return i === item[key]
     }
     return i === item
@@ -132,10 +133,10 @@ export function findItemInArray({ item, arr, key = 'label' }) {
 
 export function removeItemFromArray({ item, arr, key = 'label' }) {
   return arr.filter(i => {
-    if (isObject(i)) {
+    if (isPlainObject(i)) {
       return i[key] !== item[key]
     }
-    if (isObject(item)) {
+    if (isPlainObject(item)) {
       return i !== item[key]
     }
     return i !== item

@@ -5,7 +5,7 @@ import { FrameContext } from 'react-frame-component'
 import isString from 'lodash.isstring'
 import Container, { ID as portalContainerId } from './Portal.Container'
 import { isNodeElement } from '../../utilities/node'
-import { isObject } from '../../utilities/is'
+import isPlainObject from 'lodash.isplainobject'
 import { GlobalContext } from '../HSDS/Provider'
 
 const getMountSelector = (renderTo, body) => {
@@ -16,7 +16,9 @@ const getMountSelector = (renderTo, body) => {
       ? document.querySelector(renderTo)
       : false
     mountSelector =
-      isObject(renderTo) && isNodeElement(renderTo) ? renderTo : mountSelector
+      isPlainObject(renderTo) && isNodeElement(renderTo)
+        ? renderTo
+        : mountSelector
   }
 
   // 2- is inside an iframe, but not the one created by storybook/cypress

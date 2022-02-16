@@ -1,6 +1,7 @@
+import isPlainObject from 'lodash.isplainobject'
 import colorScheme from '../configs/colors'
 import { darken, getColorShade, lighten } from '../../utilities/color'
-import { isNumber, isObject } from '../../utilities/is'
+import { isNumber } from '../../utilities/is'
 import get from '../../utilities/get'
 export { rgba } from '../../utilities/color'
 
@@ -34,7 +35,7 @@ export const getColor = (...args) => {
     color = color[path[index++]]
   }
 
-  if (isObject(color)) {
+  if (isPlainObject(color)) {
     color = color['default']
   }
 

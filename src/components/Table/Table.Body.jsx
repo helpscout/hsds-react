@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import Row from './Table.Row'
 import { columnShape, dataShape } from './Table.utils'
-import { isObject } from '../../utilities/is'
+import isPlainObject from 'lodash.isplainobject'
 import { TBodyUI } from './Table.css'
 
 export function TableBody({
@@ -48,7 +48,7 @@ export function TableBody({
       classNames: 'animated-row',
     }
 
-    if (isObject(animateRows)) {
+    if (isPlainObject(animateRows)) {
       animateRowsObj = { ...animateRowsObj, ...animateRows }
     }
 

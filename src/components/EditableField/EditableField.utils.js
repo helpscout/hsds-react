@@ -1,4 +1,4 @@
-import { isObject } from '../../utilities/is'
+import isPlainObject from 'lodash.isplainobject'
 import { find } from '../../utilities/arrays'
 import { getColor } from '../../styles/utilities/color'
 import { createUniqueIDFactory } from '../../utilities/id'
@@ -35,7 +35,7 @@ export function createNewValueFieldObject(
   currentId
 ) {
   // If it's an object already, grab the fields first
-  if (isObject(value)) {
+  if (isPlainObject(value)) {
     const fieldObj = {
       ...value,
       id: currentId || value.id || `${name}_${uniqueID()}`,

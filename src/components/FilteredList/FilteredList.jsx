@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
 import isString from 'lodash.isstring'
-import { isObject } from '../../utilities/is'
+import isPlainObject from 'lodash.isplainobject'
 import Text from '../Text'
 import Tooltip from '../Tooltip'
 import {
@@ -34,7 +34,7 @@ export class FilteredList extends React.Component {
   }
 
   getItemValue = item => {
-    if (!isString(item) && isObject(item) && this.props.itemKey) {
+    if (!isString(item) && isPlainObject(item) && this.props.itemKey) {
       return item[this.props.itemKey]
     }
 
