@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import { isDefined } from './is'
-import get from './get'
+import get from 'lodash.get'
 
 export const isBrowserEnv = () => {
   if (!isDefined(process)) return true
