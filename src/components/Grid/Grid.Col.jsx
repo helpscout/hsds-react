@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { classNames, variantClassNames } from '../../utilities/classNames'
+import classNames from 'classnames'
 import { ColUI } from './Grid.Col.css'
 
 class GridCol extends React.PureComponent {
@@ -33,6 +33,17 @@ GridCol.propTypes = {
   size: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
+}
+
+export function variantClassNames(className, variant = '') {
+  if (typeof className !== 'string' || !className.length) return ''
+  if (variant && typeof variant !== 'string') return className
+
+  return variant
+    .trim()
+    .split(/[ ,]+/)
+    .map(o => `${className}-${o}`)
+    .join(' ')
 }
 
 export default GridCol

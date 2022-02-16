@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import Link from '../Link'
 import Spinner from '../Spinner'
 import Modal from '../Modal'
 import MessageCaption from './Message.Caption'
-import classNames, { BEM } from '../../utilities/classNames'
+import { BEM } from '../../utilities/classNames'
 import { isString } from '../../utilities/is'
 import { MediaUI, ImageUI } from './Message.Media.css'
 
