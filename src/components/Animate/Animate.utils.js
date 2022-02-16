@@ -1,4 +1,4 @@
-import { isArray, isString } from './is'
+import { isArray, isString } from '../../utilities/is'
 
 export const getSequenceNames = sequence => {
   let names = []
