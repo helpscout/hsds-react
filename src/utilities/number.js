@@ -1,4 +1,5 @@
-import { isDefined, isNumber } from './is'
+import isNumber from 'lodash.isnumber'
+import { isDefined } from './is'
 
 export const isEven = number => Number(number) % 2 === 0
 

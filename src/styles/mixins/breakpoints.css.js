@@ -1,6 +1,6 @@
 import isFunction from 'lodash.isfunction'
 import isString from 'lodash.isstring'
-import { isNumber } from '../../utilities/is'
+import isNumber from 'lodash.isnumber'
 
 export const breakpoints = {
   xs: 0,

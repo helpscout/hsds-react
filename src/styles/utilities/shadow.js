@@ -1,5 +1,6 @@
+import isNumber from 'lodash.isnumber'
 import shadows from '../configs/shadows'
-import { isNumber, isDefined } from '../../utilities/is'
+import { isDefined } from '../../utilities/is'
 
 export const defaultShadow = '0 0 0 rgba(0, 0, 0)'
 
