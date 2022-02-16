@@ -1,5 +1,8 @@
-import { isFirefox } from '../../utilities/browser'
+const isFirefox = () => {
+  if (!navigator) return false
 
+  return navigator.userAgent.toLowerCase().indexOf('firefox') > -1
+}
 /**
  * Determines if a wheel event came from a mouse or from a trackpad.
  *

@@ -2,7 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
 import { handleWheelEvent } from './ScrollLock.utils'
-import { isSafari } from '../../utilities/browser'
+
+const isSafari = () => {
+  if (!navigator) return false
+  const isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1
+
+  return !isChrome && navigator.userAgent.toLowerCase().indexOf('safari') > -1
+}
 
 export class ScrollLock extends React.PureComponent {
   componentDidMount() {
