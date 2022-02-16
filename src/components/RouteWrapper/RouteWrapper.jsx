@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import get from 'lodash.get'
 import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStatics'
 import getComponentName from '@helpscout/react-utils/dist/getComponentName'
 import { isModifierKeyPressed } from '../../utilities/keys'
 import { isString } from '../../utilities/is'
-import get from '../../utilities/get'
 import { createLocation } from '../../utilities/history'
 import WithRouterCheck from '../WithRouterCheck'
 

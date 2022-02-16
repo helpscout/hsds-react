@@ -1,7 +1,7 @@
+import get from 'lodash.get'
 import colorScheme from '../configs/colors'
 import { darken, getColorShade, lighten } from '../../utilities/color'
 import { isNumber, isObject } from '../../utilities/is'
-import get from '../../utilities/get'
 export { rgba } from '../../utilities/color'
 
 /**

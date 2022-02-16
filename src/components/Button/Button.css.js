@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import get from 'dash-get'
+import get from 'lodash.get'
 
 import Spinner from '../Spinner'
 import Icon from '../Icon'
