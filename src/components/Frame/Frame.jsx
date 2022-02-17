@@ -62,12 +62,14 @@ export const FrameComponent = ({
   children,
   initialContent,
   contentDidMount,
+  head,
   ...rest
 }) => {
   return (
     <Frame
       initialContent={initialContent}
       contentDidMount={contentDidMount}
+      head={head}
       {...getValidProps(rest)}
     >
       <FrameContent theme={theme}>{children}</FrameContent>
