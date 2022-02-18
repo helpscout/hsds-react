@@ -93,6 +93,7 @@
     "@helpscout/motion": "0.0.8",
     "@helpscout/react-utils": "^2.4.0",
     "@helpscout/wedux": "0.0.11",
+    "@juggle/resize-observer": "^3.3.1",
     "@tippyjs/react": "^4.0.2",
     "array-move": "2.1.0",
     "chalk": "^1.1.3",
