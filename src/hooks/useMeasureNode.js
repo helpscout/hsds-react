@@ -3,6 +3,8 @@
 import { useState, useCallback, useRef } from 'react'
 import isArray from 'lodash.isarray'
 import isNil from 'lodash.isnil'
+import { ResizeObserver as PolyfilledResizeObserver } from '@juggle/resize-observer'
+import { isSafari } from '../utilities/browser'
 
 export default function useMeasureNode({ observeSize = false }) {
   const [measures, setMeasures] = useState(null)
@@ -37,7 +39,10 @@ export function setupObserver({
   dimensions,
   observerEntryType = 'borderBoxSize',
 }) {
-  return new ResizeObserver(entries => {
+  // TODO: remove when Safari fully supports ResizeObserverEntry (which should be on 15.4)
+  const RO = !isSafari() ? ResizeObserver : PolyfilledResizeObserver
+
+  return new RO(entries => {
     for (let entry of entries) {
       if (entry[observerEntryType]) {
         const size = isArray(entry[observerEntryType])

@@ -60,7 +60,7 @@ export const Popover = ({
   withArrow = true,
   ...rest
 }) => {
-  const render = ({ scope, ...tooltipProps }) => {
+  const render = tooltipProps => {
     const toolTipComponent = (
       <TooltipAnimationUI>
         <PopoverUI {...tooltipProps} data-cy="PopoverContent">
@@ -77,7 +77,7 @@ export const Popover = ({
       </TooltipAnimationUI>
     )
 
-    return <div className={scope}>{toolTipComponent}</div>
+    return <div className="hsds-react hsds-beacon">{toolTipComponent}</div>
   }
 
   return (
