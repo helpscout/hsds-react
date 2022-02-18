@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import equal from 'fast-deep-equal'
 import classNames from 'classnames'
-import isArray from 'lodash.isarray'
 import isFunction from 'lodash.isfunction'
 import isNil from 'lodash.isnil'
 import {
@@ -72,9 +71,9 @@ export class EditableField extends React.Component {
       fieldValue: initialFieldValue,
       initialFieldValue,
       maskTabIndex: null,
-      multipleValuesEnabled: isArray(value) || multipleValues,
+      multipleValuesEnabled: Array.isArray(value) || multipleValues,
       valueOptions:
-        valueOptions && isArray(valueOptions)
+        valueOptions && Array.isArray(valueOptions)
           ? valueOptions.map(option => ({
               id: option,
               label: option,

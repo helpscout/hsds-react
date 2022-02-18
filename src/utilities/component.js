@@ -1,7 +1,6 @@
 /* istanbul ignore file */
 import React from 'react'
 import getComponentNameUtil from '@helpscout/react-utils/dist/getComponentName'
-import isArray from 'lodash.isarray'
 import isFunction from 'lodash.isfunction'
 import isNil from 'lodash.isnil'
 import isPlainObject from 'lodash.isplainobject'
@@ -142,7 +141,7 @@ export const renderChildrenSafely = (
 }
 
 export const renderAsSingleChild = (children, baseTag, props = {}) => {
-  const _isArray = isArray(children)
+  const _isArray = Array.isArray(children)
   if (!React.isValidElement(children) && !_isArray) return null
 
   const count = React.Children.count(children)

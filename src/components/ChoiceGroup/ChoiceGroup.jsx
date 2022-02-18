@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import isArray from 'lodash.isarray'
 import isNil from 'lodash.isnil'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import ChoiceGroupContext from './ChoiceGroup.Context'
@@ -194,7 +193,7 @@ class ChoiceGroup extends React.Component {
 }
 
 function hasSelectedValue(value) {
-  if (isArray(value)) {
+  if (Array.isArray(value)) {
     return value.length > 0
   }
   if (!isNil(value)) {

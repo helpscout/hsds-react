@@ -1,4 +1,3 @@
-import isArray from 'lodash.isarray'
 import isNil from 'lodash.isnil'
 /**
  * Determines if something is defined.
@@ -16,7 +15,7 @@ export const isDefined = obj => !isNil(obj)
  */
 export const anyDefined = objs => {
   if (!objs) return false
-  const props = isArray(objs) ? objs : Object.values(objs)
+  const props = Array.isArray(objs) ? objs : Object.values(objs)
   return props.filter(isDefined).length >= 1
 }
 
@@ -25,6 +24,6 @@ export const anyDefined = objs => {
  */
 export const allDefined = objs => {
   if (!objs) return false
-  const props = isArray(objs) ? objs : Object.values(objs)
+  const props = Array.isArray(objs) ? objs : Object.values(objs)
   return props.filter(isDefined).length === props.length
 }

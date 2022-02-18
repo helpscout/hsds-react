@@ -1,4 +1,3 @@
-import isArray from 'lodash.isarray'
 import { random } from './arrays'
 
 /**
@@ -9,7 +8,7 @@ import { random } from './arrays'
  */
 export const sample = collection => {
   if (!collection) return undefined
-  if (isArray(collection)) return random(collection)
+  if (Array.isArray(collection)) return random(collection)
   const key = random(Object.keys(collection))
   return collection[key]
 }

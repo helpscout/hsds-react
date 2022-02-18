@@ -110,7 +110,6 @@
     "jscodeshift": "^0.7.0",
     "lodash.debounce": "^4.0.8",
     "lodash.get": "^4.4.2",
-    "lodash.isarray": "^4.0.0",
     "lodash.isfunction": "^3.0.9",
     "lodash.isnil": "^4.0.0",
     "lodash.isnumber": "^3.0.3",

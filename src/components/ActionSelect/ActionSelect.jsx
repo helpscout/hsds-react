@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import isArray from 'lodash.isarray'
 import isNil from 'lodash.isnil'
 import DropList from '../DropList'
 import { SelectTag } from '../DropList/DropList.togglers'
@@ -187,7 +186,7 @@ function getUniqueKeyFromItem(item) {
 function getSelectTagText(selectedItem, items) {
   if (!isNil(selectedItem)) return selectedItem.label
 
-  if (isArray(items) && items[0]) {
+  if (Array.isArray(items) && items[0]) {
     if (items[0].label) return items[0].label
     if (items[0].value) return items[0].value
   }

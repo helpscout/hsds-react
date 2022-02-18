@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { createUniqueIDFactory } from '../../utilities/id'
-import isArray from 'lodash.isarray'
 import isFunction from 'lodash.isfunction'
 import isNil from 'lodash.isnil'
 import isPlainObject from 'lodash.isplainobject'
@@ -39,7 +38,7 @@ export const dataShape = {
 }
 
 export function generateCellKey(element, column) {
-  return isArray(column.columnKey)
+  return Array.isArray(column.columnKey)
     ? `${uniqueCellKeyFactory(element)}_${
         column.sortKey
       }_${column.columnKey.join('_')}`
@@ -52,7 +51,7 @@ export function generateCellClassNames(column, cellType = 'Cell') {
     `Column_${
       column.title
         ? column.title.replace(/[ .]/g, '')
-        : isArray(column.columnKey)
+        : Array.isArray(column.columnKey)
         ? column.columnKey.join('_').replace(/\./g, '_')
         : column.columnKey.replace(/\./g, '_')
     }`,
@@ -115,7 +114,9 @@ export function createColumnChooserListItems(columns, columnChooserResetLabel) {
 }
 
 export function isTableSortable(columns) {
-  return isArray(columns) && columns.find(column => Boolean(column.sorter))
+  return (
+    Array.isArray(columns) && columns.find(column => Boolean(column.sorter))
+  )
 }
 
 export function generateCustomHeaderCell(column, sortedInfo) {

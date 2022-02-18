@@ -1,10 +1,9 @@
-import isArray from 'lodash.isarray'
 import isString from 'lodash.isstring'
 
 export const getSequenceNames = sequence => {
   let names = []
 
-  if (isArray(sequence)) {
+  if (Array.isArray(sequence)) {
     names = sequence
   }
 

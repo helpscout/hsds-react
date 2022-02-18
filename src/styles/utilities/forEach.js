@@ -1,4 +1,3 @@
-import isArray from 'lodash.isarray'
 import isFunction from 'lodash.isfunction'
 import isPlainObject from 'lodash.isplainobject'
 
@@ -12,7 +11,7 @@ import isPlainObject from 'lodash.isplainobject'
 const forEach = (list = [], callback) => {
   if (!isFunction(callback)) return ''
 
-  if (isArray(list)) {
+  if (Array.isArray(list)) {
     return list.map(callback).join(' ')
   }
 

@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import isArray from 'lodash.isarray'
 import isNil from 'lodash.isnil'
 import Icon from '../Icon'
 import {
@@ -17,12 +16,14 @@ import {
 } from './Table.utils'
 
 export default function HeaderCell({ column, isLoading, sortedInfo }) {
-  const sorterBtnId = isArray(column.columnKey)
+  const sorterBtnId = Array.isArray(column.columnKey)
     ? `${column.columnKey.join('_')}_${column.sortKey}_sorter`
     : `${column.columnKey}_${column.sortKey}_sorter`
 
   function getColumnSortStatus() {
-    const colKey = isArray(column.columnKey) ? column.sortKey : column.columnKey
+    const colKey = Array.isArray(column.columnKey)
+      ? column.sortKey
+      : column.columnKey
 
     const isTableSortedByThisColumn =
       !isNil(sortedInfo) && sortedInfo.order && sortedInfo.columnKey === colKey
@@ -38,7 +39,7 @@ export default function HeaderCell({ column, isLoading, sortedInfo }) {
     e.persist()
 
     if (!isLoading && !isNil(column.sorter)) {
-      const sorterFnResult = isArray(column.columnKey)
+      const sorterFnResult = Array.isArray(column.columnKey)
         ? column.sorter(column.sortKey)
         : column.sorter(column.columnKey)
 

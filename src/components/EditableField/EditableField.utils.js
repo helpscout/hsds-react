@@ -1,4 +1,3 @@
-import isArray from 'lodash.isarray'
 import isNil from 'lodash.isnil'
 import isPlainObject from 'lodash.isplainobject'
 import { find } from '../../utilities/arrays'
@@ -19,7 +18,7 @@ export function normalizeFieldValue({
   defaultOption,
   currentFieldValue,
 }) {
-  if (isArray(value)) {
+  if (Array.isArray(value)) {
     if (value.length === 0) {
       return [createNewValueFieldObject('', name, defaultOption)]
     }
@@ -82,7 +81,7 @@ export function generateFieldActions(actions) {
   }
 
   // User is also able to override the action
-  let actionsArray = isArray(actions) ? actions : [actions]
+  let actionsArray = Array.isArray(actions) ? actions : [actions]
   let isDeleteActionPresent = find(
     actionsArray,
     action => action.name === 'delete'

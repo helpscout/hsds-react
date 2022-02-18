@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import get from 'lodash.get'
-import isArray from 'lodash.isarray'
 import isPlainObject from 'lodash.isplainobject'
 import Truncate from '../Truncate'
 import { CellUI } from './Table.css'
@@ -59,7 +58,7 @@ export function TableCell({ column, row }) {
     )
   }
 
-  return isArray(column.columnKey)
+  return Array.isArray(column.columnKey)
     ? renderCompoundColumnsCell()
     : renderSingleColumnCell()
 }

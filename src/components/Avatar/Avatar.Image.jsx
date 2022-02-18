@@ -7,7 +7,6 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 import classNames from 'classnames'
-import isArray from 'lodash.isarray'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import VisuallyHidden from '../VisuallyHidden'
 import { ImageWrapperUI, ImageUI, InitialsUI } from './Avatar.css'
@@ -59,7 +58,7 @@ export class AvatarImage extends React.PureComponent {
         { currentIndex: 0, isLoading: false, isLoaded: false }
   }
 
-  srcToArray = src => (isArray(src) ? src : [src]).filter(x => x)
+  srcToArray = src => (Array.isArray(src) ? src : [src]).filter(x => x)
 
   onLoad = () => {
     cache[this.sourceList[this.state.currentIndex]] = true

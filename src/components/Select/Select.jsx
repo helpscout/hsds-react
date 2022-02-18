@@ -6,7 +6,6 @@
  */
 import React from 'react'
 import PropTypes from 'prop-types'
-import isArray from 'lodash.isarray'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FormLabelContext from '../FormLabel/Context'
 import InputBackdropV2 from '../Input/Input.BackdropV2'
@@ -221,7 +220,8 @@ export class Select extends React.PureComponent {
 
   renderOptions = option => {
     // HTML <optgroup> only allows for single level nesting
-    const hasOptions = option.hasOwnProperty('value') && isArray(option.value)
+    const hasOptions =
+      option.hasOwnProperty('value') && Array.isArray(option.value)
 
     // Group
     if (!isString(option) && hasOptions) {
@@ -306,7 +306,7 @@ export class Select extends React.PureComponent {
 
     const optionsMarkup =
       children ||
-      (isArray(options)
+      (Array.isArray(options)
         ? options.map(this.renderOptions)
         : this.renderOptions(options))
 

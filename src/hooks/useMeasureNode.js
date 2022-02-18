@@ -1,7 +1,6 @@
 // very difficult to test with JSDom
 /* istanbul ignore file */
 import { useState, useCallback, useRef } from 'react'
-import isArray from 'lodash.isarray'
 import isNil from 'lodash.isnil'
 import { ResizeObserver as PolyfilledResizeObserver } from '@juggle/resize-observer'
 import { isSafari } from '../utilities/browser'
@@ -45,7 +44,7 @@ export function setupObserver({
   return new RO(entries => {
     for (let entry of entries) {
       if (entry[observerEntryType]) {
-        const size = isArray(entry[observerEntryType])
+        const size = Array.isArray(entry[observerEntryType])
           ? entry[observerEntryType][0]
           : entry[observerEntryType]
         const { blockSize: height, inlineSize: width } = size
