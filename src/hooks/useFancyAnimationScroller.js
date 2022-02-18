@@ -1,54 +1,106 @@
 // very difficult to test with JSDom, some basic interaction is tested in ScrollableContainer
 /* istanbul ignore file */
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { setupObserver } from './useMeasureNode'
 
 export default function useFancyAnimationScroller({
   container,
-  targets,
+  nodeToAnimateFinalHeight,
   selectors,
-  classNames = {},
+  topReachedClassNames = 'at-the-top',
 }) {
   const lastScrollPosition = useRef(0)
+  const initialHeight = useRef(0)
+  const containerNode = getElement(container)
 
-  function handleScroll(e) {
-    const containerNode = getElement(container)
-
-    if (containerNode) {
-      const { from, to } = targets
-      const scrollableNode = containerNode.querySelector(selectors.scrollable)
-      const targetNode = containerNode.querySelector(selectors.target)
-      const targetNodeHeight = targetNode.getBoundingClientRect().height
-      const scrollableFullHeight = scrollableNode.scrollHeight
-      const scrollTop = scrollableNode.scrollTop
-      const direction = lastScrollPosition.current < scrollTop ? 'down' : 'up'
-
-      lastScrollPosition.current = scrollTop
-
-      if (direction === 'down') {
-        if (targetNodeHeight > to) {
-          const rate = exponentialDecay(0.05, scrollableFullHeight)(scrollTop)
-          const percentage = (rate * 100) / scrollableFullHeight
-          const progress = (percentage * (from - to)) / 100
-          const newHeight = from - progress
-
-          targetNode.style.height = `${newHeight}px`
-
-          if (classNames.scrollTopReached && newHeight >= to * 0.75) {
-            targetNode.classList.add(classNames.scrollTopReached)
-          }
+  if (containerNode) {
+    const nodeToAnimate = containerNode.querySelector(selectors.nodeToAnimate)
+    const resizeObserver = setupObserver({
+      cb: ({ height }) => {
+        if (lastScrollPosition.current === 0) {
+          initialHeight.current = height
+          nodeToAnimate.classList.add(...[].concat(topReachedClassNames))
+        } else if (initialHeight.current === 0) {
+          initialHeight.current = height
         }
-      } else {
-        if (targetNodeHeight < from) {
-          const rate = exponentialDecay(0.01, scrollableFullHeight)(scrollTop)
-          const percentage = 100 - (rate * 100) / scrollableFullHeight
-          const progress = from * (percentage / 100)
-          const newHeight = progress < to ? to : progress
+      },
+      dimensions: { height: true },
+    })
 
-          targetNode.style.height = `${newHeight}px`
+    resizeObserver.observe(nodeToAnimate)
+  }
 
-          if (classNames.scrollTopReached && newHeight === from) {
-            targetNode.classList.remove(classNames.scrollTopReached)
-          }
+  useEffect(() => {
+    /**
+     * Browsers behave differently when "remembering" the scroll position
+     * of elements, for example for some reason Chrome doesn't remember
+     * on this component while firefox does.
+     * Here we make it consistent by just making them all "forget".
+     */
+    window.addEventListener('unload', restoreScroll)
+
+    return () => {
+      window.removeEventListener('unload', restoreScroll)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [containerNode])
+
+  function restoreScroll() {
+    const scrollableNode = containerNode.querySelector(
+      selectors.nodeThatScrolls
+    )
+    scrollableNode.scrollTop = 0
+  }
+
+  function handleScroll() {
+    const scrollableNode = containerNode.querySelector(
+      selectors.nodeThatScrolls
+    )
+    const scrollableFullHeight = scrollableNode.scrollHeight
+    const scrollTop = scrollableNode.scrollTop
+    const direction = lastScrollPosition.current < scrollTop ? 'down' : 'up'
+
+    lastScrollPosition.current = scrollTop
+
+    const nodeToAnimateInitialHeight = initialHeight.current
+    const nodeToAnimate = containerNode.querySelector(selectors.nodeToAnimate)
+    const nodeToAnimateCurrentHeight = nodeToAnimate.getBoundingClientRect()
+      .height
+
+    if (direction === 'down') {
+      if (nodeToAnimateCurrentHeight > nodeToAnimateFinalHeight) {
+        const rate = exponentialDecay(0.05, scrollableFullHeight)(scrollTop)
+        const percentage = (rate * 100) / scrollableFullHeight
+        const progress =
+          (percentage *
+            (nodeToAnimateInitialHeight - nodeToAnimateFinalHeight)) /
+          100
+        const newHeight = nodeToAnimateInitialHeight - progress
+
+        nodeToAnimate.style.height = `${newHeight}px`
+
+        if (newHeight >= nodeToAnimateFinalHeight * 0.75) {
+          nodeToAnimate.classList.remove(...[].concat(topReachedClassNames))
+        }
+      }
+    } else {
+      if (nodeToAnimateCurrentHeight <= nodeToAnimateInitialHeight) {
+        const rate = exponentialDecay(0.01, scrollableFullHeight)(scrollTop)
+        const percentage = 100 - (rate * 100) / scrollableFullHeight
+        const progress = nodeToAnimateInitialHeight * (percentage / 100)
+        const newHeight =
+          progress < nodeToAnimateFinalHeight
+            ? nodeToAnimateFinalHeight
+            : progress
+
+        if (scrollTop !== 0) {
+          nodeToAnimate.style.height = `${newHeight}px`
+        } else {
+          nodeToAnimate.style.height = null
+        }
+
+        if (newHeight === nodeToAnimateInitialHeight) {
+          nodeToAnimate.classList.add(...[].concat(topReachedClassNames))
         }
       }
     }
