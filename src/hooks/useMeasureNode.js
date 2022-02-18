@@ -38,7 +38,7 @@ export function setupObserver({
   observerEntryType = 'borderBoxSize',
 }) {
   // TODO: remove when Safari fully supports ResizeObserverEntry (which should be on 15.4)
-  const RO = !isSafari ? ResizeObserver : PolyfilledResizeObserver
+  const RO = !isSafari() ? ResizeObserver : PolyfilledResizeObserver
 
   return new RO(entries => {
     for (let entry of entries) {
