@@ -6,7 +6,6 @@ import {
   repeat,
   stripUrlPrefix,
   textIncludesOnlyEmoji,
-  wordHasSpaces,
 } from '../strings'
 import * as urlUtils from '../urls'
 
@@ -24,25 +23,6 @@ describe('isWord', () => {
     expect(isWord('w o r d')).toBeTruthy()
     expect(isWord(123)).toBeTruthy()
     expect(isWord(0)).toBeTruthy()
-  })
-})
-
-describe('wordHasSpaces', () => {
-  test('Returns false for non-words', () => {
-    expect(wordHasSpaces()).toBeFalsy()
-    expect(wordHasSpaces([])).toBeFalsy()
-    expect(wordHasSpaces('')).toBeFalsy()
-    expect(wordHasSpaces({})).toBeFalsy()
-    expect(wordHasSpaces(true)).toBeFalsy()
-    expect(wordHasSpaces(123)).toBeFalsy()
-    expect(wordHasSpaces('word')).toBeFalsy()
-    expect(wordHasSpaces('super-long-word_with_hyphen(underscore)')).toBeFalsy()
-    expect(wordHasSpaces(' starts-with-space')).toBeFalsy()
-  })
-
-  test('Returns true for words with spaces', () => {
-    expect(wordHasSpaces('super longworddddddddd')).toBeTruthy()
-    expect(wordHasSpaces(' super longworddddddddd')).toBeTruthy()
   })
 })
 

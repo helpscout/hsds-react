@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount, shallow } from 'enzyme'
-import Link from './Link'
 import { Router } from 'react-router'
+import Link, { wordHasSpaces } from './Link'
 
 // Since we now wrap Link in a HOC, we have to use `.first.shallow()` to test.
 // See https://github.com/airbnb/enzyme/issues/539#issuecomment-239497107
@@ -171,5 +171,24 @@ describe('voidOnClick', () => {
     )
 
     expect(wrapper.prop('href')).toBe('javascript:void(0);')
+  })
+})
+
+describe('wordHasSpaces', () => {
+  test('Returns false for non-words', () => {
+    expect(wordHasSpaces()).toBeFalsy()
+    expect(wordHasSpaces([])).toBeFalsy()
+    expect(wordHasSpaces('')).toBeFalsy()
+    expect(wordHasSpaces({})).toBeFalsy()
+    expect(wordHasSpaces(true)).toBeFalsy()
+    expect(wordHasSpaces(123)).toBeFalsy()
+    expect(wordHasSpaces('word')).toBeFalsy()
+    expect(wordHasSpaces('super-long-word_with_hyphen(underscore)')).toBeFalsy()
+    expect(wordHasSpaces(' starts-with-space')).toBeFalsy()
+  })
+
+  test('Returns true for words with spaces', () => {
+    expect(wordHasSpaces('super longworddddddddd')).toBeTruthy()
+    expect(wordHasSpaces(' super longworddddddddd')).toBeTruthy()
   })
 })

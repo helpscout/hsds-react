@@ -9,10 +9,6 @@ export const isWord = word => {
   return typeof word === 'number' || isWordString(word)
 }
 
-export const wordHasSpaces = word => {
-  return !!(isWordString(word) && word.trim().indexOf(' ') > 0)
-}
-
 export const textIncludesOnlyEmoji = text => {
   // Note: `\u2028`& `\uFE0F` are not emoji characters, but instead unicode line
   // separators that seem to appear when the `replace` methods are called below.
