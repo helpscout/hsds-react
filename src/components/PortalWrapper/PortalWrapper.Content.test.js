@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { setupManager } from '../../utilities/globalManager'
+import { setupManager } from './PortalWrapper.utils'
 import Content from './PortalWrapper.Content'
 
 afterEach(() => {

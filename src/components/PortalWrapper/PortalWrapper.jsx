@@ -15,8 +15,7 @@ import {
   createUniqueIDFactory,
   createUniqueIndexFactory,
 } from '../../utilities/id'
-import { setupManager } from '../../utilities/globalManager'
-import matchPath from './PortalWrapper.utils'
+import { matchPath, setupManager } from './PortalWrapper.utils'
 import Content from './PortalWrapper.Content'
 import WithRouterCheck from '../WithRouterCheck'
 

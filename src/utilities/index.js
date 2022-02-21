@@ -4,7 +4,6 @@ import * as collectionUtils from './collection'
 import * as colorUtils from './color'
 import * as easingUtils from './easing'
 import * as focusUtils from './focus'
-import * as globalManagerUtils from './globalManager'
 import * as idUtils from './id'
 import * as nodeUtils from './node'
 import * as otherUtils from './other'
@@ -19,7 +18,6 @@ export const color = colorUtils
 export const collection = collectionUtils
 export const easing = easingUtils
 export const focus = focusUtils
-export const globalManager = globalManagerUtils
 export const id = idUtils
 export const node = nodeUtils
 export const other = otherUtils
@@ -35,7 +33,6 @@ export default {
   color,
   easing,
   focus,
-  globalManager,
   id,
   node,
   other,
