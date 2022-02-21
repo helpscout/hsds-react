@@ -3,7 +3,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import PropTypes from 'prop-types'
 import EventListener from '../EventListener'
 import classNames from 'classnames'
-import { repeat } from '../../utilities/strings'
+import { repeat } from './Input.utils'
 import { ResizerUI, GhostUI } from './Input.Resizer.css'
 
 // Thanks Stephen <3

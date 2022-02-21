@@ -3,6 +3,7 @@ import {
   getTextAreaLineTotal,
   isTextArea,
   moveCursorToEnd,
+  repeat,
 } from '../Input.utils'
 
 describe('moveCursorToEnd', () => {
@@ -81,5 +82,19 @@ describe('isTextArea', () => {
 
     expect(isTextArea()).toBe(false)
     expect(isTextArea(node)).toBe(false)
+  })
+})
+
+describe('repeat', () => {
+  test('Repeats characters to specified amount', () => {
+    expect(repeat('a', 5)).toBe('aaaaa')
+  })
+
+  test('Repeats characters to 1', () => {
+    expect(repeat('a', 1)).toBe('a')
+  })
+
+  test('Repeats characters to 0', () => {
+    expect(repeat('a', 0)).toBe('')
   })
 })
