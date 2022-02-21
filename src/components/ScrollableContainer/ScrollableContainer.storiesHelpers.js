@@ -2,7 +2,6 @@ import React, { useLayoutEffect, useState, useRef } from 'react'
 import styled from 'styled-components'
 import debounce from 'lodash.debounce'
 import classNames from 'classnames'
-import { getColor } from '../../styles/utilities/color'
 import ScrollableContainer from './ScrollableContainer'
 import Button from '../Button'
 import EditableTextarea from '../EditableTextarea'
@@ -15,46 +14,29 @@ export const ScrollableContainerUI = styled(ScrollableContainer)`
 `
 
 export const HeaderUI = styled('header')`
-  /* display: flex;
-  align-items: center;
-  justify-content: space-between; */
-  /* min-height: 75px; */
   padding: 0 30px;
   background-color: #fff;
   transition: all 0.5s cubic-bezier(0.5, 1, 0.89, 1);
 
-  /* h1 {
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 22px;
-    color: ${getColor('charcoal.700')};
-    margin: 0;
+  span {
+    display: inline-block;
+    height: 20px;
+    padding: 10px 0;
   }
 
-  &.small {
-    h1 {
-      font-size: 16px;
-    }
-  } */
-  span {
-   display: inline-block;
-   height: 20px;
-   padding: 10px 0;
-  }
   .c-EditableTextarea {
     display: none;
   }
-  
+
   &.at-the-top {
-    background-color: lightgreen;
-    
     span {
       display: none;
     }
+
     .c-EditableTextarea {
       display: block;
       margin-bottom: 0;
-      padding: 20px 0 40px;
+      padding: 20px 0;
     }
   }
 `
@@ -172,16 +154,14 @@ export const SimpleBarExample = function () {
   const [footerHeight] = useConvoLayoutEffect(containerRef)
   const [handleScroll] = useFancyAnimationScroller({
     container: containerRef,
-    selectors: {
-      nodeThatScrolls: '.simplebar-content-wrapper',
-      nodeToAnimate: '.top-header',
-    },
-    // topReachedClassNames: 'at-the-top',
-    // bottomReachedClassNames: 'at-the-bottom',
+    nodeThatScrollsSelector: '.simplebar-content-wrapper',
+    nodeToAnimateSelector: '.top-header',
     nodeToAnimateFinalHeight: 40,
   })
 
-  const [value, setValue] = useState('hello')
+  const [value, setValue] = useState(`Multiple lines:
+  1. Test
+  2. More testing`)
 
   return (
     <BGUI>

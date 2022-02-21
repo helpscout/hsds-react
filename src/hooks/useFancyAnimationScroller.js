@@ -5,16 +5,19 @@ import { setupObserver } from './useMeasureNode'
 
 export default function useFancyAnimationScroller({
   container,
+  decayRates = [0.01, 0.015],
   nodeToAnimateFinalHeight,
-  selectors,
+  nodeToAnimateSelector,
+  nodeThatScrollsSelector,
   topReachedClassNames = 'at-the-top',
 }) {
-  const lastScrollPosition = useRef(0)
   const initialHeight = useRef(0)
+  const lastScrollPosition = useRef(0)
+  const [decayUp, decayDown] = decayRates
   const containerNode = getElement(container)
 
   if (containerNode) {
-    const nodeToAnimate = containerNode.querySelector(selectors.nodeToAnimate)
+    const nodeToAnimate = containerNode.querySelector(nodeToAnimateSelector)
     const resizeObserver = setupObserver({
       cb: ({ height }) => {
         if (lastScrollPosition.current === 0) {
@@ -46,16 +49,12 @@ export default function useFancyAnimationScroller({
   }, [containerNode])
 
   function restoreScroll() {
-    const scrollableNode = containerNode.querySelector(
-      selectors.nodeThatScrolls
-    )
+    const scrollableNode = containerNode.querySelector(nodeThatScrollsSelector)
     scrollableNode.scrollTop = 0
   }
 
   function handleScroll() {
-    const scrollableNode = containerNode.querySelector(
-      selectors.nodeThatScrolls
-    )
+    const scrollableNode = containerNode.querySelector(nodeThatScrollsSelector)
     const scrollableFullHeight = scrollableNode.scrollHeight
     const scrollTop = scrollableNode.scrollTop
     const direction = lastScrollPosition.current < scrollTop ? 'down' : 'up'
@@ -63,13 +62,16 @@ export default function useFancyAnimationScroller({
     lastScrollPosition.current = scrollTop
 
     const nodeToAnimateInitialHeight = initialHeight.current
-    const nodeToAnimate = containerNode.querySelector(selectors.nodeToAnimate)
+    const nodeToAnimate = containerNode.querySelector(nodeToAnimateSelector)
     const nodeToAnimateCurrentHeight = nodeToAnimate.getBoundingClientRect()
       .height
 
     if (direction === 'down') {
       if (nodeToAnimateCurrentHeight > nodeToAnimateFinalHeight) {
-        const rate = exponentialDecay(0.05, scrollableFullHeight)(scrollTop)
+        const rate = exponentialDecay(
+          decayDown,
+          scrollableFullHeight
+        )(scrollTop)
         const percentage = (rate * 100) / scrollableFullHeight
         const progress =
           (percentage *
@@ -83,9 +85,9 @@ export default function useFancyAnimationScroller({
           nodeToAnimate.classList.remove(...[].concat(topReachedClassNames))
         }
       }
-    } else {
+    } else if (direction === 'up') {
       if (nodeToAnimateCurrentHeight <= nodeToAnimateInitialHeight) {
-        const rate = exponentialDecay(0.01, scrollableFullHeight)(scrollTop)
+        const rate = exponentialDecay(decayUp, scrollableFullHeight)(scrollTop)
         const percentage = 100 - (rate * 100) / scrollableFullHeight
         const progress = nodeToAnimateInitialHeight * (percentage / 100)
         const newHeight =
@@ -116,7 +118,7 @@ function getElement(someRef) {
 
 /**
  * Calculates a number from a scale of exponential decay at a given rate.
- * @param {Number} rate The rate of decay, the larger the n umber the quickest the decay
+ * @param {Number} rate The rate of decay, the larger the number the quickest the decay
  * @param {Number} upper The limit value
  * @returns Number
  */
