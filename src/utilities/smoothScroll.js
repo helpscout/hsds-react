@@ -1,6 +1,5 @@
 /* istanbul ignore file */
 import { isNodeElement } from './node'
-import { requestAnimationFrame } from './other'
 import isFunction from 'lodash.isfunction'
 
 // Source:

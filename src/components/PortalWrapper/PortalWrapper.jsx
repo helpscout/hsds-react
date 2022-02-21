@@ -16,7 +16,6 @@ import {
   createUniqueIndexFactory,
 } from '../../utilities/id'
 import { setupManager } from '../../utilities/globalManager'
-import { requestAnimationFrame } from '../../utilities/other'
 import matchPath from './PortalWrapper.utils'
 import Content from './PortalWrapper.Content'
 import WithRouterCheck from '../WithRouterCheck'
@@ -194,7 +193,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     }
 
     sequenceClosePortal(onClose) {
-      requestAnimationFrame(() => onClose())
+      // requestAnimationFrame(() => onClose())
     }
 
     handleOnEsc = event => {

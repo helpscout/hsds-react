@@ -11,7 +11,6 @@ import {
   getFadeLeftStyles,
   getFadeRightStyles,
 } from '../../utilities/scrollFade'
-import { requestAnimationFrame } from '../../utilities/other'
 import { OverflowUI } from './Overflow.css'
 
 function noop() {}
