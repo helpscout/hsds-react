@@ -1,6 +1,11 @@
 // Deprecated
 /* istanbul ignore file */
-import { createActionTypes } from '../../utilities/actions'
+
+export const createActionTypes = (actionTypes = [], namespace = '@@HSDS') => {
+  return actionTypes.reduce((types, type) => {
+    return { ...types, [type]: `${namespace}/${type}` }
+  }, {})
+}
 
 const actionTypes = [
   'CHANGE_DIRECTION',

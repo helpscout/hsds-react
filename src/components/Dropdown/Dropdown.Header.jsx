@@ -6,7 +6,8 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { HeaderUI } from './Dropdown.css'
 import Heading from '../Heading'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
+
+function noop() {}
 
 export class DropdownHeader extends React.PureComponent {
   render() {

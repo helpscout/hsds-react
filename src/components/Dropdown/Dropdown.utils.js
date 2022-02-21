@@ -3,7 +3,9 @@
 import { initialState } from './Dropdown.store'
 import { getComponentKey } from '../../utilities/component'
 import classNames from 'classnames'
-import { isObject, isDefined, isArray, isString } from '../../utilities/is'
+import isNil from 'lodash.isnil'
+import isString from 'lodash.isstring'
+import isPlainObject from 'lodash.isplainobject'
 
 export const DELIMETER = '.'
 
@@ -23,9 +25,9 @@ export const SELECTORS = {
  */
 export const pathResolve = (...args) => {
   const [path, ...rest] = args
-  let nextPath = rest.filter(isDefined).join(DELIMETER)
+  let nextPath = rest.filter(p => !isNil(p)).join(DELIMETER)
 
-  if (!isDefined(path)) return `${nextPath}`
+  if (isNil(path)) return `${nextPath}`
 
   if (rest.length) {
     return [path, nextPath].join(DELIMETER)
@@ -35,8 +37,8 @@ export const pathResolve = (...args) => {
 }
 
 export const isPathActive = (path, index) => {
-  if (!isDefined(path)) return false
-  if (!isDefined(index)) return false
+  if (isNil(path)) return false
+  if (isNil(index)) return false
 
   const matchPath = path
     .split(DELIMETER)
@@ -48,7 +50,7 @@ export const isPathActive = (path, index) => {
 }
 
 export const getParentPath = path => {
-  if (!isDefined(path)) return ''
+  if (isNil(path)) return ''
 
   const paths = path.split(DELIMETER)
 
@@ -58,7 +60,7 @@ export const getParentPath = path => {
 }
 
 export const getNextChildPath = path => {
-  if (!isDefined(path)) return ''
+  if (isNil(path)) return ''
 
   return `${path}${DELIMETER}0`
 }
@@ -98,26 +100,26 @@ export const itemIsActive = (selectedItem, item) => {
     return false
   }
 
-  if (isObject(item) && isObject(selectedItem)) {
+  if (isPlainObject(item) && isPlainObject(selectedItem)) {
     const { id, value } = selectedItem
 
-    if (isDefined(value) && isDefined(item.value)) {
+    if (!isNil(value) && !isNil(item.value)) {
       // Loose comparison, as number/string values may match
       return value == item.value
     }
 
-    if (isDefined(id) && isDefined(item.id)) {
+    if (!isNil(id) && !isNil(item.id)) {
       return id === item.id
     }
   }
 
-  if (isString(selectedItem) && isObject(item)) {
-    if (isDefined(item.value)) {
+  if (isString(selectedItem) && isPlainObject(item)) {
+    if (!isNil(item.value)) {
       // Loose comparison, as number/string values may match
       return selectedItem == item.value
     }
 
-    if (isDefined(item.id)) {
+    if (!isNil(item.id)) {
       return selectedItem === item.id
     }
   }
@@ -270,7 +272,7 @@ export const getItemProps = (state, item, index) => {
     itemIndex = Object.keys(indexMap).find(key => indexMap[key] === indexKey)
   }
 
-  if (isDefined(index)) {
+  if (!isNil(index)) {
     itemIndex = !isString(index) ? index.toString() : index
   }
 
@@ -328,7 +330,7 @@ export const filterNonStoreProps = props => {
 export const isSelectedItemEmpty = selectedItem => {
   if (selectedItem == null) return true
   if (selectedItem === '') return true
-  if (isArray(selectedItem) && selectedItem.length === 0) return true
+  if (Array.isArray(selectedItem) && selectedItem.length === 0) return true
   return false
 }
 

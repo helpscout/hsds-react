@@ -5,7 +5,8 @@ import { PropTypes } from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
 import { DividerUI } from './Dropdown.css'
-import { noop } from '../../utilities/other'
+
+function noop() {}
 
 export class DropdownDivider extends React.PureComponent {
   render() {

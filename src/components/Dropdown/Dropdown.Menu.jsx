@@ -7,7 +7,8 @@ import { connect } from '@helpscout/wedux'
 import { MenuWrapperUI, MenuUI } from './Dropdown.css.js'
 import ScrollLock from '../ScrollLock'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
+
+function noop() {}
 
 export class DropdownMenu extends React.PureComponent {
   getStyles() {
