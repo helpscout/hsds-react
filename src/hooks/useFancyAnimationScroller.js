@@ -5,7 +5,7 @@ import { setupObserver } from './useMeasureNode'
 
 export default function useFancyAnimationScroller({
   container,
-  decayRates = [0.01, 0.015],
+  decayRates = [0.01, 0.05],
   nodeToAnimateFinalHeight,
   nodeToAnimateSelector,
   nodeThatScrollsSelector,
