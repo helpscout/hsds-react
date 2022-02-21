@@ -2,49 +2,13 @@ import {
   convertLinksToHTML,
   escapeHTML,
   isWord,
-  nameToInitials,
   newlineToHTML,
   repeat,
   stripUrlPrefix,
   textIncludesOnlyEmoji,
-  truncateMiddle,
   wordHasSpaces,
 } from '../strings'
 import * as urlUtils from '../urls'
-
-describe('nameToInitials', () => {
-  test('Returns empty string if no args are passed', () => {
-    expect(nameToInitials()).toBe('')
-  })
-
-  test('Returns empty string if undefined is passed', () => {
-    expect(nameToInitials(undefined)).toBe('')
-  })
-
-  test('Returns empty string if an empty string is passed', () => {
-    expect(nameToInitials('')).toBe('')
-  })
-
-  test('Returns empty string if just whitespace is passed', () => {
-    expect(nameToInitials(' ')).toBe('')
-  })
-
-  test('Returns initials string if name is passed', () => {
-    expect(nameToInitials('Tom Graham')).toBe('TG')
-  })
-
-  test('Returns initials string if name is passed with extra whitespace', () => {
-    expect(nameToInitials('Tom  Graham')).toBe('TG')
-  })
-
-  test('Returns initials string if name is passed with leading whitespace', () => {
-    expect(nameToInitials(' Tom Graham')).toBe('TG')
-  })
-
-  test('Returns initials string if name is passed with trailing whitespace', () => {
-    expect(nameToInitials('Tom Graham ')).toBe('TG')
-  })
-})
 
 describe('isWord', () => {
   test('Returns false for non-words', () => {
