@@ -2,7 +2,6 @@
 /* istanbul ignore file */
 import { useState, useCallback, useRef } from 'react'
 import { ResizeObserver as PolyfilledResizeObserver } from '@juggle/resize-observer'
-import { isSafari } from '../utilities/browser'
 
 export default function useMeasureNode({ observeSize = false }) {
   const [measures, setMeasures] = useState(null)
@@ -58,4 +57,12 @@ export function setupObserver({
       }
     }
   })
+}
+
+// TODO: remove when Safari fully supports ResizeObserverEntry (which should be on 15.4)
+function isSafari() {
+  if (!navigator) return false
+  const isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1
+
+  return !isChrome && navigator.userAgent.toLowerCase().indexOf('safari') > -1
 }
