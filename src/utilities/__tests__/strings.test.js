@@ -92,32 +92,6 @@ describe('textIncludesOnlyEmoji', () => {
   expect(textIncludesOnlyEmoji('🦄 🎂 🚀')).toBeTruthy()
 })
 
-describe('truncateMiddle', () => {
-  test('should perform a basic test', () => {
-    expect(truncateMiddle('the quick brown', 5, 5, '...')).toBe('the q...brown')
-  })
-
-  it('should perform auto fill in ellipses', () => {
-    expect(truncateMiddle('the quick brown', 5, 5)).toBe('the q…brown')
-  })
-
-  it('should have return empty string when null', () => {
-    expect(truncateMiddle(null)).toBe('')
-  })
-
-  it('should have return empty string when empty', () => {
-    expect(truncateMiddle('')).toBe('')
-  })
-
-  it('should have handle no backLength', () => {
-    expect(truncateMiddle('the quick brown', 5, 0)).toBe('the q…')
-  })
-
-  it('should have handle 0 backLength, 0 frontLength', () => {
-    expect(truncateMiddle('the quick brown', 0, 0)).toBe('the quick brown')
-  })
-})
-
 describe('stripUrlPrefix', () => {
   test('returns argument if not a string', () => {
     expect(stripUrlPrefix(true)).toBe(true)
