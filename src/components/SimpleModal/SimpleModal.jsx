@@ -38,8 +38,8 @@ function SimpleModal({
     focusModalOnShow && modalRef
   )
 
-  useClickOutside(getClickOutsideRef(), () => {
-    onClose()
+  useClickOutside(getClickOutsideRef(), e => {
+    onClose(e)
   })
 
   function getClickOutsideRef() {
@@ -56,7 +56,7 @@ function SimpleModal({
   function handleOverlayKeyDown(e) {
     if (shouldRender && e.key === 'Escape') {
       e.stopPropagation()
-      onClose()
+      onClose(e)
     } else if (e.key === 'Tab' && trapFocus && modalRef.current) {
       manageTrappedFocus(modalRef.current, e)
     }
