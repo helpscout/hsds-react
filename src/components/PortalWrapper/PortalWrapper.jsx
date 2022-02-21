@@ -17,7 +17,7 @@ import {
 } from '../../utilities/id'
 import { setupManager } from '../../utilities/globalManager'
 import { requestAnimationFrame } from '../../utilities/other'
-import matchPath from '../../utilities/react-router/matchPath'
+import matchPath from './PortalWrapper.utils'
 import Content from './PortalWrapper.Content'
 import WithRouterCheck from '../WithRouterCheck'
 
