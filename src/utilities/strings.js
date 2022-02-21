@@ -25,14 +25,6 @@ export const textIncludesOnlyEmoji = text => {
   return !withSpacesRemoved
 }
 
-export const stripUrlPrefix = url => {
-  if (!isString(url)) return url
-  return url.replace(
-    /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/g,
-    ''
-  )
-}
-
 export const newlineToHTML = string => {
   if (!string) {
     return ''

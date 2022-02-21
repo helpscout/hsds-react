@@ -4,7 +4,6 @@ import {
   isWord,
   newlineToHTML,
   repeat,
-  stripUrlPrefix,
   textIncludesOnlyEmoji,
 } from '../strings'
 import * as urlUtils from '../urls'
@@ -34,30 +33,6 @@ describe('textIncludesOnlyEmoji', () => {
   expect(textIncludesOnlyEmoji('ABC 😘')).toBeFalsy()
 
   expect(textIncludesOnlyEmoji('🦄 🎂 🚀')).toBeTruthy()
-})
-
-describe('stripUrlPrefix', () => {
-  test('returns argument if not a string', () => {
-    expect(stripUrlPrefix(true)).toBe(true)
-    expect(stripUrlPrefix(false)).toBe(false)
-    expect(stripUrlPrefix(123)).toBe(123)
-  })
-
-  test('removes https://', () => {
-    expect(stripUrlPrefix('https://site.com')).toBe('site.com')
-  })
-
-  test('removes http://', () => {
-    expect(stripUrlPrefix('http://site.com')).toBe('site.com')
-  })
-
-  test('removes https://www', () => {
-    expect(stripUrlPrefix('https://www.site.com')).toBe('site.com')
-  })
-
-  test('removes http://www', () => {
-    expect(stripUrlPrefix('http://www.site.com')).toBe('site.com')
-  })
 })
 
 describe('newlineToHTML', () => {
