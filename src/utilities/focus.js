@@ -1,3 +1,4 @@
+import isNil from 'lodash.isnil'
 import { getNodeScope, getWindowFromNode, isNodeElement } from './node'
 
 export const FOCUSABLE_SELECTOR =
@@ -92,7 +93,7 @@ export function manageTrappedFocus(container, e) {
 
   const focusableNodes = findFocusableNodes(container)
 
-  if (focusableNodes != null) {
+  if (!isNil(focusableNodes)) {
     const focusedNodeIndex = Array.prototype.indexOf.call(
       focusableNodes,
       focusedNode
@@ -126,7 +127,7 @@ export const incrementFocusIndex = options => {
     options
   )
 
-  if (typeof currentIndex !== 'number' && currentIndex !== null) return false
+  if (typeof currentIndex !== 'number' && !isNil(currentIndex)) return false
   if (typeof direction !== 'string') return false
   if (typeof enableCycling !== 'boolean') return false
   if (typeof itemCount !== 'number') return false
@@ -135,33 +136,33 @@ export const incrementFocusIndex = options => {
 
   if (direction === 'up') {
     if (enableCycling) {
-      newFocusIndex =
-        currentIndex === null
-          ? 0
-          : currentIndex <= 0
-          ? itemCount
-          : currentIndex - 1
+      newFocusIndex = isNil(currentIndex)
+        ? 0
+        : currentIndex <= 0
+        ? itemCount
+        : currentIndex - 1
     } else {
-      newFocusIndex =
-        currentIndex === null ? 0 : currentIndex <= 0 ? 0 : currentIndex - 1
+      newFocusIndex = isNil(currentIndex)
+        ? 0
+        : currentIndex <= 0
+        ? 0
+        : currentIndex - 1
     }
   }
 
   if (direction === 'down') {
     if (enableCycling) {
-      newFocusIndex =
-        currentIndex === null
-          ? 0
-          : itemCount <= currentIndex
-          ? 0
-          : currentIndex + 1
+      newFocusIndex = isNil(currentIndex)
+        ? 0
+        : itemCount <= currentIndex
+        ? 0
+        : currentIndex + 1
     } else {
-      newFocusIndex =
-        currentIndex === null
-          ? 0
-          : itemCount <= currentIndex
-          ? currentIndex
-          : currentIndex + 1
+      newFocusIndex = isNil(currentIndex)
+        ? 0
+        : itemCount <= currentIndex
+        ? currentIndex
+        : currentIndex + 1
     }
   }
 

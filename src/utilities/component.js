@@ -1,8 +1,11 @@
 /* istanbul ignore file */
 import React from 'react'
 import getComponentNameUtil from '@helpscout/react-utils/dist/getComponentName'
+import isFunction from 'lodash.isfunction'
+import isNil from 'lodash.isnil'
+import isPlainObject from 'lodash.isplainobject'
+import isString from 'lodash.isstring'
 import { includes } from './arrays'
-import { isArray, isFunction, isObject, isDefined, isString } from './is'
 
 export const CARD_TYPE = ['ArticleCard', 'Card']
 
@@ -32,7 +35,7 @@ export const CHAT_TYPE = [
  */
 export const isReactComponent = Component => {
   return (
-    isObject(Component) &&
+    isPlainObject(Component) &&
     Component.hasOwnProperty('$$typeof') &&
     Component.hasOwnProperty('type')
   )
@@ -89,17 +92,19 @@ export const isComponentTypeChat = Component => {
  * @returns {string} The React cnild key.
  */
 export const getComponentKey = (Component, index, fallback) => {
-  if (!isReactComponent(Component) && !isObject(Component)) return undefined
+  if (!isReactComponent(Component) && !isPlainObject(Component)) {
+    return undefined
+  }
 
   let key
 
   if (Component.props && Component.props.id) {
     key = Component.props.id
-  } else if (isDefined(Component.key)) {
+  } else if (!isNil(Component.key)) {
     key = Component.key
-  } else if (isDefined(fallback)) {
+  } else if (!isNil(fallback)) {
     key = fallback
-  } else if (isDefined(index)) {
+  } else if (!isNil(index)) {
     key = `unsafeComponentKey-${index}`
   } else {
     key = Component.key || undefined
@@ -136,7 +141,7 @@ export const renderChildrenSafely = (
 }
 
 export const renderAsSingleChild = (children, baseTag, props = {}) => {
-  const _isArray = isArray(children)
+  const _isArray = Array.isArray(children)
   if (!React.isValidElement(children) && !_isArray) return null
 
   const count = React.Children.count(children)

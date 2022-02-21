@@ -1,4 +1,5 @@
-import { isDefined, isNumber } from './is'
+import isNil from 'lodash.isnil'
+import isNumber from 'lodash.isnumber'
 
 export const isEven = number => Number(number) % 2 === 0
 
@@ -11,7 +12,7 @@ export const getMiddleIndex = number => {
 }
 
 export const formatNumber = num => {
-  if (!isDefined(num)) return num
+  if (isNil(num)) return num
   if (!isNumber(num)) return num
 
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')

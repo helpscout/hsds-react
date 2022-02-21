@@ -1,4 +1,5 @@
-import { isArray, isObject, isFunction } from '../../utilities/is'
+import isFunction from 'lodash.isfunction'
+import isPlainObject from 'lodash.isplainobject'
 
 /**
  * A helper function that works like Sass' @for.
@@ -10,11 +11,11 @@ import { isArray, isObject, isFunction } from '../../utilities/is'
 const forEach = (list = [], callback) => {
   if (!isFunction(callback)) return ''
 
-  if (isArray(list)) {
+  if (Array.isArray(list)) {
     return list.map(callback).join(' ')
   }
 
-  if (isObject(list)) {
+  if (isPlainObject(list)) {
     return Object.keys(list)
       .map((key, index) => callback(key, list[key], index))
       .join(' ')

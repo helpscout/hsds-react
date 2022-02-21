@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
-import { isDefined, isObject, isString } from '../../utilities/is'
+import isPlainObject from 'lodash.isplainobject'
+import isString from 'lodash.isstring'
+import isNil from 'lodash.isnil'
 import { ITEM_TYPES, VARIANTS } from './DropList.constants'
 import { SelectTag } from './DropList.togglers'
 import { ListItemUI, EmptyListUI } from './DropList.css'
@@ -39,7 +41,7 @@ export function displayWarnings({
         'The Select toggler option should not have withMultipleSelection enabled, it has been disabled for you'
       )
     }
-    if (menuCSS != null && tippyOptions.appendTo === undefined) {
+    if (!isNil(menuCSS) && tippyOptions.appendTo === undefined) {
       console.error(
         'menuCSS is only needed when using tippyOptions.appendTo to portal the DropList, please use regular styled components if you need custom styles'
       )
@@ -59,11 +61,11 @@ export function isTogglerOfType(toggler, type) {
 }
 
 export function itemToString(item) {
-  if (item == null || checkIfGroupOrDividerItem(item)) return ''
+  if (isNil(item) || checkIfGroupOrDividerItem(item)) return ''
   // Items can be simple strings
   if (isString(item)) return item
 
-  if (isObject(item)) {
+  if (isPlainObject(item)) {
     // Object items should have 'label' or 'value', obtain which one is used per item
     const itemContentKeyName = getItemContentKeyName(item)
 
@@ -75,21 +77,20 @@ export function itemToString(item) {
 
 export function parseSelectionFromProps({ withMultipleSelection, selection }) {
   if (withMultipleSelection) {
-    return selection != null ? [].concat(selection) : []
+    return !isNil(selection) ? [].concat(selection) : []
   }
-  if (selection != null) {
-    return selection != null ? selection : null
-  }
+
+  return !isNil(selection) ? selection : null
 }
 
 export function isItemSelected({ item, selectedItem, selectedItems }) {
-  if (selectedItem == null && selectedItems.length === 0) return false
+  if (isNil(selectedItem) && selectedItems.length === 0) return false
 
-  if (isObject(item)) {
+  if (isPlainObject(item)) {
     const itemContentKey = getItemContentKeyName(item)
     const itemContent = item[itemContentKey]
 
-    if (selectedItem != null && selectedItems.length === 0) {
+    if (!isNil(selectedItem) && selectedItems.length === 0) {
       const selectedItemContentKey = getItemContentKeyName(selectedItem)
       const selectedItemContent = selectedItem[selectedItemContentKey]
 
@@ -112,17 +113,17 @@ export function getItemContentKeyName(item) {
 }
 
 export function objectHasKey(obj, key) {
-  return isObject(obj) && isDefined(obj[key])
+  return isPlainObject(obj) && !isNil(obj[key])
 }
 
 export function findItemInArray({ item, arr, key = 'label' }) {
-  if (item == null) return undefined
+  if (isNil(item)) return undefined
 
   return arr.find(i => {
-    if (isObject(i)) {
+    if (isPlainObject(i)) {
       return i[key] === item[key]
     }
-    if (isObject(item)) {
+    if (isPlainObject(item)) {
       return i === item[key]
     }
     return i === item
@@ -131,10 +132,10 @@ export function findItemInArray({ item, arr, key = 'label' }) {
 
 export function removeItemFromArray({ item, arr, key = 'label' }) {
   return arr.filter(i => {
-    if (isObject(i)) {
+    if (isPlainObject(i)) {
       return i[key] !== item[key]
     }
-    if (isObject(item)) {
+    if (isPlainObject(item)) {
       return i !== item[key]
     }
     return i !== item
@@ -211,7 +212,7 @@ export function renderListContents({
     )
   }
 
-  if (isEmptyList && !customEmptyList && inputValue == null) {
+  if (isEmptyList && !customEmptyList && isNil(inputValue)) {
     return <EmptyListUI>No items</EmptyListUI>
   }
 
@@ -296,7 +297,7 @@ export function getEnabledItemIndex({
 }
 
 export function getMenuWidth(variant, menuWidth) {
-  if (menuWidth != null) return menuWidth
+  if (!isNil(menuWidth)) return menuWidth
 
   return variant.toLowerCase() === 'combobox' ? '220px' : '200px'
 }

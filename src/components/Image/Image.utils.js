@@ -1,5 +1,5 @@
+import isNil from 'lodash.isnil'
 import { calculateAspectRatioFit } from '../../utilities/images'
-import { allPropsDefined } from '../../utilities/is'
 
 /**
  * Enhances the inline style of the <img> component with aspect ratio
@@ -11,8 +11,11 @@ import { allPropsDefined } from '../../utilities/is'
 export function getImageSize(props) {
   const { maxWidth, maxHeight, width, height } = props
   const imageProps = { maxWidth, maxHeight, width, height }
+  const values = Object.values(imageProps)
 
-  if (!allPropsDefined(imageProps)) return {}
+  for (let index = 0; index < values.length; index++) {
+    if (isNil(values[index])) return {}
+  }
 
   const aspect = calculateAspectRatioFit(imageProps)
 

@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import isString from 'lodash.isstring'
+import { BEM } from '../../utilities/classNames'
 import Link from '../Link'
 import Spinner from '../Spinner'
 import Modal from '../Modal'
 import MessageCaption from './Message.Caption'
-import { BEM } from '../../utilities/classNames'
-import { isString } from '../../utilities/is'
 import { MediaUI, ImageUI } from './Message.Media.css'
 
 function noop() {}

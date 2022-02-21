@@ -1,5 +1,5 @@
+import isNumber from 'lodash.isnumber'
 const isHex = hex => hex && typeof hex === 'string'
-const isNumber = value => typeof value === 'number'
 
 const lightThreshold = 0.61
 const optimalTextColorValues = {

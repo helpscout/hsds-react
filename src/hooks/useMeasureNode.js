@@ -1,6 +1,7 @@
 // very difficult to test with JSDom
 /* istanbul ignore file */
 import { useState, useCallback, useRef } from 'react'
+import isNil from 'lodash.isnil'
 import { ResizeObserver as PolyfilledResizeObserver } from '@juggle/resize-observer'
 
 export default function useMeasureNode({ observeSize = false }) {
@@ -9,7 +10,7 @@ export default function useMeasureNode({ observeSize = false }) {
   const observerRef = useRef(null)
 
   const ref = useCallback(node => {
-    if (node != null) {
+    if (!isNil(node)) {
       if (observeSize) {
         const resizeObserver = setupObserver({
           cb: setMeasures,

@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import classNames from 'classnames'
+import isNil from 'lodash.isnil'
 import get from 'lodash.get'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import ChoiceGroupContext from './ChoiceGroup.Context'
 import FormGroup from '../FormGroup'
 import FormLabelContext from '../FormLabel/Context'
-import classNames from 'classnames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { ChoiceGroupUI } from './ChoiceGroup.css'
 
@@ -48,7 +49,7 @@ class ChoiceGroup extends React.Component {
      * we return a selectedValue array with no more items than said limit
      */
 
-    if (multiSelectLimit !== null && multiSelectLimit > 0) {
+    if (!isNil(multiSelectLimit) && multiSelectLimit > 0) {
       selectedValue = selectedValue.slice(0, multiSelectLimit)
     }
 
@@ -73,7 +74,7 @@ class ChoiceGroup extends React.Component {
 
     return (
       multiSelect &&
-      multiSelectLimit !== null &&
+      !isNil(multiSelectLimit) &&
       multiSelectLimit > 0 &&
       selectedValue.length === multiSelectLimit
     )
@@ -195,7 +196,7 @@ function hasSelectedValue(value) {
   if (Array.isArray(value)) {
     return value.length > 0
   }
-  if (value != null) {
+  if (!isNil(value)) {
     return true
   }
   return false

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import get from 'lodash.get'
-import { isObject } from '../../utilities/is'
+import isPlainObject from 'lodash.isplainobject'
 import Truncate from '../Truncate'
 import { CellUI } from './Table.css'
 import { columnShape, dataShape, generateCellClassNames } from './Table.utils'
@@ -35,7 +35,7 @@ export function TableCell({ column, row }) {
     const { row, ...rest } = cellData
 
     return Object.values(rest).map(d => (
-      <div key={isObject(d) ? Object.values(d)[0].slice(4) : d.slice(4)}>
+      <div key={isPlainObject(d) ? Object.values(d)[0].slice(4) : d.slice(4)}>
         {d}
       </div>
     ))

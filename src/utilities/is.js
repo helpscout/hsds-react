@@ -44,7 +44,7 @@ export function isString(value) {
 }
 
 export function isObject(value) {
-  return typeOf(value, 'object') && !isFunction(value) && !isArray(value)
+  return typeOf(value, 'object') && !isFunction(value) && !Array.isArray(value)
 }
 
 export function isPlainObject(value) {

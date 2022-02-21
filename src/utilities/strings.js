@@ -1,4 +1,4 @@
-import { isString } from './is'
+import isString from 'lodash.isstring'
 import { normalizeUrl } from './urls'
 
 export const nameToInitials = (name = '') => {

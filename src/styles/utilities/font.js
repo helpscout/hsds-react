@@ -1,6 +1,6 @@
+import isNumber from 'lodash.isnumber'
 import { GLOBAL_FONT_SIZE_NAMESPACE } from './variableFontSize'
 import { FONT_FAMILY, FONT_FAMILY_MONO } from '../configs/constants'
-import { isNumber } from '../../utilities/is'
 
 export const setFontSize = size => {
   const computedSize = isNumber(size) ? `${size}px` : size

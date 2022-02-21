@@ -1,5 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
+import equal from 'fast-deep-equal'
+import isNil from 'lodash.isnil'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import {
   EditableFieldMaskUI,
@@ -9,8 +12,6 @@ import {
 import EditableFieldTruncated from './EditableField.Truncated'
 import Truncate from '../Truncate'
 import { MASK_CLASSNAMES, STATES_CLASSNAMES } from './EditableField.utils'
-import classNames from 'classnames'
-import equal from 'fast-deep-equal'
 
 export class EditableFieldMask extends React.Component {
   valueRef
@@ -40,7 +41,7 @@ export class EditableFieldMask extends React.Component {
       valueNode.focus()
     } else if (
       prevProps.maskTabIndex === name &&
-      (maskTabIndex == null || maskTabIndex === prevProps.maskTabIndex)
+      (isNil(maskTabIndex) || maskTabIndex === prevProps.maskTabIndex)
     ) {
       valueNode && valueNode.removeAttribute('tabindex')
       valueNode.blur()

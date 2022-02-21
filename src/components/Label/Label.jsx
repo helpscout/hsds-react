@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Text from '../Text'
 import classNames from 'classnames'
-import { isString } from '../../utilities/is'
+import isString from 'lodash.isstring'
 import { LabelUI } from './Label.css'
 
 class Label extends React.PureComponent {

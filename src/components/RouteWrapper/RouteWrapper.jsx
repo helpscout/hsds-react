@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import get from 'lodash.get'
+import isString from 'lodash.isstring'
 import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStatics'
 import getComponentName from '@helpscout/react-utils/dist/getComponentName'
 import { isModifierKeyPressed } from '../../utilities/keys'
-import { isString } from '../../utilities/is'
 import WithRouterCheck from '../WithRouterCheck'
 
 function noop() {}
@@ -59,8 +59,6 @@ const RouteWrapper = WrappedComponent => {
 
     render() {
       const { fetch, replace, to, ...rest } = this.props
-      // TODO: Resolve data-bypass
-      // const dataByPassValue = isDefined(dataByPass) ? dataByPass : !!to
 
       return (
         <WrappedComponent

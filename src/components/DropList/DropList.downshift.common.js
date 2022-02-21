@@ -1,5 +1,6 @@
 import { useSelect, useCombobox } from 'downshift'
-import { isObject } from '../../utilities/is'
+import isNil from 'lodash.isnil'
+import isPlainObject from 'lodash.isplainobject'
 import {
   findItemInArray,
   getEnabledItemIndex,
@@ -57,7 +58,7 @@ export function stateReducerCommon({
             })
           )
         ) {
-          newState.selectedItem = isObject(changes.selectedItem)
+          newState.selectedItem = isPlainObject(changes.selectedItem)
             ? {
                 ...changes.selectedItem,
                 remove: true,
@@ -140,12 +141,14 @@ export function getA11ySelectionMessageCommon({
   selectedItems,
   withMultipleSelection,
 }) {
-  if (selectedItem == null && selectedItems.length === 0) {
+  if (isNil(selectedItem) && selectedItems.length === 0) {
     return 'All have been deselected'
   }
 
   const contentKey = getItemContentKeyName(selectedItem)
-  const msg = isObject(selectedItem) ? selectedItem[contentKey] : selectedItem
+  const msg = isPlainObject(selectedItem)
+    ? selectedItem[contentKey]
+    : selectedItem
 
   if (!withMultipleSelection) {
     return `${msg} was selected`

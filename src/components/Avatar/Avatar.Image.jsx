@@ -6,9 +6,9 @@
 
 import React from 'react'
 import { PropTypes } from 'prop-types'
+import classNames from 'classnames'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import VisuallyHidden from '../VisuallyHidden'
-import classNames from 'classnames'
 import { ImageWrapperUI, ImageUI, InitialsUI } from './Avatar.css'
 import { getAnimationProps } from './Avatar.utils'
 

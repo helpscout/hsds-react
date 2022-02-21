@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import equal from 'fast-deep-equal'
 import classNames from 'classnames'
+import isFunction from 'lodash.isfunction'
+import isNil from 'lodash.isnil'
 import {
   EditableFieldUI,
   FieldUI,
@@ -29,7 +31,6 @@ import {
   STATES_CLASSNAMES,
 } from './EditableField.utils'
 import { key } from '../../constants/Keys'
-import { isArray, isFunction } from '../../utilities/is'
 import { find } from '../../utilities/arrays'
 import { nodesHaveSameParent } from '../../utilities/node'
 
@@ -70,9 +71,9 @@ export class EditableField extends React.Component {
       fieldValue: initialFieldValue,
       initialFieldValue,
       maskTabIndex: null,
-      multipleValuesEnabled: isArray(value) || multipleValues,
+      multipleValuesEnabled: Array.isArray(value) || multipleValues,
       valueOptions:
-        valueOptions && isArray(valueOptions)
+        valueOptions && Array.isArray(valueOptions)
           ? valueOptions.map(option => ({
               id: option,
               label: option,
@@ -216,7 +217,7 @@ export class EditableField extends React.Component {
     const { name, event } = payload
     const { activeField, multipleValuesEnabled, valueOptions } = this.state
     const { validate, onCommit, onDiscard, onInputBlur } = this.props
-    const hasOptions = valueOptions != null
+    const hasOptions = !isNil(valueOptions)
     const changedField =
       this.state.fieldValue.length === 1
         ? this.state.fieldValue[0]
@@ -858,7 +859,7 @@ export class EditableField extends React.Component {
         validated: false,
       }
 
-      if (defaultOption != null) {
+      if (!isNil(defaultOption)) {
         emptyValue.option = defaultOption
       }
 
@@ -922,7 +923,7 @@ export class EditableField extends React.Component {
         className={classNames(EDITABLEFIELD_CLASSNAMES.addButton, className)}
         type="button"
         onClick={
-          onClick == null
+          isNil(onClick)
             ? this.handleAddValue
             : e => {
                 onClick(e)
