@@ -1,4 +1,4 @@
-import { getHeightRelativeToViewport } from '../../nodePosition'
+import { getHeightRelativeToViewport } from '../Drop.utils'
 
 test('Returns false for invalid arguments', () => {
   expect(getHeightRelativeToViewport()).toBeFalsy()

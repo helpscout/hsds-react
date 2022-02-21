@@ -1,6 +1,10 @@
 /* istanbul ignore file */
-import { isNodeEnv } from './other'
-import { isNodeElement, getViewportHeight, getViewportWidth } from './node'
+import { isNodeEnv } from '../../utilities/other'
+import {
+  isNodeElement,
+  getViewportHeight,
+  getViewportWidth,
+} from '../../utilities/node'
 
 export const getDirectionX = direction => {
   const defaultDirection = ''

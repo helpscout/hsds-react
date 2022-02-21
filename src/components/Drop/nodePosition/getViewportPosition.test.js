@@ -1,4 +1,4 @@
-import { getViewportPosition } from '../../nodePosition'
+import { getViewportPosition } from '../Drop.utils'
 
 test('Returns false for invalid arguments', () => {
   expect(getViewportPosition()).toBeFalsy()

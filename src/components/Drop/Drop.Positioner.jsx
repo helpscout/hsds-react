@@ -13,10 +13,7 @@ import ReactDOM from 'react-dom'
 import EventListener from '../EventListener'
 import classNames from 'classnames'
 import { applyStylesToNode, isNodeElement } from '../../utilities/node'
-import {
-  getViewportPosition,
-  getDirections,
-} from '../../utilities/nodePosition'
+import { getViewportPosition, getDirections } from './Drop.utils'
 
 import { DropContentUI, DropUI } from './Drop.css'
 
