@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import isNil from 'lodash.isnil'
 import computeScrollIntoView from './computeScrollIntoView.lib'
 

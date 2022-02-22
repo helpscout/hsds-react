@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 /**
  * A super tiny, but naive, way to pluralize a word based on a count value.
  * @param word {string} The word to pluralize.
