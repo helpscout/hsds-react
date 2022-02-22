@@ -1,6 +1,5 @@
 import * as arraysUtils from './arrays'
 import * as classNamesUtils from './classNames'
-import * as collectionUtils from './collection'
 import * as colorUtils from './color'
 import * as easingUtils from './easing'
 import * as focusUtils from './focus'
@@ -15,7 +14,6 @@ import * as urlUtils from './urls'
 export const arrays = arraysUtils
 export const classNames = classNamesUtils
 export const color = colorUtils
-export const collection = collectionUtils
 export const easing = easingUtils
 export const focus = focusUtils
 export const id = idUtils
@@ -29,7 +27,6 @@ export const urls = urlUtils
 export default {
   arrays,
   classNames,
-  collection,
   color,
   easing,
   focus,

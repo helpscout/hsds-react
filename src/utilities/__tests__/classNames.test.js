@@ -1,4 +1,4 @@
-import { BEM, classNames, variantClassNames } from '../classNames'
+import { BEM, classNames } from '../classNames'
 
 describe('classNames', () => {
   test('Consolidate arguments into a single string, separated by spaces', () => {
