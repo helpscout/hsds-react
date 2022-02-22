@@ -96,6 +96,7 @@ import fabQuestion from '../../icons/fab-question.svg'
 import fabSearch from '../../icons/fab-search.svg'
 import fields from '../../icons/fields.svg'
 import flags from '../../icons/flags.svg'
+import flagSmall from '../../icons/flag-small.svg'
 import folder from '../../icons/folder.svg'
 import folderCheck from '../../icons/folder-check.svg'
 import folderOpen from '../../icons/folder-open.svg'
@@ -210,6 +211,7 @@ import trophy from '../../icons/trophy.svg'
 import unassigned from '../../icons/unassigned.svg'
 import underline from '../../icons/underline.svg'
 import user from '../../icons/user.svg'
+import userSmall from '../../icons/user-small.svg'
 import userX from '../../icons/user-x.svg'
 import workflow from '../../icons/workflow.svg'
 import workflowSmall from '../../icons/workflow-small.svg'
@@ -238,6 +240,7 @@ const ICONS = {
   'arrow-two-way': arrowTwoWay,
   'arrow-up-huge': arrowUpHuge,
   assign,
+  'assign-small': userSmall,
   assigned,
   at,
   'attach-large': attachLarge,
@@ -328,6 +331,7 @@ const ICONS = {
   'fab-search': fabSearch,
   fields,
   flags,
+  'flag-small': flagSmall,
   'folder-check': folderCheck,
   'folder-open-small': folderOpenSmall,
   'folder-open': folderOpen,
@@ -382,8 +386,10 @@ const ICONS = {
   pause,
   'pencil-small': pencilSmall,
   period,
+  person: assign,
   'person-multiple': personMultiple,
   'person-plus': personPlus,
+  'person-small': userSmall,
   'person-tick': personTick,
   'person-x': personX,
   'play-video': playVideo,
@@ -450,6 +456,7 @@ const ICONS = {
   underline,
   'user-x': userX,
   user,
+  'user-small': userSmall,
   'workflow-small': workflowSmall,
   workflow,
   'x-large-single-arrow-left': xLargeSingleArrowLeft,
