@@ -31,7 +31,6 @@ import {
   STATES_CLASSNAMES,
 } from './EditableField.utils'
 import { key } from '../../constants/Keys'
-import { find } from '../../utilities/arrays'
 import { nodesHaveSameParent } from '../../utilities/node'
 
 function noop() {}
@@ -221,12 +220,11 @@ export class EditableField extends React.Component {
     const changedField =
       this.state.fieldValue.length === 1
         ? this.state.fieldValue[0]
-        : find(this.state.fieldValue, val => `${val.id}` === event.target.id)
+        : this.state.fieldValue.find(val => `${val.id}` === event.target.id)
     const initialField =
       this.state.initialFieldValue.length === 1
         ? this.state.initialFieldValue[0]
-        : find(
-            this.state.initialFieldValue,
+        : this.state.initialFieldValue.find(
             val => `${val.id}` === event.target.id
           )
 
@@ -549,7 +547,7 @@ export class EditableField extends React.Component {
     const { validate, onEnter, onCommit } = this.props
     const { initialFieldValue, fieldValue, multipleValuesEnabled } = this.state
     const inputValue = event.currentTarget.value
-    const impactedField = find(initialFieldValue, val => val.id === name)
+    const impactedField = initialFieldValue.find(val => val.id === name)
     const valueDidNotChange =
       impactedField && inputValue === impactedField.value
 
@@ -571,7 +569,7 @@ export class EditableField extends React.Component {
         })
       } else {
         // Case 3: value was changed
-        const impactedField = find(fieldValue, val => val.id === name)
+        const impactedField = fieldValue.find(val => val.id === name)
 
         // Get the next values and commit prior to validation so that
         // we can use it in validation.
@@ -791,8 +789,7 @@ export class EditableField extends React.Component {
       let isItemInvalid
 
       if (hasBeenValidated !== '') {
-        isItemInvalid = find(
-          this.state.validationInfo,
+        isItemInvalid = this.state.validationInfo.find(
           val => val.name === hasBeenValidated
         )
       }
@@ -956,8 +953,7 @@ export class EditableField extends React.Component {
           const isActive = activeField === val.id
           const isDisabled =
             disabled || val.disabled || this.state.disabledItem.includes(val.id)
-          const valInfo = find(
-            this.state.validationInfo,
+          const valInfo = this.state.validationInfo.find(
             valItem => valItem.name === val.id
           )
 
