@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import AccordionSection from './Accordion.Section'
 import AccordionTitle from './Accordion.Title'
-import { renderChildrenSafely } from '../../utilities/component'
+import { renderChildrenSafely } from './Accordion.utils'
 
 // Higher-order wrapper to render an enhanced Accordion.Section and Accordion.Title
 export const AccordionLink = props => {
