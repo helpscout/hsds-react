@@ -189,14 +189,17 @@ export class EditableField extends React.Component {
     // will be the field mask. If we have an EditableFieldComposite, the
     // secondary target will be the composed mask. Otherwise the secondary
     // target will be null or another element in the case of tab navigation.
-    const isSafari =
-      navigator.userAgent.indexOf('Safari') !== -1 &&
-      navigator.userAgent.indexOf('Chrome') === -1
+    const isSafari = () => {
+      if (!navigator) return false
+      const ua = navigator.userAgent.toLowerCase()
+      return !ua.includes('chrome') && ua.contains('safari')
+    }
+
     const maskIsSecondaryTarget =
       !!event.relatedTarget &&
       (event.relatedTarget.classList.contains('FieldMask__value') ||
         event.relatedTarget.classList.contains('ComposedMask'))
-    if (isSafari && maskIsSecondaryTarget) {
+    if (isSafari() && maskIsSecondaryTarget) {
       event.target.blur()
       return
     }

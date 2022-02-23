@@ -63,7 +63,6 @@ export function setupObserver({
 // TODO: remove when Safari fully supports ResizeObserverEntry (which should be on 15.4)
 function isSafari() {
   if (!navigator) return false
-  const isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1
-
-  return !isChrome && navigator.userAgent.toLowerCase().indexOf('safari') > -1
+  const ua = navigator.userAgent.toLowerCase()
+  return !ua.includes('chrome') && ua.contains('safari')
 }
