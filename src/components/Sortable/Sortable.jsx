@@ -34,7 +34,9 @@ class Sortable extends React.PureComponent {
     if (!children) return
 
     const items = React.Children.map(children, (child, index) => {
-      const sortableElement = child.type.displayName.includes('sortableElement')
+      const sortableElement =
+        child.type.displayName &&
+        child.type.displayName.includes('sortableElement')
       const key = child.props.id ? child.props.id : `item-${index}`
 
       if (sortableElement) {

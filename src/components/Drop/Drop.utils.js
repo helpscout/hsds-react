@@ -1,10 +1,8 @@
 /* istanbul ignore file */
 import { isNodeEnv } from '../../utilities/other'
-import {
-  isNodeElement,
-  getViewportHeight,
-  getViewportWidth,
-} from '../../utilities/node'
+import { isNodeElement, getNodeScope } from '../../utilities/node'
+
+const parseFloatValue = value => parseFloat(value || '0')
 
 export const getDirectionX = direction => {
   const defaultDirection = ''
@@ -264,4 +262,90 @@ export const getHeightRelativeToViewport = options => {
   const height = isNodeOutsideOfViewport ? newHeight : null
 
   return height
+}
+
+export const applyStylesToNode = (node, styles = {}) => {
+  if (!node) return false
+  if (!isNodeElement(node)) return node
+  if (typeof styles !== 'object') return node
+
+  Object.keys(styles).forEach(prop => {
+    const value = styles[prop]
+    node.style[prop] =
+      typeof value === 'number' && prop !== 'zIndex' ? `${value}px` : value
+  })
+
+  return node
+}
+
+export const getViewportHeight = scope => {
+  const node = getNodeScope(scope)
+  const { height, offset } = getComputedHeightProps(node)
+
+  return height > window.innerHeight ? height : window.innerHeight - offset
+}
+
+export const getViewportWidth = scope => {
+  const node = getNodeScope(scope)
+  const { width, offset } = getComputedWidthProps(node)
+
+  return width > window.innerWidth ? width : window.innerWidth - offset
+}
+
+export const getComputedHeightProps = node => {
+  if (!isNodeElement(node))
+    return {
+      height: 0,
+      offset: 0,
+    }
+
+  const el = node !== document ? node : document.body
+  const height = el.offsetHeight
+
+  const {
+    marginTop,
+    marginBottom,
+    paddingTop,
+    paddingBottom,
+  } = window.getComputedStyle(el)
+
+  let offset = parseFloatValue(marginTop) + parseFloatValue(marginBottom)
+  if (!isNodeEnv()) {
+    offset =
+      offset + parseFloatValue(paddingTop) + parseFloatValue(paddingBottom)
+  }
+
+  return {
+    height,
+    offset,
+  }
+}
+
+export const getComputedWidthProps = node => {
+  if (!isNodeElement(node))
+    return {
+      width: 0,
+      offset: 0,
+    }
+
+  const el = node !== document ? node : document.body
+  const width = el.offsetWidth
+
+  const {
+    marginLeft,
+    marginRight,
+    paddingLeft,
+    paddingRight,
+  } = window.getComputedStyle(el)
+
+  let offset = parseFloatValue(marginLeft) + parseFloatValue(marginRight)
+  if (!isNodeEnv()) {
+    offset =
+      offset + parseFloatValue(paddingLeft) + parseFloatValue(paddingRight)
+  }
+
+  return {
+    width,
+    offset,
+  }
 }

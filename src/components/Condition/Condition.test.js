@@ -2,6 +2,7 @@ import React from 'react'
 import { render, screen, waitFor } from '@testing-library/react'
 import Condition from './Condition'
 import userEvent from '@testing-library/user-event'
+import { isNodeWithinViewport } from './Condition.AddButton'
 
 describe('DropList', () => {
   test('Renders a DropList with options', async () => {
@@ -81,5 +82,42 @@ describe('DropList', () => {
     expect(
       screen.getByRole('button', { name: /conditions toggle menu/ })
     ).toHaveAttribute('aria-describedby', 'some-id')
+  })
+})
+
+describe('isNodeWithinViewport', () => {
+  test('Returns false if node is not valid', () => {
+    expect(isNodeWithinViewport({ node: false })).toBe(false)
+    expect(isNodeWithinViewport({ node: {} })).toBe(false)
+  })
+
+  test('Returns false if node is not within viewport', () => {
+    const mockNode = {
+      nodeType: 1,
+      getBoundingClientRect: () => ({
+        y: 1000,
+      }),
+    }
+
+    window.scrollY = 0
+
+    window.innerHeight = 600
+
+    expect(isNodeWithinViewport({ node: mockNode })).toBe(false)
+  })
+
+  test('Returns true if node is within viewport', () => {
+    const mockNode = {
+      nodeType: 1,
+      getBoundingClientRect: () => ({
+        y: 10,
+      }),
+    }
+
+    window.scrollY = 0
+
+    window.innerHeight = 1000
+
+    expect(isNodeWithinViewport({ node: mockNode })).toBe(true)
   })
 })

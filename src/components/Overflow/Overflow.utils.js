@@ -1,3 +1,5 @@
+import { isNodeElement } from '../../utilities/node'
+
 const isFirefox = () => {
   if (!navigator) return false
 
@@ -64,4 +66,9 @@ export const remapScrollingPlane = event => {
 
   // Scroll-locking
   event.preventDefault()
+}
+
+export const hasContentOverflowX = node => {
+  if (!isNodeElement(node)) return false
+  return node.clientWidth < node.scrollWidth
 }

@@ -8,7 +8,13 @@ import isNil from 'lodash.isnil'
 import isString from 'lodash.isstring'
 import isPlainObject from 'lodash.isplainobject'
 import isFunction from 'lodash.isfunction'
-import { getWindowFromNode } from '../../utilities/node'
+import { get } from 'lodash.get'
+import { isNodeElement } from '../../utilities/node'
+
+export const getWindowFromNode = node => {
+  if (!isNodeElement(node)) return window
+  return get(node, 'ownerDocument.defaultView', window)
+}
 
 export const DELIMETER = '.'
 

@@ -2,7 +2,11 @@ import React, { PureComponent as Component } from 'react'
 import { mount } from 'enzyme'
 import { waitFor } from '@testing-library/react'
 import { Overflow } from './Overflow'
-import { isMouseWheelYEvent, remapScrollingPlane } from './Overflow.utils'
+import {
+  isMouseWheelYEvent,
+  remapScrollingPlane,
+  hasContentOverflowX,
+} from './Overflow.utils'
 
 jest.useFakeTimers()
 
@@ -443,4 +447,12 @@ describe('remapScrollingPlane', () => {
 
     expect(spy).not.toHaveBeenCalled()
   })
+})
+
+test('Returns false for invalid elements', () => {
+  expect(hasContentOverflowX()).not.toBeTruthy()
+  expect(hasContentOverflowX(true)).not.toBeTruthy()
+  expect(hasContentOverflowX('div')).not.toBeTruthy()
+  expect(hasContentOverflowX(window)).not.toBeTruthy()
+  expect(hasContentOverflowX({})).not.toBeTruthy()
 })

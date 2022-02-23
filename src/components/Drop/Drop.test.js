@@ -2,6 +2,12 @@ import React from 'react'
 import { mount, shallow } from 'enzyme'
 import Drop from '.'
 import classNames from 'classnames'
+import {
+  getViewportWidth,
+  getComputedHeightProps,
+  getComputedWidthProps,
+  applyStylesToNode,
+} from './Drop.utils'
 
 jest.useFakeTimers()
 
@@ -226,5 +232,147 @@ describe('displayName', () => {
 
     expect(WrappedComponent.displayName).toContain('with')
     expect(WrappedComponent.displayName).toContain('Derek')
+  })
+})
+
+test('Returns width as a number', () => {
+  expect(getViewportWidth()).toBeTruthy()
+  expect(typeof getViewportWidth()).toBe('number')
+})
+
+describe('getComputedHeightProps', () => {
+  test('Returns empty if node (arg) is invalid', () => {
+    expect(getComputedHeightProps()).toEqual({
+      height: 0,
+      offset: 0,
+    })
+  })
+
+  test('Accepts document as a node prop', () => {
+    const o = getComputedHeightProps(document)
+
+    expect(o.height).not.toBe(null)
+    expect(o.offset).not.toBe(null)
+  })
+
+  test('Accepts document.body as a node prop', () => {
+    const o = getComputedHeightProps(document.body)
+    expect(o.height).not.toBe(null)
+    expect(o.offset).not.toBe(null)
+  })
+
+  test('Accepts node element as a node prop', () => {
+    const n = document.createElement('div')
+    const o = getComputedHeightProps(n)
+
+    expect(o.height).not.toBe(null)
+    expect(o.offset).not.toBe(null)
+  })
+
+  test('Returns object with height + offset values from document', () => {
+    const props = getComputedHeightProps(document)
+
+    expect(props.height).not.toBe(null)
+    expect(props.offset).toBeTruthy()
+  })
+
+  test('Returns object with height + offset values from node', () => {
+    const h = document.createElement('div')
+    h.style.margin = '50px'
+
+    const props = getComputedHeightProps(h)
+    // Cannot test height. node.offsetHeight isn't supported in JSDOM
+    expect(props.offset).toBe(100)
+  })
+})
+
+describe('applyStylesToNode', () => {
+  test('Returns false if node (arg) is invalid', () => {
+    expect(applyStylesToNode()).not.toBeTruthy()
+  })
+
+  test('Returns node (arg) for invalid elements', () => {
+    expect(applyStylesToNode(true)).toBe(true)
+    expect(applyStylesToNode(1)).toBe(1)
+    expect(applyStylesToNode('div')).toBe('div')
+  })
+
+  test('Returns node (arg) with untouched styles for invalid styles (arg)', () => {
+    const o = document.createElement('div')
+    expect(applyStylesToNode(o).style).toBe(o.style)
+    expect(applyStylesToNode(o, true).style).toBe(o.style)
+    expect(applyStylesToNode(o, 1).style).toBe(o.style)
+  })
+
+  test('Returns node with updated styles with valid styles (arg)', () => {
+    const o = document.createElement('div')
+    const styles = {
+      background: 'red',
+      padding: '10px',
+    }
+    expect(applyStylesToNode(o, styles).style.background).toBe('red')
+    expect(applyStylesToNode(o, styles).style.padding).toBe('10px')
+  })
+
+  test('Style argument can resolve numbers', () => {
+    const o = document.createElement('div')
+    const styles = {
+      padding: 10,
+    }
+    expect(applyStylesToNode(o, styles).style.padding).toBe('10px')
+  })
+
+  test('Style argument can resolve z-index numbers', () => {
+    const o = document.createElement('div')
+    const styles = {
+      zIndex: 10,
+    }
+    expect(applyStylesToNode(o, styles).style.zIndex).toBe('10')
+  })
+})
+
+describe('getComputedWidthProps', () => {
+  test('Returns empty if node (arg) is invalid', () => {
+    expect(getComputedWidthProps()).toEqual({
+      width: 0,
+      offset: 0,
+    })
+  })
+
+  test('Accepts document as a node prop', () => {
+    const o = getComputedWidthProps(document)
+
+    expect(o.width).not.toBe(null)
+    expect(o.offset).not.toBe(null)
+  })
+
+  test('Accepts document.body as a node prop', () => {
+    const o = getComputedWidthProps(document.body)
+    expect(o.width).not.toBe(null)
+    expect(o.offset).not.toBe(null)
+  })
+
+  test('Accepts node element as a node prop', () => {
+    const n = document.createElement('div')
+    const o = getComputedWidthProps(n)
+
+    expect(o.width).not.toBe(null)
+    expect(o.offset).not.toBe(null)
+  })
+
+  test('Returns object with height + offset values from document', () => {
+    const props = getComputedWidthProps(document)
+
+    expect(props.width).not.toBe(null)
+    expect(props.offset).toBeTruthy()
+  })
+
+  test('Returns object with height + offset values from node', () => {
+    const h = document.createElement('div')
+    h.style.margin = '50px'
+
+    const props = getComputedWidthProps(h)
+    // Cannot test width. node.offsetWidth isn't supported in JSDOM
+    expect(props.offset).toBe(100)
   })
 })

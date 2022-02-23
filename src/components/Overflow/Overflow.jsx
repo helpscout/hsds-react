@@ -4,9 +4,8 @@ import ReactDOM from 'react-dom'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import EventListener from '../EventListener'
 import classNames from 'classnames'
-import { remapScrollingPlane } from './Overflow.utils'
+import { hasContentOverflowX, remapScrollingPlane } from './Overflow.utils'
 import { smoothScrollTo } from '../../utilities/smoothScroll'
-import { hasContentOverflowX } from '../../utilities/node'
 import {
   getFadeLeftStyles,
   getFadeRightStyles,

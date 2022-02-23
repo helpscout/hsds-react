@@ -58,10 +58,7 @@ export class ChatScroller extends React.PureComponent {
     const messageChatNodes = this.scrollableNode.querySelectorAll(
       this.props.messageSelectors
     )
-
-    return Array.isArray(messageChatNodes)
-      ? messageChatNodes[messageChatNodes.length - 1]
-      : undefined
+    return messageChatNodes[messageChatNodes.length - 1]
   }
 
   autoScrollToLatestMessage() {
