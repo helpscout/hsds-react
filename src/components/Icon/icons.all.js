@@ -116,6 +116,7 @@ import imageLarge from '../../icons/image-large.svg'
 import imagePlus from '../../icons/image-plus.svg'
 import inbox from '../../icons/inbox.svg'
 import info from '../../icons/info.svg'
+import infoTiny from '../../icons/info-tiny.svg'
 import information from '../../icons/information.svg'
 import italic from '../../icons/italic.svg'
 import kebab from '../../icons/kebab.svg'
@@ -354,6 +355,7 @@ const ICONS = {
   image,
   inbox,
   info,
+  'info-tiny': infoTiny,
   information,
   italic,
   kebab,
