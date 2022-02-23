@@ -64,5 +64,5 @@ export function setupObserver({
 function isSafari() {
   if (!navigator) return false
   const ua = navigator.userAgent.toLowerCase()
-  return !ua.includes('chrome') && ua.contains('safari')
+  return !ua.includes('chrome') && ua.includes('safari')
 }
