@@ -96,7 +96,7 @@ import fabQuestion from '../../icons/fab-question.svg'
 import fabSearch from '../../icons/fab-search.svg'
 import fields from '../../icons/fields.svg'
 import flags from '../../icons/flags.svg'
-import flagSmall from '../../icons/flag-small.svg'
+import flagTiny from '../../icons/flag-tiny.svg'
 import folder from '../../icons/folder.svg'
 import folderCheck from '../../icons/folder-check.svg'
 import folderOpen from '../../icons/folder-open.svg'
@@ -211,10 +211,11 @@ import trophy from '../../icons/trophy.svg'
 import unassigned from '../../icons/unassigned.svg'
 import underline from '../../icons/underline.svg'
 import user from '../../icons/user.svg'
-import userSmall from '../../icons/user-small.svg'
+import userTiny from '../../icons/user-tiny.svg'
 import userX from '../../icons/user-x.svg'
 import workflow from '../../icons/workflow.svg'
 import workflowSmall from '../../icons/workflow-small.svg'
+import workflowTiny from '../../icons/workflow-tiny.svg'
 import xLargeSingleArrowLeft from '../../icons/x-large-single-arrow-left.svg'
 import xLargeSingleArrowRight from '../../icons/x-large-single-arrow-right.svg'
 
@@ -240,7 +241,7 @@ const ICONS = {
   'arrow-two-way': arrowTwoWay,
   'arrow-up-huge': arrowUpHuge,
   assign,
-  'assign-small': userSmall,
+  'assign-tiny': userTiny,
   assigned,
   at,
   'attach-large': attachLarge,
@@ -331,7 +332,7 @@ const ICONS = {
   'fab-search': fabSearch,
   fields,
   flags,
-  'flag-small': flagSmall,
+  'flag-tiny': flagTiny,
   'folder-check': folderCheck,
   'folder-open-small': folderOpenSmall,
   'folder-open': folderOpen,
@@ -389,7 +390,7 @@ const ICONS = {
   person: assign,
   'person-multiple': personMultiple,
   'person-plus': personPlus,
-  'person-small': userSmall,
+  'person-tiny': userTiny,
   'person-tick': personTick,
   'person-x': personX,
   'play-video': playVideo,
@@ -456,8 +457,9 @@ const ICONS = {
   underline,
   'user-x': userX,
   user,
-  'user-small': userSmall,
+  'user-tiny': userTiny,
   'workflow-small': workflowSmall,
+  'workflow-tiny': workflowTiny,
   workflow,
   'x-large-single-arrow-left': xLargeSingleArrowLeft,
   'x-large-single-arrow-right': xLargeSingleArrowRight,
