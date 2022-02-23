@@ -1,39 +1,10 @@
 import {
   convertLinksToHTML,
   escapeHTML,
-  isWord,
   newlineToHTML,
   repeat,
-  textIncludesOnlyEmoji,
 } from '../strings'
 import * as urlUtils from '../urls'
-
-describe('isWord', () => {
-  test('Returns false for non-words', () => {
-    expect(isWord()).toBeFalsy()
-    expect(isWord([])).toBeFalsy()
-    expect(isWord('')).toBeFalsy()
-    expect(isWord({})).toBeFalsy()
-    expect(isWord(true)).toBeFalsy()
-  })
-
-  test('Returns true for words', () => {
-    expect(isWord('w')).toBeTruthy()
-    expect(isWord('w o r d')).toBeTruthy()
-    expect(isWord(123)).toBeTruthy()
-    expect(isWord(0)).toBeTruthy()
-  })
-})
-
-describe('textIncludesOnlyEmoji', () => {
-  expect(textIncludesOnlyEmoji()).toBeFalsy()
-  expect(textIncludesOnlyEmoji([])).toBeFalsy()
-  expect(textIncludesOnlyEmoji('')).toBeFalsy()
-  expect(textIncludesOnlyEmoji({})).toBeFalsy()
-  expect(textIncludesOnlyEmoji('ABC 😘')).toBeFalsy()
-
-  expect(textIncludesOnlyEmoji('🦄 🎂 🚀')).toBeTruthy()
-})
 
 describe('newlineToHTML', () => {
   test('Returns string, untouched, if there are no newlines', () => {

@@ -1,5 +1,3 @@
-import { camelCase } from './strings'
-
 export const defaultEasingTiming = 'ease-in-out'
 export const bounceCubicBezier = '0.680, -0.650, 0.265, 1.650'
 export const boopCubicBezier = '0.175, 0.885, 0.325, 1.2'
@@ -48,4 +46,19 @@ export const getEasingTiming = (easing = defaultEasingTiming) => {
   const customEasing = customCubicBezier[camelCase(easing)]
 
   return customEasing ? cubicBezierCSSProp(customEasing) : easing
+}
+
+/**
+ * Camelcases a specified string.
+ *
+ * @param   {string} string The string.
+ * @returns {string} The camelCased string.
+ */
+function camelCase(string) {
+  return string
+    .replace(/-/g, ' ')
+    .replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, (match, index) => {
+      if (+match === 0) return '' // or if (/\s+/.test(match)) for white spaces
+      return index === 0 ? match.toLowerCase() : match.toUpperCase()
+    })
 }
