@@ -8,6 +8,7 @@ export const newlineToHTML = string => {
   return string.trim().replace(/\r?\n/g, '<br>')
 }
 
+// TODO: Remove, used in Beacon (src/constants/UI.Layers.js)
 /**
  * Fast way to repeat a string character.
  * @param   {string} pattern

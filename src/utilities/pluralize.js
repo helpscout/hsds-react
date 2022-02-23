@@ -1,4 +1,6 @@
 /* istanbul ignore file */
+
+// TODO: remove. Move to HSApp (site/js/apps/mailbox/chat/ChatApp/src/components/ChatSidebar/ChatSidebar.js)
 /**
  * A super tiny, but naive, way to pluralize a word based on a count value.
  * @param word {string} The word to pluralize.

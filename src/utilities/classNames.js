@@ -1,6 +1,7 @@
 import classNamesUtil from '@helpscout/react-utils/dist/classNames'
 import { last } from './arrays'
 
+// TODO: remove, use classNames lib in all apps
 /**
  * Tiny implementation of the classnames library.
  *
