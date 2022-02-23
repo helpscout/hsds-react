@@ -1,11 +1,13 @@
 // Deprecated
 /* istanbul ignore file */
+import React from 'react'
 import { initialState } from './Dropdown.store'
 import { getComponentKey } from '../../utilities/component'
 import classNames from 'classnames'
 import isNil from 'lodash.isnil'
 import isString from 'lodash.isstring'
 import isPlainObject from 'lodash.isplainobject'
+import isFunction from 'lodash.isfunction'
 
 export const DELIMETER = '.'
 
@@ -339,4 +341,14 @@ export const getSelectedItemIndex = state => {
   const selectedKey = getUniqueKeyFromItem(selectedItem)
 
   return Object.keys(indexMap).find(key => indexMap[key] === selectedKey)
+}
+
+export const renderRenderPropComponent = (renderProp, props = {}) => {
+  if (React.isValidElement(renderProp)) {
+    return React.cloneElement(renderProp, props)
+  }
+  if (isFunction(renderProp)) {
+    return renderProp(props)
+  }
+  return null
 }

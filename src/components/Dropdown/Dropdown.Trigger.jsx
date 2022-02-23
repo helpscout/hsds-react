@@ -8,7 +8,7 @@ import { toggleOpen, openDropdown, closeDropdown } from './Dropdown.actions'
 import { TriggerUI } from './Dropdown.css.js'
 import Keys from '../../constants/Keys'
 import classNames from 'classnames'
-import { renderRenderPropComponent } from '../../utilities/component'
+import { renderRenderPropComponent } from './Dropdown.utils'
 
 function noop() {}
 

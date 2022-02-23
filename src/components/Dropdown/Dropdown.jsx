@@ -11,7 +11,7 @@ import Trigger from './Dropdown.Trigger'
 import VisuallyHidden from '../VisuallyHidden'
 import { DropdownUI } from './Dropdown.css.js'
 import classNames from 'classnames'
-import { renderRenderPropComponent } from '../../utilities/component'
+import { renderRenderPropComponent } from './Dropdown.utils'
 
 function noop() {}
 
