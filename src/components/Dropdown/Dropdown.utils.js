@@ -8,6 +8,7 @@ import isNil from 'lodash.isnil'
 import isString from 'lodash.isstring'
 import isPlainObject from 'lodash.isplainobject'
 import isFunction from 'lodash.isfunction'
+import { getWindowFromNode } from '../../utilities/node'
 
 export const DELIMETER = '.'
 
@@ -351,4 +352,15 @@ export const renderRenderPropComponent = (renderProp, props = {}) => {
     return renderProp(props)
   }
   return null
+}
+
+export const focusWithoutScrolling = node => {
+  const _window = getWindowFromNode(node)
+  // Cache the current position
+  const { scrollX, scrollY } = _window
+
+  node.focus()
+
+  // Immediately scroll to the cached position
+  _window.scrollTo(scrollX, scrollY)
 }

@@ -11,6 +11,7 @@ import {
   itemIsActive,
   isSelectedItemEmpty,
   processSelectionOfItem,
+  focusWithoutScrolling,
 } from './Dropdown.utils'
 
 import {
@@ -22,8 +23,6 @@ import {
 } from './Dropdown.renderUtils'
 
 import { dispatch } from './Dropdown.store'
-
-import { focusWithoutScrolling } from '../../utilities/focus'
 
 export const changeDirection = state => {
   return dispatch(state, {
