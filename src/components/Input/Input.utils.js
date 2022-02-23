@@ -55,25 +55,3 @@ export function isTextArea(node) {
 export function isStateful(props) {
   return props.state && ['error', 'success', 'warning'].includes(props.state)
 }
-
-/**
- * Fast way to repeat a string character.
- * @param   {string} pattern
- * @param   {number} count
- * @returns {string}
- */
-export const repeat = (pattern, count) => {
-  if (count < 1) return ''
-  let result = ''
-  while (count > 1) {
-    if (count & 1) {
-      result += pattern
-    }
-    count >>= 1
-
-    if (count <= 0) break
-    pattern += pattern
-  }
-
-  return result + pattern
-}

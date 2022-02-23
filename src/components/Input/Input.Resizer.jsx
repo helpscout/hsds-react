@@ -3,7 +3,6 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import PropTypes from 'prop-types'
 import EventListener from '../EventListener'
 import classNames from 'classnames'
-import { repeat } from './Input.utils'
 import { ResizerUI, GhostUI } from './Input.Resizer.css'
 
 // Thanks Stephen <3
@@ -93,7 +92,7 @@ export class InputResizer extends React.PureComponent {
   }
 
   getFinalContents(contents) {
-    const charOffset = repeat(OFFSET_CHAR, this.props.offsetAmount)
+    const charOffset = OFFSET_CHAR.repeat(this.props.offsetAmount)
     return contents
       ? `${contents
           .replace(REPLACE_REGEX, this.replaceEntity)
