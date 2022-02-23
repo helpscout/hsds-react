@@ -112,6 +112,7 @@ export const ClipboardPlaceholderUI = styled('textarea')`
   pointer-events: none;
   width: 1px;
   height: 1px;
+  overflow: hidden;
 `
 
 export const ValidIconUI = styled(Tooltip)`
