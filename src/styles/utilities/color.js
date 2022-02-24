@@ -5,6 +5,9 @@ import isPlainObject from 'lodash.isplainobject'
 import colorScheme from '../configs/colors'
 import { darken, getColorShade, lighten } from '../../utilities/color'
 
+// TODO: remove uses in HS App
+export { rgba } from '../../utilities/color'
+
 /**
  * Retrieves a color/shade from the Color palette
  * @param   {number | string} args The color arguments.
