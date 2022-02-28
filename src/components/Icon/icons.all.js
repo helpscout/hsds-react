@@ -120,6 +120,7 @@ import infoTiny from '../../icons/info-tiny.svg'
 import information from '../../icons/information.svg'
 import italic from '../../icons/italic.svg'
 import kebab from '../../icons/kebab.svg'
+import kebabLarge from '../../icons/kebab-large.svg'
 import key from '../../icons/key.svg'
 import keyboard from '../../icons/keyboard.svg'
 import largeDoubleArrowLeft from '../../icons/large-double-arrow-left.svg'
@@ -318,8 +319,10 @@ const ICONS = {
   'drag-handle': dragHandle,
   drag: dragHandle,
   duplicate,
-  'ellipsis-small': ellipsisSmall,
   ellipsis,
+  'ellipsis-small': ellipsisSmall,
+  'ellipsis-vertical': kebab,
+  'ellipsis-vertical-large': kebabLarge,
   emoji,
   'envelope-large': envelopeLarge,
   'envelope-open': envelopeOpen,
@@ -359,6 +362,7 @@ const ICONS = {
   information,
   italic,
   kebab,
+  'kebab-large': kebabLarge,
   key,
   keyboard,
   'large-double-arrow-left': largeDoubleArrowLeft,
