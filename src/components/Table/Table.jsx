@@ -82,6 +82,10 @@ export function Table({
     updateTableData(data, maxRowsToDisplay)
   }, [data, maxRowsToDisplay, sortedInfo])
 
+  useDeepCompareEffect(() => {
+    resetColumns(columns)
+  }, [columns])
+
   function renderHeader() {
     if (!headerContent && !withColumnChooser) {
       return null
