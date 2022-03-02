@@ -1,4 +1,4 @@
-import { isNil } from 'lodash.isnil'
+import isNil from 'lodash.isnil'
 
 // TODO: remove when the rest are removed
 export function typeOf(value, type) {
