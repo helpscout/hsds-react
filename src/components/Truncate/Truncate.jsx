@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import EventListener from '../EventListener'
 import Tooltip from '../Tooltip'
-import classNames from 'classnames'
-import { truncateMiddle } from '../../utilities/strings'
 import { TruncateUI, TruncateWithSplitterUI } from './Truncate.css'
-import { TRUNCATED_CLASSNAMES } from './Truncate.utils'
+import { TRUNCATED_CLASSNAMES, truncateMiddle } from './Truncate.utils'
 
 export class Truncate extends React.PureComponent {
   node = null

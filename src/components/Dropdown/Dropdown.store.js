@@ -2,7 +2,8 @@
 /* istanbul ignore file */
 import unistoreCreateStore from '@helpscout/wedux'
 import reducer from './Dropdown.reducer'
-import { noop } from '../../utilities/other'
+
+function noop() {}
 
 export const initialState = {
   activeClassName: 'is-active',

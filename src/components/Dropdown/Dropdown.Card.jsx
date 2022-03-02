@@ -7,8 +7,10 @@ import EventListener from '../EventListener'
 import { connect } from '@helpscout/wedux'
 import { CardUI } from './Dropdown.css'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
-import { isDefined, isNumber } from '../../utilities/is'
+import isNil from 'lodash.isnil'
+import isNumber from 'lodash.isnumber'
+
+function noop() {}
 
 export class DropdownCard extends React.PureComponent {
   static className = 'c-DropdownCard'
@@ -29,7 +31,7 @@ export class DropdownCard extends React.PureComponent {
 
   getWidthValue() {
     const { triggerNode, width } = this.props
-    if (!isDefined(width)) return null
+    if (isNil(width)) return null
     if (isNumber(width)) return width
 
     if (!width.includes('%') || !triggerNode) return width

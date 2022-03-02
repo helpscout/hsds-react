@@ -1,9 +1,11 @@
+import get from 'lodash.get'
 import isNil from 'lodash.isnil'
 import isNumber from 'lodash.isnumber'
 import isPlainObject from 'lodash.isplainobject'
 import colorScheme from '../configs/colors'
 import { darken, getColorShade, lighten } from '../../utilities/color'
-import get from '../../utilities/get'
+
+// TODO: remove uses in HS App
 export { rgba } from '../../utilities/color'
 
 /**

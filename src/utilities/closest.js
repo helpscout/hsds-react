@@ -26,6 +26,7 @@ export function matches(el, selector) {
   return false
 }
 
+// TODO: remove, move to Beacon (src/components/PreviousMessages/PreviousMessages.LoadMore.js)
 export function closest(element, selector, checkYoSelf) {
   let parent = checkYoSelf ? element : element.parentNode
 

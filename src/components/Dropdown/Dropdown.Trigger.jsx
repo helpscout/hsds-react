@@ -8,8 +8,9 @@ import { toggleOpen, openDropdown, closeDropdown } from './Dropdown.actions'
 import { TriggerUI } from './Dropdown.css.js'
 import Keys from '../../constants/Keys'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
-import { renderRenderPropComponent } from '../../utilities/component'
+import { renderRenderPropComponent } from './Dropdown.utils'
+
+function noop() {}
 
 export class DropdownTrigger extends React.PureComponent {
   state = { isHovered: false }

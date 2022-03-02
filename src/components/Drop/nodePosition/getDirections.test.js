@@ -1,4 +1,4 @@
-import { getDirections } from '../../nodePosition'
+import { getDirections } from '../Drop.utils'
 
 test('Returns default object for invalid argument', () => {
   const defaultOutput = {

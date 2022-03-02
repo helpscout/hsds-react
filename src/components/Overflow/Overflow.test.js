@@ -2,6 +2,11 @@ import React, { PureComponent as Component } from 'react'
 import { mount } from 'enzyme'
 import { waitFor } from '@testing-library/react'
 import { Overflow } from './Overflow'
+import {
+  isMouseWheelYEvent,
+  remapScrollingPlane,
+  hasContentOverflowX,
+} from './Overflow.utils'
 
 jest.useFakeTimers()
 
@@ -299,4 +304,155 @@ describe('Scroll', () => {
 
     expect(typeof testMethod).toBe('function')
   })
+})
+
+describe('isMouseWheelYEvent', () => {
+  test('Returns false if X, Y delta coordinates are missing', () => {
+    expect(isMouseWheelYEvent()).toBe(false)
+    expect(isMouseWheelYEvent({})).toBe(false)
+    expect(isMouseWheelYEvent({ delta: 123 })).toBe(false)
+  })
+
+  test('Returns false if X delta is anything other than zero', () => {
+    // Non-zero deltaX come from diagonal-like movements, which come from
+    // trackpad devices or purely horizontal scroll wheels.
+    expect(isMouseWheelYEvent({ deltaX: -1, deltaY: 0 })).toBe(false)
+    expect(isMouseWheelYEvent({ deltaX: 1, deltaY: 0 })).toBe(false)
+    // Horizontal scroll wheel
+    expect(isMouseWheelYEvent({ deltaX: 8, deltaY: 0 })).toBe(false)
+    // Trackpad scroll wheel
+    expect(isMouseWheelYEvent({ deltaX: 1, deltaY: 4 })).toBe(false)
+  })
+
+  test('Returns false if Y delta is too small', () => {
+    // Smaller y delta values come from minor (vertical) trackpad based
+    // movements.
+    expect(isMouseWheelYEvent({ deltaX: 0, deltaY: 12 })).toBe(false)
+    expect(isMouseWheelYEvent({ deltaX: 0, deltaY: 8 })).toBe(false)
+    expect(isMouseWheelYEvent({ deltaX: 0, deltaY: 4 })).toBe(false)
+    expect(isMouseWheelYEvent({ deltaX: 0, deltaY: 1 })).toBe(false)
+    expect(isMouseWheelYEvent({ deltaX: 0, deltaY: -4 })).toBe(false)
+    expect(isMouseWheelYEvent({ deltaX: 0, deltaY: -8 })).toBe(false)
+    expect(isMouseWheelYEvent({ deltaX: 0, deltaY: -12 })).toBe(false)
+  })
+
+  test('Returns true if Y delta surpasses threshold', () => {
+    expect(isMouseWheelYEvent({ deltaX: 0, deltaY: -48 })).toBe(true)
+    expect(isMouseWheelYEvent({ deltaX: 0, deltaY: -24 })).toBe(true)
+    expect(isMouseWheelYEvent({ deltaX: 0, deltaY: 24 })).toBe(true)
+    expect(isMouseWheelYEvent({ deltaX: 0, deltaY: 48 })).toBe(true)
+  })
+})
+
+describe('remapScrollingPlane', () => {
+  test('Adjusts scrollLeft based on deltaY value', () => {
+    const event = {
+      currentTarget: {
+        scrollLeft: 0,
+      },
+      deltaX: 0,
+      deltaY: 40,
+      target: {
+        shiftKey: false,
+      },
+      preventDefault: () => null,
+    }
+    remapScrollingPlane(event)
+
+    expect(event.currentTarget.scrollLeft).toBe(40)
+  })
+
+  test('Does not adjusts scrollLeft, if scroll may not come from a mouse wheel', () => {
+    const event = {
+      currentTarget: {
+        scrollLeft: 0,
+      },
+      deltaX: 0,
+      deltaY: 10,
+      target: {
+        shiftKey: false,
+      },
+      preventDefault: () => null,
+    }
+    remapScrollingPlane(event)
+
+    expect(event.currentTarget.scrollLeft).toBe(0)
+  })
+
+  test('Does not adjusts scrollLeft based on deltaY value, if shiftKey is pressed', () => {
+    const event = {
+      currentTarget: {
+        scrollLeft: 0,
+      },
+      deltaX: 0,
+      deltaY: 40,
+      target: {
+        shiftKey: true,
+      },
+      preventDefault: () => null,
+    }
+    remapScrollingPlane(event)
+
+    expect(event.currentTarget.scrollLeft).toBe(0)
+  })
+
+  test('Does not adjust scrollLeft if deltaX is more than deltaY', () => {
+    const spy = jest.fn()
+    const event = {
+      currentTarget: {
+        scrollLeft: 0,
+      },
+      deltaX: 41,
+      deltaY: 40,
+      target: {
+        shiftKey: false,
+      },
+      preventDefault: spy,
+    }
+    remapScrollingPlane(event)
+
+    expect(spy).not.toHaveBeenCalled()
+    expect(event.currentTarget.scrollLeft).toBe(0)
+  })
+
+  test('Calls preventDefault on successful scroll', () => {
+    const spy = jest.fn()
+    const event = {
+      currentTarget: {
+        scrollLeft: 0,
+      },
+      deltaX: 0,
+      deltaY: 40,
+      target: {
+        shiftKey: false,
+      },
+      preventDefault: spy,
+    }
+    remapScrollingPlane(event)
+
+    expect(spy).toHaveBeenCalled()
+  })
+
+  test('Does not call preventDefault if node is missing', () => {
+    const spy = jest.fn()
+    const event = {
+      deltaX: 0,
+      deltaY: 40,
+      target: {
+        shiftKey: false,
+      },
+      preventDefault: spy,
+    }
+    remapScrollingPlane(event)
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+})
+
+test('Returns false for invalid elements', () => {
+  expect(hasContentOverflowX()).not.toBeTruthy()
+  expect(hasContentOverflowX(true)).not.toBeTruthy()
+  expect(hasContentOverflowX('div')).not.toBeTruthy()
+  expect(hasContentOverflowX(window)).not.toBeTruthy()
+  expect(hasContentOverflowX({})).not.toBeTruthy()
 })

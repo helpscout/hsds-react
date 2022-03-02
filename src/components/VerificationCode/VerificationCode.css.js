@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import { getColor, rgba } from '../../styles/utilities/color'
+import { getColor } from '../../styles/utilities/color'
+import { rgba } from '../../utilities/color'
 import Icon from '../Icon'
 import Tooltip from '../Tooltip'
 

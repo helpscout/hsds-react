@@ -8,16 +8,6 @@ const optimalTextColorValues = {
   b: 49,
 }
 
-// Source
-// https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
-
-export const componentToHex = c => {
-  if (!c || typeof c !== 'number') return '00'
-  const hex = c.toString(16)
-
-  return hex.length === 1 ? `0${hex}` : hex
-}
-
 export const hexToRgb = hex => {
   if (!isHex(hex)) return null
   // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
@@ -35,11 +25,6 @@ export const hexToRgb = hex => {
         b: parseInt(result[3], 16),
       }
     : null
-}
-
-export const rgbToHex = (r, g, b) => {
-  if (!isNumber(r) || !isNumber(g) || !isNumber(b)) return null
-  return `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`
 }
 
 export const hexToHsl = hex => {

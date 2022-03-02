@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/hsds-react",
-  "version": "3.37.0-0",
+  "version": "3.39.0",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -99,7 +99,6 @@
     "chalk": "^1.1.3",
     "classnames": "^2.3.1",
     "compute-scroll-into-view": "1.0.11",
-    "dash-get": "1.0.2",
     "downshift": "^6.1.1",
     "execa": "^4.0.0",
     "fast-deep-equal": "^2.0.1",

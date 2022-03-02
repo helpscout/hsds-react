@@ -11,8 +11,9 @@ import Trigger from './Dropdown.Trigger'
 import VisuallyHidden from '../VisuallyHidden'
 import { DropdownUI } from './Dropdown.css.js'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
-import { renderRenderPropComponent } from '../../utilities/component'
+import { renderRenderPropComponent } from './Dropdown.utils'
+
+function noop() {}
 
 export class Dropdown extends React.PureComponent {
   node

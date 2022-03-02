@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { getColor, rgba } from '../../styles/utilities/color'
+import { getColor } from '../../styles/utilities/color'
 import { d600 } from '../../styles/mixins/depth.css'
 import Animate from '../Animate'
 import Text from '../Text'

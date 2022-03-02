@@ -5,7 +5,8 @@ import { PropTypes } from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { GroupUI } from './Dropdown.css'
 import classNames from 'classnames'
-import { noop } from '../../utilities/other'
+
+function noop() {}
 
 export class DropdownGroup extends React.PureComponent {
   render() {

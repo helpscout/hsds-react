@@ -20,8 +20,9 @@ import { SELECTORS, getCustomItemProps, getItemProps } from './Dropdown.utils'
 import { setMenuPositionStyles } from './Dropdown.renderUtils'
 import classNames from 'classnames'
 import { getComponentKey } from '../../utilities/component'
-import { noop } from '../../utilities/other'
 import DropdownItemSelectedCheck from './Dropdown.ItemSelectedCheck'
+
+function noop() {}
 
 export class DropdownItem extends React.PureComponent {
   node

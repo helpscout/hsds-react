@@ -1,5 +1,24 @@
 import isNil from 'lodash.isnil'
-import { calculateAspectRatioFit } from '../../utilities/images'
+
+export function calculateAspectRatioFit(props) {
+  const { width, height, maxWidth, maxHeight } = props
+
+  if (width < maxWidth && height < maxHeight) {
+    return {
+      width,
+      height,
+    }
+  }
+
+  const ratioWidth = maxWidth / width
+  const ratioHeight = maxHeight / height
+  const ratio = Math.min(ratioWidth, ratioHeight)
+
+  return {
+    width: width * ratio,
+    height: height * ratio,
+  }
+}
 
 /**
  * Enhances the inline style of the <img> component with aspect ratio

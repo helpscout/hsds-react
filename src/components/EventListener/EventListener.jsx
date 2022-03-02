@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { getClosestDocument } from '../../utilities/node'
-import { addEventListener, removeEventListener } from '../../utilities/events'
 
 // see https://github.com/oliviertassinari/react-event-listener/
 class EventListener extends React.Component {
@@ -50,14 +49,18 @@ class EventListener extends React.Component {
     const { event, handler, capture, passive } = this.props
 
     event.split(' ').forEach(eventType => {
-      addEventListener(this.scope, eventType, handler, { capture, passive })
+      if (this.scope) {
+        this.scope.addEventListener(eventType, handler, { capture, passive })
+      }
     })
   }
 
   detachListener = () => {
     const { event, handler, capture } = this.props
     event.split(' ').forEach(eventType => {
-      removeEventListener(this.scope, eventType, handler, capture)
+      if (this.scope) {
+        this.scope.removeEventListener(eventType, handler, capture)
+      }
     })
   }
 

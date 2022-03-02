@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { setupManager } from '../../utilities/globalManager'
+import { setupManager } from './PortalWrapper.utils'
 
 const managerNamespace = 'HSDSPortalWrapperGlobalManager'
 

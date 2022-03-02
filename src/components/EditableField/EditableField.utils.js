@@ -1,6 +1,5 @@
 import isNil from 'lodash.isnil'
 import isPlainObject from 'lodash.isplainobject'
-import { find } from '../../utilities/arrays'
 import { getColor } from '../../styles/utilities/color'
 import { createUniqueIDFactory } from '../../utilities/id'
 const uniqueID = createUniqueIDFactory('EditableField')
@@ -82,8 +81,7 @@ export function generateFieldActions(actions) {
 
   // User is also able to override the action
   let actionsArray = Array.isArray(actions) ? actions : [actions]
-  let isDeleteActionPresent = find(
-    actionsArray,
+  let isDeleteActionPresent = actionsArray.find(
     action => action.name === 'delete'
   )
 

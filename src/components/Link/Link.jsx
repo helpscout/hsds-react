@@ -2,11 +2,13 @@ import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
-import { wordHasSpaces } from '../../utilities/strings'
+import isString from 'lodash.isstring'
+import isNil from 'lodash.isnil'
 import { LinkUI } from './Link.css'
 import { Link as ReactRouterLink } from 'react-router-dom'
 
 function noop() {}
+
 const WrappedLink = forwardRef(function Link(props, ref) {
   const {
     autoWordWrap,
@@ -92,6 +94,12 @@ WrappedLink.propTypes = {
   wordWrap: PropTypes.bool,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
+}
+
+export function wordHasSpaces(word) {
+  if (isNil(word) || !isString(word)) return false
+
+  return word.trim().indexOf(' ') > 0
 }
 
 export default WrappedLink

@@ -1,5 +1,3 @@
-import { includes } from '../../utilities/arrays'
-
 /**
  * Get the total number of lines (rows) of a textarea
  *
@@ -55,5 +53,5 @@ export function isTextArea(node) {
 }
 
 export function isStateful(props) {
-  return props.state && includes(['error', 'success', 'warning'], props.state)
+  return props.state && ['error', 'success', 'warning'].includes(props.state)
 }

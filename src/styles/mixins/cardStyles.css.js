@@ -1,4 +1,5 @@
-import { getColor, rgba } from '../utilities/color'
+import { getColor } from '../utilities/color'
+import { rgba } from '../../utilities/color'
 
 export const cardStyles = () => {
   const bottomColor = getColor('grey.600')

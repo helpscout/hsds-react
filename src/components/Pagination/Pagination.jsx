@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
-import pluralize from '../../utilities/pluralize'
 import KeypressListener from '../KeypressListener'
 import Keys from '../../constants/Keys'
 import { formatNumber } from '../../utilities/number'
@@ -321,6 +320,18 @@ Pagination.propTypes = {
   separator: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
+}
+
+/**
+ * A super tiny, but naive, way to pluralize a word based on a count value.
+ * @param word {string} The word to pluralize.
+ * @param count {number} The count to check against.
+ * @returns {string} The pluralized word.
+ */
+export function pluralize(word, count = 1) {
+  if (!word) return ''
+  if (word.lastIndexOf('s') === word.length - 1) return word
+  return count === 1 ? word : `${word}s`
 }
 
 export default Pagination

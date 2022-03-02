@@ -22,7 +22,6 @@ import { STATES } from '../../constants'
 import Keys from '../../constants/Keys'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isModifierKeyPressed } from '../../utilities/keys'
-import { requestAnimationFrame } from '../../utilities/other'
 import { moveCursorToEnd, isTextArea } from './Input.utils'
 import {
   CharValidatorText,

@@ -4,7 +4,8 @@ import { SELECTORS } from './Dropdown.utils'
 import styled from 'styled-components'
 import Card from '../Card'
 
-import { getColor, rgba } from '../../styles/utilities/color'
+import { getColor } from '../../styles/utilities/color'
+import { rgba } from '../../utilities/color'
 
 export const DropdownUI = styled('div')`
   position: relative;
