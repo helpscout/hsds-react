@@ -1,5 +1,4 @@
-module.exports = api => {
-  const isTest = api.env('test')
+module.exports = () => {
   const plugins = [
     [
       'prismjs',
@@ -29,11 +28,8 @@ module.exports = api => {
         fileName: true,
       },
     ],
+    ['@babel/plugin-transform-runtime'],
   ]
-
-  if (isTest) {
-    plugins.push('@babel/plugin-transform-runtime')
-  }
 
   return {
     presets: [
