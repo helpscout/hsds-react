@@ -29,8 +29,9 @@ import {
 } from './Dropdown.actions'
 import Trigger from './Dropdown.Trigger'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { noop } from '../../utilities/other'
-import { isDefined } from '../../utilities/is'
+import isNil from 'lodash.isnil'
+
+function noop() {}
 
 const uniqueID = createUniqueIDFactory('hsds-dropdown-')
 
@@ -129,7 +130,7 @@ export class DropdownContainer extends React.PureComponent {
     // Adjust index, if changed
     if (
       nextProps.closeOnSelect &&
-      isDefined(nextProps.index) &&
+      !isNil(nextProps.index) &&
       nextProps.index !== state.index
     ) {
       nextState = {

@@ -1,7 +1,11 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import { ChatScroller } from './ChatScroller'
-import { shouldAutoScroll, getScrollProps } from './ChatScroller.utils'
+import {
+  shouldAutoScroll,
+  getScrollProps,
+  allDefined,
+} from './ChatScroller.utils'
 import Message from '../Message'
 import Scrollable from '../Scrollable'
 
@@ -327,5 +331,23 @@ describe('forceScrollToBottomProp', () => {
 
     wrapper.setProps({ forceScrollToBottomProp: 'one' })
     expect(spy).toHaveBeenCalledTimes(3)
+  })
+})
+
+describe('allDefined', () => {
+  test('Returns true if defined', () => {
+    expect(allDefined([1, 2, 3])).toBe(true)
+    expect(allDefined({ a: 1, b: 2, c: 3 })).toBe(true)
+  })
+
+  test('Returns false if undefined', () => {
+    expect(allDefined()).toBe(false)
+    expect(allDefined([1, null, 3])).toBe(false)
+    expect(allDefined([1, false, null])).toBe(false)
+    expect(allDefined([1, undefined, false])).toBe(false)
+    expect(allDefined([1, undefined, null])).toBe(false)
+    expect(allDefined([undefined, undefined, 3])).toBe(false)
+    expect(allDefined([null, null])).toBe(false)
+    expect(allDefined([undefined, undefined])).toBe(false)
   })
 })

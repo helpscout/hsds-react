@@ -4,7 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Text from '../Text'
 import Truncate from '../Truncate'
 import classNames from 'classnames'
-import { isString } from '../../utilities/is'
+import isString from 'lodash.isstring'
 import {
   ArticleCardUI,
   ContentUI,

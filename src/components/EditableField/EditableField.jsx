@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import equal from 'fast-deep-equal'
 import classNames from 'classnames'
+import isFunction from 'lodash.isfunction'
+import isNil from 'lodash.isnil'
 import {
   EditableFieldUI,
   FieldUI,
@@ -29,8 +31,6 @@ import {
   STATES_CLASSNAMES,
 } from './EditableField.utils'
 import { key } from '../../constants/Keys'
-import { isArray, isFunction } from '../../utilities/is'
-import { find } from '../../utilities/arrays'
 import { nodesHaveSameParent } from '../../utilities/node'
 
 function noop() {}
@@ -70,9 +70,9 @@ export class EditableField extends React.Component {
       fieldValue: initialFieldValue,
       initialFieldValue,
       maskTabIndex: null,
-      multipleValuesEnabled: isArray(value) || multipleValues,
+      multipleValuesEnabled: Array.isArray(value) || multipleValues,
       valueOptions:
-        valueOptions && isArray(valueOptions)
+        valueOptions && Array.isArray(valueOptions)
           ? valueOptions.map(option => ({
               id: option,
               label: option,
@@ -189,14 +189,17 @@ export class EditableField extends React.Component {
     // will be the field mask. If we have an EditableFieldComposite, the
     // secondary target will be the composed mask. Otherwise the secondary
     // target will be null or another element in the case of tab navigation.
-    const isSafari =
-      navigator.userAgent.indexOf('Safari') !== -1 &&
-      navigator.userAgent.indexOf('Chrome') === -1
+    const isSafari = () => {
+      if (!navigator) return false
+      const ua = navigator.userAgent.toLowerCase()
+      return !ua.includes('chrome') && ua.includes('safari')
+    }
+
     const maskIsSecondaryTarget =
       !!event.relatedTarget &&
       (event.relatedTarget.classList.contains('FieldMask__value') ||
         event.relatedTarget.classList.contains('ComposedMask'))
-    if (isSafari && maskIsSecondaryTarget) {
+    if (isSafari() && maskIsSecondaryTarget) {
       event.target.blur()
       return
     }
@@ -216,16 +219,15 @@ export class EditableField extends React.Component {
     const { name, event } = payload
     const { activeField, multipleValuesEnabled, valueOptions } = this.state
     const { validate, onCommit, onDiscard, onInputBlur } = this.props
-    const hasOptions = valueOptions != null
+    const hasOptions = !isNil(valueOptions)
     const changedField =
       this.state.fieldValue.length === 1
         ? this.state.fieldValue[0]
-        : find(this.state.fieldValue, val => `${val.id}` === event.target.id)
+        : this.state.fieldValue.find(val => `${val.id}` === event.target.id)
     const initialField =
       this.state.initialFieldValue.length === 1
         ? this.state.initialFieldValue[0]
-        : find(
-            this.state.initialFieldValue,
+        : this.state.initialFieldValue.find(
             val => `${val.id}` === event.target.id
           )
 
@@ -548,7 +550,7 @@ export class EditableField extends React.Component {
     const { validate, onEnter, onCommit } = this.props
     const { initialFieldValue, fieldValue, multipleValuesEnabled } = this.state
     const inputValue = event.currentTarget.value
-    const impactedField = find(initialFieldValue, val => val.id === name)
+    const impactedField = initialFieldValue.find(val => val.id === name)
     const valueDidNotChange =
       impactedField && inputValue === impactedField.value
 
@@ -570,7 +572,7 @@ export class EditableField extends React.Component {
         })
       } else {
         // Case 3: value was changed
-        const impactedField = find(fieldValue, val => val.id === name)
+        const impactedField = fieldValue.find(val => val.id === name)
 
         // Get the next values and commit prior to validation so that
         // we can use it in validation.
@@ -790,8 +792,7 @@ export class EditableField extends React.Component {
       let isItemInvalid
 
       if (hasBeenValidated !== '') {
-        isItemInvalid = find(
-          this.state.validationInfo,
+        isItemInvalid = this.state.validationInfo.find(
           val => val.name === hasBeenValidated
         )
       }
@@ -858,7 +859,7 @@ export class EditableField extends React.Component {
         validated: false,
       }
 
-      if (defaultOption != null) {
+      if (!isNil(defaultOption)) {
         emptyValue.option = defaultOption
       }
 
@@ -922,7 +923,7 @@ export class EditableField extends React.Component {
         className={classNames(EDITABLEFIELD_CLASSNAMES.addButton, className)}
         type="button"
         onClick={
-          onClick == null
+          isNil(onClick)
             ? this.handleAddValue
             : e => {
                 onClick(e)
@@ -955,8 +956,7 @@ export class EditableField extends React.Component {
           const isActive = activeField === val.id
           const isDisabled =
             disabled || val.disabled || this.state.disabledItem.includes(val.id)
-          const valInfo = find(
-            this.state.validationInfo,
+          const valInfo = this.state.validationInfo.find(
             valItem => valItem.name === val.id
           )
 

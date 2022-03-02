@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
+import isNil from 'lodash.isnil'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import { ProgressBarUI, BarUI } from './ProgressBar.css'
 
 class ProgressBar extends React.PureComponent {
@@ -12,7 +13,7 @@ class ProgressBar extends React.PureComponent {
   }
 
   getValue(val) {
-    const value = val != null ? val : this.props.value
+    const value = !isNil(val) ? val : this.props.value
     const barValue = parseFloat(`${value}`)
     const normalizedBarValue =
       barValue > 100 ? 100 : barValue < 0 ? 0 : barValue

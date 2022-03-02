@@ -5,7 +5,6 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFromComponent'
 import getShallowDiffs from '@helpscout/react-utils/dist/getShallowDiffs'
 import { smoothScrollTo } from '../../utilities/smoothScroll'
-import { last, includes } from '../../utilities/arrays'
 import { shouldAutoScroll, getScrollProps } from './ChatScroller.utils'
 
 export class ChatScroller extends React.PureComponent {
@@ -39,7 +38,7 @@ export class ChatScroller extends React.PureComponent {
 
     const matches = ['scrollableSelector', 'scrollableNode']
 
-    if (diffs.some(item => includes(matches, item))) {
+    if (diffs.some(item => matches.includes(item))) {
       this.setNodes()
     }
   }
@@ -59,8 +58,7 @@ export class ChatScroller extends React.PureComponent {
     const messageChatNodes = this.scrollableNode.querySelectorAll(
       this.props.messageSelectors
     )
-
-    return last(messageChatNodes)
+    return messageChatNodes[messageChatNodes.length - 1]
   }
 
   autoScrollToLatestMessage() {

@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
+import isNil from 'lodash.isnil'
 import DropList from '../DropList'
 import { SelectTag } from '../DropList/DropList.togglers'
 import ContentResizer from './ActionSelect.ContentResizer'
-import classNames from 'classnames'
 import { findFirstFocusableNode } from '../../utilities/focus'
 import { smoothScrollTo, linear } from '../../utilities/smoothScroll'
 import { ActionSelectUI } from './ActionSelect.css'
@@ -183,7 +184,7 @@ function getUniqueKeyFromItem(item) {
 }
 
 function getSelectTagText(selectedItem, items) {
-  if (selectedItem != null) return selectedItem.label
+  if (!isNil(selectedItem)) return selectedItem.label
 
   if (Array.isArray(items) && items[0]) {
     if (items[0].label) return items[0].label

@@ -1,7 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import throttle from 'lodash.throttle'
 import classNames from 'classnames'
+import isNil from 'lodash.isnil'
+import throttle from 'lodash.throttle'
 import { setupObserver } from '../../hooks/useMeasureNode'
 import { splitAvatarsArray, getNumberOfItemsToDisplay } from './AvatarRow.utils'
 import { config } from '../Avatar/Avatar.css'
@@ -34,11 +35,11 @@ function AvatarRow({
   )
 
   useEffect(() => {
-    if (!adaptable || avatarRowRef.current == null) return
+    if (!adaptable || isNil(avatarRowRef.current)) return
 
     // Avoid adding multiple observers
     if (
-      observerRef.current != null &&
+      !isNil(observerRef.current) &&
       observerRef.current instanceof ResizeObserver
     ) {
       observerRef.current.disconnect()
@@ -56,7 +57,7 @@ function AvatarRow({
     resizeObserver.observe(avatarRowEl)
 
     return () => {
-      if (!adaptable || avatarRowEl == null) return
+      if (!adaptable || isNil(avatarRowEl)) return
 
       resizeObserver.disconnect()
     }

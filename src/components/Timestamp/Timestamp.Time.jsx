@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { calculateTimeoutPeriod } from '../../utilities/timestamp'
+import { calculateTimeoutPeriod } from './Timestamp.utils'
 
 class Time extends React.Component {
   timeoutId = undefined

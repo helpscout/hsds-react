@@ -1,6 +1,9 @@
 import React, { forwardRef } from 'react'
 import classNames from 'classnames'
-import { isFunction, isObject, isString } from '../../utilities/is'
+import isFunction from 'lodash.isfunction'
+import isNil from 'lodash.isnil'
+import isPlainObject from 'lodash.isplainobject'
+import isString from 'lodash.isstring'
 import {
   getItemContentKeyName,
   isItemAction,
@@ -62,7 +65,7 @@ const ListItem = forwardRef(
       )
     }
 
-    if (renderCustomListItem != null && isFunction(renderCustomListItem)) {
+    if (!isNil(renderCustomListItem) && isFunction(renderCustomListItem)) {
       return (
         <li
           className={getListItemClassNames('DropListItem--custom')}
@@ -90,7 +93,7 @@ const ListItem = forwardRef(
         {...itemProps}
       >
         <ListItemTextUI>
-          {isObject(item) ? item[contentKey] : item}
+          {isPlainObject(item) ? item[contentKey] : item}
         </ListItemTextUI>
         {withMultipleSelection && !isItemAction(item) ? (
           <SelectedBadge isSelected={isSelected} />
@@ -103,7 +106,7 @@ const ListItem = forwardRef(
 export function generateListItemKey(item, index) {
   const contentKey = getItemContentKeyName(item)
 
-  return isObject(item)
+  return isPlainObject(item)
     ? item.id || `${item[contentKey]}_${index}`
     : `${item}_${index}`
 }

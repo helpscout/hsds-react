@@ -3,7 +3,7 @@ import { createSpec, faker } from '@helpscout/helix'
 import { mount } from 'enzyme'
 import Tooltip from '../Tooltip'
 import { Truncate } from './Truncate'
-import { TRUNCATED_CLASSNAMES } from './Truncate.utils'
+import { TRUNCATED_CLASSNAMES, truncateMiddle } from './Truncate.utils'
 
 const fixture = createSpec(faker.lorem.paragraph())
 
@@ -319,5 +319,31 @@ describe('Tooltip', () => {
     const el = wrapper.find(Tooltip)
 
     expect(el.props().title).toBe('Ok')
+  })
+})
+
+describe('truncateMiddle', () => {
+  test('should perform a basic test', () => {
+    expect(truncateMiddle('the quick brown', 5, 5, '...')).toBe('the q...brown')
+  })
+
+  it('should perform auto fill in ellipses', () => {
+    expect(truncateMiddle('the quick brown', 5, 5)).toBe('the q…brown')
+  })
+
+  it('should have return empty string when null', () => {
+    expect(truncateMiddle(null)).toBe('')
+  })
+
+  it('should have return empty string when empty', () => {
+    expect(truncateMiddle('')).toBe('')
+  })
+
+  it('should have handle no backLength', () => {
+    expect(truncateMiddle('the quick brown', 5, 0)).toBe('the q…')
+  })
+
+  it('should have handle 0 backLength, 0 frontLength', () => {
+    expect(truncateMiddle('the quick brown', 0, 0)).toBe('the quick brown')
   })
 })

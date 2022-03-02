@@ -1,5 +1,6 @@
 import { STATES } from '../../styles/configs/constants'
-import { getColor, rgba } from '../../styles/utilities/color'
+import { getColor } from '../../styles/utilities/color'
+import { rgba } from '../../utilities/color'
 import forEach from '../../styles/utilities/forEach'
 import styled from 'styled-components'
 

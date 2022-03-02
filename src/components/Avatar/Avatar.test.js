@@ -2,10 +2,11 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import user from '@testing-library/user-event'
 import { mount } from 'enzyme'
+import { nameToInitials } from './Avatar.utils'
+import { getCircleProps } from './Avatar.css'
 import { Avatar } from './Avatar'
 import AvatarImage, { clearCache } from './Avatar.Image'
-import { getCircleProps } from './Avatar.css'
-import { StatusDot } from '../index'
+import { StatusDot } from '../'
 
 const ui = {
   root: '.c-Avatar',
@@ -697,5 +698,39 @@ describe('Action', () => {
     expect(props.cx).toBe(14)
     expect(props.cy).toBe(14)
     expect(props.r).toBe(13)
+  })
+})
+
+describe('nameToInitials', () => {
+  test('Returns empty string if no args are passed', () => {
+    expect(nameToInitials()).toBe('')
+  })
+
+  test('Returns empty string if undefined is passed', () => {
+    expect(nameToInitials(undefined)).toBe('')
+  })
+
+  test('Returns empty string if an empty string is passed', () => {
+    expect(nameToInitials('')).toBe('')
+  })
+
+  test('Returns empty string if just whitespace is passed', () => {
+    expect(nameToInitials(' ')).toBe('')
+  })
+
+  test('Returns initials string if name is passed', () => {
+    expect(nameToInitials('Tom Graham')).toBe('TG')
+  })
+
+  test('Returns initials string if name is passed with extra whitespace', () => {
+    expect(nameToInitials('Tom  Graham')).toBe('TG')
+  })
+
+  test('Returns initials string if name is passed with leading whitespace', () => {
+    expect(nameToInitials(' Tom Graham')).toBe('TG')
+  })
+
+  test('Returns initials string if name is passed with trailing whitespace', () => {
+    expect(nameToInitials('Tom Graham ')).toBe('TG')
   })
 })

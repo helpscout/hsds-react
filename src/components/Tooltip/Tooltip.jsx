@@ -7,7 +7,7 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import Tippy from '@tippyjs/react/headless'
-import { isFunction } from '../../utilities/is'
+import isFunction from 'lodash.isfunction'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
 import {

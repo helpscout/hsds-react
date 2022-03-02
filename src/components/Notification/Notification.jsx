@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import isString from 'lodash.isstring'
 import Flexy from '../Flexy'
 import Message from '../Message'
 import Text from '../Text'
@@ -8,7 +9,6 @@ import Truncate from '../Truncate'
 import Timer from './Notification.Timer'
 import { NotificationUI, TextUI } from './Notification.css'
 import classNames from 'classnames'
-import { stripUrlPrefix } from '../../utilities/strings'
 
 export const NOTIFICATION_TYPE = {
   image: 'image',
@@ -232,6 +232,15 @@ Notification.propTypes = {
   truncateLimit: PropTypes.number,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
+}
+
+export function stripUrlPrefix(url) {
+  if (!isString(url)) return url
+
+  return url.replace(
+    /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)/g,
+    ''
+  )
 }
 
 export default Notification

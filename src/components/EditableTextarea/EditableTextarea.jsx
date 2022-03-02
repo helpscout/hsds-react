@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Textarea from 'react-textarea-autosize'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
-import debounce from '../../utilities/debounce'
+import debounce from 'lodash.debounce'
 import { ComponentUI, EditableTextareaUI, MaskUI } from './EditableTextarea.css'
 import {
   LabelTextUI,

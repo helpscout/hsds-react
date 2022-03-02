@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import forEach from '../../styles/utilities/forEach'
-import { getColor, rgba } from '../../styles/utilities/color'
+import { getColor } from '../../styles/utilities/color'
+import { rgba } from '../../utilities/color'
 
 const statusStyles = {
   error: 'red',

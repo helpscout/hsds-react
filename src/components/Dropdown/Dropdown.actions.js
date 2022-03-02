@@ -1,6 +1,6 @@
 // Deprecated
 /* istanbul ignore file */
-import { isDefined } from '../../utilities/is'
+import isNil from 'lodash.isnil'
 import actionTypes from './Dropdown.actionTypes'
 import {
   getItemFromCollection,
@@ -11,6 +11,7 @@ import {
   itemIsActive,
   isSelectedItemEmpty,
   processSelectionOfItem,
+  focusWithoutScrolling,
 } from './Dropdown.utils'
 
 import {
@@ -22,8 +23,6 @@ import {
 } from './Dropdown.renderUtils'
 
 import { dispatch } from './Dropdown.store'
-
-import { focusWithoutScrolling } from '../../utilities/focus'
 
 export const changeDirection = state => {
   return dispatch(state, {
@@ -137,7 +136,7 @@ export const incrementIndex = (state, modifier = 1) => {
 
 export const decrementIndex = (state, modifier = 1) => {
   const { envNode, index, indexMap, items } = state
-  if (!items.length || !isDefined(index)) return
+  if (!items.length || isNil(index)) return
 
   const nextIndex = decrementPathIndex(index, modifier)
 
@@ -164,7 +163,7 @@ export const focusItem = (state, event) => {
     event.stopPropagation()
   }
 
-  const isMouseEvent = isDefined(event.pageX)
+  const isMouseEvent = !isNil(event.pageX)
   const lastInteractionType = isMouseEvent ? 'mouse' : 'keyboard'
 
   if (state.enableTabNavigation && !isMouseEvent) {
@@ -220,7 +219,7 @@ export const selectItem = (state, event, eventTarget) => {
   const itemValue = getValueFromItemDOMNode(node)
   const item = getItemFromCollection(items, itemValue)
   const maybeCallItemOnClick = () => {
-    const isMouseEvent = isDefined(event.pageX)
+    const isMouseEvent = !isNil(event.pageX)
 
     if (item && item.onClick && !isMouseEvent) {
       item.onClick(event)

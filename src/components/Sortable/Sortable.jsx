@@ -4,7 +4,6 @@ import classNames from 'classnames'
 import SortableDragHandle from './Sortable.DragHandle'
 import SortableItem from './Sortable.Item'
 import SortableList from './Sortable.List'
-import { includes } from '../../utilities/arrays'
 import arrayMove from '../../utilities/arrayMove.lib'
 
 function noop() {}
@@ -35,10 +34,9 @@ class Sortable extends React.PureComponent {
     if (!children) return
 
     const items = React.Children.map(children, (child, index) => {
-      const sortableElement = includes(
-        child.type.displayName,
-        'sortableElement'
-      )
+      const sortableElement =
+        child.type.displayName &&
+        child.type.displayName.includes('sortableElement')
       const key = child.props.id ? child.props.id : `item-${index}`
 
       if (sortableElement) {

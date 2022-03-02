@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 import actionTypes from './Dropdown.actionTypes'
 import { initialState } from './Dropdown.store'
-import { isFunction } from '../../utilities/is'
+import isFunction from 'lodash.isfunction'
 
 export const initialItemState = {
   index: null,

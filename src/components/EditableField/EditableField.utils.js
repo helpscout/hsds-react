@@ -1,5 +1,5 @@
-import { isObject } from '../../utilities/is'
-import { find } from '../../utilities/arrays'
+import isNil from 'lodash.isnil'
+import isPlainObject from 'lodash.isplainobject'
 import { getColor } from '../../styles/utilities/color'
 import { createUniqueIDFactory } from '../../utilities/id'
 const uniqueID = createUniqueIDFactory('EditableField')
@@ -35,14 +35,14 @@ export function createNewValueFieldObject(
   currentId
 ) {
   // If it's an object already, grab the fields first
-  if (isObject(value)) {
+  if (isPlainObject(value)) {
     const fieldObj = {
       ...value,
       id: currentId || value.id || `${name}_${uniqueID()}`,
       validated: false,
     }
 
-    if (defaultOption !== null && !Boolean(value.option)) {
+    if (!isNil(defaultOption) && !Boolean(value.option)) {
       fieldObj.option = defaultOption
     }
 
@@ -55,7 +55,7 @@ export function createNewValueFieldObject(
     validated: false,
   }
 
-  if (defaultOption !== null) {
+  if (!isNil(defaultOption)) {
     fieldObj.option = defaultOption
   }
 
@@ -81,8 +81,7 @@ export function generateFieldActions(actions) {
 
   // User is also able to override the action
   let actionsArray = Array.isArray(actions) ? actions : [actions]
-  let isDeleteActionPresent = find(
-    actionsArray,
+  let isDeleteActionPresent = actionsArray.find(
     action => action.name === 'delete'
   )
 
@@ -102,7 +101,7 @@ export function findParentByClassName(childNode, className) {
 
   let parent = childNode.parentElement
 
-  while (parent != null && !parent.classList.contains(className)) {
+  while (!isNil(parent) && !parent.classList.contains(className)) {
     parent = parent.parentElement
   }
 

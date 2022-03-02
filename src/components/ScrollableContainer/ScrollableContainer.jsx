@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import isNil from 'lodash.isnil'
 import useScrollShadow from '../../hooks/useScrollShadow'
 import useMeasureNode from '../../hooks/useMeasureNode'
 import {
@@ -62,10 +63,10 @@ function ScrollableContainer({
     const headerObserver = headerObserverRef.current
 
     return () => {
-      if (footerObserver != null && footerObserver instanceof ResizeObserver) {
+      if (!isNil(footerObserver) && footerObserver instanceof ResizeObserver) {
         footerObserver.disconnect()
       }
-      if (headerObserver != null && headerObserver instanceof ResizeObserver) {
+      if (!isNil(headerObserver) && headerObserver instanceof ResizeObserver) {
         headerObserver.disconnect()
       }
     }
@@ -165,10 +166,10 @@ function ScrollableContainer({
 function calculateSimpleBarHeight(height, headerRect, footerRect) {
   let otherSectionsHeight = 0
 
-  if (headerRect != null) {
+  if (!isNil(headerRect)) {
     otherSectionsHeight += headerRect.height
   }
-  if (footerRect != null) {
+  if (!isNil(footerRect)) {
     otherSectionsHeight += footerRect.height
   }
 

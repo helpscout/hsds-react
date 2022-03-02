@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 import classNames from 'classnames'
 import debounce from 'lodash.debounce'
+import isNil from 'lodash.isnil'
 import Tippy from '@tippyjs/react/headless'
 import { DROPLIST_TOGGLER, VARIANTS } from './DropList.constants'
 import { getAnimateProps, getTippyProps } from './DropList.config'
@@ -145,7 +146,7 @@ function DropListManager({
       if (userToggler.type === SelectTag) {
         const { text } = userToggler.props
 
-        if (text == null) {
+        if (isNil(text)) {
           togglerProps.text = itemToString(selectedItem)
         }
       }
@@ -170,7 +171,7 @@ function DropListManager({
   }
 
   function handleSelectedItemChange({ selectedItem }) {
-    if (selectedItem == null) {
+    if (isNil(selectedItem)) {
       setSelectedItem(null)
       return
     }

@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 import { useContext, useRef, useEffect } from 'react'
 import { createPortal } from 'react-dom'
+import isNil from 'lodash.isnil'
 import { GlobalContext } from '../../components/HSDS/Provider'
 import { createRootElement, addRootElement } from './usePortal.utils'
 
@@ -30,7 +31,7 @@ function usePortal(selector) {
         // Parent is either a new root or the existing dom element
         parentElem = existingParent || createRootElement(selector)
 
-        if (scope && parentElem.closest(`.${scope}`) == null) {
+        if (scope && isNil(parentElem.closest(`.${scope}`))) {
           parentElem.classList.add(scope)
         }
 

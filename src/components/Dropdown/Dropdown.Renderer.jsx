@@ -29,9 +29,10 @@ import {
   resetSubMenuScrollPositionFromItemNode,
   setAriaActiveOnMenuFromItemNode,
 } from './Dropdown.renderUtils'
-import { isDefined } from '../../utilities/is'
+import isNil from 'lodash.isnil'
 import { scrollIntoView } from '../../utilities/scrolling'
-import { noop } from '../../utilities/other'
+
+function noop() {}
 
 class DropdownRenderer extends React.PureComponent {
   modifier = 1
@@ -129,7 +130,7 @@ class DropdownRenderer extends React.PureComponent {
 
   openSubMenu() {
     const { index, isOpen } = this.props
-    if (!isOpen || !isDefined(index)) return
+    if (!isOpen || isNil(index)) return
 
     const nextIndex = getNextChildPath(index)
 
@@ -138,7 +139,7 @@ class DropdownRenderer extends React.PureComponent {
 
   closeSubMenu() {
     const { index, isOpen } = this.props
-    if (!isOpen || !isDefined(index)) return
+    if (!isOpen || isNil(index)) return
 
     const nextIndex = getParentPath(index)
 
@@ -148,7 +149,7 @@ class DropdownRenderer extends React.PureComponent {
   setNextIndex = nextIndex => {
     const { envNode } = this.props
 
-    if (!isDefined(nextIndex)) return
+    if (isNil(nextIndex)) return
 
     const target = findItemDOMNode(nextIndex, envNode)
 

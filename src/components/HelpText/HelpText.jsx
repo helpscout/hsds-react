@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
 import Text from '../Text'
-import { isString } from '../../utilities/is'
+import isString from 'lodash.isstring'
 import { HelpTextUI } from './HelpText.css'
 
 const HelpText = props => {

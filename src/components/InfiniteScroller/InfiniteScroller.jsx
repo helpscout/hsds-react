@@ -5,7 +5,8 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import EventListener from '../EventListener'
 import classNames from 'classnames'
 import LoadingDots from '../LoadingDots'
-import { isNodeElement, isNodeVisible } from '../../utilities/node'
+import { isNodeElement, getNodeScope } from '../../utilities/node'
+import { isNodeEnv } from '../../utilities/other'
 
 function noop() {}
 
@@ -226,6 +227,52 @@ InfiniteScroller.propTypes = {
   loading: PropTypes.any,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
+}
+
+/**
+ * Checks if node is visible with the view (a node Element or window). This is typically used for scroll interactions.
+ * Note: This function currently only measures vertical scroll-based
+ * calculations.
+ *
+ * @param     options   object    Config object
+ * @option    node      Element   DOM node to check visibility for
+ * @option    scope     Element   DOM node to check visibility within
+ * @option    offset    number    Top buffer amount for visiblity check
+ * @option    complete  bool      node must be in complete view, if true
+ * @return    bool                True/False if node is in view
+ */
+export function isNodeVisible(options) {
+  if (!options || typeof options !== 'object') return false
+  const { node, scope, offset, complete } = options
+
+  if (!isNodeElement(node)) return false
+
+  let nodeOffset = offset !== undefined ? offset : 0
+  nodeOffset =
+    typeof nodeOffset !== 'number' ? 0 : nodeOffset < 0 ? 0 : nodeOffset
+
+  const nodeScope = getNodeScope(scope || window)
+  const isWindow = nodeScope === window
+  const bufferOffset = 4 // To account for potential borders on the nodeScope
+
+  const rect = node.getBoundingClientRect()
+  const offsetTop = isNodeEnv() ? rect.top : node.offsetTop
+
+  const viewportHeight = isWindow
+    ? window.innerHeight
+    : nodeScope.getBoundingClientRect().height
+  const viewportTop = isWindow ? window.scrollY : nodeScope.scrollTop
+  const viewportBottom = isWindow
+    ? window.innerHeight
+    : viewportTop + viewportHeight + bufferOffset
+
+  const bottom = offsetTop + rect.height
+  const top = complete && nodeOffset === 0 ? bottom : bottom - nodeOffset
+
+  return (
+    parseInt(top, 10) <= parseInt(viewportBottom, 10) &&
+    parseInt(bottom, 10) >= parseInt(viewportTop, 10)
+  )
 }
 
 export default InfiniteScroller

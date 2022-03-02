@@ -7,12 +7,8 @@ import TypingDots from '../TypingDots'
 import Icon from '../Icon'
 import Text from '../Text'
 import classNames from 'classnames'
-import {
-  convertLinksToHTML,
-  isWord,
-  newlineToHTML,
-  textIncludesOnlyEmoji,
-} from '../../utilities/strings'
+import { convertLinksToHTML, newlineToHTML } from '../../utilities/strings'
+import { isWord, textIncludesOnlyEmoji } from './Message.utils'
 import {
   MessageBubbleUI,
   MessageBubbleBodyUI,

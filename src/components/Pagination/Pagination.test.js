@@ -3,7 +3,7 @@ import { render } from '@testing-library/react'
 import { renderHook } from '@testing-library/react-hooks'
 import user from '@testing-library/user-event'
 
-import Pagination, { usePaginationData } from './Pagination'
+import Pagination, { usePaginationData, pluralize } from './Pagination'
 import { simulateKeyPress } from '../KeypressListener/KeypressListener.test'
 import Keys from '../../constants/Keys'
 
@@ -452,5 +452,31 @@ describe('Keyboard', () => {
     )
     simulateKeyPress(Keys.KEY_K)
     expect(changeWatcher).toHaveBeenCalledWith(2)
+  })
+})
+
+describe('Pluralize', () => {
+  test('Pluralizes a zero count', () => {
+    expect(pluralize('message', 0)).toBe('messages')
+  })
+
+  test('Pluralizes a one count', () => {
+    expect(pluralize('message', 1)).toBe('message')
+  })
+
+  test('Pluralizes a +2 count', () => {
+    expect(pluralize('message', 100)).toBe('messages')
+  })
+
+  test('Pluralizes a one count, by default', () => {
+    expect(pluralize('message')).toBe('message')
+  })
+
+  test('Returns an empty string if value arg is falsy', () => {
+    expect(pluralize()).toBe('')
+  })
+
+  test('Skip pluralize if string is ending with an s', () => {
+    expect(pluralize('messages')).toBe('messages')
   })
 })

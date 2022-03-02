@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { ButtonUI, ButtonWrapperUI, SplittedButtonUI } from './Condition.css'
 import classNames from 'classnames'
-import { isNodeWithinViewport } from '../../utilities/node'
 import { linear, smoothScrollTo } from '../../utilities/smoothScroll'
+import { isNodeElement } from '../../utilities/node'
+import { ButtonUI, ButtonWrapperUI, SplittedButtonUI } from './Condition.css'
 import DropList from '../DropList/DropList'
 
 const dropListItem = value => ({
@@ -154,6 +154,24 @@ AddButton.propTypes = {
   selectableType: PropTypes.bool,
   /** Callback when type has changed */
   onTypeChanged: PropTypes.func,
+}
+
+export function isNodeWithinViewport(options) {
+  const defaultOptions = {
+    offset: 0,
+  }
+
+  const mergedOptions = { ...defaultOptions, ...options }
+  const { node, offset } = mergedOptions
+
+  if (!isNodeElement(node)) return false
+
+  const { y } = node.getBoundingClientRect()
+
+  const position = y + offset + window.scrollY
+  const viewportPosition = window.scrollY + window.innerHeight
+
+  return position < viewportPosition
 }
 
 export default AddButton

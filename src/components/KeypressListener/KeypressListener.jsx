@@ -3,9 +3,8 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { addEventListener, removeEventListener } from '../../utilities/events'
+import isNil from 'lodash.isnil'
 import { getClosestDocument } from '../../utilities/node'
-import { isDefined } from '../../utilities/is'
 
 class KeypressListener extends React.Component {
   node
@@ -15,11 +14,15 @@ class KeypressListener extends React.Component {
     const { scope, type } = this.props
     this.scope = scope === document ? getClosestDocument(this.node) : scope
 
-    addEventListener(this.scope, type, this.handleKeyEvent)
+    if (this.scope) {
+      this.scope.addEventListener(type, this.handleKeyEvent)
+    }
   }
 
   componentWillUnmount() {
-    removeEventListener(this.scope, this.props.type, this.handleKeyEvent)
+    if (this.scope) {
+      this.scope.removeEventListener(this.props.type, this.handleKeyEvent)
+    }
   }
 
   shouldComponentUpdate() {
@@ -30,7 +33,7 @@ class KeypressListener extends React.Component {
     const { keyCode, handler, modifier, noModifier } = this.props
     let modKey = true
 
-    if (!isDefined(keyCode)) {
+    if (isNil(keyCode)) {
       return handler(event)
     }
 

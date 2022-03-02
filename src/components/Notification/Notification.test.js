@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { Notification } from './Notification'
+import { Notification, stripUrlPrefix } from './Notification'
 import { Animate, Truncate } from '../index'
 
 jest.useFakeTimers()
@@ -298,5 +298,29 @@ describe('Truncation', () => {
     const o = wrapper.find(Truncate).first()
 
     expect(o.prop('limit')).toBe(3)
+  })
+})
+
+describe('stripUrlPrefix', () => {
+  test('returns argument if not a string', () => {
+    expect(stripUrlPrefix(true)).toBe(true)
+    expect(stripUrlPrefix(false)).toBe(false)
+    expect(stripUrlPrefix(123)).toBe(123)
+  })
+
+  test('removes https://', () => {
+    expect(stripUrlPrefix('https://site.com')).toBe('site.com')
+  })
+
+  test('removes http://', () => {
+    expect(stripUrlPrefix('http://site.com')).toBe('site.com')
+  })
+
+  test('removes https://www', () => {
+    expect(stripUrlPrefix('https://www.site.com')).toBe('site.com')
+  })
+
+  test('removes http://www', () => {
+    expect(stripUrlPrefix('http://www.site.com')).toBe('site.com')
   })
 })

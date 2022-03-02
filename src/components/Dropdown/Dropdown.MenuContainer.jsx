@@ -3,6 +3,8 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 import { connect } from '@helpscout/wedux'
+import isNil from 'lodash.isnil'
+import get from 'lodash.get'
 import Animate from '../Animate'
 import Card from './Dropdown.Card'
 import Menu from './Dropdown.Menu'
@@ -27,15 +29,67 @@ import {
 } from './Dropdown.actions'
 import { MenuContainerUI } from './Dropdown.css.js'
 import classNames from 'classnames'
-import { renderRenderPropComponent } from '../../utilities/component'
-import { noop } from '../../utilities/other'
-import { isBrowserEnv } from '../../utilities/env'
+import getShallowDiffs from '@helpscout/react-utils/dist/getShallowDiffs'
+import { renderRenderPropComponent } from './Dropdown.utils'
 import { createUniqueIDFactory } from '../../utilities/id'
-import { memoizeWithProps } from '../../utilities/memoize'
 import { getComputedClientRect } from './Dropdown.MenuContainer.utils'
+
+function noop() {}
 
 const uniqueID = createUniqueIDFactory('DropdownMenuContainer')
 const clearerID = createUniqueIDFactory('hsds-dropdown-theallclearer')
+
+const shallowEqual = function shallowEqual(newValue, oldValue) {
+  return newValue === oldValue
+}
+
+const simpleIsEqual = function simpleIsEqual(newArgs, lastArgs) {
+  return (
+    newArgs.length === lastArgs.length &&
+    newArgs.every(function (newArg, index) {
+      return shallowEqual(newArg, lastArgs[index])
+    })
+  )
+}
+
+export function memoizeOne(resultFn, isEqual) {
+  if (isEqual === void 0) {
+    isEqual = simpleIsEqual
+  }
+
+  let lastThis
+  let lastArgs = []
+  let lastResult
+  let calledOnce = false
+
+  var result = function result() {
+    for (
+      var _len = arguments.length, newArgs = new Array(_len), _key = 0;
+      _key < _len;
+      _key++
+    ) {
+      newArgs[_key] = arguments[_key]
+    }
+
+    if (calledOnce && lastThis === this && isEqual(newArgs, lastArgs)) {
+      return lastResult
+    }
+
+    lastResult = resultFn.apply(this, newArgs)
+    calledOnce = true
+
+    lastThis = this
+
+    lastArgs = newArgs
+    return lastResult
+  }
+
+  return result
+}
+export const shallowPropMemoizeIsEqual = (a, b) => {
+  return !getShallowDiffs(a[0], b[0]).diffs.length
+}
+export const memoizeWithProps = fn => memoizeOne(fn, shallowPropMemoizeIsEqual)
 
 export class MenuContainer extends React.PureComponent {
   id = uniqueID()
@@ -570,5 +624,11 @@ const ConnectedMenuContainer = connect(
     selectItem,
   }
 )(MenuContainer)
+
+function isBrowserEnv() {
+  if (isNil(process)) return true
+
+  return get(process, 'browser') === true
+}
 
 export default ConnectedMenuContainer

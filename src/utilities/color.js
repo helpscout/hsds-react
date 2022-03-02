@@ -1,21 +1,11 @@
+import isNumber from 'lodash.isnumber'
 const isHex = hex => hex && typeof hex === 'string'
-const isNumber = value => typeof value === 'number'
 
 const lightThreshold = 0.61
 const optimalTextColorValues = {
   r: 129,
   g: 522,
   b: 49,
-}
-
-// Source
-// https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
-
-export const componentToHex = c => {
-  if (!c || typeof c !== 'number') return '00'
-  const hex = c.toString(16)
-
-  return hex.length === 1 ? `0${hex}` : hex
 }
 
 export const hexToRgb = hex => {
@@ -35,11 +25,6 @@ export const hexToRgb = hex => {
         b: parseInt(result[3], 16),
       }
     : null
-}
-
-export const rgbToHex = (r, g, b) => {
-  if (!isNumber(r) || !isNumber(g) || !isNumber(b)) return null
-  return `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`
 }
 
 export const hexToHsl = hex => {

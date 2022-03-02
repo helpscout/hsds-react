@@ -1,9 +1,11 @@
 /* eslint react/no-deprecated: off */
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
+import isNil from 'lodash.isnil'
+import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import Animate from '../Animate'
 import Badge from '../Badge'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import FormLabelContext from '../FormLabel/Context'
 import InputAddOn from './Input.AddOn'
 import InputBackdropV2 from './Input.BackdropV2'
@@ -18,10 +20,8 @@ import { scrollLockY } from '../ScrollLock/ScrollLock.utils'
 import Tooltip from '../Tooltip'
 import { STATES } from '../../constants'
 import Keys from '../../constants/Keys'
-import classNames from 'classnames'
 import { createUniqueIDFactory } from '../../utilities/id'
 import { isModifierKeyPressed } from '../../utilities/keys'
-import { requestAnimationFrame } from '../../utilities/other'
 import { moveCursorToEnd, isTextArea } from './Input.utils'
 import {
   CharValidatorText,
@@ -511,17 +511,16 @@ export class Input extends React.PureComponent {
 
     const { height, value } = this.state
 
-    const resizer =
-      multiline != null ? (
-        <InputResizer
-          contents={value}
-          currentHeight={height}
-          minimumLines={this.getMultilineValue()}
-          offsetAmount={offsetAmount}
-          onResize={this.handleExpandingResize}
-          seamless={seamless}
-        />
-      ) : null
+    const resizer = !isNil(multiline) ? (
+      <InputResizer
+        contents={value}
+        currentHeight={height}
+        minimumLines={this.getMultilineValue()}
+        offsetAmount={offsetAmount}
+        onResize={this.handleExpandingResize}
+        seamless={seamless}
+      />
+    ) : null
 
     return resizer
   }

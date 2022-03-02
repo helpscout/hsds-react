@@ -1,4 +1,4 @@
-import { isString } from '../../utilities/is'
+import isString from 'lodash.isstring'
 
 export const COMPONENT_KEY = 'Icon'
 

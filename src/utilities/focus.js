@@ -1,4 +1,5 @@
-import { getNodeScope, getWindowFromNode, isNodeElement } from './node'
+import isNil from 'lodash.isnil'
+import { getNodeScope, isNodeElement } from './node'
 
 export const FOCUSABLE_SELECTOR =
   'a[href],frame,iframe,input:not([type=hidden]):not([disabled]),select,textarea,button:not([disabled]):not([tabindex="-1"]),*[tabindex]:not([tabindex="-1"])'
@@ -92,7 +93,7 @@ export function manageTrappedFocus(container, e) {
 
   const focusableNodes = findFocusableNodes(container)
 
-  if (focusableNodes != null) {
+  if (!isNil(focusableNodes)) {
     const focusedNodeIndex = Array.prototype.indexOf.call(
       focusableNodes,
       focusedNode
@@ -108,73 +109,4 @@ export function manageTrappedFocus(container, e) {
       focusableNodes[focusableNodes.length - 1].focus()
     }
   }
-}
-
-export const incrementFocusIndex = options => {
-  if (!options || typeof options !== 'object') return false
-
-  const defaultOptions = {
-    currentIndex: null,
-    direction: 'down',
-    enableCycling: false,
-    itemCount: 1,
-  }
-
-  const { currentIndex, direction, enableCycling, itemCount } = Object.assign(
-    {},
-    defaultOptions,
-    options
-  )
-
-  if (typeof currentIndex !== 'number' && currentIndex !== null) return false
-  if (typeof direction !== 'string') return false
-  if (typeof enableCycling !== 'boolean') return false
-  if (typeof itemCount !== 'number') return false
-
-  let newFocusIndex
-
-  if (direction === 'up') {
-    if (enableCycling) {
-      newFocusIndex =
-        currentIndex === null
-          ? 0
-          : currentIndex <= 0
-          ? itemCount
-          : currentIndex - 1
-    } else {
-      newFocusIndex =
-        currentIndex === null ? 0 : currentIndex <= 0 ? 0 : currentIndex - 1
-    }
-  }
-
-  if (direction === 'down') {
-    if (enableCycling) {
-      newFocusIndex =
-        currentIndex === null
-          ? 0
-          : itemCount <= currentIndex
-          ? 0
-          : currentIndex + 1
-    } else {
-      newFocusIndex =
-        currentIndex === null
-          ? 0
-          : itemCount <= currentIndex
-          ? currentIndex
-          : currentIndex + 1
-    }
-  }
-
-  return newFocusIndex
-}
-
-export const focusWithoutScrolling = node => {
-  const _window = getWindowFromNode(node)
-  // Cache the current position
-  const { scrollX, scrollY } = _window
-
-  node.focus()
-
-  // Immediately scroll to the cached position
-  _window.scrollTo(scrollX, scrollY)
 }

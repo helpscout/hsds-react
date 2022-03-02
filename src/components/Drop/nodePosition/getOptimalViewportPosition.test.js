@@ -1,4 +1,4 @@
-import { getOptimalViewportPosition } from '../../nodePosition'
+import { getOptimalViewportPosition } from '../Drop.utils'
 
 test('Returns false for invalid arguments', () => {
   expect(getOptimalViewportPosition()).toBeFalsy()
