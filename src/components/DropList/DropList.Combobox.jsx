@@ -84,8 +84,8 @@ function Combobox({
     },
 
     onInputValueChange({ inputValue }) {
-      let filtered = items.filter(item =>
-        itemToString(item).toLowerCase().startsWith(inputValue.toLowerCase())
+      let filtered = items.filter(
+        item => itemToString(item).toLowerCase() === inputValue.toLowerCase()
       )
       const isListEmpty = filtered.length === 0
 
