@@ -9,6 +9,7 @@ import {
   isItemAction,
   isItemADivider,
   isItemAGroupLabel,
+  emphasizeSubstring,
   objectHasKey,
 } from './DropList.utils'
 import {
@@ -29,6 +30,7 @@ const ListItem = forwardRef(
       isSelected,
       renderCustomListItem,
       isDisabled,
+      inputValue,
       ...itemProps
     },
     ref
@@ -92,9 +94,13 @@ const ListItem = forwardRef(
         withMultipleSelection={withMultipleSelection}
         {...itemProps}
       >
-        <ListItemTextUI>
-          {isPlainObject(item) ? item[contentKey] : item}
-        </ListItemTextUI>
+        <ListItemTextUI
+          dangerouslySetInnerHTML={getListItemText({
+            label: isPlainObject(item) ? item[contentKey] : item,
+            emphasize: inputValue && !isItemAction(item),
+            substr: inputValue,
+          })}
+        />
         {withMultipleSelection && !isItemAction(item) ? (
           <SelectedBadge isSelected={isSelected} />
         ) : null}
@@ -102,6 +108,17 @@ const ListItem = forwardRef(
     )
   }
 )
+
+/**
+ * If `substr` is passed, we want to emphasize that with html's <strong />
+ */
+export function getListItemText({ label, emphasize, substr }) {
+  const __html = emphasize ? emphasizeSubstring(label, substr) : label
+
+  return {
+    __html,
+  }
+}
 
 export function generateListItemKey(item, index) {
   const contentKey = getItemContentKeyName(item)

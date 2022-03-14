@@ -304,6 +304,11 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
         toggler={
           <SimpleButton text="Combobox" style={{ marginLeft: '20px' }} />
         }
+        tippyOptions={{
+          placement: 'top-start',
+          offset: [0, 5],
+          appendTo: () => document.body,
+        }}
       />
     </div>
   </Story>
@@ -454,6 +459,7 @@ const groupedItems = [
       }}
     >
       <DropList
+        variant="combobox"
         items={simpleGroupedItems}
         toggler={<SimpleButton text="Click" />}
       />
@@ -475,6 +481,7 @@ const groupedItems = [
       }}
     >
       <DropList
+        variant="combobox"
         items={groupAndDividerItems}
         toggler={<SimpleButton text="Click" />}
       />
@@ -842,23 +849,28 @@ Depending on your use case, you might want to set `closeOnSelection = false` whe
       }}
     >
       <DropList
-        items={regularItems.slice(0, 3).concat([
-          {
+        variant="combobox"
+        items={regularItems
+          .slice(0, 3)
+          .concat({
             type: 'divider',
-          },
-          {
-            label: 'Reset to defaults',
+          })
+          .concat({
+            label: 'Add tag',
+            template: 'Add __inputValue__ tag',
             type: 'action',
-            action: 'RESET',
-          },
-        ])}
+            action: 'ADD_TAG',
+          })}
         onSelect={(selection, clickedItem) => {
-          if (clickedItem.type === 'action' && clickedItem.action === 'RESET') {
-            console.log('RESET CLICKED')
+          if (
+            clickedItem.type === 'action' &&
+            clickedItem.action === 'ADD_TAG'
+          ) {
+            console.log('add tag clicked, do something!')
+            console.log('🚀 ~ WithActionItem ~ clickedItem', clickedItem)
           }
         }}
         toggler={<SimpleButton text="Click" />}
-        withMultipleSelection
       />
     </div>
   </Story>

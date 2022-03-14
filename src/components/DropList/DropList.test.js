@@ -3,11 +3,13 @@ import { render, waitFor } from '@testing-library/react'
 import user from '@testing-library/user-event'
 import { css } from 'styled-components'
 import DropList from './DropList'
+import { filterItems } from './DropList.Combobox'
 import { SimpleButton, SelectTag, SplittedButton } from './DropList.togglers'
 import {
   flattenListItems,
   getEnabledItemIndex,
   getMenuWidth,
+  emphasizeSubstring,
 } from './DropList.utils'
 import {
   itemsWithDivider,
@@ -567,7 +569,7 @@ describe('Combobox', () => {
     expect(getByPlaceholderText('Search')).toHaveFocus()
   })
 
-  test('should return input to onInputChange', () => {
+  test('should return value and resultant filtered items onInputChange', () => {
     const onInputChangeSpy = jest.fn()
     const { getByPlaceholderText } = render(
       <DropList
@@ -579,10 +581,14 @@ describe('Combobox', () => {
       />
     )
 
-    user.type(getByPlaceholderText('Search'), 'Aoki')
+    user.type(getByPlaceholderText('Search'), 'J')
 
-    expect(onInputChangeSpy).toHaveBeenCalledWith('Aoki')
+    expect(onInputChangeSpy).toHaveBeenCalledWith('J', [
+      { label: 'John' },
+      { label: 'Jeff' },
+    ])
   })
+
   test('should hide the search input on combobox if list empty', () => {
     const { queryByRole, getByPlaceholderText } = render(
       <DropList
@@ -632,7 +638,7 @@ describe('Combobox', () => {
     ).toBe('none')
   })
 
-  test('should filter items', () => {
+  test('should filter items', async () => {
     const { container, getByPlaceholderText } = render(
       <DropList
         isMenuOpen
@@ -646,10 +652,12 @@ describe('Combobox', () => {
 
     user.type(getByPlaceholderText('Search'), 'G')
 
-    expect(container.querySelectorAll('.DropListItem').length).toBe(1)
+    await waitFor(() => {
+      expect(container.querySelectorAll('.DropListItem').length).toBe(1)
+    })
   })
 
-  test('should filter items to empty if none found', () => {
+  test('should filter items to empty if none found', async () => {
     const { container, getByText, getByPlaceholderText } = render(
       <DropList
         isMenuOpen
@@ -663,14 +671,16 @@ describe('Combobox', () => {
 
     user.type(getByPlaceholderText('Search'), 'Z')
 
-    expect(container.querySelectorAll('.DropListItem').length).toBe(0)
-    expect(getByText('No results for Z')).toBeInTheDocument()
-    // input search should still be present
-    expect(
-      window
-        .getComputedStyle(getByPlaceholderText('Search').parentElement)
-        .getPropertyValue('display')
-    ).toBe('block')
+    await waitFor(() => {
+      expect(container.querySelectorAll('.DropListItem').length).toBe(0)
+      expect(getByText('No results for Z')).toBeInTheDocument()
+      // input search should still be present
+      expect(
+        window
+          .getComputedStyle(getByPlaceholderText('Search').parentElement)
+          .getPropertyValue('display')
+      ).toBe('block')
+    })
   })
 })
 
@@ -1184,7 +1194,7 @@ describe('Selection', () => {
     })
   })
 
-  test('should select when filtering and pressing enter on combobox', () => {
+  test('should select when filtering and pressing enter on combobox', async () => {
     const onSelectSpy = jest.fn()
     const { getByPlaceholderText } = render(
       <DropList
@@ -1199,7 +1209,9 @@ describe('Selection', () => {
     user.type(getByPlaceholderText('Search'), 'G')
     user.type(getByPlaceholderText('Search'), '{enter}')
 
-    expect(onSelectSpy).toHaveBeenCalledWith('George', 'George')
+    await waitFor(() => {
+      expect(onSelectSpy).toHaveBeenCalledWith('George', 'George')
+    })
   })
 
   test('should set an initial item as selected (single string version)', () => {
@@ -1793,5 +1805,162 @@ describe('getMenuWidth', () => {
 
   test('should return custom width if provided', () => {
     expect(getMenuWidth('Combobox', '400px')).toBe('400px')
+  })
+})
+
+describe('markStringSubsection', () => {
+  test('should not mark a subsection if not found in str', () => {
+    const str = 'hello'
+
+    expect(emphasizeSubstring(str, 'f')).toBe('hello')
+    expect(emphasizeSubstring(str, 'fe')).toBe('hello')
+  })
+
+  test('should mark a subsection with strong by default', () => {
+    const str = 'hello'
+
+    expect(emphasizeSubstring(str, 'h')).toBe('<strong>h</strong>ello')
+    expect(emphasizeSubstring(str, 'he')).toBe('<strong>he</strong>llo')
+  })
+
+  test('should mark a subsection with custom tag', () => {
+    const str = 'hello'
+
+    expect(emphasizeSubstring(str, 'he', 'em')).toBe('<em>he</em>llo')
+  })
+
+  test('should mark a subsection respecting uppercase chars', () => {
+    const str = 'Hello'
+
+    expect(emphasizeSubstring(str, 'h')).toBe('<strong>H</strong>ello')
+    expect(emphasizeSubstring(str, 'he')).toBe('<strong>He</strong>llo')
+  })
+
+  test('should mark a subsection in the middle', () => {
+    const str = 'hello'
+
+    expect(emphasizeSubstring(str, 'e')).toBe('h<strong>e</strong>llo')
+    expect(emphasizeSubstring(str, 'el')).toBe('h<strong>el</strong>lo')
+  })
+
+  test('should mark a subsection at the end', () => {
+    const str = 'hello'
+
+    expect(emphasizeSubstring(str, 'llo')).toBe('he<strong>llo</strong>')
+    expect(emphasizeSubstring(str, 'o')).toBe('hell<strong>o</strong>')
+  })
+})
+
+describe('filter items', () => {
+  test('should return items that start with input value', () => {
+    expect(filterItems(beatles, 'j')).toEqual(['John'])
+    expect(filterItems(someItems, 'j')).toEqual([
+      { label: 'John' },
+      { label: 'Jeff' },
+    ])
+  })
+
+  test('should return empty if nothing starts with input value', () => {
+    expect(filterItems(beatles, 'w')).toEqual([])
+    expect(filterItems(someItems, 'w')).toEqual([])
+  })
+
+  test('should return groups with items in them', () => {
+    const someItems = [
+      { label: 'Beatles', type: 'group_label' },
+      { label: 'Paul' },
+      { label: 'Ringo' },
+      { label: 'George' },
+      { label: 'People', type: 'group_label' },
+      { label: 'Bob' },
+      { label: 'Jeff' },
+      { label: 'David' },
+    ]
+
+    expect(filterItems(someItems, 'P')).toEqual([
+      { label: 'Beatles', type: 'group_label' },
+      { label: 'Paul' },
+    ])
+    expect(filterItems(someItems, 'W')).toEqual([])
+    expect(filterItems(someItems, 'D')).toEqual([
+      { label: 'People', type: 'group_label' },
+      { label: 'David' },
+    ])
+  })
+
+  test('should return action item', () => {
+    const someItems = [
+      { label: 'Paul' },
+      { label: 'Ringo' },
+      { label: 'George' },
+      { type: 'divider' },
+      { label: 'Listen', type: 'action' },
+    ]
+
+    expect(filterItems(someItems, 'P')).toEqual([
+      { label: 'Paul' },
+      { type: 'divider' },
+      { label: 'Listen', type: 'action' },
+    ])
+
+    expect(filterItems(someItems, 'W')).toEqual([
+      { label: 'Listen', type: 'action' },
+    ])
+  })
+
+  test('should return action item (with groups)', () => {
+    const someItems = [
+      { label: 'Beatles', type: 'group_label' },
+      { label: 'Paul' },
+      { label: 'Ringo' },
+      { label: 'George' },
+      { type: 'divider' },
+      { label: 'Listen', type: 'action' },
+    ]
+
+    expect(filterItems(someItems, 'P')).toEqual([
+      { label: 'Beatles', type: 'group_label' },
+      { label: 'Paul' },
+      { type: 'divider' },
+      { label: 'Listen', type: 'action' },
+    ])
+
+    expect(filterItems(someItems, 'W')).toEqual([
+      { label: 'Listen', type: 'action' },
+    ])
+  })
+
+  test('should update action item if template key found', () => {
+    const someItems = [
+      { label: 'Paul' },
+      { label: 'Ringo' },
+      { label: 'George' },
+      { type: 'divider' },
+      {
+        label: 'Listen',
+        type: 'action',
+        template: 'You searched: __inputValue__',
+      },
+    ]
+
+    expect(filterItems(someItems, 'P')).toEqual([
+      { label: 'Paul' },
+      { type: 'divider' },
+      {
+        label: 'You searched: P',
+        type: 'action',
+        template: 'You searched: __inputValue__',
+        inputValue: 'P',
+      },
+    ])
+
+    expect(filterItems(someItems, 'W')).toEqual([
+      {
+        label: 'You searched: W',
+        type: 'action',
+        template: 'You searched: __inputValue__',
+        inputValue: 'W',
+      },
+    ])
   })
 })
