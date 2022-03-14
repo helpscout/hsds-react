@@ -390,8 +390,11 @@ Add a `type = action`:
 {
   label: 'Create tag',
   type: 'action',
+  template: 'Add __inputValue__ tag'
 }
 ```
+
+> If you want to update the label of it with the input value of a combobox, add a `template:string` key, where `__inputValue__` will be replaced with the typed value.
 
 > This is a similar effect to using `clearOnSelect`, except only for action items as opposed to all items in the list
 
