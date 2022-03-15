@@ -398,6 +398,27 @@ Add a `type = action`:
 
 > This is a similar effect to using `clearOnSelect`, except only for action items as opposed to all items in the list
 
+#### Hide items if the input of the combobox is empty
+
+Sometimes you might need to only add an item (usually an action) if there's some value in the input, for that you can add `hideOnEmptyInputValue : true` to your item and it will do just that:
+
+```jsx
+<DropList
+  variant="combobox"
+  items={regularItems
+    .concat({
+      type: 'divider',
+      hideOnEmptyInputValue: true,
+    })
+    .concat({
+      label: 'Add tag',
+      template: 'Add __inputValue__ tag',
+      type: 'action',
+      action: 'ADD_TAG',
+      hideOnEmptyInputValue: true,
+    })}
+```
+
 #### Dividers
 
 Add a `type = divider` property to an object to create a divider
