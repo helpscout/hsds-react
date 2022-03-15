@@ -35,6 +35,10 @@ const ListItem = forwardRef(
     },
     ref
   ) => {
+    if (!inputValue && item.hideOnEmptyInputValue) {
+      return null
+    }
+
     if (isItemADivider(item)) {
       return (
         <DividerUI className="DropListItem--divider" key={`divider_${index}`} />

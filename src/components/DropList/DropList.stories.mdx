@@ -857,12 +857,14 @@ Depending on your use case, you might want to set `closeOnSelection = false` whe
           .slice(0, 3)
           .concat({
             type: 'divider',
+            hideOnEmptyInputValue: true,
           })
           .concat({
             label: 'Add tag',
             template: 'Add __inputValue__ tag',
             type: 'action',
             action: 'ADD_TAG',
+            hideOnEmptyInputValue: true,
           })}
         onSelect={(selection, clickedItem) => {
           if (
