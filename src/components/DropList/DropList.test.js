@@ -1206,8 +1206,7 @@ describe('Selection', () => {
       />
     )
 
-    user.type(getByPlaceholderText('Search'), 'G')
-    user.type(getByPlaceholderText('Search'), '{enter}')
+    user.type(getByPlaceholderText('Search'), 'G{enter}')
 
     await waitFor(() => {
       expect(onSelectSpy).toHaveBeenCalledWith('George', 'George')

@@ -52,13 +52,13 @@ function Combobox({
   toggleOpenedState = noop,
   withMultipleSelection = false,
 }) {
-  const [inputFilteredItems, setInputFilteredItems] = useState(items)
-  const [resultingItems, setResultingItems] = useState([])
   const noSourceItems = items.length === 0
   const withCustomEmptyListItems =
     noSourceItems &&
     Array.isArray(customEmptyListItems) &&
     customEmptyListItems.length > 0
+  const [inputFilteredItems, setInputFilteredItems] = useState(items)
+  const actionItemRef = useRef(null)
   const inputEl = useRef(null)
 
   const {
@@ -73,7 +73,7 @@ function Combobox({
     initialInputValue: '',
     initialIsOpen: isOpen,
     isOpen,
-    items: resultingItems,
+    items: withCustomEmptyListItems ? customEmptyListItems : inputFilteredItems,
     itemToString,
     selectedItem,
 
@@ -86,7 +86,7 @@ function Combobox({
     },
 
     onInputValueChange({ inputValue }) {
-      let filtered = filterItems(items, inputValue)
+      let filtered = filterItems(items, inputValue, actionItemRef)
       const isListEmpty = filtered.length === 0
 
       if (isListEmpty && Array.isArray(customEmptyListItems)) {
@@ -136,7 +136,9 @@ function Combobox({
       return stateReducerCommon({
         changes,
         closeOnSelection,
-        items: resultingItems,
+        items: withCustomEmptyListItems
+          ? customEmptyListItems
+          : inputFilteredItems,
         selectedItems,
         state,
         type: `${VARIANTS.COMBOBOX}.${type}`,
@@ -150,12 +152,14 @@ function Combobox({
   }, [isOpen])
 
   useDeepCompareEffect(() => {
-    setResultingItems(
-      withCustomEmptyListItems ? customEmptyListItems : inputFilteredItems
-    )
-  }, [withCustomEmptyListItems, customEmptyListItems, inputFilteredItems])
+    if (isNil(actionItemRef.current)) {
+      const actionItem = items.find(item => isItemAction(item))
 
-  useDeepCompareEffect(() => {
+      // Store the original action item in a ref, we make sure to only do it once.
+      // The `false` assignment here will make sure we don't enter this
+      // `if` block again: `isNil(false) === false`
+      actionItemRef.current = !isNil(actionItem) ? { ...actionItem } : false
+    }
     setInputFilteredItems(items)
   }, [items])
 
@@ -245,7 +249,9 @@ function Combobox({
         {renderListContents({
           customEmptyList,
           inputValue,
-          items: resultingItems,
+          items: withCustomEmptyListItems
+            ? customEmptyListItems
+            : inputFilteredItems,
           renderListItem,
         })}
       </MenuListUI>
@@ -299,6 +305,31 @@ function maybeRemoveActionDivider(items) {
 }
 
 /**
+ * Find the action item and restore it's label to the original one
+ * @param {array} items List of items
+ * @param {object} actionItemRef Ref that holds the original action item if it existed
+ * @returns array
+ */
+function restoreActionItemLabel(items, actionItemRef) {
+  if (actionItemRef.current === false) return items
+  // Usually action items are the last in the array, let's try our luck to avoi traversing the whole array
+  const last = items[items.length - 1]
+
+  if (isItemAction(last)) {
+    last.label = actionItemRef.current.label
+  } else {
+    // If it wasn't, traverse the array trying to find it
+    const actionItemIndex = items.findIndex(item => isItemAction(item))
+
+    if (actionItemIndex !== -1) {
+      items[actionItemIndex].label = actionItemRef.current.label
+    }
+  }
+
+  return items
+}
+
+/**
  * Filters items:
  * Keeps item if it's value starts with the value of `inputValue`
  * Keeps item if it's GROUP_LABEL, only if that group still has items left in the filtered array
@@ -313,17 +344,21 @@ function maybeRemoveActionDivider(items) {
  * @param {string} inputValue The value to filter by
  * @returns Array
  */
-export function filterItems(items, inputValue) {
+export function filterItems(items, inputValue, actionItemRef) {
   let filtered = []
   let hasAction = false
   let hasGroups = false
 
+  if (!inputValue) {
+    return !isNil(actionItemRef.current) || actionItemRef.current === false
+      ? restoreActionItemLabel(items, actionItemRef)
+      : items
+  }
+
   for (let index = 0; index < items.length; index++) {
     const item = items[index]
 
-    if (itemToString(item).toLowerCase().startsWith(inputValue.toLowerCase())) {
-      filtered.push(item)
-    } else if (isItemAction(item)) {
+    if (isItemAction(item)) {
       hasAction = true
       filtered.push(item)
 
@@ -335,6 +370,11 @@ export function filterItems(items, inputValue) {
       hasGroups = true
       filtered.push(item)
     } else if (isItemADivider(item) && isItemAction(items[index + 1])) {
+      filtered.push(item)
+    } else if (
+      inputValue &&
+      itemToString(item).toLowerCase().startsWith(inputValue.toLowerCase())
+    ) {
       filtered.push(item)
     }
   }
