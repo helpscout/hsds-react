@@ -301,3 +301,29 @@ export function getMenuWidth(variant, menuWidth) {
 
   return variant.toLowerCase() === 'combobox' ? '220px' : '200px'
 }
+
+/**
+ * Emphasize the first matched section of a string that respects uppercase
+ * @param {string} str The string to process
+ * @param {string} subsection The section of the string to emphasize
+ * @returns string
+ */
+export function emphasizeSubstring(str, subsection, htmlTag = 'strong') {
+  const strUppercased = str.toUpperCase()
+  const subsectionUppercased = subsection.toUpperCase()
+  const idx = strUppercased.indexOf(subsectionUppercased)
+
+  if (!subsectionUppercased || idx === -1) {
+    return str
+  }
+
+  const l = subsectionUppercased.length
+
+  return (
+    str.substring(0, idx) +
+    `<${htmlTag}>` +
+    str.substring(idx, l + idx) +
+    `</${htmlTag}>` +
+    str.substring(idx + l)
+  )
+}
