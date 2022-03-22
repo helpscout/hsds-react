@@ -145,6 +145,8 @@ import note from '../../icons/note.svg'
 import objects from '../../icons/objects.svg'
 import offline from '../../icons/offline.svg'
 import orderedList from '../../icons/ordered-list.svg'
+import panelLeft from '../../icons/panel-left.svg'
+import panelRight from '../../icons/panel-right.svg'
 import paperPlane from '../../icons/paper-plane.svg'
 import pause from '../../icons/pause.svg'
 import pencilSmall from '../../icons/pencil-small.svg'
@@ -389,6 +391,8 @@ const ICONS = {
   offline,
   'option-dots': ellipsis,
   'ordered-list': orderedList,
+  'panel-left': panelLeft,
+  'panel-right': panelRight,
   'paper-plane': paperPlane,
   pause,
   'pencil-small': pencilSmall,
