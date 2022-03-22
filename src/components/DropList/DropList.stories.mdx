@@ -304,6 +304,11 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
         toggler={
           <SimpleButton text="Combobox" style={{ marginLeft: '20px' }} />
         }
+        tippyOptions={{
+          placement: 'top-start',
+          offset: [0, 5],
+          appendTo: () => document.body,
+        }}
       />
     </div>
   </Story>
@@ -385,10 +390,34 @@ Add a `type = action`:
 {
   label: 'Create tag',
   type: 'action',
+  template: 'Add __inputValue__ tag'
 }
 ```
 
+> If you want to update the label of it with the input value of a combobox, add a `template:string` key, where `__inputValue__` will be replaced with the typed value.
+
 > This is a similar effect to using `clearOnSelect`, except only for action items as opposed to all items in the list
+
+#### Hide items if the input of the combobox is empty
+
+Sometimes you might need to only add an item (usually an action) if there's some value in the input, for that you can add `hideOnEmptyInputValue : true` to your item and it will do just that:
+
+```jsx
+<DropList
+  variant="combobox"
+  items={regularItems
+    .concat({
+      type: 'divider',
+      hideOnEmptyInputValue: true,
+    })
+    .concat({
+      label: 'Add tag',
+      template: 'Add __inputValue__ tag',
+      type: 'action',
+      action: 'ADD_TAG',
+      hideOnEmptyInputValue: true,
+    })}
+```
 
 #### Dividers
 
@@ -454,6 +483,7 @@ const groupedItems = [
       }}
     >
       <DropList
+        variant="combobox"
         items={simpleGroupedItems}
         toggler={<SimpleButton text="Click" />}
       />
@@ -475,6 +505,7 @@ const groupedItems = [
       }}
     >
       <DropList
+        variant="combobox"
         items={groupAndDividerItems}
         toggler={<SimpleButton text="Click" />}
       />
@@ -842,23 +873,30 @@ Depending on your use case, you might want to set `closeOnSelection = false` whe
       }}
     >
       <DropList
-        items={regularItems.slice(0, 3).concat([
-          {
+        variant="combobox"
+        items={regularItems
+          .slice(0, 3)
+          .concat({
             type: 'divider',
-          },
-          {
-            label: 'Reset to defaults',
+            hideOnEmptyInputValue: true,
+          })
+          .concat({
+            label: 'Add tag',
+            template: 'Add __inputValue__ tag',
             type: 'action',
-            action: 'RESET',
-          },
-        ])}
+            action: 'ADD_TAG',
+            hideOnEmptyInputValue: true,
+          })}
         onSelect={(selection, clickedItem) => {
-          if (clickedItem.type === 'action' && clickedItem.action === 'RESET') {
-            console.log('RESET CLICKED')
+          if (
+            clickedItem.type === 'action' &&
+            clickedItem.action === 'ADD_TAG'
+          ) {
+            console.log('add tag clicked, do something!')
+            console.log('🚀 ~ WithActionItem ~ clickedItem', clickedItem)
           }
         }}
         toggler={<SimpleButton text="Click" />}
-        withMultipleSelection
       />
     </div>
   </Story>

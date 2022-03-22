@@ -2,11 +2,15 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useCombobox } from 'downshift'
 import useDeepCompareEffect from 'use-deep-compare-effect'
 import isFunction from 'lodash.isfunction'
+import isNil from 'lodash.isnil'
 import {
-  itemToString,
-  isItemSelected,
-  renderListContents,
+  isItemAction,
+  isItemADivider,
+  isItemAGroupLabel,
   isItemHighlightable,
+  isItemSelected,
+  itemToString,
+  renderListContents,
 } from './DropList.utils'
 import {
   getA11ySelectionMessageCommon,
@@ -48,15 +52,13 @@ function Combobox({
   toggleOpenedState = noop,
   withMultipleSelection = false,
 }) {
-  const [inputFilteredItems, setInputFilteredItems] = useState(items)
   const noSourceItems = items.length === 0
   const withCustomEmptyListItems =
     noSourceItems &&
     Array.isArray(customEmptyListItems) &&
     customEmptyListItems.length > 0
-  const resultingItems = withCustomEmptyListItems
-    ? customEmptyListItems
-    : inputFilteredItems
+  const [inputFilteredItems, setInputFilteredItems] = useState(items)
+  const actionItemRef = useRef(null)
   const inputEl = useRef(null)
 
   const {
@@ -71,7 +73,7 @@ function Combobox({
     initialInputValue: '',
     initialIsOpen: isOpen,
     isOpen,
-    items: resultingItems,
+    items: withCustomEmptyListItems ? customEmptyListItems : inputFilteredItems,
     itemToString,
     selectedItem,
 
@@ -84,9 +86,7 @@ function Combobox({
     },
 
     onInputValueChange({ inputValue }) {
-      let filtered = items.filter(item =>
-        itemToString(item).toLowerCase().startsWith(inputValue.toLowerCase())
-      )
+      let filtered = filterItems(items, inputValue, actionItemRef)
       const isListEmpty = filtered.length === 0
 
       if (isListEmpty && Array.isArray(customEmptyListItems)) {
@@ -104,6 +104,7 @@ function Combobox({
 
       setHighlightedIndex(filtered.findIndex(isItemHighlightable))
       setInputFilteredItems(filtered)
+      onInputChange(inputValue, filtered)
     },
 
     onIsOpenChange(changes) {
@@ -135,7 +136,9 @@ function Combobox({
       return stateReducerCommon({
         changes,
         closeOnSelection,
-        items: resultingItems,
+        items: withCustomEmptyListItems
+          ? customEmptyListItems
+          : inputFilteredItems,
         selectedItems,
         state,
         type: `${VARIANTS.COMBOBOX}.${type}`,
@@ -149,6 +152,14 @@ function Combobox({
   }, [isOpen])
 
   useDeepCompareEffect(() => {
+    if (isNil(actionItemRef.current)) {
+      const actionItem = items.find(item => isItemAction(item))
+
+      // Store the original action item in a ref, we make sure to only do it once.
+      // The `false` assignment here will make sure we don't enter this
+      // `if` block again: `isNil(false) === false`
+      actionItemRef.current = !isNil(actionItem) ? { ...actionItem } : false
+    }
     setInputFilteredItems(items)
   }, [items])
 
@@ -156,6 +167,7 @@ function Combobox({
     const itemProps = {
       highlightedIndex,
       index,
+      inputValue,
       isSelected: isItemSelected({
         item,
         selectedItem,
@@ -201,9 +213,6 @@ function Combobox({
             onBlur: event => {
               onMenuBlur(event)
             },
-            onChange: event => {
-              onInputChange(event.target.value)
-            },
             onFocus: event => {
               onMenuFocus(event)
             },
@@ -240,12 +249,145 @@ function Combobox({
         {renderListContents({
           customEmptyList,
           inputValue,
-          items: resultingItems,
+          items: withCustomEmptyListItems
+            ? customEmptyListItems
+            : inputFilteredItems,
           renderListItem,
         })}
       </MenuListUI>
     </DropListWrapperUI>
   )
+}
+
+/**
+ * Remove empty groups (normally after some filtering has been done), examples:
+ * [group_label, item, group_label, item] => [group_label, item, group_label, item]
+ * [group_label, item, group_label] => [group_label, item]
+ * [group_label, group_label] => []
+ * [group_label, divider] => []
+ * [group_label, divider, action] => [action]
+ *
+ * @param {Array} items The items to process
+ * @returns Array
+ */
+function removeEmptyGroups(items) {
+  const copy = [].concat(items)
+  const remove = []
+
+  for (let index = 0; index < copy.length; index++) {
+    const current = copy[index]
+    const next = copy[index + 1]
+
+    if (isItemAGroupLabel(current)) {
+      if (isNil(next) || isItemAGroupLabel(next) || isItemADivider(next)) {
+        remove.push(index)
+      }
+    }
+  }
+
+  return remove.length ? copy.filter((_, idx) => !remove.includes(idx)) : copy
+}
+
+/**
+ * Remove the divider if the only other item left is an action item:
+ * [dividerItem, actionItem] => [actionItem]
+ * @param {Array} items The items to process
+ * @returns Array
+ */
+function maybeRemoveActionDivider(items) {
+  if (items.length === 2) {
+    if (isItemADivider(items[0]) && isItemAction(items[1])) {
+      return items.filter(item => !isItemADivider(item))
+    }
+  }
+
+  return items
+}
+
+/**
+ * Find the action item and restore it's label to the original one
+ * @param {array} items List of items
+ * @param {object} actionItemRef Ref that holds the original action item if it existed
+ * @returns array
+ */
+function restoreActionItemLabel(items, actionItemRef) {
+  if (actionItemRef.current === false) return items
+  // Usually action items are the last in the array, let's try our luck to avoi traversing the whole array
+  const last = items[items.length - 1]
+
+  if (isItemAction(last)) {
+    last.label = actionItemRef.current.label
+  } else {
+    // If it wasn't, traverse the array trying to find it
+    const actionItemIndex = items.findIndex(item => isItemAction(item))
+
+    if (actionItemIndex !== -1) {
+      items[actionItemIndex].label = actionItemRef.current.label
+    }
+  }
+
+  return items
+}
+
+/**
+ * Filters items:
+ * Keeps item if it's value starts with the value of `inputValue`
+ * Keeps item if it's GROUP_LABEL, only if that group still has items left in the filtered array
+ * Keeps item if it's ACTION
+ * Keeps item if it's DIVIDER followed by ACTION and there are more items left in the filtered array
+ * 
+ * Plus:
+ * ACTION item: if a `template` key is found, replace the "__inputValue__" substring found in it with `inputValue` 
+ * and add a new key `inputValue` for easy retrieval
+ 
+ * @param {Array} items The items to process
+ * @param {string} inputValue The value to filter by
+ * @returns Array
+ */
+export function filterItems(items, inputValue, actionItemRef) {
+  let filtered = []
+  let hasAction = false
+  let hasGroups = false
+
+  if (!inputValue) {
+    return !isNil(actionItemRef.current) || actionItemRef.current === false
+      ? restoreActionItemLabel(items, actionItemRef)
+      : items
+  }
+
+  for (let index = 0; index < items.length; index++) {
+    const item = items[index]
+
+    if (isItemAction(item)) {
+      hasAction = true
+      filtered.push(item)
+
+      if (item.template && inputValue) {
+        item.label = item.template.replace('__inputValue__', inputValue)
+        item.inputValue = inputValue
+      }
+    } else if (isItemAGroupLabel(item)) {
+      hasGroups = true
+      filtered.push(item)
+    } else if (isItemADivider(item) && isItemAction(items[index + 1])) {
+      filtered.push(item)
+    } else if (
+      inputValue &&
+      itemToString(item).toLowerCase().startsWith(inputValue.toLowerCase())
+    ) {
+      filtered.push(item)
+    }
+  }
+
+  if (hasGroups) {
+    filtered = removeEmptyGroups(filtered)
+  }
+
+  if (hasAction) {
+    filtered = maybeRemoveActionDivider(filtered)
+  }
+
+  return filtered
 }
 
 export default Combobox
