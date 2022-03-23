@@ -46,7 +46,7 @@ module.exports = api => {
             firefox: '85',
             chrome: '86',
             safari: '12',
-            node: '12.16.3',
+            node: '16.14.0',
           },
           loose: true,
           shippedProposals: true,
