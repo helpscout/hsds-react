@@ -32,6 +32,7 @@ const ForwardedTag = forwardRef(function Tag(props, ref) {
     className,
     color,
     count,
+    customRemoveLabel,
     display,
     filled,
     id,
@@ -139,8 +140,8 @@ const ForwardedTag = forwardRef(function Tag(props, ref) {
       </TagElementUI>
       {isRemovable && (
         <RemoveTagUI
-          aria-label="Remove tag"
-          data-testid="RemoveTag"
+          aria-label={customRemoveLabel || 'Remove tag'}
+          data-testid={customRemoveLabel || 'RemoveTag'}
           onClick={handleRemove}
         >
           <RemoveIconUI name="cross-small" size={18} title="Remove" />
@@ -184,6 +185,8 @@ ForwardedTag.propTypes = {
   ]),
   /** Renders a badge within a medium sized tag */
   count: PropTypes.number,
+  /** Sets a custom value for the label */
+  customRemoveLabel: PropTypes.string,
   /** Determines the CSS `display` of the component. Default `inline`. */
   display: PropTypes.oneOf(['block', 'inline']),
   /** Custom class names to be added to the element component. */
