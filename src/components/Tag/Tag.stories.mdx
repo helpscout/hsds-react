@@ -112,3 +112,15 @@ A Tag component is a UI element that provide contextual labels for categories/ta
 ### Props
 
 <ArgsTable of={Tag} />
+
+## Stories
+
+If you're using the Tag component as something other than a tag, you may want to customize the remove button. Use the `removeProps` prop to pass down an aria label, test ID, or whatever else you might need!
+
+<Canvas>
+  <Story name="custom remove label">
+    <Tag isRemovable={true} removeProps={{ 'aria-label': 'Remove Steve Aoki' }}>
+      Steve Aoki
+    </Tag>
+  </Story>
+</Canvas>

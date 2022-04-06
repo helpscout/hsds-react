@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/hsds-react",
-  "version": "3.40.0-1",
+  "version": "3.43.0",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -58,7 +58,7 @@
     "pretty": "npm run prettier",
     "remake:component": "remake component --output=src/components",
     "remake": "remake component --output=src/components",
-    "release": "np --no-yarn --contents=dist",
+    "release": "np --no-yarn --contents=./dist",
     "release:patch": "npm run release -- patch",
     "release:beta": "npm run release -- --yolo --any-branch",
     "snapshot": "npm run storybook:build && percy-storybook --widths=1280 --build_dir=public",
@@ -81,8 +81,8 @@
     "make:version": "node ./scripts/make-version.js"
   },
   "peerDependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^16.13.1 || ^17.0.0",
+    "react-dom": "^16.13.1 || ^17.0.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "styled-components": "5.1.1"
@@ -183,7 +183,7 @@
     "husky": "4.2.5",
     "jest": "^26.1.0",
     "jest-watch-typeahead": "^0.3.0",
-    "np": "^7.5.0",
+    "np": "^7.6.1",
     "nyc": "^15.0.0",
     "prettier": "2.0.5",
     "pretty-quick": "^2.0.1",

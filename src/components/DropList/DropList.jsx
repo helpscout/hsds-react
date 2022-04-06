@@ -375,7 +375,7 @@ DropListManager.propTypes = {
   menuCSS: PropTypes.any,
   /** Custom width for the Menu */
   menuWidth: PropTypes.any,
-  /** Callback that fires when combobox search input changes */
+  /** Callback that fires when combobox search input changes, gives acces to value and resulting filtered items `onInputChange(value, filteredItems)` */
   onInputChange: PropTypes.func,
   /** Callback that fires when the menu loses focus */
   onMenuBlur: PropTypes.func,

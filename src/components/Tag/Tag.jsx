@@ -39,6 +39,7 @@ const ForwardedTag = forwardRef(function Tag(props, ref) {
     onRemove,
     onHide,
     isRemoving: isRemovingProp,
+    removeProps,
     showTooltipOnTruncate,
     size,
     value,
@@ -142,6 +143,7 @@ const ForwardedTag = forwardRef(function Tag(props, ref) {
           aria-label="Remove tag"
           data-testid="RemoveTag"
           onClick={handleRemove}
+          {...removeProps}
         >
           <RemoveIconUI name="cross-small" size={18} title="Remove" />
         </RemoveTagUI>
@@ -196,6 +198,8 @@ ForwardedTag.propTypes = {
   isRemovable: PropTypes.bool,
   /** Renders the `Spinner` and replaces the `x` `Icon` */
   isRemoving: PropTypes.bool,
+  /** Custom props to pass to the remove button */
+  removeProps: PropTypes.object,
   /** Apply a different size to the component */
   size: PropTypes.oneOf(['sm', 'md', 'lg']),
   /** Callback function when component is removed and unmounted. */
