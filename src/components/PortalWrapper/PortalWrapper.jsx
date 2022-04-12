@@ -93,6 +93,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
         isOpen: props.isOpen,
         id: uniqueID(),
         timeout,
+        renderContent: false,
         wrapperClassName: classNames(
           props.wrapperClassName,
           composedWrapperClassName
@@ -114,6 +115,10 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
       if (this.routeMatches(path)) {
         this.openPortal()
       }
+
+      if (this.state.isOpen) {
+        this.safeSetState({ renderContent: true })
+      }
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -131,9 +136,14 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+      const { isOpen } = this.state
       // Only refocus if closed and was previously opened
-      if (!this.state.isOpen && prevState.isOpen) {
+      if (!isOpen && prevState.isOpen) {
         this.refocusTriggerNode()
+      }
+
+      if (isOpen !== prevState.isOpen && isOpen) {
+        this.safeSetState({ renderContent: true })
       }
     }
 
@@ -299,20 +309,22 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
             timeout={timeout}
             {...rest}
           >
-            <Content manager={this._MrManager} id={this._portalWrapperId}>
-              <ComposedComponent
-                className={className}
-                openPortal={openPortal}
-                closePortal={handleOnClose}
-                onClose={onClose}
-                portalIsOpen={portalIsOpen}
-                portalIsMounted={portalIsOpen}
-                forceClosePortal={this.forceClosePortal}
-                trigger={trigger}
-                zIndex={zIndex}
-                {...rest}
-              />
-            </Content>
+            {this.state.renderContent && (
+              <Content manager={this._MrManager} id={this._portalWrapperId}>
+                <ComposedComponent
+                  className={className}
+                  openPortal={openPortal}
+                  closePortal={handleOnClose}
+                  onClose={onClose}
+                  portalIsOpen={portalIsOpen}
+                  portalIsMounted={portalIsOpen}
+                  forceClosePortal={this.forceClosePortal}
+                  trigger={trigger}
+                  zIndex={zIndex}
+                  {...rest}
+                />
+              </Content>
+            )}
           </Portal>
         </Animate>
       )
