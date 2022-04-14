@@ -54,6 +54,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     static defaultProps = {
       closeOnEscape: true,
       isOpen: false,
+      delayedContentRender: false,
       preventEscActionElements: extendedOptions.preventEscActionElements || [],
     }
     static childContextTypes = {
@@ -108,7 +109,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     }
 
     componentDidMount() {
-      const { path } = this.props
+      const { path, delayedContentRender } = this.props
       this._isMounted = true
       this.setTriggerNode()
 
@@ -116,7 +117,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
         this.openPortal()
       }
 
-      if (this.state.isOpen) {
+      if (this.state.isOpen && delayedContentRender) {
         this.safeSetState({ renderContent: true })
       }
     }
@@ -142,7 +143,11 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
         this.refocusTriggerNode()
       }
 
-      if (isOpen !== prevState.isOpen && isOpen) {
+      if (
+        isOpen !== prevState.isOpen &&
+        isOpen &&
+        this.props.delayedContentRender
+      ) {
         this.safeSetState({ renderContent: true })
       }
     }
@@ -309,7 +314,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
             timeout={timeout}
             {...rest}
           >
-            {this.state.renderContent && (
+            {(!this.props.delayedContentRender || this.state.renderContent) && (
               <Content manager={this._MrManager} id={this._portalWrapperId}>
                 <ComposedComponent
                   className={className}
@@ -368,6 +373,7 @@ PortalWrapper.propTypes = Object.assign(Portal.propTypes, {
   isOpenProps: PropTypes.bool,
   preventEscActionElements: PropTypes.arrayOf(PropTypes.string),
   wrapperClassName: PropTypes.string,
+  delayedContentRender: PropTypes.bool,
 })
 
 export default PortalWrapper
