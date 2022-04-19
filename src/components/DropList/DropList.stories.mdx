@@ -1095,14 +1095,7 @@ The `toggler` prop accepts any React component, so you can provide your own cust
     >
       <DropList
         items={regularItems}
-        toggler={
-          <SelectTag
-            disabled={boolean('disabled', false)}
-            onClick={() => {
-              console.log('Clicked from story')
-            }}
-          />
-        }
+        toggler={<SelectTag disabled={boolean('disabled', false)} />}
       />
     </div>
   </Story>
