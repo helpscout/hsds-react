@@ -104,14 +104,20 @@ const Tooltip = ({
     let titleContent = null
 
     if (typeof title === 'string') {
-      titleContent = <span dangerouslySetInnerHTML={{ __html: title }} />
+      titleContent = (
+        <span
+          className="c-Tooltip__title"
+          dangerouslySetInnerHTML={{ __html: title }}
+        />
+      )
     } else {
       titleContent = title
     }
 
     const tooltipClassnames = classNames(
       className,
-      hasKeyboardBadge && 'with-badge'
+      hasKeyboardBadge && 'with-badge',
+      typeof title === 'string' && 'with-plain-title'
     )
 
     const toolTipComponent = (
@@ -177,6 +183,8 @@ const Tooltip = ({
     placement,
     plugins,
     render,
+    maxWidth,
+    minWidth: minWidth || 'none',
   }
 
   // only set those props if the component is not in a controlled way
