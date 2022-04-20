@@ -6,6 +6,7 @@ import { ArrowPopoverUI, HeaderUI, HeadingUI, PopoverUI } from './Popover.css'
 import Text from '../Text'
 import Tooltip from '../Tooltip'
 import { TooltipAnimationUI } from '../Tooltip/Tooltip.css'
+import isFunction from 'lodash.isfunction'
 
 const getClassName = className => classNames('c-Popover', className)
 
@@ -54,30 +55,36 @@ export const Popover = ({
   renderHeader,
   content,
   renderContent,
+  renderAnimation,
   className,
   placement,
   triggerOn = 'click',
   withArrow = true,
   ...rest
 }) => {
+  console.log(rest)
   const render = tooltipProps => {
     const toolTipComponent = (
-      <TooltipAnimationUI>
-        <PopoverUI {...tooltipProps} data-cy="PopoverContent">
-          <PopoverHeader header={header} renderHeader={renderHeader} />
-          <PopoverContent content={content} renderContent={renderContent} />
-          {withArrow && (
-            <ArrowPopoverUI
-              className="ArrowPopoverUI"
-              arrowSize={arrowSize}
-              data-popper-arrow
-            />
-          )}
-        </PopoverUI>
-      </TooltipAnimationUI>
+      <PopoverUI {...tooltipProps} data-cy="PopoverContent">
+        <PopoverHeader header={header} renderHeader={renderHeader} />
+        <PopoverContent content={content} renderContent={renderContent} />
+        {withArrow && (
+          <ArrowPopoverUI
+            className="ArrowPopoverUI"
+            arrowSize={arrowSize}
+            data-popper-arrow
+          />
+        )}
+      </PopoverUI>
     )
 
-    return <div className="hsds-react hsds-beacon">{toolTipComponent}</div>
+    const tooltipWithAnimation = isFunction(renderAnimation) ? (
+      renderAnimation(toolTipComponent)
+    ) : (
+      <TooltipAnimationUI>{toolTipComponent}</TooltipAnimationUI>
+    )
+
+    return <div className="hsds-react hsds-beacon">{tooltipWithAnimation}</div>
   }
 
   return (
@@ -108,6 +115,8 @@ Popover.propTypes = {
   renderContent: PropTypes.any,
   /** Renders a component within the Popover. Is prioritized over `header` */
   renderHeader: PropTypes.any,
+  /** Renders a wrapper around the tooltip to customize the animation. */
+  renderAnimation: PropTypes.func,
   /** Determines how to engage the component. */
   triggerOn: PropTypes.string,
   /** Whether to render the arrow */
