@@ -62,7 +62,6 @@ export const Popover = ({
   withArrow = true,
   ...rest
 }) => {
-  console.log(rest)
   const render = tooltipProps => {
     const toolTipComponent = (
       <PopoverUI {...tooltipProps} data-cy="PopoverContent">
