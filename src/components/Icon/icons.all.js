@@ -6,6 +6,7 @@ import alignLeft from '../../icons/align-left.svg'
 import alignRight from '../../icons/align-right.svg'
 import animalsAndNature from '../../icons/animals-and-nature.svg'
 import arrowDownHuge from '../../icons/arrow-down-huge.svg'
+import arrowDownSmall from '../../icons/arrow-down-small.svg'
 import arrowLeft from '../../icons/arrow-left.svg'
 import arrowLeftSmall from '../../icons/arrow-left-small.svg'
 import arrowMerge from '../../icons/arrow-merge.svg'
@@ -233,6 +234,7 @@ const ICONS = {
   'align-right': alignRight,
   'animals-and-nature': animalsAndNature,
   'arrow-down-huge': arrowDownHuge,
+  'arrow-down-small': arrowDownSmall,
   'arrow-left-double-large': largeDoubleArrowLeft,
   'arrow-left-single-large': largeSingleArrowLeft,
   'arrow-left-small': arrowLeftSmall,
