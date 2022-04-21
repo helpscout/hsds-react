@@ -87,6 +87,7 @@ import emoji from '../../icons/emoji.svg'
 import envelope from '../../icons/envelope.svg'
 import envelopeLarge from '../../icons/envelope-large.svg'
 import envelopeOpen from '../../icons/envelope-open.svg'
+import envelopeTiny from '../../icons/envelope-tiny.svg'
 import eye from '../../icons/eye.svg'
 import eyeClosed from '../../icons/eye-closed.svg'
 import fabAntenna from '../../icons/fab-antenna.svg'
@@ -328,6 +329,7 @@ const ICONS = {
   emoji,
   'envelope-large': envelopeLarge,
   'envelope-open': envelopeOpen,
+  'envelope-tiny': envelopeTiny,
   envelope,
   'eye-closed': eyeClosed,
   eye,
