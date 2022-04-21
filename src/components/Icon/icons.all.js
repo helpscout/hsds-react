@@ -105,6 +105,7 @@ import folderOpen from '../../icons/folder-open.svg'
 import folderOpenSmall from '../../icons/folder-open-small.svg'
 import foodAndDrink from '../../icons/food-and-drink.svg'
 import forward from '../../icons/forward.svg'
+import filter from '../../icons/filter.svg'
 import fullscreen from '../../icons/fullscreen.svg'
 import globe from '../../icons/globe.svg'
 import graph from '../../icons/graph.svg'
@@ -341,6 +342,7 @@ const ICONS = {
   'fab-question': fabQuestion,
   'fab-search': fabSearch,
   fields,
+  filter,
   flags,
   'flag-tiny': flagTiny,
   'folder-check': folderCheck,
