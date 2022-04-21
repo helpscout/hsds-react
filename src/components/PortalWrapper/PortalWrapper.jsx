@@ -54,6 +54,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     static defaultProps = {
       closeOnEscape: true,
       isOpen: false,
+      delayedContentRender: false,
       preventEscActionElements: extendedOptions.preventEscActionElements || [],
     }
     static childContextTypes = {
@@ -93,6 +94,7 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
         isOpen: props.isOpen,
         id: uniqueID(),
         timeout,
+        renderContent: false,
         wrapperClassName: classNames(
           props.wrapperClassName,
           composedWrapperClassName
@@ -107,12 +109,16 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     }
 
     componentDidMount() {
-      const { path } = this.props
+      const { path, delayedContentRender } = this.props
       this._isMounted = true
       this.setTriggerNode()
 
       if (this.routeMatches(path)) {
         this.openPortal()
+      }
+
+      if (this.state.isOpen && delayedContentRender) {
+        this.safeSetState({ renderContent: true })
       }
     }
 
@@ -131,9 +137,18 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+      const { isOpen } = this.state
       // Only refocus if closed and was previously opened
-      if (!this.state.isOpen && prevState.isOpen) {
+      if (!isOpen && prevState.isOpen) {
         this.refocusTriggerNode()
+      }
+
+      if (
+        isOpen !== prevState.isOpen &&
+        isOpen &&
+        this.props.delayedContentRender
+      ) {
+        this.safeSetState({ renderContent: true })
       }
     }
 
@@ -299,20 +314,22 @@ const PortalWrapper = (options = defaultOptions) => ComposedComponent => {
             timeout={timeout}
             {...rest}
           >
-            <Content manager={this._MrManager} id={this._portalWrapperId}>
-              <ComposedComponent
-                className={className}
-                openPortal={openPortal}
-                closePortal={handleOnClose}
-                onClose={onClose}
-                portalIsOpen={portalIsOpen}
-                portalIsMounted={portalIsOpen}
-                forceClosePortal={this.forceClosePortal}
-                trigger={trigger}
-                zIndex={zIndex}
-                {...rest}
-              />
-            </Content>
+            {(!this.props.delayedContentRender || this.state.renderContent) && (
+              <Content manager={this._MrManager} id={this._portalWrapperId}>
+                <ComposedComponent
+                  className={className}
+                  openPortal={openPortal}
+                  closePortal={handleOnClose}
+                  onClose={onClose}
+                  portalIsOpen={portalIsOpen}
+                  portalIsMounted={portalIsOpen}
+                  forceClosePortal={this.forceClosePortal}
+                  trigger={trigger}
+                  zIndex={zIndex}
+                  {...rest}
+                />
+              </Content>
+            )}
           </Portal>
         </Animate>
       )
@@ -356,6 +373,7 @@ PortalWrapper.propTypes = Object.assign(Portal.propTypes, {
   isOpenProps: PropTypes.bool,
   preventEscActionElements: PropTypes.arrayOf(PropTypes.string),
   wrapperClassName: PropTypes.string,
+  delayedContentRender: PropTypes.bool,
 })
 
 export default PortalWrapper
