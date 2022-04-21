@@ -7,6 +7,8 @@ import { STATES } from '../../constants'
 import Tooltip from '../Tooltip'
 import {
   IconButtonUI,
+  IconBtnWrapperUI,
+  IconBtnChevronUI,
   NavLinkTogglerUI,
   SelectArrowsUI,
   SelectErrorTooltipIconUI,
@@ -321,6 +323,7 @@ export const IconBtn = forwardRef(
       isActive = false,
       iconName = 'assign',
       onClick = noop,
+      withChevron = false,
       withTooltip = false,
       tooltipProps,
       theme = THEME_GREY,
@@ -330,25 +333,35 @@ export const IconBtn = forwardRef(
     ref
   ) => {
     const component = (
-      <IconButtonUI
-        aria-label={a11yLabel || 'toggle-menu'}
-        aria-haspopup="true"
-        aria-expanded={isActive}
-        className={classNames(
-          className,
-          'IconButtonToggler',
-          isActive && 'is-active'
+      <IconBtnWrapperUI>
+        <IconButtonUI
+          aria-label={a11yLabel || 'toggle-menu'}
+          aria-haspopup="true"
+          aria-expanded={isActive}
+          className={classNames(
+            className,
+            'IconButtonToggler',
+            isActive && 'is-active'
+          )}
+          data-cy="DropList.IconButtonToggler"
+          data-testid="DropList.IconButtonToggler"
+          isActive={isActive}
+          onClick={onClick}
+          icon={iconName}
+          ref={ref}
+          theme={theme}
+          size={size}
+          {...rest}
+        />
+        {withChevron && (
+          <IconBtnChevronUI
+            className="iconbtn-chevron"
+            name={isActive ? 'caret-up' : 'caret-down'}
+            size="14"
+            $adjustPosition={rest.seamless ? -10 : 5}
+          />
         )}
-        data-cy="DropList.IconButtonToggler"
-        data-testid="DropList.IconButtonToggler"
-        isActive={isActive}
-        onClick={onClick}
-        icon={iconName}
-        ref={ref}
-        theme={theme}
-        size={size}
-        {...rest}
-      />
+      </IconBtnWrapperUI>
     )
 
     return withTooltip ? (

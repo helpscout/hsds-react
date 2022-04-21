@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import HSDSButton from '../Button'
 import IconButton from '../IconButton'
+import Icon from '../Icon'
 
 import { focusShadowWithInset } from '../../styles/mixins/focusRing.css'
 
@@ -137,4 +138,28 @@ export const IconButtonUI = styled(IconButton)`
       background-color: var(--buttonBackgroundColorHover);
     }
   }
+
+  &.is-active + .iconbtn-chevron,
+  &:hover + .iconbtn-chevron {
+    color: var(--buttonColorHover);
+  }
+
+  &:focus,
+  &.is-focused {
+    &:before {
+      opacity: ${({ seamless }) => (seamless ? '0 !important' : '1')};
+    }
+  }
+`
+
+export const IconBtnChevronUI = styled(Icon)`
+  display: block;
+  margin-left: ${({ $adjustPosition }) => `${$adjustPosition}px`};
+  color: ${getColor('charcoal.400')};
+`
+
+export const IconBtnWrapperUI = styled('div')`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 `

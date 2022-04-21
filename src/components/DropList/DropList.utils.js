@@ -4,7 +4,7 @@ import isString from 'lodash.isstring'
 import isNil from 'lodash.isnil'
 import { ITEM_TYPES, VARIANTS } from './DropList.constants'
 import { SelectTag } from './DropList.togglers'
-import { ListItemUI, EmptyListUI } from './DropList.css'
+import { ListItemUI, EmptyListUI, LoadingItems } from './DropList.css'
 import Combobox from './DropList.Combobox'
 import Select from './DropList.Select'
 
@@ -197,7 +197,12 @@ export function renderListContents({
   inputValue,
   items,
   renderListItem,
+  loadingItems,
 }) {
+  if (loadingItems) {
+    return <LoadingItems />
+  }
+
   const isEmptyList = items.length === 0
 
   if (!isEmptyList) {

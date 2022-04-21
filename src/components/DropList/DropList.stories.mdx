@@ -18,6 +18,7 @@ import {
   simpleGroupedItems,
   disabledItems,
 } from '../../utilities/specs/dropdown.specs'
+import { TagsExample } from './DropList.storiesHelpers'
 
 <Meta
   title="Components/Dropdowns/DropList"
@@ -263,6 +264,22 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
         }}
         toggler={<SimpleButton text="This is a combobox" />}
       />
+    </div>
+  </Story>
+</Canvas>
+
+<Canvas>
+  <Story name="Tags">
+    <div
+      style={{
+        width: '600px',
+        margin: '50px 100px 200px 150px',
+        border: '1px dashed silver',
+        borderRadius: '5px',
+        padding: '20px',
+      }}
+    >
+      <TagsExample />
     </div>
   </Story>
 </Canvas>

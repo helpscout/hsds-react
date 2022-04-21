@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
+import { getColor, rgba } from '../../styles/utilities/color'
 import Icon from '../Icon'
 
 export const DropListWrapperUI = styled('div')`
@@ -155,6 +155,82 @@ export const EmptyListUI = styled('div')`
   font-style: italic;
 `
 
+export const LoadingItems = () => {
+  return (
+    <LoadingItemsUI>
+      <FakeItemUI
+        $delay={0.1}
+        $width="180px"
+        $bgc={rgba(getColor('grey.300'), 1)}
+      />
+      <FakeItemUI
+        $delay={0.2}
+        $width="120px"
+        $bgc={rgba(getColor('grey.300'), 0.8)}
+      />
+      <FakeItemUI
+        $delay={-0.3}
+        $width="160px"
+        $bgc={rgba(getColor('grey.300'), 0.6)}
+      />
+      <FakeItemUI
+        $delay={-0.4}
+        $width="120px"
+        $bgc={rgba(getColor('grey.300'), 0.4)}
+      />
+    </LoadingItemsUI>
+  )
+}
+
+const animation = `
+@keyframes moving-gradient {
+  0% {
+      opacity: 1;
+  }
+  
+  25% {
+      opacity: 0.5;
+  }
+  
+  50% {
+      opacity: 1;
+  }
+  
+  75% {
+      opacity: 0.75;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}​
+`
+
+export const FakeItemUI = styled('div')`
+  width: ${({ $width }) => $width};
+  height: 26px;
+  background: ${({ $bgc }) => $bgc};
+  margin-bottom: 11px;
+  border-radius: 4px;
+  background-size: 50% 100%;
+  animation-name: moving-gradient;
+  animation-delay: ${({ $delay }) => `${$delay}s`};
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+
+  ${animation}
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+`
+export const LoadingItemsUI = styled('div')`
+  width: 100%;
+  height: 150px;
+  padding: 3px 16px;
+  background-color: transparent;
+`
+
 const SelectedBadgeUI = styled('div')`
   width: 24px;
   height: 24px;
@@ -186,7 +262,7 @@ const SelectedBadgeUI = styled('div')`
   }
 `
 
-export const SelectedBadge = ({ isSelected }) => {
+export const SelectedBadge = () => {
   return (
     <SelectedBadgeUI className="SelectedBadge">
       <Icon name="checkmark" size="18" />
