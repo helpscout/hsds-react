@@ -1,6 +1,6 @@
 {
   "name": "@helpscout/hsds-react",
-  "version": "3.44.1",
+  "version": "3.44.2-1",
   "private": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
