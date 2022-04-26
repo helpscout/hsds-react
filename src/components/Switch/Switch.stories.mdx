@@ -1,5 +1,4 @@
 import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
-import { select, boolean } from '@storybook/addon-knobs'
 import Switch from './'
 
 <Meta
@@ -20,28 +19,182 @@ A Switch component is an alternative to a `Checkbox` that provides a switch-togg
 
 <Canvas>
   <Story name="default">
-    <Switch
-      checked={boolean('checked', false)}
-      disabled={boolean('disabled', false)}
-      isLoading={boolean('isLoading', false)}
-      size={select(
-        'Size',
-        {
-          lg: 'lg',
-          md: 'md',
-          sm: 'sm',
-        },
-        'md'
-      )}
-      state={select(
-        'State',
-        {
-          error: 'error',
-          default: '',
-        },
-        ''
-      )}
-    />
+    <div style={{ display: 'flex', width: '100%' }}>
+      <div style={{ flexBasis: '100px', flexGrow: '0', flexShrink: '0' }}>
+        <h2>sm</h2>
+        <div
+          style={{
+            fontFamily: 'monospace',
+            fontSize: '11px',
+            margin: '10px 0 5px',
+          }}
+        >
+          default:
+        </div>
+        <Switch size="sm" />
+        <br />
+        <div
+          style={{
+            fontFamily: 'monospace',
+            fontSize: '11px',
+            margin: '10px 0 5px',
+          }}
+        >
+          checked:
+        </div>
+        <Switch checked size="sm" />
+        <br />
+        <div
+          style={{
+            fontFamily: 'monospace',
+            fontSize: '11px',
+            margin: '10px 0 5px',
+          }}
+        >
+          disabled:
+        </div>
+        <Switch disabled size="sm" />
+        <br />
+        <div
+          style={{
+            fontFamily: 'monospace',
+            fontSize: '11px',
+            margin: '10px 0 5px',
+          }}
+        >
+          isLoading:
+        </div>
+        <Switch isLoading size="sm" />
+        <br />
+        <div
+          style={{
+            fontFamily: 'monospace',
+            fontSize: '11px',
+            margin: '10px 0 5px',
+          }}
+        >
+          error:
+        </div>
+        <Switch state="error" size="sm" />
+        <br />
+      </div>
+      <div style={{ flexBasis: '100px', flexGrow: '0', flexShrink: '0' }}>
+        <h2>md</h2>
+        <div
+          style={{
+            fontFamily: 'monospace',
+            fontSize: '11px',
+            margin: '10px 0 5px',
+          }}
+        >
+          default:
+        </div>
+        <Switch />
+        <br />
+        <div
+          style={{
+            fontFamily: 'monospace',
+            fontSize: '11px',
+            margin: '10px 0 5px',
+          }}
+        >
+          checked:
+        </div>
+        <Switch checked />
+        <br />
+        <div
+          style={{
+            fontFamily: 'monospace',
+            fontSize: '11px',
+            margin: '10px 0 5px',
+          }}
+        >
+          disabled:
+        </div>
+        <Switch disabled />
+        <br />
+        <div
+          style={{
+            fontFamily: 'monospace',
+            fontSize: '11px',
+            margin: '10px 0 5px',
+          }}
+        >
+          isLoading:
+        </div>
+        <Switch isLoading />
+        <br />
+        <div
+          style={{
+            fontFamily: 'monospace',
+            fontSize: '11px',
+            margin: '10px 0 5px',
+          }}
+        >
+          error:
+        </div>
+        <Switch state="error" />
+        <br />
+      </div>
+      <div style={{ flexBasis: '100px', flexGrow: '0', flexShrink: '0' }}>
+        <h2>lg</h2>
+        <div
+          style={{
+            fontFamily: 'monospace',
+            fontSize: '11px',
+            margin: '10px 0 5px',
+          }}
+        >
+          default:
+        </div>
+        <Switch size="lg" />
+        <br />
+        <div
+          style={{
+            fontFamily: 'monospace',
+            fontSize: '11px',
+            margin: '10px 0 5px',
+          }}
+        >
+          checked:
+        </div>
+        <Switch checked size="lg" />
+        <br />
+        <div
+          style={{
+            fontFamily: 'monospace',
+            fontSize: '11px',
+            margin: '10px 0 5px',
+          }}
+        >
+          disabled:
+        </div>
+        <Switch disabled size="lg" />
+        <br />
+        <div
+          style={{
+            fontFamily: 'monospace',
+            fontSize: '11px',
+            margin: '10px 0 5px',
+          }}
+        >
+          isLoading:
+        </div>
+        <Switch isLoading size="lg" />
+        <br />
+        <div
+          style={{
+            fontFamily: 'monospace',
+            fontSize: '11px',
+            margin: '10px 0 5px',
+          }}
+        >
+          error:
+        </div>
+        <Switch state="error" size="lg" />
+        <br />
+      </div>
+    </div>
   </Story>
 </Canvas>
 
