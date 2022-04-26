@@ -47,17 +47,20 @@ function Combobox({
   onListItemSelectEvent = noop,
   onInputChange = noop,
   renderCustomListItem = null,
+  retrieveItems = noop,
+  searchFn,
   selectedItem = null,
   selectedItems,
   toggleOpenedState = noop,
   withMultipleSelection = false,
 }) {
+  const [inputFilteredItems, setInputFilteredItems] = useState(items)
   const noSourceItems = items.length === 0
   const withCustomEmptyListItems =
-    noSourceItems &&
+    inputFilteredItems.length === 0 &&
     Array.isArray(customEmptyListItems) &&
     customEmptyListItems.length > 0
-  const [inputFilteredItems, setInputFilteredItems] = useState(items)
+  const [loadingItems, setLoadingItems] = useState(false)
   const actionItemRef = useRef(null)
   const inputEl = useRef(null)
 
@@ -86,25 +89,51 @@ function Combobox({
     },
 
     onInputValueChange({ inputValue }) {
-      let filtered = filterItems(items, inputValue, actionItemRef)
-      const isListEmpty = filtered.length === 0
+      if (isNil(searchFn)) {
+        let filtered = filterItems(items, inputValue, actionItemRef)
+        const isListEmpty = filtered.length === 0
 
-      if (isListEmpty && Array.isArray(customEmptyListItems)) {
-        const processed = customEmptyListItems.map(item => {
-          if (isFunction(item.customizeLabel)) {
-            item.label = item.customizeLabel(inputValue)
-            item.inputValue = inputValue
-          }
+        if (isListEmpty && Array.isArray(customEmptyListItems)) {
+          const processed = customEmptyListItems.map(item => {
+            if (isFunction(item.customizeLabel)) {
+              item.label = item.customizeLabel(inputValue)
+              item.inputValue = inputValue
+            }
+            return item
+          })
+          filtered = processed
+        }
+        setHighlightedIndex(filtered.findIndex(isItemHighlightable))
+        setInputFilteredItems(filtered)
+        onInputChange(inputValue, filtered)
+      } else {
+        onInputChange(inputValue)
 
-          return item
-        })
+        if (inputValue) {
+          setLoadingItems(true)
 
-        filtered = processed
+          searchFn(inputValue).then(({ items }) => {
+            const isListEmpty = items.length === 0
+            const processed =
+              isListEmpty && Array.isArray(customEmptyListItems)
+                ? customEmptyListItems.map(item => {
+                    if (isFunction(item.customizeLabel)) {
+                      item.label = item.customizeLabel(inputValue)
+                      item.inputValue = inputValue
+                    }
+                    return item
+                  })
+                : items
+
+            retrieveItems(processed)
+            setHighlightedIndex(processed.findIndex(isItemHighlightable))
+            setInputFilteredItems(processed)
+            setLoadingItems(false)
+          })
+        } else {
+          setInputFilteredItems(items)
+        }
       }
-
-      setHighlightedIndex(filtered.findIndex(isItemHighlightable))
-      setInputFilteredItems(filtered)
-      onInputChange(inputValue, filtered)
     },
 
     onIsOpenChange(changes) {
@@ -164,6 +193,10 @@ function Combobox({
   }, [items])
 
   function renderListItem(item, index) {
+    if (item.hideOnBlankInputValue && !inputValue) {
+      return null
+    }
+
     const itemProps = {
       highlightedIndex,
       index,
@@ -204,7 +237,9 @@ function Combobox({
       menuWidth={menuWidth}
       {...getComboboxProps()}
     >
-      <InputSearchHolderUI hide={withCustomEmptyListItems || noSourceItems}>
+      <InputSearchHolderUI
+        hide={!searchFn && (withCustomEmptyListItems || noSourceItems)}
+      >
         <input
           data-event-driver
           {...getInputProps({
@@ -253,6 +288,7 @@ function Combobox({
             ? customEmptyListItems
             : inputFilteredItems,
           renderListItem,
+          loadingItems,
         })}
       </MenuListUI>
     </DropListWrapperUI>

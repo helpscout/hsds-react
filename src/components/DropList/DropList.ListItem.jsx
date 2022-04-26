@@ -8,6 +8,7 @@ import {
   getItemContentKeyName,
   isItemAction,
   isItemADivider,
+  isItemInert,
   isItemAGroupLabel,
   emphasizeSubstring,
   objectHasKey,
@@ -73,9 +74,12 @@ const ListItem = forwardRef(
 
     if (!isNil(renderCustomListItem) && isFunction(renderCustomListItem)) {
       return (
-        <li
+        <ListItemUI
           className={getListItemClassNames('DropListItem--custom')}
+          highlighted={highlightedIndex === index}
           ref={ref}
+          selected={isSelected}
+          withMultipleSelection={withMultipleSelection}
           {...itemProps}
         >
           {renderCustomListItem({
@@ -85,7 +89,7 @@ const ListItem = forwardRef(
             withMultipleSelection,
             isDisabled,
           })}
-        </li>
+        </ListItemUI>
       )
     }
 
@@ -101,7 +105,7 @@ const ListItem = forwardRef(
         <ListItemTextUI
           dangerouslySetInnerHTML={getListItemText({
             label: isPlainObject(item) ? item[contentKey] : item,
-            emphasize: inputValue && !isItemAction(item),
+            emphasize: inputValue && !isItemAction(item) && !isItemInert(item),
             substr: inputValue,
           })}
         />

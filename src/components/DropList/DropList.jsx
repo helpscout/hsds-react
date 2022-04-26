@@ -57,7 +57,9 @@ function DropListManager({
   onListItemSelectEvent = noop,
   onOpenedStateChange = noop,
   onSelect = noop,
+  retrieveItems = noop,
   renderCustomListItem = null,
+  searchFn,
   selection = null,
   tippyOptions = {},
   toggler = {},
@@ -299,6 +301,8 @@ function DropListManager({
             onMenuFocus={onMenuFocus}
             onListItemSelectEvent={onListItemSelectEvent}
             renderCustomListItem={renderCustomListItem}
+            retrieveItems={retrieveItems}
+            searchFn={searchFn}
             selectedItem={selectedItem}
             selectedItems={selectedItems}
             toggleOpenedState={toggleOpenedState}
