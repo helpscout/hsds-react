@@ -13,8 +13,8 @@ import { MessageCardContent } from './components/MessageCard.Content'
 import { MessageCardSurvey } from './components/MessageCard.Survey'
 import MessageCardUrlAttachmentImage from './components/MessageCard.UrlAttachmentImage'
 import MessageCardArticleCard from './components/MessageCard.ArticleCard'
-
-function noop() {}
+import { MessageCardVideo } from './components/MessageCard.Video'
+import { noop } from '../../utilities/other'
 
 export const MessageCard = React.memo(
   React.forwardRef(
@@ -23,6 +23,7 @@ export const MessageCard = React.memo(
         onShow,
         in: inProp,
         image,
+        video,
         action,
         animationDuration,
         animationEasing,
@@ -53,11 +54,17 @@ export const MessageCard = React.memo(
 
       const hasImage = useCallback(() => image && image.url, [image])
 
+      const makeMessageVisible = useCallback(() => {
+        setTimeout(() => {
+          isMounted.current && setVisible(true)
+        }, 0)
+      }, [])
+
       useEffect(() => {
-        if (inProp && !hasImage() && !isShown.current) {
+        if (inProp && !hasImage() && !isShown.current && !video) {
           makeMessageVisible()
         }
-      }, [inProp, hasImage])
+      }, [inProp, hasImage, video, makeMessageVisible])
 
       useEffect(() => {
         if (visible && !isShown.current) {
@@ -65,12 +72,6 @@ export const MessageCard = React.memo(
           isShown.current = true
         }
       }, [visible, onShow])
-
-      const makeMessageVisible = () => {
-        setTimeout(() => {
-          isMounted.current && setVisible(true)
-        }, 0)
-      }
 
       const getClassName = () => {
         return classNames(
@@ -97,7 +98,7 @@ export const MessageCard = React.memo(
             <MessageCardSubtitle subtitle={subtitle} />
             <MessageCardContent
               withMargin={!!(title || subtitle)}
-              render={!!(body || image || children)}
+              render={!!(body || image || children || video)}
             >
               <MessageCardBody
                 body={body}
@@ -105,6 +106,7 @@ export const MessageCard = React.memo(
                 variables={variables}
               />
               <MessageCardImage image={image} onLoad={makeMessageVisible} />
+              <MessageCardVideo video={video} onLoad={makeMessageVisible} />
               {children}
             </MessageCardContent>
             <MessageCardAction action={action} />
@@ -165,6 +167,10 @@ MessageCard.propTypes = {
     width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     altText: PropTypes.string,
+  }),
+  /** Definition of the Message video */
+  video: PropTypes.shape({
+    html: PropTypes.string.isRequired,
   }),
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,

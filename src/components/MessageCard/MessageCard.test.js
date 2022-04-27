@@ -344,6 +344,67 @@ describe('image', () => {
   })
 })
 
+describe('video', () => {
+  jest.useFakeTimers()
+  test('Does not render video if is not passed down as a prop', () => {
+    const { container } = render(<MessageCard />)
+
+    expect(container.querySelector('iframe')).not.toBeInTheDocument()
+  })
+
+  test('Renders video if it is passed down as a prop', () => {
+    const { container } = render(
+      <MessageCard video={{ html: '<div><iframe/></div>' }} />
+    )
+
+    expect(container.querySelector('iframe')).toBeInTheDocument()
+  })
+
+  test('Should be visible by default if there is no video', () => {
+    const onShowSpy = jest.fn()
+    const { container } = render(<MessageCard onShow={onShowSpy} />)
+
+    expect(cardWrapper(container)).not.toBeVisible()
+    expect(onShowSpy).not.toHaveBeenCalled()
+
+    act(() => {
+      jest.runAllTimers()
+    })
+
+    expect(cardWrapper(container)).toBeVisible()
+    expect(onShowSpy).toHaveBeenCalled()
+  })
+
+  test('Should not be visible by default if there is a video, but become visible when image loads', () => {
+    const onShowSpy = jest.fn()
+    const { container } = render(
+      <MessageCard
+        video={{ html: '<div><iframe/></div>' }}
+        onShow={onShowSpy}
+      />
+    )
+
+    expect(cardWrapper(container)).not.toBeVisible()
+    expect(onShowSpy).not.toHaveBeenCalled()
+
+    act(() => {
+      jest.runAllTimers()
+    })
+
+    expect(cardWrapper(container)).not.toBeVisible()
+    expect(onShowSpy).not.toHaveBeenCalled()
+
+    fireEvent.load(container.querySelector('iframe'))
+
+    act(() => {
+      jest.runAllTimers()
+    })
+
+    expect(cardWrapper(container)).toBeVisible()
+    expect(onShowSpy).toHaveBeenCalled()
+  })
+})
+
 describe('Action', () => {
   test('Does not render action if is not passed down as a prop', () => {
     const { container } = render(<MessageCard />)
