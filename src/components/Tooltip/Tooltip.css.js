@@ -45,24 +45,47 @@ export const TooltipUI = styled.div`
   color: white;
   display: block;
   font-size: 13px;
-  max-width: 300px;
   padding: 6px 8px;
   transition-property: transform, visibility, opacity;
   transition-duration: ${({ animationDuration }) => animationDuration}ms;
   transition-timing-function: ease-in-out;
   opacity: 0;
-  line-height: 1;
+  line-height: 1.3;
   word-break: break-word;
   white-space: pre-wrap;
   overflow-wrap: break-word;
   word-wrap: break-word;
+  max-width: ${({ maxWidth }) => maxWidth || 300}px;
+  min-width: ${({ minWidth }) => minWidth || 20}px;
 
-  ${({ maxWidth }) => (maxWidth ? `max-width: ${maxWidth}px` : '')};
-  ${({ minWidth }) => (minWidth ? `min-width: ${minWidth}px` : '')};
+  &.with-plain-title {
+    padding: 0;
+  }
+
+  .c-Tooltip__title {
+    display: inline-block;
+    padding: 6px 8px;
+  }
 
   &[data-placement^='top'] {
     ${ArrowUI} {
       bottom: calc((${({ arrowSize }) => arrowSize}px / 2) * -1);
+    }
+  }
+
+  &[data-placement='top-end'],
+  &[data-placement='bottom-end'] {
+    ${ArrowUI} {
+      right: 8px;
+      left: unset !important;
+    }
+  }
+
+  &[data-placement='top-start'],
+  &[data-placement='bottom-start'] {
+    ${ArrowUI} {
+      left: 8px !important;
+      transform: unset !important;
     }
   }
 

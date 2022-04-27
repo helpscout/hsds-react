@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef } from 'react'
+import React, { forwardRef } from 'react'
 import classNames from 'classnames'
 import ControlGroup from '../ControlGroup'
 import HSDSButton from '../Button'
@@ -198,6 +198,8 @@ export const SelectTag = forwardRef(
       isActive = false,
       onClick = noop,
       text = '',
+      withTooltip = false,
+      tooltipProps,
       ...rest
     },
     ref
@@ -206,7 +208,7 @@ export const SelectTag = forwardRef(
       ? `toggle menu, ${text} currently selected`
       : 'toggle menu'
 
-    return (
+    const component = (
       <SelectUI
         aria-label={a11yLabel || ariaLabelWithText}
         aria-haspopup="true"
@@ -235,6 +237,21 @@ export const SelectTag = forwardRef(
         )}
       </SelectUI>
     )
+
+    return withTooltip ? (
+      <Tooltip
+        animationDelay={0}
+        animationDuration={0}
+        placement="top"
+        title={a11yLabel}
+        withTriggerWrapper={false}
+        {...tooltipProps}
+      >
+        {component}
+      </Tooltip>
+    ) : (
+      component
+    )
   }
 )
 
@@ -256,8 +273,6 @@ export const MeatButton = forwardRef(
     },
     ref
   ) => {
-    const tooltipRef = useRef()
-
     const component = (
       <IconButtonUI
         aria-haspopup="true"
@@ -283,12 +298,8 @@ export const MeatButton = forwardRef(
       <Tooltip
         animationDelay={0}
         animationDuration={0}
-        getTippyInstance={instance => {
-          tooltipRef.current = instance.reference
-        }}
         placement="top-end"
         title={a11yLabel}
-        triggerTarget={tooltipRef.current && tooltipRef.current.parentElement}
         withTriggerWrapper={false}
         {...tooltipProps}
       >
