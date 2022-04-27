@@ -132,6 +132,8 @@ export class ActionSelect extends React.PureComponent {
       id,
       ariaLabel,
       error,
+      withTooltip,
+      tooltipProps,
     } = this.props
     const { isOpen, resizeCount, selection } = this.state
 
@@ -155,6 +157,16 @@ export class ActionSelect extends React.PureComponent {
                 id={id}
                 aria-label={ariaLabel || 'action toggle menu'}
                 error={error}
+                withTooltip={withTooltip}
+                tooltipProps={{
+                  appendTo: reference => {
+                    return reference.closest('.c-ActionSelect').parentElement
+                  },
+                  maxWidth: 190,
+                  title: 'Beacon',
+                  placement: 'right',
+                  ...tooltipProps,
+                }}
               />
             }
             selection={selection}
@@ -242,6 +254,10 @@ ActionSelect.propTypes = {
   ariaLabel: PropTypes.string,
   /** Error message */
   error: PropTypes.string,
+  /** Enable a tooltip on the DropList/SelectTag item */
+  withTooltip: PropTypes.bool,
+  /** Customize the tooltip on the DropList/SelectTag item */
+  tooltipProps: PropTypes.any,
 }
 
 export default ActionSelect

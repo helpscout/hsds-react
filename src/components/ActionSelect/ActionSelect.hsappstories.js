@@ -100,7 +100,7 @@ export class Example extends React.Component {
     ]
 
     return (
-      <div style={{ padding: 20, maxWidth: 480, margin: 'auto' }}>
+      <div style={{ padding: '0px', maxWidth: 400, margin: '100px auto' }}>
         <ActionSelect
           animationDuration={this.props.animationDuration}
           label="Action Select"
@@ -115,6 +115,11 @@ export class Example extends React.Component {
           onSelect={this.onSelect}
           shouldScrollIntoView={this.shouldScrollIntoView}
           shouldRefocusOnClose={this.shouldRefocusOnClose}
+          withTooltip
+          tooltipProps={{
+            title: 'Beacon selection is required to add an action.',
+            visible: true,
+          }}
         >
           {this.renderContent()}
         </ActionSelect>

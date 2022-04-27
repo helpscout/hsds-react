@@ -6,6 +6,7 @@ import alignLeft from '../../icons/align-left.svg'
 import alignRight from '../../icons/align-right.svg'
 import animalsAndNature from '../../icons/animals-and-nature.svg'
 import arrowDownHuge from '../../icons/arrow-down-huge.svg'
+import arrowDownSmall from '../../icons/arrow-down-small.svg'
 import arrowLeft from '../../icons/arrow-left.svg'
 import arrowLeftSmall from '../../icons/arrow-left-small.svg'
 import arrowMerge from '../../icons/arrow-merge.svg'
@@ -87,6 +88,7 @@ import emoji from '../../icons/emoji.svg'
 import envelope from '../../icons/envelope.svg'
 import envelopeLarge from '../../icons/envelope-large.svg'
 import envelopeOpen from '../../icons/envelope-open.svg'
+import envelopeTiny from '../../icons/envelope-tiny.svg'
 import eye from '../../icons/eye.svg'
 import eyeClosed from '../../icons/eye-closed.svg'
 import fabAntenna from '../../icons/fab-antenna.svg'
@@ -103,6 +105,7 @@ import folderOpen from '../../icons/folder-open.svg'
 import folderOpenSmall from '../../icons/folder-open-small.svg'
 import foodAndDrink from '../../icons/food-and-drink.svg'
 import forward from '../../icons/forward.svg'
+import filter from '../../icons/filter.svg'
 import fullscreen from '../../icons/fullscreen.svg'
 import globe from '../../icons/globe.svg'
 import graph from '../../icons/graph.svg'
@@ -232,6 +235,7 @@ const ICONS = {
   'align-right': alignRight,
   'animals-and-nature': animalsAndNature,
   'arrow-down-huge': arrowDownHuge,
+  'arrow-down-small': arrowDownSmall,
   'arrow-left-double-large': largeDoubleArrowLeft,
   'arrow-left-single-large': largeSingleArrowLeft,
   'arrow-left-small': arrowLeftSmall,
@@ -328,6 +332,7 @@ const ICONS = {
   emoji,
   'envelope-large': envelopeLarge,
   'envelope-open': envelopeOpen,
+  'envelope-tiny': envelopeTiny,
   envelope,
   'eye-closed': eyeClosed,
   eye,
@@ -337,6 +342,7 @@ const ICONS = {
   'fab-question': fabQuestion,
   'fab-search': fabSearch,
   fields,
+  filter,
   flags,
   'flag-tiny': flagTiny,
   'folder-check': folderCheck,

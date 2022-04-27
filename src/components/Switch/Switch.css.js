@@ -1,6 +1,8 @@
 import { getColor } from '../../styles/utilities/color'
 import forEach from '../../styles/utilities/forEach'
 import styled from 'styled-components'
+import { focusRing } from '../../styles/mixins/focusRing.css'
+import { rgba } from '../../utilities/color'
 
 export const config = {
   backgroundColor: {
@@ -10,7 +12,7 @@ export const config = {
   },
   backgroundColorChecked: {
     default: getColor('green.500'),
-    disabled: getColor('green.300'),
+    disabled: rgba(getColor('green.500'), 0.5),
     hover: getColor('green.600'),
   },
   borderRadius: 100,
@@ -92,6 +94,14 @@ export const SwitchUI = styled('label')`
   &.is-loading {
     pointer-events: none;
   }
+
+  &:hover .c-Switch__backdrop {
+    background-color: ${config.backgroundColor.hover};
+  }
+
+  &:hover .c-Switch__backdrop.is-checked {
+    background-color: ${config.backgroundColorChecked.hover};
+  }
 `
 
 export const InputUI = styled('input')`
@@ -123,7 +133,9 @@ export const BackdropUI = styled('div')`
   z-index: 1;
 
   &.is-focused {
-    background-color: ${config.backgroundColor.hover};
+    ${focusRing};
+    --focusRingOffset: -2px;
+    --focusRingRadius: ${config.borderRadius}px;
   }
 
   &.is-disabled {
@@ -135,10 +147,6 @@ export const BackdropUI = styled('div')`
     background-color: ${config.backgroundColorChecked.default};
     color: ${config.color.checked};
     text-align: left;
-
-    &.is-focused {
-      background-color: ${config.backgroundColorChecked.hover};
-    }
 
     &.is-disabled {
       background-color: ${config.backgroundColorChecked.disabled};
@@ -201,14 +209,20 @@ export const ToggleUI = styled('div')`
 export const StateUI = styled('div')`
   border-radius: 100px;
   bottom: 0;
-  box-shadow: 0 0 0 2px ${getColor('state.error')};
+  ${focusRing};
+  --focusRingOffset: -2px;
+  --focusRingRadius: ${config.borderRadius}px;
+  --focusRingColor: ${getColor('pink.900')};
   display: block;
   left: 0;
-  opacity: 0.7;
   position: absolute;
   right: 0;
   top: 0;
   z-index: 0;
+
+  &:before {
+    opacity: 1;
+  }
 `
 
 export default SwitchUI
