@@ -1,4 +1,5 @@
 import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
+import { boolean } from '@storybook/addon-knobs'
 import Emoticon from './'
 
 <Meta title="Components/Elements/Emoticon" component={Emoticon} />
@@ -10,11 +11,20 @@ The Emoticon renders multicolor SVG icons.
 <Canvas>
   <Story name="default">
     <div>
-      <Emoticon name="reaction-happy" />
+      <Emoticon
+        name="reaction-happy"
+        withAnimation={boolean('withAnimation', false)}
+      />
       <br />
-      <Emoticon name="reaction-sad" />
+      <Emoticon
+        name="reaction-sad"
+        withAnimation={boolean('withAnimation', false)}
+      />
       <br />
-      <Emoticon name="reaction-okay" />
+      <Emoticon
+        name="reaction-okay"
+        withAnimation={boolean('withAnimation', false)}
+      />
     </div>
   </Story>
 </Canvas>
