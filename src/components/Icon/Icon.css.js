@@ -72,10 +72,18 @@ export const IconUI = styled.span`
       width: 100%;
     }
 
-    circle,
+    circle[fill],
     path,
-    rect {
+    rect[fill] {
       fill: currentColor;
+    }
+    path[stroke] {
+      fill: none;
+    }
+    circle[stroke],
+    path[stroke],
+    rect[stroke] {
+      stroke: currentColor;
     }
 
     &.is-caret {
