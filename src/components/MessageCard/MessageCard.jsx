@@ -14,7 +14,6 @@ import { MessageCardSurvey } from './components/MessageCard.Survey'
 import MessageCardUrlAttachmentImage from './components/MessageCard.UrlAttachmentImage'
 import MessageCardArticleCard from './components/MessageCard.ArticleCard'
 import { MessageCardVideo } from './components/MessageCard.Video'
-import { noop } from '../../utilities/other'
 
 export const MessageCard = React.memo(
   React.forwardRef(
@@ -60,11 +59,13 @@ export const MessageCard = React.memo(
         }, 0)
       }, [])
 
+      const videoHtml = video ? video.html : undefined
+
       useEffect(() => {
-        if (inProp && !hasImage() && !isShown.current && !video) {
+        if (inProp && !hasImage() && !isShown.current && !videoHtml) {
           makeMessageVisible()
         }
-      }, [inProp, hasImage, video, makeMessageVisible])
+      }, [inProp, hasImage, videoHtml, makeMessageVisible])
 
       useEffect(() => {
         if (visible && !isShown.current) {
@@ -105,8 +106,12 @@ export const MessageCard = React.memo(
                 onClick={onBodyClick}
                 variables={variables}
               />
-              <MessageCardImage image={image} onLoad={makeMessageVisible} />
-              <MessageCardVideo video={video} onLoad={makeMessageVisible} />
+              {image ? (
+                <MessageCardImage image={image} onLoad={makeMessageVisible} />
+              ) : null}
+              {video ? (
+                <MessageCardVideo video={video} onLoad={makeMessageVisible} />
+              ) : null}
               {children}
             </MessageCardContent>
             <MessageCardAction action={action} />
@@ -116,6 +121,8 @@ export const MessageCard = React.memo(
     }
   )
 )
+
+function noop() {}
 
 MessageCard.defaultProps = {
   align: 'right',

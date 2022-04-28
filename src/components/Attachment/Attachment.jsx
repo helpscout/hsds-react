@@ -102,27 +102,28 @@ export class Attachment extends React.PureComponent {
 
     function contentMarkup() {
       if (content) {
-        return <span className="c-Attachment__content">{content}</span>
+        return content
       }
-
-      return imageUrl ? (
-        <span className="c-Attachment__content">
+      if (imageUrl) {
+        return (
           <Image
             block
             className="c-Attachment__image"
             src={imageUrl}
             alt={name}
           />
-        </span>
-      ) : (
-        <span className="c-Attachment__content">
+        )
+      }
+
+      return (
+        <>
           <Text className="c-Attachment__name" lineHeightReset>
             <Truncate limit={truncateLimit} text={name} type="middle">
               {name}
             </Truncate>
           </Text>
           {sizeMarkup}
-        </span>
+        </>
       )
     }
 
@@ -150,7 +151,7 @@ export class Attachment extends React.PureComponent {
         title={name}
         {...downloadProps}
       >
-        {contentMarkup()}
+        <span className="c-Attachment__content">{contentMarkup()}</span>
         {closeMarkup}
         {this.renderErrorBorder()}
       </AttachmentUI>

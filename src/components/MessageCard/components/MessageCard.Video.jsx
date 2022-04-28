@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
-import { noop } from '../../../utilities/other'
 
 export const MessageCardVideo = ({ video, onLoad }) => {
   const videoIframeRef = useRef(null)
@@ -26,10 +25,6 @@ export const MessageCardVideo = ({ video, onLoad }) => {
     }
   }, [onLoad, video])
 
-  if (!video) {
-    return null
-  }
-
   return (
     <div
       ref={videoContainerRef}
@@ -42,11 +37,11 @@ MessageCardVideo.propTypes = {
   /** Video to render */
   video: PropTypes.shape({
     html: PropTypes.string.isRequired,
-  }),
+  }).isRequired,
   /** Callback when video loaded */
   onLoad: PropTypes.func,
 }
 
 MessageCardVideo.defaultProps = {
-  onLoad: noop,
+  onLoad: () => {},
 }
