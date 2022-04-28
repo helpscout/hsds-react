@@ -184,6 +184,24 @@ describe('Content', () => {
     expect(n.length).toBe(0)
     expect(i.length).toBe(1)
   })
+
+  test('Renders provided custom content', () => {
+    const wrapper = shallow(
+      <Attachment
+        name="custom content"
+        content={<strong>My custom content</strong>}
+      />
+    )
+    const contentWrapper = wrapper.find(ui.content)
+    const customContent = contentWrapper.find('strong')
+    const name = contentWrapper.find(ui.name)
+    const image = contentWrapper.find(ui.image)
+
+    expect(contentWrapper.length).toBe(1)
+    expect(customContent.length).toBe(1)
+    expect(name.length).toBe(0)
+    expect(image.length).toBe(0)
+  })
 })
 
 describe('CloseButton', () => {
