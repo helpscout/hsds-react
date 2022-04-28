@@ -26,6 +26,7 @@ import bell from '../../icons/bell.svg'
 import bellSmall from '../../icons/bell-small.svg'
 import bold from '../../icons/bold.svg'
 import blockArrowDown from '../../icons/block-arrow-down.svg'
+import blockquote from '../../icons/blockquote.svg'
 import blockArrowUp from '../../icons/block-arrow-up.svg'
 import bubbleDots from '../../icons/bubble-dots.svg'
 import bubbleDotsDuplicate from '../../icons/bubble-dots-duplicate.svg'
@@ -35,6 +36,7 @@ import buoy from '../../icons/buoy.svg'
 import calendar from '../../icons/calendar.svg'
 import call from '../../icons/call.svg'
 import callLarge from '../../icons/call-large.svg'
+import callout from '../../icons/callout.svg'
 import camera from '../../icons/camera.svg'
 import caretDown from '../../icons/caret-down.svg'
 import caretLeft from '../../icons/caret-left.svg'
@@ -51,6 +53,7 @@ import checkmark from '../../icons/checkmark.svg'
 import checkmarkSmall from '../../icons/checkmark-small.svg'
 import checkboxLarge from '../../icons/checkbox-large.svg'
 import checkboxSmall from '../../icons/checkbox-small.svg'
+import circleArrow from '../../icons/circle-arrow.svg'
 import circleArrowDown from '../../icons/circle-arrow-down.svg'
 import circleArrowLeft from '../../icons/circle-arrow-left.svg'
 import circleArrowRight from '../../icons/circle-arrow-right.svg'
@@ -63,6 +66,7 @@ import clock from '../../icons/clock.svg'
 import clockSmall from '../../icons/clock-small.svg'
 import closed from '../../icons/closed.svg'
 import cloud from '../../icons/cloud.svg'
+import code from '../../icons/code.svg'
 import cog from '../../icons/cog.svg'
 import compose from '../../icons/compose.svg'
 import columnCheck from '../../icons/cols-check.svg'
@@ -75,6 +79,7 @@ import crossMediumAlt from '../../icons/cross-medium-alt.svg'
 import crossSmall from '../../icons/cross-small.svg'
 import cursor from '../../icons/cursor.svg'
 import dashboard from '../../icons/dashboard.svg'
+import dl from '../../icons/dl.svg'
 import document from '../../icons/document.svg'
 import documentIn from '../../icons/document-in.svg'
 import documentOut from '../../icons/document-out.svg'
@@ -109,6 +114,7 @@ import filter from '../../icons/filter.svg'
 import fullscreen from '../../icons/fullscreen.svg'
 import globe from '../../icons/globe.svg'
 import graph from '../../icons/graph.svg'
+import h1 from '../../icons/h1.svg'
 import handwave from '../../icons/handwave.svg'
 import heart from '../../icons/heart.svg'
 import house from '../../icons/house.svg'
@@ -203,6 +209,8 @@ import stop from '../../icons/stop.svg'
 import suitcase from '../../icons/suitcase.svg'
 import symbols from '../../icons/symbols.svg'
 import table from '../../icons/table.svg'
+import tableLeft from '../../icons/table-left.svg'
+import tableTop from '../../icons/table-top.svg'
 import tag from '../../icons/tag.svg'
 import text from '../../icons/text.svg'
 import tickLarge from '../../icons/tick-large.svg'
@@ -262,6 +270,7 @@ const ICONS = {
   bin: trash,
   'block-arrow-down': blockArrowDown,
   'block-arrow-up': blockArrowUp,
+  blockquote,
   bold,
   'bubble-dots-duplicate': bubbleDotsDuplicate,
   'bubble-dots-plus': bubbleDotsPlus,
@@ -270,6 +279,7 @@ const ICONS = {
   buoy,
   calendar,
   'call-large': callLarge,
+  callout,
   call,
   camera,
   'caret-down': caretDown,
@@ -288,10 +298,12 @@ const ICONS = {
   checkmark: checkmarkSmall,
   'checkbox-large': checkboxLarge,
   'checkbox-small': checkboxSmall,
+  'circle-arrow': circleArrow,
   'circle-arrow-down': circleArrowDown,
   'circle-arrow-left': circleArrowLeft,
   'circle-arrow-right': circleArrowRight,
   'circle-arrow-up': circleArrowUp,
+
   'circle-cross': circleCross,
   'circle-minus': circleMinus,
   'circle-plus': circlePlus,
@@ -302,6 +314,7 @@ const ICONS = {
   clockLarge: clock,
   closed,
   cloud,
+  code,
   cog,
   collapse: minus,
   'column-check': columnCheck,
@@ -317,6 +330,7 @@ const ICONS = {
   cross: crossLarge,
   cursor,
   dashboard,
+  dl,
   'document-in': documentIn,
   'document-out': documentOut,
   document,
@@ -354,6 +368,7 @@ const ICONS = {
   fullscreen,
   globe,
   graph,
+  h1,
   handwave,
   heart,
   'helpscout-logo': hsLogo,
@@ -455,6 +470,8 @@ const ICONS = {
   suitcase,
   symbols,
   table,
+  'table-left': tableLeft,
+  'table-top': tableTop,
   tag,
   text,
   'tick-large': tickLarge,
