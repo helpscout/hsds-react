@@ -1,7 +1,7 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import { rgba } from '../../utilities/color'
-import { reactionEmoticonsColours } from '../Emoticon/Emoticon.css'
+import { emoticonAnimationCSS } from '../Emoticon/Emoticon.css'
 
 export const config = {
   size: {
@@ -125,39 +125,6 @@ export const RateActionUI = styled('button')`
 
     &:hover,
     &:focus {
-      cursor: pointer;
-
-      .is-reaction-happy {
-        .reaction-head {
-          fill: ${reactionEmoticonsColours.on.head.happy};
-        }
-        .reaction-face {
-          fill: ${reactionEmoticonsColours.on.face};
-          animation: HSDSEmoticonYep 1s;
-        }
-      }
-      .is-reaction-okay {
-        .reaction-head {
-          fill: ${reactionEmoticonsColours.on.head.okay};
-        }
-        .reaction-face {
-          fill: ${reactionEmoticonsColours.on.face};
-          animation: HSDSEmoticonMeh 0.5s forwards;
-        }
-      }
-      .is-reaction-sad {
-        .reaction-head {
-          fill: ${reactionEmoticonsColours.on.head.sad};
-        }
-        .reaction-face {
-          fill: ${reactionEmoticonsColours.on.face};
-          animation: HSDSEmoticonNotReally 1s;
-        }
-      }
-    }
-
-    &:hover,
-    &:focus {
       outline: none;
       box-shadow: 0 4px 7px 0 ${config.boxShadowColor};
       transform: scale(1.3);
@@ -186,42 +153,9 @@ export const RateActionUI = styled('button')`
         width: calc(${config.size.sm} + 4px);
       }
     }
-
-    /**
-   * Face Animations
-   */
-
-    @keyframes HSDSEmoticonYep {
-      15%,
-      45%,
-      75% {
-        transform: translate3d(0, -2px, 0);
-      }
-      30%,
-      60% {
-        transform: translate3d(0, 2px, 0);
-      }
+    &:hover {
+      cursor: pointer;
     }
-
-    @keyframes HSDSEmoticonMeh {
-      0% {
-        transform: rotate(0);
-      }
-      100% {
-        transform: rotate(-12deg);
-      }
-    }
-
-    @keyframes HSDSEmoticonNotReally {
-      15%,
-      45%,
-      75% {
-        transform: translate3d(-2px, 0, 0);
-      }
-      30%,
-      60% {
-        transform: translate3d(2px, 0, 0);
-      }
-    }
+    ${emoticonAnimationCSS};
   }
 `

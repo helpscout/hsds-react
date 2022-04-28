@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
-import { EmoticonUI, IconUI } from './Emoticon.css'
+import { EmoticonUI, IconUI, EmoticonAnimationUI } from './Emoticon.css'
 import { getName, getIcon } from './Emoticon.utils'
 
 export class Emoticon extends React.PureComponent {
@@ -45,12 +45,13 @@ export class Emoticon extends React.PureComponent {
       name,
       title,
       size,
+      withAnimation = false,
       ...rest
     } = this.props
     const iconName = getName(name)
     const icon = getIcon(iconName, size)
 
-    return (
+    const component = (
       <EmoticonUI
         {...getValidProps(rest)}
         size={size}
@@ -62,6 +63,12 @@ export class Emoticon extends React.PureComponent {
         </IconUI>
       </EmoticonUI>
     )
+
+    if (withAnimation) {
+      return <EmoticonAnimationUI>{component}</EmoticonAnimationUI>
+    }
+
+    return component
   }
 }
 
@@ -111,6 +118,8 @@ Emoticon.propTypes = {
   title: PropTypes.string,
   /** size of the emoticon: lg: '24px', md: '20px', sm: '16px' */
   size: PropTypes.oneOf(['lg', 'md', 'sm']),
+  /** Animate Emoticon on hover */
+  withAnimation: PropTypes.bool,
 }
 
 export default Emoticon
