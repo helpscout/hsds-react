@@ -375,7 +375,7 @@ describe('video', () => {
     expect(onShowSpy).toHaveBeenCalled()
   })
 
-  test('Should not be visible by default if there is a video, but become visible when image loads', () => {
+  test('Should not be visible by default if there is a video, but become visible when video loads', () => {
     const onShowSpy = jest.fn()
     const { container } = render(
       <MessageCard
