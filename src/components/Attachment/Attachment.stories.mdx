@@ -99,6 +99,38 @@ A Provider component provides child components with props accessible as `context
   </Story>
 </Canvas>
 
+#### Preview theme with custom content
+
+<Canvas>
+  <Story name="Preview theme with custom content">
+    <Attachment.Provider theme="preview">
+      <Attachment
+        name={text('name', 'custom content preview')}
+        content={
+          <div>
+            <span style={{ color: 'initial' }}>
+              This is my <b>custom</b>
+            </span>{' '}
+            content
+          </div>
+        }
+        state={select(
+          'state',
+          {
+            default: 'default',
+            error: 'error',
+          },
+          'default'
+        )}
+        url={text(
+          'url',
+          'https://github.com/helpscout/hsds-react/raw/main/images/Blue.png'
+        )}
+      />
+    </Attachment.Provider>
+  </Story>
+</Canvas>
+
 #### Preview theme with image
 
 <Canvas>
