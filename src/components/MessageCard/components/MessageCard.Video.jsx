@@ -1,5 +1,12 @@
 import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
+
+const MessageCardVideoContainerUI = styled.div`
+  iframe {
+    border-radius: 3px;
+  }
+`
 
 export const MessageCardVideo = ({ video, onLoad }) => {
   const videoIframeRef = useRef(null)
@@ -26,7 +33,7 @@ export const MessageCardVideo = ({ video, onLoad }) => {
   }, [onLoad, video])
 
   return (
-    <div
+    <MessageCardVideoContainerUI
       ref={videoContainerRef}
       dangerouslySetInnerHTML={{ __html: video.html }}
     />
