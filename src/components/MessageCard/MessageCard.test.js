@@ -360,6 +360,28 @@ describe('video', () => {
     expect(container.querySelector('iframe')).toBeInTheDocument()
   })
 
+  test('Adds title to the video iframe if it is missing', () => {
+    const { container } = render(
+      <MessageCard video={{ html: '<div><iframe/></div>' }} />
+    )
+
+    expect(container.querySelector('iframe')).toHaveAttribute(
+      'title',
+      'Message video'
+    )
+  })
+
+  test('Does not add title to the video iframe if it has one already', () => {
+    const { container } = render(
+      <MessageCard video={{ html: '<div><iframe title="existing"/></div>' }} />
+    )
+
+    expect(container.querySelector('iframe')).toHaveAttribute(
+      'title',
+      'existing'
+    )
+  })
+
   test('Should be visible by default if there is no video', () => {
     const onShowSpy = jest.fn()
     const { container } = render(<MessageCard onShow={onShowSpy} />)

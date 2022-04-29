@@ -18,6 +18,10 @@ export const MessageCardVideo = ({ video, onLoad }) => {
       if (videoIframeRef.current) {
         videoIframeRef.current.onload = () => onLoad()
         videoIframeRef.current.onerror = () => onLoad()
+        const iframeTitle = videoIframeRef.current.getAttribute('title')
+        if (!iframeTitle) {
+          videoIframeRef.current.setAttribute('title', 'Message video')
+        }
       } else {
         // in case something went wrong rendering iframe, just show a Message
         onLoad()
