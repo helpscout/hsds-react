@@ -10,7 +10,7 @@ export const MessageCardImage = ({ image, onLoad }) => {
     onLoad()
   }
 
-  if (!image || imageError) {
+  if (imageError) {
     return null
   }
 
@@ -30,8 +30,6 @@ export const MessageCardImage = ({ image, onLoad }) => {
   )
 }
 
-function noop() {}
-
 MessageCardImage.propTypes = {
   /** Image to render */
   image: PropTypes.shape({
@@ -39,11 +37,11 @@ MessageCardImage.propTypes = {
     altText: PropTypes.string,
     width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  }),
+  }).isRequired,
   /** Callback when image loaded */
   onLoad: PropTypes.func,
 }
 
 MessageCardImage.defaultProps = {
-  onLoad: noop,
+  onLoad: () => {},
 }

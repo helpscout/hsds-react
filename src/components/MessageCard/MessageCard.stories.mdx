@@ -188,6 +188,48 @@ This component renders a Message Card Notification with (optional) Title, Subtit
   </Story>
 </Canvas>
 
+# With video
+
+<Canvas>
+  <Story name="With video">
+    <MessageCard
+      key="with-video"
+      in={boolean('show', true)}
+      isMobile={boolean('isMobile', false)}
+      isWithBoxShadow={boolean('isWithBoxShadow', true)}
+      withAnimation={true}
+      subtitle={text('Subtitle', 'The J&G Team is here')}
+      title={text('Title', 'Need help?')}
+      video={{
+        html:
+          '<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;"><iframe src="https://www.youtube.com/embed/YB-slq0hqWw?rel=0" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen scrolling="no" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"></iframe></div>',
+      }}
+      action={() => <MessageCard.Button>Click here</MessageCard.Button>}
+    />
+  </Story>
+</Canvas>
+
+# With iframely video
+
+<Canvas>
+  <Story name="With iframely video url">
+    <MessageCard
+      key="with-iframely-video"
+      in={boolean('show', true)}
+      isMobile={boolean('isMobile', false)}
+      isWithBoxShadow={boolean('isWithBoxShadow', true)}
+      withAnimation={true}
+      subtitle={text('Subtitle', 'The J&G Team is here')}
+      title={text('Title', 'Need help?')}
+      video={{
+        html:
+          '<div><div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;"><iframe src="//cdn.iframe.ly/api/iframe?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DYB-slq0hqWw&key=32d974fdab1b804ff90cbd07d257baba" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen scrolling="no" allow="accelerometer *; clipboard-write *; encrypted-media *; gyroscope *; picture-in-picture *;"></iframe></div></div>',
+      }}
+      action={() => <MessageCard.Button>Click here</MessageCard.Button>}
+    />
+  </Story>
+</Canvas>
+
 #### Reference
 
 - **Designer**: Buzz

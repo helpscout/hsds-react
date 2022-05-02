@@ -2,6 +2,7 @@ import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { boolean, number, select, text } from '@storybook/addon-knobs'
 import { action } from '@storybook/addon-actions'
 import Popover from './'
+import { CustomAnimationDemoUI } from './Popover.utils.js'
 
 <Meta
   title="Components/Overlay/Popover"
@@ -58,6 +59,11 @@ Tooltip is powered by [react-tippy](https://github.com/atomiks/tippyjs-react) an
         content={text('content', 'Hello')}
         minWidth={number('minWidth', '')}
         maxWidth={number('maxWidth', '')}
+        renderAnimation={children => (
+          <CustomAnimationDemoUI className="animation">
+            {children}
+          </CustomAnimationDemoUI>
+        )}
       >
         <div tabIndex="0">Popover Trigger</div>
       </Popover>
