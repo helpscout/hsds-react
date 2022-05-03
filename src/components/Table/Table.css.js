@@ -96,6 +96,10 @@ export const TableUI = styled('table')`
     padding: 5px 14px;
     height: ${props => (props.withTallRows ? '60px' : '50px')};
     color: ${props => props.theme.fontColorBody};
+
+    &.without-padding {
+      padding: 0;
+    }
   }
 
   /* Borders: table header */

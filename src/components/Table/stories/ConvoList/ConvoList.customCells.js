@@ -9,7 +9,7 @@ import {
 
 export function ConversationCell({ subject, preview, tags, row }) {
   return (
-    <ConversationCellUI>
+    <ConversationCellUI href="https://hello">
       <div>
         {tags
           ? tags.map(tag => (

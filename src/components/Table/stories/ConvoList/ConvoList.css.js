@@ -93,7 +93,7 @@ export const PreviewUI = styled('div')`
   font-weight: 400;
 `
 
-export const ConversationCellUI = styled('div')`
+export const ConversationCellUI = styled('a')`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -103,6 +103,12 @@ export const ConversationCellUI = styled('div')`
   width: calc(100% + 14px);
   overflow: hidden;
   white-space: nowrap;
+  padding: 5px 14px;
+  text-decoration: none;
+
+  &:hover ${SubjectUI} {
+    text-decoration: underline;
+  }
 
   &::after {
     position: absolute;
