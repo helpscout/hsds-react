@@ -143,16 +143,16 @@ export default function ConvoList() {
               viewing: row.id === 281796229,
             }
           }}
-          // onRowClick={(e, row) => {
-          //   const url = `/conversation/${row.id}/${row.number}`
-          //   console.groupCollapsed('Row Click')
-          //   console.log('🚀 ~ file: ConvoList.js ~ line 181 ~ row', row)
-          //   console.log('🚀 ~ file: ConvoList.js ~ line 143 ~ url', url)
-          //   console.warn(
-          //     'We need: this.options.folder.get("id") to complete the url'
-          //   )
-          //   console.groupEnd()
-          // }}
+          onRowClick={(e, row) => {
+            const url = `/conversation/${row.id}/${row.number}`
+            console.groupCollapsed('Row Click')
+            console.log('🚀 ~ file: ConvoList.js ~ line 181 ~ row', row)
+            console.log('🚀 ~ file: ConvoList.js ~ line 143 ~ url', url)
+            console.warn(
+              'We need: this.options.folder.get("id") to complete the url'
+            )
+            console.groupEnd()
+          }}
           rowWrapper={(children, row) => {
             if (row.id === 281796231 || row.id === 281796229) {
               return (
