@@ -5,6 +5,7 @@ import Emoticon from '../Emoticon'
 import classNames from 'classnames'
 import { RateActionUI } from './RateAction.css'
 import { getName } from '../Emoticon/Emoticon.utils'
+import { getColor } from '../../styles/utilities/color'
 
 export class RateAction extends React.PureComponent {
   static className = 'c-RateAction'
@@ -50,6 +51,7 @@ export class RateAction extends React.PureComponent {
       size,
       onBlur,
       onFocus,
+      outlineColor,
       withCircle,
       ...rest
     } = this.props
@@ -63,6 +65,7 @@ export class RateAction extends React.PureComponent {
         onBlur={this.handleOnBlur}
         onClick={this.handleOnClick}
         onFocus={this.handleOnFocus}
+        outlineColor={outlineColor}
         name={name}
         size={size}
         withCircle={withCircle}
@@ -87,6 +90,7 @@ RateAction.defaultProps = {
   isActive: false,
   name: 'reaction-happy',
   onClick: noop,
+  outlineColor: getColor('green.500'),
   size: 'lg',
   withCircle: false,
 }
@@ -109,12 +113,14 @@ RateAction.propTypes = {
     'reaction-sad',
     'reaction-okay',
   ]),
-  /** Adjusts the size of the component. One of 'lg', 'md', 'sm' */
-  size: PropTypes.oneOf(['lg', 'md', 'sm']),
+  /** Adjusts the size of the component. One of 'xl', 'lg', 'md', 'sm' */
+  size: PropTypes.oneOf(['xl', 'lg', 'md', 'sm']),
   /** Obtain the DOM node of the button */
   innerRef: PropTypes.func,
   /** Callback on click */
   onClick: PropTypes.func,
+  /** Outline color for active state */
+  outlineColor: PropTypes.string,
   /** Shows a big border around the icon */
   withCircle: PropTypes.bool,
 }

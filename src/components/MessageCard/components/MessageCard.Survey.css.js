@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { focusRing } from '../../../styles/mixins/focusRing.css'
 import { getColor } from '../../../styles/utilities/color'
 import Button from '../../Button'
+import RateAction from '../../RateAction'
 
 export const SurveyUI = styled('div')`
   background: ${getColor('grey.200')};
@@ -43,6 +44,32 @@ export const EmojiButtonUI = styled('button')`
 
   &.is-selected {
     border: 2px solid ${getColor('blue.500')};
+  }
+`
+
+export const RateActionUI = styled(RateAction)`
+  margin-left: 10px !important;
+
+  /* ${focusRing};
+  --focusRingOffset: -2px;
+  --focusRingRadius: 50%;
+
+  &.is-active {
+    --focusRingOffset: -3px;
+  } */
+
+  transition: all .2s ease-in-out !important;
+
+  svg {
+    transition: all .2s ease-in-out !important;
+  }
+
+  &:after {
+    transition: all .2s ease-in-out !important;
+  }
+
+  &:first-child {
+    margin-left: 0;
   }
 `
 
