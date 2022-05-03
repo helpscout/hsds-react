@@ -55,8 +55,8 @@ export function generateCellClassNames(column, cellType = 'Cell') {
         ? column.columnKey.join('_').replace(/\./g, '_')
         : column.columnKey.replace(/\./g, '_')
     }`,
-    column.className || '',
-    column.clearCellPadding && 'without-padding'
+    column.clearCellPadding && 'without-padding',
+    column.className || ''
   )
 }
 
