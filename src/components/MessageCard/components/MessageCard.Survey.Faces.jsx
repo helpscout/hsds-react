@@ -3,29 +3,28 @@ import PropTypes from 'prop-types'
 import { RateActionUI, SurveyOptionsUI } from './MessageCard.Survey.css'
 import { useSurveyContext } from '../MessageCard.Survey.context'
 import { getColor } from '../../../styles/utilities/color'
+import { useButtonResizeOnSelection } from '../utils/MessageCard.hooks'
 
 export const MessageCardSurveyFaces = ({
   faces = ['happy', 'okay', 'sad'],
 }) => {
   const { onSelection, selected } = useSurveyContext()
-  const [emojiSize, setEmojiSize] = React.useState('xl')
-
-  const handleOnClick = id => {
-    onSelection(id)
-    setTimeout(() => {
-      setEmojiSize('lg')
-    }, 200)
-  }
+  const { buttonSize, handleOnClick } = useButtonResizeOnSelection({
+    defaultSize: 'xl',
+    selectedSize: 'lg',
+    onSelection,
+  })
 
   return (
     <SurveyOptionsUI>
       {faces.map(face => (
         <RateActionUI
-          name={`reaction-${face}`}
-          size={emojiSize}
           key={face}
-          onClick={() => handleOnClick(face)}
+          size={buttonSize}
+          name={`reaction-${face}`}
+          aria-label={`${face} face`}
           isActive={selected === face}
+          onClick={() => handleOnClick(face)}
           outlineColor={getColor('grey.600')}
         />
       ))}

@@ -1,8 +1,12 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { focusRing } from '../../../styles/mixins/focusRing.css'
 import { getColor } from '../../../styles/utilities/color'
 import Button from '../../Button'
 import RateAction from '../../RateAction'
+
+const defaultTransition = css`
+  transition: all 0.2s ease-in-out;
+`
 
 export const SurveyUI = styled('div')`
   background: ${getColor('grey.200')};
@@ -27,8 +31,8 @@ export const EmojiButtonUI = styled('button')`
   font-size: 22px;
   margin-left: 10px;
   height: 42px;
-  transition: transform 0.2s ease-in-out;
   width: 42px;
+  ${defaultTransition};
 
   ${focusRing};
   --focusRingOffset: -3px;
@@ -42,30 +46,64 @@ export const EmojiButtonUI = styled('button')`
     transform: scale(1.3);
   }
 
+  &:after {
+    content: '';
+    border-radius: 50%;
+    border: 2px solid ${getColor('grey.600')};
+    display: none;
+    height: 46px;
+    left: -2px;
+    pointer-events: none;
+    position: absolute;
+    top: -2px;
+    width: 46px;
+    ${defaultTransition};
+
+    @keyframes HSDSRateActionSelected {
+      0% {
+        transform: scale(0.5);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+  }
+
   &.is-selected {
-    border: 2px solid ${getColor('blue.500')};
+    transform: scale(1.3);
+
+    &:after {
+      animation: HSDSRateActionSelected 200ms
+        cubic-bezier(0.39, 0.575, 0.565, 1) both;
+      display: block;
+    }
+  }
+
+  &.is-md {
+    height: 24px;
+    width: 24px;
+    font-size: 12px;
+
+    &:after {
+      height: 28px;
+      width: 28px;
+    }
   }
 `
 
 export const RateActionUI = styled(RateAction)`
   margin-left: 10px !important;
 
-  /* ${focusRing};
-  --focusRingOffset: -2px;
-  --focusRingRadius: 50%;
+  &.c-RateAction {
+    ${defaultTransition};
 
-  &.is-active {
-    --focusRingOffset: -3px;
-  } */
+    svg {
+      ${defaultTransition};
+    }
 
-  transition: all .2s ease-in-out !important;
-
-  svg {
-    transition: all .2s ease-in-out !important;
-  }
-
-  &:after {
-    transition: all .2s ease-in-out !important;
+    &:after {
+      ${defaultTransition};
+    }
   }
 
   &:first-child {
