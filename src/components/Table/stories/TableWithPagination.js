@@ -4,16 +4,6 @@ import { createFakeCustomers, getCurrentPageData } from '../Table.testUtils'
 import Pagination from '../../Pagination'
 import Button from '../../Button'
 import Table from '../'
-import styled from 'styled-components'
-
-const LinkUI = styled('a')`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 5px 14px;
-  width: 100%;
-  height: 100%;
-`
 
 export default class TableWithPagination extends Component {
   constructor(props) {
@@ -32,9 +22,9 @@ export default class TableWithPagination extends Component {
           clearCellPadding: true,
           renderCell: ({ name }) => {
             return (
-              <LinkUI href="#" tabIndex="-1">
+              <a className="fill-table-cell" href="#top" tabIndex="-1">
                 {name}
-              </LinkUI>
+              </a>
             )
           },
         },

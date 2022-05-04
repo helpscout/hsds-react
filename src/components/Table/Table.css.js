@@ -100,6 +100,15 @@ export const TableUI = styled('table')`
     &.without-padding {
       padding: 0;
     }
+
+    .fill-table-cell {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5px 14px;
+      width: 100%;
+      height: 100%;
+    }
   }
 
   /* Borders: table header */

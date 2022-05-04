@@ -64,7 +64,7 @@ Columns is a list of objects that configure each column, here you can customize 
 
 Full list of acceptable fields 👇:
 
-- `columnKey`: This value ties to corresponding data field(s), can be a string for a single data field, or a list (array) to get multiple data fields. If you have nested data you'd like to access, use a "dot notation", for example `customer.email`
+- `columnKey`: (required) This value ties to corresponding data field(s), can be a string for a single data field, or a list (array) to get multiple data fields. If you have nested data you'd like to access, use a "dot notation", for example `customer.email`
 - `title`: The string that renders by default in the header for this column
 - `width`: Column width, ideally the sum of all the columns should be 100%
 - `align`: Horizontal cell alignment for this column, one of "left" (default), "center" or "right"
@@ -74,9 +74,10 @@ Full list of acceptable fields 👇:
 - `renderCell`: To customize how each cell renders it corresponding data on this column. A function that takes the corresponding data and returns a React Component/Element, its arguments are the data provided by `columnKey` above, if using nested data, access it by replaceing the dot (`.`) with an underscore (`_`), for example: `customer.email` in `columnKey` becomes `customer_email` in `renderCell` (see code example below). It also gives you access to the `row`
 - `sorter`: A function that instructs how to sort the data based on this column. If you return a promise, the table will be able to refocus the button when triggered via pressing the `enter` key
 - `sortKey`: If this column contains more than one columnKey, sorting will be based on this value which should exist in the list of Column Keys for this column.
-- 'clearCellPadding': setting this to `true` will remove the default cell padding for all cells in this column.
+- `clearCellPadding`: setting this to `true` will remove the default cell padding for all cells in this column.
+  - [Optional] For convenience, if using this plus `renderCell`, add a class name of `fill-table-cell` to the root element returned in `renderCell` to apply styles that will fill the cell with the correct padding (see default story).
 
-Note: only `columnKey` is required
+> Reminder: only `columnKey` is required
 
 Example:
 
