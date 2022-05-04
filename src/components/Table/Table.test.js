@@ -228,6 +228,27 @@ describe('Table Body', () => {
     expect(cellsInRow.first().find('.name').exists()).toBeTruthy()
     expect(cellsInRow.first().find('.companyName').exists()).toBeTruthy()
   })
+
+  test('should add without-padding class name if clearCellPadding is added to a column', () => {
+    const customers = createFakeCustomers({ amount: 5 })
+    const { container } = render(
+      <Table
+        tableDescription="test-table"
+        columns={[
+          {
+            title: 'Name',
+            columnKey: 'name',
+            clearCellPadding: true,
+          },
+        ]}
+        data={customers}
+      />
+    )
+    const row = container.querySelector('tbody > tr')
+    const cell = row.querySelector('td')
+
+    expect(cell).toHaveClass('without-padding')
+  })
 })
 
 describe('Skin', () => {
@@ -330,6 +351,142 @@ describe('Clickable Rows', () => {
 
     expect(spy).toHaveBeenCalled()
     expect(spy).toHaveBeenCalledWith(expect.any(Object), customers[0])
+  })
+
+  test('Fires onRowClick when pressing enter on a focused row', () => {
+    const customers = createFakeCustomers({ amount: 5 })
+    const spy = jest.fn()
+    const { container } = render(
+      <Table
+        tableDescription="test-table"
+        columns={defaultColumns}
+        data={customers}
+        onRowClick={spy}
+        withFocusableRows
+      />
+    )
+    const row = container.querySelector('tbody > tr')
+
+    user.type(row, '{enter}')
+
+    expect(spy).toHaveBeenCalled()
+    expect(spy).toHaveBeenCalledWith(expect.any(Object), customers[0])
+  })
+
+  test('Does not fire onRowClick when an anchor tag inside cell is clicked', () => {
+    const customers = createFakeCustomers({ amount: 5 })
+    const spy = jest.fn()
+    const { container } = render(
+      <Table
+        tableDescription="test-table"
+        columns={[
+          {
+            title: 'Name',
+            columnKey: 'name',
+            renderCell: ({ name }) => {
+              return (
+                <a className="fill-table-cell" href="#top" tabIndex="-1">
+                  {name}
+                </a>
+              )
+            },
+          },
+        ]}
+        data={customers}
+        onRowClick={spy}
+      />
+    )
+    const row = container.querySelector('tbody > tr')
+    const link = row.querySelector('a')
+
+    user.click(link)
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('Does not fire onRowClick when pressing enter on an anchor tag inside cell', () => {
+    const customers = createFakeCustomers({ amount: 5 })
+    const spy = jest.fn()
+    const { container } = render(
+      <Table
+        tableDescription="test-table"
+        columns={[
+          {
+            title: 'Name',
+            columnKey: 'name',
+            renderCell: ({ name }) => {
+              return (
+                <a className="fill-table-cell" href="#top" tabIndex="-1">
+                  {name}
+                </a>
+              )
+            },
+          },
+        ]}
+        data={customers}
+        onRowClick={spy}
+      />
+    )
+    const row = container.querySelector('tbody > tr')
+    const link = row.querySelector('a')
+
+    user.type(link, '{enter}')
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('Does not fire onRowClick when a button inside cell is clicked', () => {
+    const customers = createFakeCustomers({ amount: 5 })
+    const spy = jest.fn()
+    const { container } = render(
+      <Table
+        tableDescription="test-table"
+        columns={[
+          {
+            title: 'Name',
+            columnKey: 'name',
+            renderCell: ({ name }) => {
+              return <button>{name}</button>
+            },
+          },
+        ]}
+        data={customers}
+        onRowClick={spy}
+      />
+    )
+    const row = container.querySelector('tbody > tr')
+    const button = row.querySelector('button')
+
+    user.click(button)
+
+    expect(spy).not.toHaveBeenCalled()
+  })
+
+  test('Does not fire onRowClick when pressing enter on a button inside cell', () => {
+    const customers = createFakeCustomers({ amount: 5 })
+    const spy = jest.fn()
+    const { container } = render(
+      <Table
+        tableDescription="test-table"
+        columns={[
+          {
+            title: 'Name',
+            columnKey: 'name',
+            renderCell: ({ name }) => {
+              return <button>{name}</button>
+            },
+          },
+        ]}
+        data={customers}
+        onRowClick={spy}
+      />
+    )
+    const row = container.querySelector('tbody > tr')
+    const button = row.querySelector('button')
+
+    user.type(button, '{enter}')
+
+    expect(spy).not.toHaveBeenCalled()
   })
 })
 
