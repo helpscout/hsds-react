@@ -60,11 +60,13 @@ describe('Closing', () => {
     HTMLElement.prototype,
     'offsetWidth'
   )
+
   beforeAll(() => {
     Object.defineProperty(HTMLElement.prototype, 'offsetHeight', {
       configurable: true,
       value: 200,
     })
+
     Object.defineProperty(HTMLElement.prototype, 'offsetWidth', {
       configurable: true,
       value: 200,
@@ -84,6 +86,7 @@ describe('Closing', () => {
       originalOffsetWidth
     )
   })
+
   test('should render close button', () => {
     const { container } = render(<SimpleModal show />)
     const button = container.querySelector('.SimpleModal__CloseButton')
