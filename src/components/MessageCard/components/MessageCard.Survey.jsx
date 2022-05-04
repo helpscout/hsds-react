@@ -20,6 +20,8 @@ export const MessageCardSurvey = ({
   withFeedbackForm = false,
   forceFeedbackForm = false,
   feedbackFormText = '',
+  confirmationText = 'Thanks for the feedback',
+  submitButtonText = 'Send',
   onSubmit = noop,
   showSpinner = false,
   showConfirmationMessage = false,
@@ -55,7 +57,7 @@ export const MessageCardSurvey = ({
       <SurveyUI data-cy="beacon-message-cta-survey">
         <ConfirmationMessageUI>
           <Icon name="tick-small" inline size={24} />
-          Thanks for the feedback
+          {confirmationText}
         </ConfirmationMessageUI>
       </SurveyUI>
     )
@@ -87,7 +89,7 @@ export const MessageCardSurvey = ({
             onChange={value => setFeedback(value)}
           />
           <SubmitFeedbackFormButtonUI submit size="xxl" theme="blue">
-            Send
+            {submitButtonText}
           </SubmitFeedbackFormButtonUI>
         </FeedbackFormUI>
       )}
@@ -106,6 +108,7 @@ MessageCardSurvey.propTypes = {
   withFeedbackForm: PropTypes.bool,
   forceFeedbackForm: PropTypes.bool,
   feedbackFormText: PropTypes.string,
+  confirmationText: PropTypes.string,
   onSubmit: PropTypes.func,
   showSpinner: PropTypes.bool,
   showConfirmationMessage: PropTypes.bool,
