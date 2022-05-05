@@ -28,6 +28,7 @@ describe('Show / no show', () => {
 
     expect(queryByTestId('simple-modal-overlay')).not.toBeInTheDocument()
   })
+
   test('should set z-index on overlay', () => {
     const { queryByTestId } = render(<SimpleModal show zIndex={500} />)
     const styles = window.getComputedStyle(
@@ -51,6 +52,41 @@ describe('Contents', () => {
 })
 
 describe('Closing', () => {
+  const originalOffsetHeight = Object.getOwnPropertyDescriptor(
+    HTMLElement.prototype,
+    'offsetHeight'
+  )
+  const originalOffsetWidth = Object.getOwnPropertyDescriptor(
+    HTMLElement.prototype,
+    'offsetWidth'
+  )
+
+  beforeAll(() => {
+    Object.defineProperty(HTMLElement.prototype, 'offsetHeight', {
+      configurable: true,
+      value: 200,
+    })
+
+    Object.defineProperty(HTMLElement.prototype, 'offsetWidth', {
+      configurable: true,
+      value: 200,
+    })
+  })
+
+  afterAll(() => {
+    Object.defineProperty(
+      HTMLElement.prototype,
+      'offsetHeight',
+      originalOffsetHeight
+    )
+
+    Object.defineProperty(
+      HTMLElement.prototype,
+      'offsetWidth',
+      originalOffsetWidth
+    )
+  })
+
   test('should render close button', () => {
     const { container } = render(<SimpleModal show />)
     const button = container.querySelector('.SimpleModal__CloseButton')
@@ -82,13 +118,21 @@ describe('Closing', () => {
   test('should call onClose on clicking outside modal if set', () => {
     const spy = jest.fn()
     const { container } = render(
-      <div className="app">
-        <SimpleModal closeOnClickOutside="modal" show onClose={spy} />
-      </div>
+      <>
+        <div className="app" style={{ width: '500px' }}>
+          <SimpleModal
+            closeOnClickOutside="modal"
+            show
+            onClose={spy}
+            width={'200px'}
+          />
+        </div>
+        <button className="test">test</button>
+      </>
     )
-    const app = container.querySelector('.app')
+    const test = container.querySelector('.test')
 
-    user.click(app)
+    user.click(test)
 
     expect(spy).toHaveBeenCalled()
   })

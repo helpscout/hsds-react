@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { boolean, select } from '@storybook/addon-knobs'
 import { createFakeCustomers, getCurrentPageData } from '../Table.testUtils'
 import Pagination from '../../Pagination'
+import Button from '../../Button'
 import Table from '../'
 
 export default class TableWithPagination extends Component {
@@ -18,6 +19,14 @@ export default class TableWithPagination extends Component {
           title: 'Name',
           columnKey: 'name',
           width: '33%',
+          clearCellPadding: true,
+          renderCell: ({ name }) => {
+            return (
+              <a className="fill-table-cell" href="#top" tabIndex="-1">
+                {name}
+              </a>
+            )
+          },
         },
         {
           title: 'Company',
@@ -27,6 +36,20 @@ export default class TableWithPagination extends Component {
         {
           title: 'Email',
           columnKey: 'emails',
+          align: 'center',
+          renderCell(cellData) {
+            return (
+              <Button
+                style={{ width: '120px' }}
+                size="xxs"
+                onClick={e => {
+                  console.log('button activated:click')
+                }}
+              >
+                Email {cellData.row.firstName}
+              </Button>
+            )
+          },
           width: '34%',
         },
       ],
@@ -58,6 +81,10 @@ export default class TableWithPagination extends Component {
           tableDescription="Example table with pagination"
           tableWidth={tableWidth}
           containerWidth={containerWidth}
+          onRowClick={(e, row) => {
+            console.log('🚀 ~ Row click / enter')
+          }}
+          withFocusableRows
           withTallRows={boolean('withTallRows', false)}
           skin={select(
             'Skin',

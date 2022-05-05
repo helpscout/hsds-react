@@ -96,6 +96,19 @@ export const TableUI = styled('table')`
     padding: 5px 14px;
     height: ${props => (props.withTallRows ? '60px' : '50px')};
     color: ${props => props.theme.fontColorBody};
+
+    &.without-padding {
+      padding: 0;
+    }
+
+    .fill-table-cell {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5px 14px;
+      width: 100%;
+      height: 100%;
+    }
   }
 
   /* Borders: table header */

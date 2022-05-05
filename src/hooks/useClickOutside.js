@@ -9,7 +9,12 @@ import { useEffect } from 'react'
  */
 const useClickOutside = (ref, callback) => {
   const handleClick = e => {
-    if (ref && ref.current && !ref.current.contains(e.target)) {
+    if (
+      ref &&
+      ref.current &&
+      !ref.current.contains(e.target) &&
+      isVisible(e.target)
+    ) {
       callback(e)
     }
   }
@@ -26,6 +31,13 @@ const useClickOutside = (ref, callback) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+}
+
+function isVisible(elem) {
+  return (
+    !!elem &&
+    !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length)
+  )
 }
 
 export default useClickOutside
