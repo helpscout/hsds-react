@@ -36,11 +36,11 @@ export default createGlobalStyle`
 
   //reset element-level styling from hs-app
   a, abbr, address, blockquote, body, button, code, dd, dl, dt, form, figure, fieldset, img, input, h1, h2, h3, h4, h5, h6, label, legend, li, ol, pre, svg, table, textarea, ul {
-    margin: initial;
-    padding: initial;
-    height: initial;
-    width: initial;
-    line-height: initial;
-    border: 0;
+    margin: ${props => (props.cssReset ? 'initial' : null)};
+    padding: ${props => (props.cssReset ? 'initial' : null)};
+    height: ${props => (props.cssReset ? 'initial' : null)};
+    width: ${props => (props.cssReset ? 'initial' : null)};
+    line-height: ${props => (props.cssReset ? 'initial' : null)};
+    border: ${props => (props.cssReset ? 0 : null)};
   }
 `
