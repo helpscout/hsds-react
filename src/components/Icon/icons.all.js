@@ -165,6 +165,7 @@ import personPlus from '../../icons/person-plus.svg'
 import personTick from '../../icons/person-tick.svg'
 import personX from '../../icons/person-x.svg'
 import playVideo from '../../icons/play-video.svg'
+import playVideoLarge from '../../icons/play-video-large.svg'
 import plusLarge from '../../icons/plus-large.svg'
 import plusMedium from '../../icons/plus-medium.svg'
 import plusSmall from '../../icons/plus-small.svg'
@@ -425,6 +426,7 @@ const ICONS = {
   'person-tick': personTick,
   'person-x': personX,
   'play-video': playVideo,
+  'play-video-large': playVideoLarge,
   'plus-large': plusLarge,
   'plus-medium': plusMedium,
   'plus-small': plusSmall,

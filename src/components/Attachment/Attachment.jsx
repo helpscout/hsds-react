@@ -78,6 +78,7 @@ export class Attachment extends React.PureComponent {
       truncateLimit,
       type,
       url,
+      content,
       ...rest
     } = this.props
     const { theme } = this.context
@@ -99,25 +100,32 @@ export class Attachment extends React.PureComponent {
       </Text>
     ) : null
 
-    const contentMarkup = imageUrl ? (
-      <span className="c-Attachment__content">
-        <Image
-          block
-          className="c-Attachment__image"
-          src={imageUrl}
-          alt={name}
-        />
-      </span>
-    ) : (
-      <span className="c-Attachment__content">
-        <Text className="c-Attachment__name" lineHeightReset>
-          <Truncate limit={truncateLimit} text={name} type="middle">
-            {name}
-          </Truncate>
-        </Text>
-        {sizeMarkup}
-      </span>
-    )
+    function contentMarkup() {
+      if (content) {
+        return content
+      }
+      if (imageUrl) {
+        return (
+          <Image
+            block
+            className="c-Attachment__image"
+            src={imageUrl}
+            alt={name}
+          />
+        )
+      }
+
+      return (
+        <>
+          <Text className="c-Attachment__name" lineHeightReset>
+            <Truncate limit={truncateLimit} text={name} type="middle">
+              {name}
+            </Truncate>
+          </Text>
+          {sizeMarkup}
+        </>
+      )
+    }
 
     const closeMarkup = isThemePreview ? (
       <CloseButton
@@ -143,7 +151,7 @@ export class Attachment extends React.PureComponent {
         title={name}
         {...downloadProps}
       >
-        {contentMarkup}
+        <span className="c-Attachment__content">{contentMarkup()}</span>
         {closeMarkup}
         {this.renderErrorBorder()}
       </AttachmentUI>

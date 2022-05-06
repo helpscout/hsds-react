@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useState } from 'react'
 import SimpleModal from './SimpleModal'
 import { Portal } from '../../hooks/usePortal'
 import Button from '../Button'
@@ -24,9 +24,17 @@ export const SimpleModalWithTrigger = () => {
     isOpen1: false,
     isOpen2: false,
   })
+  const [buttonVisible, setButtonVisible] = useState(true)
+
   return (
     <>
-      <Button kind="primary" onClick={() => dispatch('OPEN_1')}>
+      <Button
+        kind="primary"
+        onClick={() => {
+          setButtonVisible(true)
+          dispatch('OPEN_1')
+        }}
+      >
         Open modal
       </Button>
       <Portal selector="#root">
@@ -40,10 +48,21 @@ export const SimpleModalWithTrigger = () => {
           }}
           closeOnClickOutside="modal"
         >
-          <div>My modal</div>
           <Button kind="primary" onClick={() => dispatch('OPEN_2')}>
             Open second modal
           </Button>
+          {buttonVisible ? (
+            <Button
+              style={{ marginTop: '20px' }}
+              size="xs"
+              theme="green"
+              onClick={() => {
+                setButtonVisible(false)
+              }}
+            >
+              remove this button
+            </Button>
+          ) : null}
         </SimpleModal>
       </Portal>
       <Portal selector="#root">
