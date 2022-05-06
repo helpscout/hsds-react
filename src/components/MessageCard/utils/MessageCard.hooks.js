@@ -17,6 +17,8 @@ function useButtonResizeOnSelection({
   onSelection = () => {},
   // The delay (in ms) for the resize transition
   transitionTimeout = DEFAULT_TRANSITION_TIMEOUT,
+  // Disabling the transition prevents the buttons from resizing
+  disableTransition = false,
 }) {
   const [buttonSize, setButtonSize] = React.useState(defaultSize)
   let timeoutId = null
@@ -31,6 +33,8 @@ function useButtonResizeOnSelection({
 
   function handleOnClick(id) {
     onSelection(id)
+
+    if (disableTransition) return
 
     timeoutId = setTimeout(() => {
       setButtonSize(selectedSize)

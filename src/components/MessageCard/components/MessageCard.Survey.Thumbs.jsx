@@ -10,8 +10,9 @@ const buttons = [
 ]
 
 export const MessageCardSurveyThumbs = () => {
-  const { onSelection, selected } = useSurveyContext()
+  const { onSelection, selected, withFeedbackForm } = useSurveyContext()
   const { buttonSize, handleOnClick } = useButtonResizeOnSelection({
+    disableTransition: !withFeedbackForm,
     onSelection,
   })
 

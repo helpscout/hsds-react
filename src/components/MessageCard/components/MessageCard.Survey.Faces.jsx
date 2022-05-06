@@ -8,8 +8,9 @@ import { useButtonResizeOnSelection } from '../utils/MessageCard.hooks'
 export const MessageCardSurveyFaces = ({
   faces = ['happy', 'okay', 'sad'],
 }) => {
-  const { onSelection, selected } = useSurveyContext()
+  const { onSelection, selected, withFeedbackForm } = useSurveyContext()
   const { buttonSize, handleOnClick } = useButtonResizeOnSelection({
+    disableTransition: !withFeedbackForm,
     defaultSize: 'xl',
     selectedSize: 'lg',
     onSelection,

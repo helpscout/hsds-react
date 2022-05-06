@@ -66,6 +66,7 @@ export const MessageCardSurvey = ({
   const contextValue = {
     onSelection: handleSelection,
     selected,
+    withFeedbackForm,
   }
 
   return (
