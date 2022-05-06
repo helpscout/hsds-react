@@ -89,6 +89,12 @@ export const EmojiButtonUI = styled('button')`
       width: 28px;
     }
   }
+
+  & > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `
 
 export const RateActionUI = styled(RateAction)`
