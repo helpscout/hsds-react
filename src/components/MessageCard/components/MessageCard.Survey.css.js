@@ -75,6 +75,7 @@ export const EmojiButtonUI = styled('button')`
     &:after {
       animation: HSDSRateActionSelected 200ms
         cubic-bezier(0.39, 0.575, 0.565, 1) both;
+      box-sizing: border-box;
       display: block;
     }
   }
@@ -94,6 +95,15 @@ export const EmojiButtonUI = styled('button')`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    // Native emojis show up off-centered on non-retina screens...
+    // Which is why we need to adjust the margin a little bit here.
+    @media not screen and (min-device-pixel-ratio: 2),
+      not screen and (min-resolution: 192dpi) {
+      & {
+        margin-right: 2px;
+      }
+    }
   }
 `
 
@@ -108,6 +118,7 @@ export const RateActionUI = styled(RateAction)`
     }
 
     &:after {
+      box-sizing: border-box;
       ${defaultTransition};
     }
   }
