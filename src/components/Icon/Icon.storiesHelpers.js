@@ -21,6 +21,15 @@ const WrapperUI = styled('div')`
   flex-direction: column;
 `
 
+const IconContainerUI = styled.div`
+  display: inline-block;
+
+  &:hover {
+    border: 1px solid ${getColor('grey.400')};
+    border-radius: 3px;
+  }
+`
+
 const TextWrapper = styled(Text)`
   margin-top: 'auto';
   border-top: 1px solid ${getColor('grey.500')};
@@ -54,7 +63,7 @@ export const Icons = () => {
       48: 48,
       52: 52,
     },
-    20
+    24
   )
 
   const state = select(
@@ -84,16 +93,18 @@ export const Icons = () => {
   const icons = Object.keys(iconList).map(i => (
     <WrapperUI key={i}>
       <IconWrapper>
-        <Icon
-          name={i}
-          key={i}
-          size={size}
-          center
-          state={state}
-          shade={shade}
-          muted={muted}
-          withCaret={withCaret}
-        />
+        <IconContainerUI>
+          <Icon
+            name={i}
+            key={i}
+            size={size}
+            center
+            state={state}
+            shade={shade}
+            muted={muted}
+            withCaret={withCaret}
+          />
+        </IconContainerUI>
       </IconWrapper>
       <TextWrapper size="12">{i}</TextWrapper>
     </WrapperUI>
