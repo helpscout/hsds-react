@@ -54,8 +54,10 @@ function SimpleModal({
   }
 
   function handleOverlayKeyDown(e) {
+    // Prevent keyboard events originating from the modal from leaking out onto the page.
+    e.stopPropagation()
+
     if (shouldRender && e.key === 'Escape') {
-      e.stopPropagation()
       onClose(e)
     } else if (e.key === 'Tab' && trapFocus && modalRef.current) {
       manageTrappedFocus(modalRef.current, e)
