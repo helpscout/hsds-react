@@ -91,7 +91,7 @@ const editorHtmlFontSize = 14
 
 export const ContentUI = styled.div`
   margin-top: ${({ withMargin }) => (withMargin ? '20px' : '0')};
-  padding: 0 18px 0 20px;
+  padding: 0 20px;
   display: flex;
   flex-direction: column;
 

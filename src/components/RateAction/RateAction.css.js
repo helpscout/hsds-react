@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 import { rgba } from '../../utilities/color'
 import { emoticonAnimationCSS } from '../Emoticon/Emoticon.css'
@@ -6,12 +6,12 @@ import { emoticonAnimationCSS } from '../Emoticon/Emoticon.css'
 export const config = {
   size: {
     default: '28px',
+    xl: '42px',
     lg: '28px',
     md: '24px',
     sm: '20px',
   },
   boxShadowColor: rgba(getColor('grey.600'), 0.5),
-  outlineColor: getColor('green.500'),
   transition: 'all 200ms ease-in-out',
 }
 
@@ -86,8 +86,8 @@ export const RateActionUI = styled('button')`
     &:after {
       content: '';
       border-radius: 50%;
-      border: ${({ withCircle }) =>
-        !withCircle ? `2px solid ${config.outlineColor}` : 'none'};
+      border: ${({ withCircle, outlineColor }) =>
+        !withCircle ? `2px solid ${outlineColor}` : 'none'};
       display: none;
       height: calc(${config.size.default} + 4px);
       left: -2px;
@@ -129,6 +129,16 @@ export const RateActionUI = styled('button')`
       box-shadow: 0 4px 7px 0 ${config.boxShadowColor};
       transform: scale(1.3);
       z-index: 1;
+    }
+
+    &.is-xl {
+      height: ${config.size.xl};
+      width: ${config.size.xl};
+
+      &:after {
+        height: calc(${config.size.xl} + 4px);
+        width: calc(${config.size.xl} + 4px);
+      }
     }
 
     &.is-lg {

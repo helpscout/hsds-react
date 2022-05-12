@@ -184,7 +184,6 @@ const Tooltip = ({
     plugins,
     render,
     maxWidth,
-    minWidth: minWidth || 'none',
   }
 
   // only set those props if the component is not in a controlled way

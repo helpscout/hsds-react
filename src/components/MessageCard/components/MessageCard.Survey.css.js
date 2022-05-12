@@ -1,7 +1,12 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { focusRing } from '../../../styles/mixins/focusRing.css'
 import { getColor } from '../../../styles/utilities/color'
 import Button from '../../Button'
+import RateAction from '../../RateAction'
+
+const defaultTransition = css`
+  transition: all 0.2s ease-in-out;
+`
 
 export const SurveyUI = styled('div')`
   background: ${getColor('grey.200')};
@@ -26,8 +31,8 @@ export const EmojiButtonUI = styled('button')`
   font-size: 22px;
   margin-left: 10px;
   height: 42px;
-  transition: transform 0.2s ease-in-out;
   width: 42px;
+  ${defaultTransition};
 
   ${focusRing};
   --focusRingOffset: -3px;
@@ -41,8 +46,85 @@ export const EmojiButtonUI = styled('button')`
     transform: scale(1.3);
   }
 
+  &:after {
+    content: '';
+    border-radius: 50%;
+    border: 2px solid ${getColor('grey.600')};
+    display: none;
+    height: 46px;
+    left: -2px;
+    pointer-events: none;
+    position: absolute;
+    top: -2px;
+    width: 46px;
+    ${defaultTransition};
+
+    @keyframes HSDSRateActionSelected {
+      0% {
+        transform: scale(0.5);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+  }
+
   &.is-selected {
-    border: 2px solid ${getColor('blue.500')};
+    transform: scale(1.3);
+
+    &:after {
+      animation: HSDSRateActionSelected 200ms
+        cubic-bezier(0.39, 0.575, 0.565, 1) both;
+      box-sizing: border-box;
+      display: block;
+    }
+  }
+
+  &.is-md {
+    height: 24px;
+    width: 24px;
+    font-size: 12px;
+
+    &:after {
+      height: 28px;
+      width: 28px;
+    }
+  }
+
+  & > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    // Native emojis show up off-centered on non-retina screens...
+    // Which is why we need to adjust the margin a little bit here.
+    @media not screen and (min-device-pixel-ratio: 2),
+      not screen and (min-resolution: 192dpi) {
+      & {
+        margin-right: 2px;
+      }
+    }
+  }
+`
+
+export const RateActionUI = styled(RateAction)`
+  margin-left: 10px !important;
+
+  &.c-RateAction {
+    ${defaultTransition};
+
+    svg {
+      ${defaultTransition};
+    }
+
+    &:after {
+      box-sizing: border-box;
+      ${defaultTransition};
+    }
+  }
+
+  &:first-child {
+    margin-left: 0;
   }
 `
 

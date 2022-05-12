@@ -116,8 +116,8 @@ Emoticon.propTypes = {
   ]),
   /** Render a html title attribute on the emoticon*/
   title: PropTypes.string,
-  /** size of the emoticon: lg: '24px', md: '20px', sm: '16px' */
-  size: PropTypes.oneOf(['lg', 'md', 'sm']),
+  /** size of the emoticon: xl: '38px', lg: '24px', md: '20px', sm: '16px' */
+  size: PropTypes.oneOf(['xl', 'lg', 'md', 'sm']),
   /** Animate Emoticon on hover */
   withAnimation: PropTypes.bool,
 }
