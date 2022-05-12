@@ -22,23 +22,16 @@ export function TableRow({
   withFocusableRows,
 }) {
   function handleRowClick(e) {
-    // Avoid firing when selecting a row
-    const wasSelectorClicked = Boolean(e.target.closest('.Selector_Checkbox'))
-
-    if (!wasSelectorClicked) {
+    if (shouldfireRowClickEvent(e)) {
       e.persist()
       onRowClick && onRowClick(e, row)
     }
   }
 
   function handleKeyDown(e) {
-    if (e.key === 'Enter') {
-      const wasSelectorClicked = Boolean(e.target.closest('.Selector_Checkbox'))
-
-      if (!wasSelectorClicked) {
-        e.persist()
-        onRowClick && onRowClick(e, row)
-      }
+    if (e.key === 'Enter' && shouldfireRowClickEvent(e)) {
+      e.persist()
+      onRowClick && onRowClick(e, row)
     }
   }
 
@@ -90,6 +83,17 @@ export function TableRow({
   }
 
   return rowWrapper ? rowWrapper(renderRow(), row) : renderRow()
+}
+
+function shouldfireRowClickEvent(e) {
+  const { target } = e
+  // Avoid firing when selecting a row
+  const wasSelectorClicked = target.closest('.Selector_Checkbox')
+  // Avoid firing if the content is clickable
+  const isTargetLinkOrButton =
+    target.tagName === 'A' || target.tagName === 'BUTTON'
+
+  return !wasSelectorClicked && !isTargetLinkOrButton
 }
 
 TableRow.propTypes = {

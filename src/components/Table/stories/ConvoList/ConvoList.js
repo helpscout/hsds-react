@@ -56,6 +56,7 @@ export default function ConvoList() {
     {
       title: 'Conversation',
       columnKey: ['subject', 'preview', 'tags'],
+      clearCellPadding: true,
       renderCell: cellData => {
         return <ConversationCell {...cellData} />
       },

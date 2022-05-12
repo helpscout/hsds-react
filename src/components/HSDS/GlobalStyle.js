@@ -1,5 +1,5 @@
 /* istanbul ignore file */
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle, css } from 'styled-components'
 
 export const FONT_FAMILY =
   '"Aktiv Grotesk", "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
@@ -11,6 +11,47 @@ export const FONT_FAMILY_MONO =
   '"SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace'
 
 export const BASE_FONT_SIZE = 13
+
+const hsAppResetCSS = css`
+  //reset element-level styling from hs-app
+  a,
+  abbr,
+  address,
+  blockquote,
+  body,
+  button,
+  code,
+  dd,
+  dl,
+  dt,
+  form,
+  figure,
+  fieldset,
+  img,
+  input,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  label,
+  legend,
+  li,
+  ol,
+  pre,
+  svg,
+  table,
+  textarea,
+  ul {
+    margin: initial;
+    padding: initial;
+    height: initial;
+    width: initial;
+    line-height: initial;
+    border: 0;
+  }
+`
 
 export default createGlobalStyle`
   :root{
@@ -33,4 +74,6 @@ export default createGlobalStyle`
       box-sizing: border-box;
     }
   }
+
+  ${props => (props.cssReset ? hsAppResetCSS : null)};
 `

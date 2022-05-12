@@ -5,6 +5,7 @@ import isPlainObject from 'lodash.isplainobject'
 import Truncate from '../Truncate'
 import { CellUI } from './Table.css'
 import { columnShape, dataShape, generateCellClassNames } from './Table.utils'
+import isFunction from 'lodash.isfunction'
 
 export function TableCell({ column, row }) {
   const cellClassNames = generateCellClassNames(column)
@@ -43,17 +44,19 @@ export function TableCell({ column, row }) {
 
   function renderSingleColumnCell() {
     const cellContent = get(row, column.columnKey)
+    const { renderCell } = column
+    let cellMarkup = <Truncate>{cellContent}</Truncate>
+
+    if (isFunction(renderCell)) {
+      cellMarkup = renderCell({
+        [column.columnKey]: cellContent,
+        row,
+      })
+    }
 
     return (
       <CellUI align={column.align} className={cellClassNames}>
-        {column.renderCell ? (
-          column.renderCell({
-            [column.columnKey]: cellContent,
-            row,
-          })
-        ) : (
-          <Truncate>{cellContent}</Truncate>
-        )}
+        {cellMarkup}
       </CellUI>
     )
   }
