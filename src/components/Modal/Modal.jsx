@@ -330,6 +330,7 @@ class Modal extends React.PureComponent {
 
   render() {
     const {
+      blocksGlobalHotkeys,
       className,
       'data-cy': dataCy,
       isOpen,
@@ -363,6 +364,7 @@ class Modal extends React.PureComponent {
       <ModalUI
         {...rest}
         className={componentClassName}
+        data-blocks-global-hotkeys={blocksGlobalHotkeys}
         data-cy={dataCy}
         role="document"
         style={styles}
@@ -383,6 +385,7 @@ class Modal extends React.PureComponent {
           {...rest}
           className={innerWrapperClassName}
           isHsApp={isHsApp}
+          tabIndex="0"
         >
           {this.getInnerContentMarkup()}
         </InnerWrapperUI>
@@ -393,6 +396,7 @@ class Modal extends React.PureComponent {
 }
 
 Modal.defaultProps = {
+  blocksGlobalHotkeys: true,
   closeIcon: true,
   closeIconOffset: 10,
   closeIconRepositionDelay: 0,
@@ -432,6 +436,8 @@ Modal.defaultProps = {
 }
 
 Modal.propTypes = {
+  /** Adds a data-blocks-global-hotkeys="true" to the modal element in case you want to signal that no global hotkeys should be allowed when the modal is on screen */
+  blocksGlobalHotkeys: PropTypes.bool,
   /** Custom class names to be added to the child `Card` component. */
   cardClassName: PropTypes.string,
   /** Custom class names to be added to the component. */

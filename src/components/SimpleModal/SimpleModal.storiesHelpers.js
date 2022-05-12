@@ -1,7 +1,9 @@
-import React, { useReducer, useState } from 'react'
+import React, { useReducer, useState, useEffect } from 'react'
 import SimpleModal from './SimpleModal'
 import { Portal } from '../../hooks/usePortal'
 import Button from '../Button'
+import { useHotkeys } from 'react-hotkeys-hook'
+import { allowGlobalHotkeys } from './SimpleModal.utils'
 
 function reducer(state, type) {
   switch (type) {
@@ -25,6 +27,34 @@ export const SimpleModalWithTrigger = () => {
     isOpen2: false,
   })
   const [buttonVisible, setButtonVisible] = useState(true)
+
+  useHotkeys(
+    'k',
+    e => {
+      e.preventDefault()
+      e.stopPropagation()
+      alert('global k hotkey triggered')
+    },
+    {
+      filter: e => allowGlobalHotkeys(e.target),
+    }
+  )
+
+  useEffect(() => {
+    function handleEvent(e) {
+      if (e.key === 'j') {
+        if (allowGlobalHotkeys(e.target)) {
+          alert('global j hotkey triggered')
+        }
+      }
+    }
+
+    document.body.addEventListener('keydown', handleEvent)
+
+    return () => {
+      document.body.removeEventListener('keydown', handleEvent)
+    }
+  }, [])
 
   return (
     <>

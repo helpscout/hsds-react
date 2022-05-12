@@ -14,6 +14,7 @@ function noop() {}
 
 function SimpleModal({
   ariaLabelledBy = '',
+  blocksGlobalHotkeys = true,
   children,
   className,
   customCloseButton,
@@ -107,6 +108,7 @@ function SimpleModal({
         className="SimpleModal"
         dataCy={dataCy}
         data-testid="simple-modal"
+        data-blocks-global-hotkeys={blocksGlobalHotkeys}
         id="simple-modal"
         role="dialog"
         ref={modalRef}
@@ -125,6 +127,8 @@ function SimpleModal({
 SimpleModal.propTypes = {
   /** If you include a Heading in the modal, give it the same ID as the value you put here. Otherwise add a `aria-label` with a description */
   ariaLabelledBy: PropTypes.string,
+  /** Adds a data-blocks-global-hotkeys="true" to the modal element in case you want to signal that no global hotkeys should be allowed when the modal is on screen */
+  blocksGlobalHotkeys: PropTypes.bool,
   /** Content to be rendered inside the modal */
   children: PropTypes.any,
   /** Custom classname on this component */
