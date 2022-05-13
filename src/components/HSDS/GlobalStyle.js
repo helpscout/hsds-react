@@ -27,7 +27,6 @@ const hsAppResetCSS = css`
   form,
   figure,
   fieldset,
-  img,
   input,
   h1,
   h2,
@@ -40,7 +39,6 @@ const hsAppResetCSS = css`
   li,
   ol,
   pre,
-  svg,
   table,
   textarea,
   ul {
