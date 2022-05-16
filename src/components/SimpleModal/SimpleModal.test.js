@@ -167,4 +167,105 @@ describe('Closing', () => {
 
     expect(spy).not.toHaveBeenCalled()
   })
+
+  test('(multiple modals outsideClick) should not call onClose clicking the second modal ', () => {
+    const spyOne = jest.fn()
+    const spyTwo = jest.fn()
+    const { container } = render(
+      <>
+        <div className="app" style={{ width: '500px' }}>
+          <SimpleModal
+            closeOnClickOutside="modal"
+            show
+            onClose={spyOne}
+            width={'200px'}
+          />
+          <SimpleModal
+            id="second-modal"
+            closeOnClickOutside="modal"
+            show
+            onClose={spyTwo}
+            width={'200px'}
+          >
+            <strong>My second modal</strong>
+          </SimpleModal>
+        </div>
+      </>
+    )
+
+    const secondModal = container.querySelector('#second-modal')
+
+    user.click(secondModal)
+
+    expect(spyOne).not.toHaveBeenCalled()
+    expect(spyTwo).not.toHaveBeenCalled()
+  })
+
+  test('(multiple modals outsideClick) should only call onClose on the second modal when clicking overlay', () => {
+    const spyOne = jest.fn()
+    const spyTwo = jest.fn()
+    const { container } = render(
+      <>
+        <div className="app" style={{ width: '500px' }}>
+          <SimpleModal
+            closeOnClickOutside="modal"
+            show
+            onClose={spyOne}
+            width={'200px'}
+          />
+          <SimpleModal
+            id="second-modal"
+            closeOnClickOutside="modal"
+            show
+            onClose={spyTwo}
+            width={'200px'}
+          >
+            <strong>My second modal</strong>
+          </SimpleModal>
+        </div>
+      </>
+    )
+
+    const secondModal = container.querySelector('#second-modal')
+    const secondModalOverlay = secondModal.closest('.SimpleModal__Overlay')
+
+    user.click(secondModalOverlay)
+
+    expect(spyOne).not.toHaveBeenCalled()
+    expect(spyTwo).toHaveBeenCalled()
+  })
+
+  test('(multiple modals outsideClick) should not call onClose clicking on content on second modal ', () => {
+    const spyOne = jest.fn()
+    const spyTwo = jest.fn()
+    const { container } = render(
+      <>
+        <div className="app" style={{ width: '500px' }}>
+          <SimpleModal
+            closeOnClickOutside="modal"
+            show
+            onClose={spyOne}
+            width={'200px'}
+          />
+          <SimpleModal
+            id="second-modal"
+            closeOnClickOutside="modal"
+            show
+            onClose={spyTwo}
+            width={'200px'}
+          >
+            <strong>My second modal</strong>
+          </SimpleModal>
+        </div>
+      </>
+    )
+
+    const secondModal = container.querySelector('#second-modal')
+    const secondModalContent = secondModal.querySelector('strong')
+
+    user.click(secondModalContent)
+
+    expect(spyOne).not.toHaveBeenCalled()
+    expect(spyTwo).not.toHaveBeenCalled()
+  })
 })

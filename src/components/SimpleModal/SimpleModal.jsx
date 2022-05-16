@@ -12,6 +12,11 @@ import {
 
 function noop() {}
 
+const DATA_COMPONENTS_ID = {
+  OVERLAY: 'simple-modal-overlay',
+  MODAL: 'simple-modal',
+}
+
 function SimpleModal({
   ariaLabelledBy = '',
   blocksGlobalHotkeys = true,
@@ -40,6 +45,42 @@ function SimpleModal({
   )
 
   useClickOutside(getClickOutsideRef(), e => {
+    const { target } = e
+
+    // If there is another modal around don't fire onClose under these scenarios:
+
+    /**
+     * a) if the clicked element is a modal, but no _this_ modal
+     */
+    if (
+      target.dataset.componentId === DATA_COMPONENTS_ID.MODAL &&
+      target !== modalRef.current
+    ) {
+      return
+    }
+
+    /**
+     * b) if the clicked element is a modal overlay, but not the one containing _this_ modal
+     */
+    if (
+      target.dataset.componentId === DATA_COMPONENTS_ID.OVERLAY &&
+      target.firstChild !== modalRef.current
+    ) {
+      return
+    }
+
+    const targetParentModal = target.closest(
+      `[data-component-id="${DATA_COMPONENTS_ID.MODAL}"]`
+    )
+
+    /**
+     * c) if the clicked element is inside a modal, but not inside _this_ modal
+     */
+
+    if (targetParentModal && targetParentModal !== modalRef.current) {
+      return
+    }
+
     onClose(e)
   })
 
@@ -77,7 +118,10 @@ function SimpleModal({
         <CloseModalButtonUI
           aria-label="close modal button"
           className="SimpleModal__CloseButton"
-          onClick={onClose}
+          onClick={e => {
+            e.stopPropagation()
+            onClose(e)
+          }}
           $zIndex={zIndexCloseButton}
           icon="cross-small"
           size="lg"
@@ -96,7 +140,8 @@ function SimpleModal({
         show && 'element-in',
         className
       )}
-      data-testid="simple-modal-overlay"
+      data-component-id={DATA_COMPONENTS_ID.OVERLAY}
+      data-testid={DATA_COMPONENTS_ID.OVERLAY}
       onAnimationEnd={onAnimationEnd}
       onKeyDown={handleOverlayKeyDown}
       ref={overlayRef}
@@ -107,9 +152,10 @@ function SimpleModal({
         aria-labelledby={ariaLabelledBy}
         className="SimpleModal"
         dataCy={dataCy}
-        data-testid="simple-modal"
+        data-component-id={DATA_COMPONENTS_ID.MODAL}
+        data-testid={DATA_COMPONENTS_ID.MODAL}
         data-blocks-global-hotkeys={blocksGlobalHotkeys}
-        id="simple-modal"
+        id={DATA_COMPONENTS_ID.MODAL}
         role="dialog"
         ref={modalRef}
         height={height}
