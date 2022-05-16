@@ -1,8 +1,9 @@
 import styled, { css } from 'styled-components'
-import { focusRing } from '../../../styles/mixins/focusRing.css'
-import { getColor } from '../../../styles/utilities/color'
-import Button from '../../Button'
-import RateAction from '../../RateAction'
+import { focusRing } from '../../../../styles/mixins/focusRing.css'
+import { getColor } from '../../../../styles/utilities/color'
+import Button from '../../../Button'
+import RateAction from '../../../RateAction'
+import ChoiceGroup from '../../../ChoiceGroup'
 
 const defaultTransition = css`
   transition: all 0.2s ease-in-out;
@@ -168,5 +169,17 @@ export const ConfirmationMessageUI = styled('div')`
 
   .c-Icon {
     color: ${getColor('green.500')};
+  }
+`
+
+export const MultipleChoiceGroupUI = styled(ChoiceGroup)`
+  background-color: #fff;
+  width: 100%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  padding: 15px;
+
+  & .c-FormGroupChoice:last-of-type {
+    margin-bottom: 0;
   }
 `

@@ -8,10 +8,10 @@ import {
   SubmitFeedbackFormButtonUI,
   SurveyUI,
 } from './MessageCard.Survey.css'
-import { SurveyContext } from '../MessageCard.Survey.context'
-import Input from '../../Input'
-import Spinner from '../../Spinner'
-import Icon from '../../Icon'
+import { SurveyContext } from '../../utils/MessageCard.Survey.context'
+import Input from '../../../Input'
+import Spinner from '../../../Spinner'
+import Icon from '../../../Icon'
 
 function noop() {}
 

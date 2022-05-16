@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { RateActionUI, SurveyOptionsUI } from './MessageCard.Survey.css'
-import { useSurveyContext } from '../MessageCard.Survey.context'
-import { getColor } from '../../../styles/utilities/color'
-import { useButtonResizeOnSelection } from '../utils/MessageCard.hooks'
+import { useSurveyContext } from '../../utils/MessageCard.Survey.context'
+import { getColor } from '../../../../styles/utilities/color'
+import { useButtonResizeOnSelection } from '../../utils/MessageCard.hooks'
 
 export const MessageCardSurveyFaces = ({
   faces = ['happy', 'okay', 'sad'],

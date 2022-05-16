@@ -1,7 +1,11 @@
 import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs/blocks'
 import { boolean, select, text } from '@storybook/addon-knobs'
 import MessageCard from './'
-import { FacesSurvey, ThumbsSurvey } from './MessageCard.Survey.variants'
+import {
+  FacesSurvey,
+  MultipleChoiceSurvey,
+  ThumbsSurvey,
+} from './MessageCard.Survey.variants'
 
 <Meta
   title="Components/Conversation/Message/MessageCard"
@@ -202,6 +206,34 @@ This component renders a Message Card Notification with (optional) Title, Subtit
           onSubmit={data => console.log(data)}
         >
           <FacesSurvey />
+        </MessageCard.Survey>
+      )}
+    />
+  </Story>
+</Canvas>
+
+# With Multiple Choice survey
+
+<Canvas>
+  <Story name="With Multiple Choice survey">
+    <MessageCard
+      title="Which pizza do you like the most?"
+      body="Your feedback is valuable to us. Let us know how we did so we can continue to improve our services."
+      action={() => (
+        <MessageCard.Survey
+          withFeedbackForm
+          feedbackFormText="Tell us more..."
+          onSubmit={data => console.log(data)}
+        >
+          <MultipleChoiceSurvey
+            choices={[
+              { id: '1', text: 'Pepperoni' },
+              { id: '2', text: 'With pineapple of course!' },
+              { id: '3', text: 'Classic margherita' },
+              { id: '4', text: 'Veggie option' },
+              { id: '5', text: 'My favorite with all ingredients' },
+            ]}
+          />
         </MessageCard.Survey>
       )}
     />
