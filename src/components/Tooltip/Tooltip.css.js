@@ -73,22 +73,6 @@ export const TooltipUI = styled.div`
     }
   }
 
-  &[data-placement='top-end'],
-  &[data-placement='bottom-end'] {
-    ${ArrowUI} {
-      right: 8px;
-      left: unset !important;
-    }
-  }
-
-  &[data-placement='top-start'],
-  &[data-placement='bottom-start'] {
-    ${ArrowUI} {
-      left: 8px !important;
-      transform: unset !important;
-    }
-  }
-
   &[data-placement^='bottom'] {
     ${ArrowUI} {
       top: calc((${({ arrowSize }) => arrowSize}px / 2) * -1);

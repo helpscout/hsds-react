@@ -16,6 +16,7 @@ function noop() {}
 
 function SidePanel({
   ariaLabelledBy = '',
+  blocksGlobalHotkeys = false,
   children,
   className,
   closeOnClickOutside = false,
@@ -92,6 +93,7 @@ function SidePanel({
         aria-labelledby={ariaLabelledBy}
         className="SidePanel"
         dataCy={dataCy}
+        data-blocks-global-hotkeys={blocksGlobalHotkeys}
         data-testid="sidepanel"
         id="sidepanel"
         panelWidth={panelWidth}
@@ -116,6 +118,8 @@ function SidePanel({
 SidePanel.propTypes = {
   /** If you include a Heading in the SidePanel, give it the same ID as the value you put here. Otherwise add a `aria-label` with a description */
   ariaLabelledBy: PropTypes.string,
+  /** Adds a data-blocks-global-hotkeys="true" to the modal element in case you want to signal that no global hotkeys should be allowed when the modal is on screen */
+  blocksGlobalHotkeys: PropTypes.bool,
   /** Content to be rendered inside the panel body */
   children: PropTypes.any,
   /** Custom classname on this component */
