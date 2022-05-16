@@ -10,12 +10,15 @@ import reactionSadSmall from '../../emoticons/reaction-sad-small.svg'
 
 // Emoticon full name: [emoticon-name]-[size]
 const EMOTICONS = {
+  'reaction-happy-xl': reactionHappyLarge,
   'reaction-happy-lg': reactionHappyLarge,
   'reaction-happy-md': reactionHappyMedium,
   'reaction-happy-sm': reactionHappySmall,
+  'reaction-okay-xl': reactionOkayLarge,
   'reaction-okay-lg': reactionOkayLarge,
   'reaction-okay-md': reactionOkayMedium,
   'reaction-okay-sm': reactionOkaySmall,
+  'reaction-sad-xl': reactionSadLarge,
   'reaction-sad-lg': reactionSadLarge,
   'reaction-sad-md': reactionSadMedium,
   'reaction-sad-sm': reactionSadSmall,

@@ -88,6 +88,7 @@ export const emoticonAnimationCSS = css`
 `
 
 const sizes = {
+  xl: '38px',
   lg: '24px',
   md: '20px',
   sm: '16px',
@@ -140,6 +141,13 @@ export const EmoticonUI = styled('span')`
     opacity: 0.5;
     cursor: initial;
     pointer-events: none;
+  }
+
+  &.is-xl {
+    svg {
+      height: ${sizes.xl};
+      width: ${sizes.xl};
+    }
   }
 
   /**
