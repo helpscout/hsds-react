@@ -54,11 +54,8 @@ export const InputSearchHolderUI = styled('div')`
     box-shadow: inset 0 0 0 1px ${getColor('grey.600')};
     border: 0;
     border-radius: 3px;
-
-    &:focus {
-      outline: 0;
-      box-shadow: 0 0 0 2px ${getColor('blue.500')};
-    }
+    outline: 0;
+    box-shadow: 0 0 0 2px ${getColor('blue.500')};
   }
 `
 
