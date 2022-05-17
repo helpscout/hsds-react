@@ -178,7 +178,7 @@ export const MultipleChoiceGroupUI = styled(ChoiceGroup)`
   width: 100%;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   border-radius: 3px;
-  padding: 15px;
+  padding: 5px 15px;
 
   & .c-FormGroupChoice {
     margin-bottom: 0;
