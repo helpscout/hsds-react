@@ -4,6 +4,7 @@ import { getColor } from '../../../../styles/utilities/color'
 import Button from '../../../Button'
 import RateAction from '../../../RateAction'
 import ChoiceGroup from '../../../ChoiceGroup'
+import Radio from '../../../Radio'
 
 const defaultTransition = css`
   transition: all 0.2s ease-in-out;
@@ -179,7 +180,15 @@ export const MultipleChoiceGroupUI = styled(ChoiceGroup)`
   border-radius: 3px;
   padding: 15px;
 
-  & .c-FormGroupChoice:last-of-type {
+  & .c-FormGroupChoice {
     margin-bottom: 0;
+  }
+`
+
+export const MultipleChoiceRadioUI = styled(Radio)`
+  .c-Choice__label-text {
+    height: 36px;
+    display: flex;
+    align-items: center;
   }
 `

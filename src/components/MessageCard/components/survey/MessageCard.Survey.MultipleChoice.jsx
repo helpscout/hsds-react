@@ -1,6 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { MultipleChoiceGroupUI } from './MessageCard.Survey.css'
+import {
+  MultipleChoiceGroupUI,
+  MultipleChoiceRadioUI,
+} from './MessageCard.Survey.css'
 import { useSurveyContext } from '../../utils/MessageCard.Survey.context'
 import Radio from '../../../Radio'
 
@@ -14,7 +17,12 @@ export const MessageCardSurveyMultipleChoice = ({ choices }) => {
       onChange={onSelection}
     >
       {choices.map(({ id, text }) => (
-        <Radio label={text} value={id} name={text} key={`Choice-${id}`} />
+        <MultipleChoiceRadioUI
+          label={text}
+          value={id}
+          name={text}
+          key={`Choice-${id}`}
+        />
       ))}
     </MultipleChoiceGroupUI>
   )
