@@ -1,6 +1,7 @@
 import { ArgsTable, Canvas, Meta, Story } from '@storybook/addon-docs/blocks'
 import { boolean, select, text } from '@storybook/addon-knobs'
 import MessageCard from './'
+import { MessageCardStoryWrapperUI } from './MessageCard.storiesHelper'
 import {
   FacesSurvey,
   MultipleChoiceSurvey,
@@ -28,21 +29,23 @@ This component renders a Message Card Notification with (optional) Title, Subtit
 
 <Canvas>
   <Story name="default">
-    <MessageCard
-      key="default"
-      in={boolean('show', true)}
-      isMobile={boolean('isMobile', false)}
-      isWithBoxShadow={boolean('isWithBoxShadow', true)}
-      withAnimation={true}
-      align={select('Align', { Right: 'right', Left: 'left' }, 'right')}
-      subtitle={text('Subtitle', 'The J&G Team is here')}
-      title={text('Title', 'Need help?')}
-      body={text(
-        'Body',
-        '<p>This <i>sentence</i> has five <u>words</u>. has five more <code class="inline-code">words</code></p><ul> <li>Point one</li><li>Somewhat unimaginatively , I&#39;ve <s>compartmentalized</s> my incomprehensibilities. Furthermore, announcements of such long-windedness are likely un-copyrightable!</li><li>Text</li></ul><p>Hol’ up, here comes a blockquote. Thanks,</p><blockquote> <p>This sentence has five words. Here are five more words. Five-word sentences are fine. But several together become monotonous. Listen to what is happening. The writing is getting boring. The sound of it drones. It’s like a stuck record. The ear demands some variety. Now listen. I vary the sentence length, and I create music. Music. The writing sings. It has a pleasant rhythm, a lilt, a harmony. I use short sentences</p></blockquote><p><b>Bold text</b> is charcoal.800 whist links are <a href="https://www.google.com/">blue.600</a></p><ol> <li>Point one</li><li>Point two is made up of two lines, of course list items can extend well beyond this, but still respect the grid</li><li>Text</li></ol><pre><code><p>let settings = HSBeaconSettings(beaconId: "cac8be08-60a3 -46e8-b22e-ed50bfcaa0aa"); HSBeacon.open(settings);</p></code></pre><p>The J&amp;G Support Team are always happy.</p>'
-      )}
-      action={() => <MessageCard.Button>Click here</MessageCard.Button>}
-    />
+    <MessageCardStoryWrapperUI>
+      <MessageCard
+        key="default"
+        in={boolean('show', true)}
+        isMobile={boolean('isMobile', false)}
+        isWithBoxShadow={boolean('isWithBoxShadow', true)}
+        withAnimation={true}
+        align={select('Align', { Right: 'right', Left: 'left' }, 'right')}
+        subtitle={text('Subtitle', 'The J&G Team is here')}
+        title={text('Title', 'Need help?')}
+        body={text(
+          'Body',
+          '<p>This <i>sentence</i> has five <u>words</u>. has five more <code class="inline-code">words</code></p><ul> <li>Point one</li><li>Somewhat unimaginatively , I&#39;ve <s>compartmentalized</s> my incomprehensibilities. Furthermore, announcements of such long-windedness are likely un-copyrightable!</li><li>Text</li></ul><p>Hol’ up, here comes a blockquote. Thanks,</p><blockquote> <p>This sentence has five words. Here are five more words. Five-word sentences are fine. But several together become monotonous. Listen to what is happening. The writing is getting boring. The sound of it drones. It’s like a stuck record. The ear demands some variety. Now listen. I vary the sentence length, and I create music. Music. The writing sings. It has a pleasant rhythm, a lilt, a harmony. I use short sentences</p></blockquote><p><b>Bold text</b> is charcoal.800 whist links are <a href="https://www.google.com/">blue.600</a></p><ol> <li>Point one</li><li>Point two is made up of two lines, of course list items can extend well beyond this, but still respect the grid</li><li>Text</li></ol><pre><code><p>let settings = HSBeaconSettings(beaconId: "cac8be08-60a3 -46e8-b22e-ed50bfcaa0aa"); HSBeacon.open(settings);</p></code></pre><p>The J&amp;G Support Team are always happy.</p>'
+        )}
+        action={() => <MessageCard.Button>Click here</MessageCard.Button>}
+      />
+    </MessageCardStoryWrapperUI>
   </Story>
 </Canvas>
 
@@ -50,28 +53,30 @@ This component renders a Message Card Notification with (optional) Title, Subtit
 
 <Canvas>
   <Story name="with scrollbar">
-    <MessageCard
-      key="default"
-      in={boolean('show', true)}
-      isMobile={boolean('isMobile', false)}
-      isWithBoxShadow={boolean('isWithBoxShadow', true)}
-      withAnimation={true}
-      align={select('Align', { Right: 'right', Left: 'left' }, 'right')}
-      subtitle={text('Subtitle', 'The J&G Team is here')}
-      title={text('Title', 'Need help?')}
-      body={text(
-        'Body',
-        '<p>This <i>sentence</i> has five <u>words</u>. has five more <code class="inline-code">words</code></p><ul> <li>Point one</li><li>Somewhat unimaginatively , I&#39;ve <s>compartmentalized</s> my incomprehensibilities. Furthermore, announcements of such long-windedness are likely un-copyrightable!</li><li>Text</li></ul><p>Hol’ up, here comes a blockquote. Thanks,</p><blockquote> <p>This sentence has five words. Here are five more words. Five-word sentences are fine. But several together become monotonous. Listen to what is happening. The writing is getting boring. The sound of it drones. It’s like a stuck record. The ear demands some variety. Now listen. I vary the sentence length, and I create music. Music. The writing sings. It has a pleasant rhythm, a lilt, a harmony. I use short sentences</p></blockquote><p><b>Bold text</b> is charcoal.800 whist links are <a href="https://www.google.com/">blue.600</a></p><ol> <li>Point one</li><li>Point two is made up of two lines, of course list items can extend well beyond this, but still respect the grid</li><li>Text</li></ol><pre><code><p>let settings = HSBeaconSettings(beaconId: "cac8be08-60a3 -46e8-b22e-ed50bfcaa0aa"); HSBeacon.open(settings);</p></code></pre><p>The J&amp;G Support Team are always happy.</p>'
-      )}
-      image={{
-        height: '700',
-        width: '1050',
-        url:
-          'https://images.unsplash.com/photo-1620607812709-f7c4a88baf11?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-      }}
-      action={() => <MessageCard.Button>Click here</MessageCard.Button>}
-      style={{ height: '600px' }}
-    />
+    <MessageCardStoryWrapperUI>
+      <MessageCard
+        key="default"
+        in={boolean('show', true)}
+        isMobile={boolean('isMobile', false)}
+        isWithBoxShadow={boolean('isWithBoxShadow', true)}
+        withAnimation={true}
+        align={select('Align', { Right: 'right', Left: 'left' }, 'right')}
+        subtitle={text('Subtitle', 'The J&G Team is here')}
+        title={text('Title', 'Need help?')}
+        body={text(
+          'Body',
+          '<p>This <i>sentence</i> has five <u>words</u>. has five more <code class="inline-code">words</code></p><ul> <li>Point one</li><li>Somewhat unimaginatively , I&#39;ve <s>compartmentalized</s> my incomprehensibilities. Furthermore, announcements of such long-windedness are likely un-copyrightable!</li><li>Text</li></ul><p>Hol’ up, here comes a blockquote. Thanks,</p><blockquote> <p>This sentence has five words. Here are five more words. Five-word sentences are fine. But several together become monotonous. Listen to what is happening. The writing is getting boring. The sound of it drones. It’s like a stuck record. The ear demands some variety. Now listen. I vary the sentence length, and I create music. Music. The writing sings. It has a pleasant rhythm, a lilt, a harmony. I use short sentences</p></blockquote><p><b>Bold text</b> is charcoal.800 whist links are <a href="https://www.google.com/">blue.600</a></p><ol> <li>Point one</li><li>Point two is made up of two lines, of course list items can extend well beyond this, but still respect the grid</li><li>Text</li></ol><pre><code><p>let settings = HSBeaconSettings(beaconId: "cac8be08-60a3 -46e8-b22e-ed50bfcaa0aa"); HSBeacon.open(settings);</p></code></pre><p>The J&amp;G Support Team are always happy.</p>'
+        )}
+        image={{
+          height: '700',
+          width: '1050',
+          url:
+            'https://images.unsplash.com/photo-1620607812709-f7c4a88baf11?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
+        }}
+        action={() => <MessageCard.Button>Click here</MessageCard.Button>}
+        style={{ height: '600px' }}
+      />
+    </MessageCardStoryWrapperUI>
   </Story>
 </Canvas>
 
@@ -79,21 +84,23 @@ This component renders a Message Card Notification with (optional) Title, Subtit
 
 <Canvas>
   <Story name="With image">
-    <MessageCard
-      key="with-image"
-      in={boolean('show', true)}
-      isMobile={boolean('isMobile', false)}
-      isWithBoxShadow={boolean('isWithBoxShadow', true)}
-      withAnimation={true}
-      subtitle={text('Subtitle', 'The J&G Team is here')}
-      title={text('Title', 'Need help?')}
-      image={{
-        height: '700',
-        width: '1050',
-        url:
-          'https://images.unsplash.com/photo-1620607812709-f7c4a88baf11?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-      }}
-    />
+    <MessageCardStoryWrapperUI>
+      <MessageCard
+        key="with-image"
+        in={boolean('show', true)}
+        isMobile={boolean('isMobile', false)}
+        isWithBoxShadow={boolean('isWithBoxShadow', true)}
+        withAnimation={true}
+        subtitle={text('Subtitle', 'The J&G Team is here')}
+        title={text('Title', 'Need help?')}
+        image={{
+          height: '700',
+          width: '1050',
+          url:
+            'https://images.unsplash.com/photo-1620607812709-f7c4a88baf11?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
+        }}
+      />
+    </MessageCardStoryWrapperUI>
   </Story>
 </Canvas>
 
@@ -101,26 +108,7 @@ This component renders a Message Card Notification with (optional) Title, Subtit
 
 <Canvas>
   <Story name="With image and action">
-    <MessageCard
-      subtitle={text('Subtitle', 'The J&G Team is here')}
-      title={text('Title', 'Need help?')}
-      body={text('Body', '<p>This <i>sentence</i> has five <u>words</u>. </p>')}
-      image={{
-        height: '700',
-        width: '1050',
-        url:
-          'https://images.unsplash.com/photo-1620607812709-f7c4a88baf11?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-      }}
-      action={() => <MessageCard.Button>Click here</MessageCard.Button>}
-    />
-  </Story>
-</Canvas>
-
-# With attachment
-
-<Canvas>
-  <Story name="With attachment">
-    <div style={{ width: '300px' }}>
+    <MessageCardStoryWrapperUI>
       <MessageCard
         subtitle={text('Subtitle', 'The J&G Team is here')}
         title={text('Title', 'Need help?')}
@@ -136,16 +124,42 @@ This component renders a Message Card Notification with (optional) Title, Subtit
         }}
         action={() => <MessageCard.Button>Click here</MessageCard.Button>}
       />
-      <MessageCard.ArticleCard
-        onClick={() => {}}
-        title="Attachment"
-        content="Some content for attachment"
-        footer={
-          <MessageCard.UrlAttachmentImage url="https://images.unsplash.com/photo-1620607812709-f7c4a88baf11?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" />
-        }
-        contentLimit={201}
-      />
-    </div>
+    </MessageCardStoryWrapperUI>
+  </Story>
+</Canvas>
+
+# With attachment
+
+<Canvas>
+  <Story name="With attachment">
+    <MessageCardStoryWrapperUI>
+      <div style={{ width: '300px' }}>
+        <MessageCard
+          subtitle={text('Subtitle', 'The J&G Team is here')}
+          title={text('Title', 'Need help?')}
+          body={text(
+            'Body',
+            '<p>This <i>sentence</i> has five <u>words</u>. </p>'
+          )}
+          image={{
+            height: '700',
+            width: '1050',
+            url:
+              'https://images.unsplash.com/photo-1620607812709-f7c4a88baf11?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
+          }}
+          action={() => <MessageCard.Button>Click here</MessageCard.Button>}
+        />
+        <MessageCard.ArticleCard
+          onClick={() => {}}
+          title="Attachment"
+          content="Some content for attachment"
+          footer={
+            <MessageCard.UrlAttachmentImage url="https://images.unsplash.com/photo-1620607812709-f7c4a88baf11?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" />
+          }
+          contentLimit={201}
+        />
+      </div>
+    </MessageCardStoryWrapperUI>
   </Story>
 </Canvas>
 
@@ -153,22 +167,24 @@ This component renders a Message Card Notification with (optional) Title, Subtit
 
 <Canvas>
   <Story name="With variables">
-    <MessageCard
-      subtitle={text('Subtitle', 'The J&G Team is here')}
-      title={text('Title', 'Need help?')}
-      body={text(
-        'Body',
-        '<p>Hi {%customer.firstName,fallback=there%}!</p> <p>This <i>sentence</i> has five <u>words</u>. </p>' +
-          ' <p>See you at our <b>amazing show with {%coordinator,fallback=Coordinator%}</b>!</p>' +
-          ' <p>It would happen at {%date%}</p> <p>And this is non-existing variable {%nonExisting,fallback=no%}</p>' +
-          ' <p>Long variable {%coordinator,fallback=Some quite very very long variable fallback%}</p>'
-      )}
-      variables={[
-        { id: 'customer.firstName', display: 'First Name' },
-        { id: 'coordinator', display: 'Person' },
-        { id: 'date', display: 'Date' },
-      ]}
-    />
+    <MessageCardStoryWrapperUI>
+      <MessageCard
+        subtitle={text('Subtitle', 'The J&G Team is here')}
+        title={text('Title', 'Need help?')}
+        body={text(
+          'Body',
+          '<p>Hi {%customer.firstName,fallback=there%}!</p> <p>This <i>sentence</i> has five <u>words</u>. </p>' +
+            ' <p>See you at our <b>amazing show with {%coordinator,fallback=Coordinator%}</b>!</p>' +
+            ' <p>It would happen at {%date%}</p> <p>And this is non-existing variable {%nonExisting,fallback=no%}</p>' +
+            ' <p>Long variable {%coordinator,fallback=Some quite very very long variable fallback%}</p>'
+        )}
+        variables={[
+          { id: 'customer.firstName', display: 'First Name' },
+          { id: 'coordinator', display: 'Person' },
+          { id: 'date', display: 'Date' },
+        ]}
+      />
+    </MessageCardStoryWrapperUI>
   </Story>
 </Canvas>
 
@@ -176,19 +192,21 @@ This component renders a Message Card Notification with (optional) Title, Subtit
 
 <Canvas>
   <Story name="With Thumbs survey">
-    <MessageCard
-      title="How did you feel about your checkout experience?"
-      body="Your feedback is valuable to us. Let us know how we did so we can continue to improve our services."
-      action={() => (
-        <MessageCard.Survey
-          withFeedbackForm
-          feedbackFormText="Tell us more..."
-          onSubmit={data => console.log(data)}
-        >
-          <ThumbsSurvey />
-        </MessageCard.Survey>
-      )}
-    />
+    <MessageCardStoryWrapperUI>
+      <MessageCard
+        title="How did you feel about your checkout experience?"
+        body="Your feedback is valuable to us. Let us know how we did so we can continue to improve our services."
+        action={() => (
+          <MessageCard.Survey
+            withFeedbackForm
+            feedbackFormText="Tell us more..."
+            onSubmit={data => console.log(data)}
+          >
+            <ThumbsSurvey />
+          </MessageCard.Survey>
+        )}
+      />
+    </MessageCardStoryWrapperUI>
   </Story>
 </Canvas>
 
@@ -196,19 +214,21 @@ This component renders a Message Card Notification with (optional) Title, Subtit
 
 <Canvas>
   <Story name="With Faces survey">
-    <MessageCard
-      title="How did you feel about your checkout experience?"
-      body="Your feedback is valuable to us. Let us know how we did so we can continue to improve our services."
-      action={() => (
-        <MessageCard.Survey
-          withFeedbackForm
-          feedbackFormText="Tell us more..."
-          onSubmit={data => console.log(data)}
-        >
-          <FacesSurvey />
-        </MessageCard.Survey>
-      )}
-    />
+    <MessageCardStoryWrapperUI>
+      <MessageCard
+        title="How did you feel about your checkout experience?"
+        body="Your feedback is valuable to us. Let us know how we did so we can continue to improve our services."
+        action={() => (
+          <MessageCard.Survey
+            withFeedbackForm
+            feedbackFormText="Tell us more..."
+            onSubmit={data => console.log(data)}
+          >
+            <FacesSurvey />
+          </MessageCard.Survey>
+        )}
+      />
+    </MessageCardStoryWrapperUI>
   </Story>
 </Canvas>
 
@@ -216,27 +236,29 @@ This component renders a Message Card Notification with (optional) Title, Subtit
 
 <Canvas>
   <Story name="With Multiple Choice survey">
-    <MessageCard
-      title="Which pizza do you like the most?"
-      body="Your feedback is valuable to us. Let us know how we did so we can continue to improve our services."
-      action={() => (
-        <MessageCard.Survey
-          withFeedbackForm
-          feedbackFormText="Tell us more..."
-          onSubmit={data => console.log(data)}
-        >
-          <MultipleChoiceSurvey
-            choices={[
-              { id: '1', text: 'Pepperoni' },
-              { id: '2', text: 'With pineapple of course!' },
-              { id: '3', text: 'Classic margherita' },
-              { id: '4', text: 'Veggie option' },
-              { id: '5', text: 'My favorite with all ingredients' },
-            ]}
-          />
-        </MessageCard.Survey>
-      )}
-    />
+    <MessageCardStoryWrapperUI>
+      <MessageCard
+        title="Which pizza do you like the most?"
+        body="Your feedback is valuable to us. Let us know how we did so we can continue to improve our services."
+        action={() => (
+          <MessageCard.Survey
+            withFeedbackForm
+            feedbackFormText="Tell us more..."
+            onSubmit={data => console.log(data)}
+          >
+            <MultipleChoiceSurvey
+              choices={[
+                { id: '1', text: 'Pepperoni' },
+                { id: '2', text: 'With pineapple of course!' },
+                { id: '3', text: 'Classic margherita' },
+                { id: '4', text: 'Veggie option' },
+                { id: '5', text: 'My favorite with all ingredients' },
+              ]}
+            />
+          </MessageCard.Survey>
+        )}
+      />
+    </MessageCardStoryWrapperUI>
   </Story>
 </Canvas>
 
@@ -244,20 +266,22 @@ This component renders a Message Card Notification with (optional) Title, Subtit
 
 <Canvas>
   <Story name="With video">
-    <MessageCard
-      key="with-video"
-      in={boolean('show', true)}
-      isMobile={boolean('isMobile', false)}
-      isWithBoxShadow={boolean('isWithBoxShadow', true)}
-      withAnimation={true}
-      subtitle={text('Subtitle', 'The J&G Team is here')}
-      title={text('Title', 'Need help?')}
-      video={{
-        html:
-          '<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;"><iframe src="https://www.youtube.com/embed/YB-slq0hqWw?rel=0" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen scrolling="no" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"></iframe></div>',
-      }}
-      action={() => <MessageCard.Button>Click here</MessageCard.Button>}
-    />
+    <MessageCardStoryWrapperUI>
+      <MessageCard
+        key="with-video"
+        in={boolean('show', true)}
+        isMobile={boolean('isMobile', false)}
+        isWithBoxShadow={boolean('isWithBoxShadow', true)}
+        withAnimation={true}
+        subtitle={text('Subtitle', 'The J&G Team is here')}
+        title={text('Title', 'Need help?')}
+        video={{
+          html:
+            '<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;"><iframe src="https://www.youtube.com/embed/YB-slq0hqWw?rel=0" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen scrolling="no" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"></iframe></div>',
+        }}
+        action={() => <MessageCard.Button>Click here</MessageCard.Button>}
+      />
+    </MessageCardStoryWrapperUI>
   </Story>
 </Canvas>
 
@@ -265,20 +289,22 @@ This component renders a Message Card Notification with (optional) Title, Subtit
 
 <Canvas>
   <Story name="With iframely video url">
-    <MessageCard
-      key="with-iframely-video"
-      in={boolean('show', true)}
-      isMobile={boolean('isMobile', false)}
-      isWithBoxShadow={boolean('isWithBoxShadow', true)}
-      withAnimation={true}
-      subtitle={text('Subtitle', 'The J&G Team is here')}
-      title={text('Title', 'Need help?')}
-      video={{
-        html:
-          '<div><div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;"><iframe src="//cdn.iframe.ly/api/iframe?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DYB-slq0hqWw&key=32d974fdab1b804ff90cbd07d257baba" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen scrolling="no" allow="accelerometer *; clipboard-write *; encrypted-media *; gyroscope *; picture-in-picture *;"></iframe></div></div>',
-      }}
-      action={() => <MessageCard.Button>Click here</MessageCard.Button>}
-    />
+    <MessageCardStoryWrapperUI>
+      <MessageCard
+        key="with-iframely-video"
+        in={boolean('show', true)}
+        isMobile={boolean('isMobile', false)}
+        isWithBoxShadow={boolean('isWithBoxShadow', true)}
+        withAnimation={true}
+        subtitle={text('Subtitle', 'The J&G Team is here')}
+        title={text('Title', 'Need help?')}
+        video={{
+          html:
+            '<div><div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;"><iframe src="//cdn.iframe.ly/api/iframe?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DYB-slq0hqWw&key=32d974fdab1b804ff90cbd07d257baba" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen scrolling="no" allow="accelerometer *; clipboard-write *; encrypted-media *; gyroscope *; picture-in-picture *;"></iframe></div></div>',
+        }}
+        action={() => <MessageCard.Button>Click here</MessageCard.Button>}
+      />
+    </MessageCardStoryWrapperUI>
   </Story>
 </Canvas>
 

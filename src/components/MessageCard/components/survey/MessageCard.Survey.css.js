@@ -190,5 +190,10 @@ export const MultipleChoiceRadioUI = styled(Radio)`
     height: 36px;
     display: flex;
     align-items: center;
+
+    .c-Text {
+      font-size: 14px;
+      color: ${getColor('charcoal.700')};
+    }
   }
 `
