@@ -1,49 +1,48 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
 import BadgeUI from './Badge.css'
 
-class Badge extends React.Component {
-  render() {
-    const {
-      children,
-      color,
-      count,
-      className,
-      display,
-      inverted,
-      isSquare,
-      size,
-      status,
-      textColor,
-      white,
-      ...rest
-    } = this.props
+const WrappedBadge = forwardRef(function Badge(props, ref) {
+  const {
+    children,
+    color,
+    count,
+    className,
+    display,
+    inverted,
+    isSquare,
+    size,
+    status,
+    textColor,
+    white,
+    ...rest
+  } = props
 
-    const componentClassName = classNames(
-      'c-Badge',
-      count && 'is-count',
-      display && `is-display-${display}`,
-      isSquare && `is-square`,
-      size && `is-${size}`,
-      status && `is-${status}`,
-      white && 'is-white',
-      className
-    )
+  const componentClassName = classNames(
+    'c-Badge',
+    count && 'is-count',
+    display && `is-display-${display}`,
+    isSquare && `is-square`,
+    size && `is-${size}`,
+    status && `is-${status}`,
+    white && 'is-white',
+    className
+  )
 
-    return (
-      <BadgeUI
-        {...{ ...getValidProps(rest), color, inverted, textColor }}
-        className={componentClassName}
-      >
-        {children}
-      </BadgeUI>
-    )
-  }
-}
+  return (
+    <BadgeUI
+      {...{ ...getValidProps(rest), color, inverted, textColor }}
+      ref={ref}
+      className={componentClassName}
+    >
+      {children}
+    </BadgeUI>
+  )
+})
 
-Badge.defaultProps = {
+WrappedBadge.defaultProps = {
   'data-cy': 'Badge',
   display: 'inlineBlock',
   inverted: false,
@@ -51,7 +50,7 @@ Badge.defaultProps = {
   textColor: '',
 }
 
-Badge.propTypes = {
+WrappedBadge.propTypes = {
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
   /** A custom color value that can be passed in */
@@ -75,4 +74,4 @@ Badge.propTypes = {
   'data-cy': PropTypes.string,
 }
 
-export default Badge
+export default WrappedBadge
