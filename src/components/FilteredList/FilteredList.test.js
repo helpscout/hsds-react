@@ -115,8 +115,6 @@ describe('Tooltip', () => {
 
     container.querySelector('.c-Badge').focus()
 
-    // const wrapper = mount(component)
-    // const badgeItems = wrapper.instance().renderBadgeContent()
     expect(screen.queryAllByTestId('FilteredList.BadgeItem').length).toBe(
       items.length - limit
     )
