@@ -72,8 +72,6 @@ export const EmojiButtonUI = styled('button')`
   }
 
   &.is-selected {
-    transform: scale(1.3);
-
     &:after {
       animation: HSDSRateActionSelected 200ms
         cubic-bezier(0.39, 0.575, 0.565, 1) both;
@@ -119,9 +117,22 @@ export const RateActionUI = styled(RateAction)`
       ${defaultTransition};
     }
 
+    &.is-md {
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
     &:after {
       box-sizing: border-box;
       ${defaultTransition};
+    }
+
+    &.is-active:not(:hover):not(:focus) {
+      & {
+        transform: none;
+      }
     }
   }
 

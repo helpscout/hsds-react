@@ -53,6 +53,7 @@ export class RateAction extends React.PureComponent {
       onFocus,
       outlineColor,
       withCircle,
+      iconSize,
       ...rest
     } = this.props
 
@@ -75,6 +76,7 @@ export class RateAction extends React.PureComponent {
           name={getName(name)}
           isActive={this.state.isActive}
           isDisabled={disabled}
+          iconSize={iconSize}
         />
       </RateActionUI>
     )
@@ -123,6 +125,8 @@ RateAction.propTypes = {
   outlineColor: PropTypes.string,
   /** Shows a big border around the icon */
   withCircle: PropTypes.bool,
+  /** Allows to overwrite icon size */
+  iconSize: PropTypes.string,
 }
 
 export default RateAction

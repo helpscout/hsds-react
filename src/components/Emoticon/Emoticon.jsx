@@ -45,11 +45,12 @@ export class Emoticon extends React.PureComponent {
       name,
       title,
       size,
+      iconSize,
       withAnimation = false,
       ...rest
     } = this.props
     const iconName = getName(name)
-    const icon = getIcon(iconName, size)
+    const icon = getIcon(iconName, iconSize || size)
 
     const component = (
       <EmoticonUI
@@ -120,6 +121,8 @@ Emoticon.propTypes = {
   size: PropTypes.oneOf(['xl', 'lg', 'md', 'sm']),
   /** Animate Emoticon on hover */
   withAnimation: PropTypes.bool,
+  /** Allows to overwrite icon size */
+  iconSize: PropTypes.string,
 }
 
 export default Emoticon

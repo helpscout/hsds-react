@@ -12,7 +12,6 @@ export const MessageCardSurveyFaces = ({
   const { buttonSize, handleOnClick } = useButtonResizeOnSelection({
     disableTransition: !withFeedbackForm,
     defaultSize: 'xl',
-    selectedSize: 'lg',
     onSelection,
   })
 
@@ -27,6 +26,7 @@ export const MessageCardSurveyFaces = ({
           isActive={selected === face}
           onClick={() => handleOnClick(face)}
           outlineColor={getColor('grey.600')}
+          iconSize="lg"
         />
       ))}
     </SurveyOptionsUI>
