@@ -9,3 +9,9 @@ export function allowGlobalHotkeys(target) {
 
   return true
 }
+
+export function shouldClearDimensions(name) {
+  if (name === 'Confirmation') return true
+
+  return false
+}

@@ -77,6 +77,8 @@ WrappedButton.propTypes = {
   inlined: PropTypes.bool,
   /** Renders a loading `Spinner`. */
   loading: PropTypes.bool,
+  /** Renders the button with white bg and theme outline and text color */
+  outlined: PropTypes.bool,
   /** Sets the size of the button. */
   size: PropTypes.oneOf(['xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']),
   /** Sets the `type` of the button to `"submit"`. */

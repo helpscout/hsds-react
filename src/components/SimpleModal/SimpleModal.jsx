@@ -9,6 +9,7 @@ import {
   SimpleModalOverlayUI,
   SimpleModalUI,
 } from './SimpleModal.css'
+import { shouldClearDimensions } from './SimpleModal.utils'
 
 function noop() {}
 
@@ -158,8 +159,8 @@ function SimpleModal({
         id={DATA_COMPONENTS_ID.MODAL}
         role="dialog"
         ref={modalRef}
-        height={height}
-        width={width}
+        height={shouldClearDimensions(children.type.name) ? null : height}
+        width={shouldClearDimensions(children.type.name) ? null : width}
         tabIndex="0"
         {...rest}
       >

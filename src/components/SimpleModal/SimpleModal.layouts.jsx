@@ -3,7 +3,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import ScrollableContainer from '../ScrollableContainer'
-import { BodyUI, HeaderUI, FooterUI } from './SimpleModal.layouts.css'
+import Button from '../Button'
+import {
+  BodyUI,
+  HeaderUI,
+  FooterUI,
+  ConfirmationWrapperUI,
+  ConfirmationBodyUI,
+  ConfirmationHeadingUI,
+  ConfirmationFooterUI,
+} from './SimpleModal.layouts.css'
+
+function noop() {}
 
 export function HeaderAndFooter({
   children,
@@ -46,4 +57,46 @@ HeaderAndFooter.propTypes = {
   heading: PropTypes.string,
   /** Custom header content */
   header: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+}
+
+export function Confirmation({
+  heading,
+  body,
+  onConfirm = noop,
+  onCancel = noop,
+  mainButtonText = 'Accept',
+  cancelButtonText = 'Cancel',
+  danger,
+}) {
+  return (
+    <ConfirmationWrapperUI className={classNames(!body && 'is-compact')}>
+      <ConfirmationHeadingUI>{heading}</ConfirmationHeadingUI>
+      {body && <ConfirmationBodyUI>{body}</ConfirmationBodyUI>}
+      <ConfirmationFooterUI>
+        <Button outlined theme="grey" onClick={onConfirm}>
+          {cancelButtonText}
+        </Button>
+        <Button theme={danger ? 'red' : 'blue'} onClick={onCancel}>
+          {mainButtonText}
+        </Button>
+      </ConfirmationFooterUI>
+    </ConfirmationWrapperUI>
+  )
+}
+
+Confirmation.propTypes = {
+  /** Text of the modal heading */
+  heading: PropTypes.string.isRequired,
+  /** Text of the modal body */
+  body: PropTypes.string,
+  /** Callback to run on main action click */
+  onConfirm: PropTypes.func,
+  /** Callback to run on cancel action click */
+  onCancel: PropTypes.func,
+  /** Text of the main action button */
+  mainButtonText: PropTypes.string,
+  /** Text of the cancel button */
+  cancelButtonText: PropTypes.string,
+  /** Render the main action as a red button */
+  danger: PropTypes.bool,
 }
