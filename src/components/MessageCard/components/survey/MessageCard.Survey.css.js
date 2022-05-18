@@ -207,4 +207,15 @@ export const MultipleChoiceRadioUI = styled(Radio)`
       color: ${getColor('charcoal.700')};
     }
   }
+
+  .c-InputBackdropV2 {
+    &.is-radio.is-filled {
+      background-color: ${getColor('charcoal.300')};
+      border-color: ${getColor('charcoal.300')};
+    }
+
+    &__focus {
+      box-shadow: 0 0 0 2px ${getColor('charcoal.300')};
+    }
+  }
 `
