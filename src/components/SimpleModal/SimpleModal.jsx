@@ -159,8 +159,8 @@ function SimpleModal({
         id={DATA_COMPONENTS_ID.MODAL}
         role="dialog"
         ref={modalRef}
-        height={shouldClearDimensions(children.type.name) ? null : height}
-        width={shouldClearDimensions(children.type.name) ? null : width}
+        height={shouldClearDimensions(children?.type?.name) ? null : height}
+        width={shouldClearDimensions(children?.type?.name) ? null : width}
         tabIndex="0"
         {...rest}
       >
