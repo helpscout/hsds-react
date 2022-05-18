@@ -39,7 +39,8 @@ export const emoticonAnimationCSS = css`
       }
       .reaction-face {
         fill: ${reactionEmoticonsColours.on.face};
-        animation: HSDSEmoticonMeh 0.5s forwards;
+        animation: HSDSEmoticonMeh 0.5s forwards,
+          HSDSEmoticonMehBack 0.5s forwards 1s;
       }
     }
     .is-reaction-sad {
@@ -71,6 +72,15 @@ export const emoticonAnimationCSS = css`
     }
     100% {
       transform: rotate(-12deg);
+    }
+  }
+
+  @keyframes HSDSEmoticonMehBack {
+    0% {
+      transform: rotate(-12deg);
+    }
+    100% {
+      transform: rotate(0);
     }
   }
 
