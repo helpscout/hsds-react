@@ -64,7 +64,7 @@ export function Confirmation({
   body,
   onConfirm = noop,
   onCancel = noop,
-  mainButtonText = 'Accept',
+  confirmButtonText = 'Accept',
   cancelButtonText = 'Cancel',
   danger,
 }) {
@@ -77,7 +77,7 @@ export function Confirmation({
           {cancelButtonText}
         </Button>
         <Button theme={danger ? 'red' : 'blue'} onClick={onCancel}>
-          {mainButtonText}
+          {confirmButtonText}
         </Button>
       </ConfirmationFooterUI>
     </ConfirmationWrapperUI>
@@ -94,7 +94,7 @@ Confirmation.propTypes = {
   /** Callback to run on cancel action click */
   onCancel: PropTypes.func,
   /** Text of the main action button */
-  mainButtonText: PropTypes.string,
+  confirmButtonText: PropTypes.string,
   /** Text of the cancel button */
   cancelButtonText: PropTypes.string,
   /** Render the main action as a red button */
