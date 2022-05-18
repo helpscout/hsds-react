@@ -139,6 +139,13 @@ describe('Disabled', () => {
 
     expect(wrapper.getDOMNode().classList.contains('is-disabled')).toBeFalsy()
   })
+
+  test('show tooltip to the card if provided', () => {
+    const wrapper = mount(<CheckMarkCard cardTooltipText="hello" disabled />)
+
+    expect(wrapper.find(Tooltip).length).toBeTruthy()
+    expect(wrapper.find(Tooltip).first().props().title).toBe('hello')
+  })
 })
 
 describe('Events', () => {
