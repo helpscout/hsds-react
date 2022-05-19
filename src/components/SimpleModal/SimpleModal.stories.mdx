@@ -175,7 +175,7 @@ Don't forget to add styles to position it yourself.
     <div style={{ position: 'relative', height: '450px' }}>
       <SimpleModal show>
         <Confirmation
-          heading="Are you sure?"
+          heading="Alert title"
           body="You are about to merge the selected conversation with this one — this action cannot be undone."
           confirmButtonText="Okay"
           cancelButtonText="Cancel"
@@ -185,8 +185,17 @@ Don't forget to add styles to position it yourself.
     <div style={{ position: 'relative', height: '450px' }}>
       <SimpleModal show>
         <Confirmation
-          heading="Are you sure?"
-          body="You are about to merge the selected conversation with this one — this action cannot be undone."
+          heading={
+            <span>
+              Alert <em>title</em>
+            </span>
+          }
+          body={
+            <div>
+              "You are about to merge the <em>selected conversation</em> with
+              this one — this action cannot be undone."
+            </div>
+          }
           confirmButtonText="Okay"
           cancelButtonText="Cancel"
           danger
@@ -196,7 +205,7 @@ Don't forget to add styles to position it yourself.
     <div style={{ position: 'relative', height: '450px' }}>
       <SimpleModal show>
         <Confirmation
-          heading="Are you sure?"
+          heading="Alert title"
           confirmButtonText="Okay"
           cancelButtonText="Cancel"
         />

@@ -85,10 +85,11 @@ export function Confirmation({
 }
 
 Confirmation.propTypes = {
-  /** Text of the modal heading */
-  heading: PropTypes.string.isRequired,
-  /** Text of the modal body */
-  body: PropTypes.string,
+  /** Text or element for the modal heading */
+  heading: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
+    .isRequired,
+  /** Text or element for the modal body */
+  body: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   /** Callback to run on main action click */
   onConfirm: PropTypes.func,
   /** Callback to run on cancel action click */
