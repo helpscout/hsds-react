@@ -9,7 +9,7 @@ import {
   SimpleModalOverlayUI,
   SimpleModalUI,
 } from './SimpleModal.css'
-import { shouldClearDimensions } from './SimpleModal.utils'
+import { shouldUnsetDimensions } from './SimpleModal.utils'
 
 function noop() {}
 
@@ -32,6 +32,7 @@ function SimpleModal({
   trapFocus = true,
   width = '360px',
   height = '390px',
+  unsetDimensions = false,
   withCloseButton = true,
   zIndex = 999,
   zIndexCloseButton = 5,
@@ -134,6 +135,11 @@ function SimpleModal({
     return null
   }
 
+  const clearDimensions = shouldUnsetDimensions(
+    unsetDimensions,
+    children?.type?.name
+  )
+
   return shouldRender ? (
     <SimpleModalOverlayUI
       className={classNames(
@@ -159,8 +165,8 @@ function SimpleModal({
         id={DATA_COMPONENTS_ID.MODAL}
         role="dialog"
         ref={modalRef}
-        height={shouldClearDimensions(children?.type?.name) ? null : height}
-        width={shouldClearDimensions(children?.type?.name) ? null : width}
+        height={clearDimensions ? null : height}
+        width={clearDimensions ? null : width}
         tabIndex="0"
         {...rest}
       >
@@ -196,6 +202,8 @@ SimpleModal.propTypes = {
   show: PropTypes.bool,
   /** Whether to restrict focus to elements inside the modal */
   trapFocus: PropTypes.bool,
+  /** Explicitily remove the height and width values so they depend on the content instead */
+  unsetDimensions: PropTypes.bool,
   /** Customize the modal's width */
   width: PropTypes.string,
   /** Whether to include a close button */

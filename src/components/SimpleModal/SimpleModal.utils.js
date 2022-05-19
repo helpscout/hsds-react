@@ -10,8 +10,9 @@ export function allowGlobalHotkeys(target) {
   return true
 }
 
-export function shouldClearDimensions(name) {
-  if (name === 'Confirmation') return true
+export function shouldUnsetDimensions(unsetDimensions, layoutName) {
+  if (layoutName === 'Confirmation') return true
+  if (unsetDimensions) return true
 
   return false
 }

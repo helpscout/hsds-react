@@ -16,7 +16,6 @@ export const OverlayUI = styled('div')`
   align-items: center;
   background-color: ${config.backgroundColor};
   bottom: 0;
-  cursor: pointer;
   display: flex;
   justify-content: center;
   left: 0;
