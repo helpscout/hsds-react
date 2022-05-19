@@ -45,7 +45,7 @@ export const ConfirmationWrapperUI = styled('div')`
   flex-direction: column;
   height: 247px;
   width: 440px;
-  padding: 45px 50px 60px 50px;
+  padding: 50px 50px 60px 50px;
 
   &.is-compact {
     height: 197px;
@@ -57,7 +57,7 @@ export const ConfirmationHeadingUI = styled('h1')`
   font-size: 18px;
   font-weight: 500;
   text-align: center;
-  margin: 0 0 10px 0;
+  margin: 0 0 6px 0;
 
   .is-compact & {
     margin-bottom: 25px;
