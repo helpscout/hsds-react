@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { EmojiButtonUI, SurveyOptionsUI } from './MessageCard.Survey.css'
-import { useSurveyContext } from '../MessageCard.Survey.context'
-import { useButtonResizeOnSelection } from '../utils/MessageCard.hooks'
+import { useSurveyContext } from '../../utils/MessageCard.Survey.context'
+import { useButtonResizeOnSelection } from '../../utils/MessageCard.hooks'
 
 const buttons = [
   { id: 'thumbs-up', text: '👍' },
