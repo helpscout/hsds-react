@@ -47,7 +47,8 @@ const Mark = props => {
 
   // ? "Render" MarkUI below even if neither withStatus or checked with opacity 0
   // ? so we can animate the transition
-  return Boolean(tooltipText) ? (
+  const shouldHaveTooltip = Boolean(tooltipText) && withStatus
+  return shouldHaveTooltip ? (
     <Tooltip
       title={tooltipText}
       triggerOn="mouseenter focus"
@@ -64,6 +65,7 @@ const Mark = props => {
 const CheckMarkCard = props => {
   const {
     avatar,
+    cardTooltipText,
     checked,
     children,
     className,
@@ -145,7 +147,8 @@ const CheckMarkCard = props => {
   const shouldDisplayHeading = showHeading && (heading || label)
   // let the Avatar component handle nullified value
   const shouldShowAvatar = props.hasOwnProperty('avatar')
-  return (
+
+  const component = (
     <CheckMarkCardUI
       {...rest}
       className={checkmarkClassnames}
@@ -180,8 +183,22 @@ const CheckMarkCard = props => {
       </VisuallyHidden>
     </CheckMarkCardUI>
   )
-}
 
+  if (cardTooltipText && !shouldShowStatus) {
+    return (
+      <Tooltip
+        title={cardTooltipText}
+        triggerOn="mouseenter focus"
+        appendTo={document.body}
+        withTriggerWrapper={false}
+      >
+        {component}
+      </Tooltip>
+    )
+  }
+
+  return component
+}
 CheckMarkCard.defaultProps = {
   checked: false,
   'data-cy': 'CheckMarkCard',
@@ -195,6 +212,8 @@ CheckMarkCard.defaultProps = {
 CheckMarkCard.propTypes = {
   /** Image url that will be used within the Avatar component. If the prop is declared the Avatar will be shown no matter the value */
   avatar: PropTypes.string,
+  /** The card tooltip text that will appear on hover/focus */
+  cardTooltipText: PropTypes.string,
   /** Custom class names to be added to the component. */
   className: PropTypes.string,
   /** Determines if the card is checked. */
