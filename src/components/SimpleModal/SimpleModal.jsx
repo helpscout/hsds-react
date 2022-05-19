@@ -52,7 +52,7 @@ function SimpleModal({
     // If there is another modal around don't fire onClose under these scenarios:
 
     /**
-     * a) if the clicked element is a modal, but no _this_ modal
+     * a) if the clicked element is a modal, but not _this_ modal
      */
     if (
       target.dataset.componentId === DATA_COMPONENTS_ID.MODAL &&
