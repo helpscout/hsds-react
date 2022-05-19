@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import classNames from 'classnames'
@@ -14,66 +14,70 @@ import {
   SeparatorUI,
 } from './FilteredList.css'
 
-export class FilteredList extends React.Component {
-  shouldComponentUpdate(nextProps) {
-    const { items } = this.props
-
-    if (nextProps.items.length !== items.length) {
-      return true
-    }
-
-    const itemKey = items.map(this.getItemValue).sort().join(':')
-
-    const nextItemKey = nextProps.items.map(this.getItemValue).sort().join(':')
-
-    if (nextItemKey !== itemKey) {
-      return true
-    }
-
-    return false
+const getItemValue = (item, itemKey) => {
+  if (!isString(item) && isPlainObject(item) && itemKey) {
+    return item[itemKey]
   }
 
-  getItemValue = item => {
-    if (!isString(item) && isPlainObject(item) && this.props.itemKey) {
-      return item[this.props.itemKey]
-    }
+  return item
+}
 
-    return item
-  }
+const FilteredListBadge = props => {
+  const { limit, items, itemKey, badgeProps } = props
 
-  renderBadgeContent = () => {
-    const { limit, items } = this.props
-
+  const renderBadgeContent = useCallback(() => {
     return items.slice(limit, items.length).map(item => {
-      const value = this.getItemValue(item)
+      const value = getItemValue(item, itemKey)
       return (
-        <BadgeItemUI data-cy="FilteredList.BadgeItem" key={value}>
+        <BadgeItemUI
+          data-cy="FilteredList.BadgeItem"
+          data-testid="FilteredList.BadgeItem"
+          key={value}
+        >
           {value}
         </BadgeItemUI>
       )
     })
-  }
+  }, [items, limit, itemKey])
 
-  renderBadge() {
-    const { limit, items } = this.props
-    return (
-      <Tooltip
-        closeOnContentClick={true}
-        renderContent={this.renderBadgeContent}
+  return (
+    <Tooltip
+      closeOnContentClick={true}
+      renderContent={renderBadgeContent}
+      withTriggerWrapper={false}
+    >
+      <BadgeUI
+        tabIndex={0}
+        isSquare
+        data-cy="FilteredList.Badge"
+        data-testid="FilteredList.Badge"
+        {...badgeProps}
       >
-        <BadgeUI isSquare data-cy="FilteredList.Badge">
-          +{items.length - limit}
-        </BadgeUI>
-      </Tooltip>
-    )
-  }
+        +{items.length - limit}
+      </BadgeUI>
+    </Tooltip>
+  )
+}
 
-  renderSeparator() {
-    return <SeparatorUI data-cy="FilteredList.Separator">•</SeparatorUI>
-  }
+const FilteredList = props => {
+  const {
+    badgeProps,
+    children,
+    className,
+    inline,
+    limit,
+    renderItem,
+    items,
+    itemKey,
+    ...rest
+  } = props
+  const componentClassName = classNames(
+    'c-FilteredList',
+    inline && 'is-inline',
+    className
+  )
 
-  renderItems() {
-    const { limit, inline, renderItem, items } = this.props
+  const renderItems = () => {
     const itemsList = limit ? items.slice(0, limit) : items
     const isListFiltered = limit && items.length > limit
 
@@ -81,37 +85,46 @@ export class FilteredList extends React.Component {
       const isLastItem = index + 1 >= itemsList.length
       const isBadgeVisible = isListFiltered && isLastItem
       const isSeparatorVisible = !isLastItem && inline
-      const value = this.getItemValue(item)
+      const value = getItemValue(item, itemKey)
 
       return (
-        <ItemUI key={value} data-cy="FilteredList.Item">
+        <ItemUI
+          key={value}
+          data-cy="FilteredList.Item"
+          data-testid="FilteredList.Item"
+        >
           {renderItem && renderItem(item)}
           {!renderItem && <Text data-cy="FilteredList.ItemLabel">{value}</Text>}
-          {isBadgeVisible && this.renderBadge()}
-          {isSeparatorVisible && this.renderSeparator()}
+          {isBadgeVisible && (
+            <FilteredListBadge
+              items={items}
+              limit={limit}
+              itemKey={itemKey}
+              badgeProps={badgeProps}
+            />
+          )}
+          {isSeparatorVisible && (
+            <SeparatorUI
+              data-cy="FilteredList.Separator"
+              data-testid="FilteredList.Separator"
+            >
+              •
+            </SeparatorUI>
+          )}
         </ItemUI>
       )
     })
   }
 
-  render() {
-    const { children, className, inline, ...rest } = this.props
-    const componentClassName = classNames(
-      'c-FilteredList',
-      inline && 'is-inline',
-      className
-    )
-
-    return (
-      <FilteredListUI
-        aria-label="FilteredList"
-        {...getValidProps(rest)}
-        className={componentClassName}
-      >
-        {this.renderItems()}
-      </FilteredListUI>
-    )
-  }
+  return (
+    <FilteredListUI
+      aria-label="FilteredList"
+      {...getValidProps(rest)}
+      className={componentClassName}
+    >
+      {renderItems()}
+    </FilteredListUI>
+  )
 }
 
 FilteredList.defaultProps = {
@@ -121,6 +134,9 @@ FilteredList.defaultProps = {
 }
 
 FilteredList.propTypes = {
+  /** Extra props to the badge component */
+  badgeProps: PropTypes.object,
+  /** Key to pull the value from the object (optional) */
   itemKey: PropTypes.string,
   /** Custom class names to be added to the component. */
   className: PropTypes.string,

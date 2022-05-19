@@ -4,9 +4,11 @@ import { d400, d400Effect } from '../../styles/mixins/depth.css'
 import ChoiceGroup from '../ChoiceGroup'
 
 import { getColor } from '../../styles/utilities/color'
-import { rgba } from '../../utilities/color'
+import { focusRing } from '../../styles/mixins/focusRing.css'
 
 export const MarkUI = styled('div')`
+  ${focusRing};
+  --focusRingRadius: 3px;
   position: absolute;
   top: 0;
   left: 0;
@@ -31,27 +33,10 @@ export const MarkUI = styled('div')`
     left: 50%;
     transform: translate(-50%, -50%);
   }
+`
 
-  &:focus {
-    &:before {
-      opacity: 1;
-    }
-  }
-
-  // Focus UI
-  &:before {
-    content: '';
-    border-radius: 5px;
-    bottom: -2px;
-    box-shadow: 0px 0px 0 2px ${getColor('blue.500')};
-    left: -2px;
-    pointer-events: none;
-    position: absolute;
-    right: -2px;
-    top: -2px;
-    opacity: 0;
-    transition: opacity ease 0.2s;
-  }
+export const AvatarWrapperUI = styled.div`
+  margin-bottom: 14px;
 `
 
 export const CheckMarkCardContentUI = styled.div`
@@ -67,7 +52,13 @@ export const CheckMarkCardContentUI = styled.div`
 `
 
 export const CheckMarkCardUI = styled('label')`
-  display:flex;
+  ${focusRing};
+  ${d400};
+  --headingColor: ${getColor('charcoal.600')};
+  --subtitleColor: ${getColor('charcoal.400')};
+  --focusRingOffset: 0;
+  --focusRingRadius: 4px;
+  display: flex;
   box-sizing: border-box;
   position: relative;
 
@@ -75,89 +66,72 @@ export const CheckMarkCardUI = styled('label')`
   will-change: transform, box-shadow;
   transition: transform 0.16s ease-in-out, box-shadow 0.16s ease-in-out;
   cursor: pointer;
-  padding:3px;
+  padding: 3px;
   margin-bottom: 0;
-  
+
   /* if no maxWidth are set, let's make sure the card is 170px */
   height: ${({ height }) => (height ? height : 'auto')};
   min-height: ${({ height }) => (!height ? '160px' : '0')};
   width: ${({ maxWidth }) => (maxWidth ? '100%' : '170px')};
   max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '170px')};
 
-  ${d400}
-
-  // Focus UI
-  &:before{
-    content: '';
-    border-radius: 5px;
-    bottom: 0px;
-    box-shadow: 0px 0px 0 2px ${getColor('blue.500')};
-    left: 0px;
-    pointer-events: none;
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    opacity: 0;
-    transition: opacity ease 0.2s;
-  }
-
-
   &:not(.is-disabled):hover {
-    ${d400Effect}  
+    ${d400Effect}
     transform: translateY(-2px);
   }
 
-  &.is-focused,
-  &:focus-within,
-  &:focus-visible {
-    &:before{
-      opacity:1;
-    }
-  }
-
   &.is-disabled {
-    ${d400}
-    color: ${rgba(getColor('charcoal.500'), 0.85)};
-    opacity: 0.8;
     cursor: not-allowed;
     transition: none;
   }
 
+  &.is-disabled:not(.with-status) {
+    --headingColor: ${getColor('charcoal.400')};
+    --subtitleColor: ${getColor('charcoal.400')};
+
+    box-shadow: none;
+    background: ${getColor('grey.200')};
+
+    ${AvatarWrapperUI} {
+      opacity: 0.5;
+    }
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
+
   &.with-status {
     cursor: default;
-    
+
     &:hover {
       ${d400}
       transform: translateY(0);
     }
   }
 
-  &.is-checked ${CheckMarkCardContentUI}{
-      background:${getColor('blue.100')};
+  &.is-checked ${CheckMarkCardContentUI} {
+    background: ${getColor('blue.100')};
   }
 
-  &.is-lavender{
-    &:before{
+  &.is-lavender {
+    &:before {
       opacity: 0;
     }
-        
-    ${MarkUI} {
+
+    ${MarkUI}  {
       background-color: ${getColor('lavender.600')};
     }
 
-    ${CheckMarkCardContentUI}{
-      background:${getColor('purple.100')};
+    ${CheckMarkCardContentUI} {
+      background: ${getColor('purple.100')};
     }
   }
-`
-
-export const AvatarWrapperUI = styled.div`
-  margin-bottom: 14px;
 `
 
 export const SubtitleUI = styled('div')`
   font-size: 13px;
-  color: ${getColor('charcoal.400')};
+  color: var(--subtitleColor);
 `
 
 export const HeadingUI = styled('div')`
@@ -167,7 +141,7 @@ export const HeadingUI = styled('div')`
   overflow: hidden;
   padding: 0 10px;
   font-weight: 500;
-  color: ${getColor('charcoal.600')};
+  color: var(--headingColor);
   text-overflow: ellipsis;
   width: 100%;
   white-space: nowrap;
