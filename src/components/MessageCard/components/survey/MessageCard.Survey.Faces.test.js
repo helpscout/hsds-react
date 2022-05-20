@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { MessageCardSurveyFaces } from './MessageCard.Survey.Faces'
-import { SurveyContext } from '../MessageCard.Survey.context'
+import { SurveyContext } from '../../utils/MessageCard.Survey.context'
 import userEvent from '@testing-library/user-event'
 
 describe('MessageCard.Survey.Faces', () => {

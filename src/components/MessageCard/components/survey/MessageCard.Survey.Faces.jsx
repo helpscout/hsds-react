@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { RateActionUI, SurveyOptionsUI } from './MessageCard.Survey.css'
-import { useSurveyContext } from '../MessageCard.Survey.context'
-import { getColor } from '../../../styles/utilities/color'
-import { useButtonResizeOnSelection } from '../utils/MessageCard.hooks'
+import { useSurveyContext } from '../../utils/MessageCard.Survey.context'
+import { getColor } from '../../../../styles/utilities/color'
+import { useButtonResizeOnSelection } from '../../utils/MessageCard.hooks'
 
 export const MessageCardSurveyFaces = ({
   faces = ['happy', 'okay', 'sad'],
@@ -12,7 +12,6 @@ export const MessageCardSurveyFaces = ({
   const { buttonSize, handleOnClick } = useButtonResizeOnSelection({
     disableTransition: !withFeedbackForm,
     defaultSize: 'xl',
-    selectedSize: 'lg',
     onSelection,
   })
 
@@ -27,6 +26,7 @@ export const MessageCardSurveyFaces = ({
           isActive={selected === face}
           onClick={() => handleOnClick(face)}
           outlineColor={getColor('grey.600')}
+          iconSize="lg"
         />
       ))}
     </SurveyOptionsUI>

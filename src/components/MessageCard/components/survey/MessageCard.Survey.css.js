@@ -1,8 +1,10 @@
 import styled, { css } from 'styled-components'
-import { focusRing } from '../../../styles/mixins/focusRing.css'
-import { getColor } from '../../../styles/utilities/color'
-import Button from '../../Button'
-import RateAction from '../../RateAction'
+import { focusRing } from '../../../../styles/mixins/focusRing.css'
+import { getColor } from '../../../../styles/utilities/color'
+import Button from '../../../Button'
+import RateAction from '../../../RateAction'
+import ChoiceGroup from '../../../ChoiceGroup'
+import Radio from '../../../Radio'
 
 const defaultTransition = css`
   transition: all 0.2s ease-in-out;
@@ -70,8 +72,6 @@ export const EmojiButtonUI = styled('button')`
   }
 
   &.is-selected {
-    transform: scale(1.3);
-
     &:after {
       animation: HSDSRateActionSelected 200ms
         cubic-bezier(0.39, 0.575, 0.565, 1) both;
@@ -117,9 +117,22 @@ export const RateActionUI = styled(RateAction)`
       ${defaultTransition};
     }
 
+    &.is-md {
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
     &:after {
       box-sizing: border-box;
       ${defaultTransition};
+    }
+
+    &.is-active:not(:hover):not(:focus) {
+      & {
+        transform: none;
+      }
     }
   }
 
@@ -168,5 +181,41 @@ export const ConfirmationMessageUI = styled('div')`
 
   .c-Icon {
     color: ${getColor('green.500')};
+  }
+`
+
+export const MultipleChoiceGroupUI = styled(ChoiceGroup)`
+  background-color: #fff;
+  width: 100%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  padding: 5px 15px;
+
+  & .c-FormGroupChoice {
+    margin-bottom: 0;
+  }
+`
+
+export const MultipleChoiceRadioUI = styled(Radio)`
+  .c-Choice__label-text {
+    height: 36px;
+    display: flex;
+    align-items: center;
+
+    .c-Text {
+      font-size: 14px;
+      color: ${getColor('charcoal.700')};
+    }
+  }
+
+  .c-InputBackdropV2 {
+    &.is-radio.is-filled {
+      background-color: ${getColor('charcoal.300')};
+      border-color: ${getColor('charcoal.300')};
+    }
+
+    &__focus {
+      box-shadow: 0 0 0 2px ${getColor('charcoal.300')};
+    }
   }
 `
