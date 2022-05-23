@@ -5,7 +5,6 @@ import {
   MultipleChoiceRadioUI,
 } from './MessageCard.Survey.css'
 import { useSurveyContext } from '../../utils/MessageCard.Survey.context'
-import Radio from '../../../Radio'
 
 export const MessageCardSurveyMultipleChoice = ({ choices }) => {
   const { onSelection } = useSurveyContext()
