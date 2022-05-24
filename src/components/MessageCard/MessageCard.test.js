@@ -4,6 +4,8 @@ import MessageCard from './MessageCard'
 import { ThumbsSurvey } from './MessageCard.Survey.variants'
 import { MessageCardButton as Button } from './MessageCard.Button'
 import userEvent from '@testing-library/user-event'
+import { makeBrandColors } from '../../styles/utilities/color'
+import { ThemeProvider } from 'styled-components'
 
 describe('className', () => {
   test('Has default className', () => {
@@ -499,6 +501,8 @@ describe('Message Button', () => {
 })
 
 describe('Surveys', () => {
+  jest.useFakeTimers()
+
   test('Renders a feedback form after selection if withFeedbackForm is set', () => {
     const formLabel = 'Tell us more...'
 
@@ -511,6 +515,30 @@ describe('Surveys', () => {
     expect(screen.queryByLabelText(formLabel)).not.toBeInTheDocument()
 
     userEvent.click(screen.getByRole('button', { name: 'thumbs-up' }))
+
+    expect(screen.queryByLabelText(formLabel)).toBeInTheDocument()
+  })
+
+  test('Renders a feedback form delayed after selection if withShowFeedbackFormDelay is set', () => {
+    const formLabel = 'Tell us more...'
+
+    render(
+      <MessageCard.Survey
+        withFeedbackForm
+        withShowFeedbackFormDelay
+        feedbackFormText={formLabel}
+      >
+        <ThumbsSurvey />
+      </MessageCard.Survey>
+    )
+
+    expect(screen.queryByLabelText(formLabel)).not.toBeInTheDocument()
+    userEvent.click(screen.getByRole('button', { name: 'thumbs-up' }))
+    expect(screen.queryByLabelText(formLabel)).not.toBeInTheDocument()
+
+    act(() => {
+      jest.runAllTimers()
+    })
 
     expect(screen.queryByLabelText(formLabel)).toBeInTheDocument()
   })

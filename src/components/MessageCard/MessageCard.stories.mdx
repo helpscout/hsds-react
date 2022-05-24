@@ -7,6 +7,8 @@ import {
   MultipleChoiceSurvey,
   ThumbsSurvey,
 } from './MessageCard.Survey.variants'
+import { ThemeProvider } from 'styled-components'
+import { makeBrandColors } from '../../styles/utilities/color'
 
 <Meta
   title="Components/Conversation/Message/MessageCard"
@@ -201,6 +203,7 @@ This component renders a Message Card Notification with (optional) Title, Subtit
             withFeedbackForm
             feedbackFormText="Tell us more..."
             onSubmit={data => console.log(data)}
+            withShowFeedbackFormDelay
           >
             <ThumbsSurvey />
           </MessageCard.Survey>
@@ -219,13 +222,17 @@ This component renders a Message Card Notification with (optional) Title, Subtit
         title="How did you feel about your checkout experience?"
         body="Your feedback is valuable to us. Let us know how we did so we can continue to improve our services."
         action={() => (
-          <MessageCard.Survey
-            withFeedbackForm
-            feedbackFormText="Tell us more..."
-            onSubmit={data => console.log(data)}
-          >
-            <FacesSurvey />
-          </MessageCard.Survey>
+          <ThemeProvider theme={{ brandColor: makeBrandColors('#8c3c4a') }}>
+            <MessageCard.Survey
+              withFeedbackForm
+              feedbackFormText="Tell us more..."
+              submitButtonText="Send with some long button text"
+              onSubmit={data => console.log(data)}
+              withShowFeedbackFormDelay
+            >
+              <FacesSurvey />
+            </MessageCard.Survey>
+          </ThemeProvider>
         )}
       />
     </MessageCardStoryWrapperUI>

@@ -5,6 +5,8 @@ import Button from '../../../Button'
 import RateAction from '../../../RateAction'
 import ChoiceGroup from '../../../ChoiceGroup'
 import Radio from '../../../Radio'
+import { setFontSize } from '../../../../styles/utilities/font'
+import { FONT_FAMILY } from '../../../../styles/configs/constants'
 
 const defaultTransition = css`
   transition: all 0.2s ease-in-out;
@@ -142,7 +144,21 @@ export const RateActionUI = styled(RateAction)`
 `
 
 export const FeedbackFormUI = styled('form')`
-  margin-top: 16px;
+  // adding padding and negative margin to compensate, because of focus state of children
+  // without this, the outline (box shadow) is cut off on the sides/bottom
+  padding: 4px;
+  margin: 16px -4px -4px;
+  overflow: hidden;
+  animation: HeightAnimation 400ms;
+
+  @keyframes HeightAnimation {
+    0% {
+      max-height: 0;
+    }
+    100% {
+      max-height: 400px;
+    }
+  }
 `
 
 export const FeedbackLabelUI = styled('label')`
@@ -155,6 +171,11 @@ export const SubmitFeedbackFormButtonUI = styled(Button)`
   &.is-size-xxl {
     --buttonMinWidth: 100%;
     margin-top: 15px;
+    width: 100%;
+
+    ${setFontSize(14)};
+    font-family: ${FONT_FAMILY};
+    line-height: normal !important;
   }
 `
 

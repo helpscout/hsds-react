@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import {
   ConfirmationMessageUI,
@@ -12,8 +12,11 @@ import { SurveyContext } from '../../utils/MessageCard.Survey.context'
 import Input from '../../../Input'
 import Spinner from '../../../Spinner'
 import Icon from '../../../Icon'
+import Truncate from '../../../Truncate'
 
 function noop() {}
+
+const SHOW_FEEDBACK_FORM_DELAY = 600
 
 export const MessageCardSurvey = ({
   children,
@@ -25,17 +28,32 @@ export const MessageCardSurvey = ({
   onSubmit = noop,
   showSpinner = false,
   showConfirmationMessage = false,
+  theme,
+  withShowFeedbackFormDelay = false,
 }) => {
   const [feedback, setFeedback] = React.useState('')
   const [selected, setSelected] = React.useState(null)
   const [showFeedbackForm, setShowFeedbackForm] = React.useState(false)
   const shouldShowFeedbackForm = showFeedbackForm || forceFeedbackForm
+  const isMounted = useRef(true)
+
+  useEffect(() => {
+    return () => {
+      isMounted.current = false
+    }
+  }, [])
 
   function handleSelection(id) {
     setSelected(id)
 
     if (withFeedbackForm) {
-      setShowFeedbackForm(true)
+      if (withShowFeedbackFormDelay) {
+        setTimeout(() => {
+          isMounted.current && setShowFeedbackForm(true)
+        }, SHOW_FEEDBACK_FORM_DELAY)
+      } else {
+        setShowFeedbackForm(true)
+      }
       return
     }
 
@@ -89,8 +107,13 @@ export const MessageCardSurvey = ({
             value={feedback}
             onChange={value => setFeedback(value)}
           />
-          <SubmitFeedbackFormButtonUI submit size="xxl" theme="blue">
-            {submitButtonText}
+          <SubmitFeedbackFormButtonUI
+            data-cy="beacon-message-cta-survey-submit"
+            submit
+            size="xxl"
+            theme={theme || 'blue'}
+          >
+            <Truncate>{submitButtonText}</Truncate>
           </SubmitFeedbackFormButtonUI>
         </FeedbackFormUI>
       )}
