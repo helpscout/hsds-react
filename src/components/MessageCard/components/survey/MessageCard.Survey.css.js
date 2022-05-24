@@ -27,6 +27,7 @@ export const SurveyOptionsUI = styled('div')`
 `
 
 export const EmojiButtonUI = styled('button')`
+  position: relative;
   background: white;
   border: none;
   border-radius: 50%;
@@ -39,14 +40,15 @@ export const EmojiButtonUI = styled('button')`
   ${defaultTransition};
 
   ${focusRing};
-  --focusRingOffset: -3px;
+  --focusRingOffset: 0px;
   --focusRingRadius: 50%;
 
   &:first-child {
     margin-left: 0;
   }
 
-  &:hover {
+  &:hover,
+  &:focus {
     transform: scale(1.3);
   }
 
@@ -114,6 +116,10 @@ export const RateActionUI = styled(RateAction)`
 
   &.c-RateAction {
     ${defaultTransition};
+
+    ${focusRing};
+    --focusRingOffset: 0px;
+    --focusRingRadius: 50%;
 
     svg {
       ${defaultTransition};
