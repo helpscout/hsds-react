@@ -144,7 +144,10 @@ export const RateActionUI = styled(RateAction)`
 `
 
 export const FeedbackFormUI = styled('form')`
-  margin-top: 16px;
+  // adding padding and negative margin to compensate, because of focus state of children
+  // without this, the outline (box shadow) is cut off on the sides/bottom
+  padding: 4px;
+  margin: 16px -4px -4px;
   overflow: hidden;
   animation: HeightAnimation 400ms;
 
