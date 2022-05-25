@@ -16,7 +16,7 @@ export const SurveyUI = styled('div')`
   background: ${getColor('grey.200')};
   border-radius: 5px;
   margin: 0px -16px -16px -16px;
-  padding: 14px 15px;
+  padding: 15px;
   position: relative;
 `
 
@@ -27,6 +27,7 @@ export const SurveyOptionsUI = styled('div')`
 `
 
 export const EmojiButtonUI = styled('button')`
+  position: relative;
   background: white;
   border: none;
   border-radius: 50%;
@@ -39,14 +40,15 @@ export const EmojiButtonUI = styled('button')`
   ${defaultTransition};
 
   ${focusRing};
-  --focusRingOffset: -3px;
+  --focusRingOffset: 0px;
   --focusRingRadius: 50%;
 
   &:first-child {
     margin-left: 0;
   }
 
-  &:hover {
+  &:hover,
+  &:focus {
     transform: scale(1.3);
   }
 
@@ -115,6 +117,10 @@ export const RateActionUI = styled(RateAction)`
   &.c-RateAction {
     ${defaultTransition};
 
+    ${focusRing};
+    --focusRingOffset: 0px;
+    --focusRingRadius: 50%;
+
     svg {
       ${defaultTransition};
     }
@@ -147,7 +153,7 @@ export const FeedbackFormUI = styled('form')`
   // adding padding and negative margin to compensate, because of focus state of children
   // without this, the outline (box shadow) is cut off on the sides/bottom
   padding: 4px;
-  margin: 16px -4px -4px;
+  margin: 12px -4px -4px;
   overflow: hidden;
   animation: HeightAnimation 400ms;
 
