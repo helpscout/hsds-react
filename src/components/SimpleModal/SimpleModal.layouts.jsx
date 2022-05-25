@@ -73,10 +73,10 @@ export function Confirmation({
       <ConfirmationHeadingUI>{heading}</ConfirmationHeadingUI>
       {body && <ConfirmationBodyUI>{body}</ConfirmationBodyUI>}
       <ConfirmationFooterUI>
-        <Button outlined theme="grey" onClick={onConfirm}>
+        <Button outlined theme="grey" onClick={onCancel}>
           {cancelButtonText}
         </Button>
-        <Button theme={danger ? 'red' : 'blue'} onClick={onCancel}>
+        <Button theme={danger ? 'red' : 'blue'} onClick={onConfirm}>
           {confirmButtonText}
         </Button>
       </ConfirmationFooterUI>
