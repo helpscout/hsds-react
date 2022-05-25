@@ -304,7 +304,10 @@ export const BodyUI = styled.div`
 `
 
 export const ActionUI = styled('div')`
-  margin-top: 20px;
+  &:not(:only-child) {
+    margin-top: 20px;
+  }
+
   padding: 0 20px;
   flex: 0 0 auto;
 `
