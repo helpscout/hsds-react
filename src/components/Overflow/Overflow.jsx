@@ -1,15 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import EventListener from '../EventListener'
 import classNames from 'classnames'
 import { hasContentOverflowX, remapScrollingPlane } from './Overflow.utils'
-import { smoothScrollTo } from '../../utilities/smoothScroll'
-import {
-  getFadeLeftStyles,
-  getFadeRightStyles,
-} from '../../utilities/scrollFade'
+import { smoothScrollTo } from '@hsds/utils-scroll'
+import { getFadeLeftStyles, getFadeRightStyles } from '@hsds/utils-faders'
 import { OverflowUI } from './Overflow.css'
 
 function noop() {}

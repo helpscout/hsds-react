@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 import React from 'react'
 import { PropTypes } from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import { connect } from '@helpscout/wedux'
 import { MenuWrapperUI, MenuUI } from './Dropdown.css.js'
 import ScrollLock from '../ScrollLock'

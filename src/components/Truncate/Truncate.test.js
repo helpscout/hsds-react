@@ -1,5 +1,5 @@
 import React from 'react'
-import { createSpec, faker } from '@helpscout/helix'
+import { createSpec, faker } from '@hsds/helix'
 import { mount } from 'enzyme'
 import Tooltip from '../Tooltip'
 import { Truncate } from './Truncate'

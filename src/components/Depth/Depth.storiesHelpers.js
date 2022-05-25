@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 import { FONT_FAMILY as AKTIV_FONT_FAMILY } from '../HSDS/GlobalStyle'
 import Depth from './Depth'
 

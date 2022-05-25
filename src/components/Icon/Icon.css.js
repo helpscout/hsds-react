@@ -1,8 +1,8 @@
-import { BEM } from '../../utilities/classNames'
+import { BEM } from '@hsds/utils-bem'
 
-import { STATES, TEXT_SHADES } from '../../styles/configs/constants'
-import { getColor } from '../../styles/utilities/color'
-import forEach from '../../styles/utilities/forEach'
+import { STATES, TEXT_SHADES } from '@hsds/utils-constants'
+import { getColor } from '@hsds/utils-color'
+import { forEach } from '@hsds/utils-sass'
 import styled from 'styled-components'
 
 const bem = BEM('.c-Icon')

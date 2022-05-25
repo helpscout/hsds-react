@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 
-import linkStyles from '../../styles/mixins/linkStyles.css'
+import { generateLinkStyles } from '@hsds/utils-mixins'
 
 export const LinkUI = styled('a')`
-  ${linkStyles};
+  ${generateLinkStyles};
 
   &:focus {
     outline: 5px auto Highlight;

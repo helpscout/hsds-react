@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext } from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import AccordionBody from './Accordion.Body'
 import AccordionHeading from './Accordion.Heading'
 import AccordionLink from './Accordion.Link'

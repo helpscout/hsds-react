@@ -1,7 +1,6 @@
-import { STATES } from '../../styles/configs/constants'
-import { getColor } from '../../styles/utilities/color'
-import { rgba } from '../../utilities/color'
-import forEach from '../../styles/utilities/forEach'
+import { STATES } from '@hsds/utils-constants'
+import { getColor, rgba } from '@hsds/utils-color'
+import { forEach } from '@hsds/utils-sass'
 import styled from 'styled-components'
 
 export const config = {

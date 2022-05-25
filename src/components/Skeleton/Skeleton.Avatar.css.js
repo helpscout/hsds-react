@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import SkeletonBlock from './Skeleton.Block'
 import { config as avatarConfig } from '../Avatar/Avatar.css'
-import forEach from '../../styles/utilities/forEach'
+import { forEach } from '@hsds/utils-sass'
 
 export const config = {
   ...avatarConfig,

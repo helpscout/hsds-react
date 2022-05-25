@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import Text from '../Text'
 import classNames from 'classnames'
 import { HeaderUI, SubTitleUI, HeadingUI } from './Page.css'

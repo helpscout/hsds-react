@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { breakpoint } from '../../styles/mixins/breakpoints.css'
+import { generateBreakPoint } from '@hsds/utils-mixins'
 import { pageBreakpointsConfig } from '../Page/Page.config'
-import { getColor } from '../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 
 export const config = {
   operatorHeight: '56px',
@@ -32,7 +32,7 @@ export const ConditionListUI = styled('div')`
     margin-right: -10px;
     width: calc(100% + 20px);
 
-    ${breakpoint(
+    ${generateBreakPoint(
       pageBreakpointsConfig.breakpoint.widescreen,
       `
       margin-left: -60px;

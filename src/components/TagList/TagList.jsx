@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import { getComponentKey } from '../../utilities/component'
+import { getValidProps } from '@hsds/utils-react'
+import { getComponentKey } from '@hsds/utils-react'
 
 import Overflow from '../Overflow'
 import Tooltip from '../Tooltip'

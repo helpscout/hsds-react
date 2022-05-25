@@ -2,11 +2,11 @@
 // Deprecated component, use AvatarList instead
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import { AvatarListContext } from '../AvatarList/AvatarList'
 import classNames from 'classnames'
-import { getComponentKey } from '../../utilities/component'
-import { isOdd, getMiddleIndex } from '../../utilities/number'
+import { getComponentKey } from '@hsds/utils-react'
+import { isOdd, getMiddleIndex } from '@hsds/utils-number'
 import { AvatarStackLayeringUI, ItemUI } from './AvatarStack.css'
 import Animate from '../Animate'
 

@@ -31,7 +31,7 @@ import { MenuContainerUI } from './Dropdown.css.js'
 import classNames from 'classnames'
 import getShallowDiffs from '@helpscout/react-utils/dist/getShallowDiffs'
 import { renderRenderPropComponent } from './Dropdown.utils'
-import { createUniqueIDFactory } from '../../utilities/id'
+import { createUniqueIDFactory } from '@hsds/utils-id'
 import { getComputedClientRect } from './Dropdown.MenuContainer.utils'
 
 function noop() {}

@@ -1,5 +1,5 @@
-import { getColor } from '../utilities/color'
-import { rgba } from '../../utilities/color'
+import { getColor } from '@hsds/utils-color'
+import { rgba } from '@hsds/utils-color'
 
 export const makeShadows = (...args) => args.join(',')
 

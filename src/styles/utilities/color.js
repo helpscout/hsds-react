@@ -3,10 +3,10 @@ import isNil from 'lodash.isnil'
 import isNumber from 'lodash.isnumber'
 import isPlainObject from 'lodash.isplainobject'
 import colorScheme from '../configs/colors'
-import { darken, getColorShade, lighten } from '../../utilities/color'
+import { darken, getColorShade, lighten } from '@hsds/utils-color'
 
 // TODO: remove uses in HS App
-export { rgba } from '../../utilities/color'
+export { rgba } from '@hsds/utils-color'
 
 /**
  * Retrieves a color/shade from the Color palette

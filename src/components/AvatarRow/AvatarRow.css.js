@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 
 export const AvatarRowUI = styled('div')`
   display: flex;

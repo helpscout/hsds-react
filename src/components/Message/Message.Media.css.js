@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 import Image from '../Image'
-import { breakpoint } from '../../styles/mixins/breakpoints.css'
+import { generateBreakPoint } from '@hsds/utils-mixins'
 import { noteBoxShadow } from '../../styles/mixins/noteStyles.css'
-import { getColor } from '../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 
-import { BEM } from '../../utilities/classNames'
+import { BEM } from '@hsds/utils-bem'
 import MessageChat from './Message.Chat'
 
 const bem = BEM('.c-MessageMedia')
@@ -76,7 +76,7 @@ export const MediaUI = styled(MessageChat)`
   }
 
   &__modal.c-Modal {
-    ${breakpoint(
+    ${generateBreakPoint(
       'md',
       `
       padding: 20px;

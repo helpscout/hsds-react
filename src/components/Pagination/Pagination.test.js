@@ -5,7 +5,7 @@ import user from '@testing-library/user-event'
 
 import Pagination, { usePaginationData, pluralize } from './Pagination'
 import { simulateKeyPress } from '../KeypressListener/KeypressListener.test'
-import Keys from '../../constants/Keys'
+import { Keys } from '@hsds/utils-keyboard'
 
 describe('className', () => {
   test('Has a default className', () => {

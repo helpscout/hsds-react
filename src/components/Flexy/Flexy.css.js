@@ -1,4 +1,4 @@
-import forEach from '../../styles/utilities/forEach'
+import { forEach } from '@hsds/utils-sass'
 import styled from 'styled-components'
 
 export const config = {

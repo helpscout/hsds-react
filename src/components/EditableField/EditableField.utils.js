@@ -1,7 +1,7 @@
 import isNil from 'lodash.isnil'
 import isPlainObject from 'lodash.isplainobject'
-import { getColor } from '../../styles/utilities/color'
-import { createUniqueIDFactory } from '../../utilities/id'
+import { getColor } from '@hsds/utils-color'
+import { createUniqueIDFactory } from '@hsds/utils-id'
 const uniqueID = createUniqueIDFactory('EditableField')
 
 export const EF_COMPONENT_KEY = 'EditableField'

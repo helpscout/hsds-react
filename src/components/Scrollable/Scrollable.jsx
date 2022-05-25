@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import EventListener from '../EventListener'
 import ScrollLock from '../ScrollLock'
 import classNames from 'classnames'
@@ -11,7 +11,7 @@ import {
   getFadeBottomStyles,
   getFadeLeftStyles,
   getFadeRightStyles,
-} from '../../utilities/scrollFade'
+} from '@hsds/utils-faders'
 import { ScrollableUI, ContentUI, FaderUI } from './Scrollable.css'
 
 function noop() {}

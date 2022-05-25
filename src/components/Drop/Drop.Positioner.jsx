@@ -8,11 +8,11 @@
  */
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import ReactDOM from 'react-dom'
 import EventListener from '../EventListener'
 import classNames from 'classnames'
-import { isNodeElement } from '../../utilities/node'
+import { isNodeElement } from '@hsds/utils-dom'
 import {
   getViewportPosition,
   getDirections,

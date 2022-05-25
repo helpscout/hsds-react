@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import KeypressListener from '.'
-import Keys from '../../constants/Keys'
+import { Keys } from '@hsds/utils-keyboard'
 
 export const simulateKeyPress = (keyCode, modifier) => {
   const event = new Event('keyup')

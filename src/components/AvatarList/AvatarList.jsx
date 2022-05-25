@@ -1,12 +1,12 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import Animate from '../Animate'
 import Avatar from '../Avatar'
 import { ItemUI, AvatarListUI, AvatarListWrapperUI } from './AvatarList.css'
 import classNames from 'classnames'
-import { getComponentKey } from '../../utilities/component'
-import { isOdd, getMiddleIndex } from '../../utilities/number'
+import { getComponentKey } from '@hsds/utils-react'
+import { isOdd, getMiddleIndex } from '@hsds/utils-number'
 
 export const AvatarListContext = React.createContext({})
 

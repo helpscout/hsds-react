@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getColor } from '../../../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 import { page1, page2 } from './convoData'
 import { formatDate } from './convoList.utils'
 import { CONVO_STATUS_CLASSNAMES, skin } from './ConvoList.constants'

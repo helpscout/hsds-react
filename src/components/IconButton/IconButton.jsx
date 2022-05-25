@@ -17,7 +17,7 @@ import {
   ChildrenUI,
   StatusUI,
 } from './IconButton.css'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 
 export const SIZES = [SIZE_XL, SIZE_LG, SIZE_SM]
 

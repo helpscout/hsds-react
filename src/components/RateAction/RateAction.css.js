@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
-import { rgba } from '../../utilities/color'
+import { getColor } from '@hsds/utils-color'
+import { rgba } from '@hsds/utils-color'
 import { emoticonAnimationCSS } from '../Emoticon/Emoticon.css'
 
 export const config = {

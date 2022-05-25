@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import EventListener from '../EventListener'
 import classNames from 'classnames'
 import LoadingDots from '../LoadingDots'
-import { isNodeElement, getNodeScope } from '../../utilities/node'
-import { isNodeEnv } from '../../utilities/other'
+import { isNodeElement, getNodeScope } from '@hsds/utils-dom'
+import { isNodeEnv } from '@hsds/utils-env'
 
 function noop() {}
 

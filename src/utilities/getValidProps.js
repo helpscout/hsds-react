@@ -1,3 +1,3 @@
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 
 export default getValidProps

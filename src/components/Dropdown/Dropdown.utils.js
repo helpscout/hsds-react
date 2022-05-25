@@ -2,14 +2,14 @@
 /* istanbul ignore file */
 import React from 'react'
 import { initialState } from './Dropdown.store'
-import { getComponentKey } from '../../utilities/component'
+import { getComponentKey } from '@hsds/utils-react'
 import classNames from 'classnames'
 import isNil from 'lodash.isnil'
 import isString from 'lodash.isstring'
 import isPlainObject from 'lodash.isplainobject'
 import isFunction from 'lodash.isfunction'
 import { get } from 'lodash.get'
-import { isNodeElement } from '../../utilities/node'
+import { isNodeElement } from '@hsds/utils-dom'
 
 export const getWindowFromNode = node => {
   if (!isNodeElement(node)) return window

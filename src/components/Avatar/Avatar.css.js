@@ -1,6 +1,6 @@
-import { getColor, getThemeBrandProp } from '../../styles/utilities/color'
-import forEach from '../../styles/utilities/forEach'
-import variableFontSize from '../../styles/utilities/variableFontSize'
+import { getColor, getThemeBrandProp } from '@hsds/utils-color'
+import { forEach } from '@hsds/utils-sass'
+import { variableFontSize } from '@hsds/utils-fonts'
 
 import styled from 'styled-components'
 import buttonConfig from '../Button/Button.config'

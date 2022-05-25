@@ -1,7 +1,7 @@
-import { getColor } from '../utilities/color'
-import { rgba } from '../../utilities/color'
+import { getColor } from '@hsds/utils-color'
+import { rgba } from '@hsds/utils-color'
 
-export const cardStyles = () => {
+export const generateCardStyles = () => {
   const bottomColor = getColor('grey.600')
   const color = getColor('grey.600')
   const colorHover = getColor('grey.700')
@@ -49,4 +49,4 @@ export const shadowlessBoxShadowWithHover = () => `
   }
 `
 
-export default cardStyles
+export default generateCardStyles

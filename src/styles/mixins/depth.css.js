@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 // These are just exported strings
-import { getColor } from '../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 
 const common = `
   background-color: #fff;

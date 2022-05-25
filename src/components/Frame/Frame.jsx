@@ -2,7 +2,7 @@
 // and https://github.com/styled-components/styled-components/issues/659#issuecomment-456894873
 import React, { useContext, useMemo } from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import Frame, { FrameContext } from 'react-frame-component'
 
 import {

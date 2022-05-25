@@ -8,7 +8,7 @@ import React, {
 import PropTypes from 'prop-types'
 import Tippy from '@tippyjs/react/headless'
 import isFunction from 'lodash.isfunction'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import classNames from 'classnames'
 import {
   ArrowUI,

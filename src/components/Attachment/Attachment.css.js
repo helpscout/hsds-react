@@ -1,9 +1,12 @@
 import styled from 'styled-components'
-import { BEM } from '../../utilities/classNames'
-import cardStyles from '../../styles/mixins/cardStyles.css'
-import { d400, d400Effect } from '../../styles/mixins/depth.css'
-import linkStyles from '../../styles/mixins/linkStyles.css'
-import { getColor } from '../../styles/utilities/color'
+import { BEM } from '@hsds/utils-bem'
+import {
+  generateCardStyles,
+  generateLinkStyles,
+  d400,
+  d400Effect,
+} from '@hsds/utils-mixins'
+import { getColor } from '@hsds/utils-color'
 
 const bem = BEM('.c-Attachment')
 
@@ -34,7 +37,7 @@ export const ErrorBorderUI = styled('div')`
 `
 
 export const AttachmentUI = styled.a`
-  ${linkStyles()};
+  ${generateLinkStyles()};
 
   background-color: white;
   border: 1px solid ${getColor('grey.500')};
@@ -114,7 +117,7 @@ export const AttachmentUI = styled.a`
   }
 
   ${bem.element('closeButton')} {
-    ${cardStyles()};
+    ${generateCardStyles()};
     display: block;
     border-radius: 9999px !important;
     position: absolute;

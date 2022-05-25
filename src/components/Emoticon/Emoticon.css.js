@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 
 // Note: some colours here are not from the Help Scout palette
 export const reactionEmoticonsColours = {

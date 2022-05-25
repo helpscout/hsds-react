@@ -1,4 +1,4 @@
-import { isNodeElement } from '../../utilities/node'
+import { isNodeElement } from '@hsds/utils-dom'
 
 const isFirefox = () => {
   if (!navigator) return false

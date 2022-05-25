@@ -1,6 +1,6 @@
 import { STATES } from '../configs/constants'
-import { getColor } from '../utilities/color'
-import forEach from '../utilities/forEach'
+import { getColor } from '@hsds/utils-color'
+import { forEach } from '@hsds/utils-sass'
 
 /**
  * Generates the color CSS property for various states.

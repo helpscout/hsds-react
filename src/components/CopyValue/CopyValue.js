@@ -9,7 +9,7 @@ import {
   ConfirmationIconWrapperUI,
 } from './CopyValue.css'
 import { useCopyConfirmation } from '../CopyButton/CopyButton.utils'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import classNames from 'classnames'
 import Icon from '../Icon'
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { BEM } from '../../utilities/classNames'
+import { BEM } from '@hsds/utils-bem'
 
 const bem = BEM('.c-Overflow')
 

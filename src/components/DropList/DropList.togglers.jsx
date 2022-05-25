@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import ControlGroup from '../ControlGroup'
 import HSDSButton from '../Button'
 import Icon from '../Icon'
-import { STATES } from '../../constants'
+import { STATES } from '@hsds/utils-constants'
 import Tooltip from '../Tooltip'
 import {
   IconButtonUI,

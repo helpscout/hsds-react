@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { makeFieldStyles } from '../Input/Input.css'
-import { getColor } from '../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 export { InlinePrefixSuffixUI } from '../Input/Input.css'
 
 export const SelectUI = styled('div')`

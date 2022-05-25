@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import CopyButton from '../CopyButton'
-import { getColor } from '../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 
 export const config = {
   borderColor: getColor('border'),

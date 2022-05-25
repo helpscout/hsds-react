@@ -1,15 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import classNames from 'classnames'
-import { copyToClipboard, selectText } from '../../utilities/clipboard'
+import { copyToClipboard, selectText } from '@hsds/utils-clipboard'
 import {
   CopyButtonUI,
   CopyCodeUI,
   SyntaxHighlight,
   WrapperUI,
 } from './CopyCode.css'
-import Keys from '../../constants/Keys'
+import { Keys } from '@hsds/utils-keyboard'
 const Prism = require('prismjs')
 require('prismjs/components/prism-java')
 require('prismjs/components/prism-swift')

@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import equal from 'fast-deep-equal'
 import classNames from 'classnames'
-import { key } from '../../constants/Keys'
+import { key } from '@hsds/utils-keyboard'
 import { EditableFieldCompositeUI, ComposedMaskUI } from './EditableField.css'
 import {
   STATES_CLASSNAMES,

@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-import { createSpec, faker } from '@helpscout/helix'
+import { createSpec, faker } from '@hsds/helix'
 import { Card, Text } from '../../../index'
 
 test('Renders fixture data into Blue component', () => {

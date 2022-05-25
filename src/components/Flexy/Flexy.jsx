@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import FlexyBlock from './Flexy.Block'
 import FlexyItem from './Flexy.Item'
 import classNames from 'classnames'

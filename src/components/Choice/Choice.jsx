@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import ChoiceInput from './Choice.Input'
 import Flexy from '../Flexy'
 import HelpText from '../HelpText'
@@ -8,7 +8,7 @@ import Text from '../Text'
 import VisuallyHidden from '../VisuallyHidden'
 import ChoiceGroupContext from '../ChoiceGroup/ChoiceGroup.Context'
 import classNames from 'classnames'
-import { createUniqueIDFactory } from '../../utilities/id'
+import { createUniqueIDFactory } from '@hsds/utils-id'
 import {
   ChoiceLabelUI,
   ChoiceLabelTextUI,

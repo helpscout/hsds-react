@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 import isNil from 'lodash.isnil'
-import { getColor } from '../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 import Button from '../Button'
-import { focusRing } from '../../styles/mixins/focusRing.css'
+import { focusRing } from '@hsds/utils-mixins'
 
 export const HeaderUI = styled('header')`
   display: flex;

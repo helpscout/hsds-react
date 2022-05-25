@@ -7,7 +7,7 @@ import {
   svgSet as illoSet,
   unload as unloadIllos,
 } from '../../components/Illo/Illo.utils'
-import { getComponentName } from '../../utilities/component'
+import { getComponentName } from '@hsds/utils-react'
 
 afterEach(() => {
   unloadIcons()

@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from '@testing-library/react'
 import { mount } from 'enzyme'
 import { EditableFieldActions as Actions } from '../EditableField.Actions'
-import * as urlUtils from '../../../utilities/urls'
+import * as urlUtils from '@hsds/utils-strings'
 
 import { STATES_CLASSNAMES } from '../EditableField.utils'
 

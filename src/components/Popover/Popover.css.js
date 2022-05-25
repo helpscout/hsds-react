@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
-import { d500 } from '../../styles/mixins/depth.css'
+import { getColor } from '@hsds/utils-color'
+import { d500 } from '@hsds/utils-mixins'
 import { ArrowUI, TooltipUI } from '../Tooltip/Tooltip.css'
 import Heading from '../Heading'
 

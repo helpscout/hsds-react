@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 import React from 'react'
-import { createSpec, derived, faker } from '@helpscout/helix'
+import { createSpec, derived, faker } from '@hsds/helix'
 import Truncate from '../Truncate'
 
 export const defaultColumns = [

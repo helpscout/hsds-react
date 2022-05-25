@@ -4,9 +4,9 @@ import get from 'lodash.get'
 import Spinner from '../Spinner'
 import Icon from '../Icon'
 
-import { getColor } from '../../styles/utilities/color'
-import variableFontSize from '../../styles/utilities/variableFontSize'
-import { focusRing } from '../../styles/mixins/focusRing.css'
+import { getColor } from '@hsds/utils-color'
+import { variableFontSize } from '@hsds/utils-fonts'
+import { focusRing } from '@hsds/utils-mixins'
 
 import config from './Button.config'
 

@@ -1,4 +1,4 @@
-import { getColor } from '../utilities/color'
+import { getColor } from '@hsds/utils-color'
 
 const linkStyles = () => `
   color: ${getColor('link.base')};

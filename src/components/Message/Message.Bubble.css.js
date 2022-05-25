@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
-import { BEM } from '../../utilities/classNames'
+import { getColor } from '@hsds/utils-color'
+import { BEM } from '@hsds/utils-bem'
 import Heading from '../Heading'
 
 const bem = BEM('.c-MessageBubble')

@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 
-import { getColor } from '../../styles/utilities/color'
-import { setFontSize } from '../../styles/utilities/font'
+import { getColor } from '@hsds/utils-color'
+import { setFontSize } from '@hsds/utils-fonts'
 
 import Badge from '../Badge'
-import { focusRing } from '../../styles/mixins/focusRing.css'
+import { focusRing } from '@hsds/utils-mixins'
 
 export const ItemUI = styled('li')`
   display: flex;

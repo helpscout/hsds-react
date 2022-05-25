@@ -8,7 +8,7 @@ import Tooltip from '../Tooltip'
 import VisuallyHidden from '../VisuallyHidden'
 
 import classNames from 'classnames'
-import { createUniqueIDFactory } from '../../utilities/id'
+import { createUniqueIDFactory } from '@hsds/utils-id'
 
 import {
   AvatarWrapperUI,

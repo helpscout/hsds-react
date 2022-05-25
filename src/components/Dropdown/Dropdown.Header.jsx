@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 import React from 'react'
 import { PropTypes } from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import { HeaderUI } from './Dropdown.css'
 import Heading from '../Heading'
 import classNames from 'classnames'

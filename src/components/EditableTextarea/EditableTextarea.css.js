@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import { COLOURS, SIZES } from '../EditableField/EditableField.utils'
-import { FONT_FAMILY } from '../../styles/configs/constants'
+import { FONT_FAMILY } from '@hsds/utils-fonts'
 
 const { field, focusIndicator, floatingLabel } = SIZES
 

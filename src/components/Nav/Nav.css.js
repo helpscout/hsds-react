@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Flexy from '../Flexy'
 import Text from '../Text'
-import { getColor } from '../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 
 export const config = {
   indicatorTransition: 'opacity 100ms ease',

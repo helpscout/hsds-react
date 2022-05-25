@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
-import forEach from '../../styles/utilities/forEach'
+import { getColor } from '@hsds/utils-color'
+import { forEach } from '@hsds/utils-sass'
 
 const height = 6
 const sizes = {

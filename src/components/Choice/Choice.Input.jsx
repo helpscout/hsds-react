@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { key } from '../../constants/Keys'
+import { key } from '@hsds/utils-keyboard'
 import InputBackdropV2 from '../Input/Input.BackdropV2'
 import Icon from '../Icon'
 import classNames from 'classnames'

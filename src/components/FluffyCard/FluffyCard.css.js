@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { d200, d200Effect } from '../../styles/mixins/depth.css'
+import { d200, d200Effect } from '@hsds/utils-mixins'
 import Card from '../Card'
 
 export const FluffyCardContainerUI = styled('div')`

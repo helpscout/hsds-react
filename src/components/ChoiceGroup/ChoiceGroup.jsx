@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import isNil from 'lodash.isnil'
 import get from 'lodash.get'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import ChoiceGroupContext from './ChoiceGroup.Context'
 import FormGroup from '../FormGroup'
 import FormLabelContext from '../FormLabel/Context'
-import { createUniqueIDFactory } from '../../utilities/id'
+import { createUniqueIDFactory } from '@hsds/utils-id'
 import { ChoiceGroupUI } from './ChoiceGroup.css'
 
 function noop() {}

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 import Flexy from '../Flexy'
 import Button from '../Button'
 import { SplittedButton } from '../DropList/DropList.togglers'

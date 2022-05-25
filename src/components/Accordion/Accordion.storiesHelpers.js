@@ -1,7 +1,7 @@
 import React from 'react'
 import { Accordion, Button, Input, Text } from '../index'
 import { boolean, number } from '@storybook/addon-knobs'
-import { faker } from '@helpscout/helix'
+import { faker } from '@hsds/helix'
 
 const body = faker.lorem.paragraph()()
 const form = (

@@ -1,11 +1,9 @@
 import styled from 'styled-components'
 
-import linkStyles from '../../styles/mixins/linkStyles.css'
-import { getColor } from '../../styles/utilities/color'
-import forEach from '../../styles/utilities/forEach'
-import variableFontSize, {
-  BASE_FONT_SIZE,
-} from '../../styles/utilities/variableFontSize'
+import { generateLinkStyles } from '@hsds/utils-mixins'
+import { getColor } from '@hsds/utils-color'
+import { forEach } from '@hsds/utils-sass'
+import { variableFontSize, BASE_FONT_SIZE } from '@hsds/utils-fonts'
 import { makeWeightStyles } from '../Text/Text.css'
 
 export const VAR_NAMESPACE_SIZE = 'HSDSGlobalHeadingFontSize'
@@ -55,7 +53,7 @@ export const HeadingUI = styled.div`
   }
 
   &.is-linkStyle {
-    ${linkStyles()}
+    ${generateLinkStyles()}
   }
 
   &.is-truncate {

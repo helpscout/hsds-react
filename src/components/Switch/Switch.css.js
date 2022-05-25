@@ -1,8 +1,8 @@
-import { getColor } from '../../styles/utilities/color'
-import forEach from '../../styles/utilities/forEach'
+import { getColor } from '@hsds/utils-color'
+import { forEach } from '@hsds/utils-sass'
 import styled from 'styled-components'
-import { focusRing } from '../../styles/mixins/focusRing.css'
-import { rgba } from '../../utilities/color'
+import { focusRing } from '@hsds/utils-mixins'
+import { rgba } from '@hsds/utils-color'
 
 export const config = {
   backgroundColor: {

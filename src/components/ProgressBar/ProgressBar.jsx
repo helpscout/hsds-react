@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import isNil from 'lodash.isnil'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import { ProgressBarUI, BarUI } from './ProgressBar.css'
 
 class ProgressBar extends React.PureComponent {

@@ -4,7 +4,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import isNil from 'lodash.isnil'
-import { getClosestDocument } from '../../utilities/node'
+import { getClosestDocument } from '@hsds/utils-dom'
 
 class KeypressListener extends React.Component {
   node

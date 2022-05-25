@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 import React from 'react'
 import { PropTypes } from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import { connect } from '@helpscout/wedux'
 import Icon from '../Icon'
 import Card from './Dropdown.Card'
@@ -19,7 +19,7 @@ import {
 import { SELECTORS, getCustomItemProps, getItemProps } from './Dropdown.utils'
 import { setMenuPositionStyles } from './Dropdown.renderUtils'
 import classNames from 'classnames'
-import { getComponentKey } from '../../utilities/component'
+import { getComponentKey } from '@hsds/utils-react'
 import DropdownItemSelectedCheck from './Dropdown.ItemSelectedCheck'
 
 function noop() {}

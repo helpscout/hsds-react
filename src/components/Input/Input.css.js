@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
-import { STATES } from '../../styles/configs/constants'
-import { getColor } from '../../styles/utilities/color'
-import forEach from '../../styles/utilities/forEach'
+import { STATES } from '@hsds/utils-constants'
+import { getColor } from '@hsds/utils-color'
+import { forEach } from '@hsds/utils-sass'
 
 export const config = {
   borderWidth: '2px',

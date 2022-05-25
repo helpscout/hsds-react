@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { getColor } from '../../../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 import Popover from '../../../Popover'
 
 export const GridUI = styled('div')`

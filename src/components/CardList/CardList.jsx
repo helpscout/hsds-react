@@ -1,8 +1,8 @@
 import React from 'react'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import Animate from '../Animate'
 import AnimateGroup from '../AnimateGroup'
-import { getComponentKey } from '../../utilities/component'
+import { getComponentKey } from '@hsds/utils-react'
 import classNames from 'classnames'
 import PropTypes from 'prop-types'
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { createUniqueIDFactory } from '../../utilities/id'
+import { createUniqueIDFactory } from '@hsds/utils-id'
 import isFunction from 'lodash.isfunction'
 import isNil from 'lodash.isnil'
 import isPlainObject from 'lodash.isplainobject'

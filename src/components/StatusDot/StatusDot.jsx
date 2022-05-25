@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import Icon from '../Icon'
 import classNames from 'classnames'
 import { StatusDotUI, CenteredContentUI } from './StatusDot.css'

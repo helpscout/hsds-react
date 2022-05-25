@@ -1,4 +1,4 @@
-import { createSpec, faker } from '@helpscout/helix'
+import { createSpec, faker } from '@hsds/helix'
 
 test('Can create and generate a spec', () => {
   const Spec = createSpec({

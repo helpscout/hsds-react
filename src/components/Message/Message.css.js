@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { BEM } from '../../utilities/classNames'
+import { BEM } from '@hsds/utils-bem'
 import Text from '../Text'
 
 const bem = BEM('.c-Message')

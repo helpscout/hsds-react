@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import IconButton from '../IconButton'
 import Text from '../Text'
-import { getColor } from '../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 
 export const ConfirmationIconWrapperUI = styled.span`
   display: flex;

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
-import { breakpoint } from '../../styles/mixins/breakpoints.css'
-import { d300, d300Effect } from '../../styles/mixins/depth.css'
+import { getColor } from '@hsds/utils-color'
+import { generateBreakPoint } from '@hsds/utils-mixins'
+import { d300, d300Effect } from '@hsds/utils-mixins'
 import {
   pageConfig,
   headerConfig,
@@ -27,14 +27,14 @@ export const PageUI = styled('div')`
   width: 100%;
 
   &.is-responsive {
-    ${breakpoint(
+    ${generateBreakPoint(
       pageBreakpointsConfig.breakpoint.superWidescreen,
       `
       max-width: ${pageConfig.maxWidth.superWidescreen};
     `
     )};
 
-    ${breakpoint(
+    ${generateBreakPoint(
       pageBreakpointsConfig.breakpoint.widest,
       `
       max-width: ${pageConfig.maxWidth.widest};
@@ -146,7 +146,7 @@ export const CardUI = styled('div')`
     ${d300Effect}
   }
 
-  ${breakpoint(
+  ${generateBreakPoint(
     pageBreakpointsConfig.breakpoint.widescreen,
     `
       padding: ${pageCardConfig.padding.widescreen};
@@ -154,14 +154,14 @@ export const CardUI = styled('div')`
   )};
 
   .is-responsive & {
-    ${breakpoint(
+    ${generateBreakPoint(
       pageBreakpointsConfig.breakpoint.superWidescreen,
       `
         padding: ${pageCardConfig.padding.superWidescreen};
       `
     )};
 
-    ${breakpoint(
+    ${generateBreakPoint(
       pageBreakpointsConfig.breakpoint.fullscreen,
       `
         padding: ${pageCardConfig.padding.fullscreen};
@@ -190,7 +190,7 @@ export const HeaderUI = styled('header')`
   }
 
   &.is-responsive {
-    ${breakpoint(
+    ${generateBreakPoint(
       pageBreakpointsConfig.breakpoint.superWidescreen,
       `
         border-bottom: none;
@@ -199,7 +199,7 @@ export const HeaderUI = styled('header')`
       `
     )};
 
-    ${breakpoint(
+    ${generateBreakPoint(
       pageBreakpointsConfig.breakpoint.widest,
       `
         width: ${headerConfig.width.widest};
@@ -234,7 +234,7 @@ export const SectionUI = styled('section')`
   }
 
   &.is-responsive {
-    ${breakpoint(
+    ${generateBreakPoint(
       pageBreakpointsConfig.breakpoint.superWidescreen,
       `
         flex-direction: ${pageSectionConfig.flexDirection.superWidescreen};
