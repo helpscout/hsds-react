@@ -16,7 +16,7 @@ export const SurveyUI = styled('div')`
   background: ${getColor('grey.200')};
   border-radius: 5px;
   margin: 0px -16px -16px -16px;
-  padding: 14px 15px;
+  padding: 15px;
   position: relative;
 `
 
@@ -153,7 +153,7 @@ export const FeedbackFormUI = styled('form')`
   // adding padding and negative margin to compensate, because of focus state of children
   // without this, the outline (box shadow) is cut off on the sides/bottom
   padding: 4px;
-  margin: 16px -4px -4px;
+  margin: 12px -4px -4px;
   overflow: hidden;
   animation: HeightAnimation 400ms;
 
