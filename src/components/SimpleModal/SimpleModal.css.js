@@ -37,4 +37,9 @@ export const SimpleModalUI = styled('div')`
   background-color: #fff;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 6px;
+
+  &:focus {
+    outline: 2px solid ${getColor('yellow.600')};
+    outline-offset: 2px;
+  }
 `
