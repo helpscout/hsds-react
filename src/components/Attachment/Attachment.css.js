@@ -4,6 +4,8 @@ import cardStyles from '../../styles/mixins/cardStyles.css'
 import { d400, d400Effect } from '../../styles/mixins/depth.css'
 import linkStyles from '../../styles/mixins/linkStyles.css'
 import { getColor } from '../../styles/utilities/color'
+import Image from '../Image'
+import Text from '../Text'
 
 const bem = BEM('.c-Attachment')
 
@@ -33,6 +35,22 @@ export const ErrorBorderUI = styled('div')`
   `};
 `
 
+export const SizeUI = styled(Text)`
+  color: ${getColor('charcoal.200')};
+  margin-left: 5px;
+`
+export const NameUI = styled(Text)``
+
+export const ImageUI = styled(Image)`
+  border-radius: 2px;
+  height: ${config.imageSize};
+  object-fit: cover;
+  max-height: ${config.imageSize};
+  max-width: ${config.imageMaxWidth};
+  min-width: ${config.imageSize};
+  width: auto;
+`
+
 export const AttachmentUI = styled.a`
   ${linkStyles()};
 
@@ -45,6 +63,19 @@ export const AttachmentUI = styled.a`
   position: relative;
   text-decoration: none;
 
+  &.is-error:before{
+    content:'';
+    border-radius: inherit;
+    border: 1px solid ${getColor('red.500')};
+    bottom: 0px;
+    left: 0px;
+    pointer-events: none;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+  }
+
+
   &.is-error {
     color: ${getColor('red.500')};
 
@@ -56,7 +87,7 @@ export const AttachmentUI = styled.a`
   }
 
   &.is-action {
-    ${bem.element('name')} {
+    ${NameUI} {
       text-decoration: none;
     }
   }
@@ -73,10 +104,10 @@ export const AttachmentUI = styled.a`
       ${d400Effect}
     }
 
-    &:focus {
+    /* &:focus {
       outline: none;
       box-shadow: 0 0 0 2px ${getColor('blue.500')};
-    }
+    } */
 
     &.has-image {
       padding: 3px;
@@ -93,24 +124,9 @@ export const AttachmentUI = styled.a`
     border-color: ${getColor('grey.600')};
     text-decoration: none;
 
-    ${bem.element('name')} {
+    ${NameUI} {
       text-decoration: underline;
     }
-  }
-
-  ${bem.element('size')} {
-    color: ${getColor('charcoal.200')};
-    margin-left: 5px;
-  }
-
-  ${bem.element('image')} {
-    border-radius: 2px;
-    height: ${config.imageSize};
-    object-fit: cover;
-    max-height: ${config.imageSize};
-    max-width: ${config.imageMaxWidth};
-    min-width: ${config.imageSize};
-    width: auto;
   }
 
   ${bem.element('closeButton')} {

@@ -1,162 +1,132 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import AttachmentProvider from './Attachment.Provider'
+import AttachmentProvider, { AttachmentContext } from './Attachment.Provider'
 import CloseButton from '../CloseButton'
-import Image from '../Image'
-import Text from '../Text'
 import Truncate from '../Truncate'
 import classNames from 'classnames'
-import { AttachmentUI, ErrorBorderUI } from './Attachment.css'
+import {
+  AttachmentUI,
+  ImageUI,
+  SizeUI,
+  NameUI,
+  ErrorBorderUI,
+} from './Attachment.css'
 
 function noop() {}
 
-export const Provider = AttachmentProvider
+const Attachment = props => {
+  const {
+    children,
+    className,
+    content,
+    download,
+    id,
+    imageUrl,
+    mime,
+    name,
+    onClick,
+    onRemoveClick,
+    size,
+    state,
+    target,
+    theme: themeProp,
+    truncateLimit,
+    type,
+    url,
+    ...rest
+  } = props
 
-export class Attachment extends React.PureComponent {
-  static contextTypes = {
-    theme: noop,
+  const { theme: themeContext } = useContext(AttachmentContext) || {}
+
+  const theme = themeContext || themeProp
+  const isThemePreview = theme === 'preview'
+
+  const attachmentProps = {
+    id,
+    imageUrl,
+    mime,
+    name,
+    size,
+    url,
   }
-  static Provider = AttachmentProvider
 
-  getAttachmentProps = () => {
-    const { id, imageUrl, mime, name, size, url } = this.props
-
-    return {
-      id,
-      imageUrl,
-      mime,
-      name,
-      size,
-      url,
-    }
+  const handleOnClick = event => {
+    onClick && onClick(event, attachmentProps)
   }
 
-  isError() {
-    return this.props.state === 'error'
-  }
-
-  isThemePreview() {
-    return this.context.theme === 'preview'
-  }
-
-  handleOnClick = event => {
-    this.props.onClick(event, this.getAttachmentProps())
-  }
-
-  handleOnRemoveClick = event => {
+  const handleOnRemoveClick = event => {
     // prevent from opening a link set on attachment if remove button clicked
     event.preventDefault()
-    this.props.onRemoveClick(event, this.getAttachmentProps())
+    onRemoveClick && onRemoveClick(event, attachmentProps)
   }
 
-  renderErrorBorder() {
-    return (
-      this.isError() && (
-        <ErrorBorderUI
-          className="c-Attachment__errorBorder"
-          isCard={this.isThemePreview()}
+  const downloadProps = {
+    download: download !== undefined ? download : url ? true : null,
+    target: target !== undefined ? target : url ? '_blank' : '',
+  }
+
+  const componentClassName = classNames(
+    'c-Attachment',
+    imageUrl && 'has-image',
+    state && `is-${state}`,
+    type && `is-${type}`,
+    theme && `is-theme-${theme}`,
+    className
+  )
+
+  function contentMarkup() {
+    if (content) {
+      return content
+    }
+    if (imageUrl) {
+      return (
+        <ImageUI
+          block
+          className="c-Attachment__image"
+          src={imageUrl}
+          alt={name}
         />
       )
-    )
-  }
-
-  render() {
-    const {
-      children,
-      className,
-      download,
-      id,
-      imageUrl,
-      mime,
-      name,
-      onClick,
-      onRemoveClick,
-      size,
-      state,
-      target,
-      truncateLimit,
-      type,
-      url,
-      content,
-      ...rest
-    } = this.props
-    const { theme } = this.context
-
-    const isThemePreview = this.isThemePreview()
-
-    const componentClassName = classNames(
-      'c-Attachment',
-      imageUrl && 'has-image',
-      state && `is-${state}`,
-      type && `is-${type}`,
-      theme && `is-theme-${theme}`,
-      className
-    )
-
-    const sizeMarkup = size ? (
-      <Text className="c-Attachment__size" lineHeightReset>
-        {size}
-      </Text>
-    ) : null
-
-    function contentMarkup() {
-      if (content) {
-        return content
-      }
-      if (imageUrl) {
-        return (
-          <Image
-            block
-            className="c-Attachment__image"
-            src={imageUrl}
-            alt={name}
-          />
-        )
-      }
-
-      return (
-        <>
-          <Text className="c-Attachment__name" lineHeightReset>
-            <Truncate limit={truncateLimit} text={name} type="middle">
-              {name}
-            </Truncate>
-          </Text>
-          {sizeMarkup}
-        </>
-      )
-    }
-
-    const closeMarkup = isThemePreview ? (
-      <CloseButton
-        className="c-Attachment__closeButton"
-        onClick={this.handleOnRemoveClick}
-        size="tiny"
-        title="Remove"
-        aria-label="Remove attachment"
-      />
-    ) : null
-
-    const downloadProps = {
-      download: download !== undefined ? download : url ? true : null,
-      target: target !== undefined ? target : url ? '_blank' : '',
     }
 
     return (
-      <AttachmentUI
-        {...getValidProps(rest)}
-        className={componentClassName}
-        href={url}
-        onClick={this.handleOnClick}
-        title={name}
-        {...downloadProps}
-      >
-        <span className="c-Attachment__content">{contentMarkup()}</span>
-        {closeMarkup}
-        {this.renderErrorBorder()}
-      </AttachmentUI>
+      <>
+        <NameUI className="c-Attachment__name" lineHeightReset>
+          <Truncate limit={truncateLimit} text={name} type="middle">
+            {name}
+          </Truncate>
+        </NameUI>
+        {size && (
+          <SizeUI className="c-Attachment__size" lineHeightReset>
+            {size}
+          </SizeUI>
+        )}
+      </>
     )
   }
+
+  return (
+    <AttachmentUI
+      {...getValidProps(rest)}
+      className={componentClassName}
+      href={url}
+      onClick={handleOnClick}
+      title={name}
+      {...downloadProps}
+    >
+      <span className="c-Attachment__content">{contentMarkup()}</span>
+      {isThemePreview && (
+        <CloseButton
+          className="c-Attachment__closeButton"
+          onClick={handleOnRemoveClick}
+          size="tiny"
+          title="Remove"
+          aria-label="Remove attachment"
+        />
+      )}
+    </AttachmentUI>
+  )
 }
 
 Attachment.defaultProps = {
@@ -203,4 +173,6 @@ Attachment.propTypes = {
   'data-cy': PropTypes.string,
 }
 
+Attachment.Provider = AttachmentProvider
+export const Provider = AttachmentProvider
 export default Attachment

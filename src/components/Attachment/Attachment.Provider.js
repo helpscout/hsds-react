@@ -1,4 +1,6 @@
-import SimpleThemeProvider from '../SimpleThemeProvider/index'
+import React, { createContext, useMemo } from 'react'
+
+export const AttachmentContext = createContext()
 
 const propTypes = {
   theme: () => null,
@@ -8,13 +10,22 @@ const defaultProps = {
   theme: 'default',
 }
 
-const childContextTypes = propTypes
+const Provider = ({ theme, children, ...rest }) => {
+  const contextValue = useMemo(() => {
+    return {
+      theme,
+    }
+  }, [theme])
 
-const Provider = SimpleThemeProvider
+  return (
+    <AttachmentContext.Provider value={contextValue}>
+      {children}
+    </AttachmentContext.Provider>
+  )
+}
 
 Provider.propTypes = propTypes
 Provider.defaultProps = defaultProps
-Provider.childContextTypes = childContextTypes
 Provider.displayName = 'AttachmentProvider'
 
 export default Provider
