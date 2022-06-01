@@ -3,6 +3,7 @@ import { getColor } from '../../styles/utilities/color'
 import { rgba } from '../../utilities/color'
 import { defaultAnimation as overlayAnimation } from '../../hooks/useAnimatedRender'
 import IconButton from '../IconButton'
+import { focusRing } from '../../styles/mixins/focusRing.css'
 
 export const CloseModalButtonUI = styled(IconButton)`
   position: absolute;
@@ -27,6 +28,10 @@ export const SimpleModalOverlayUI = styled('div')`
 `
 
 export const SimpleModalUI = styled('div')`
+  ${focusRing};
+  --focusRingColor: ${getColor('yellow.600')};
+  --focusRingRadius: 8px;
+
   position: relative;
   width: ${({ width }) => width};
   height: ${({ height }) => height};
@@ -37,9 +42,4 @@ export const SimpleModalUI = styled('div')`
   background-color: #fff;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 6px;
-
-  &:focus {
-    outline: 2px solid ${getColor('yellow.600')};
-    outline-offset: 2px;
-  }
 `
