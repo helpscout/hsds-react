@@ -5,42 +5,32 @@ import classNames from 'classnames'
 import { ImageUI } from './Image.css'
 import { getImageSize } from './Image.utils'
 
-class Image extends React.PureComponent {
-  render() {
-    const {
-      className,
-      block,
-      maxHeight,
-      maxWidth,
-      shape,
-      style,
-      ...rest
-    } = this.props
+const ImageComponent = props => {
+  const { className, block, maxHeight, maxWidth, shape, style, ...rest } = props
 
-    const componentClassName = classNames(
-      'c-Image',
-      block && 'is-block',
-      shape && `is-${shape}`,
-      className
-    )
+  const componentClassName = classNames(
+    'c-Image',
+    block && 'is-block',
+    shape && `is-${shape}`,
+    className
+  )
 
-    return (
-      <ImageUI
-        {...getValidProps(rest)}
-        className={componentClassName}
-        size={getImageSize(this.props)}
-      />
-    )
-  }
+  return (
+    <ImageUI
+      {...getValidProps(rest)}
+      className={componentClassName}
+      size={getImageSize(props)}
+    />
+  )
 }
 
-Image.defaultProps = {
+ImageComponent.defaultProps = {
   'data-cy': 'Image',
   shape: '',
   style: {},
 }
 
-Image.propTypes = {
+ImageComponent.propTypes = {
   /** Alt description for the image. */
   alt: PropTypes.string,
   /** Enables `display: block` for the image. */
@@ -64,4 +54,6 @@ Image.propTypes = {
   'data-cy': PropTypes.string,
 }
 
-export default Image
+ImageComponent.displayName = 'Image'
+
+export default ImageComponent
