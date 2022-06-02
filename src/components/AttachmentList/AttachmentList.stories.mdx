@@ -26,8 +26,18 @@ If 2 or more `<Attachment>` components are provided, this component will automat
 <Canvas>
   <Story name="AttachmentList">
     <AttachmentList onDownloadAllClick={action('Download all')}>
-      <Attachment name="parrot.png" size="5KB" onClick={action('on-click')} />
-      <Attachment name="parrot2.png" size="5KB" onClick={action('on-click')} />
+      <Attachment
+        name="parrot.png"
+        url="http://google.com/"
+        size="5KB"
+        onClick={action('on-click')}
+      />
+      <Attachment
+        name="parrot2.png"
+        url="http://google.com/"
+        size="5KB"
+        onClick={action('on-click')}
+      />
       <Attachment
         name="parrot3-with-a-really-long-name.png"
         size="5KB"
@@ -64,7 +74,7 @@ If 2 or more `<Attachment>` components are provided, this component will automat
         />
         <Attachment imageUrl="http://matthewjamestaylor.com/img/illustrations/large/how-to-convert-a-liquid-layout-to-fixed-width.jpg" />
         <Attachment name="attachment-coming-soon.md" />
-        <Attachment name="attachment-coming-soon.md" />
+        <Attachment name="with-url.md" url="http://google.com/" />
       </AttachmentList>
     </Attachment.Provider>
   </Story>

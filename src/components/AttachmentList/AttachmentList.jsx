@@ -10,6 +10,7 @@ import Overflow from '../Overflow'
 import classNames from 'classnames'
 import { AttachmentListUI } from './AttachmentList.css'
 import { AttachmentContext } from '../Attachment/Attachment.Provider'
+import IconButton from '../IconButton'
 
 function noop() {}
 
@@ -67,39 +68,59 @@ export const AttachmentList = props => {
       })
     : null
 
-  const downloadInlineClassnames = classNames(
-    'c-AttachmentList__inlineListItemDownloadAll',
-    isThemePreview && 'c-AttachmentWrapper'
-  )
-  const downloadAllMarkup =
-    showDownloadAll && attachmentChildren.length > 1 ? (
-      <Inline.Item className={downloadInlineClassnames}>
+  const getDownloadAllMarkup = () => {
+    if (!showDownloadAll || attachmentChildren.length <= 1) return null
+
+    if (isThemePreview) {
+      return (
+        <Inline.Item className="c-AttachmentList__inlineListItemDownloadAll">
+          <IconButton
+            theme="grey"
+            icon="inbox"
+            seamless
+            onClick={onDownloadAllClick}
+            title={downloadAllLabel}
+          />
+        </Inline.Item>
+      )
+    }
+
+    return (
+      <Inline.Item className="c-AttachmentList__inlineListItemDownloadAll">
         <Attachment
           name={downloadAllLabel}
           onClick={onDownloadAllClick}
           type="action"
+          as="button"
         />
       </Inline.Item>
-    ) : null
+    )
+  }
 
-  const contentMarkup = isThemePreview ? (
-    <div className="c-AttachmentList__content">
-      {childrenMarkup}
-      {downloadAllMarkup}
-    </div>
-  ) : (
-    <Inline className="c-AttachmentList__content c-AttachmentList__inlineList">
-      <Inline.Item>
-        <Icon
-          className="c-AttachmentList__icon"
-          name="attachment"
-          shade="faint"
-        />
-      </Inline.Item>
-      {childrenMarkup}
-      {downloadAllMarkup}
-    </Inline>
-  )
+  const getContentMarkup = () => {
+    if (isThemePreview) {
+      return (
+        <div className="c-AttachmentList__content">
+          {childrenMarkup}
+          {getDownloadAllMarkup()}
+        </div>
+      )
+    }
+
+    return (
+      <Inline className="c-AttachmentList__content c-AttachmentList__inlineList">
+        <Inline.Item>
+          <Icon
+            className="c-AttachmentList__icon"
+            name="attachment"
+            shade="faint"
+          />
+        </Inline.Item>
+        {childrenMarkup}
+        {getDownloadAllMarkup()}
+      </Inline>
+    )
+  }
 
   const wrappedContentMarkup =
     withOverflow && isThemePreview ? (
@@ -108,10 +129,10 @@ export const AttachmentList = props => {
         refApplyFade={fn => (overflowCallback.current.handleApplyFade = fn)}
         refScrollToEnd={fn => (overflowCallback.current.handleScrollToEnd = fn)}
       >
-        {contentMarkup}
+        {getContentMarkup()}
       </Overflow>
     ) : (
-      contentMarkup
+      getContentMarkup()
     )
 
   return (
