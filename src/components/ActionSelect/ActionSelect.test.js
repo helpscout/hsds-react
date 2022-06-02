@@ -47,6 +47,26 @@ describe('DropList', () => {
     await waitFor(() => expect(getByRole('button')).toBeDisabled())
   })
 
+  test('Wraps disabled droplist toggler with a span for proper tooltip handling', async () => {
+    const { getByRole } = render(
+      <ActionSelect items={mockItems} disabled withTooltip />
+    )
+
+    await waitFor(() => {
+      expect(getByRole('button').parentElement).toHaveClass('TooltipTrigger')
+      expect(getByRole('button').parentElement.nodeName).toEqual('SPAN')
+    })
+  })
+
+  test('Does not wrap enabled droplist toggler with a span when tooltip enabled', async () => {
+    const { getByRole } = render(<ActionSelect items={mockItems} withTooltip />)
+
+    await waitFor(() => {
+      expect(getByRole('button')).toHaveClass('TooltipTrigger')
+      expect(getByRole('button').parentElement.nodeName).not.toEqual('SPAN')
+    })
+  })
+
   test('Marks droplist toggler with an error', async () => {
     const { getByRole } = render(
       <ActionSelect items={mockItems} error="Some error" />

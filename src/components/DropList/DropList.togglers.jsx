@@ -200,6 +200,7 @@ export const SelectTag = forwardRef(
       text = '',
       withTooltip = false,
       tooltipProps,
+      disabled = false,
       ...rest
     },
     ref
@@ -222,6 +223,7 @@ export const SelectTag = forwardRef(
         data-cy="DropList.SelectTagToggler"
         data-testid="DropList.SelectTagToggler"
         isActive={isActive}
+        disabled={disabled}
         onClick={onClick}
         ref={ref}
         type="button"
@@ -247,7 +249,7 @@ export const SelectTag = forwardRef(
         withTriggerWrapper={false}
         {...tooltipProps}
       >
-        {component}
+        {disabled ? <span tabIndex={-1}>{component}</span> : component}
       </Tooltip>
     ) : (
       component
