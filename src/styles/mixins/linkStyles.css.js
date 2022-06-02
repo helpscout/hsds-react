@@ -1,6 +1,7 @@
+import { css } from 'styled-components'
 import { getColor } from '../utilities/color'
 
-const linkStyles = () => `
+const linkStyles = () => css`
   color: ${getColor('link.base')};
   cursor: pointer;
   text-decoration: none;
