@@ -1,17 +1,12 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import AttachmentProvider, { AttachmentContext } from './Attachment.Provider'
 import CloseButton from '../CloseButton'
 import Truncate from '../Truncate'
+import Icon from '../Icon'
 import classNames from 'classnames'
-import {
-  AttachmentUI,
-  ImageUI,
-  SizeUI,
-  NameUI,
-  ErrorBorderUI,
-} from './Attachment.css'
+import { AttachmentUI, ImageUI, SizeUI, NameUI } from './Attachment.css'
 
 function noop() {}
 
@@ -36,6 +31,8 @@ const Attachment = props => {
     url,
     ...rest
   } = props
+
+  const [isBrokenImage, setBrokenImage] = useState(false)
 
   const { theme: themeContext } = useContext(AttachmentContext) || {}
 
@@ -72,6 +69,7 @@ const Attachment = props => {
     state && `is-${state}`,
     type && `is-${type}`,
     theme && `is-theme-${theme}`,
+    isBrokenImage && imageUrl && 'is-broken-image',
     className
   )
 
@@ -79,34 +77,50 @@ const Attachment = props => {
     if (content) {
       return content
     }
-    if (imageUrl) {
+    if (imageUrl && !isBrokenImage) {
       return (
         <ImageUI
           block
           className="c-Attachment__image"
           src={imageUrl}
           alt={name}
+          onError={() => setBrokenImage(true)}
         />
+      )
+    }
+
+    const nameComponent = (
+      <NameUI className="c-Attachment__name" lineHeightReset>
+        <Truncate limit={truncateLimit} text={name} type="middle">
+          {name}
+        </Truncate>
+      </NameUI>
+    )
+
+    const sizeComponent = size && (
+      <SizeUI className="c-Attachment__size" lineHeightReset>
+        {size}
+      </SizeUI>
+    )
+
+    if (isBrokenImage) {
+      return (
+        <>
+          <Icon size="24" name="image-broken" />
+          {nameComponent}
+        </>
       )
     }
 
     return (
       <>
-        <NameUI className="c-Attachment__name" lineHeightReset>
-          <Truncate limit={truncateLimit} text={name} type="middle">
-            {name}
-          </Truncate>
-        </NameUI>
-        {size && (
-          <SizeUI className="c-Attachment__size" lineHeightReset>
-            {size}
-          </SizeUI>
-        )}
+        {nameComponent}
+        {sizeComponent}
       </>
     )
   }
 
-  return (
+  const attachmentComponent = (
     <AttachmentUI
       {...getValidProps(rest)}
       className={componentClassName}
@@ -115,7 +129,7 @@ const Attachment = props => {
       title={name}
       {...downloadProps}
     >
-      <span className="c-Attachment__content">{contentMarkup()}</span>
+      {contentMarkup()}
       {isThemePreview && (
         <CloseButton
           className="c-Attachment__closeButton"
@@ -127,6 +141,8 @@ const Attachment = props => {
       )}
     </AttachmentUI>
   )
+
+  return attachmentComponent
 }
 
 Attachment.defaultProps = {

@@ -3,6 +3,7 @@ import { BEM } from '../../utilities/classNames'
 import cardStyles from '../../styles/mixins/cardStyles.css'
 import { d400, d400Effect } from '../../styles/mixins/depth.css'
 import linkStyles from '../../styles/mixins/linkStyles.css'
+import { focusRing } from '../../styles/mixins/focusRing.css'
 import { getColor } from '../../styles/utilities/color'
 import Image from '../Image'
 import Text from '../Text'
@@ -53,15 +54,26 @@ export const ImageUI = styled(Image)`
 
 export const AttachmentUI = styled.a`
   ${linkStyles()};
-
+  ${focusRing};
+  --focusRingRadius: 9999px;
   background-color: white;
   border: 1px solid ${getColor('grey.500')};
   border-radius: 9999px;
-  display: inline-block;
   line-height: 1;
   padding: 4px 10px;
   position: relative;
   text-decoration: none;
+  display: inline-flex;
+  align-items:center;
+
+  &:hover {
+    border-color: ${getColor('grey.600')};
+    text-decoration: none;
+
+    ${NameUI} {
+      text-decoration: underline;
+    }
+  }
 
   &.is-error:before{
     content:'';
@@ -94,11 +106,18 @@ export const AttachmentUI = styled.a`
 
   &.is-theme-preview {
     ${d400}
+    --focusRingRadius: 3px;
     border: none;
     border-radius: 3px;
-    display: block;
+    display: inline-flex;
     font-weight: 500;
-    padding: 15px 17px;
+    padding: 0 17px;
+    height: 43px;
+    align-items:center;
+    white-space: nowrap;
+    flex-direction: row;
+    gap: 4px;
+    flex-wrap: nowrap;
 
     &:hover {
       ${d400Effect}
@@ -109,23 +128,17 @@ export const AttachmentUI = styled.a`
       box-shadow: 0 0 0 2px ${getColor('blue.500')};
     } */
 
-    &.has-image {
+    &.has-image:not(.is-broken-image) {
       padding: 3px;
     }
-
-    .c-Truncate__content {
-      display: block;
-      padding: 16px;
-      margin: -16px;
-    }
-  }
-
-  &:hover {
-    border-color: ${getColor('grey.600')};
-    text-decoration: none;
-
-    ${NameUI} {
-      text-decoration: underline;
+    &.is-broken-image{
+      background-color: ${getColor('grey.200')};
+      color: ${getColor('charcoal.400')};
+      padding-left:14px;
+      
+      > .c-Icon{
+        color: ${getColor('charcoal.200')};
+      }
     }
   }
 
@@ -133,11 +146,12 @@ export const AttachmentUI = styled.a`
     ${cardStyles()};
     display: block;
     border-radius: 9999px !important;
-    position: absolute;
+    position: absolute;;
+
     right: 0;
     top: 0;
     transform: translate(50%, -50%);
-    z-index: 1;
+    z-index: 5;
     opacity: 0;
 
     transition: all 200ms linear;
