@@ -5,10 +5,9 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 
 import Attachment from '../Attachment'
 import Icon from '../Icon'
-import Inline from '../Inline'
 import Overflow from '../Overflow'
 import classNames from 'classnames'
-import { AttachmentListUI } from './AttachmentList.css'
+import { AttachmentListUI, ContentUI } from './AttachmentList.css'
 import { AttachmentContext } from '../Attachment/Attachment.Provider'
 import IconButton from '../IconButton'
 
@@ -52,73 +51,46 @@ export const AttachmentList = props => {
     className
   )
 
-  const childrenMarkup = attachmentChildren.length
-    ? attachmentChildren.map((child, index) => {
-        const { id, name } = child.props
-        const key = id || `${name}-${index}`
-
-        return (
-          <Inline.Item
-            className="c-AttachmentList__inlineListItem c-AttachmentWrapper"
-            key={key}
-          >
-            {child}
-          </Inline.Item>
-        )
-      })
-    : null
-
   const getDownloadAllMarkup = () => {
     if (!showDownloadAll || attachmentChildren.length <= 1) return null
 
     if (isThemePreview) {
       return (
-        <Inline.Item className="c-AttachmentList__inlineListItemDownloadAll">
-          <IconButton
-            theme="grey"
-            icon="inbox"
-            seamless
-            onClick={onDownloadAllClick}
-            title={downloadAllLabel}
-          />
-        </Inline.Item>
+        <IconButton
+          className="AttachmentList__DownloadAll"
+          theme="grey"
+          icon="inbox"
+          seamless
+          onClick={onDownloadAllClick}
+          title={downloadAllLabel}
+        />
       )
     }
 
     return (
-      <Inline.Item className="c-AttachmentList__inlineListItemDownloadAll">
-        <Attachment
-          name={downloadAllLabel}
-          onClick={onDownloadAllClick}
-          type="action"
-          as="button"
-        />
-      </Inline.Item>
+      <Attachment
+        className="AttachmentList__DownloadAll"
+        name={downloadAllLabel}
+        onClick={onDownloadAllClick}
+        type="action"
+        as="button"
+      />
     )
   }
 
   const getContentMarkup = () => {
-    if (isThemePreview) {
-      return (
-        <div className="c-AttachmentList__content">
-          {childrenMarkup}
-          {getDownloadAllMarkup()}
-        </div>
-      )
-    }
-
     return (
-      <Inline className="c-AttachmentList__content c-AttachmentList__inlineList">
-        <Inline.Item>
+      <ContentUI className="c-AttachmentList__content">
+        {!isThemePreview && (
           <Icon
             className="c-AttachmentList__icon"
             name="attachment"
             shade="faint"
           />
-        </Inline.Item>
-        {childrenMarkup}
+        )}
+        {attachmentChildren}
         {getDownloadAllMarkup()}
-      </Inline>
+      </ContentUI>
     )
   }
 

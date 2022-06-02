@@ -1,12 +1,13 @@
 import styled from 'styled-components'
 import { BEM } from '../../utilities/classNames'
-import cardStyles from '../../styles/mixins/cardStyles.css'
+
 import { d400, d400Effect } from '../../styles/mixins/depth.css'
 import linkStyles from '../../styles/mixins/linkStyles.css'
 import { focusRing } from '../../styles/mixins/focusRing.css'
 import { getColor } from '../../styles/utilities/color'
 import Image from '../Image'
 import Text from '../Text'
+import { rgba } from '../../utilities/color'
 
 const bem = BEM('.c-Attachment')
 
@@ -14,27 +15,6 @@ const config = {
   imageSize: '37px',
   imageMaxWidth: '80px',
 }
-
-export const ErrorBorderUI = styled('div')`
-  border-radius: 99999px;
-  border: 1px solid ${getColor('red.500')};
-  bottom: -1px;
-  left: -1px;
-  pointer-events: none;
-  position: absolute;
-  right: -1px;
-  top: -1px;
-
-  ${({ isCard }) =>
-    isCard &&
-    `
-    border-radius: 3px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 0;
-  `};
-`
 
 export const SizeUI = styled(Text)`
   color: ${getColor('charcoal.200')};
@@ -55,24 +35,40 @@ export const ImageUI = styled(Image)`
 export const AttachmentUI = styled.a`
   ${linkStyles()};
   ${focusRing};
-  --focusRingRadius: 9999px;
+  --focusRingRadius: 15px;
   background-color: white;
   border: 1px solid ${getColor('grey.500')};
-  border-radius: 9999px;
+  border-radius: var(--focusRingRadius);
   line-height: 1;
   padding: 4px 10px;
   position: relative;
   text-decoration: none;
   display: inline-flex;
   align-items:center;
+  font-family: var(--HSDSGlobalFontFamily);
+  flex: 0 0 auto;
+  transition: all 200ms linear;
 
-  &:hover {
+  &:hover, &:focus-within {
+    z-index:15;
     border-color: ${getColor('grey.600')};
     text-decoration: none;
+    transform: translateY(-2px);
 
     ${NameUI} {
       text-decoration: underline;
     }
+
+    ${bem.element('closeButton')} {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  &:hover{
+    z-index:3;
+  }
+  &:focus-within{
+    z-index:2;
   }
 
   &.is-error:before{
@@ -119,7 +115,7 @@ export const AttachmentUI = styled.a`
     gap: 4px;
     flex-wrap: nowrap;
 
-    &:hover {
+    &:hover, &:focus-within {
       ${d400Effect}
     }
 
@@ -130,12 +126,17 @@ export const AttachmentUI = styled.a`
 
     &.has-image:not(.is-broken-image) {
       padding: 3px;
+      
     }
     &.is-broken-image{
+      box-shadow: 0 0 0 1px ${rgba(getColor('grey.700'), 0.7)};
       background-color: ${getColor('grey.200')};
       color: ${getColor('charcoal.400')};
       padding-left:14px;
-      
+
+      &:hover{
+        box-shadow: 0 0 0 1px ${rgba(getColor('grey.700'), 0.7)};
+      }
       > .c-Icon{
         color: ${getColor('charcoal.200')};
       }
@@ -143,47 +144,23 @@ export const AttachmentUI = styled.a`
   }
 
   ${bem.element('closeButton')} {
-    ${cardStyles()};
-    display: block;
-    border-radius: 9999px !important;
-    position: absolute;;
+    --buttonHeight:24px;
 
-    right: 0;
-    top: 0;
-    transform: translate(50%, -50%);
+    position: absolute;
+    right: -12px;
+    top: -12px;
     z-index: 5;
     opacity: 0;
+    transform: scale(0);
+
+
+    &.is-theme-grey.has-icon-only{ 
+      --focusRingOffset: -2px;
+      --buttonBackgroundColorHover: white; 
+      --buttonColorHover: ${getColor('pink.1000')};
+      --buttonBorderColorHover: ${getColor('pink.900')};
+    }
 
     transition: all 200ms linear;
-    will-change: box-shadow, color, opacity;
-
-    box-shadow: inset 0 0 0 1px ${getColor('grey.700')};
-    color: ${getColor('charcoal.300')};
-
-    & .c-Icon {
-      &,
-      &:focus,
-      &:hover {
-        opacity: 1;
-      }
-    }
-  }
-
-  &:hover,
-  &:focus {
-    ${bem.element('closeButton')} {
-      opacity: 1;
-    }
-  }
-
-  ${bem.element('closeButton')}:focus {
-    opacity: 1;
-    box-shadow: 0 0 0 2px ${getColor('blue.500')};
-  }
-
-  ${bem.element('closeButton')}:hover {
-    box-shadow: inset 0 0 0 1px ${getColor('red.500')};
-
-    color: ${getColor('red.500')};
   }
 `

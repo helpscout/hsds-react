@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import AttachmentProvider, { AttachmentContext } from './Attachment.Provider'
-import CloseButton from '../CloseButton'
+import IconButton from '../IconButton'
 import Truncate from '../Truncate'
 import Icon from '../Icon'
 import classNames from 'classnames'
@@ -22,6 +22,7 @@ const Attachment = props => {
     name,
     onClick,
     onRemoveClick,
+    isRemovable: isRemovableProp,
     size,
     state,
     target,
@@ -34,9 +35,13 @@ const Attachment = props => {
 
   const [isBrokenImage, setBrokenImage] = useState(false)
 
-  const { theme: themeContext } = useContext(AttachmentContext) || {}
+  const { theme: themeContext, isRemovable: isRemovableContext } =
+    useContext(AttachmentContext) || {}
 
   const theme = themeContext || themeProp
+  const isRemovable = Boolean(isRemovableContext)
+    ? isRemovableContext
+    : isRemovableProp
   const isThemePreview = theme === 'preview'
 
   const attachmentProps = {
@@ -120,6 +125,8 @@ const Attachment = props => {
     )
   }
 
+  const shouldShowRemoveIcon = isRemovable && isThemePreview
+
   const attachmentComponent = (
     <AttachmentUI
       {...getValidProps(rest)}
@@ -130,13 +137,15 @@ const Attachment = props => {
       {...downloadProps}
     >
       {contentMarkup()}
-      {isThemePreview && (
-        <CloseButton
+      {shouldShowRemoveIcon && (
+        <IconButton
           className="c-Attachment__closeButton"
           onClick={handleOnRemoveClick}
-          size="tiny"
-          title="Remove"
+          size="sm"
+          title="Remove attachment"
           aria-label="Remove attachment"
+          theme="grey"
+          icon="cross-small"
         />
       )}
     </AttachmentUI>
@@ -151,6 +160,7 @@ Attachment.defaultProps = {
   name: 'image.png',
   onClick: noop,
   onRemoveClick: noop,
+  isRemovable: true,
   truncateLimit: 20,
   state: 'default',
   type: 'link',
@@ -173,6 +183,8 @@ Attachment.propTypes = {
   onClick: PropTypes.func,
   /** The callback when the component's `CloseButton` UI is clicked. */
   onRemoveClick: PropTypes.func,
+  /** On theme preview, it will display a remove icon when hovering the attachment. */
+  isRemovable: PropTypes.string,
   /** The size of the attachment. */
   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   /** The state of the attachment. */
