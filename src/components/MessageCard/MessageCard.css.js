@@ -19,7 +19,7 @@ export const MessageCardUI = styled(Card)`
   background-color: white;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  padding: 17px 0 20px;
+  padding: 20px 0;
   width: 300px;
   word-break: break-word;
   display: flex;
