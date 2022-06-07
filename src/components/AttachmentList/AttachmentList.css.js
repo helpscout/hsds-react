@@ -14,7 +14,7 @@ export const AttachmentListUI = styled.div`
   &.withOverflow ${ContentUI} {
     flex-wrap: nowrap;
 
-    padding: 0 1px;
+    padding: 0 4px;
   }
 
   &.withOverflow.is-theme-preview ${ContentUI} {
