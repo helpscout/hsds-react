@@ -4,6 +4,7 @@ import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import AttachmentProvider, { AttachmentContext } from './Attachment.Provider'
 import IconButton from '../IconButton'
 import Truncate from '../Truncate'
+import Tooltip from '../Tooltip'
 import Icon from '../Icon'
 import classNames from 'classnames'
 import { AttachmentUI, ImageUI, SizeUI, NameUI } from './Attachment.css'
@@ -133,7 +134,7 @@ const Attachment = props => {
       className={componentClassName}
       href={url}
       onClick={handleOnClick}
-      title={name}
+      title={!isBrokenImage ? name : null}
       {...downloadProps}
     >
       {contentMarkup()}
@@ -150,6 +151,19 @@ const Attachment = props => {
       )}
     </AttachmentUI>
   )
+
+  if (isBrokenImage) {
+    return (
+      <Tooltip
+        role="tooltip"
+        title="Unavailable image"
+        appendTo={() => document.body}
+        withTriggerWrapper={false}
+      >
+        {attachmentComponent}
+      </Tooltip>
+    )
+  }
 
   return attachmentComponent
 }
