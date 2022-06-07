@@ -44,13 +44,14 @@ export const AttachmentUI = styled.a`
   position: relative;
   text-decoration: none;
   display: inline-flex;
-  align-items:center;
+  align-items: center;
   font-family: var(--HSDSGlobalFontFamily);
   flex: 0 0 auto;
   transition: all 200ms linear;
 
-  &:hover, &:focus-within {
-    z-index:15;
+  &:hover,
+  &:focus-within {
+    z-index: 15;
     border-color: ${getColor('grey.600')};
     text-decoration: none;
     transform: translateY(-2px);
@@ -64,15 +65,15 @@ export const AttachmentUI = styled.a`
       transform: scale(1);
     }
   }
-  &:hover{
-    z-index:3;
+  &:hover {
+    z-index: 3;
   }
-  &:focus-within{
-    z-index:2;
+  &:focus-within {
+    z-index: 2;
   }
 
-  &.is-error:before{
-    content:'';
+  &.is-error:after {
+    content: '';
     border-radius: inherit;
     border: 1px solid ${getColor('red.500')};
     bottom: 0px;
@@ -82,7 +83,6 @@ export const AttachmentUI = styled.a`
     right: 0px;
     top: 0px;
   }
-
 
   &.is-error {
     color: ${getColor('red.500')};
@@ -101,50 +101,45 @@ export const AttachmentUI = styled.a`
   }
 
   &.is-theme-preview {
-    ${d400}
-    --focusRingRadius: 3px;
+    ${d400};
+    --focusRingRadius: 4px;
     border: none;
-    border-radius: 3px;
+    border-radius: var(--focusRingRadius);
     display: inline-flex;
     font-weight: 500;
     padding: 0 17px;
     height: 43px;
-    align-items:center;
+    align-items: center;
     white-space: nowrap;
     flex-direction: row;
     gap: 4px;
     flex-wrap: nowrap;
 
-    &:hover, &:focus-within {
+    &:hover,
+    &:focus-within {
       ${d400Effect}
     }
 
-    /* &:focus {
-      outline: none;
-      box-shadow: 0 0 0 2px ${getColor('blue.500')};
-    } */
-
     &.has-image:not(.is-broken-image) {
       padding: 3px;
-      
     }
-    &.is-broken-image{
+    &.is-broken-image {
       box-shadow: 0 0 0 1px ${rgba(getColor('grey.700'), 0.7)};
       background-color: ${getColor('grey.200')};
       color: ${getColor('charcoal.400')};
-      padding-left:14px;
+      padding-left: 14px;
 
-      &:hover{
+      &:hover {
         box-shadow: 0 0 0 1px ${rgba(getColor('grey.700'), 0.7)};
       }
-      > .c-Icon{
+      > .c-Icon {
         color: ${getColor('charcoal.200')};
       }
     }
   }
 
   ${bem.element('closeButton')} {
-    --buttonHeight:24px;
+    --buttonHeight: 24px;
 
     position: absolute;
     right: -12px;
@@ -153,10 +148,9 @@ export const AttachmentUI = styled.a`
     opacity: 0;
     transform: scale(0);
 
-
-    &.is-theme-grey.has-icon-only{ 
+    &.is-theme-grey.has-icon-only {
       --focusRingOffset: -2px;
-      --buttonBackgroundColorHover: white; 
+      --buttonBackgroundColorHover: white;
       --buttonColorHover: ${getColor('pink.1000')};
       --buttonBorderColorHover: ${getColor('pink.900')};
     }
