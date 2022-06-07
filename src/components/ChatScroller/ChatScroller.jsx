@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import getDocumentFromComponent from '@helpscout/react-utils/dist/getDocumentFromComponent'
 import getShallowDiffs from '@helpscout/react-utils/dist/getShallowDiffs'
-import { smoothScrollTo } from '../../utilities/smoothScroll'
+import { smoothScrollTo } from '@hsds/utils-scroll'
 import { shouldAutoScroll, getScrollProps } from './ChatScroller.utils'
 
 export class ChatScroller extends React.PureComponent {

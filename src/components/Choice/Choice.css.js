@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
-import visuallyHidden from '../../styles/mixins/visuallyHidden.css'
+import { getColor } from '@hsds/utils-color'
+import { generateVisuallyHiddenStyles } from '@hsds/utils-mixins'
 
 export const choiceConfig = {
   color: {
@@ -103,7 +103,7 @@ export const InputUI = styled('div')`
 `
 
 export const InputInputUI = styled('input')`
-  ${visuallyHidden()};
+  ${generateVisuallyHiddenStyles()};
 `
 
 export const InputPlaceholderUI = styled('div')`

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 import Icon from '../Icon'
 
 export const DropListWrapperUI = styled('div')`

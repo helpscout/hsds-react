@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import { TruncatedUI } from './EditableField.css'
 import Truncate from '../Truncate'
 import { TRUNCATED_CLASSNAMES } from './EditableField.utils'

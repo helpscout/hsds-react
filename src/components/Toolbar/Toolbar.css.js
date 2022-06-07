@@ -2,8 +2,8 @@ import Flexy from '../Flexy'
 import Nav from '../Nav'
 import styled from 'styled-components'
 
-import forEach from '../../styles/utilities/forEach'
-import { getColor } from '../../styles/utilities/color'
+import { forEach } from '@hsds/utils-sass'
+import { getColor } from '@hsds/utils-color'
 
 export const config = {
   borderColor: getColor('border'),

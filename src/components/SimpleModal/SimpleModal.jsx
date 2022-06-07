@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import useAnimatedRender from '../../hooks/useAnimatedRender'
 import useClickOutside from '../../hooks/useClickOutside'
-import { manageTrappedFocus } from '../../utilities/focus'
+import { manageTrappedFocus } from '@hsds/utils-focus'
 import {
   CloseModalButtonUI,
   SimpleModalOverlayUI,

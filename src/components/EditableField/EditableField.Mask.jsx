@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import equal from 'fast-deep-equal'
 import isNil from 'lodash.isnil'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import {
   EditableFieldMaskUI,
   MaskValueUI,

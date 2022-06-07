@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import Context from './Context'
 import HelpText from '../HelpText'
 import Label from '../Label'
 import classNames from 'classnames'
-import { createUniqueIDFactory } from '../../utilities/id'
+import { createUniqueIDFactory } from '@hsds/utils-id'
 import { FormLabelUI, FormLabelHelpTextUI } from './FormLabel.css'
 
 const uniqueID = createUniqueIDFactory('FormControl')

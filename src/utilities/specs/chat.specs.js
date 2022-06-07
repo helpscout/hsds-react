@@ -1,4 +1,4 @@
-import { createSpec, faker } from '@helpscout/helix'
+import { createSpec, faker } from '@hsds/helix'
 import TagSpec from './tags.specs'
 
 export default createSpec({

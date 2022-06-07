@@ -1,5 +1,5 @@
 import React from 'react'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import PropTypes from 'prop-types'
 import EventListener from '../EventListener'
 import classNames from 'classnames'

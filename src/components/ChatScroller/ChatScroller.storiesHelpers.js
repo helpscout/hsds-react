@@ -1,5 +1,5 @@
 import React from 'react'
-import { createSpec, faker } from '@helpscout/helix'
+import { createSpec, faker } from '@hsds/helix'
 import { Avatar, ChatScroller, Message, Scrollable } from '../index'
 
 const MessageSpec = createSpec({

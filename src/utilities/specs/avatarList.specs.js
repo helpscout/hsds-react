@@ -1,4 +1,4 @@
-import { compose, createSpec, faker } from '@helpscout/helix'
+import { compose, createSpec, faker } from '@hsds/helix'
 import AvatarSpec from './avatar.specs'
 
 const Spec = createSpec({

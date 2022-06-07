@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { breakpoints } from '../../styles/mixins/breakpoints.css'
+import { breakpoints } from '@hsds/utils-mixins'
 
 export const config = {
   gutter: '15px',

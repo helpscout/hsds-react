@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 import Timestamp from '../Timestamp'
-import linkStyles from '../../styles/mixins/linkStyles.css'
+import { generateLinkStyles } from '@hsds/utils-mixins'
 
 export const ActionUI = styled('div')`
   line-height: 22px;
@@ -12,7 +12,7 @@ export const ActionUI = styled('div')`
     !isThemeEmbed && `color: ${getColor('charcoal.700')} !important;`}
 
   a {
-    ${linkStyles()}
+    ${generateLinkStyles()}
   }
 `
 export const TimestampUI = styled(Timestamp)`

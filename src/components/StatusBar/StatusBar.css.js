@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import forEach from '../../styles/utilities/forEach'
-import { getColor } from '../../styles/utilities/color'
-import { rgba } from '../../utilities/color'
+import { forEach } from '@hsds/utils-sass'
+import { getColor } from '@hsds/utils-color'
+import { rgba } from '@hsds/utils-color'
 
 const statusStyles = {
   error: 'red',

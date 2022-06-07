@@ -1,4 +1,4 @@
-import { getColor, getThemeBrandProp } from '../../styles/utilities/color'
+import { getColor, getThemeBrandProp } from '@hsds/utils-color'
 import styled from 'styled-components'
 
 export const config = {

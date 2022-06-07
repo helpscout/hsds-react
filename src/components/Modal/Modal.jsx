@@ -12,10 +12,10 @@ import CloseButton from '../CloseButton'
 import EventListener from '../EventListener'
 import KeypressListener from '../KeypressListener'
 import PortalWrapper from '../PortalWrapper'
-import Keys from '../../constants/Keys'
+import { Keys } from '@hsds/utils-keyboard'
 import classNames from 'classnames'
-import { findFocusableNodes } from '../../utilities/focus'
-import { getClosestDocument, isNodeElement } from '../../utilities/node'
+import { findFocusableNodes } from '@hsds/utils-focus'
+import { getClosestDocument, isNodeElement } from '@hsds/utils-dom'
 import { MODAL_KIND, getModalKindClassName } from './Modal.utils'
 import {
   ModalUI,

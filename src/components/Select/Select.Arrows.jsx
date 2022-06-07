@@ -5,7 +5,7 @@
  ***DEPRECATED COMPONENT***
  */
 import React from 'react'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import classNames from 'classnames'
 import { SelectArrowsUI } from './Select.css'
 

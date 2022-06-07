@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { ButtonUI } from '../Button/Button.css'
-import { getColor } from '../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 
 export const IconContainerUI = styled.span`
   display: inline-flex;

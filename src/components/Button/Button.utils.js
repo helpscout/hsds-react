@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { useTheme } from 'styled-components'
 
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import classNames from 'classnames'
 import Icon from '../Icon'
 import { Link as ReactRouterLink } from 'react-router-dom'

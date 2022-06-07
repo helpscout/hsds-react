@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
-import { d600 } from '../../styles/mixins/depth.css'
+import { getColor } from '@hsds/utils-color'
+import { d600 } from '@hsds/utils-mixins'
 import Animate from '../Animate'
 import Text from '../Text'
 

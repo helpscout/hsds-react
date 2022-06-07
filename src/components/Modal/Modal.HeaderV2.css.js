@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import Toolbar from '../Toolbar'
-import { getColor } from '../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 
 export const HeaderUI = styled(Toolbar)`
   border-top-left-radius: 4px;

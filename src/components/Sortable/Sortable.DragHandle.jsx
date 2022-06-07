@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { SortableHandle } from 'react-sortable-hoc'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import Icon from '../Icon'
 import classNames from 'classnames'
 import { DragHandleUI } from './Sortable.css'

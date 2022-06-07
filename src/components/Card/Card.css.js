@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Link from '../Link'
 
-import cardStyles from '../../styles/mixins/cardStyles.css'
+import { generateCardStyles } from '@hsds/utils-mixins'
 
 export const config = {
   borderRadius: 4,
@@ -63,7 +63,7 @@ export const CardUI = styled(Link)`
 
   &.is-hoverable {
     border: none;
-    ${cardStyles()};
+    ${generateCardStyles()};
   }
 
   &.is-seamless {

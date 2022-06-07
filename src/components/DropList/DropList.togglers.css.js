@@ -1,9 +1,9 @@
 import styled from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 import HSDSButton from '../Button'
 import IconButton from '../IconButton'
 
-import { focusShadowWithInset } from '../../styles/mixins/focusRing.css'
+import { focusShadowWithInset } from '@hsds/utils-mixins'
 
 export const NavLinkTogglerUI = styled('button')`
   display: flex;

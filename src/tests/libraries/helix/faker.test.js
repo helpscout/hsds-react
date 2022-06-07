@@ -1,4 +1,4 @@
-import { createSpec, faker } from '@helpscout/helix'
+import { createSpec, faker } from '@hsds/helix'
 
 test('Can generate simple computed values', () => {
   const Computed = createSpec({

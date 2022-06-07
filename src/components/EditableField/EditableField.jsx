@@ -22,7 +22,7 @@ import { EditableFieldInput as Input } from './EditableField.Input'
 import { EditableFieldMask as Mask } from './EditableField.Mask'
 import { EditableFieldActions as Actions } from './EditableField.Actions'
 import Icon from '../Icon'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import {
   createNewValueFieldObject,
   generateFieldActions,
@@ -30,8 +30,8 @@ import {
   EDITABLEFIELD_CLASSNAMES,
   STATES_CLASSNAMES,
 } from './EditableField.utils'
-import { key } from '../../constants/Keys'
-import { nodesHaveSameParent } from '../../utilities/node'
+import { key } from '@hsds/utils-keyboard'
+import { nodesHaveSameParent } from '@hsds/utils-dom'
 
 function noop() {}
 

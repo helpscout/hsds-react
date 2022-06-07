@@ -1,4 +1,4 @@
-import { getColor } from '../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 
 const config = {
   borderRadius: 3,

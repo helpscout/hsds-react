@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import ChatBlock from './Message.ChatBlock'
 
-import { BEM } from '../../utilities/classNames'
+import { BEM } from '@hsds/utils-bem'
 
 const messageContentBem = BEM('.c-MessageContent')
 

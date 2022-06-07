@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
-import { getColor } from '../../styles/utilities/color'
-import forEach from '../../styles/utilities/forEach'
-import { BEM } from '../../utilities/classNames'
+import { getColor } from '@hsds/utils-color'
+import { forEach } from '@hsds/utils-sass'
+import { BEM } from '@hsds/utils-bem'
 
 export const ILLO_DEFAULT_SIZE = 40
 export const ILLO_SIZES = [ILLO_DEFAULT_SIZE, 60, 72, 80, 90]

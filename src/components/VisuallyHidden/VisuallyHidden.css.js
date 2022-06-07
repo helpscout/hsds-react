@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import visuallyHidden from '../../styles/mixins/visuallyHidden.css'
+import { generateVisuallyHiddenStyles } from '@hsds/utils-mixins'
 
 export const VisuallyHiddenUI = styled.span`
-  ${visuallyHidden()}
+  ${generateVisuallyHiddenStyles()}
 
   &.is-focusable {
     &:active,

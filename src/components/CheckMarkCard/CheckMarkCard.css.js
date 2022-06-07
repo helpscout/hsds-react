@@ -1,10 +1,10 @@
 import styled from 'styled-components'
-import { d400, d400Effect } from '../../styles/mixins/depth.css'
+import { d400, d400Effect } from '@hsds/utils-mixins'
 
 import ChoiceGroup from '../ChoiceGroup'
 
-import { getColor } from '../../styles/utilities/color'
-import { focusRing } from '../../styles/mixins/focusRing.css'
+import { getColor } from '@hsds/utils-color'
+import { focusRing } from '@hsds/utils-mixins'
 
 export const MarkUI = styled('div')`
   ${focusRing};

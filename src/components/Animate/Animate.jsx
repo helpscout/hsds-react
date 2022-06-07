@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { Transition } from 'react-transition-group'
 import { getSequenceNames } from './Animate.utils'
-import { getEasingTiming } from '../../utilities/easing'
+import { getEasingTiming } from '@hsds/utils-animation'
 import { AnimateUI } from './Animate.css'
 import { AnimateGroupContext } from '../AnimateGroup/AnimateGroup'
 

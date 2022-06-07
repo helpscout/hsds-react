@@ -1,12 +1,11 @@
 import styled, { css } from 'styled-components'
-import { focusRing } from '../../../../styles/mixins/focusRing.css'
-import { getColor } from '../../../../styles/utilities/color'
+import { focusRing } from '@hsds/utils-mixins'
+import { getColor } from '@hsds/utils-color'
 import Button from '../../../Button'
 import RateAction from '../../../RateAction'
 import ChoiceGroup from '../../../ChoiceGroup'
 import Radio from '../../../Radio'
-import { setFontSize } from '../../../../styles/utilities/font'
-import { FONT_FAMILY } from '../../../../styles/configs/constants'
+import { setFontSize, FONT_FAMILY } from '@hsds/utils-fonts'
 
 const defaultTransition = css`
   transition: all 0.2s ease-in-out;

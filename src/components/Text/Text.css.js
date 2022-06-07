@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 
-import linkStyles from '../../styles/mixins/linkStyles.css'
+import { generateLinkStyles } from '@hsds/utils-mixins'
 import { makeStateColorStyles } from '../../styles/mixins/stateStyles.css'
-import { getColor } from '../../styles/utilities/color'
-import forEach from '../../styles/utilities/forEach'
-import variableFontSize from '../../styles/utilities/variableFontSize'
-import { TEXT_SHADES } from '../../styles/configs/constants'
+import { getColor } from '@hsds/utils-color'
+import { forEach } from '@hsds/utils-sass'
+import { variableFontSize } from '@hsds/utils-fonts'
+import { TEXT_SHADES } from '@hsds/utils-constants'
 
 export const VAR_NAMESPACE_SIZE = 'HSDSGlobalTextFontSize'
 export const TEXT_SIZES = [10, 11, 12, 13, 14, 15, 16, 20, 48]
@@ -61,7 +61,7 @@ export const TextUI = styled.span`
   }
 
   &.is-linkStyle {
-    ${linkStyles()}
+    ${generateLinkStyles()}
   }
 
   &.is-noUnderline {

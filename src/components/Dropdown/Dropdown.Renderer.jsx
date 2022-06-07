@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 import React from 'react'
 import { connect } from '@helpscout/wedux'
-import Keys from '../../constants/Keys'
+import { Keys } from '@hsds/utils-keyboard'
 import KeypressListener from '../KeypressListener'
 import {
   focusItem,
@@ -30,7 +30,7 @@ import {
   setAriaActiveOnMenuFromItemNode,
 } from './Dropdown.renderUtils'
 import isNil from 'lodash.isnil'
-import { scrollIntoView } from '../../utilities/scrolling'
+import { scrollIntoView } from '@hsds/utils-scroll'
 
 function noop() {}
 

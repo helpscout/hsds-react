@@ -1,6 +1,6 @@
 import React from 'react'
 import { withMotion } from '@helpscout/motion'
-import { faker } from '@helpscout/helix'
+import { faker } from '@hsds/helix'
 import Condition from '.'
 import ConditionList from '../ConditionList'
 import ConditionField from '../ConditionField'

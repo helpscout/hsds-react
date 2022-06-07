@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
-import { d400, d400Effect } from '../../styles/mixins/depth.css'
+import { getColor } from '@hsds/utils-color'
+import { d400, d400Effect } from '@hsds/utils-mixins'
 import Card from '../Card'
 
 export const MetaHeaderUI = styled('header')`

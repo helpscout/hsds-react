@@ -28,7 +28,7 @@ import {
   updateSelectedItem,
 } from './Dropdown.actions'
 import Trigger from './Dropdown.Trigger'
-import { createUniqueIDFactory } from '../../utilities/id'
+import { createUniqueIDFactory } from '@hsds/utils-id'
 import isNil from 'lodash.isnil'
 
 function noop() {}

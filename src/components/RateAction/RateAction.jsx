@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import Emoticon from '../Emoticon'
 import classNames from 'classnames'
 import { RateActionUI } from './RateAction.css'
 import { getName } from '../Emoticon/Emoticon.utils'
-import { getColor } from '../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 
 export class RateAction extends React.PureComponent {
   static className = 'c-RateAction'

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import Tooltip from '../Tooltip'
 import { DotStepperUI, BulletUI, ProgressBulletUI } from './DotStepper.css'
 import classNames from 'classnames'

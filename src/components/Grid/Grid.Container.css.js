@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import forEach from '../../styles/utilities/forEach'
-import { breakpointAll } from '../../styles/mixins/breakpoints.css'
+import { forEach } from '@hsds/utils-sass'
+import { breakpointAll } from '@hsds/utils-mixins'
 
 export const config = {
   maxWidth: '1140px',

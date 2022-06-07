@@ -2,11 +2,11 @@
 /* istanbul ignore file */
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import { connect } from '@helpscout/wedux'
 import { toggleOpen, openDropdown, closeDropdown } from './Dropdown.actions'
 import { TriggerUI } from './Dropdown.css.js'
-import Keys from '../../constants/Keys'
+import { Keys } from '@hsds/utils-keyboard'
 import classNames from 'classnames'
 import { renderRenderPropComponent } from './Dropdown.utils'
 

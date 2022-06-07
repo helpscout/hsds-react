@@ -1,5 +1,5 @@
-import { getColor } from '../../styles/utilities/color'
-import variableFontSize from '../../styles/utilities/variableFontSize'
+import { getColor } from '@hsds/utils-color'
+import { variableFontSize } from '@hsds/utils-fonts'
 import styled from 'styled-components'
 
 import Heading from '../Heading'

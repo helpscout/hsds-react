@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
-import { getColor } from '../../styles/utilities/color'
-import { FONT_FAMILY } from '../../styles/configs/constants'
+import { getColor } from '@hsds/utils-color'
+import { FONT_FAMILY } from '@hsds/utils-fonts'
 
 import {
   COLOURS,

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 import SpeechBubble from '@helpscout/hsds-illos/speech-bubble'
 import Card from '../Card'
 import Flexy from '../Flexy'

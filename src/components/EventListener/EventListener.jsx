@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { getClosestDocument } from '../../utilities/node'
+import { getClosestDocument } from '@hsds/utils-dom'
 
 // see https://github.com/oliviertassinari/react-event-listener/
 class EventListener extends React.Component {

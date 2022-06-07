@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { FrameContext } from 'react-frame-component'
 import isString from 'lodash.isstring'
 import Container, { ID as portalContainerId } from './Portal.Container'
-import { isNodeElement } from '../../utilities/node'
+import { isNodeElement } from '@hsds/utils-dom'
 import isPlainObject from 'lodash.isplainobject'
 import { GlobalContext } from '../HSDS/Provider'
 

@@ -1,4 +1,4 @@
-import { getColor } from '../../../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 
 export const CONVO_STATUS_CLASSNAMES = {
   1: 'convo-active',

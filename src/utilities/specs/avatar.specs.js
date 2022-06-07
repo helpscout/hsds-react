@@ -1,4 +1,4 @@
-import { createSpec, derived, faker } from '@helpscout/helix'
+import { createSpec, derived, faker } from '@hsds/helix'
 
 const avatarSpec = createSpec({
   id: faker.datatype.uuid(),

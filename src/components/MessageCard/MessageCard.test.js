@@ -4,7 +4,7 @@ import MessageCard from './MessageCard'
 import { ThumbsSurvey } from './MessageCard.Survey.variants'
 import { MessageCardButton as Button } from './MessageCard.Button'
 import userEvent from '@testing-library/user-event'
-import { makeBrandColors } from '../../styles/utilities/color'
+import { makeBrandColors } from '@hsds/utils-color'
 import { ThemeProvider } from 'styled-components'
 
 describe('className', () => {

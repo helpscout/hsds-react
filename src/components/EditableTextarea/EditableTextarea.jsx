@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Textarea from 'react-textarea-autosize'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import classNames from 'classnames'
 import debounce from 'lodash.debounce'
 import { ComponentUI, EditableTextareaUI, MaskUI } from './EditableTextarea.css'
@@ -12,7 +12,7 @@ import {
 import Icon from '../Icon'
 import Tooltip from '../Tooltip'
 import { scrollToTop } from './EditableTextarea.utils'
-import { key } from '../../constants/Keys'
+import { key } from '@hsds/utils-keyboard'
 import { CAUSE, OPERATION } from '../EditableField/EditableField.constants'
 import { getValidationColor } from '../EditableField/EditableField.utils'
 

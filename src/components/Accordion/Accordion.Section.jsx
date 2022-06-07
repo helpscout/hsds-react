@@ -1,10 +1,10 @@
 import React, { createContext, useContext, useState } from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import classNames from 'classnames'
 import { SectionUI } from './Accordion.css'
 import { AccordionContext } from './Accordion'
-import { createUniqueIDFactory } from '../../utilities/id'
+import { createUniqueIDFactory } from '@hsds/utils-id'
 
 const nextUuid = createUniqueIDFactory('AccordionSection')
 

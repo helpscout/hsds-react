@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
-import { rgba } from '../../utilities/color'
+import { getColor } from '@hsds/utils-color'
+import { rgba } from '@hsds/utils-color'
 import { defaultAnimation as overlayAnimation } from '../../hooks/useAnimatedRender'
 
 const sidePanelDefaultAnimation = `

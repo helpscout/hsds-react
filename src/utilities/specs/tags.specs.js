@@ -1,4 +1,4 @@
-import { createSpec, faker } from '@helpscout/helix'
+import { createSpec, faker } from '@hsds/helix'
 
 export default createSpec({
   color: faker.random.arrayElement([

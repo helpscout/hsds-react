@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import VisuallyHidden from '../VisuallyHidden'
 import classNames from 'classnames'
 import { IconUI } from './Icon.css'

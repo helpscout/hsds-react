@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import Collapsible from '../Collapsible'
 import classNames from 'classnames'
 import { BodyUI } from './Accordion.css'

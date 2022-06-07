@@ -4,7 +4,7 @@ import get from 'lodash.get'
 import isString from 'lodash.isstring'
 import hoistNonReactStatics from '@helpscout/react-utils/dist/hoistNonReactStatics'
 import getComponentName from '@helpscout/react-utils/dist/getComponentName'
-import { isModifierKeyPressed } from '../../utilities/keys'
+import { isModifierKeyPressed } from '@hsds/utils-keyboard'
 import WithRouterCheck from '../WithRouterCheck'
 
 function noop() {}

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
-import { d300Effect, d400Effect } from '../../styles/mixins/depth.css'
+import { getColor } from '@hsds/utils-color'
+import { d300Effect, d400Effect } from '@hsds/utils-mixins'
 import Heading from '../Heading'
 import Text from '../Text'
 

@@ -3,7 +3,7 @@ import { mount } from 'enzyme'
 import CopyButton from '../CopyButton'
 import CopyCode from './CopyCode'
 import { CopyCodeUI } from './CopyCode.css'
-import Keys from '../../constants/Keys'
+import { Keys } from '@hsds/utils-keyboard'
 
 // Stub selection/range functions as they are not available in tests
 window.getSelection = () => ({

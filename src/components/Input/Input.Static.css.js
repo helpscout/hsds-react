@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 import { config as inputConfig } from './Input.css'
-import forEach from '../../styles/utilities/forEach'
+import { forEach } from '@hsds/utils-sass'
 
 export const config = {
   defaultHeight: inputConfig.size.md.height,

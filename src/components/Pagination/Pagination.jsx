@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import classNames from 'classnames'
 import KeypressListener from '../KeypressListener'
-import Keys from '../../constants/Keys'
-import { formatNumber } from '../../utilities/number'
+import { Keys } from '@hsds/utils-keyboard'
+import { formatNumber } from '@hsds/utils-number'
 import {
   PaginationUI,
   InformationUI,

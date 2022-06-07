@@ -1,5 +1,5 @@
 import { css } from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 
 export const focusShadow = `0 0 0 2px var(--focusRingColor, ${getColor(
   'blue.500'

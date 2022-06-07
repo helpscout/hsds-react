@@ -1,4 +1,5 @@
-import variableFontSize, { defaultProps } from '../variableFontSize'
+import { defaultProps } from '../variableFontSize'
+import { variableFontSize } from '@hsds/utils-fonts'
 
 test('Renders defaultProps if no arguments defined', () => {
   expect(variableFontSize()).toContain(defaultProps.baseFontSize)

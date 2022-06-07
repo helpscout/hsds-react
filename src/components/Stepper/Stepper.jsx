@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import isNil from 'lodash.isnil'
 import Step from './Stepper.Step'
 import classNames from 'classnames'
-import { getComponentKey } from '../../utilities/component'
+import { getComponentKey } from '@hsds/utils-react'
 import { StepperUI, StepWrapperUI } from './Stepper.css'
 
 function noop() {}

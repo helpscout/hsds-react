@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getClosestFocusableParent } from '../utilities/focus'
+import { getClosestFocusableParent } from '@hsds/utils-focus'
 
 /**
  *

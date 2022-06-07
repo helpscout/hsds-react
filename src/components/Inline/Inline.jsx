@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import InlineItem from './Inline.Item'
 import classNames from 'classnames'
 import { InlineUI } from './Inline.css'

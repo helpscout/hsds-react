@@ -1,13 +1,10 @@
 import styled from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
-import { darken } from '../../utilities/color'
-import forEach from '../../styles/utilities/forEach'
+import { getColor } from '@hsds/utils-color'
+import { darken } from '@hsds/utils-color'
+import { forEach } from '@hsds/utils-sass'
 import Icon from '../Icon'
 import Truncate from '../Truncate'
-import {
-  focusRing,
-  focusShadowWithInset,
-} from '../../styles/mixins/focusRing.css'
+import { focusRing, focusShadowWithInset } from '@hsds/utils-mixins'
 
 export const config = {
   colors: {

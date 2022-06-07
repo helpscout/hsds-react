@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Button from '../Button'
 import Toolbar from '../Toolbar'
-import { getColor } from '../../styles/utilities/color'
+import { getColor } from '@hsds/utils-color'
 
 export const ActionFooterUI = styled(Toolbar)`
   border-bottom-left-radius: 4px;

@@ -1,4 +1,4 @@
-import { getEasingTiming } from '../../utilities/easing'
+import { getEasingTiming } from '@hsds/utils-animation'
 
 export const getImageSrc = props => {
   const { fallbackImage, image } = props

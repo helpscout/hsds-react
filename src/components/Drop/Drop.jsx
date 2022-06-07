@@ -8,7 +8,7 @@
  */
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import PortalWrapper from '../PortalWrapper'
 import DropPositioner from './Drop.Positioner'
 import classNames from 'classnames'

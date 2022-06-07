@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 import React from 'react'
 import PropTypes from 'prop-types'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import { withMotion } from '../Motion'
 import Condition from '../Condition'
 import classNames from 'classnames'

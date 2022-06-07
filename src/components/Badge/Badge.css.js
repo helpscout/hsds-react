@@ -1,9 +1,9 @@
-import { STATUSES } from '../../styles/configs/constants'
+import { STATUSES } from '@hsds/utils-constants'
 import styled from 'styled-components'
 
-import { getColor } from '../../styles/utilities/color'
-import forEach from '../../styles/utilities/forEach'
-import variableFontSize from '../../styles/utilities/variableFontSize'
+import { getColor } from '@hsds/utils-color'
+import { forEach } from '@hsds/utils-sass'
+import { variableFontSize } from '@hsds/utils-fonts'
 
 const DEFAULT_COLOR = getColor('charcoal.200')
 

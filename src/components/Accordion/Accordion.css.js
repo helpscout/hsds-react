@@ -2,11 +2,11 @@ import styled from 'styled-components'
 import Badge from '../Badge'
 import Flexy from '../Flexy'
 import Text from '../Text'
-import { breakpoint } from '../../styles/mixins/breakpoints.css'
-import { getColor } from '../../styles/utilities/color'
+import { generateBreakPoint } from '@hsds/utils-mixins'
+import { getColor } from '@hsds/utils-color'
 import { pageBreakpointsConfig } from '../Page/Page.config'
 import { classNameStrings as titleClassNames } from './Accordion.Title'
-import { setFontSize } from '../../styles/utilities/font'
+import { setFontSize } from '@hsds/utils-fonts'
 
 export const AccordionUI = styled('div')`
   border: 1px solid ${getColor('grey.400')};
@@ -30,7 +30,7 @@ export const AccordionUI = styled('div')`
     margin-left: -50px;
     margin-right: -50px;
 
-    ${breakpoint(
+    ${generateBreakPoint(
       pageBreakpointsConfig.breakpoint.widescreen,
       `
       margin-left: -100px;
@@ -109,7 +109,7 @@ export const BodyUI = styled('div')`
     padding-left: 50px;
     padding-right: 50px;
 
-    ${breakpoint(
+    ${generateBreakPoint(
       pageBreakpointsConfig.breakpoint.widescreen,
       `
       padding-left: 100px;
@@ -243,7 +243,7 @@ export const TitleUI = styled('div')`
     padding-left: 50px;
     padding-right: 50px;
 
-    ${breakpoint(
+    ${generateBreakPoint(
       pageBreakpointsConfig.breakpoint.widescreen,
       `
     padding-left: 100px;
@@ -264,7 +264,10 @@ export const TitleUI = styled('div')`
     &.is-page .drag-handle {
       left: 14px;
 
-      ${breakpoint(pageBreakpointsConfig.breakpoint.widescreen, `left: 39px;`)};
+      ${generateBreakPoint(
+        pageBreakpointsConfig.breakpoint.widescreen,
+        `left: 39px;`
+      )};
     }
 
     .drag-handle {

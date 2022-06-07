@@ -14,7 +14,7 @@ import DropList from '../DropList'
 import Icon from '../Icon'
 import Tooltip from '../Tooltip'
 import Truncate from '../Truncate'
-import getValidProps from '@helpscout/react-utils/dist/getValidProps'
+import { getValidProps } from '@hsds/utils-react'
 import { ACTION_ICONS, FIELDTYPES } from './EditableField.constants'
 import {
   findParentByClassName,
@@ -28,7 +28,7 @@ import {
   STATES_CLASSNAMES,
 } from './EditableField.utils'
 import classNames from 'classnames'
-import { key } from '../../constants/Keys'
+import { key } from '@hsds/utils-keyboard'
 import equal from 'fast-deep-equal'
 
 function noop() {}

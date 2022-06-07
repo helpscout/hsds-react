@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import SkeletonBlock from './Skeleton.Block'
-import forEach from '../../styles/utilities/forEach'
+import { forEach } from '@hsds/utils-sass'
 
 export const config = {
   size: {

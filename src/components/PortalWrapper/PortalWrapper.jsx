@@ -10,11 +10,8 @@ import getComponentName from '@helpscout/react-utils/dist/getComponentName'
 import Animate from '../Animate'
 import KeypressListener from '../KeypressListener'
 import Portal from '../Portal'
-import Keys from '../../constants/Keys'
-import {
-  createUniqueIDFactory,
-  createUniqueIndexFactory,
-} from '../../utilities/id'
+import { Keys } from '@hsds/utils-keyboard'
+import { createUniqueIDFactory, createUniqueIndexFactory } from '@hsds/utils-id'
 import { matchPath, setupManager } from './PortalWrapper.utils'
 import Content from './PortalWrapper.Content'
 import WithRouterCheck from '../WithRouterCheck'

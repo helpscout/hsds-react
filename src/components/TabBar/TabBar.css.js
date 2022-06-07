@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 import Toolbar from '../Toolbar'
 
-import { getColor } from '../../styles/utilities/color'
-import { setFontSize } from '../../styles/utilities/font'
+import { getColor } from '@hsds/utils-color'
+import { setFontSize } from '@hsds/utils-fonts'
 
 const getAlignment = align => {
   switch (align) {

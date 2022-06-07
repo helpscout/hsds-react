@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import { getColor } from '../../styles/utilities/color'
-import { setFontSize } from '../../styles/utilities/font'
-import { darken } from '../../utilities/color'
-import { focusRing } from '../../styles/mixins/focusRing.css'
+import { getColor } from '@hsds/utils-color'
+import { setFontSize } from '@hsds/utils-fonts'
+import { darken } from '@hsds/utils-color'
+import { focusRing } from '@hsds/utils-mixins'
 
 export const ShowAllButtonUI = styled.button`
   ${focusRing}

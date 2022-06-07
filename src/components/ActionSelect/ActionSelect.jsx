@@ -5,8 +5,8 @@ import isNil from 'lodash.isnil'
 import DropList from '../DropList'
 import { SelectTag } from '../DropList/DropList.togglers'
 import ContentResizer from './ActionSelect.ContentResizer'
-import { findFirstFocusableNode } from '../../utilities/focus'
-import { smoothScrollTo, linear } from '../../utilities/smoothScroll'
+import { findFirstFocusableNode } from '@hsds/utils-focus'
+import { smoothScrollTo, linear } from '@hsds/utils-scroll'
 import { ActionSelectUI } from './ActionSelect.css'
 
 export class ActionSelect extends React.PureComponent {

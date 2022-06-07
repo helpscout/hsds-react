@@ -1,6 +1,6 @@
 /* istanbul ignore file */
-import { isNodeEnv } from '../../utilities/other'
-import { isNodeElement, getNodeScope } from '../../utilities/node'
+import { isNodeEnv } from '@hsds/utils-env'
+import { isNodeElement, getNodeScope } from '@hsds/utils-dom'
 
 const parseFloatValue = value => parseFloat(value || '0')
 
