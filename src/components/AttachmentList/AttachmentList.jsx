@@ -21,6 +21,7 @@ export const AttachmentList = props => {
     onDownloadAllClick,
     showDownloadAll,
     withOverflow,
+    onScrollEnd,
     theme: themeProp,
     ...rest
   } = props
@@ -42,7 +43,8 @@ export const AttachmentList = props => {
   useEffect(() => {
     overflowCallback.current.handleApplyFade()
     overflowCallback.current.handleScrollToEnd()
-  }, [attachmentChildren.length])
+    onScrollEnd && onScrollEnd()
+  }, [attachmentChildren.length, onScrollEnd])
 
   const componentClassName = classNames(
     'c-AttachmentList',
@@ -116,6 +118,7 @@ export const AttachmentList = props => {
 
 AttachmentList.defaultProps = {
   'data-cy': 'AttachmentList',
+  'data-testid': 'AttachmentList',
   downloadAllLabel: 'Download All',
   onDownloadAllClick: noop,
   showDownloadAll: true,
@@ -127,8 +130,12 @@ AttachmentList.propTypes = {
   className: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
+  /** Data attr for RTL tests. */
+  'data-testid': PropTypes.string,
   /** Text label for the "Download All" attachment. */
   downloadAllLabel: PropTypes.string,
+  /** Callback when the scroll container was moved to the end. */
+  onScrollEnd: PropTypes.func,
   /** The callback when the "Download All" attachment is clicked. */
   onDownloadAllClick: PropTypes.func,
   /** Show/hides the "Download All" attachment. */

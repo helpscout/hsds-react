@@ -170,6 +170,7 @@ const Attachment = props => {
 
 Attachment.defaultProps = {
   'data-cy': 'Attachment',
+  'data-testid': 'Attachment',
   mime: 'image/png',
   name: 'image.png',
   onClick: noop,
@@ -198,7 +199,7 @@ Attachment.propTypes = {
   /** The callback when the component's `CloseButton` UI is clicked. */
   onRemoveClick: PropTypes.func,
   /** On theme preview, it will display a remove icon when hovering the attachment. */
-  isRemovable: PropTypes.string,
+  isRemovable: PropTypes.bool,
   /** The size of the attachment. */
   size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   /** The state of the attachment. */
@@ -213,6 +214,8 @@ Attachment.propTypes = {
   url: PropTypes.string,
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
+  /** Data attr for RTL tests. */
+  'data-testid': PropTypes.string,
 }
 
 Attachment.Provider = AttachmentProvider

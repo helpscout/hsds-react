@@ -1,120 +1,111 @@
 import React from 'react'
-import { mount, shallow } from 'enzyme'
+import { render, screen } from '@testing-library/react'
+import { mount } from 'enzyme'
 import { AttachmentList } from './AttachmentList'
 import { Attachment, Icon } from '../index'
+import userEvent from '@testing-library/user-event'
 
 const ui = {
   content: '.c-AttachmentList__content',
-  list: {
-    item: '.c-AttachmentList__inlineListItem',
-    download: '.c-AttachmentList__inlineListItemDownloadAll',
-  },
+  download: '.AttachmentList__DownloadAll',
 }
 
 describe('ClassName', () => {
   test('Has default className', () => {
-    const wrapper = shallow(<AttachmentList />)
+    const { getByTestId } = render(<AttachmentList />)
 
-    expect(wrapper.hasClass('c-AttachmentList')).toBeTruthy()
+    expect(getByTestId('AttachmentList')).toHaveClass('c-AttachmentList')
   })
 
   test('Applies custom className if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const wrapper = shallow(<AttachmentList className={customClass} />)
-
-    expect(wrapper.prop('className')).toContain(customClass)
+    const { getByTestId } = render(<AttachmentList className={customClass} />)
+    expect(getByTestId('AttachmentList')).toHaveClass(customClass)
   })
 })
 
 describe('Custom attributes', () => {
   test('Can render custom HTML attributes', () => {
-    const wrapper = shallow(<AttachmentList data-tie="piano-key" />)
-    const html = wrapper.html()
+    const { getByTestId, container } = render(
+      <AttachmentList data-tie="piano-key" />
+    )
 
-    expect(html).toContain('data-tie')
-    expect(html).toContain('piano-key')
+    expect(getByTestId('AttachmentList')).toHaveAttribute(
+      'data-tie',
+      'piano-key'
+    )
   })
 })
 
 describe('Children', () => {
   test('Does not render non-Attachment child content', () => {
-    const wrapper = shallow(
+    const { container } = render(
       <AttachmentList>
         <div className="child">Hello</div>
       </AttachmentList>
     )
-    const o = wrapper.find('div.child')
 
-    expect(o.length).toBeFalsy()
+    expect(container.querySelector('div.child')).toBeFalsy()
   })
 
   test('Renders Attachment children', () => {
-    const wrapper = shallow(
-      <AttachmentList>
+    const { queryAllByTestId } = render(
+      <AttachmentList showDownloadAll={false}>
         <Attachment />
         <Attachment />
         <Attachment />
       </AttachmentList>
     )
-    const o = wrapper.find(ui.list.item)
 
-    expect(o.length).toBe(3)
+    expect(queryAllByTestId('Attachment').length).toBe(3)
   })
 })
 
 describe('Download All', () => {
   test('Does not render if there is only 1 attachment', () => {
-    const wrapper = shallow(
+    const { queryAllByTestId, container } = render(
       <AttachmentList>
         <Attachment />
       </AttachmentList>
     )
-    const o = wrapper.find(ui.list.item)
-    const d = wrapper.find(ui.list.download)
 
-    expect(o.length).toBe(1)
-    expect(d.length).toBe(0)
+    expect(queryAllByTestId('Attachment').length).toBe(1)
+    expect(container.querySelector(ui.download)).toBeFalsy()
   })
 
   test('Renders by default for more than 1 attachment', () => {
-    const wrapper = shallow(
+    const { container } = render(
       <AttachmentList>
         <Attachment />
         <Attachment />
       </AttachmentList>
     )
-    const o = wrapper.find(ui.list.item)
-    const d = wrapper.find(ui.list.download)
 
-    expect(o.length).toBe(2)
-    expect(d.length).toBe(1)
+    expect(container.querySelector(ui.download)).toBeTruthy()
   })
 
   test('Can be disabled', () => {
-    const wrapper = shallow(
+    const { queryAllByTestId, container } = render(
       <AttachmentList showDownloadAll={false}>
         <Attachment />
         <Attachment />
       </AttachmentList>
     )
-    const o = wrapper.find(ui.list.item)
-    const d = wrapper.find(ui.list.download)
 
-    expect(o.length).toBe(2)
-    expect(d.length).toBe(0)
+    expect(queryAllByTestId('Attachment').length).toBe(2)
+    expect(container.querySelector(ui.download)).toBeFalsy()
   })
 
   test('Fires callback on click', () => {
     const spy = jest.fn()
-    const wrapper = shallow(
+    const { container } = render(
       <AttachmentList onDownloadAllClick={spy}>
         <Attachment />
         <Attachment />
       </AttachmentList>
     )
-    const d = wrapper.find(ui.list.download).find(Attachment)
 
-    d.simulate('click')
+    userEvent.click(container.querySelector(ui.download))
 
     expect(spy).toHaveBeenCalled()
   })
@@ -122,89 +113,52 @@ describe('Download All', () => {
 
 describe('Icon', () => {
   test('Has Attachment Icon', () => {
-    const wrapper = shallow(<AttachmentList />)
-    const o = wrapper.find(Icon)
-
-    expect(o.prop('name')).toBe('attachment')
-    expect(o.length).toBe(1)
+    const { container } = render(<AttachmentList />)
+    const o = container.querySelector('.c-Icon')
+    expect(o).toBeTruthy()
+    expect(o).toHaveAttribute('data-icon-name', 'attachment')
   })
 })
 
 describe('Theme', () => {
   test('Renders default theme styles, if wrapped in Provider', () => {
-    const wrapper = mount(
+    const { getByTestId } = render(
       <Attachment.Provider>
         <AttachmentList />
       </Attachment.Provider>
     )
-    const o = wrapper.find('div.c-AttachmentList')
+    const o = getByTestId('AttachmentList')
 
-    expect(o.length).toBe(1)
-    expect(o.hasClass('is-theme-default')).toBeTruthy()
+    expect(o).toBeTruthy()
+    expect(o).toHaveClass('is-theme-default')
   })
 
   test('Renders theme styles, if provided', () => {
-    const wrapper = mount(
+    const { getByTestId } = render(
       <Attachment.Provider theme="preview">
         <AttachmentList />
       </Attachment.Provider>
     )
-    const o = wrapper.find('div.c-AttachmentList')
+    const o = getByTestId('AttachmentList')
 
-    expect(o.length).toBe(1)
-    expect(o.hasClass('is-theme-preview')).toBeTruthy()
+    expect(o).toBeTruthy()
+    expect(o).toHaveClass('is-theme-preview')
   })
 })
 
 describe('New attachments', () => {
-  test('Determines if new attachments are added on prop change', () => {
-    const spy = jest.fn()
-    const wrapper = mount(<AttachmentList />)
-    wrapper.instance().didAddNewAttachment = spy
-    wrapper.setProps({ children: ['one'] })
-
-    expect(spy).toHaveBeenCalled()
-  })
-
-  test('Checker returns false if this.props.children is undefined', () => {
-    const wrapper = mount(<AttachmentList />)
-    wrapper.setProps({ children: undefined })
-
-    expect(wrapper.instance().didAddNewAttachment({ title: 'gogo' })).toBe(
-      false
-    )
-  })
-
-  test('Checker defaults to this.props for arg', () => {
-    const wrapper = mount(<AttachmentList />)
-    wrapper.setProps({ children: ['one'] })
-
-    expect(wrapper.instance().didAddNewAttachment()).toBe(false)
-  })
-
-  test('Can correctly handles new attachments with action', () => {
-    const spy = jest.fn()
-    const wrapper = mount(<AttachmentList />)
-    wrapper.setProps({ children: ['one'] })
-    wrapper.instance().handleOnAddNewAttachment = spy
-
-    wrapper.setProps({ children: ['one'] })
-    expect(spy).not.toHaveBeenCalled()
-
-    wrapper.setProps({ children: ['one', 'two'] })
-    expect(spy).toHaveBeenCalled()
-  })
-
   test('Scrolls to end when a new attachment is added', () => {
     const spy = jest.fn()
-    const wrapper = mount(<AttachmentList />)
-    wrapper.setProps({ children: ['one'] })
-    wrapper.instance().handleScrollToEnd = spy
+    const { rerender } = render(<AttachmentList onScrollEnd={spy} />)
 
-    wrapper.setProps({ children: ['one'] })
-    expect(spy).not.toHaveBeenCalled()
+    rerender(
+      <AttachmentList onScrollEnd={spy}>
+        <Attachment />
+        <Attachment />
+        <Attachment />
+      </AttachmentList>
+    )
 
-    wrapper.setProps({ children: ['one', 'two'] })
     expect(spy).toHaveBeenCalled()
   })
 })
