@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import Attachment from './Attachment'
 import { Provider } from './index'
 import userEvent from '@testing-library/user-event'
@@ -12,16 +12,29 @@ const ui = {
 }
 
 describe('ClassName', () => {
-  test('Has default className', () => {
+  test('Container has default className', () => {
+    const { container } = render(<Attachment />)
+    expect(container.querySelector('.c-Attachment')).toBeTruthy()
+  })
+  test('Element Has default className', () => {
     const { getByTestId } = render(<Attachment />)
-    expect(getByTestId('Attachment')).toHaveClass('c-Attachment')
+    expect(getByTestId('Attachment')).toHaveClass('c-AttachmentElement')
   })
 
-  test('Applies custom className if specified', () => {
+  test('Applies custom className to element if specified', () => {
     const customClass = 'piano-key-neck-tie'
-    const { getByTestId } = render(<Attachment className={customClass} />)
+    const { getByTestId } = render(
+      <Attachment elementClassName={customClass} />
+    )
 
     expect(getByTestId('Attachment')).toHaveClass(customClass)
+  })
+
+  test('Applies custom className to container if specified', () => {
+    const customClass = 'piano-key-neck-tie'
+    const { container } = render(<Attachment className={customClass} />)
+
+    expect(container.querySelector('.c-Attachment')).toHaveClass(customClass)
   })
 })
 

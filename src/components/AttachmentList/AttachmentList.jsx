@@ -71,7 +71,7 @@ export const AttachmentList = props => {
 
     return (
       <Attachment
-        className="AttachmentList__DownloadAll"
+        elementClassName="AttachmentList__DownloadAll"
         name={downloadAllLabel}
         onClick={onDownloadAllClick}
         type="action"
