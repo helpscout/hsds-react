@@ -2,12 +2,19 @@ import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 import AttachmentProvider, { AttachmentContext } from './Attachment.Provider'
-import IconButton from '../IconButton'
+
 import Truncate from '../Truncate'
 import Tooltip from '../Tooltip'
 import Icon from '../Icon'
 import classNames from 'classnames'
-import { AttachmentUI, ImageUI, SizeUI, NameUI } from './Attachment.css'
+import {
+  AttachmentUI,
+  AttachmentElementUI,
+  ImageUI,
+  SizeUI,
+  NameUI,
+  RemoveButtonUI,
+} from './Attachment.css'
 
 function noop() {}
 
@@ -17,6 +24,7 @@ const Attachment = props => {
     className,
     content,
     download,
+    elementClassName,
     id,
     imageUrl,
     mime,
@@ -69,14 +77,16 @@ const Attachment = props => {
     target: target !== undefined ? target : url ? '_blank' : '',
   }
 
-  const componentClassName = classNames(
-    'c-Attachment',
+  const componentClassName = classNames('c-Attachment', className)
+
+  const componentElementClassName = classNames(
+    'c-AttachmentElement',
     imageUrl && 'has-image',
     state && `is-${state}`,
     type && `is-${type}`,
     theme && `is-theme-${theme}`,
     isBrokenImage && imageUrl && 'is-broken-image',
-    className
+    elementClassName
   )
 
   function contentMarkup() {
@@ -129,17 +139,34 @@ const Attachment = props => {
   const shouldShowRemoveIcon = isRemovable && isThemePreview
 
   const attachmentComponent = (
-    <AttachmentUI
+    <AttachmentElementUI
       {...getValidProps(rest)}
-      className={componentClassName}
+      className={componentElementClassName}
       href={url}
       onClick={handleOnClick}
       title={!isBrokenImage ? name : null}
       {...downloadProps}
     >
       {contentMarkup()}
+    </AttachmentElementUI>
+  )
+
+  return (
+    <AttachmentUI className={componentClassName}>
+      {isBrokenImage ? (
+        <Tooltip
+          role="tooltip"
+          title="Unavailable image"
+          appendTo={() => document.body}
+          withTriggerWrapper={false}
+        >
+          {attachmentComponent}
+        </Tooltip>
+      ) : (
+        attachmentComponent
+      )}
       {shouldShowRemoveIcon && (
-        <IconButton
+        <RemoveButtonUI
           className="c-Attachment__closeButton"
           onClick={handleOnRemoveClick}
           size="sm"
@@ -151,21 +178,6 @@ const Attachment = props => {
       )}
     </AttachmentUI>
   )
-
-  if (isBrokenImage) {
-    return (
-      <Tooltip
-        role="tooltip"
-        title="Unavailable image"
-        appendTo={() => document.body}
-        withTriggerWrapper={false}
-      >
-        {attachmentComponent}
-      </Tooltip>
-    )
-  }
-
-  return attachmentComponent
 }
 
 Attachment.defaultProps = {
@@ -186,6 +198,8 @@ Attachment.propTypes = {
   className: PropTypes.string,
   /** Enables file downloaded. Allowed by default if `url` is provided. */
   download: PropTypes.any,
+  /** Custom class names to be added to the element/button component. */
+  elementClassName: PropTypes.string,
   /** The id of the attachment. */
   id: PropTypes.string,
   /** The URL of the an image attachment to render. */

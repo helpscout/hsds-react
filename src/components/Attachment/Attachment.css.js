@@ -8,16 +8,34 @@ import { getColor } from '../../styles/utilities/color'
 import Image from '../Image'
 import Text from '../Text'
 import { rgba } from '../../utilities/color'
-
-const bem = BEM('.c-Attachment')
+import IconButton from '../IconButton'
 
 const config = {
   imageSize: '37px',
   imageMaxWidth: '80px',
 }
 
+export const RemoveButtonUI = styled(IconButton)`
+  position: absolute;
+  right: -12px;
+  top: -12px;
+  z-index: 5;
+  opacity: 0;
+  transform: scale(0);
+
+  &.is-theme-grey.has-icon-only {
+    --buttonHeight: 24px;
+    --focusRingOffset: -2px;
+    --buttonBackgroundColorHover: white;
+    --buttonColorHover: ${getColor('pink.1000')};
+    --buttonBorderColorHover: ${getColor('pink.900')};
+  }
+
+  transition: all 200ms linear;
+`
+
 export const SizeUI = styled(Text)`
-  color: ${getColor('charcoal.200')};
+  color: ${getColor('charcoal.400')};
   margin-left: 5px;
 `
 export const NameUI = styled(Text)``
@@ -32,7 +50,7 @@ export const ImageUI = styled(Image)`
   width: auto;
 `
 
-export const AttachmentUI = styled.a`
+export const AttachmentElementUI = styled.a`
   ${linkStyles()};
   ${focusRing};
   --focusRingRadius: 15px;
@@ -41,35 +59,19 @@ export const AttachmentUI = styled.a`
   border-radius: var(--focusRingRadius);
   line-height: 1;
   padding: 4px 10px;
-  position: relative;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   font-family: var(--HSDSGlobalFontFamily);
-  flex: 0 0 auto;
-  transition: all 200ms linear;
 
   &:hover,
   &:focus-within {
-    z-index: 15;
     border-color: ${getColor('grey.600')};
     text-decoration: none;
-    transform: translateY(-2px);
 
     ${NameUI} {
       text-decoration: underline;
     }
-
-    ${bem.element('closeButton')} {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-  &:hover {
-    z-index: 3;
-  }
-  &:focus-within {
-    z-index: 2;
   }
 
   &.is-error:after {
@@ -137,24 +139,29 @@ export const AttachmentUI = styled.a`
       }
     }
   }
+`
 
-  ${bem.element('closeButton')} {
-    --buttonHeight: 24px;
+export const AttachmentUI = styled.div`
+  position: relative;
+  flex: 0 0 auto;
+  display: inline-flex;
+  transition: all 200ms linear;
+  z-index: 1;
 
-    position: absolute;
-    right: -12px;
-    top: -12px;
-    z-index: 5;
-    opacity: 0;
-    transform: scale(0);
+  &:hover {
+    z-index: 3;
+  }
+  &:focus-within {
+    z-index: 2;
+  }
 
-    &.is-theme-grey.has-icon-only {
-      --focusRingOffset: -2px;
-      --buttonBackgroundColorHover: white;
-      --buttonColorHover: ${getColor('pink.1000')};
-      --buttonBorderColorHover: ${getColor('pink.900')};
+  &:hover,
+  &:focus-within {
+    transform: translateY(-2px);
+
+    ${RemoveButtonUI} {
+      opacity: 1;
+      transform: scale(1);
     }
-
-    transition: all 200ms linear;
   }
 `
