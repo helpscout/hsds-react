@@ -231,6 +231,7 @@ export const MultipleChoiceRadioUI = styled(Radio)`
 
     .c-Text {
       font-size: 14px;
+      line-height: normal;
       color: ${getColor('charcoal.700')};
     }
   }
