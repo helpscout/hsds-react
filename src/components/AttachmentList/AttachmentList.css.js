@@ -22,7 +22,7 @@ export const AttachmentListUI = styled.div`
     padding-bottom: 10px;
   }
 
-  .AttachmentList__DownloadAll {
+  .c-AttachmentList__DownloadAll {
     flex: 0 0 auto;
     --buttonHeight: 30px;
     margin-left: 4px;

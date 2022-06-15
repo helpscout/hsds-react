@@ -1,13 +1,12 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
-import { mount } from 'enzyme'
+import { render } from '@testing-library/react'
 import { AttachmentList } from './AttachmentList'
-import { Attachment, Icon } from '../index'
+import { Attachment } from '../index'
 import userEvent from '@testing-library/user-event'
 
 const ui = {
   content: '.c-AttachmentList__content',
-  download: '.AttachmentList__DownloadAll',
+  download: '.c-AttachmentList__DownloadAll',
 }
 
 describe('ClassName', () => {
@@ -26,9 +25,7 @@ describe('ClassName', () => {
 
 describe('Custom attributes', () => {
   test('Can render custom HTML attributes', () => {
-    const { getByTestId, container } = render(
-      <AttachmentList data-tie="piano-key" />
-    )
+    const { getByTestId } = render(<AttachmentList data-tie="piano-key" />)
 
     expect(getByTestId('AttachmentList')).toHaveAttribute(
       'data-tie',

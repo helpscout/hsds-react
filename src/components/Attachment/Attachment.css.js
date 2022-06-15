@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { BEM } from '../../utilities/classNames'
 
 import { d400, d400Effect } from '../../styles/mixins/depth.css'
 import linkStyles from '../../styles/mixins/linkStyles.css'

@@ -65,7 +65,7 @@ export const AttachmentList = props => {
     if (isThemePreview) {
       return (
         <IconButton
-          className="AttachmentList__DownloadAll"
+          className="c-AttachmentList__DownloadAll"
           theme="grey"
           icon="inbox"
           seamless
@@ -77,7 +77,7 @@ export const AttachmentList = props => {
 
     return (
       <Attachment
-        elementClassName="AttachmentList__DownloadAll"
+        elementClassName="c-AttachmentList__DownloadAll"
         name={downloadAllLabel}
         onClick={onDownloadAllClick}
         type="action"

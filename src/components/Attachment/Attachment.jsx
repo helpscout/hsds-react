@@ -72,9 +72,12 @@ const Attachment = props => {
     onRemoveClick && onRemoveClick(event, attachmentProps)
   }
 
-  const downloadProps = {
-    download: download !== undefined ? download : url ? true : null,
-    target: target !== undefined ? target : url ? '_blank' : '',
+  const downloadProps = { download, target }
+  if (downloadProps.download === undefined) {
+    downloadProps.download = Boolean(url)
+  }
+  if (downloadProps.target === undefined) {
+    downloadProps.target = url ? '_blank' : ''
   }
 
   const componentClassName = classNames('c-Attachment', className)
