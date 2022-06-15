@@ -39,6 +39,12 @@ export const AttachmentList = props => {
 
   const theme = themeContext || themeProp
   const isThemePreview = theme === 'preview'
+  const shouldShowDownloadAll =
+    showDownloadAll === undefined
+      ? isThemePreview
+        ? false
+        : true
+      : showDownloadAll
 
   useEffect(() => {
     overflowCallback.current.handleApplyFade()
@@ -54,7 +60,7 @@ export const AttachmentList = props => {
   )
 
   const getDownloadAllMarkup = () => {
-    if (!showDownloadAll || attachmentChildren.length <= 1) return null
+    if (!shouldShowDownloadAll || attachmentChildren.length <= 1) return null
 
     if (isThemePreview) {
       return (
@@ -121,7 +127,6 @@ AttachmentList.defaultProps = {
   'data-testid': 'AttachmentList',
   downloadAllLabel: 'Download All',
   onDownloadAllClick: noop,
-  showDownloadAll: true,
   withOverflow: true,
 }
 
