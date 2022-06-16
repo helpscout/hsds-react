@@ -8,6 +8,7 @@ import {
   SIZE_XL,
   SIZE_LG,
   SIZE_SM,
+  SIZE_XS,
 } from '../Button/Button.utils'
 import Icon from '../Icon'
 import Avatar from '../Avatar'
@@ -19,7 +20,7 @@ import {
 } from './IconButton.css'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
 
-export const SIZES = [SIZE_XL, SIZE_LG, SIZE_SM]
+export const SIZES = [SIZE_XL, SIZE_LG, SIZE_SM, SIZE_XS]
 
 const useIconButtonAvatar = props => {
   if (!props) {
@@ -77,7 +78,7 @@ const useIconButton = props => {
       status && 'with-status'
     ),
     'aria-label': ariaLabel,
-    iconSize: size !== SIZE_SM ? 24 : 20,
+    iconSize: ![SIZE_SM, SIZE_XS].includes(size) ? 24 : 20,
     icon,
     children,
     status,
@@ -143,7 +144,7 @@ IconButton.propTypes = {
   /** Data attr for Cypress tests. */
   'data-cy': PropTypes.string,
   /** Sets the size of the button. */
-  size: PropTypes.oneOf(['sm', 'lg', 'xl']),
+  size: PropTypes.oneOf(['xs', 'sm', 'lg', 'xl']),
   /** Sets the `type` of the button to `"submit"`. */
   submit: PropTypes.bool,
   /** Applies a theme based style to the button. */

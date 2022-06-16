@@ -123,6 +123,7 @@ import hyphen from '../../icons/hyphen.svg'
 import image from '../../icons/image.svg'
 import imageLarge from '../../icons/image-large.svg'
 import imagePlus from '../../icons/image-plus.svg'
+import imageBroken from '../../icons/image-broken.svg'
 import inbox from '../../icons/inbox.svg'
 import info from '../../icons/info.svg'
 import infoTiny from '../../icons/info-tiny.svg'
@@ -379,6 +380,7 @@ const ICONS = {
   'image-add': imagePlus,
   'image-large': imageLarge,
   'image-plus': imagePlus,
+  'image-broken': imageBroken,
   image,
   inbox,
   info,

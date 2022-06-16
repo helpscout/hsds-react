@@ -1,14 +1,14 @@
 import { css } from 'styled-components'
 import { getColor } from '../../styles/utilities/color'
 
-export const focusShadow = `0 0 0 2px var(--focusRingColor, ${getColor(
+export const focusShadow = `0 0 0 var(--focusRingSize, 2px) var(--focusRingColor, ${getColor(
   'blue.500'
 )});`
 
 export const focusShadowWithInset = `
-  0 0 0 2px var(--focusRingColor, ${getColor(
+  0 0 0 var(--focusRingSize, 2px) var(--focusRingColor, ${getColor(
     'blue.500'
-  )}), inset 0 0 0 2px white;
+  )}), inset 0 0 0 var(--focusRingSize, 2px) white;
 `
 
 export const focusRing = css`

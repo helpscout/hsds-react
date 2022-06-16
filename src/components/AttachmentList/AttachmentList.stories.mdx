@@ -1,5 +1,6 @@
 import { Meta, Story, ArgsTable, Canvas } from '@storybook/addon-docs/blocks'
 import { action } from '@storybook/addon-actions'
+import { boolean } from '@storybook/addon-knobs'
 import { Attachment } from '../index'
 import AttachmentList from './'
 
@@ -26,8 +27,18 @@ If 2 or more `<Attachment>` components are provided, this component will automat
 <Canvas>
   <Story name="AttachmentList">
     <AttachmentList onDownloadAllClick={action('Download all')}>
-      <Attachment name="parrot.png" size="5KB" onClick={action('on-click')} />
-      <Attachment name="parrot2.png" size="5KB" onClick={action('on-click')} />
+      <Attachment
+        name="parrot.png"
+        url="http://google.com/"
+        size="5KB"
+        onClick={action('on-click')}
+      />
+      <Attachment
+        name="parrot2.png"
+        url="http://google.com/"
+        size="5KB"
+        onClick={action('on-click')}
+      />
       <Attachment
         name="parrot3-with-a-really-long-name.png"
         size="5KB"
@@ -59,12 +70,38 @@ If 2 or more `<Attachment>` components are provided, this component will automat
     <Attachment.Provider theme="preview">
       <AttachmentList>
         <Attachment
+          imageUrl="http://matthewjamestaylor.com/img/illustrations/large/how-to-convert-a-liquid-layout-to-fixed-width.jpg"
+          name="how-to-convert-a-liquid-layout-to-fixed-width.jpg"
+        />
+        <Attachment
           imageUrl="https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto"
           state="error"
         />
-        <Attachment imageUrl="http://matthewjamestaylor.com/img/illustrations/large/how-to-convert-a-liquid-layout-to-fixed-width.jpg" />
+        <Attachment imageUrl="https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto" />
         <Attachment name="attachment-coming-soon.md" />
+        <Attachment name="with-url.md" url="http://google.com/" />
+      </AttachmentList>
+    </Attachment.Provider>
+  </Story>
+</Canvas>
+
+#### Preview theme with download all
+
+<Canvas>
+  <Story name="AttachmentList with preview and download all">
+    <Attachment.Provider theme="preview">
+      <AttachmentList showDownloadAll={true}>
+        <Attachment
+          imageUrl="http://matthewjamestaylor.com/img/illustrations/large/how-to-convert-a-liquid-layout-to-fixed-width.jpg"
+          name="how-to-convert-a-liquid-layout-to-fixed-width.jpg"
+        />
+        <Attachment
+          imageUrl="https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto"
+          state="error"
+        />
+        <Attachment imageUrl="https://img.buzzfeed.com/buzzfeed-static/static/2014-12/5/11/enhanced/webdr06/longform-original-7538-1417798667-22.jpg?downsize=715:*&output-format=auto&output-quality=auto" />
         <Attachment name="attachment-coming-soon.md" />
+        <Attachment name="with-url.md" url="http://google.com/" />
       </AttachmentList>
     </Attachment.Provider>
   </Story>

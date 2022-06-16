@@ -65,7 +65,7 @@ export const remapScrollingPlane = event => {
   }
 
   // Scroll-locking
-  event.preventDefault()
+  if (event.cancelable) event.preventDefault()
 }
 
 export const hasContentOverflowX = node => {
