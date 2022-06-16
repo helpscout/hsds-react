@@ -418,6 +418,7 @@ describe('remapScrollingPlane', () => {
   test('Calls preventDefault on successful scroll', () => {
     const spy = jest.fn()
     const event = {
+      cancelable: true,
       currentTarget: {
         scrollLeft: 0,
       },
