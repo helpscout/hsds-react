@@ -74,8 +74,17 @@ export const TableUI = styled('table')`
 
   tbody tr:focus {
     background-color: ${props => props.theme.bgFocus};
-    box-shadow: inset 3px 0 ${props => props.theme.bgFocusIndicator};
     outline: 0;
+  }
+
+  tbody tr:focus > td:first-child {
+    background: linear-gradient(
+      to right,
+      ${props => props.theme.bgFocusIndicator},
+      ${props => props.theme.bgFocusIndicator} 3px,
+      transparent 3px,
+      transparent 100%
+    );
   }
 
   th,
