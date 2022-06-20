@@ -50,9 +50,13 @@ module.exports = api => {
           shippedProposals: true,
         },
       ],
-      '@babel/react',
+      [
+        '@babel/preset-react',
+        {
+          runtime: 'automatic',
+        },
+      ],
     ],
     plugins: plugins,
-    exclude: ['node_modules'],
   }
 }

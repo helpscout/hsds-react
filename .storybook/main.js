@@ -17,8 +17,13 @@ module.exports = {
     postcss: false,
   },
   webpackFinal: async config => {
+    config.module.rules.forEach(rule => {
+      if (rule.exclude && rule.exclude.source.indexOf('node_modules') != -1) {
+        rule.exclude = /node_modules\/(?!@hsds)/
+      }
+    })
+    config.watchOptions.ignored = /node_modules\/(?!@hsds)/
     config.resolve.extensions.push('.js', '.jsx')
-
     // Removes process logging
     config.plugins = config.plugins.filter(
       plugin => plugin.constructor.name !== 'ProgressPlugin'
