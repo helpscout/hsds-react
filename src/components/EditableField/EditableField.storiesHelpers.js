@@ -78,14 +78,15 @@ export class ValidationApp extends React.Component {
     console.log('validating')
 
     const { name, value } = payload
-    let isValid = value !== 'off' && value !== 'other' && value !== 'warn'
+    let isValid =
+      !value.includes('off') && value !== 'other' && value !== 'warn'
 
     return new Promise(resolve => {
       setTimeout(function () {
         if (isValid) {
           resolve({ isValid, name, value })
         } else {
-          if (value === 'off') {
+          if (value.includes('off')) {
             resolve({
               isValid,
               name,

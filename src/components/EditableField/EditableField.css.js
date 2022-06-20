@@ -195,6 +195,12 @@ export const EditableFieldInputUI = styled('div')`
   &.${STATES_CLASSNAMES.isInline} {
     position: relative;
   }
+
+  &.${STATES_CLASSNAMES.withValidation} {
+    .${INPUT_CLASSNAMES.input} {
+      padding-right: 24px;
+    }
+  }
 `
 
 export const InputWrapperUI = styled('div')`
