@@ -72,6 +72,7 @@ export const SimpleModalWithTrigger = () => {
           show={state.isOpen1}
           className="first-modal"
           focusModalOnShow
+          ariaHidden={state.isOpen2}
           trapFocus
           onClose={e => {
             dispatch('CLOSE_1')
@@ -100,8 +101,8 @@ export const SimpleModalWithTrigger = () => {
           id="second-modal"
           className="second-modal"
           show={state.isOpen2}
-          height="150px"
-          width="150px"
+          height="200px"
+          width="200px"
           focusModalOnShow
           trapFocus
           onClose={e => {
@@ -111,6 +112,7 @@ export const SimpleModalWithTrigger = () => {
           closeOnClickOutside="modal"
         >
           <div>My second modal</div>
+          <Button kind="primary">Another button</Button>
         </SimpleModal>
       </Portal>
     </>

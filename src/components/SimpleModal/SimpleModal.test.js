@@ -19,6 +19,9 @@ describe('Show / no show', () => {
     expect(
       queryByTestId('simple-modal-overlay').querySelector('.SimpleModal')
     ).toBeInTheDocument()
+    expect(
+      queryByTestId('simple-modal-overlay').querySelector('.SimpleModal')
+    ).toHaveAttribute('aria-hidden', 'false')
     expect(document.activeElement).toBe(
       queryByTestId('simple-modal-overlay').querySelector('.SimpleModal')
     )

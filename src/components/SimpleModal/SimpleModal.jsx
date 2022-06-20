@@ -10,6 +10,7 @@ import {
   SimpleModalUI,
 } from './SimpleModal.css'
 import { shouldUnsetDimensions } from './SimpleModal.utils'
+import isNil from 'lodash.isnil'
 
 function noop() {}
 
@@ -112,10 +113,12 @@ function SimpleModal({
     if (withCloseButton) {
       if (customCloseButton && React.isValidElement(customCloseButton)) {
         const clickHandler = customCloseButton.props.onClick || onClose
+
         return React.cloneElement(customCloseButton, {
           onClick: clickHandler,
         })
       }
+
       return (
         <CloseModalButtonUI
           aria-label="close modal button"
@@ -156,6 +159,7 @@ function SimpleModal({
     >
       <SimpleModalUI
         aria-modal="true"
+        aria-hidden={!isNil(rest.ariaHidden) ? rest.ariaHidden : !show}
         aria-labelledby={ariaLabelledBy}
         className="SimpleModal"
         dataCy={dataCy}
