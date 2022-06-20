@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import isNil from 'lodash.isnil'
 import getValidProps from '@helpscout/react-utils/dist/getValidProps'
-import Animate from '../Animate'
 import Badge from '../Badge'
 import FormLabelContext from '../FormLabel/Context'
 import InputAddOn from './Input.AddOn'
@@ -108,10 +107,16 @@ export class Input extends React.PureComponent {
 
   setValidatorCount(value) {
     const { charValidatorLimit } = this.props
-    const validatorCount = charValidatorLimit - value.length
 
-    if (value.length >= validatorCount) {
-      this.setState({ validatorCount })
+    if (!value) {
+      // reset the validator count
+      this.setState({ validatorCount: charValidatorLimit })
+    } else {
+      const validatorCount = charValidatorLimit - value.length
+
+      if (value.length >= validatorCount) {
+        this.setState({ validatorCount })
+      }
     }
   }
 
@@ -465,17 +470,21 @@ export class Input extends React.PureComponent {
     // shows validator green at 50% rounded down to the nearest 10th
     const charValidatorShowAt =
       Math.floor(charValidatorLimit / 2 / 10) * 10 || charValidatorLimit / 2
-    const isTooMuch = validatorCount <= 0
+
     // shows validator yellow at 20% rounded down to the nearest 10th
     const isLessThanAFifth =
       validatorCount <=
       (Math.floor(charValidatorLimit / 5 / 10) * 10 || charValidatorLimit / 5)
+
+    // shows validator red when reached the limit
+    const isTooMuch = validatorCount <= 0
+
     const isVisible =
       isFocused &&
       validatorCount <= charValidatorShowAt &&
       value.length >= validatorCount
 
-    function getBadgeColor() {
+    function getValidatorBadgeColor() {
       if (isTooMuch) {
         return 'error'
       } else if (isLessThanAFifth) {
@@ -484,26 +493,19 @@ export class Input extends React.PureComponent {
         return 'success'
       }
     }
+    // console.log('🚀 ~ getCharValidatorMarkup ~ isFocused', isFocused)
 
-    return (
-      <CharValidatorUI>
-        <Animate
-          animateOnMount={true}
-          duration={250}
-          easing="bounce"
-          in={isVisible}
-          sequence="fade"
-        >
-          <Badge count={true} status={getBadgeColor()}>
-            <CharValidatorText
-              chars={this.state.validatorCount.toString().length}
-            >
-              {this.state.validatorCount}
-            </CharValidatorText>
-          </Badge>
-        </Animate>
+    return isVisible ? (
+      <CharValidatorUI className="c-Input__CharValidator">
+        <Badge count={true} status={getValidatorBadgeColor()}>
+          <CharValidatorText
+            chars={this.state.validatorCount.toString().length}
+          >
+            {this.state.validatorCount}
+          </CharValidatorText>
+        </Badge>
       </CharValidatorUI>
-    )
+    ) : null
   }
 
   getResizerMarkup() {

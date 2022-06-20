@@ -1,12 +1,9 @@
 import React from 'react'
-import { render as renderComponent } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import user from '@testing-library/user-event'
-import { mount, shallow, render } from 'enzyme'
+import { mount, shallow, render as enzymeRender } from 'enzyme'
 import Input from '../Input'
 import Resizer from '../Input.Resizer'
-import Badge from '../../Badge'
-import Animate from '../../Animate'
-import { CharValidatorUI } from '../Input.css'
 
 const ui = {
   field: '.c-InputField',
@@ -44,7 +41,7 @@ describe('ClassName', () => {
 
 describe('Input', () => {
   test('Can generate an input component', () => {
-    const wrapper = render(<Input />)
+    const wrapper = enzymeRender(<Input />)
     const el = wrapper.find('input')
 
     expect(el.length).toBeTruthy()
@@ -313,21 +310,21 @@ describe('ID', () => {
 
 describe('Multiline', () => {
   test('Default selector is an input', () => {
-    const wrapper = render(<Input />)
+    const wrapper = enzymeRender(<Input />)
     const el = wrapper.find('input')
 
     expect(el.length).toBeTruthy()
   })
 
   test('Selector becomes a textarea if multiline is defined', () => {
-    const wrapper = render(<Input multiline />)
+    const wrapper = enzymeRender(<Input multiline />)
     const el = wrapper.find('textarea')
 
     expect(el.length).toBeTruthy()
   })
 
   test('Accepts number argument', () => {
-    const wrapper = render(<Input multiline={5} />)
+    const wrapper = enzymeRender(<Input multiline={5} />)
     const el = wrapper.find('textarea')
 
     expect(el.length).toBeTruthy()
@@ -340,7 +337,7 @@ describe('Multiline', () => {
   })
 
   test('Applies resizable styles if specified', () => {
-    const wrapper = render(<Input multiline resizable />)
+    const wrapper = enzymeRender(<Input multiline resizable />)
     const el = wrapper.find('textarea')
 
     expect(el.hasClass('is-resizable')).toBeTruthy()
@@ -633,7 +630,7 @@ describe('isFocused', () => {
 
   test('Can toggle isFocused', () => {
     const spy = jest.fn()
-    const { container, rerender } = renderComponent(
+    const { container, rerender } = render(
       <Input onFocus={spy} isFocused={false} forceAutoFocusTimeout={20} />
     )
     const input = container.querySelector('.c-Input__inputField')
@@ -1115,9 +1112,7 @@ describe('onEnterUp', () => {
 describe('inputType', () => {
   test('Removes characters for number inputType', () => {
     const spy = jest.fn()
-    const { container } = renderComponent(
-      <Input inputType="number" onChange={spy} />
-    )
+    const { container } = render(<Input inputType="number" onChange={spy} />)
     const input = container.querySelector('input')
 
     user.type(input, 'abc123def ~!@#$%^&*()-=[]')
@@ -1128,125 +1123,154 @@ describe('inputType', () => {
 })
 
 describe('charValidator', () => {
-  test('it should set the proper char validator count', () => {
-    const wrapper = mount(
+  test('should not show the charValidator if no value in the input', () => {
+    const { container } = render(
       <Input charValidatorLimit="9" withCharValidator={true} />
     )
-    wrapper.instance().setValue('12345')
-    expect(wrapper.state().validatorCount).toEqual(4)
+    expect(
+      container.querySelector('.c-Input__CharValidator')
+    ).not.toBeInTheDocument()
   })
 
-  test('it should set a validator count only if the count is more than the value', () => {
-    const wrapper = mount(
-      <Input charValidatorLimit="20" withCharValidator={true} />
+  test('should not show the charValidator if the input value length is less than half the limit', async () => {
+    const { container, debug } = render(
+      <Input charValidatorLimit="10" withCharValidator={true} />
     )
-    wrapper.instance().setValue('1234567891011')
-    expect(wrapper.state().validatorCount).toEqual(7)
-    wrapper.instance().setValue('12345')
-    expect(wrapper.state().validatorCount).toEqual(7)
+    const input = container.querySelector('input')
+    const charValidator = container.querySelector('.c-Input__CharValidator')
+
+    user.type(input, '1234')
+
+    await waitFor(() => {
+      expect(charValidator).not.toBeInTheDocument()
+    })
   })
 
-  test('it should render charValidator without a badge', () => {
-    const wrapper = mount(
-      <Input isFocused={true} value="1" withCharValidator={true} />
+  test('should show the green charValidator if the input value length is equal or more than half the limit', () => {
+    const { container } = render(
+      <Input charValidatorLimit="10" withCharValidator={true} value="12345" />
     )
-    expect(wrapper.find(Badge).length).toEqual(0)
-    expect(wrapper.find(CharValidatorUI).length).toEqual(1)
-    const animate = wrapper.find(Animate)
-    expect(animate.props().in).toEqual(false)
-    expect(animate.length).toEqual(1)
+    const input = container.querySelector('input')
+
+    input.focus()
+    expect(
+      container.querySelector('.c-Input__CharValidator')
+    ).toBeInTheDocument()
+    expect(container.querySelector('.c-Badge')).toHaveClass('is-success')
   })
-  test('it should render charValidator with a badge', () => {
-    const wrapper = mount(
+
+  test('should show the yellow charValidator if the input value length is equal or more than half the limit', () => {
+    const { container } = render(
       <Input
         charValidatorLimit="10"
-        isFocused={true}
         withCharValidator={true}
-        value="123456"
-      />
-    )
-    expect(wrapper.find(Badge).length).toEqual(1)
-    expect(wrapper.find(CharValidatorUI).length).toEqual(1)
-    const animate = wrapper.find(Animate)
-    expect(animate.props().in).toEqual(true)
-    expect(animate.length).toEqual(1)
-  })
-  test('it should not render charValidator', () => {
-    const wrapper = mount(<Input />)
-    expect(wrapper.find(CharValidatorUI).length).toEqual(0)
-  })
-  test('it should not render badge if the input does not have focus', () => {
-    const wrapper = mount(
-      <Input
-        charValidatorLimit={10}
-        isFocused={false}
         value="12345678"
-        withCharValidator={true}
       />
     )
-    expect(wrapper.find(CharValidatorUI).length).toEqual(1)
-    expect(wrapper.find(Badge).length).toEqual(0)
-  })
-  test('it should not render charValidator, because showAt has not been reached', () => {
-    const wrapper = mount(<Input withCharValidator={true} value="12345678" />)
-    expect(wrapper.find(CharValidatorUI).length).toEqual(1)
-    const animate = wrapper.find(Animate)
-    const badge = wrapper.find(Badge)
-    expect(animate.props().in).toEqual(false)
-    expect(animate.length).toEqual(1)
-    expect(badge.length).toEqual(0)
+    const input = container.querySelector('input')
+
+    input.focus()
+    expect(
+      container.querySelector('.c-Input__CharValidator')
+    ).toBeInTheDocument()
+    expect(container.querySelector('.c-Badge')).toHaveClass('is-warning')
   })
 
-  test('it should render with badge error', () => {
-    const wrapper = mount(
+  test('should show the red charValidator if the input value length has reached the limit', () => {
+    const { container } = render(
       <Input
-        charValidatorLimit={7}
-        isFocused={true}
-        value="12345678"
+        charValidatorLimit="10"
         withCharValidator={true}
+        value="1234567890"
       />
     )
-    const animate = wrapper.find(Animate)
-    const badge = wrapper.find(Badge)
-    expect(wrapper.find(CharValidatorUI).length).toEqual(1)
-    expect(animate.props().in).toEqual(true)
-    expect(animate.length).toEqual(1)
-    expect(badge.length).toEqual(1)
-    expect(badge.props().status).toEqual('error')
+    const input = container.querySelector('input')
+
+    input.focus()
+    expect(
+      container.querySelector('.c-Input__CharValidator')
+    ).toBeInTheDocument()
+    expect(container.querySelector('.c-Badge')).toHaveClass('is-error')
   })
 
-  test('it should render with badge warning', () => {
-    const wrapper = mount(
+  test('should clear the charValidator if the input value is cleared', () => {
+    const { container } = render(
       <Input
-        charValidatorLimit={21}
-        isFocused={true}
+        charValidatorLimit="10"
         withCharValidator={true}
-        value="only a fifth left"
+        value="1234567890"
       />
     )
-    const animate = wrapper.find(Animate)
-    const badge = wrapper.find(Badge)
-    expect(wrapper.find(CharValidatorUI).length).toEqual(1)
-    expect(animate.props().in).toEqual(true)
-    expect(animate.length).toEqual(1)
-    expect(badge.length).toEqual(1)
-    expect(badge.props().status).toEqual('warning')
+    const input = container.querySelector('input')
+
+    user.type(input, '{selectall}{backspace}')
+
+    expect(
+      container.querySelector('.c-Input__CharValidator')
+    ).not.toBeInTheDocument()
   })
-  test('it should render charValidator success', () => {
-    const wrapper = mount(
-      <Input
-        charValidatorLimit={10}
-        isFocused={true}
-        value="123456"
-        withCharValidator={true}
-      />
+
+  test('should update the charValidator as you type', () => {
+    const { container } = render(
+      <Input charValidatorLimit="10" withCharValidator={true} />
     )
-    const animate = wrapper.find(Animate)
-    const badge = wrapper.find(Badge)
-    expect(wrapper.find(CharValidatorUI).length).toEqual(1)
-    expect(animate.props().in).toEqual(true)
-    expect(animate.length).toEqual(1)
-    expect(badge.length).toEqual(1)
-    expect(badge.props().status).toEqual('success')
+    const input = container.querySelector('input')
+
+    // no show
+    user.type(input, '1234')
+
+    expect(
+      container.querySelector('.c-Input__CharValidator')
+    ).not.toBeInTheDocument()
+
+    // show green
+    user.type(input, '5')
+
+    expect(
+      container.querySelector('.c-Input__CharValidator')
+    ).toBeInTheDocument()
+    expect(container.querySelector('.c-Badge')).toHaveClass('is-success')
+
+    // show yellow
+    user.type(input, '678')
+
+    expect(
+      container.querySelector('.c-Input__CharValidator')
+    ).toBeInTheDocument()
+    expect(container.querySelector('.c-Badge')).toHaveClass('is-warning')
+
+    // show red
+    user.type(input, '67890')
+
+    expect(
+      container.querySelector('.c-Input__CharValidator')
+    ).toBeInTheDocument()
+    expect(container.querySelector('.c-Badge')).toHaveClass('is-error')
+
+    // back to yellow
+
+    user.type(input, '{backspace}')
+
+    expect(
+      container.querySelector('.c-Input__CharValidator')
+    ).toBeInTheDocument()
+    expect(container.querySelector('.c-Badge')).toHaveClass('is-warning')
+
+    // back to green
+
+    user.type(input, '{backspace}{backspace}')
+
+    expect(
+      container.querySelector('.c-Input__CharValidator')
+    ).toBeInTheDocument()
+    expect(container.querySelector('.c-Badge')).toHaveClass('is-success')
+
+    // back to hide
+
+    user.type(input, '{backspace}{backspace}{backspace}')
+
+    expect(
+      container.querySelector('.c-Input__CharValidator')
+    ).not.toBeInTheDocument()
   })
 })
