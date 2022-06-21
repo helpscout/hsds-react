@@ -93,7 +93,7 @@ export class Input extends React.PureComponent {
   }
 
   setValue = value => {
-    const { inputType, withCharValidator } = this.props
+    const { inputType, withCharValidator, charValidatorLimit } = this.props
     let nextValue = value
 
     if (inputType === 'number') {
@@ -101,23 +101,16 @@ export class Input extends React.PureComponent {
     }
 
     this.setState({ value: nextValue })
-    withCharValidator && this.setValidatorCount(nextValue)
-    return nextValue
-  }
 
-  setValidatorCount(value) {
-    const { charValidatorLimit } = this.props
-
-    if (!value) {
-      // reset the validator count
-      this.setState({ validatorCount: charValidatorLimit })
-    } else {
-      const validatorCount = charValidatorLimit - value.length
-
-      if (value.length >= validatorCount) {
-        this.setState({ validatorCount })
-      }
+    if (withCharValidator) {
+      this.setState({
+        validatorCount: !value
+          ? charValidatorLimit
+          : charValidatorLimit - value.length,
+      })
     }
+
+    return nextValue
   }
 
   maybeForceAutoFocus() {
@@ -493,7 +486,6 @@ export class Input extends React.PureComponent {
         return 'success'
       }
     }
-    // console.log('🚀 ~ getCharValidatorMarkup ~ isFocused', isFocused)
 
     return isVisible ? (
       <CharValidatorUI className="c-Input__CharValidator">

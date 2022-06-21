@@ -1133,7 +1133,7 @@ describe('charValidator', () => {
   })
 
   test('should not show the charValidator if the input value length is less than half the limit', async () => {
-    const { container, debug } = render(
+    const { container } = render(
       <Input charValidatorLimit="10" withCharValidator={true} />
     )
     const input = container.querySelector('input')
@@ -1204,6 +1204,23 @@ describe('charValidator', () => {
     const input = container.querySelector('input')
 
     user.type(input, '{selectall}{backspace}')
+
+    expect(
+      container.querySelector('.c-Input__CharValidator')
+    ).not.toBeInTheDocument()
+  })
+
+  test('should clear the charValidator if the input value is completely replaced with a value under the green limit', () => {
+    const { container } = render(
+      <Input
+        charValidatorLimit="10"
+        withCharValidator={true}
+        value="1234567890"
+      />
+    )
+    const input = container.querySelector('input')
+
+    user.type(input, '{selectall}a')
 
     expect(
       container.querySelector('.c-Input__CharValidator')
