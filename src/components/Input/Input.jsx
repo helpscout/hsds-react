@@ -104,9 +104,7 @@ export class Input extends React.PureComponent {
 
     if (withCharValidator) {
       this.setState({
-        validatorCount: !value
-          ? charValidatorLimit
-          : charValidatorLimit - value.length,
+        validatorCount: charValidatorLimit - `${value}`.length,
       })
     }
 
