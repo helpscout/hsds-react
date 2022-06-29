@@ -34,7 +34,8 @@ export const EmojiButtonUI = styled('button')`
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   font-size: 22px;
-  margin-left: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
   height: 42px;
   width: 42px;
   ${defaultTransition};
@@ -42,10 +43,6 @@ export const EmojiButtonUI = styled('button')`
   ${focusRing};
   --focusRingOffset: 0px;
   --focusRingRadius: 50%;
-
-  &:first-child {
-    margin-left: 0;
-  }
 
   &:hover,
   &:focus {
@@ -112,7 +109,8 @@ export const EmojiButtonUI = styled('button')`
 `
 
 export const RateActionUI = styled(RateAction)`
-  margin-left: 10px !important;
+  margin-left: 5px !important;
+  margin-right: 5px !important;
 
   &.c-RateAction {
     ${defaultTransition};
@@ -170,7 +168,8 @@ export const FeedbackFormUI = styled('form')`
 export const FeedbackLabelUI = styled('label')`
   color: ${getColor('charcoal.500')};
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
+  text-align: center;
 `
 
 export const SubmitFeedbackFormButtonUI = styled(Button)`
