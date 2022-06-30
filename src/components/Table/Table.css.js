@@ -81,8 +81,8 @@ export const TableUI = styled('table')`
     background: linear-gradient(
       to right,
       ${props => props.theme.bgFocusIndicator},
-      ${props => props.theme.bgFocusIndicator} 3px,
-      transparent 3px,
+      ${props => props.theme.bgFocusIndicator} 2px,
+      transparent 2px,
       transparent 100%
     );
   }

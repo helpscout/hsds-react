@@ -49,6 +49,7 @@ export function Table({
   },
   tableClassName,
   tableDescription,
+  tableRole = 'table',
   tableWidth = { min: '700px' },
   withColumnChooser = false,
   withFocusableRows = false,
@@ -145,6 +146,7 @@ export function Table({
               withSelectableRows && 'selection-enabled',
               tableClassName
             )}
+            role={tableRole}
             tableWidth={tableWidth}
             withTallRows={withTallRows}
           >
@@ -160,6 +162,7 @@ export function Table({
                 state.selectedRows.length === state.currentTableData.length
               }
               sortedInfo={sortedInfo}
+              tableRole={tableRole}
               withSelectableRows={withSelectableRows}
             />
             <TableBody
@@ -258,6 +261,8 @@ Table.propTypes = {
   tableClassName: PropTypes.string,
   /** Description of the table contents for accessibility */
   tableDescription: PropTypes.string.isRequired,
+  /** Change the default role of the table */
+  tableRole: PropTypes.string,
   /** The `<table>` width */
   tableWidth: PropTypes.shape({ min: PropTypes.string, max: PropTypes.string }),
   /** An object to customize the visual appearance of the table. See [Skins.md](/src/components/Table/docs/Skins.md) */

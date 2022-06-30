@@ -15,20 +15,28 @@ import {
   generateCustomHeaderCell,
 } from './Table.utils'
 
-export default function HeaderCell({ column, isLoading, sortedInfo }) {
+export default function HeaderCell({
+  column,
+  isLoading,
+  sortedInfo,
+  tableRole,
+}) {
   const sorterBtnId = Array.isArray(column.columnKey)
     ? `${column.columnKey.join('_')}_${column.sortKey}_sorter`
     : `${column.columnKey}_${column.sortKey}_sorter`
 
-  function getColumnSortStatus() {
+  function isTableSortedByThisColumn() {
     const colKey = Array.isArray(column.columnKey)
       ? column.sortKey
       : column.columnKey
 
-    const isTableSortedByThisColumn =
+    return (
       !isNil(sortedInfo) && sortedInfo.order && sortedInfo.columnKey === colKey
+    )
+  }
 
-    if (isTableSortedByThisColumn) {
+  function getColumnSortStatus() {
+    if (isTableSortedByThisColumn()) {
       return sortedInfo.order
     }
 
@@ -81,6 +89,7 @@ export default function HeaderCell({ column, isLoading, sortedInfo }) {
 
     if (isSortable) {
       const columnSortStatus = getColumnSortStatus()
+      const isSorted = isTableSortedByThisColumn()
 
       return (
         <SortableCellUI
@@ -91,6 +100,11 @@ export default function HeaderCell({ column, isLoading, sortedInfo }) {
           )}
         >
           <SortableCellContentUI
+            aria-label={
+              isSorted &&
+              tableRole !== 'table' &&
+              `Sorted by ${sortedInfo.columnKey} ${columnSortStatus}`
+            }
             align={column.align}
             className={`${TABLE_CLASSNAME}__SortableHeaderCell__title`}
             onClick={handleClick}
@@ -122,7 +136,7 @@ export default function HeaderCell({ column, isLoading, sortedInfo }) {
       className={generateCellClassNames(column, 'HeaderCell')}
       align={column.align}
       cellWidth={column.width}
-      aria-sort={getColumnSortStatus()}
+      aria-sort={tableRole === 'table' ? getColumnSortStatus() : null}
     >
       {renderCellContents()}
     </HeaderCellUI>

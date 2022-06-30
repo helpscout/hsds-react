@@ -17,6 +17,7 @@ function TableHead({
   selected,
   selectionKey,
   sortedInfo,
+  tableRole,
   withSelectableRows,
 }) {
   function handleChange(_, checked) {
@@ -51,6 +52,7 @@ function TableHead({
               column={column}
               isLoading={isLoading}
               sortedInfo={sortedInfo}
+              tableRole={tableRole}
             />
           ))}
       </tr>
