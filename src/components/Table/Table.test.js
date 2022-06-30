@@ -1,5 +1,4 @@
 import React from 'react'
-import { mount, render as enzymeRender } from 'enzyme'
 import { render } from '@testing-library/react'
 import user from '@testing-library/user-event'
 import { Table, TABLE_CLASSNAME } from './Table'
@@ -13,7 +12,7 @@ import {
   SELECT_ROW,
   DESELECT_ROW,
 } from './Table.actionTypes'
-import { defaultSkin, alternativeSkin, chooseSkin } from './Table.skins'
+import { alternativeSkin } from './Table.skins'
 import {
   columnsChooser,
   createFakeCustomers,
@@ -25,33 +24,37 @@ import { createColumnChooserListItems } from './Table.utils'
 
 describe('ClassName', () => {
   test('Wrapper has default className', () => {
-    const wrapper = enzymeRender(<Table tableDescription="test-table" />)
+    const { container } = render(<Table tableDescription="test-table" />)
 
-    expect(wrapper.hasClass(`${TABLE_CLASSNAME}__Wrapper`)).toBeTruthy()
+    expect(
+      container.querySelector(`.${TABLE_CLASSNAME}__Wrapper`)
+    ).toBeInTheDocument()
   })
 
   test('Applies custom className to wrapper if specified', () => {
     const className = 'channel-4'
-    const wrapper = enzymeRender(
+    const { container } = render(
       <Table tableDescription="test-table" className={className} />
     )
 
-    expect(wrapper.hasClass(className)).toBeTruthy()
+    expect(container.querySelector(`.${TABLE_CLASSNAME}__Wrapper`)).toHaveClass(
+      className
+    )
   })
 
   test('Table has default className', () => {
-    const wrapper = enzymeRender(<Table tableDescription="test-table" />)
+    const { getByRole } = render(<Table tableDescription="test-table" />)
 
-    expect(wrapper.find('table').hasClass(TABLE_CLASSNAME)).toBeTruthy()
+    expect(getByRole('table')).toHaveClass(TABLE_CLASSNAME)
   })
 
   test('Applies custom className to table if specified', () => {
     const className = 'channel-4'
-    const wrapper = enzymeRender(
+    const { getByRole } = render(
       <Table tableDescription="test-table" tableClassName={className} />
     )
 
-    expect(wrapper.find('table').hasClass(className)).toBeTruthy()
+    expect(getByRole('table')).toHaveClass(className)
   })
 })
 
@@ -90,20 +93,20 @@ describe('Render', () => {
 
 describe('Table Header', () => {
   test('Renders rows and cells', () => {
-    const wrapper = mount(
+    const { container } = render(
       <Table
         tableDescription="test-table"
         columns={defaultColumns}
         data={createFakeCustomers({ amount: 5 })}
       />
     )
-    const thead = wrapper.find('thead')
-    const headerCells = thead.find('th')
-    const nameHeaderCell = headerCells.first()
+    const thead = container.querySelector('thead')
+    const headerCells = thead.querySelectorAll('th')
+    const nameHeaderCell = headerCells[0]
 
-    expect(thead.exists()).toBeTruthy()
+    expect(thead).toBeInTheDocument()
     expect(headerCells.length).toBe(4)
-    expect(nameHeaderCell.text()).toBe('Name')
+    expect(nameHeaderCell).toHaveTextContent('Name')
   })
 
   test('Icon Header cells', () => {
@@ -127,47 +130,47 @@ describe('Table Header', () => {
   })
 
   test('Custom cells', () => {
-    const wrapper = mount(
+    const { container } = render(
       <Table
         tableDescription="test-table"
         columns={defaultColumnsCustomContent}
         data={createFakeCustomers({ amount: 5 })}
       />
     )
-    const thead = wrapper.find('thead')
-    const headerCells = thead.find('th')
-    const nameHeaderCell = headerCells.first()
+    const thead = container.querySelector('thead')
+    const headerCells = thead.querySelectorAll('th')
+    const nameHeaderCell = headerCells[0]
 
-    expect(nameHeaderCell.find('em').exists()).toBeTruthy()
+    expect(nameHeaderCell.querySelector('em')).toBeInTheDocument()
   })
 })
 
 describe('Table Body', () => {
   test('Renders rows and cells', () => {
     const customers = createFakeCustomers({ amount: 10 })
-    const wrapper = mount(
+    const { container } = render(
       <Table
         tableDescription="test-table"
         columns={defaultColumns}
         data={customers}
       />
     )
-    const tbody = wrapper.find('tbody')
-    const rows = tbody.find('tr')
-    const firstRow = rows.first()
-    const cellsInRow = firstRow.find('td')
+    const tbody = container.querySelector('tbody')
+    const rows = tbody.querySelectorAll('tr')
+    const firstRow = rows[0]
+    const cellsInRow = firstRow.querySelectorAll('td')
 
-    expect(tbody.exists()).toBeTruthy()
+    expect(tbody).toBeInTheDocument()
     expect(rows.length).toBe(10)
     expect(cellsInRow.length).toBe(4)
-    expect(firstRow.hasClass(`${TABLE_CLASSNAME}__Row`)).toBeTruthy()
+    expect(firstRow).toHaveClass(`${TABLE_CLASSNAME}__Row`)
 
     const customer = customers[0]
 
-    expect(cellsInRow.at(0).text()).toBe(customer.name)
-    expect(cellsInRow.at(1).text()).toBe(customer.companyName)
-    expect(cellsInRow.at(2).text()).toBe(customer.emails)
-    expect(cellsInRow.at(3).text()).toBe(customer.lastSeen)
+    expect(cellsInRow[0]).toHaveTextContent(customer.name)
+    expect(cellsInRow[1]).toHaveTextContent(customer.companyName)
+    expect(cellsInRow[2]).toHaveTextContent(customer.emails)
+    expect(cellsInRow[3]).toHaveTextContent(customer.lastSeen)
   })
 
   test('Renders rows with provided classNames', () => {
@@ -176,18 +179,18 @@ describe('Table Body', () => {
       return { ...info, ...{ className } }
     })
 
-    const wrapper = mount(
+    const { container } = render(
       <Table
         tableDescription="test-table"
         columns={defaultColumns}
         data={customers}
       />
     )
-    const tbody = wrapper.find('tbody')
-    const rows = tbody.find('tr')
+    const tbody = container.querySelector('tbody')
+    const rows = tbody.querySelectorAll('tr')
 
     customers.forEach((customer, i) => {
-      expect(rows.get(i).props.className).toContain(customer.className)
+      expect(rows[i]).toHaveClass(customer.className)
     })
   })
 
@@ -214,19 +217,19 @@ describe('Table Body', () => {
       },
     ]
 
-    const wrapper = mount(
+    const { container } = render(
       <Table
         tableDescription="test-table"
         columns={columns}
         data={createFakeCustomers({ amount: 5 })}
       />
     )
-    const tbody = wrapper.find('tbody')
-    const rows = tbody.find('tr')
-    const cellsInRow = rows.first().find('td')
+    const tbody = container.querySelector('tbody')
+    const rows = tbody.querySelectorAll('tr')
+    const cellsInRow = rows[0].querySelectorAll('td')
 
-    expect(cellsInRow.first().find('.name').exists()).toBeTruthy()
-    expect(cellsInRow.first().find('.companyName').exists()).toBeTruthy()
+    expect(cellsInRow[0].querySelector('.name')).toBeInTheDocument()
+    expect(cellsInRow[0].querySelector('.companyName')).toBeInTheDocument()
   })
 
   test('should add without-padding class name if clearCellPadding is added to a column', () => {
@@ -252,45 +255,37 @@ describe('Table Body', () => {
 })
 
 describe('Skin', () => {
-  test('Renders default without specifying skin', () => {
-    const customers = createFakeCustomers({ amount: 10 })
-    const wrapper = mount(
-      <Table
-        tableDescription="test-table"
-        columns={defaultColumns}
-        data={customers}
-      />
-    )
-
-    expect(chooseSkin(wrapper.prop('skin'))).toEqual(defaultSkin)
-  })
-
   test('Renders default skin', () => {
     const customers = createFakeCustomers({ amount: 10 })
-    const wrapper = mount(
+    const { getByRole } = render(
       <Table
         tableDescription="test-table"
         columns={defaultColumns}
         data={customers}
-        skin="default"
       />
     )
 
-    expect(chooseSkin(wrapper.prop('skin'))).toEqual(defaultSkin)
+    expect(
+      window.getComputedStyle(getByRole('table').querySelector('th'))
+        .backgroundColor
+    ).toBe('white')
   })
 
   test('Renders alternative skin', () => {
     const customers = createFakeCustomers({ amount: 10 })
-    const wrapper = mount(
+    const { getByRole } = render(
       <Table
         tableDescription="test-table"
         columns={defaultColumns}
         data={customers}
-        skin="alternative"
+        skin={alternativeSkin}
       />
     )
 
-    expect(chooseSkin(wrapper.prop('skin'))).toEqual(alternativeSkin)
+    expect(
+      window.getComputedStyle(getByRole('table').querySelector('th'))
+        .backgroundColor
+    ).toBe('rgb(229, 233, 236)') //rgb value of getColor('grey.400')
   })
 
   test('Renders custom skin', () => {
@@ -307,7 +302,7 @@ describe('Skin', () => {
       borderRows: '1px solid blueviolet',
       borderColumns: '1px solid blueviolet',
     }
-    const wrapper = mount(
+    const { getByRole } = render(
       <Table
         tableDescription="test-table"
         columns={defaultColumns}
@@ -316,20 +311,21 @@ describe('Skin', () => {
       />
     )
 
-    expect(chooseSkin(wrapper.prop('skin'))).toEqual({
-      ...defaultSkin,
-      ...purpleSkin,
-    })
+    expect(
+      window.getComputedStyle(getByRole('table').querySelector('td')).color
+    ).toBe('rebeccapurple')
   })
 })
 
 describe('Is loading state', () => {
   test('Displays LoadingUI', () => {
-    const wrapper = enzymeRender(
+    const { container } = render(
       <Table tableDescription="test-table" isLoading />
     )
 
-    expect(wrapper.find(`.${TABLE_CLASSNAME}__Loading`).length).toBeTruthy()
+    expect(
+      container.querySelector(`.${TABLE_CLASSNAME}__Loading`)
+    ).toBeInTheDocument()
   })
 })
 
@@ -490,8 +486,8 @@ describe('Clickable Rows', () => {
   })
 })
 
-describe('Sortable', () => {
-  test('Fires function when header cell is clicked', () => {
+describe('Sorting', () => {
+  test('it should sort when you tell it to sort', () => {
     const customers = createFakeCustomers({ amount: 5 })
     const regularColumnSpy = jest.fn()
     const compoundColumnSpy = jest.fn()
@@ -587,6 +583,108 @@ describe('Sortable', () => {
       'descending'
     )
   })
+
+  test('it should sort when you tell it to sort (role not table)', () => {
+    const customers = createFakeCustomers({ amount: 5 })
+    const regularColumnSpy = jest.fn()
+    const compoundColumnSpy = jest.fn()
+    const columns = [
+      {
+        title: 'Name',
+        columnKey: 'name',
+        width: '30%',
+        sortKey: 'name',
+        sorter: regularColumnSpy,
+      },
+      {
+        title: 'Customer (sorts by name)',
+        columnKey: ['name', 'companyName'],
+        width: '30%',
+        sortKey: 'companyName',
+        sorter: compoundColumnSpy,
+      },
+    ]
+    const { container, rerender } = render(
+      <Table
+        tableRole="presentation"
+        tableDescription="test-table"
+        columns={columns}
+        data={customers}
+        sortedInfo={{
+          columnKey: null,
+          order: null,
+        }}
+      />
+    )
+
+    // Regular column sorting, should be called with 'columnKey'
+    expect(container.querySelector(`thead th`)).not.toHaveAttribute('aria-sort')
+    expect(container.querySelector('thead button')).not.toHaveAttribute(
+      'aria-label'
+    )
+    expect(container.querySelector('.is-sortable')).toBeInTheDocument()
+
+    rerender(
+      <Table
+        tableRole="presentation"
+        tableDescription="test-table"
+        columns={columns}
+        data={customers}
+        sortedInfo={{
+          columnKey: 'name',
+          order: 'ascending',
+        }}
+      />
+    )
+
+    expect(container.querySelector('thead th')).not.toHaveAttribute('aria-sort')
+    expect(container.querySelector('thead button')).toHaveAttribute(
+      'aria-label',
+      'Sorted by name ascending'
+    )
+
+    user.click(container.querySelector('.c-Table__SortableHeaderCell__title'))
+
+    expect(regularColumnSpy).toHaveBeenCalled()
+    expect(regularColumnSpy).toHaveBeenCalledWith(columns[0].columnKey)
+
+    expect(
+      container.querySelector(`.${TABLE_CLASSNAME}__SortableHeaderCell`)
+    ).toBeInTheDocument()
+
+    expect(
+      container.querySelector(`.${TABLE_CLASSNAME}__SortableHeaderCell__title`)
+    ).toBeInTheDocument()
+
+    // Compound column sorting, should be called with 'sortKey'
+    const customerHeaderCell = container.querySelectorAll('thead th')[1]
+
+    user.click(
+      customerHeaderCell.querySelector('.c-Table__SortableHeaderCell__title')
+    )
+
+    expect(compoundColumnSpy).toHaveBeenCalled()
+    expect(compoundColumnSpy).toHaveBeenCalledWith(columns[1].sortKey)
+
+    rerender(
+      <Table
+        tableRole="presentation"
+        tableDescription="test-table"
+        columns={columns}
+        data={customers}
+        sortedInfo={{
+          columnKey: 'name',
+          order: 'descending',
+        }}
+      />
+    )
+
+    expect(container.querySelector('thead th')).not.toHaveAttribute('aria-sort')
+    expect(container.querySelector('thead button')).toHaveAttribute(
+      'aria-label',
+      'Sorted by name descending'
+    )
+  })
 })
 
 describe('Expandable', () => {
@@ -614,21 +712,21 @@ describe('Expandable', () => {
     )
 
     expect(container.querySelectorAll('tbody tr').length).toBe(4)
-    expect(getByRole('button').textContent).toBe('View All')
+    expect(getByRole('button')).toHaveTextContent('View All')
 
     user.click(getByRole('button'))
 
     expect(container.querySelectorAll('tbody tr').length).toBe(10)
-    expect(getByRole('button').textContent).toBe('Collapse')
+    expect(getByRole('button')).toHaveTextContent('Collapse')
 
     user.click(getByRole('button'))
 
     expect(container.querySelectorAll('tbody tr').length).toBe(4)
-    expect(getByRole('button').textContent).toBe('View All')
+    expect(getByRole('button')).toHaveTextContent('View All')
   })
 
   test('Table expands/collapses on click of Expander (custom text)', () => {
-    const wrapper = mount(
+    const { container } = render(
       <Table
         tableDescription="test-table"
         columns={defaultColumns}
@@ -640,15 +738,16 @@ describe('Expandable', () => {
         }}
       />
     )
-    const expander = wrapper.find(`.${TABLE_CLASSNAME}__Expander`).first()
-    expander.simulate('click')
 
-    expect(expander.text()).toBe('Show me all')
+    expect(
+      container.querySelector(`.${TABLE_CLASSNAME}__Expander`)
+    ).toHaveTextContent('Show me all')
 
-    const expander2 = wrapper.find(`.${TABLE_CLASSNAME}__Expander`).first()
-    expander2.simulate('click')
+    user.click(container.querySelector(`.${TABLE_CLASSNAME}__Expander`))
 
-    expect(expander2.text()).toBe('Show me the top 4')
+    expect(
+      container.querySelector(`.${TABLE_CLASSNAME}__Expander`)
+    ).toHaveTextContent('Show me the top 4')
   })
 
   test('Table fires onExpand on click of Expander', () => {
