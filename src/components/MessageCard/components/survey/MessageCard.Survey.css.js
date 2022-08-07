@@ -27,6 +27,9 @@ export const SurveyOptionsUI = styled('div')`
 `
 
 export const EmojiButtonUI = styled('button')`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   background: white;
   border: none;
@@ -90,21 +93,44 @@ export const EmojiButtonUI = styled('button')`
       height: 28px;
       width: 28px;
     }
+
+    & > span {
+      height: auto;
+      top: 1px;
+    }
   }
 
   & > span {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: block;
+    height: 26px;
+    position: relative;
+  }
 
-    // Native emojis show up off-centered on non-retina screens...
-    // Which is why we need to adjust the margin a little bit here.
-    @media not screen and (min-device-pixel-ratio: 2),
-      not screen and (min-resolution: 192dpi) {
-      & {
-        margin-right: 2px;
+  // Native emojis show up off-centered on non-retina screens...
+  // Which is why we need to adjust the margin a little bit here.
+  @media not screen and (min-device-pixel-ratio: 2),
+    not screen and (min-resolution: 192dpi) {
+    & > span {
+      top: -1px;
+    }
+    &.is-md {
+      font-size: 11px;
+      & > span {
+        top: 0;
       }
     }
+  }
+`
+
+export const ImageEmojiUI = styled('img')`
+  display: inline-block;
+  height: 22px;
+  position: relative;
+  width: auto;
+  ${defaultTransition};
+
+  &.is-md {
+    height: 12px;
   }
 `
 

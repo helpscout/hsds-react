@@ -3,6 +3,7 @@ import { boolean, select, text } from '@storybook/addon-knobs'
 import MessageCard from './'
 import { MessageCardStoryWrapperUI } from './MessageCard.storiesHelper'
 import {
+  EmojiSurvey,
   FacesSurvey,
   MultipleChoiceSurvey,
   ThumbsSurvey,
@@ -231,6 +232,51 @@ This component renders a Message Card Notification with (optional) Title, Subtit
               withShowFeedbackFormDelay
             >
               <FacesSurvey />
+            </MessageCard.Survey>
+          </ThemeProvider>
+        )}
+      />
+    </MessageCardStoryWrapperUI>
+  </Story>
+</Canvas>
+
+# With Emoji survey
+
+<Canvas>
+  <Story name="With Emoji survey">
+    <MessageCardStoryWrapperUI>
+      <MessageCard
+        title="How did you feel about your checkout experience?"
+        body="Your feedback is valuable to us. Let us know how we did so we can continue to improve our services."
+        action={() => (
+          <ThemeProvider theme={{ brandColor: makeBrandColors('#5c8c3c') }}>
+            <MessageCard.Survey
+              withFeedbackForm
+              feedbackFormText="Tell us more..."
+              submitButtonText="Send with some long button text"
+              onSubmit={data => console.log(data)}
+              withShowFeedbackFormDelay
+            >
+              <EmojiSurvey
+                emojis={[
+                  {
+                    id: '+1',
+                    name: 'Thumbs Up',
+                    unicode: '1f44d',
+                  },
+                  {
+                    id: '100',
+                    name: 'Hundred Points',
+                    unicode: '1f4af',
+                  },
+                  {
+                    id: 'sunglasses',
+                    name: 'Sunglasses',
+                    unicode: '1f60e',
+                    native: '😎',
+                  },
+                ]}
+              />
             </MessageCard.Survey>
           </ThemeProvider>
         )}
