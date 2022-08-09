@@ -33,6 +33,8 @@ export function stateReducerCommon({
       }
 
     case `${COMBOBOX}.${useCombobox.stateChangeTypes.ControlledPropUpdatedSelectedItem}`:
+      return { ...changes, inputValue: state.inputValue }
+
     case `${COMBOBOX}.${useCombobox.stateChangeTypes.InputKeyDownEnter}`:
     case `${COMBOBOX}.${useCombobox.stateChangeTypes.ItemClick}`:
     case `${SELECT}.${useSelect.stateChangeTypes.MenuKeyDownEnter}`:
