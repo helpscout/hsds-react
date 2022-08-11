@@ -1,11 +1,11 @@
 import React from 'react'
-import { render, act, screen, fireEvent } from '@testing-library/react'
-import MessageCard from './MessageCard'
-import { ThumbsSurvey } from './MessageCard.Survey.variants'
-import { MessageCardButton as Button } from './MessageCard.Button'
+import { act, fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { makeBrandColors } from '../../styles/utilities/color'
-import { ThemeProvider } from 'styled-components'
+
+import MessageCard from './MessageCard'
+import { MessageCardButton as Button } from './MessageCard.Button'
+import { ThumbsSurvey } from './MessageCard.Survey.variants'
+import { MessageCardContext } from './utils/MessageCard.context'
 
 describe('className', () => {
   test('Has default className', () => {
@@ -561,10 +561,13 @@ describe('Surveys', () => {
     userEvent.type(screen.getByLabelText(formLabel), 'Did not like it')
     userEvent.click(screen.getByRole('button', { name: 'Send' }))
 
-    expect(onSubmit).toHaveBeenCalledWith({
-      feedback: 'Did not like it',
-      selected: 'thumbs-down',
-    })
+    expect(onSubmit).toHaveBeenCalledWith(
+      {
+        feedback: 'Did not like it',
+        selected: 'thumbs-down',
+      },
+      expect.any(Function)
+    )
   })
 
   test('Calls the onSubmit callback right away if withFeedbackForm is not set', () => {
@@ -578,9 +581,12 @@ describe('Surveys', () => {
 
     userEvent.click(screen.getByRole('button', { name: 'thumbs-up' }))
 
-    expect(onSubmit).toHaveBeenCalledWith({
-      selected: 'thumbs-up',
-    })
+    expect(onSubmit).toHaveBeenCalledWith(
+      {
+        selected: 'thumbs-up',
+      },
+      expect.any(Function)
+    )
   })
 
   test('Shows the feedback form before submit if forceFeedbackForm is set', () => {
@@ -594,6 +600,134 @@ describe('Surveys', () => {
 
     expect(screen.queryByLabelText(formLabel)).toBeInTheDocument()
   })
+
+  test('calls onSelectionWithComment context function when has feedback form and not delayed', () => {
+    const onSelectionWithComment = jest.fn()
+    render(
+      <MessageCardContext.Provider value={{ onSelectionWithComment }}>
+        <MessageCard.Survey withFeedbackForm>
+          <ThumbsSurvey />
+        </MessageCard.Survey>
+      </MessageCardContext.Provider>
+    )
+
+    userEvent.click(screen.getByRole('button', { name: 'thumbs-up' }))
+
+    expect(onSelectionWithComment).toHaveBeenCalled()
+  })
+
+  test('calls delayed onSelectionWithComment context function when has feedback form and not delayed', () => {
+    const onSelectionWithComment = jest.fn()
+    render(
+      <MessageCardContext.Provider value={{ onSelectionWithComment }}>
+        <MessageCard.Survey withFeedbackForm withShowFeedbackFormDelay>
+          <ThumbsSurvey />
+        </MessageCard.Survey>
+      </MessageCardContext.Provider>
+    )
+
+    userEvent.click(screen.getByRole('button', { name: 'thumbs-up' }))
+
+    expect(onSelectionWithComment).not.toHaveBeenCalled()
+
+    act(() => {
+      jest.runAllTimers()
+    })
+
+    expect(onSelectionWithComment).toHaveBeenCalled()
+  })
+
+  test('does not call onSelectionWithComment context function when no feedback form', () => {
+    const onSelectionWithComment = jest.fn()
+    render(
+      <MessageCardContext.Provider value={{ onSelectionWithComment }}>
+        <MessageCard.Survey>
+          <ThumbsSurvey />
+        </MessageCard.Survey>
+      </MessageCardContext.Provider>
+    )
+
+    userEvent.click(screen.getByRole('button', { name: 'thumbs-up' }))
+
+    expect(onSelectionWithComment).not.toHaveBeenCalled()
+  })
+
+  test('calls onSuccessfulSubmit context function after feedback submit succeeded', () => {
+    const onSuccessfulSubmit = jest.fn()
+    const onSubmit = (data, callback) => {
+      callback(true)
+    }
+    render(
+      <MessageCardContext.Provider value={{ onSuccessfulSubmit }}>
+        <MessageCard.Survey withFeedbackForm onSubmit={onSubmit}>
+          <ThumbsSurvey />
+        </MessageCard.Survey>
+      </MessageCardContext.Provider>
+    )
+
+    userEvent.click(screen.getByRole('button', { name: 'thumbs-up' }))
+    expect(onSuccessfulSubmit).not.toHaveBeenCalled()
+    userEvent.click(screen.getByRole('button', { name: 'Send' }))
+
+    expect(onSuccessfulSubmit).toHaveBeenCalled()
+  })
+
+  test('calls onSuccessfulSubmit context function after response selected when no feedback form', () => {
+    const onSuccessfulSubmit = jest.fn()
+    const onSubmit = (data, callback) => {
+      callback(true)
+    }
+    render(
+      <MessageCardContext.Provider value={{ onSuccessfulSubmit }}>
+        <MessageCard.Survey onSubmit={onSubmit}>
+          <ThumbsSurvey />
+        </MessageCard.Survey>
+      </MessageCardContext.Provider>
+    )
+
+    userEvent.click(screen.getByRole('button', { name: 'thumbs-up' }))
+
+    expect(onSuccessfulSubmit).toHaveBeenCalled()
+  })
+
+  test('does not call onSuccessfulSubmit context function after feedback submit failed', () => {
+    const onSuccessfulSubmit = jest.fn()
+    const onSubmit = (data, callback) => {
+      callback(false)
+    }
+    render(
+      <MessageCardContext.Provider value={{ onSuccessfulSubmit }}>
+        <MessageCard.Survey withFeedbackForm onSubmit={onSubmit}>
+          <ThumbsSurvey />
+        </MessageCard.Survey>
+      </MessageCardContext.Provider>
+    )
+
+    userEvent.click(screen.getByRole('button', { name: 'thumbs-up' }))
+    userEvent.click(screen.getByRole('button', { name: 'Send' }))
+
+    expect(onSuccessfulSubmit).not.toHaveBeenCalled()
+  })
+
+  test('does not call onSuccessfulSubmit context function after response selected when no feedback form, but error', () => {
+    const onSuccessfulSubmit = jest.fn()
+    const onSubmit = (data, callback) => {
+      callback(false)
+    }
+    render(
+      <MessageCardContext.Provider value={{ onSuccessfulSubmit }}>
+        <MessageCard.Survey onSubmit={onSubmit}>
+          <ThumbsSurvey />
+        </MessageCard.Survey>
+      </MessageCardContext.Provider>
+    )
+
+    userEvent.click(screen.getByRole('button', { name: 'thumbs-up' }))
+
+    expect(onSuccessfulSubmit).not.toHaveBeenCalled()
+  })
+
+  // TODO: context tests
 })
 
 function messageCard(container) {

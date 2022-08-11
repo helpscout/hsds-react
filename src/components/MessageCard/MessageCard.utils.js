@@ -1,6 +1,5 @@
-import { MAX_IMAGE_SIZE } from './MessageCard.css'
+import { MAX_IMAGE_SIZE } from './MessageCard.styles'
 import Truncate from '../Truncate'
-import React from 'react'
 
 const sizeWithRatio = (recalculatedSide, otherSide, defaultValue) =>
   // Check if other side is smaller than max size to not recalculate unnecessarily this side as it doesn't need any scaling

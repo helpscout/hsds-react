@@ -1,6 +1,7 @@
 import React from 'react'
-import { UrlAttachmentImageUI } from '../MessageCard.css'
 import PropTypes from 'prop-types'
+
+import { UrlAttachmentImageUI } from '../MessageCard.styles'
 
 function MessageCardUrlAttachmentImage({
   url,

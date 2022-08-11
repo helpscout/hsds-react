@@ -1,7 +1,9 @@
-import { TitleUI } from '../MessageCard.css'
-import { getTruncatedText } from '../MessageCard.utils'
 import React from 'react'
 import PropTypes from 'prop-types'
+
+import { getTruncatedText } from '../MessageCard.utils'
+
+import { TitleUI } from '../MessageCard.styles'
 
 export const MessageCardTitle = ({ title }) => {
   return title ? (

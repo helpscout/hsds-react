@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import {
   MultipleChoiceGroupUI,
   MultipleChoiceRadioUI,
-} from './MessageCard.Survey.css'
+} from './MessageCard.Survey.styles'
+
 import { useSurveyContext } from '../../utils/MessageCard.Survey.context'
 
 export const MessageCardSurveyMultipleChoice = ({ choices }) => {
@@ -11,7 +13,7 @@ export const MessageCardSurveyMultipleChoice = ({ choices }) => {
 
   return (
     <MultipleChoiceGroupUI
-      multiSelect={false}
+      selectionLimits="radio"
       isResponsive
       onChange={onSelection}
     >

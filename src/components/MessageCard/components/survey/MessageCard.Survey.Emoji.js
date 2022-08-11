@@ -1,10 +1,11 @@
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import {
   EmojiButtonUI,
   ImageEmojiUI,
   SurveyOptionsUI,
-} from './MessageCard.Survey.css'
+} from './MessageCard.Survey.styles'
 
 import { useButtonResizeOnSelection } from '../../utils/MessageCard.hooks'
 import { useSurveyContext } from '../../utils/MessageCard.Survey.context'

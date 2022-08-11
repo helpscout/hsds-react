@@ -36,3 +36,5 @@ export const replaceMessageVariables = (text = '', variables = []) => {
 
   return text.replace(regex, replacer)
 }
+
+export function noop() {}

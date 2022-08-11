@@ -1,6 +1,8 @@
 import React from 'react'
+
 import PropTypes from 'prop-types'
-import { ActionButtonUI } from './MessageCard.css'
+
+import { ActionButtonUI } from './MessageCard.styles'
 import Truncate from '../Truncate'
 
 export class MessageCardButton extends React.PureComponent {

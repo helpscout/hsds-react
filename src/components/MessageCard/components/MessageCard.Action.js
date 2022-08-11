@@ -1,6 +1,7 @@
-import { ActionUI } from '../MessageCard.css'
 import React from 'react'
 import PropTypes from 'prop-types'
+
+import { ActionUI } from '../MessageCard.styles'
 
 export const MessageCardAction = ({ action }) => {
   return action ? (

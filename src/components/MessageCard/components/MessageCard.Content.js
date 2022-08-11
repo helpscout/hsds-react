@@ -1,6 +1,7 @@
-import PropTypes from 'prop-types'
-import { ContentUI } from '../MessageCard.css'
 import React from 'react'
+import PropTypes from 'prop-types'
+
+import { ContentUI } from '../MessageCard.styles'
 
 export const MessageCardContent = ({ children, withMargin, render }) => {
   if (!render) {

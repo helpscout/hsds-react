@@ -1,7 +1,8 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import { SurveyContext } from '../../utils/MessageCard.Survey.context'
 import userEvent from '@testing-library/user-event'
+
+import { SurveyContext } from '../../utils/MessageCard.Survey.context'
 import { MessageCardSurveyMultipleChoice } from './MessageCard.Survey.MultipleChoice'
 
 describe('MessageCard.Survey.MultipleChoice', () => {

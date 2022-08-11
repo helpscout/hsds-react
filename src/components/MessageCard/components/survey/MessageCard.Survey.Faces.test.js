@@ -1,8 +1,9 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import { MessageCardSurveyFaces } from './MessageCard.Survey.Faces'
-import { SurveyContext } from '../../utils/MessageCard.Survey.context'
 import userEvent from '@testing-library/user-event'
+
+import { SurveyContext } from '../../utils/MessageCard.Survey.context'
+import { MessageCardSurveyFaces } from './MessageCard.Survey.Faces'
 
 describe('MessageCard.Survey.Faces', () => {
   test('should render all three reaction faces by default', () => {

@@ -1,14 +1,14 @@
 import styled from 'styled-components'
+
+import { messageVariablePill } from './utils/MessageCard.utils.styles'
 import { makeFontFamily, setFontSize } from '../../styles/utilities/font'
-import { getColor } from '../../styles/utilities/color'
-import { FONT_FAMILY } from '../../styles/configs/constants'
-import { d600Effect } from '../../styles/mixins/depth.css'
 import Card from '../Card'
-import Button from '../Button'
+import { d600Effect } from '../../styles/mixins/depth.css'
 import Heading from '../Heading'
-import Image from '../Image'
+import { getColor } from '../../styles/utilities/color'
+import Button from '../Button'
+import { FONT_FAMILY } from '../HSDS/GlobalStyle'
 import ArticleCard from '../ArticleCard'
-import { messageVariableClassName } from './utils/MessageCard.utils'
 
 export const MAX_IMAGE_SIZE = 258
 
@@ -19,7 +19,7 @@ export const MessageCardUI = styled(Card)`
   background-color: white;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  padding: 20px 0;
+  padding: 0;
   width: 300px;
   word-break: break-word;
   display: flex;
@@ -59,10 +59,19 @@ export const MessageCardUI = styled(Card)`
 
     .c-Button {
       margin-top: 30px;
-      font-size: 16px !important;
-      height: 65px !important;
+      font-size: 16px;
+      height: 65px;
     }
   }
+`
+
+export const MessageCardContentUI = styled.div`
+  overflow: auto;
+  width: 100%;
+  height: auto;
+  padding: 20px 0;
+  flex-grow: 1;
+  border: none;
 `
 
 export const MessageCardWrapperUI = styled('div')`
@@ -277,30 +286,7 @@ export const BodyUI = styled.div`
     text-decoration: line-through;
   }
 
-  .${messageVariableClassName} {
-    display: inline-flex;
-    max-width: 50%;
-    padding: 3px 8px;
-    margin-right: 4px;
-    height: 20px;
-    line-height: 17px;
-    align-items: center;
-    color: ${getColor('purple.800')};
-    background-color: ${getColor('purple.200')};
-    border-radius: 100px;
-
-    &__text {
-      max-width: 100%;
-
-      // clearing any text style coming from b or i elements, as we want to have it always display the same
-      font-style: normal;
-      font-weight: normal;
-      text-decoration: none;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  }
+  ${messageVariablePill};
 `
 
 export const ActionUI = styled('div')`

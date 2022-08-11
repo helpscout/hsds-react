@@ -1,7 +1,9 @@
-import { BodyUI } from '../MessageCard.css'
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import { replaceMessageVariables } from '../utils/MessageCard.utils'
+
+import { BodyUI } from '../MessageCard.styles'
 
 export const MessageCardBody = ({ body, onClick, variables }) => {
   const getBodyToRender = () => {

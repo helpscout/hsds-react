@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react'
+
 import PropTypes from 'prop-types'
+
 import {
   ConfirmationMessageUI,
   FeedbackFormUI,
@@ -7,12 +9,14 @@ import {
   SpinnerContainerUI,
   SubmitFeedbackFormButtonUI,
   SurveyUI,
-} from './MessageCard.Survey.css'
+} from './MessageCard.Survey.styles'
+
 import { SurveyContext } from '../../utils/MessageCard.Survey.context'
-import Input from '../../../Input'
-import Spinner from '../../../Spinner'
+import { useMessageCardContext } from '../../utils/MessageCard.context'
 import Icon from '../../../Icon'
+import Input from '../../../Input'
 import Truncate from '../../../Truncate'
+import Spinner from '../../../Spinner'
 
 function noop() {}
 
@@ -36,6 +40,12 @@ export const MessageCardSurvey = ({
   const [showFeedbackForm, setShowFeedbackForm] = React.useState(false)
   const shouldShowFeedbackForm = showFeedbackForm || forceFeedbackForm
   const isMounted = useRef(true)
+  // Use context to allow for MessageCard to react on user interactions
+  const {
+    onSelectionWithComment,
+    onSuccessfulSubmit,
+    canShowConfirmationMessage,
+  } = useMessageCardContext()
 
   useEffect(() => {
     return () => {
@@ -43,38 +53,55 @@ export const MessageCardSurvey = ({
     }
   }, [])
 
+  function afterSubmit(success) {
+    if (success) {
+      onSuccessfulSubmit()
+    }
+  }
+
+  function showForm() {
+    isMounted.current && setShowFeedbackForm(true)
+    onSelectionWithComment()
+  }
+
   function handleSelection(id) {
     setSelected(id)
 
     if (withFeedbackForm) {
       if (withShowFeedbackFormDelay) {
         setTimeout(() => {
-          isMounted.current && setShowFeedbackForm(true)
+          showForm()
         }, SHOW_FEEDBACK_FORM_DELAY)
       } else {
-        setShowFeedbackForm(true)
+        showForm()
       }
       return
     }
 
-    onSubmit({
-      selected: id,
-    })
+    onSubmit(
+      {
+        selected: id,
+      },
+      afterSubmit
+    )
   }
 
   function handleSubmit(event) {
     event.preventDefault()
-    onSubmit({
-      selected,
-      feedback,
-    })
+    onSubmit(
+      {
+        selected,
+        feedback,
+      },
+      afterSubmit
+    )
   }
 
-  if (showConfirmationMessage) {
+  if (showConfirmationMessage && canShowConfirmationMessage) {
     return (
       <SurveyUI data-cy="beacon-message-cta-survey">
         <ConfirmationMessageUI>
-          <Icon name="tick-small" inline size={24} />
+          <Icon icon="checkmark" inline size={24} />
           {confirmationText}
         </ConfirmationMessageUI>
       </SurveyUI>

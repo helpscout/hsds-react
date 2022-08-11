@@ -1,7 +1,9 @@
-import { SubtitleUI } from '../MessageCard.css'
-import { getTruncatedText } from '../MessageCard.utils'
 import React from 'react'
 import PropTypes from 'prop-types'
+
+import { getTruncatedText } from '../MessageCard.utils'
+
+import { SubtitleUI } from '../MessageCard.styles'
 
 export const MessageCardSubtitle = ({ subtitle }) => {
   return subtitle ? (

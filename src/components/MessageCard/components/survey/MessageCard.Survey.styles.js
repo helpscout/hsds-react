@@ -1,12 +1,12 @@
 import styled, { css } from 'styled-components'
-import { focusRing } from '../../../../styles/mixins/focusRing.css'
 import { getColor } from '../../../../styles/utilities/color'
-import Button from '../../../Button'
+import { focusRing } from '../../../../styles/mixins/focusRing.css'
 import RateAction from '../../../RateAction'
+import Button from '../../../Button'
+import { setFontSize } from '../../../../styles/utilities/font'
+import { FONT_FAMILY } from '../../../HSDS/GlobalStyle'
 import ChoiceGroup from '../../../ChoiceGroup'
 import Radio from '../../../Radio'
-import { setFontSize } from '../../../../styles/utilities/font'
-import { FONT_FAMILY } from '../../../../styles/configs/constants'
 
 const defaultTransition = css`
   transition: all 0.2s ease-in-out;
@@ -113,8 +113,10 @@ export const EmojiButtonUI = styled('button')`
     & > span {
       top: -1px;
     }
+
     &.is-md {
       font-size: 11px;
+
       & > span {
         top: 0;
       }
@@ -219,6 +221,7 @@ export const SpinnerContainerUI = styled('div')`
   width: 100%;
   top: 0;
   left: 0;
+  right: 0;
   background: rgba(255, 255, 255, 0.5);
   color: ${getColor('charcoal.500')};
 `

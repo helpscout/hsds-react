@@ -1,7 +1,12 @@
-import { calculateSize } from '../MessageCard.utils'
-import { ImageContainerUI, ImageUI } from '../MessageCard.css'
-import React, { useState } from 'react'
+import React from 'react'
+
+import { useState } from 'react'
+
 import PropTypes from 'prop-types'
+
+import { calculateSize } from '../MessageCard.utils'
+
+import { ImageContainerUI, ImageUI } from '../MessageCard.styles'
 
 export const MessageCardImage = ({ image, onLoad }) => {
   const [imageError, setImageError] = useState(false)

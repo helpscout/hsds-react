@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
 
 const DEFAULT_TRANSITION_TIMEOUT = 200
 
@@ -20,10 +20,10 @@ function useButtonResizeOnSelection({
   // Disabling the transition prevents the buttons from resizing
   disableTransition = false,
 }) {
-  const [buttonSize, setButtonSize] = React.useState(defaultSize)
+  const [buttonSize, setButtonSize] = useState(defaultSize)
   let timeoutId = null
 
-  React.useEffect(() => {
+  useEffect(() => {
     return () => {
       if (timeoutId) {
         clearTimeout(timeoutId)
