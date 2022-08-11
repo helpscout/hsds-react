@@ -9,6 +9,7 @@ import { getColor } from '../../styles/utilities/color'
 import Button from '../Button'
 import { FONT_FAMILY } from '../HSDS/GlobalStyle'
 import ArticleCard from '../ArticleCard'
+import Image from '../Image'
 
 export const MAX_IMAGE_SIZE = 258
 
