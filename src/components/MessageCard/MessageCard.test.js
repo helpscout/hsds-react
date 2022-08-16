@@ -519,6 +519,29 @@ describe('Surveys', () => {
     expect(screen.queryByLabelText(formLabel)).toBeInTheDocument()
   })
 
+  test('Renders a feedback form by default if isTextOnlySurvey is set', () => {
+    const onSubmit = jest.fn()
+    const formLabel = 'Tell us more...'
+
+    render(
+      <MessageCard.Survey
+        isTextOnlySurvey
+        feedbackFormPlaceholder={formLabel}
+        onSubmit={onSubmit}
+      />
+    )
+
+    expect(screen.queryByLabelText(formLabel)).toBeInTheDocument()
+
+    userEvent.type(screen.getByLabelText(formLabel), 'Great question')
+    userEvent.click(screen.getByRole('button', { name: 'Send' }))
+
+    expect(onSubmit).toHaveBeenCalledWith({
+      feedback: 'Great question',
+      selected: null,
+    })
+  })
+
   test('Renders a feedback form delayed after selection if withShowFeedbackFormDelay is set', () => {
     const formLabel = 'Tell us more...'
 

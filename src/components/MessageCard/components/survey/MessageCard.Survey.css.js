@@ -18,6 +18,13 @@ export const SurveyUI = styled('div')`
   margin: 0px -16px -16px -16px;
   padding: 15px;
   position: relative;
+
+  ${({ $isTextOnly }) =>
+    $isTextOnly &&
+    css`
+      padding-top: 0px;
+      background: transparent;
+    `};
 `
 
 export const SurveyOptionsUI = styled('div')`
@@ -180,6 +187,15 @@ export const FeedbackFormUI = styled('form')`
   margin: 12px -4px -4px;
   overflow: hidden;
   animation: HeightAnimation 400ms;
+
+  ${({ $isTextOnly }) =>
+    $isTextOnly &&
+    css`
+      // This essentially resets the padding and margin to 0, but leaving space for the focus state
+      // as mentioned in the comment above.
+      padding-top: 1px;
+      margin-top: -1px;
+    `};
 
   @keyframes HeightAnimation {
     0% {
