@@ -146,5 +146,6 @@ MessageCard.Button = MessageCardButton
 MessageCard.UrlAttachmentImage = MessageCardUrlAttachmentImage
 MessageCard.ArticleCard = MessageCardArticleCard
 MessageCard.Survey = MessageCardSurvey
+MessageCard.NPS = MessageCardNPS
 
 export default MessageCard

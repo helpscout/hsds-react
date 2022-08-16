@@ -17,24 +17,24 @@ export function useContentTransitions(cardRef, withContentAnimations) {
   const [isTransitioning, setIsTransitioning] = useState(undefined)
   const isMounted = useRef(true)
 
-  const onTransitionEnd = useCallback(e => {
-    // after height transition ended, disable transitioning state
-    if (e.target === cardRef.current && e.propertyName === 'height') {
-      // needs to be called in a timeout because of scrollbar appearing too early for a moment, due to multiple animations on different elements
-      setTimeout(() => isMounted.current && setIsTransitioning(false), 300)
-    }
-  }, [])
+  const onTransitionEnd = useCallback(
+    e => {
+      // after height transition ended, disable transitioning state
+      if (e.target === cardRef.current && e.propertyName === 'height') {
+        // needs to be called in a timeout because of scrollbar appearing too early for a moment, due to multiple animations on different elements
+        setTimeout(() => isMounted.current && setIsTransitioning(false), 300)
+      }
+    },
+    [cardRef.current]
+  )
 
   const onAnimationEnd = useCallback(e => {
     // When hiding content animation has finished, set confirmed state and proper height
     if (e.animationName === HIDE_CONTENT_ANIMATION_NAME) {
       // height has to be a fixed value, because it's too early to get it automatically (we want to shrink Message before showing new content)
       const contentHeight = 84
-      requestAnimationFrame(
-        () =>
-          withContentAnimations &&
-          setCurrentHeight(POWERED_BY_HEIGHT + contentHeight)
-      )
+      withContentAnimations &&
+        setCurrentHeight(POWERED_BY_HEIGHT + contentHeight)
       setIsTransitioning(true)
       setState('confirmed')
     }
@@ -46,10 +46,6 @@ export function useContentTransitions(cardRef, withContentAnimations) {
     }
   }, [])
 
-  const resizeContent = useCallback(() => {
-    setNewHeightBasedOnContent()
-  }, [])
-
   const setNewHeightBasedOnContent = useCallback(() => {
     const element = cardRef.current
     const hiddenElementHeight = 18
@@ -59,15 +55,17 @@ export function useContentTransitions(cardRef, withContentAnimations) {
         element.querySelector(`.${CONTENT_CLASS_NAME}`).scrollHeight +
         offsetCompensation
 
-      requestAnimationFrame(() =>
-        setCurrentHeight(prev => {
-          if (prev && prev !== newHeight) {
-            return newHeight
-          }
-        })
-      )
+      setCurrentHeight(prev => {
+        if (prev && prev !== newHeight) {
+          return newHeight
+        }
+      })
     }
-  }, [])
+  }, [cardRef.current])
+
+  const resizeContent = useCallback(() => {
+    setNewHeightBasedOnContent()
+  }, [setNewHeightBasedOnContent])
 
   // Setup transition/animation listeners
   useEffect(() => {
@@ -89,16 +87,14 @@ export function useContentTransitions(cardRef, withContentAnimations) {
       window.removeEventListener('resize', resizeContent)
       isMounted.current = false
     }
-  }, [])
+  }, [cardRef.current])
 
   // Set initial height
   useLayoutEffect(() => {
     if (cardRef.current && withContentAnimations) {
-      requestAnimationFrame(() =>
-        setCurrentHeight(cardRef.current.getBoundingClientRect().height)
-      )
+      setCurrentHeight(cardRef.current.getBoundingClientRect().height)
     }
-  }, [])
+  }, [cardRef.current])
 
   // set height of card after selecting option
   useLayoutEffect(() => {
