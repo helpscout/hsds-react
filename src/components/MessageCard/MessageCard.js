@@ -15,6 +15,7 @@ import { MessageCardVideo } from './components/MessageCard.Video'
 import { MessageCardSurvey } from './components/survey/MessageCard.Survey'
 import MessageCardButton from './MessageCard.Button'
 import MessageCardWrapper from './MessageCard.Wrapper'
+import MessageCardNPS from './NPS/MessageCard.NPS'
 
 function noop() {}
 
