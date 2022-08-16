@@ -9,7 +9,7 @@ import {
   SurveyNPSUI,
 } from './MessageCard.Survey.NPS.styles'
 
-const scores = [...Array(11)]
+const scores = [...Array(11).fill('')]
 
 export const MessageCardSurveyNPS = ({
   detractor = 'Not likely',
