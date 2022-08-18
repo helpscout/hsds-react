@@ -526,7 +526,7 @@ describe('Surveys', () => {
     render(
       <MessageCard.Survey
         isTextOnlySurvey
-        feedbackFormPlaceholder={formLabel}
+        feedbackFormText={formLabel}
         onSubmit={onSubmit}
       />
     )
