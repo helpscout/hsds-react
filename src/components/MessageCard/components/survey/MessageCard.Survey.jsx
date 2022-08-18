@@ -24,7 +24,6 @@ export const MessageCardSurvey = ({
   withFeedbackForm = false,
   forceFeedbackForm = false,
   feedbackFormText = '',
-  feedbackFormPlaceholder = '',
   confirmationText = 'Thanks for the feedback',
   submitButtonText = 'Send',
   onSubmit = noop,
@@ -91,6 +90,12 @@ export const MessageCardSurvey = ({
     withFeedbackForm,
   }
 
+  const formLabel = (
+    <FeedbackLabelUI htmlFor="survey-comment">
+      {feedbackFormText}
+    </FeedbackLabelUI>
+  )
+
   return (
     <SurveyUI
       data-cy="beacon-message-cta-survey"
@@ -104,14 +109,10 @@ export const MessageCardSurvey = ({
 
       {shouldShowFeedbackForm && (
         <FeedbackFormUI onSubmit={handleSubmit} $isTextOnly={isTextOnlySurvey}>
-          {!isTextOnlySurvey ? (
-            <FeedbackLabelUI htmlFor="survey-comment">
-              {feedbackFormText}
-            </FeedbackLabelUI>
+          {isTextOnlySurvey ? (
+            <VisuallyHidden>{formLabel}</VisuallyHidden>
           ) : (
-            <VisuallyHidden>
-              <label htmlFor="survey-comment">{feedbackFormPlaceholder}</label>
-            </VisuallyHidden>
+            formLabel
           )}
           <Input
             id="survey-comment"
@@ -121,7 +122,7 @@ export const MessageCardSurvey = ({
             multiline={3}
             value={feedback}
             onChange={value => setFeedback(value)}
-            placeholder={feedbackFormPlaceholder}
+            placeholder={isTextOnlySurvey ? feedbackFormText : ''}
           />
           <SubmitFeedbackFormButtonUI
             data-cy="beacon-message-cta-survey-submit"
@@ -148,7 +149,6 @@ MessageCardSurvey.propTypes = {
   withFeedbackForm: PropTypes.bool,
   forceFeedbackForm: PropTypes.bool,
   feedbackFormText: PropTypes.string,
-  feedbackFormPlaceholder: PropTypes.string,
   confirmationText: PropTypes.string,
   onSubmit: PropTypes.func,
   showSpinner: PropTypes.bool,
