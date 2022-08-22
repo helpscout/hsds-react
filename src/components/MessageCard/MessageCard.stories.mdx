@@ -315,6 +315,26 @@ This component renders a Message Card Notification with (optional) Title, Subtit
   </Story>
 </Canvas>
 
+# With Text survey
+
+<Canvas>
+  <Story name="With Text survey">
+    <MessageCardStoryWrapperUI>
+      <MessageCard
+        title="Which pizza do you like the most?"
+        body="Your feedback is valuable to us. Let us know how we did so we can continue to improve our services."
+        action={() => (
+          <MessageCard.Survey
+            isTextOnlySurvey
+            feedbackFormText="Tell us more..."
+            onSubmit={data => console.log(data)}
+          />
+        )}
+      />
+    </MessageCardStoryWrapperUI>
+  </Story>
+</Canvas>
+
 # With video
 
 <Canvas>

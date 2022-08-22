@@ -13,6 +13,7 @@ import Input from '../../../Input'
 import Spinner from '../../../Spinner'
 import Icon from '../../../Icon'
 import Truncate from '../../../Truncate'
+import VisuallyHidden from '../../../VisuallyHidden'
 
 function noop() {}
 
@@ -29,12 +30,14 @@ export const MessageCardSurvey = ({
   showSpinner = false,
   showConfirmationMessage = false,
   theme,
+  isTextOnlySurvey = false,
   withShowFeedbackFormDelay = false,
 }) => {
   const [feedback, setFeedback] = React.useState('')
   const [selected, setSelected] = React.useState(null)
   const [showFeedbackForm, setShowFeedbackForm] = React.useState(false)
-  const shouldShowFeedbackForm = showFeedbackForm || forceFeedbackForm
+  const shouldShowFeedbackForm =
+    showFeedbackForm || forceFeedbackForm || isTextOnlySurvey
   const isMounted = useRef(true)
 
   useEffect(() => {
@@ -87,17 +90,30 @@ export const MessageCardSurvey = ({
     withFeedbackForm,
   }
 
+  const formLabel = (
+    <FeedbackLabelUI htmlFor="survey-comment">
+      {feedbackFormText}
+    </FeedbackLabelUI>
+  )
+
   return (
-    <SurveyUI data-cy="beacon-message-cta-survey">
-      <SurveyContext.Provider value={contextValue}>
-        {children}
-      </SurveyContext.Provider>
+    <SurveyUI
+      data-cy="beacon-message-cta-survey"
+      $isTextOnly={isTextOnlySurvey}
+    >
+      {children && (
+        <SurveyContext.Provider value={contextValue}>
+          {children}
+        </SurveyContext.Provider>
+      )}
 
       {shouldShowFeedbackForm && (
-        <FeedbackFormUI onSubmit={handleSubmit}>
-          <FeedbackLabelUI htmlFor="survey-comment">
-            {feedbackFormText}
-          </FeedbackLabelUI>
+        <FeedbackFormUI onSubmit={handleSubmit} $isTextOnly={isTextOnlySurvey}>
+          {isTextOnlySurvey ? (
+            <VisuallyHidden>{formLabel}</VisuallyHidden>
+          ) : (
+            formLabel
+          )}
           <Input
             id="survey-comment"
             name="survey-comment"
@@ -106,6 +122,7 @@ export const MessageCardSurvey = ({
             multiline={3}
             value={feedback}
             onChange={value => setFeedback(value)}
+            placeholder={isTextOnlySurvey ? feedbackFormText : ''}
           />
           <SubmitFeedbackFormButtonUI
             data-cy="beacon-message-cta-survey-submit"
@@ -128,7 +145,7 @@ export const MessageCardSurvey = ({
 }
 
 MessageCardSurvey.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   withFeedbackForm: PropTypes.bool,
   forceFeedbackForm: PropTypes.bool,
   feedbackFormText: PropTypes.string,
@@ -136,4 +153,5 @@ MessageCardSurvey.propTypes = {
   onSubmit: PropTypes.func,
   showSpinner: PropTypes.bool,
   showConfirmationMessage: PropTypes.bool,
+  isTextOnlySurvey: PropTypes.bool,
 }
