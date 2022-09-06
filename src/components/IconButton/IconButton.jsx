@@ -88,6 +88,7 @@ const useIconButton = props => {
 
 export const IconButton = forwardRef((props, ref) => {
   const { avatarProps = {}, ...rest } = props
+  console.log('🚀 ~ IconButton ~ props', props)
 
   const { iconSize, children, icon, status, ...buttonProps } = useIconButton(
     rest
