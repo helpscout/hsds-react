@@ -57,6 +57,7 @@ const useIconButton = props => {
   }
 
   const additionalProps = useButtonAs(props)
+  console.log('🚀 ~ useIconButton ~ additionalProps', additionalProps)
 
   const buttonProps = {
     ...rest,
