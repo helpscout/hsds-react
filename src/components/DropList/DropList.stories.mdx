@@ -248,6 +248,10 @@ You can use the `autoSetComboboxAt` prop to automatically choose between the 2 v
         onDropListLeave={() => {
           console.log('DropList left')
         }}
+        onInputChange={(value, e) => {
+          console.log('🚀 ~ value', value)
+          console.log('🚀 ~ e', e)
+        }}
         items={select(
           'Items',
           {

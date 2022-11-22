@@ -41,6 +41,7 @@ function DropListManager({
   customEmptyList = null,
   customEmptyListItems,
   'data-cy': dataCy,
+  deactivateInputFilterAction = false,
   enableLeftRightNavigation = false,
   focusTogglerOnMenuClose = true,
   getTippyInstance = noop,
@@ -284,6 +285,7 @@ function DropListManager({
             customEmptyList={customEmptyList}
             customEmptyListItems={customEmptyListItems}
             data-cy={dataCy}
+            deactivateInputFilterAction={deactivateInputFilterAction}
             enableLeftRightNavigation={enableLeftRightNavigation}
             focusToggler={focusToggler}
             handleSelectedItemChange={handleSelectedItemChange}
@@ -355,6 +357,8 @@ DropListManager.propTypes = {
   ),
   /** Data attr applied to the DropList for Cypress tests. By default one of 'DropList.Select' or 'DropList.Combobox' depending on the variant used */
   'data-cy': PropTypes.string,
+  /** On combobox, deactivate the default action of filtering so you can use the input as you please (like search) */
+  deactivateInputFilterAction: PropTypes.bool,
   /** Enable navigation with Right and Left arrows (useful for horizontally rendered lists) */
   enableLeftRightNavigation: PropTypes.bool,
   /** Automatically moves the focus back to the toggler when the DropList is closed */
@@ -375,7 +379,7 @@ DropListManager.propTypes = {
   menuCSS: PropTypes.any,
   /** Custom width for the Menu */
   menuWidth: PropTypes.any,
-  /** Callback that fires when combobox search input changes, gives acces to value and resulting filtered items `onInputChange(value, filteredItems)` */
+  /** Callback that fires when combobox search input changes, gives acces to value, resulting filtered items and event (if deactivateInputFilterAction is on) `onInputChange(value, filteredItems, event)` */
   onInputChange: PropTypes.func,
   /** Callback that fires when the menu loses focus */
   onMenuBlur: PropTypes.func,

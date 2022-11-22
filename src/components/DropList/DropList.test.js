@@ -582,11 +582,31 @@ describe('Combobox', () => {
     )
 
     user.type(getByPlaceholderText('Search'), 'J')
-
     expect(onInputChangeSpy).toHaveBeenCalledWith('J', [
       { label: 'John' },
       { label: 'Jeff' },
     ])
+  })
+
+  test('should return value, items and event onInputChange if deactivateInputFilterAction on', () => {
+    const onInputChangeSpy = jest.fn()
+    const { getByPlaceholderText } = render(
+      <DropList
+        isMenuOpen
+        deactivateInputFilterAction
+        items={someItems}
+        toggler={<SimpleButton text="Button Toggler" />}
+        variant="combobox"
+        onInputChange={onInputChangeSpy}
+      />
+    )
+
+    user.type(getByPlaceholderText('Search'), 'J')
+    expect(onInputChangeSpy).toHaveBeenCalledWith(
+      'J',
+      someItems,
+      expect.anything()
+    )
   })
 
   test('should hide the search input on combobox if list empty', () => {

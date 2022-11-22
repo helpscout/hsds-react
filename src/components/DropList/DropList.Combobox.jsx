@@ -33,6 +33,7 @@ function Combobox({
   customEmptyList = null,
   customEmptyListItems,
   'data-cy': dataCy = `DropList.${VARIANTS.COMBOBOX}`,
+  deactivateInputFilterAction,
   focusToggler = noop,
   handleSelectedItemChange = noop,
   inputPlaceholder = 'Search',
@@ -86,6 +87,8 @@ function Combobox({
     },
 
     onInputValueChange({ inputValue }) {
+      if (deactivateInputFilterAction) return
+
       let filtered = filterItems(items, inputValue, actionItemRef)
       const isListEmpty = filtered.length === 0
 
@@ -215,6 +218,12 @@ function Combobox({
             },
             onFocus: event => {
               onMenuFocus(event)
+            },
+            onChange: event => {
+              if (deactivateInputFilterAction) {
+                event.persist()
+                onInputChange(event.target.value, inputFilteredItems, event)
+              }
             },
             onKeyDown: event => {
               if (event.key === 'Tab') {
